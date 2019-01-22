@@ -145,7 +145,7 @@ func resourceFirewallObjectAddressGroupRead(d *schema.ResourceData, m interface{
 
 	//Refresh property
 	d.Set("name", o.Name)
-	member := forticlient.ExpandStringList(o.Member)
+	member := forticlient.ExtractString(o.Member)
 	d.Set("member", member)
 	d.Set("comment", o.Comment)
 

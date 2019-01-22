@@ -9,7 +9,7 @@ import (
 	// "strconv"
 )
 
-//JSONVPNIPsecPhase1Interface contains ... need to comment completely
+// JSONVPNIPsecPhase1Interface contains the parameters for Create and Update API function
 type JSONVPNIPsecPhase1Interface struct {
 	Name                string     `json:"name"`
 	Type                string     `json:"type"`
@@ -29,7 +29,7 @@ type JSONVPNIPsecPhase1Interface struct {
 	IPv4SplitExclude    string     `json:"ipv4-split-exclude"`
 }
 
-//JSONCreateVPNIPsecPhase1InterfaceOutput contains ... need to comment completely
+// JSONCreateVPNIPsecPhase1InterfaceOutput contains the output results for Create API function
 type JSONCreateVPNIPsecPhase1InterfaceOutput struct {
 	Vdom       string  `json:"vdom"`
 	Mkey       string  `json:"mkey"`
@@ -37,8 +37,8 @@ type JSONCreateVPNIPsecPhase1InterfaceOutput struct {
 	HTTPStatus float64 `json:"http_status"`
 }
 
-//JSONUpdateVPNIPsecPhase1InterfaceOutput contains ... need to comment completely
-//Attention: The RESTful API changed the Mkey type from float64 in CREATE to string in UPDATE!
+// JSONUpdateVPNIPsecPhase1InterfaceOutput contains the output results for Update API function
+// Attention: Considering scalability, the previous structure and the current structure may change differently
 type JSONUpdateVPNIPsecPhase1InterfaceOutput struct {
 	Vdom       string  `json:"vdom"`
 	Mkey       string  `json:"mkey"`
@@ -46,7 +46,10 @@ type JSONUpdateVPNIPsecPhase1InterfaceOutput struct {
 	HTTPStatus float64 `json:"http_status"`
 }
 
-//CreateVPNIPsecPhase1Interface will send ... need to comment completely
+// CreateVPNIPsecPhase1Interface API operation for FortiOS creates a new phase 1 definition for a route-based (interface mode) IPsec VPN tunnel.
+// Returns the index value of the phase1-interface setting and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the vpn - ipsec phase1-interface chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) CreateVPNIPsecPhase1Interface(params *JSONVPNIPsecPhase1Interface) (output *JSONCreateVPNIPsecPhase1InterfaceOutput, err error) {
 	HTTPMethod := "POST"
 	path := "/api/v2/cmdb/vpn.ipsec/phase1-interface"
@@ -92,7 +95,10 @@ func (c *FortiSDKClient) CreateVPNIPsecPhase1Interface(params *JSONVPNIPsecPhase
 	return
 }
 
-//UpdateVPNIPsecPhase1Interface will send ... need to comment completely
+// UpdateVPNIPsecPhase1Interface API operation for FortiOS updates the specified phase1-interface setting.
+// Returns the index value of the phase1-interface and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the vpn - ipsec phase1-interface chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) UpdateVPNIPsecPhase1Interface(params *JSONVPNIPsecPhase1Interface, mkey string) (output *JSONUpdateVPNIPsecPhase1InterfaceOutput, err error) {
 	HTTPMethod := "PUT"
 	path := "/api/v2/cmdb/vpn.ipsec/phase1-interface"
@@ -109,7 +115,7 @@ func (c *FortiSDKClient) UpdateVPNIPsecPhase1Interface(params *JSONVPNIPsecPhase
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios response: %s", string(body))
+	log.Printf("FOS-fortios response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -140,7 +146,9 @@ func (c *FortiSDKClient) UpdateVPNIPsecPhase1Interface(params *JSONVPNIPsecPhase
 	return
 }
 
-//DeleteVPNIPsecPhase1Interface will send ... need to comment completely
+// DeleteVPNIPsecPhase1Interface API operation for FortiOS deletes the specified phase1-interface setting.
+// Returns error for service API and SDK errors.
+// See the vpn - ipsec phase1-interface chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) DeleteVPNIPsecPhase1Interface(mkey string) (err error) {
 	HTTPMethod := "DELETE"
 	path := "/api/v2/cmdb/vpn.ipsec/phase1-interface"
@@ -150,7 +158,7 @@ func (c *FortiSDKClient) DeleteVPNIPsecPhase1Interface(mkey string) (err error) 
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios response: %s", string(body))
+	log.Printf("FOS-fortios response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -170,7 +178,11 @@ func (c *FortiSDKClient) DeleteVPNIPsecPhase1Interface(mkey string) (err error) 
 	return
 }
 
-//ReadVPNIPsecPhase1Interface will send ... need to comment completely
+// ReadVPNIPsecPhase1Interface API operation for FortiOS gets the phase1-interface setting
+// with the specified index value.
+// Returns the requested phase1-interface setting value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the vpn - ipsec phase1-interface chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) ReadVPNIPsecPhase1Interface(mkey string) (output *JSONVPNIPsecPhase1Interface, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/vpn.ipsec/phase1-interface"
@@ -180,7 +192,7 @@ func (c *FortiSDKClient) ReadVPNIPsecPhase1Interface(mkey string) (output *JSONV
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios reading response: %s", string(body))
+	log.Printf("FOS-fortios reading response: %s", string(body))
 
 	output = &JSONVPNIPsecPhase1Interface{}
 	var result map[string]interface{}

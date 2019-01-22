@@ -9,13 +9,13 @@ import (
 	// "strconv"
 )
 
-//JSONSystemSettingNTP contains ... need to comment completely
+// JSONSystemSettingNTP contains the parameters for Create and Update API function
 type JSONSystemSettingNTP struct {
 	Type      string        `json:"type"`
 	Ntpserver NTPMultValues `json:"ntpserver"`
 }
 
-//JSONCreateSystemSettingNTPOutput contains ... need to comment completely
+// JSONCreateSystemSettingNTPOutput contains the output results for Create API function
 type JSONCreateSystemSettingNTPOutput struct {
 	Vdom       string  `json:"vdom"`
 	Mkey       string  `json:"mkey"`
@@ -23,8 +23,8 @@ type JSONCreateSystemSettingNTPOutput struct {
 	HTTPStatus float64 `json:"http_status"`
 }
 
-//JSONUpdateSystemSettingNTPOutput contains ... need to comment completely
-//Attention: The RESTful API changed the Mkey type from float64 in CREATE to string in UPDATE!
+// JSONUpdateSystemSettingNTPOutput contains the output results for Update API function
+// Attention: Considering scalability, the previous structure and the current structure may change differently
 type JSONUpdateSystemSettingNTPOutput struct {
 	Vdom       string  `json:"vdom"`
 	Mkey       string  `json:"mkey"`
@@ -32,61 +32,64 @@ type JSONUpdateSystemSettingNTPOutput struct {
 	HTTPStatus float64 `json:"http_status"`
 }
 
-//NTPMultValue contains ... need to comment completely
+// NTPMultValue contains the output results for Read API function
 type NTPMultValue struct {
 	Server string `json:"server"`
 }
 
-//NTPMultValues contains ... need to comment completely
+// NTPMultValues contains the output results for Read API function
 type NTPMultValues []NTPMultValue
 
-//CreateSystemSettingNTP will send ... need to comment completely
+// CreateSystemSettingNTP API operation for FortiOS
 func (c *FortiSDKClient) CreateSystemSettingNTP(params *JSONSystemSettingNTP) (output *JSONCreateSystemSettingNTPOutput, err error) {
-	HTTPMethod := "POST"
-	path := "/api/v2/cmdb/system/ntp"
-	output = &JSONCreateSystemSettingNTPOutput{}
-	locJSON, err := json.Marshal(params)
-	if err != nil {
-		log.Fatal(err)
-		return
-	}
+	// HTTPMethod := "POST"
+	// path := "/api/v2/cmdb/system/ntp"
+	// output = &JSONCreateSystemSettingNTPOutput{}
+	// locJSON, err := json.Marshal(params)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// 	return
+	// }
 
-	bytes := bytes.NewBuffer(locJSON)
-	req := c.NewRequest(HTTPMethod, path, nil, bytes)
-	err = req.Send()
+	// bytes := bytes.NewBuffer(locJSON)
+	// req := c.NewRequest(HTTPMethod, path, nil, bytes)
+	// err = req.Send()
 
-	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	// body, err := ioutil.ReadAll(req.HTTPResponse.Body)
 
-	var result map[string]interface{}
-	json.Unmarshal([]byte(string(body)), &result)
+	// var result map[string]interface{}
+	// json.Unmarshal([]byte(string(body)), &result)
 
-	req.HTTPResponse.Body.Close()
+	// req.HTTPResponse.Body.Close()
 
-	if result != nil {
-		if result["vdom"] != nil {
-			output.Vdom = result["vdom"].(string)
-		}
-		if result["mkey"] != nil {
-			output.Mkey = result["mkey"].(string)
-		}
-		if result["status"] != nil {
-			output.Status = result["status"].(string)
-		} else {
-			err = fmt.Errorf("cannot get the right response")
-			return
-		}
-		if result["http_status"] != nil {
-			output.HTTPStatus = result["http_status"].(float64)
-		}
-	} else {
-		err = fmt.Errorf("cannot get the right response")
-		return
-	}
+	// if result != nil {
+	// 	if result["vdom"] != nil {
+	// 		output.Vdom = result["vdom"].(string)
+	// 	}
+	// 	if result["mkey"] != nil {
+	// 		output.Mkey = result["mkey"].(string)
+	// 	}
+	// 	if result["status"] != nil {
+	// 		output.Status = result["status"].(string)
+	// 	} else {
+	// 		err = fmt.Errorf("cannot get the right response")
+	// 		return
+	// 	}
+	// 	if result["http_status"] != nil {
+	// 		output.HTTPStatus = result["http_status"].(float64)
+	// 	}
+	// } else {
+	// 	err = fmt.Errorf("cannot get the right response")
+	// 	return
+	// }
 
 	return
 }
 
-//UpdateSystemSettingNTP will send ... need to comment completely
+// UpdateSystemSettingNTP API operation for FortiOS configures Network Time Protocol (NTP) server.
+// Returns the execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - ntp chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) UpdateSystemSettingNTP(params *JSONSystemSettingNTP, mkey string) (output *JSONUpdateSystemSettingNTPOutput, err error) {
 	HTTPMethod := "PUT"
 	path := "/api/v2/cmdb/system/ntp"
@@ -103,7 +106,7 @@ func (c *FortiSDKClient) UpdateSystemSettingNTP(params *JSONSystemSettingNTP, mk
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios response: %s", string(body))
+	log.Printf("FOS-fortios response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -134,37 +137,40 @@ func (c *FortiSDKClient) UpdateSystemSettingNTP(params *JSONSystemSettingNTP, mk
 	return
 }
 
-//DeleteSystemSettingNTP will send ... need to comment completely
+// DeleteSystemSettingNTP API operation for FortiOS
 func (c *FortiSDKClient) DeleteSystemSettingNTP(mkey string) (err error) {
-	HTTPMethod := "DELETE"
-	path := "/api/v2/cmdb/system/ntp"
-	// path += "/" + mkey
+	// HTTPMethod := "DELETE"
+	// path := "/api/v2/cmdb/system/ntp"
+	// // path += "/" + mkey
 
-	req := c.NewRequest(HTTPMethod, path, nil, nil)
-	err = req.Send()
+	// req := c.NewRequest(HTTPMethod, path, nil, nil)
+	// err = req.Send()
 
-	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios response: %s", string(body))
+	// body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	// log.Printf("FOS-fortios response: %s", string(body))
 
-	var result map[string]interface{}
-	json.Unmarshal([]byte(string(body)), &result)
+	// var result map[string]interface{}
+	// json.Unmarshal([]byte(string(body)), &result)
 
-	req.HTTPResponse.Body.Close()
+	// req.HTTPResponse.Body.Close()
 
-	if result != nil {
-		if result["status"] == nil {
-			err = fmt.Errorf("cannot get the right response")
-			return
-		}
-	} else {
-		err = fmt.Errorf("cannot get the right response")
-		return
-	}
+	// if result != nil {
+	// 	if result["status"] == nil {
+	// 		err = fmt.Errorf("cannot get the right response")
+	// 		return
+	// 	}
+	// } else {
+	// 	err = fmt.Errorf("cannot get the right response")
+	// 	return
+	// }
 
 	return
 }
 
-//ReadSystemSettingNTP will send ... need to comment completely
+// ReadSystemSettingNTP API operation for FortiOS gets the Network Time Protocol (NTP) server.
+// Returns the requested NTP setting value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - ntp chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) ReadSystemSettingNTP(mkey string) (output *JSONSystemSettingNTP, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/system/ntp"
@@ -174,7 +180,7 @@ func (c *FortiSDKClient) ReadSystemSettingNTP(mkey string) (output *JSONSystemSe
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios reading response: %s", string(body))
+	log.Printf("FOS-fortios reading response: %s", string(body))
 
 	output = &JSONSystemSettingNTP{}
 	var result map[string]interface{}

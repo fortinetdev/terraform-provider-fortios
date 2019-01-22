@@ -9,7 +9,7 @@ import (
 	"strconv"
 )
 
-//JSONNetworkingInterfacePort contains ... need to comment completely
+// JSONNetworkingInterfacePort contains the parameters for Create and Update API function
 type JSONNetworkingInterfacePort struct {
 	// Portname          string `json:"portname"`
 	Ipf                  string `json:"ip"`
@@ -34,7 +34,7 @@ type JSONNetworkingInterfacePort struct {
 	Vlanid               string `json:"vlanid"`
 }
 
-//JSONCreateNetworkingInterfacePortOutput contains ... need to comment completely
+// JSONCreateNetworkingInterfacePortOutput contains the output results for Create API function
 type JSONCreateNetworkingInterfacePortOutput struct {
 	Vdom       string  `json:"vdom"`
 	Mkey       string  `json:"mkey"`
@@ -42,8 +42,8 @@ type JSONCreateNetworkingInterfacePortOutput struct {
 	HTTPStatus float64 `json:"http_status"`
 }
 
-//JSONUpdateNetworkingInterfacePortOutput contains ... need to comment completely
-//Attention: The RESTful API changed the Mkey type from float64 in CREATE to string in UPDATE!
+// JSONUpdateNetworkingInterfacePortOutput contains the output results for Update API function
+// Attention: Considering scalability, the previous structure and the current structure may change differently
 type JSONUpdateNetworkingInterfacePortOutput struct {
 	Vdom       string  `json:"vdom"`
 	Mkey       string  `json:"mkey"`
@@ -51,7 +51,10 @@ type JSONUpdateNetworkingInterfacePortOutput struct {
 	HTTPStatus float64 `json:"http_status"`
 }
 
-//CreateNetworkingInterfacePort will send ... need to comment completely
+// CreateNetworkingInterfacePort API operation for FortiOS creates a new interface.
+// Returns the index value of the interface and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - interface chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) CreateNetworkingInterfacePort(params *JSONNetworkingInterfacePort) (output *JSONCreateNetworkingInterfacePortOutput, err error) {
 	HTTPMethod := "POST"
 	path := "/api/v2/cmdb/system/interface"
@@ -62,14 +65,14 @@ func (c *FortiSDKClient) CreateNetworkingInterfacePort(params *JSONNetworkingInt
 		return
 	}
 
-	//log.Printf("shengh.............fortios resquest1: %s", locJSON)
+	//log.Printf("FOS-fortios resquest1: %s", locJSON)
 
 	bytes := bytes.NewBuffer(locJSON)
 	req := c.NewRequest(HTTPMethod, path, nil, bytes)
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	//log.Printf("shengh.............fortios response1: %s", string(body))
+	//log.Printf("FOS-fortios response1: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -100,7 +103,10 @@ func (c *FortiSDKClient) CreateNetworkingInterfacePort(params *JSONNetworkingInt
 	return
 }
 
-//UpdateNetworkingInterfacePort will send ... need to comment completely
+// UpdateNetworkingInterfacePort API operation for FortiOS updates the specified interface.
+// Returns the index value of the interface and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - interface chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) UpdateNetworkingInterfacePort(params *JSONNetworkingInterfacePort, mkey string) (output *JSONUpdateNetworkingInterfacePortOutput, err error) {
 	HTTPMethod := "PUT"
 	path := "/api/v2/cmdb/system/interface"
@@ -112,14 +118,14 @@ func (c *FortiSDKClient) UpdateNetworkingInterfacePort(params *JSONNetworkingInt
 		return
 	}
 
-	log.Printf("shengh.............fortios resquest2: %s", locJSON)
+	log.Printf("FOS-fortios resquest2: %s", locJSON)
 
 	bytes := bytes.NewBuffer(locJSON)
 	req := c.NewRequest(HTTPMethod, path, nil, bytes)
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios response2: %s", string(body))
+	log.Printf("FOS-fortios response2: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -150,7 +156,9 @@ func (c *FortiSDKClient) UpdateNetworkingInterfacePort(params *JSONNetworkingInt
 	return
 }
 
-//DeleteNetworkingInterfacePort will send ... need to comment completely
+// DeleteNetworkingInterfacePort API operation for FortiOS deletes the specified interface.
+// Returns error for service API and SDK errors.
+// See the system - interface chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) DeleteNetworkingInterfacePort(mkey string) (err error) {
 	HTTPMethod := "DELETE"
 	path := "/api/v2/cmdb/system/interface"
@@ -160,7 +168,7 @@ func (c *FortiSDKClient) DeleteNetworkingInterfacePort(mkey string) (err error) 
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios response: %s", string(body))
+	log.Printf("FOS-fortios response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -180,7 +188,11 @@ func (c *FortiSDKClient) DeleteNetworkingInterfacePort(mkey string) (err error) 
 	return
 }
 
-//ReadNetworkingInterfacePort will send ... need to comment completely
+// ReadNetworkingInterfacePort API operation for FortiOS gets the interface
+// with the specified index value.
+// Returns the requested interface value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - interface chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) ReadNetworkingInterfacePort(mkey string) (output *JSONNetworkingInterfacePort, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/system/interface"
@@ -190,7 +202,7 @@ func (c *FortiSDKClient) ReadNetworkingInterfacePort(mkey string) (output *JSONN
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios reading response: %s", string(body))
+	log.Printf("FOS-fortios reading response: %s", string(body))
 
 	output = &JSONNetworkingInterfacePort{}
 	var result map[string]interface{}

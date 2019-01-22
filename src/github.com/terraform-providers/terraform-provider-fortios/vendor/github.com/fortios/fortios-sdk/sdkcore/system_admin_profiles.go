@@ -8,7 +8,7 @@ import (
 	"log"
 )
 
-//JSONSystemAdminProfiles contains ... need to comment completely
+// JSONSystemAdminProfiles contains the parameters for Create and Update API function
 type JSONSystemAdminProfiles struct {
 	Name                 string `json:"name"`
 	Scope                string `json:"scope"`
@@ -27,16 +27,16 @@ type JSONSystemAdminProfiles struct {
 	AdmintimeoutOverride string `json:"admintimeout-override"`
 }
 
-//JSONCreateSystemAdminProfilesOutput contains ... need to comment completely
+// JSONCreateSystemAdminProfilesOutput contains the output results for Create API function
 type JSONCreateSystemAdminProfilesOutput struct {
 	Vdom       string  `json:"vdom"`
-	Mkey       float64 `json:"mkey"`
+	Mkey       string  `json:"mkey"`
 	Status     string  `json:"status"`
 	HTTPStatus float64 `json:"http_status"`
 }
 
-//JSONUpdateSystemAdminProfilesOutput contains ... need to comment completely
-//Attention: The RESTful API changed the Mkey type from float64 in CREATE to string in UPDATE!
+// JSONUpdateSystemAdminProfilesOutput contains the output results for Update API function
+// Attention: Considering scalability, the previous structure and the current structure may change differently
 type JSONUpdateSystemAdminProfilesOutput struct {
 	Vdom       string  `json:"vdom"`
 	Mkey       string  `json:"mkey"`
@@ -44,11 +44,14 @@ type JSONUpdateSystemAdminProfilesOutput struct {
 	HTTPStatus float64 `json:"http_status"`
 }
 
-//CreateSystemAdminProfiles will send ... need to comment completely
-func (c *FortiSDKClient) CreateSystemAdminProfiles(params *JSONSystemAdminProfiles) (output *JSONUpdateSystemAdminProfilesOutput, err error) {
+// CreateSystemAdminProfiles API operation for FortiOS creates a new access profile
+// Returns the index value of the access profile and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - accprofile chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateSystemAdminProfiles(params *JSONSystemAdminProfiles) (output *JSONCreateSystemAdminProfilesOutput, err error) {
 	HTTPMethod := "POST"
 	path := "/api/v2/cmdb/system/accprofile"
-	output = &JSONUpdateSystemAdminProfilesOutput{}
+	output = &JSONCreateSystemAdminProfilesOutput{}
 	locJSON, err := json.Marshal(params)
 	if err != nil {
 		log.Fatal(err)
@@ -90,7 +93,10 @@ func (c *FortiSDKClient) CreateSystemAdminProfiles(params *JSONSystemAdminProfil
 	return
 }
 
-//UpdateSystemAdminProfiles will send ... need to comment completely
+// UpdateSystemAdminProfiles API operation for FortiOS updates the specified access profile
+// Returns the index value of the access profile and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - accprofile chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) UpdateSystemAdminProfiles(params *JSONSystemAdminProfiles, mkey string) (output *JSONUpdateSystemAdminProfilesOutput, err error) {
 	HTTPMethod := "PUT"
 	path := "/api/v2/cmdb/system/accprofile"
@@ -107,7 +113,7 @@ func (c *FortiSDKClient) UpdateSystemAdminProfiles(params *JSONSystemAdminProfil
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios response: %s", string(body))
+	log.Printf("FOS-fortios response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -138,7 +144,9 @@ func (c *FortiSDKClient) UpdateSystemAdminProfiles(params *JSONSystemAdminProfil
 	return
 }
 
-//DeleteSystemAdminProfiles will send ... need to comment completely
+// DeleteSystemAdminProfiles API operation for FortiOS deletes the specified access profile
+// Returns error for service API and SDK errors.
+// See the system - accprofile chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) DeleteSystemAdminProfiles(mkey string) (err error) {
 	HTTPMethod := "DELETE"
 	path := "/api/v2/cmdb/system/accprofile"
@@ -148,7 +156,7 @@ func (c *FortiSDKClient) DeleteSystemAdminProfiles(mkey string) (err error) {
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios response: %s", string(body))
+	log.Printf("FOS-fortios response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -168,7 +176,11 @@ func (c *FortiSDKClient) DeleteSystemAdminProfiles(mkey string) (err error) {
 	return
 }
 
-//ReadSystemAdminProfiles will send ... need to comment completely
+// ReadSystemAdminProfiles API operation for FortiOS gets the access profile
+// with the specified index value.
+// Returns the requested access profile value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - accprofile chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) ReadSystemAdminProfiles(mkey string) (output *JSONSystemAdminProfiles, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/system/accprofile"
@@ -178,7 +190,7 @@ func (c *FortiSDKClient) ReadSystemAdminProfiles(mkey string) (output *JSONSyste
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios reading response: %s", string(body))
+	log.Printf("FOS-fortios reading response: %s", string(body))
 
 	output = &JSONSystemAdminProfiles{}
 	var result map[string]interface{}

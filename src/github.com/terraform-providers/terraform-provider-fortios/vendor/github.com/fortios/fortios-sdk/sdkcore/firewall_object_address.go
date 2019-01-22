@@ -9,35 +9,35 @@ import (
 	// "strconv"
 )
 
-//JSONFirewallObjectAddressCommon contains ... need to comment completely
+// JSONFirewallObjectAddressCommon contains the General parameters for Create and Update API function
 type JSONFirewallObjectAddressCommon struct {
 	Name    string `json:"name"`
 	Type    string `json:"type"`
 	Comment string `json:"comment"`
 }
 
-//JSONFirewallObjectAddressIPRange contains ... need to comment completely
+// JSONFirewallObjectAddressIPRange contains the IP Range parameters for Create and Update API function
 type JSONFirewallObjectAddressIPRange struct {
 	StartIP string `json:"start-ip"`
 	EndIP   string `json:"end-ip"`
 }
 
-//JSONFirewallObjectAddressCountry contains ... need to comment completely
+// JSONFirewallObjectAddressCountry contains the Country parameters for Create and Update API function
 type JSONFirewallObjectAddressCountry struct {
 	Country string `json:"country"`
 }
 
-//JSONFirewallObjectAddressFqdn contains ... need to comment completely
+// JSONFirewallObjectAddressFqdn contains the FQDN parameters for Create and Update API function
 type JSONFirewallObjectAddressFqdn struct {
 	Fqdn string `json:"fqdn"`
 }
 
-//JSONFirewallObjectAddressIPMask contains ... need to comment completely
+// JSONFirewallObjectAddressIPMask contains the Subnet parameters for Create and Update API function
 type JSONFirewallObjectAddressIPMask struct {
 	Subnet string `json:"subnet"`
 }
 
-//JSONFirewallObjectAddress contains ... need to comment completely
+// JSONFirewallObjectAddress contains the parameters for Create and Update API function
 type JSONFirewallObjectAddress struct {
 	*JSONFirewallObjectAddressCommon
 	*JSONFirewallObjectAddressIPRange
@@ -46,16 +46,16 @@ type JSONFirewallObjectAddress struct {
 	*JSONFirewallObjectAddressIPMask
 }
 
-//JSONCreateFirewallObjectAddressOutput contains ... need to comment completely
+// JSONCreateFirewallObjectAddressOutput contains the output results for Create API function
 type JSONCreateFirewallObjectAddressOutput struct {
 	Vdom       string  `json:"vdom"`
-	Mkey       float64 `json:"mkey"`
+	Mkey       string  `json:"mkey"`
 	Status     string  `json:"status"`
 	HTTPStatus float64 `json:"http_status"`
 }
 
-//JSONUpdateFirewallObjectAddressOutput contains ... need to comment completely
-//Attention: The RESTful API changed the Mkey type from float64 in CREATE to string in UPDATE!
+// JSONUpdateFirewallObjectAddressOutput contains the output results for Update API function
+// Attention: Considering scalability, the previous structure and the current structure may change differently
 type JSONUpdateFirewallObjectAddressOutput struct {
 	Vdom       string  `json:"vdom"`
 	Mkey       string  `json:"mkey"`
@@ -63,11 +63,14 @@ type JSONUpdateFirewallObjectAddressOutput struct {
 	HTTPStatus float64 `json:"http_status"`
 }
 
-//CreateFirewallObjectAddress will send ... need to comment completely
-func (c *FortiSDKClient) CreateFirewallObjectAddress(params *JSONFirewallObjectAddress) (output *JSONUpdateFirewallObjectAddressOutput, err error) {
+// CreateFirewallObjectAddress API operation for FortiOS creates a new firewall address for firewall policies.
+// Returns the index value of the firewall address and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the firewall - address chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateFirewallObjectAddress(params *JSONFirewallObjectAddress) (output *JSONCreateFirewallObjectAddressOutput, err error) {
 	HTTPMethod := "POST"
 	path := "/api/v2/cmdb/firewall/address"
-	output = &JSONUpdateFirewallObjectAddressOutput{}
+	output = &JSONCreateFirewallObjectAddressOutput{}
 	locJSON, err := json.Marshal(params)
 	if err != nil {
 		log.Fatal(err)
@@ -109,7 +112,10 @@ func (c *FortiSDKClient) CreateFirewallObjectAddress(params *JSONFirewallObjectA
 	return
 }
 
-//UpdateFirewallObjectAddress will send ... need to comment completely
+// UpdateFirewallObjectAddress API operation for FortiOS updates the specified firewall address for firewall policies.
+// Returns the index value of the firewall address and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the firewall - address chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) UpdateFirewallObjectAddress(params *JSONFirewallObjectAddress, mkey string) (output *JSONUpdateFirewallObjectAddressOutput, err error) {
 	HTTPMethod := "PUT"
 	path := "/api/v2/cmdb/firewall/address"
@@ -126,7 +132,7 @@ func (c *FortiSDKClient) UpdateFirewallObjectAddress(params *JSONFirewallObjectA
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios response: %s", string(body))
+	log.Printf("FOS-fortios response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -157,7 +163,9 @@ func (c *FortiSDKClient) UpdateFirewallObjectAddress(params *JSONFirewallObjectA
 	return
 }
 
-//DeleteFirewallObjectAddress will send ... need to comment completely
+// DeleteFirewallObjectAddress API operation for FortiOS deletes the specified firewall address for firewall policies.
+// Returns error for service API and SDK errors.
+// See the firewall - address chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) DeleteFirewallObjectAddress(mkey string) (err error) {
 	HTTPMethod := "DELETE"
 	path := "/api/v2/cmdb/firewall/address"
@@ -167,7 +175,7 @@ func (c *FortiSDKClient) DeleteFirewallObjectAddress(mkey string) (err error) {
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios response: %s", string(body))
+	log.Printf("FOS-fortios response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -187,7 +195,11 @@ func (c *FortiSDKClient) DeleteFirewallObjectAddress(mkey string) (err error) {
 	return
 }
 
-//ReadFirewallObjectAddress will send ... need to comment completely
+// ReadFirewallObjectAddress API operation for FortiOS gets the firewall address for firewall policies
+// with the specified index value.
+// Returns the requested firewall addresses value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the firewall - address chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) ReadFirewallObjectAddress(mkey string) (output *JSONFirewallObjectAddress, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/firewall/address"
@@ -197,7 +209,7 @@ func (c *FortiSDKClient) ReadFirewallObjectAddress(mkey string) (output *JSONFir
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios reading response: %s", string(body))
+	log.Printf("FOS-fortios reading response: %s", string(body))
 
 	j1 := JSONFirewallObjectAddressCommon{}
 	j2 := JSONFirewallObjectAddressIPRange{}

@@ -9,7 +9,7 @@ import (
 	"strconv"
 )
 
-//JSONNetworkingRouteStatic contains ... need to comment completely
+// JSONNetworkingRouteStatic contains the parameters for Create and Update API function
 type JSONNetworkingRouteStatic struct {
 	Dst       string `json:"dst"`
 	Gateway   string `json:"gateway"`
@@ -21,7 +21,7 @@ type JSONNetworkingRouteStatic struct {
 	Comment   string `json:"comment"`
 }
 
-//JSONCreateNetworkingRouteStaticOutput contains ... need to comment completely
+// JSONCreateNetworkingRouteStaticOutput contains the output results for Create API function
 type JSONCreateNetworkingRouteStaticOutput struct {
 	Vdom       string  `json:"vdom"`
 	Mkey       float64 `json:"mkey"`
@@ -29,8 +29,8 @@ type JSONCreateNetworkingRouteStaticOutput struct {
 	HTTPStatus float64 `json:"http_status"`
 }
 
-//JSONUpdateNetworkingRouteStaticOutput contains ... need to comment completely
-//Attention: The RESTful API changed the Mkey type from float64 in CREATE to string in UPDATE!
+// JSONUpdateNetworkingRouteStaticOutput contains the output results for Update API function
+// Attention: The RESTful API changed the Mkey type from float64 in CREATE to string in UPDATE!
 type JSONUpdateNetworkingRouteStaticOutput struct {
 	Vdom       string  `json:"vdom"`
 	Mkey       string  `json:"mkey"`
@@ -38,7 +38,10 @@ type JSONUpdateNetworkingRouteStaticOutput struct {
 	HTTPStatus float64 `json:"http_status"`
 }
 
-//CreateNetworkingRouteStatic will send ... need to comment completely
+// CreateNetworkingRouteStatic API operation for FortiOS creates a new static route.
+// Returns the index value of the static route and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router - static chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) CreateNetworkingRouteStatic(params *JSONNetworkingRouteStatic) (output *JSONCreateNetworkingRouteStaticOutput, err error) {
 	HTTPMethod := "POST"
 	path := "/api/v2/cmdb/router/static"
@@ -84,7 +87,10 @@ func (c *FortiSDKClient) CreateNetworkingRouteStatic(params *JSONNetworkingRoute
 	return
 }
 
-//UpdateNetworkingRouteStatic will send ... need to comment completely
+// UpdateNetworkingRouteStatic API operation for FortiOS updates the specified static route.
+// Returns the index value of the static route and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router - static chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) UpdateNetworkingRouteStatic(params *JSONNetworkingRouteStatic, mkey string) (output *JSONUpdateNetworkingRouteStaticOutput, err error) {
 	HTTPMethod := "PUT"
 	path := "/api/v2/cmdb/router/static"
@@ -101,7 +107,7 @@ func (c *FortiSDKClient) UpdateNetworkingRouteStatic(params *JSONNetworkingRoute
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios response: %s", string(body))
+	log.Printf("FOS-fortios response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -132,7 +138,9 @@ func (c *FortiSDKClient) UpdateNetworkingRouteStatic(params *JSONNetworkingRoute
 	return
 }
 
-//DeleteNetworkingRouteStatic will send ... need to comment completely
+// DeleteNetworkingRouteStatic API operation for FortiOS deletes the specified static route.
+// Returns error for service API and SDK errors.
+// See the router - static chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) DeleteNetworkingRouteStatic(mkey string) (err error) {
 	HTTPMethod := "DELETE"
 	path := "/api/v2/cmdb/router/static"
@@ -142,7 +150,7 @@ func (c *FortiSDKClient) DeleteNetworkingRouteStatic(mkey string) (err error) {
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios response: %s", string(body))
+	log.Printf("FOS-fortios response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -162,7 +170,11 @@ func (c *FortiSDKClient) DeleteNetworkingRouteStatic(mkey string) (err error) {
 	return
 }
 
-//ReadNetworkingRouteStatic will send ... need to comment completely
+// ReadNetworkingRouteStatic API operation for FortiOS gets the static route
+// with the specified index value.
+// Returns the requested static route value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router - static chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) ReadNetworkingRouteStatic(mkey string) (output *JSONNetworkingRouteStatic, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/router/static"
@@ -172,7 +184,7 @@ func (c *FortiSDKClient) ReadNetworkingRouteStatic(mkey string) (output *JSONNet
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios reading response: %s", string(body))
+	log.Printf("FOS-fortios reading response: %s", string(body))
 
 	output = &JSONNetworkingRouteStatic{}
 	var result map[string]interface{}

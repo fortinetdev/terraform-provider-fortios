@@ -9,7 +9,7 @@ import (
 	// "strconv"
 )
 
-//JSONFirewallObjectVip contains ... need to comment completely
+// JSONFirewallObjectVip contains the parameters for Create and Update API function
 type JSONFirewallObjectVip struct {
 	Name        string        `json:"name"`
 	Comment     string        `json:"comment"`
@@ -19,7 +19,7 @@ type JSONFirewallObjectVip struct {
 	Portforward string        `json:"portforward"`
 }
 
-//JSONCreateFirewallObjectVipOutput contains ... need to comment completely
+// JSONCreateFirewallObjectVipOutput contains the output results for Create API function
 type JSONCreateFirewallObjectVipOutput struct {
 	Vdom       string  `json:"vdom"`
 	Mkey       string  `json:"mkey"`
@@ -27,8 +27,8 @@ type JSONCreateFirewallObjectVipOutput struct {
 	HTTPStatus float64 `json:"http_status"`
 }
 
-//JSONUpdateFirewallObjectVipOutput contains ... need to comment completely
-//Attention: The RESTful API changed the Mkey type from float64 in CREATE to string in UPDATE!
+// JSONUpdateFirewallObjectVipOutput contains the output results for Update API function
+// Attention: Considering scalability, the previous structure and the current structure may change differently
 type JSONUpdateFirewallObjectVipOutput struct {
 	Vdom       string  `json:"vdom"`
 	Mkey       string  `json:"mkey"`
@@ -36,15 +36,18 @@ type JSONUpdateFirewallObjectVipOutput struct {
 	HTTPStatus float64 `json:"http_status"`
 }
 
-//VIPMultValue contains ... need to comment completely
+// VIPMultValue contains the output results for Read API function
 type VIPMultValue struct {
 	Range string `json:"range"`
 }
 
-//VIPMultValues contains ... need to comment completely
+// VIPMultValues contains the output results for Read API function
 type VIPMultValues []VIPMultValue
 
-//CreateFirewallObjectVip will send ... need to comment completely
+// CreateFirewallObjectVip API operation for FortiOS creates a new firewall virtual IP.
+// Returns the index value of the firewall virtual IP and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the firewall - vip chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) CreateFirewallObjectVip(params *JSONFirewallObjectVip) (output *JSONCreateFirewallObjectVipOutput, err error) {
 	HTTPMethod := "POST"
 	path := "/api/v2/cmdb/firewall/vip"
@@ -65,7 +68,7 @@ func (c *FortiSDKClient) CreateFirewallObjectVip(params *JSONFirewallObjectVip) 
 	json.Unmarshal([]byte(string(body)), &result)
 
 	req.HTTPResponse.Body.Close()
-	log.Printf("shengh1.............fortios response: %v", result)
+	log.Printf("FOS-fortios response: %v", result)
 
 	if result != nil {
 		if result["vdom"] != nil {
@@ -94,7 +97,10 @@ func (c *FortiSDKClient) CreateFirewallObjectVip(params *JSONFirewallObjectVip) 
 	return
 }
 
-//UpdateFirewallObjectVip will send ... need to comment completely
+// UpdateFirewallObjectVip API operation for FortiOS updates the specified firewall virtual IP.
+// Returns the index value of the firewall virtual IP and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the firewall - vip chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) UpdateFirewallObjectVip(params *JSONFirewallObjectVip, mkey string) (output *JSONUpdateFirewallObjectVipOutput, err error) {
 	HTTPMethod := "PUT"
 	path := "/api/v2/cmdb/firewall/vip"
@@ -111,7 +117,7 @@ func (c *FortiSDKClient) UpdateFirewallObjectVip(params *JSONFirewallObjectVip, 
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios response: %s", string(body))
+	log.Printf("FOS-fortios response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -142,7 +148,9 @@ func (c *FortiSDKClient) UpdateFirewallObjectVip(params *JSONFirewallObjectVip, 
 	return
 }
 
-//DeleteFirewallObjectVip will send ... need to comment completely
+// DeleteFirewallObjectVip API operation for FortiOS deletes the specified firewall virtual IP.
+// Returns error for service API and SDK errors.
+// See the firewall - vip chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) DeleteFirewallObjectVip(mkey string) (err error) {
 	HTTPMethod := "DELETE"
 	path := "/api/v2/cmdb/firewall/vip"
@@ -152,7 +160,7 @@ func (c *FortiSDKClient) DeleteFirewallObjectVip(mkey string) (err error) {
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios response: %s", string(body))
+	log.Printf("FOS-fortios response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -172,7 +180,11 @@ func (c *FortiSDKClient) DeleteFirewallObjectVip(mkey string) (err error) {
 	return
 }
 
-//ReadFirewallObjectVip will send ... need to comment completely
+// ReadFirewallObjectVip API operation for FortiOS gets the firewall virtual IP
+// with the specified index value.
+// Returns the requested firewall virtual IP value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the firewall - vip chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) ReadFirewallObjectVip(mkey string) (output *JSONFirewallObjectVip, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/firewall/vip"
@@ -182,7 +194,7 @@ func (c *FortiSDKClient) ReadFirewallObjectVip(mkey string) (output *JSONFirewal
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios reading response: %s", string(body))
+	log.Printf("FOS-fortios reading response: %s", string(body))
 
 	output = &JSONFirewallObjectVip{}
 	var result map[string]interface{}

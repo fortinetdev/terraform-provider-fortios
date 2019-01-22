@@ -9,14 +9,14 @@ import (
 	// "strconv"
 )
 
-//JSONFirewallObjectServiceGroup contains ... need to comment completely
+// JSONFirewallObjectServiceGroup contains the parameters for Create and Update API function
 type JSONFirewallObjectServiceGroup struct {
 	Name    string     `json:"name"`
 	Member  MultValues `json:"member"`
 	Comment string     `json:"comment"`
 }
 
-//JSONCreateFirewallObjectServiceGroupOutput contains ... need to comment completely
+// JSONCreateFirewallObjectServiceGroupOutput contains the output results for Create API function
 type JSONCreateFirewallObjectServiceGroupOutput struct {
 	Vdom       string  `json:"vdom"`
 	Mkey       string  `json:"mkey"`
@@ -24,8 +24,8 @@ type JSONCreateFirewallObjectServiceGroupOutput struct {
 	HTTPStatus float64 `json:"http_status"`
 }
 
-//JSONUpdateFirewallObjectServiceGroupOutput contains ... need to comment completely
-//Attention: The RESTful API changed the Mkey type from float64 in CREATE to string in UPDATE!
+// JSONUpdateFirewallObjectServiceGroupOutput contains the output results for Update API function
+// Attention: Considering scalability, the previous structure and the current structure may change differently
 type JSONUpdateFirewallObjectServiceGroupOutput struct {
 	Vdom       string  `json:"vdom"`
 	Mkey       string  `json:"mkey"`
@@ -33,7 +33,10 @@ type JSONUpdateFirewallObjectServiceGroupOutput struct {
 	HTTPStatus float64 `json:"http_status"`
 }
 
-//CreateFirewallObjectServiceGroup will send ... need to comment completely
+// CreateFirewallObjectServiceGroup API operation for FortiOS creates a new firewal service group.
+// Returns the index value of the firewal service group and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the firewal - service group chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) CreateFirewallObjectServiceGroup(params *JSONFirewallObjectServiceGroup) (output *JSONCreateFirewallObjectServiceGroupOutput, err error) {
 	HTTPMethod := "POST"
 	path := "/api/v2/cmdb/firewall.service/group"
@@ -79,7 +82,10 @@ func (c *FortiSDKClient) CreateFirewallObjectServiceGroup(params *JSONFirewallOb
 	return
 }
 
-//UpdateFirewallObjectServiceGroup will send ... need to comment completely
+// UpdateFirewallObjectServiceGroup API operation for FortiOS updates the specified firewal service group.
+// Returns the index value of the firewal service group and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the firewal - service group chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) UpdateFirewallObjectServiceGroup(params *JSONFirewallObjectServiceGroup, mkey string) (output *JSONUpdateFirewallObjectServiceGroupOutput, err error) {
 	HTTPMethod := "PUT"
 	path := "/api/v2/cmdb/firewall.service/group"
@@ -96,7 +102,7 @@ func (c *FortiSDKClient) UpdateFirewallObjectServiceGroup(params *JSONFirewallOb
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios response: %s", string(body))
+	log.Printf("FOS-fortios response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -127,7 +133,9 @@ func (c *FortiSDKClient) UpdateFirewallObjectServiceGroup(params *JSONFirewallOb
 	return
 }
 
-//DeleteFirewallObjectServiceGroup will send ... need to comment completely
+// DeleteFirewallObjectServiceGroup API operation for FortiOS deletes the specified firewal service group.
+// Returns error for service API and SDK errors.
+// See the firewal - service group chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) DeleteFirewallObjectServiceGroup(mkey string) (err error) {
 	HTTPMethod := "DELETE"
 	path := "/api/v2/cmdb/firewall.service/group"
@@ -137,7 +145,7 @@ func (c *FortiSDKClient) DeleteFirewallObjectServiceGroup(mkey string) (err erro
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios response: %s", string(body))
+	log.Printf("FOS-fortios response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -157,7 +165,11 @@ func (c *FortiSDKClient) DeleteFirewallObjectServiceGroup(mkey string) (err erro
 	return
 }
 
-//ReadFirewallObjectServiceGroup will send ... need to comment completely
+// ReadFirewallObjectServiceGroup API operation for FortiOS gets the firewal service group
+// with the specified index value.
+// Returns the requested firewal service group value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the firewal - service group chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) ReadFirewallObjectServiceGroup(mkey string) (output *JSONFirewallObjectServiceGroup, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/firewall.service/group"
@@ -167,7 +179,7 @@ func (c *FortiSDKClient) ReadFirewallObjectServiceGroup(mkey string) (output *JS
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios reading response: %s", string(body))
+	log.Printf("FOS-fortios reading response: %s", string(body))
 
 	output = &JSONFirewallObjectServiceGroup{}
 	var result map[string]interface{}
