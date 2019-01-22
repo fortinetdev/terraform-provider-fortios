@@ -9,14 +9,14 @@ import (
 	"strconv"
 )
 
-//JSONSystemVdomSetting contains ... need to comment completely
+// JSONSystemVdomSetting contains the parameters for Create and Update API function
 type JSONSystemVdomSetting struct {
 	Name       string `json:"name"`
 	ShortName       string `json:"short-name"`
 	Temporary       string `json:"temporary"`
 }
 
-//JSONCreateSystemVdomSettingOutput contains ... need to comment completely
+// JSONCreateSystemVdomSettingOutput contains the output results for Create API function
 type JSONCreateSystemVdomSettingOutput struct {
 	Vdom       string  `json:"vdom"`
 	Mkey       string `json:"mkey"`
@@ -24,8 +24,8 @@ type JSONCreateSystemVdomSettingOutput struct {
 	HTTPStatus float64 `json:"http_status"`
 }
 
-//JSONUpdateSystemVdomSettingOutput contains ... need to comment completely
-//Attention: The RESTful API changed the Mkey type from float64 in CREATE to string in UPDATE!
+// JSONUpdateSystemVdomSettingOutput contains the output results for Update API function
+// Attention: Considering scalability, the previous structure and the current structure may change differently
 type JSONUpdateSystemVdomSettingOutput struct {
 	Vdom       string  `json:"vdom"`
 	Mkey       string  `json:"mkey"`
@@ -33,7 +33,10 @@ type JSONUpdateSystemVdomSettingOutput struct {
 	HTTPStatus float64 `json:"http_status"`
 }
 
-//CreateSystemVdomSetting will send ... need to comment completely
+// CreateSystemVdomSetting API operation for FortiOS creates a new vdom.
+// Returns the index value of the vdom and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - vdom chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) CreateSystemVdomSetting(params *JSONSystemVdomSetting) (output *JSONCreateSystemVdomSettingOutput, err error) {
 	HTTPMethod := "POST"
 	path := "/api/v2/cmdb/system/vdom"
@@ -79,7 +82,10 @@ func (c *FortiSDKClient) CreateSystemVdomSetting(params *JSONSystemVdomSetting) 
 	return
 }
 
-//UpdateSystemVdomSetting will send ... need to comment completely
+// UpdateSystemVdomSetting API operation for FortiOS updates the specified vdom.
+// Returns the index value of the vdom and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - vdom chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) UpdateSystemVdomSetting(params *JSONSystemVdomSetting, mkey string) (output *JSONUpdateSystemVdomSettingOutput, err error) {
 	HTTPMethod := "PUT"
 	path := "/api/v2/cmdb/system/vdom"
@@ -96,7 +102,7 @@ func (c *FortiSDKClient) UpdateSystemVdomSetting(params *JSONSystemVdomSetting, 
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios response: %s", string(body))
+	log.Printf("FOS-fortios response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -127,8 +133,9 @@ func (c *FortiSDKClient) UpdateSystemVdomSetting(params *JSONSystemVdomSetting, 
 	return
 }
 
-
-//DeleteSystemVdomSetting will send ... need to comment completely
+// DeleteSystemVdomSetting API operation for FortiOS deletes the specified vdom.
+// Returns error for service API and SDK errors.
+// See the system - vdom chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) DeleteSystemVdomSetting(mkey string) (err error) {
 	HTTPMethod := "DELETE"
 	path := "/api/v2/cmdb/system/vdom"
@@ -138,7 +145,7 @@ func (c *FortiSDKClient) DeleteSystemVdomSetting(mkey string) (err error) {
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios response: %s", string(body))
+	log.Printf("FOS-fortios response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -158,7 +165,11 @@ func (c *FortiSDKClient) DeleteSystemVdomSetting(mkey string) (err error) {
 	return
 }
 
-//ReadSystemVdomSetting will send ... need to comment completely
+// ReadSystemVdomSetting API operation for FortiOS gets the vdom
+// with the specified index value.
+// Returns the requested vdom value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - vdom chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) ReadSystemVdomSetting(mkey string) (output *JSONSystemVdomSetting, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/system/vdom"
@@ -168,7 +179,7 @@ func (c *FortiSDKClient) ReadSystemVdomSetting(mkey string) (output *JSONSystemV
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios reading response: %s", string(body))
+	log.Printf("FOS-fortios reading response: %s", string(body))
 
 	output = &JSONSystemVdomSetting{}
 	var result map[string]interface{}

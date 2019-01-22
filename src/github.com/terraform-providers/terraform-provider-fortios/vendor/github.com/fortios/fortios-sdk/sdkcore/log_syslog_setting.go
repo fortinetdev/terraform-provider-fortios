@@ -9,7 +9,7 @@ import (
 	"strconv"
 )
 
-//JSONLogSyslogSetting contains ... need to comment completely
+// JSONLogSyslogSetting contains the parameters for Create and Update API function
 type JSONLogSyslogSetting struct {
 	Status   string `json:"status"`
 	Server   string `json:"server"`
@@ -20,7 +20,7 @@ type JSONLogSyslogSetting struct {
 	Format   string `json:"format"`
 }
 
-//JSONCreateLogSyslogSettingOutput contains ... need to comment completely
+// JSONCreateLogSyslogSettingOutput contains the output results for Create API function
 type JSONCreateLogSyslogSettingOutput struct {
 	Vdom       string  `json:"vdom"`
 	Mkey       string  `json:"mkey"`
@@ -28,8 +28,8 @@ type JSONCreateLogSyslogSettingOutput struct {
 	HTTPStatus float64 `json:"http_status"`
 }
 
-//JSONUpdateLogSyslogSettingOutput contains ... need to comment completely
-//Attention: The RESTful API changed the Mkey type from float64 in CREATE to string in UPDATE!
+// JSONUpdateLogSyslogSettingOutput contains the output results for Update API function
+// Attention: Considering scalability, the previous structure and the current structure may change differently
 type JSONUpdateLogSyslogSettingOutput struct {
 	Vdom       string  `json:"vdom"`
 	Mkey       string  `json:"mkey"`
@@ -37,7 +37,10 @@ type JSONUpdateLogSyslogSettingOutput struct {
 	HTTPStatus float64 `json:"http_status"`
 }
 
-//CreateLogSyslogSetting will send ... need to comment completely
+// CreateLogSyslogSetting API operation for FortiOS creates a new remote Syslog logging server.
+// Returns the index value of the remote Syslog logging server and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the log - syslogd setting chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) CreateLogSyslogSetting(params *JSONLogSyslogSetting) (output *JSONCreateLogSyslogSettingOutput, err error) {
 	HTTPMethod := "POST"
 	path := "/api/v2/cmdb/log.syslogd/setting"
@@ -83,7 +86,10 @@ func (c *FortiSDKClient) CreateLogSyslogSetting(params *JSONLogSyslogSetting) (o
 	return
 }
 
-//UpdateLogSyslogSetting will send ... need to comment completely
+// UpdateLogSyslogSetting API operation for FortiOS updates the specified remote Syslog logging server.
+// Returns the index value of the remote Syslog logging server and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the log - syslogd setting chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) UpdateLogSyslogSetting(params *JSONLogSyslogSetting, mkey string) (output *JSONUpdateLogSyslogSettingOutput, err error) {
 	HTTPMethod := "PUT"
 	path := "/api/v2/cmdb/log.syslogd/setting"
@@ -100,7 +106,7 @@ func (c *FortiSDKClient) UpdateLogSyslogSetting(params *JSONLogSyslogSetting, mk
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios response: %s", string(body))
+	log.Printf("FOS-fortios response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -131,7 +137,9 @@ func (c *FortiSDKClient) UpdateLogSyslogSetting(params *JSONLogSyslogSetting, mk
 	return
 }
 
-//DeleteLogSyslogSetting will send ... need to comment completely
+// DeleteLogSyslogSetting API operation for FortiOS deletes the specified remote Syslog logging server.
+// Returns error for service API and SDK errors.
+// See the log - syslogd setting chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) DeleteLogSyslogSetting(mkey string) (err error) {
 	HTTPMethod := "DELETE"
 	path := "/api/v2/cmdb/log.syslogd/setting"
@@ -141,7 +149,7 @@ func (c *FortiSDKClient) DeleteLogSyslogSetting(mkey string) (err error) {
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios response: %s", string(body))
+	log.Printf("FOS-fortios response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -161,7 +169,11 @@ func (c *FortiSDKClient) DeleteLogSyslogSetting(mkey string) (err error) {
 	return
 }
 
-//ReadLogSyslogSetting will send ... need to comment completely
+// ReadLogSyslogSetting API operation for FortiOS gets the remote Syslog logging server
+// with the specified index value.
+// Returns the requested remote Syslog logging server value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the log - syslogd setting chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) ReadLogSyslogSetting(mkey string) (output *JSONLogSyslogSetting, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/log.syslogd/setting"
@@ -171,7 +183,7 @@ func (c *FortiSDKClient) ReadLogSyslogSetting(mkey string) (output *JSONLogSyslo
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios reading response: %s", string(body))
+	log.Printf("FOS-fortios reading response: %s", string(body))
 
 	output = &JSONLogSyslogSetting{}
 	var result map[string]interface{}

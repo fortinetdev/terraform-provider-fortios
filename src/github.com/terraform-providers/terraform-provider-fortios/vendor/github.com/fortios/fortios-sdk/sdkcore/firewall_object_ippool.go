@@ -9,7 +9,7 @@ import (
 	// "strconv"
 )
 
-//JSONFirewallObjectIPPool contains ... need to comment completely
+// JSONFirewallObjectIPPool contains the parameters for Create and Update API function
 type JSONFirewallObjectIPPool struct {
 	Name     string `json:"name"`
 	Type     string `json:"type"`
@@ -19,7 +19,7 @@ type JSONFirewallObjectIPPool struct {
 	Comments string `json:"comments"`
 }
 
-//JSONCreateFirewallObjectIPPoolOutput contains ... need to comment completely
+// JSONCreateFirewallObjectIPPoolOutput contains the output results for Create API function
 type JSONCreateFirewallObjectIPPoolOutput struct {
 	Vdom       string  `json:"vdom"`
 	Mkey       string  `json:"mkey"`
@@ -27,8 +27,8 @@ type JSONCreateFirewallObjectIPPoolOutput struct {
 	HTTPStatus float64 `json:"http_status"`
 }
 
-//JSONUpdateFirewallObjectIPPoolOutput contains ... need to comment completely
-//Attention: The RESTful API changed the Mkey type from float64 in CREATE to string in UPDATE!
+// JSONUpdateFirewallObjectIPPoolOutput contains the output results for Update API function
+// Attention: Considering scalability, the previous structure and the current structure may change differently
 type JSONUpdateFirewallObjectIPPoolOutput struct {
 	Vdom       string  `json:"vdom"`
 	Mkey       string  `json:"mkey"`
@@ -36,7 +36,10 @@ type JSONUpdateFirewallObjectIPPoolOutput struct {
 	HTTPStatus float64 `json:"http_status"`
 }
 
-//CreateFirewallObjectIPPool will send ... need to comment completely
+// CreateFirewallObjectIPPool API operation for FortiOS creates a new IP address pool.
+// Returns the index value of the IP address pool and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the firewall - ippool chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) CreateFirewallObjectIPPool(params *JSONFirewallObjectIPPool) (output *JSONCreateFirewallObjectIPPoolOutput, err error) {
 	HTTPMethod := "POST"
 	path := "/api/v2/cmdb/firewall/ippool"
@@ -82,7 +85,10 @@ func (c *FortiSDKClient) CreateFirewallObjectIPPool(params *JSONFirewallObjectIP
 	return
 }
 
-//UpdateFirewallObjectIPPool will send ... need to comment completely
+// UpdateFirewallObjectIPPool API operation for FortiOS updates the specified IP address pool.
+// Returns the index value of the IP address pool and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the firewall - ippool chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) UpdateFirewallObjectIPPool(params *JSONFirewallObjectIPPool, mkey string) (output *JSONUpdateFirewallObjectIPPoolOutput, err error) {
 	HTTPMethod := "PUT"
 	path := "/api/v2/cmdb/firewall/ippool"
@@ -99,7 +105,7 @@ func (c *FortiSDKClient) UpdateFirewallObjectIPPool(params *JSONFirewallObjectIP
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios response: %s", string(body))
+	log.Printf("FOS-fortios response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -130,7 +136,9 @@ func (c *FortiSDKClient) UpdateFirewallObjectIPPool(params *JSONFirewallObjectIP
 	return
 }
 
-//DeleteFirewallObjectIPPool will send ... need to comment completely
+// DeleteFirewallObjectIPPool API operation for FortiOS deletes the specified IP address pool.
+// Returns error for service API and SDK errors.
+// See the firewall - ippool chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) DeleteFirewallObjectIPPool(mkey string) (err error) {
 	HTTPMethod := "DELETE"
 	path := "/api/v2/cmdb/firewall/ippool"
@@ -140,7 +148,7 @@ func (c *FortiSDKClient) DeleteFirewallObjectIPPool(mkey string) (err error) {
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios response: %s", string(body))
+	log.Printf("FOS-fortios response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -160,7 +168,11 @@ func (c *FortiSDKClient) DeleteFirewallObjectIPPool(mkey string) (err error) {
 	return
 }
 
-//ReadFirewallObjectIPPool will send ... need to comment completely
+// ReadFirewallObjectIPPool API operation for FortiOS gets the IP address pool
+// with the specified index value.
+// Returns the requested IP address pool value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the firewall - ippool chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) ReadFirewallObjectIPPool(mkey string) (output *JSONFirewallObjectIPPool, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/firewall/ippool"
@@ -170,7 +182,7 @@ func (c *FortiSDKClient) ReadFirewallObjectIPPool(mkey string) (output *JSONFire
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios reading response: %s", string(body))
+	log.Printf("FOS-fortios reading response: %s", string(body))
 
 	output = &JSONFirewallObjectIPPool{}
 	var result map[string]interface{}

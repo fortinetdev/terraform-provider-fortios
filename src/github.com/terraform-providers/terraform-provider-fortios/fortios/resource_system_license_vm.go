@@ -33,7 +33,7 @@ func resourceSystemLicenseVMCreate(d *schema.ResourceData, m interface{}) error 
 
 	//Build input data by sdk
 	i := &forticlient.JSONSystemLicenseVM{
-		File_content: fileContent,
+		FileContent: fileContent,
 	}
 
 	//Call process by sdk
@@ -61,7 +61,7 @@ func resourceSystemLicenseVMUpdate(d *schema.ResourceData, m interface{}) error 
 
 	// //Build input data by sdk
 	// i := &forticlient.JSONSystemLicenseVM{
-	// 	File_content: fileContent,
+	// 	FileContent: fileContent,
 	// }
 
 	// //Call process by sdk
@@ -112,7 +112,7 @@ func resourceSystemLicenseVMRead(d *schema.ResourceData, m interface{}) error {
 	// }
 
 	// //Refresh property
-	// d.Set("file_content", o.File_content)
+	// d.Set("file_content", o.FileContent)
 
 	return nil
 }

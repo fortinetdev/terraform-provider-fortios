@@ -199,7 +199,7 @@ func resourceNetworkingInterfacePortCreate(d *schema.ResourceData, m interface{}
 		}
 
 		//Set index for d
-		log.Printf("shengh........................id is %v\n", o.Mkey)
+		log.Printf("FOS-id is %v\n", o.Mkey)
 		d.SetId(o.Mkey)
 
 	}

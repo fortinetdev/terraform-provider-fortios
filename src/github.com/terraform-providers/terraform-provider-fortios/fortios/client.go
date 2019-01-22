@@ -8,19 +8,21 @@ import (
 	"github.com/fortios/fortios-sdk/sdkcore"
 )
 
-// Config Basic connection information
+// Config gets the authentication information from the given metadata
 type Config struct {
 	Hostname string
 	Token    string
 }
 
-// FortiClient Used for every tf modules
+// FortiClient contains the basic FortiOS SDK connection information to FortiOS
+// It can be used to as a client of FortiOS for the plugin
 type FortiClient struct {
 	//to sdk client
 	Client *forticlient.FortiSDKClient
 }
 
-// CreateClient ...
+// CreateClient creates a FortiClient Object with the authentication information.
+// It returns the FortiClient Object for the use when the plugin is initialized.
 func (c *Config) CreateClient() (interface{}, error) {
 	var fClient FortiClient
 
@@ -31,11 +33,6 @@ func (c *Config) CreateClient() (interface{}, error) {
 	client := &http.Client{
 		Transport: tr,
 	}
-
-	// tr := &http.Transport{
-	// 	TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-	// }
-	// c.HTTPCon.Transport = tr
 
 	auth := auth.NewAuth(c.Token)
 

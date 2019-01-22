@@ -155,7 +155,7 @@ func resourceFirewallObjectVipGroupRead(d *schema.ResourceData, m interface{}) e
 	d.Set("name", o.Name)
 	d.Set("comments", o.Comments)
 	d.Set("interface", o.Interface)
-	member := forticlient.ExpandStringList(o.Member)
+	member := forticlient.ExtractString(o.Member)
 	d.Set("member", member)
 
 	return nil

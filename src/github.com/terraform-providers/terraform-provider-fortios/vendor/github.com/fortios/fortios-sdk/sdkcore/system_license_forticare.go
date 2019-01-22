@@ -9,12 +9,12 @@ import (
 	// "strconv"
 )
 
-//JSONSystemLicenseFortiCare contains ... need to comment completely
+// JSONSystemLicenseFortiCare contains the parameters for Create and Update API function
 type JSONSystemLicenseFortiCare struct {
 	RegistrationCode       string `json:"registration_code"`
 }
 
-//JSONCreateSystemLicenseFortiCareOutput contains ... need to comment completely
+// JSONCreateSystemLicenseFortiCareOutput contains the output results for Create API function
 type JSONCreateSystemLicenseFortiCareOutput struct {
 	Vdom       string  `json:"vdom"`
 	Mkey       string `json:"mkey"`
@@ -22,8 +22,8 @@ type JSONCreateSystemLicenseFortiCareOutput struct {
 	HTTPStatus float64 `json:"http_status"`
 }
 
-//JSONUpdateSystemLicenseFortiCareOutput contains ... need to comment completely
-//Attention: The RESTful API changed the Mkey type from float64 in CREATE to string in UPDATE!
+// JSONUpdateSystemLicenseFortiCareOutput contains the output results for Update API function
+// Attention: Considering scalability, the previous structure and the current structure may change differently
 type JSONUpdateSystemLicenseFortiCareOutput struct {
 	Vdom       string  `json:"vdom"`
 	Mkey       string  `json:"mkey"`
@@ -31,7 +31,9 @@ type JSONUpdateSystemLicenseFortiCareOutput struct {
 	HTTPStatus float64 `json:"http_status"`
 }
 
-//CreateSystemLicenseFortiCare will send ... need to comment completely
+// CreateSystemLicenseFortiCare API operation for FortiOS commits a module registration code.
+// Returns the execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
 func (c *FortiSDKClient) CreateSystemLicenseFortiCare(params *JSONSystemLicenseFortiCare) (output *JSONCreateSystemLicenseFortiCareOutput, err error) {
 	HTTPMethod := "POST"
 	path := "/api/v2/monitor/registration/forticare/add-license"
@@ -47,7 +49,7 @@ func (c *FortiSDKClient) CreateSystemLicenseFortiCare(params *JSONSystemLicenseF
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios response(create): %s", string(body))
+	log.Printf("FOS-fortios response(create): %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -100,7 +102,7 @@ func (c *FortiSDKClient) CreateSystemLicenseFortiCare(params *JSONSystemLicenseF
 	return
 }
 
-//UpdateSystemLicenseFortiCare will send ... need to comment completely
+// UpdateSystemLicenseFortiCare API operation for FortiOS
 func (c *FortiSDKClient) UpdateSystemLicenseFortiCare(params *JSONSystemLicenseFortiCare, mkey string) (output *JSONUpdateSystemLicenseFortiCareOutput, err error) {
 	// HTTPMethod := "PUT"
 	// path := "/api/v2/monitor/registration/forticare/add-license"
@@ -117,7 +119,7 @@ func (c *FortiSDKClient) UpdateSystemLicenseFortiCare(params *JSONSystemLicenseF
 	// err = req.Send()
 
 	// body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	// log.Printf("shengh.............fortios response: %s", string(body))
+	// log.Printf("FOS-fortios response: %s", string(body))
 
 	// var result map[string]interface{}
 	// json.Unmarshal([]byte(string(body)), &result)
@@ -149,8 +151,7 @@ func (c *FortiSDKClient) UpdateSystemLicenseFortiCare(params *JSONSystemLicenseF
 	return
 }
 
-
-//DeleteSystemLicenseFortiCare will send ... need to comment completely
+// DeleteSystemLicenseFortiCare API operation for FortiOS
 func (c *FortiSDKClient) DeleteSystemLicenseFortiCare(mkey string) (err error) {
 	// HTTPMethod := "DELETE"
 	// path := "/api/v2/monitor/registration/forticare/add-license"
@@ -160,7 +161,7 @@ func (c *FortiSDKClient) DeleteSystemLicenseFortiCare(mkey string) (err error) {
 	// err = req.Send()
 
 	// body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	// log.Printf("shengh.............fortios response: %s", string(body))
+	// log.Printf("FOS-fortios response: %s", string(body))
 
 	// var result map[string]interface{}
 	// json.Unmarshal([]byte(string(body)), &result)
@@ -180,7 +181,7 @@ func (c *FortiSDKClient) DeleteSystemLicenseFortiCare(mkey string) (err error) {
 	return
 }
 
-//ReadSystemLicenseFortiCare will send ... need to comment completely
+// ReadSystemLicenseFortiCare API operation for FortiOS
 func (c *FortiSDKClient) ReadSystemLicenseFortiCare(mkey string) (output *JSONSystemLicenseFortiCare, err error) {
 	// HTTPMethod := "GET"
 	// path := "/api/v2/monitor/registration/forticare/add-license"
@@ -190,7 +191,7 @@ func (c *FortiSDKClient) ReadSystemLicenseFortiCare(mkey string) (output *JSONSy
 	// err = req.Send()
 
 	// body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	// log.Printf("shengh.............fortios reading response: %s", string(body))
+	// log.Printf("FOS-fortios reading response: %s", string(body))
 
 	// output = &JSONSystemLicenseFortiCare{}
 	// var result map[string]interface{}

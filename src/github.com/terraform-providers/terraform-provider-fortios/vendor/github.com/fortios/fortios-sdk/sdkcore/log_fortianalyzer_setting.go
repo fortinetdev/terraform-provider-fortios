@@ -9,7 +9,7 @@ import (
 	// "strconv"
 )
 
-//JSONLogFortiAnalyzerSetting contains ... need to comment completely
+// JSONLogFortiAnalyzerSetting contains the parameters for Create and Update API function
 type JSONLogFortiAnalyzerSetting struct {
 	Status        string `json:"status"`
 	Server        string `json:"server"`
@@ -20,7 +20,7 @@ type JSONLogFortiAnalyzerSetting struct {
 	EncAlgorithm  string `json:"enc-algorithm"`
 }
 
-//JSONCreateLogFortiAnalyzerSettingOutput contains ... need to comment completely
+// JSONCreateLogFortiAnalyzerSettingOutput contains the output results for Create API function
 type JSONCreateLogFortiAnalyzerSettingOutput struct {
 	Vdom       string  `json:"vdom"`
 	Mkey       string  `json:"mkey"`
@@ -28,8 +28,8 @@ type JSONCreateLogFortiAnalyzerSettingOutput struct {
 	HTTPStatus float64 `json:"http_status"`
 }
 
-//JSONUpdateLogFortiAnalyzerSettingOutput contains ... need to comment completely
-//Attention: The RESTful API changed the Mkey type from float64 in CREATE to string in UPDATE!
+// JSONUpdateLogFortiAnalyzerSettingOutput contains the output results for Update API function
+// Attention: Considering scalability, the previous structure and the current structure may change differently
 type JSONUpdateLogFortiAnalyzerSettingOutput struct {
 	Vdom       string  `json:"vdom"`
 	Mkey       string  `json:"mkey"`
@@ -37,7 +37,10 @@ type JSONUpdateLogFortiAnalyzerSettingOutput struct {
 	HTTPStatus float64 `json:"http_status"`
 }
 
-//CreateLogFortiAnalyzerSetting will send ... need to comment completely
+// CreateLogFortiAnalyzerSetting API operation for FortiOS creates a new FortiAnalyzer log management device.
+// Returns the index value of the FortiAnalyzer log management device and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the log - fortianalyzer setting chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) CreateLogFortiAnalyzerSetting(params *JSONLogFortiAnalyzerSetting) (output *JSONCreateLogFortiAnalyzerSettingOutput, err error) {
 	HTTPMethod := "POST"
 	path := "/api/v2/cmdb/log.fortianalyzer/setting"
@@ -83,7 +86,10 @@ func (c *FortiSDKClient) CreateLogFortiAnalyzerSetting(params *JSONLogFortiAnaly
 	return
 }
 
-//UpdateLogFortiAnalyzerSetting will send ... need to comment completely
+// UpdateLogFortiAnalyzerSetting API operation for FortiOS updates the specified FortiAnalyzer log management device.
+// Returns the index value of the FortiAnalyzer log management device and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the log - fortianalyzer setting chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) UpdateLogFortiAnalyzerSetting(params *JSONLogFortiAnalyzerSetting, mkey string) (output *JSONUpdateLogFortiAnalyzerSettingOutput, err error) {
 	HTTPMethod := "PUT"
 	path := "/api/v2/cmdb/log.fortianalyzer/setting"
@@ -100,7 +106,7 @@ func (c *FortiSDKClient) UpdateLogFortiAnalyzerSetting(params *JSONLogFortiAnaly
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios response: %s", string(body))
+	log.Printf("FOS-fortios response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -131,7 +137,9 @@ func (c *FortiSDKClient) UpdateLogFortiAnalyzerSetting(params *JSONLogFortiAnaly
 	return
 }
 
-//DeleteLogFortiAnalyzerSetting will send ... need to comment completely
+// DeleteLogFortiAnalyzerSetting API operation for FortiOS deletes the specified FortiAnalyzer log management device.
+// Returns error for service API and SDK errors.
+// See the log - fortianalyzer setting chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) DeleteLogFortiAnalyzerSetting(mkey string) (err error) {
 	HTTPMethod := "DELETE"
 	path := "/api/v2/cmdb/log.fortianalyzer/setting"
@@ -141,7 +149,7 @@ func (c *FortiSDKClient) DeleteLogFortiAnalyzerSetting(mkey string) (err error) 
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios response: %s", string(body))
+	log.Printf("FOS-fortios response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -161,7 +169,11 @@ func (c *FortiSDKClient) DeleteLogFortiAnalyzerSetting(mkey string) (err error) 
 	return
 }
 
-//ReadLogFortiAnalyzerSetting will send ... need to comment completely
+// ReadLogFortiAnalyzerSetting API operation for FortiOS gets the FortiAnalyzer log management device
+// with the specified index value.
+// Returns the requested FortiAnalyzer log management device value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the log - fortianalyzer setting chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) ReadLogFortiAnalyzerSetting(mkey string) (output *JSONLogFortiAnalyzerSetting, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/log.fortianalyzer/setting"
@@ -171,7 +183,7 @@ func (c *FortiSDKClient) ReadLogFortiAnalyzerSetting(mkey string) (output *JSONL
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios reading response: %s", string(body))
+	log.Printf("FOS-fortios reading response: %s", string(body))
 
 	output = &JSONLogFortiAnalyzerSetting{}
 	var result map[string]interface{}

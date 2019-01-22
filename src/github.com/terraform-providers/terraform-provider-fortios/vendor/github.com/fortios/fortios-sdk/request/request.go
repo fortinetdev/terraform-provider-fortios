@@ -8,7 +8,7 @@ import (
 	"github.com/fortios/fortios-sdk/config"
 )
 
-//Request .....
+// Request describes the request to FortiOS service
 type Request struct {
 	Config       config.Config
 	HTTPRequest  *http.Request
@@ -16,15 +16,13 @@ type Request struct {
 	Path         string
 	Params       interface{}
 	Data         *bytes.Buffer
-	//Body                   io.ReadSeeker
 }
 
-//New wil create Request object with ALL information for next send
-//Need Client Structure Information!!!!!!since cannot recycle refer,
-//so need to add a public module for configuration
+// New creates reqeust object with http method, path, params and data,
+// It will save the http request, path, etc. for the next operations
+// such as sending data, getting response, etc.
+// It returns the created request object to the gobal plugin client.
 func New(c config.Config, method string, path string, params interface{}, data *bytes.Buffer) *Request {
-	log.Printf("shengh.............request New1\n")
-
 	var h *http.Request
 
 	if (data == nil) {
@@ -32,8 +30,6 @@ func New(c config.Config, method string, path string, params interface{}, data *
 	} else {
 		h, _ = http.NewRequest(method, "", data)
 	}
-	
-	log.Printf("shengh.............request New2\n")
 
 	r := &Request{
 		Config:      c,
@@ -45,11 +41,12 @@ func New(c config.Config, method string, path string, params interface{}, data *
 	return r
 }
 
-//Build Request header
+// Build Request header
 
-//Build Request Sign/Login Info
+// Build Request Sign/Login Info
 
-//Send Request to Firewall
+// Send request data to FortiOS.
+// If errors are encountered, it returns the error.
 func (r *Request) Send() error {
 	//Build FortiOS
 	//build Sign/Login INfo
@@ -70,7 +67,6 @@ func (r *Request) Send() error {
 	rsp, err := r.Config.HTTPCon.Do(r.HTTPRequest)
 	r.HTTPResponse = rsp
 	if err != nil {
-		log.Printf("shengh.............shengh ERROR\n")
 		log.Fatal(err)
 	}
 

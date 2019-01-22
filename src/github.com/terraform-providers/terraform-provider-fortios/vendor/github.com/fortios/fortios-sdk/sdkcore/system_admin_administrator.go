@@ -9,7 +9,7 @@ import (
 	//"strconv"
 )
 
-//JSONSystemAdminAdministrator contains ... need to comment completely
+// JSONSystemAdminAdministrator contains the parameters for Create and Update API function
 type JSONSystemAdminAdministrator struct {
 	Name        string `json:"name"`
 	Password    string `json:"password"`
@@ -27,7 +27,7 @@ type JSONSystemAdminAdministrator struct {
 	Comments    string `json:"comments"`
 }
 
-//JSONSystemAdminAdministrator2 contains ... need to comment completely
+// JSONSystemAdminAdministrator2 contains the parameters for Create and Update API function
 type JSONSystemAdminAdministrator2 struct {
 	Name        string `json:"name"`
 	Trusthost1  string `json:"trusthost1"`
@@ -44,16 +44,16 @@ type JSONSystemAdminAdministrator2 struct {
 	Comments    string `json:"comments"`
 }
 
-//JSONCreateSystemAdminAdministratorOutput contains ... need to comment completely
+// JSONCreateSystemAdminAdministratorOutput contains the output results for Create API function
 type JSONCreateSystemAdminAdministratorOutput struct {
 	Vdom       string  `json:"vdom"`
-	Mkey       float64 `json:"mkey"`
+	Mkey       string  `json:"mkey"`
 	Status     string  `json:"status"`
 	HTTPStatus float64 `json:"http_status"`
 }
 
-//JSONUpdateSystemAdminAdministratorOutput contains ... need to comment completely
-//Attention: The RESTful API changed the Mkey type from float64 in CREATE to string in UPDATE!
+// JSONUpdateSystemAdminAdministratorOutput contains the output results for Update API function
+// Attention: Considering scalability, the previous structure and the current structure may change differently
 type JSONUpdateSystemAdminAdministratorOutput struct {
 	Vdom       string  `json:"vdom"`
 	Mkey       string  `json:"mkey"`
@@ -61,11 +61,14 @@ type JSONUpdateSystemAdminAdministratorOutput struct {
 	HTTPStatus float64 `json:"http_status"`
 }
 
-//CreateSystemAdminAdministrator will send ... need to comment completely
-func (c *FortiSDKClient) CreateSystemAdminAdministrator(params *JSONSystemAdminAdministrator) (output *JSONUpdateSystemAdminAdministratorOutput, err error) {
+// CreateSystemAdminAdministrator API operation for FortiOS creates a new administrator account.
+// Returns the index value of the administrator account and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - admin chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateSystemAdminAdministrator(params *JSONSystemAdminAdministrator) (output *JSONCreateSystemAdminAdministratorOutput, err error) {
 	HTTPMethod := "POST"
 	path := "/api/v2/cmdb/system/admin"
-	output = &JSONUpdateSystemAdminAdministratorOutput{}
+	output = &JSONCreateSystemAdminAdministratorOutput{}
 	locJSON, err := json.Marshal(params)
 	if err != nil {
 		log.Fatal(err)
@@ -107,7 +110,10 @@ func (c *FortiSDKClient) CreateSystemAdminAdministrator(params *JSONSystemAdminA
 	return
 }
 
-//UpdateSystemAdminAdministrator will send ... need to comment completely
+// UpdateSystemAdminAdministrator API operation for FortiOS updates the specified administrator account.
+// Returns the index value of the administrator account and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - admin chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) UpdateSystemAdminAdministrator(params *JSONSystemAdminAdministrator2, mkey string) (output *JSONUpdateSystemAdminAdministratorOutput, err error) {
 	HTTPMethod := "PUT"
 	path := "/api/v2/cmdb/system/admin"
@@ -124,7 +130,7 @@ func (c *FortiSDKClient) UpdateSystemAdminAdministrator(params *JSONSystemAdminA
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios response: %s", string(body))
+	log.Printf("FOS-fortios response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -155,7 +161,9 @@ func (c *FortiSDKClient) UpdateSystemAdminAdministrator(params *JSONSystemAdminA
 	return
 }
 
-//DeleteSystemAdminAdministrator will send ... need to comment completely
+// DeleteSystemAdminAdministrator API operation for FortiOS deletes the specified administrator account.
+// Returns error for service API and SDK errors.
+// See the system - admin chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) DeleteSystemAdminAdministrator(mkey string) (err error) {
 	HTTPMethod := "DELETE"
 	path := "/api/v2/cmdb/system/admin"
@@ -165,7 +173,7 @@ func (c *FortiSDKClient) DeleteSystemAdminAdministrator(mkey string) (err error)
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios response: %s", string(body))
+	log.Printf("FOS-fortios response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -185,7 +193,11 @@ func (c *FortiSDKClient) DeleteSystemAdminAdministrator(mkey string) (err error)
 	return
 }
 
-//ReadSystemAdminAdministrator will send ... need to comment completely
+// ReadSystemAdminAdministrator API operation for FortiOS gets the administrator account
+// with the specified index value.
+// Returns the requested administrator account value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - admin chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) ReadSystemAdminAdministrator(mkey string) (output *JSONSystemAdminAdministrator2, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/system/admin"
@@ -195,7 +207,7 @@ func (c *FortiSDKClient) ReadSystemAdminAdministrator(mkey string) (output *JSON
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios reading response: %s", string(body))
+	log.Printf("FOS-fortios reading response: %s", string(body))
 
 	output = &JSONSystemAdminAdministrator2{}
 	var result map[string]interface{}

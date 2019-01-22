@@ -9,7 +9,7 @@ import (
 	// "strconv"
 )
 
-//JSONFirewallObjectVipGroup contains ... need to comment completely
+// JSONFirewallObjectVipGroup contains the parameters for Create and Update API function
 type JSONFirewallObjectVipGroup struct {
 	Name      string     `json:"name"`
 	Comments  string     `json:"comments"`
@@ -17,7 +17,7 @@ type JSONFirewallObjectVipGroup struct {
 	Member    MultValues `json:"member"`
 }
 
-//JSONCreateFirewallObjectVipGroupOutput contains ... need to comment completely
+// JSONCreateFirewallObjectVipGroupOutput contains the output results for Create API function
 type JSONCreateFirewallObjectVipGroupOutput struct {
 	Vdom       string  `json:"vdom"`
 	Mkey       string  `json:"mkey"`
@@ -25,8 +25,8 @@ type JSONCreateFirewallObjectVipGroupOutput struct {
 	HTTPStatus float64 `json:"http_status"`
 }
 
-//JSONUpdateFirewallObjectVipGroupOutput contains ... need to comment completely
-//Attention: The RESTful API changed the Mkey type from float64 in CREATE to string in UPDATE!
+// JSONUpdateFirewallObjectVipGroupOutput contains the output results for Update API function
+// Attention: Considering scalability, the previous structure and the current structure may change differently
 type JSONUpdateFirewallObjectVipGroupOutput struct {
 	Vdom       string  `json:"vdom"`
 	Mkey       string  `json:"mkey"`
@@ -34,7 +34,10 @@ type JSONUpdateFirewallObjectVipGroupOutput struct {
 	HTTPStatus float64 `json:"http_status"`
 }
 
-//CreateFirewallObjectVipGroup will send ... need to comment completely
+// CreateFirewallObjectVipGroup API operation for FortiOS creates a new firewall virtual IP group.
+// Returns the index value of the firewall virtual IP group and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the firewall - vipgrp chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) CreateFirewallObjectVipGroup(params *JSONFirewallObjectVipGroup) (output *JSONCreateFirewallObjectVipGroupOutput, err error) {
 	HTTPMethod := "POST"
 	path := "/api/v2/cmdb/firewall/vipgrp"
@@ -80,7 +83,10 @@ func (c *FortiSDKClient) CreateFirewallObjectVipGroup(params *JSONFirewallObject
 	return
 }
 
-//UpdateFirewallObjectVipGroup will send ... need to comment completely
+// UpdateFirewallObjectVipGroup API operation for FortiOS updates the specified firewall virtual IP group.
+// Returns the index value of the firewall virtual IP group and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the firewall - vipgrp chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) UpdateFirewallObjectVipGroup(params *JSONFirewallObjectVipGroup, mkey string) (output *JSONUpdateFirewallObjectVipGroupOutput, err error) {
 	HTTPMethod := "PUT"
 	path := "/api/v2/cmdb/firewall/vipgrp"
@@ -97,7 +103,7 @@ func (c *FortiSDKClient) UpdateFirewallObjectVipGroup(params *JSONFirewallObject
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios response: %s", string(body))
+	log.Printf("FOS-fortios response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -128,7 +134,9 @@ func (c *FortiSDKClient) UpdateFirewallObjectVipGroup(params *JSONFirewallObject
 	return
 }
 
-//DeleteFirewallObjectVipGroup will send ... need to comment completely
+// DeleteFirewallObjectVipGroup API operation for FortiOS deletes the specified firewall virtual IP group.
+// Returns error for service API and SDK errors.
+// See the firewall - vipgrp chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) DeleteFirewallObjectVipGroup(mkey string) (err error) {
 	HTTPMethod := "DELETE"
 	path := "/api/v2/cmdb/firewall/vipgrp"
@@ -138,7 +146,7 @@ func (c *FortiSDKClient) DeleteFirewallObjectVipGroup(mkey string) (err error) {
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios response: %s", string(body))
+	log.Printf("FOS-fortios response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -158,7 +166,11 @@ func (c *FortiSDKClient) DeleteFirewallObjectVipGroup(mkey string) (err error) {
 	return
 }
 
-//ReadFirewallObjectVipGroup will send ... need to comment completely
+// ReadFirewallObjectVipGroup API operation for FortiOS gets the firewall virtual IP group
+// with the specified index value.
+// Returns the requested firewall virtual IP group value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the firewall - vipgrp chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) ReadFirewallObjectVipGroup(mkey string) (output *JSONFirewallObjectVipGroup, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/firewall/vipgrp"
@@ -168,7 +180,7 @@ func (c *FortiSDKClient) ReadFirewallObjectVipGroup(mkey string) (output *JSONFi
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios reading response: %s", string(body))
+	log.Printf("FOS-fortios reading response: %s", string(body))
 
 	output = &JSONFirewallObjectVipGroup{}
 	var result map[string]interface{}

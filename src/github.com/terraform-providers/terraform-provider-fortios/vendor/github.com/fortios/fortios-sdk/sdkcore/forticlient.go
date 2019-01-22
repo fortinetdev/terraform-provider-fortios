@@ -7,22 +7,23 @@ import (
 	"github.com/fortios/fortios-sdk/auth"
 	"github.com/fortios/fortios-sdk/request")
 
-//MultValue contains ... need to comment completely
+// MultValue describes the nested structure in the results
 type MultValue struct {
 	Name string `json:"name"`
 }
 
-//MultValues contains ... need to comment completely
+// MultValues describes the nested structure in the results
 type MultValues []MultValue
 
-
+// FortiSDKClient describes the global FortiOS plugin client instance
 type FortiSDKClient struct {
 	Config   config.Config
 	Retries  int
 }
 
-//ExpandStringList contains ... need to comment completely
-func ExpandStringList(members []MultValue) []string {
+// ExtractString extracts strings from result and put them into a string array,
+// and return the string array
+func ExtractString(members []MultValue) []string {
 	vs := make([]string, 0, len(members))
 	for _, v := range members {
 		c := v.Name
@@ -32,7 +33,8 @@ func ExpandStringList(members []MultValue) []string {
 }
 
 
-//Create new client object
+// NewClient initializes a new global plugin client
+// It returns the created client object
 func NewClient(host string, auth *auth.Auth, client *http.Client) *FortiSDKClient{
 	c := &FortiSDKClient{ }
 
@@ -43,7 +45,8 @@ func NewClient(host string, auth *auth.Auth, client *http.Client) *FortiSDKClien
 	return c
 }
 
-//Build new reqeust
+// NewRequest creates the request to FortiOS for the client 
+// and return it to the client
 func (c *FortiSDKClient) NewRequest(method string, path string, params interface{}, data *bytes.Buffer) *request.Request {
 	return request.New(c.Config, method, path, params, data);
 }

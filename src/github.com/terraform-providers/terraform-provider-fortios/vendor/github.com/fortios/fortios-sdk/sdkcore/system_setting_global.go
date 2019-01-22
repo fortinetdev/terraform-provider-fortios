@@ -9,7 +9,7 @@ import (
 	"strconv"
 )
 
-//JSONSystemSettingGlobal contains ... need to comment completely
+// JSONSystemSettingGlobal contains the parameters for Create and Update API function
 type JSONSystemSettingGlobal struct {
 	Admintimeout string `json:"admintimeout"`
 	Timezone     string `json:"timezone"`
@@ -18,7 +18,7 @@ type JSONSystemSettingGlobal struct {
 	AdminSSHPort string `json:"admin-ssh-port"`
 }
 
-//JSONCreateSystemSettingGlobalOutput contains ... need to comment completely
+// JSONCreateSystemSettingGlobalOutput contains the output results for Create API function
 type JSONCreateSystemSettingGlobalOutput struct {
 	Vdom       string  `json:"vdom"`
 	Mkey       string  `json:"mkey"`
@@ -26,8 +26,8 @@ type JSONCreateSystemSettingGlobalOutput struct {
 	HTTPStatus float64 `json:"http_status"`
 }
 
-//JSONUpdateSystemSettingGlobalOutput contains ... need to comment completely
-//Attention: The RESTful API changed the Mkey type from float64 in CREATE to string in UPDATE!
+// JSONUpdateSystemSettingGlobalOutput contains the output results for Update API function
+// Attention: Considering scalability, the previous structure and the current structure may change differently
 type JSONUpdateSystemSettingGlobalOutput struct {
 	Vdom       string  `json:"vdom"`
 	Mkey       string  `json:"mkey"`
@@ -35,53 +35,56 @@ type JSONUpdateSystemSettingGlobalOutput struct {
 	HTTPStatus float64 `json:"http_status"`
 }
 
-//CreateSystemSettingGlobal will send ... need to comment completely
+// CreateSystemSettingGlobal API operation for FortiOS
 func (c *FortiSDKClient) CreateSystemSettingGlobal(params *JSONSystemSettingGlobal) (output *JSONCreateSystemSettingGlobalOutput, err error) {
-	HTTPMethod := "POST"
-	path := "/api/v2/cmdb/system/global"
-	output = &JSONCreateSystemSettingGlobalOutput{}
-	locJSON, err := json.Marshal(params)
-	if err != nil {
-		log.Fatal(err)
-		return
-	}
+	// HTTPMethod := "POST"
+	// path := "/api/v2/cmdb/system/global"
+	// output = &JSONCreateSystemSettingGlobalOutput{}
+	// locJSON, err := json.Marshal(params)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// 	return
+	// }
 
-	bytes := bytes.NewBuffer(locJSON)
-	req := c.NewRequest(HTTPMethod, path, nil, bytes)
-	err = req.Send()
+	// bytes := bytes.NewBuffer(locJSON)
+	// req := c.NewRequest(HTTPMethod, path, nil, bytes)
+	// err = req.Send()
 
-	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	// body, err := ioutil.ReadAll(req.HTTPResponse.Body)
 
-	var result map[string]interface{}
-	json.Unmarshal([]byte(string(body)), &result)
+	// var result map[string]interface{}
+	// json.Unmarshal([]byte(string(body)), &result)
 
-	req.HTTPResponse.Body.Close()
+	// req.HTTPResponse.Body.Close()
 
-	if result != nil {
-		if result["vdom"] != nil {
-			output.Vdom = result["vdom"].(string)
-		}
-		if result["mkey"] != nil {
-			output.Mkey = result["mkey"].(string)
-		}
-		if result["status"] != nil {
-			output.Status = result["status"].(string)
-		} else {
-			err = fmt.Errorf("cannot get the right response")
-			return
-		}
-		if result["http_status"] != nil {
-			output.HTTPStatus = result["http_status"].(float64)
-		}
-	} else {
-		err = fmt.Errorf("cannot get the right response")
-		return
-	}
+	// if result != nil {
+	// 	if result["vdom"] != nil {
+	// 		output.Vdom = result["vdom"].(string)
+	// 	}
+	// 	if result["mkey"] != nil {
+	// 		output.Mkey = result["mkey"].(string)
+	// 	}
+	// 	if result["status"] != nil {
+	// 		output.Status = result["status"].(string)
+	// 	} else {
+	// 		err = fmt.Errorf("cannot get the right response")
+	// 		return
+	// 	}
+	// 	if result["http_status"] != nil {
+	// 		output.HTTPStatus = result["http_status"].(float64)
+	// 	}
+	// } else {
+	// 	err = fmt.Errorf("cannot get the right response")
+	// 	return
+	// }
 
 	return
 }
 
-//UpdateSystemSettingGlobal will send ... need to comment completely
+// UpdateSystemSettingGlobal API operation for FortiOS configures global settings that affect FortiGate systems and configurations.
+// Returns the execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - global chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) UpdateSystemSettingGlobal(params *JSONSystemSettingGlobal, mkey string) (output *JSONUpdateSystemSettingGlobalOutput, err error) {
 	HTTPMethod := "PUT"
 	path := "/api/v2/cmdb/system/global"
@@ -98,7 +101,7 @@ func (c *FortiSDKClient) UpdateSystemSettingGlobal(params *JSONSystemSettingGlob
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios response: %s", string(body))
+	log.Printf("FOS-fortios response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -129,37 +132,40 @@ func (c *FortiSDKClient) UpdateSystemSettingGlobal(params *JSONSystemSettingGlob
 	return
 }
 
-//DeleteSystemSettingGlobal will send ... need to comment completely
+// DeleteSystemSettingGlobal API operation for FortiOS
 func (c *FortiSDKClient) DeleteSystemSettingGlobal(mkey string) (err error) {
-	HTTPMethod := "DELETE"
-	path := "/api/v2/cmdb/system/global"
-	// path += "/" + mkey
+	// HTTPMethod := "DELETE"
+	// path := "/api/v2/cmdb/system/global"
+	// // path += "/" + mkey
 
-	req := c.NewRequest(HTTPMethod, path, nil, nil)
-	err = req.Send()
+	// req := c.NewRequest(HTTPMethod, path, nil, nil)
+	// err = req.Send()
 
-	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios response: %s", string(body))
+	// body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	// log.Printf("FOS-fortios response: %s", string(body))
 
-	var result map[string]interface{}
-	json.Unmarshal([]byte(string(body)), &result)
+	// var result map[string]interface{}
+	// json.Unmarshal([]byte(string(body)), &result)
 
-	req.HTTPResponse.Body.Close()
+	// req.HTTPResponse.Body.Close()
 
-	if result != nil {
-		if result["status"] == nil {
-			err = fmt.Errorf("cannot get the right response")
-			return
-		}
-	} else {
-		err = fmt.Errorf("cannot get the right response")
-		return
-	}
+	// if result != nil {
+	// 	if result["status"] == nil {
+	// 		err = fmt.Errorf("cannot get the right response")
+	// 		return
+	// 	}
+	// } else {
+	// 	err = fmt.Errorf("cannot get the right response")
+	// 	return
+	// }
 
 	return
 }
 
-//ReadSystemSettingGlobal will send ... need to comment completely
+// ReadSystemSettingGlobal API operation for FortiOS gets the global settings that affect FortiGate systems and configurations.
+// Returns the requested global settings value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - global chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) ReadSystemSettingGlobal(mkey string) (output *JSONSystemSettingGlobal, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/system/global"
@@ -169,7 +175,7 @@ func (c *FortiSDKClient) ReadSystemSettingGlobal(mkey string) (output *JSONSyste
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios reading response: %s", string(body))
+	log.Printf("FOS-fortios reading response: %s", string(body))
 
 	output = &JSONSystemSettingGlobal{}
 	var result map[string]interface{}

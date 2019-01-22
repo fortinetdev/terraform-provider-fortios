@@ -9,7 +9,7 @@ import (
 	// "strconv"
 )
 
-//JSONFirewallObjectServiceCommon contains ... need to comment completely
+// JSONFirewallObjectServiceCommon contains the General parameters for Create and Update API function
 type JSONFirewallObjectServiceCommon struct {
 	Name     string `json:"name"`
 	Category string `json:"category"`
@@ -17,24 +17,24 @@ type JSONFirewallObjectServiceCommon struct {
 	Comment  string `json:"comment"`
 }
 
-//JSONFirewallObjectServiceFqdn contains ... need to comment completely
+// JSONFirewallObjectServiceFqdn contains the FQDN parameters for Create and Update API function
 type JSONFirewallObjectServiceFqdn struct {
 	Fqdn string `json:"fqdn"`
 }
 
-//JSONFirewallObjectServiceIprange contains ... need to comment completely
+// JSONFirewallObjectServiceIprange contains the IP Range parameters for Create and Update API function
 type JSONFirewallObjectServiceIprange struct {
 	Iprange string `json:"iprange"`
 }
 
-//JSONFirewallObjectService contains ... need to comment completely
+// JSONFirewallObjectService contains the parameters for Create and Update API function
 type JSONFirewallObjectService struct {
 	*JSONFirewallObjectServiceCommon
 	*JSONFirewallObjectServiceFqdn
 	*JSONFirewallObjectServiceIprange
 }
 
-//JSONCreateFirewallObjectServiceOutput contains ... need to comment completely
+// JSONCreateFirewallObjectServiceOutput contains the output results for Create API function
 type JSONCreateFirewallObjectServiceOutput struct {
 	Vdom       string  `json:"vdom"`
 	Mkey       string  `json:"mkey"`
@@ -42,8 +42,8 @@ type JSONCreateFirewallObjectServiceOutput struct {
 	HTTPStatus float64 `json:"http_status"`
 }
 
-//JSONUpdateFirewallObjectServiceOutput contains ... need to comment completely
-//Attention: The RESTful API changed the Mkey type from float64 in CREATE to string in UPDATE!
+// JSONUpdateFirewallObjectServiceOutput contains the output results for Update API function
+// Attention: Considering scalability, the previous structure and the current structure may change differently
 type JSONUpdateFirewallObjectServiceOutput struct {
 	Vdom       string  `json:"vdom"`
 	Mkey       string  `json:"mkey"`
@@ -51,7 +51,10 @@ type JSONUpdateFirewallObjectServiceOutput struct {
 	HTTPStatus float64 `json:"http_status"`
 }
 
-//CreateFirewallObjectService will send ... need to comment completely
+// CreateFirewallObjectService API operation for FortiOS creates a new firewall service.
+// Returns the index value of the firewall service and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the firewal - service chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) CreateFirewallObjectService(params *JSONFirewallObjectService) (output *JSONCreateFirewallObjectServiceOutput, err error) {
 	HTTPMethod := "POST"
 	path := "/api/v2/cmdb/firewall.service/custom"
@@ -97,7 +100,10 @@ func (c *FortiSDKClient) CreateFirewallObjectService(params *JSONFirewallObjectS
 	return
 }
 
-//UpdateFirewallObjectService will send ... need to comment completely
+// UpdateFirewallObjectService API operation for FortiOS updates the specified firewall service.
+// Returns the index value of the firewall service and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the firewal - service chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) UpdateFirewallObjectService(params *JSONFirewallObjectService, mkey string) (output *JSONUpdateFirewallObjectServiceOutput, err error) {
 	HTTPMethod := "PUT"
 	path := "/api/v2/cmdb/firewall.service/custom"
@@ -114,7 +120,7 @@ func (c *FortiSDKClient) UpdateFirewallObjectService(params *JSONFirewallObjectS
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios response: %s", string(body))
+	log.Printf("FOS-fortios response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -145,7 +151,9 @@ func (c *FortiSDKClient) UpdateFirewallObjectService(params *JSONFirewallObjectS
 	return
 }
 
-//DeleteFirewallObjectService will send ... need to comment completely
+// DeleteFirewallObjectService API operation for FortiOS deletes the specified firewall service.
+// Returns error for service API and SDK errors.
+// See the firewal - service chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) DeleteFirewallObjectService(mkey string) (err error) {
 	HTTPMethod := "DELETE"
 	path := "/api/v2/cmdb/firewall.service/custom"
@@ -155,7 +163,7 @@ func (c *FortiSDKClient) DeleteFirewallObjectService(mkey string) (err error) {
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios response: %s", string(body))
+	log.Printf("FOS-fortios response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -175,7 +183,11 @@ func (c *FortiSDKClient) DeleteFirewallObjectService(mkey string) (err error) {
 	return
 }
 
-//ReadFirewallObjectService will send ... need to comment completely
+// ReadFirewallObjectService API operation for FortiOS gets the firewall service
+// with the specified index value.
+// Returns the requested firewall service value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the firewal - service chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) ReadFirewallObjectService(mkey string) (output *JSONFirewallObjectService, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/firewall.service/custom"
@@ -185,7 +197,7 @@ func (c *FortiSDKClient) ReadFirewallObjectService(mkey string) (output *JSONFir
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	log.Printf("shengh.............fortios reading response: %s", string(body))
+	log.Printf("FOS-fortios reading response: %s", string(body))
 
 	j1 := JSONFirewallObjectServiceCommon{}
 	j2 := JSONFirewallObjectServiceFqdn{}
