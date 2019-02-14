@@ -77,6 +77,10 @@ func (c *FortiSDKClient) CreateSystemAdminProfiles(params *JSONSystemAdminProfil
 			output.Mkey = result["mkey"].(string)
 		}
 		if result["status"] != nil {
+			if result["status"] != "success" {
+				err = fmt.Errorf("cannot get the right response")
+				return
+			}
 			output.Status = result["status"].(string)
 		} else {
 			err = fmt.Errorf("cannot get the right response")
@@ -128,6 +132,10 @@ func (c *FortiSDKClient) UpdateSystemAdminProfiles(params *JSONSystemAdminProfil
 			output.Mkey = result["mkey"].(string)
 		}
 		if result["status"] != nil {
+			if result["status"] != "success" {
+				err = fmt.Errorf("cannot get the right response")
+				return
+			}
 			output.Status = result["status"].(string)
 		} else {
 			err = fmt.Errorf("cannot get the right response")
@@ -168,6 +176,12 @@ func (c *FortiSDKClient) DeleteSystemAdminProfiles(mkey string) (err error) {
 			err = fmt.Errorf("cannot get the right response")
 			return
 		}
+
+		if result["status"] != "success" {
+			err = fmt.Errorf("cannot get the right response")
+			return
+		}
+
 	} else {
 		err = fmt.Errorf("cannot get the right response")
 		return
@@ -200,6 +214,11 @@ func (c *FortiSDKClient) ReadSystemAdminProfiles(mkey string) (output *JSONSyste
 
 	if result != nil {
 		if result["status"] == nil {
+			err = fmt.Errorf("cannot get the right response")
+			return
+		}
+		
+		if result["status"] != "success" {
 			err = fmt.Errorf("cannot get the right response")
 			return
 		}

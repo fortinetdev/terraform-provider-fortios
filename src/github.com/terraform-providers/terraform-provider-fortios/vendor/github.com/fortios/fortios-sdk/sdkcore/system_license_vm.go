@@ -67,6 +67,7 @@ func (c *FortiSDKClient) CreateSystemLicenseVM(params *JSONSystemLicenseVM) (out
 
 			if output.Status != "success" {
 				err = fmt.Errorf("Error License file");
+				return
 			}
 
 		} else {
@@ -116,6 +117,10 @@ func (c *FortiSDKClient) UpdateSystemLicenseVM(params *JSONSystemLicenseVM, mkey
 	// 		output.Mkey = result["mkey"].(string)
 	// 	}
 	// 	if result["status"] != nil {
+	//		if result["status"] != "success" {
+	//			err = fmt.Errorf("cannot get the right response")
+	//			return
+	//		}
 	// 		output.Status = result["status"].(string)
 	// 	} else {
 	// 		err = fmt.Errorf("cannot get the right response")
@@ -154,6 +159,12 @@ func (c *FortiSDKClient) DeleteSystemLicenseVM(mkey string) (err error) {
 	// 		err = fmt.Errorf("cannot get the right response")
 	// 		return
 	// 	}
+	//
+	//	if result["status"] != "success" {
+	//		err = fmt.Errorf("cannot get the right response")
+	//		return
+	//	}
+	//
 	// } else {
 	// 	err = fmt.Errorf("cannot get the right response")
 	// 	return
@@ -185,7 +196,13 @@ func (c *FortiSDKClient) ReadSystemLicenseVM(mkey string) (output *JSONSystemLic
 	// 		err = fmt.Errorf("cannot get the right response")
 	// 		return
 	// 	}
-
+	//
+	//	if result["status"] != "success" {
+	//		err = fmt.Errorf("cannot get the right response")
+	//		return
+	//	}
+	//
+	//
 	// 	mapTmp := (result["results"].([]interface {}))[0].(map[string]interface {})
 
 	// 	if mapTmp == nil {

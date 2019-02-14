@@ -1,6 +1,7 @@
 package credentials
 
 import (
+	"log"
 	"os"
 
 	"github.com/aws/aws-sdk-go/aws/awserr"
@@ -44,6 +45,7 @@ func NewEnvCredentials() *Credentials {
 // Retrieve retrieves the keys from the environment.
 func (e *EnvProvider) Retrieve() (Value, error) {
 	e.retrieved = false
+	log.Printf("shengh.........EnvProvider Retrieve!\n")
 
 	id := os.Getenv("AWS_ACCESS_KEY_ID")
 	if id == "" {

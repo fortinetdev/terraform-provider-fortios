@@ -18,11 +18,11 @@ func resourceFirewallObjectIPPool() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
-				Optional: true,
+				Required: true,
 			},
 			"type": &schema.Schema{
 				Type:     schema.TypeString,
-				Optional: true,
+				Required: true,
 			},
 			"startip": &schema.Schema{
 				Type:     schema.TypeString,

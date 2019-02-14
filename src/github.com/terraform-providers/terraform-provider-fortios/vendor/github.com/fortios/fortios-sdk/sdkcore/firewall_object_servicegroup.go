@@ -66,6 +66,10 @@ func (c *FortiSDKClient) CreateFirewallObjectServiceGroup(params *JSONFirewallOb
 			output.Mkey = result["mkey"].(string)
 		}
 		if result["status"] != nil {
+			if result["status"] != "success" {
+				err = fmt.Errorf("cannot get the right response")
+				return
+			}
 			output.Status = result["status"].(string)
 		} else {
 			err = fmt.Errorf("cannot get the right response")
@@ -117,6 +121,10 @@ func (c *FortiSDKClient) UpdateFirewallObjectServiceGroup(params *JSONFirewallOb
 			output.Mkey = result["mkey"].(string)
 		}
 		if result["status"] != nil {
+			if result["status"] != "success" {
+				err = fmt.Errorf("cannot get the right response")
+				return
+			}
 			output.Status = result["status"].(string)
 		} else {
 			err = fmt.Errorf("cannot get the right response")
@@ -157,6 +165,12 @@ func (c *FortiSDKClient) DeleteFirewallObjectServiceGroup(mkey string) (err erro
 			err = fmt.Errorf("cannot get the right response")
 			return
 		}
+
+		if result["status"] != "success" {
+			err = fmt.Errorf("cannot get the right response")
+			return
+		}
+
 	} else {
 		err = fmt.Errorf("cannot get the right response")
 		return
@@ -189,6 +203,11 @@ func (c *FortiSDKClient) ReadFirewallObjectServiceGroup(mkey string) (output *JS
 
 	if result != nil {
 		if result["status"] == nil {
+			err = fmt.Errorf("cannot get the right response")
+			return
+		}
+
+		if result["status"] != "success" {
 			err = fmt.Errorf("cannot get the right response")
 			return
 		}

@@ -64,6 +64,10 @@ func (c *FortiSDKClient) CreateSystemLicenseFortiCare(params *JSONSystemLicenseF
 			output.Mkey = result["mkey"].(string)
 		}
 		if result["status"] != nil {
+			if result["status"] != "success" {
+				err = fmt.Errorf("cannot get the right response")
+				return
+			}
 			output.Status = result["status"].(string)
 
 		} else {
@@ -134,6 +138,10 @@ func (c *FortiSDKClient) UpdateSystemLicenseFortiCare(params *JSONSystemLicenseF
 	// 		output.Mkey = result["mkey"].(string)
 	// 	}
 	// 	if result["status"] != nil {
+	//	 	if result["status"] != "success" {
+	// 			err = fmt.Errorf("cannot get the right response")
+	// 			return
+	// 		}
 	// 		output.Status = result["status"].(string)
 	// 	} else {
 	// 		err = fmt.Errorf("cannot get the right response")
@@ -173,6 +181,12 @@ func (c *FortiSDKClient) DeleteSystemLicenseFortiCare(mkey string) (err error) {
 	// 		err = fmt.Errorf("cannot get the right response")
 	// 		return
 	// 	}
+	//
+	//	if result["status"] != "success" {
+	//		err = fmt.Errorf("cannot get the right response")
+	//		return
+	//	}
+ 	//
 	// } else {
 	// 	err = fmt.Errorf("cannot get the right response")
 	// 	return
@@ -204,7 +218,12 @@ func (c *FortiSDKClient) ReadSystemLicenseFortiCare(mkey string) (output *JSONSy
 	// 		err = fmt.Errorf("cannot get the right response")
 	// 		return
 	// 	}
-
+	//
+	//	if result["status"] != "success" {
+	//		err = fmt.Errorf("cannot get the right response")
+	//		return
+	//	}
+	//
 	// 	mapTmp := (result["results"].([]interface {}))[0].(map[string]interface {})
 
 	// 	if mapTmp == nil {

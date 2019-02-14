@@ -81,6 +81,10 @@ func (c *FortiSDKClient) CreateFirewallObjectVip(params *JSONFirewallObjectVip) 
 			return
 		}
 		if result["status"] != nil {
+			if result["status"] != "success" {
+				err = fmt.Errorf("cannot get the right response")
+				return
+			}
 			output.Status = result["status"].(string)
 		} else {
 			err = fmt.Errorf("cannot get the right response")
@@ -132,6 +136,10 @@ func (c *FortiSDKClient) UpdateFirewallObjectVip(params *JSONFirewallObjectVip, 
 			output.Mkey = result["mkey"].(string)
 		}
 		if result["status"] != nil {
+			if result["status"] != "success" {
+				err = fmt.Errorf("cannot get the right response")
+				return
+			}
 			output.Status = result["status"].(string)
 		} else {
 			err = fmt.Errorf("cannot get the right response")
@@ -172,6 +180,12 @@ func (c *FortiSDKClient) DeleteFirewallObjectVip(mkey string) (err error) {
 			err = fmt.Errorf("cannot get the right response")
 			return
 		}
+
+		if result["status"] != "success" {
+			err = fmt.Errorf("cannot get the right response")
+			return
+		}
+
 	} else {
 		err = fmt.Errorf("cannot get the right response")
 		return
@@ -204,6 +218,11 @@ func (c *FortiSDKClient) ReadFirewallObjectVip(mkey string) (output *JSONFirewal
 
 	if result != nil {
 		if result["status"] == nil {
+			err = fmt.Errorf("cannot get the right response")
+			return
+		}
+		
+		if result["status"] != "success" {
 			err = fmt.Errorf("cannot get the right response")
 			return
 		}

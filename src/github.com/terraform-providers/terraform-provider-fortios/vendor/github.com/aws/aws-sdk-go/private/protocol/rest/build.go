@@ -4,7 +4,6 @@ package rest
 import (
 	"bytes"
 	"encoding/base64"
-	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
@@ -14,14 +13,13 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"log"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/aws/request"
+	"github.com/aws/aws-sdk-go/private/protocol"
 )
-
-// RFC822 returns an RFC822 formatted timestamp for AWS protocols
-const RFC822 = "Mon, 2 Jan 2006 15:04:05 GMT"
 
 // Whether the byte value can be sent without escaping in AWS URLs
 var noEscape [256]bool
@@ -135,10 +133,13 @@ func buildBody(r *request.Request, v reflect.Value) {
 					switch reader := payload.Interface().(type) {
 					case io.ReadSeeker:
 						r.SetReaderBody(reader)
+						log.Printf("shengh.........SetStringBody1\n")
 					case []byte:
 						r.SetBufferBody(reader)
+						log.Printf("shengh.........SetStringBody2\n")
 					case string:
 						r.SetStringBody(reader)
+						log.Printf("shengh.........SetStringBody3\n")
 					default:
 						r.Error = awserr.New("SerializationError",
 							"failed to encode REST request",
@@ -252,13 +253,12 @@ func EscapePath(path string, encodeSep bool) string {
 	return buf.String()
 }
 
-func convertType(v reflect.Value, tag reflect.StructTag) (string, error) {
+func convertType(v reflect.Value, tag reflect.StructTag) (str string, err error) {
 	v = reflect.Indirect(v)
 	if !v.IsValid() {
 		return "", errValueNotSet
 	}
 
-	var str string
 	switch value := v.Interface().(type) {
 	case string:
 		str = value
@@ -271,19 +271,28 @@ func convertType(v reflect.Value, tag reflect.StructTag) (string, error) {
 	case float64:
 		str = strconv.FormatFloat(value, 'f', -1, 64)
 	case time.Time:
-		str = value.UTC().Format(RFC822)
-	case aws.JSONValue:
-		b, err := json.Marshal(value)
-		if err != nil {
-			return "", err
+		format := tag.Get("timestampFormat")
+		if len(format) == 0 {
+			format = protocol.RFC822TimeFormatName
+			if tag.Get("location") == "querystring" {
+				format = protocol.ISO8601TimeFormatName
+			}
 		}
+		str = protocol.FormatTime(format, value)
+	case aws.JSONValue:
+		if len(value) == 0 {
+			return "", errValueNotSet
+		}
+		escaping := protocol.NoEscape
 		if tag.Get("location") == "header" {
-			str = base64.StdEncoding.EncodeToString(b)
-		} else {
-			str = string(b)
+			escaping = protocol.Base64Escape
+		}
+		str, err = protocol.EncodeJSONValue(value, escaping)
+		if err != nil {
+			return "", fmt.Errorf("unable to encode JSONValue, %v", err)
 		}
 	default:
-		err := fmt.Errorf("Unsupported value for param %v (%s)", v.Interface(), v.Type())
+		err := fmt.Errorf("unsupported value for param %v (%s)", v.Interface(), v.Type())
 		return "", err
 	}
 	return str, nil

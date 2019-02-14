@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
 
@@ -15,6 +16,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/corehandlers"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/credentials/stscreds"
+	"github.com/aws/aws-sdk-go/aws/csm"
 	"github.com/aws/aws-sdk-go/aws/defaults"
 	"github.com/aws/aws-sdk-go/aws/endpoints"
 	"github.com/aws/aws-sdk-go/aws/request"
@@ -26,7 +28,7 @@ import (
 // Sessions are safe to create service clients concurrently, but it is not safe
 // to mutate the Session concurrently.
 //
-// The Session satisfies the service client's client.ClientConfigProvider.
+// The Session satisfies the service client's client.ConfigProvider.
 type Session struct {
 	Config   *aws.Config
 	Handlers request.Handlers
@@ -53,12 +55,25 @@ type Session struct {
 // Deprecated: Use NewSession functions to create sessions instead. NewSession
 // has the same functionality as New except an error can be returned when the
 // func is called instead of waiting to receive an error until a request is made.
-func New(cfgs ...*aws.Config) *Session {
+func New(cfgs ...*aws.Config) *Session { //169.254.169.254/latest 系列用，可以认为没有用
 	// load initial config from environment
+	log.Printf("shengh.............session.goCDF 1")
+
+	log.Printf("shengh.........session.go New11\n")
+
+	log.Printf("frank 004.........New!\n")
+
 	envCfg := loadEnvConfig()
 
 	if envCfg.EnableSharedConfig {
-		s, err := newSession(Options{}, envCfg, cfgs...)
+		var cfg aws.Config
+		cfg.MergeIn(cfgs...)
+
+		log.Printf("shengh.........session.go NewSessionWithOptions A\n")
+		s, err := NewSessionWithOptions(Options{
+			Config:            cfg,
+			SharedConfigState: SharedConfigEnable,
+		})
 		if err != nil {
 			// Old session.New expected all errors to be discovered when
 			// a request is made, and would report the errors then. This
@@ -70,16 +85,25 @@ func New(cfgs ...*aws.Config) *Session {
 			// Session creation failed, need to report the error and prevent
 			// any requests from succeeding.
 			s = &Session{Config: defaults.Config()}
+			log.Printf("shengh.........session.go New12\n")
 			s.Config.MergeIn(cfgs...)
 			s.Config.Logger.Log("ERROR:", msg, "Error:", err)
 			s.Handlers.Validate.PushBack(func(r *request.Request) {
 				r.Error = err
 			})
 		}
+
 		return s
 	}
 
-	return deprecatedNewSession(cfgs...)
+	log.Printf("shengh.............session.goCDF 2")
+	s := deprecatedNewSession(cfgs...)
+	log.Printf("shengh.........session.go New13\n")
+	if envCfg.CSMEnabled {
+		enableCSM(&s.Handlers, envCfg.CSMClientID, envCfg.CSMPort, s.Config.Logger)
+	}
+
+	return s
 }
 
 // NewSession returns a new Session created from SDK defaults, config files,
@@ -97,10 +121,12 @@ func New(cfgs ...*aws.Config) *Session {
 // See the NewSessionWithOptions func for information on how to override or
 // control through code how the Session will be created. Such as specifying the
 // config profile, and controlling if shared config is enabled or not.
-func NewSession(cfgs ...*aws.Config) (*Session, error) {
+func NewSession(cfgs ...*aws.Config) (*Session, error) { //没到这里
+	log.Printf("shengh.............session.goCDF 3")
 	opts := Options{}
 	opts.Config.MergeIn(cfgs...)
 
+	log.Printf("shengh.........session.go NewSessionWithOptions B\n")
 	return NewSessionWithOptions(opts)
 }
 
@@ -225,10 +251,12 @@ type Options struct {
 //         SharedConfigState: session.SharedConfigEnable,
 //     }))
 func NewSessionWithOptions(opts Options) (*Session, error) {
+	log.Printf("shengh.............session.goCDF 4")
 	var envCfg envConfig
 	if opts.SharedConfigState == SharedConfigEnable {
 		envCfg = loadSharedEnvConfig()
 	} else {
+		log.Printf("shengh.............session.goCDF kk loadEnvConfig")
 		envCfg = loadEnvConfig()
 	}
 
@@ -243,13 +271,6 @@ func NewSessionWithOptions(opts Options) (*Session, error) {
 		envCfg.EnableSharedConfig = true
 	}
 
-	if len(envCfg.SharedCredentialsFile) == 0 {
-		envCfg.SharedCredentialsFile = defaults.SharedCredentialsFilename()
-	}
-	if len(envCfg.SharedConfigFile) == 0 {
-		envCfg.SharedConfigFile = defaults.SharedConfigFilename()
-	}
-
 	// Only use AWS_CA_BUNDLE if session option is not provided.
 	if len(envCfg.CustomCABundle) != 0 && opts.CustomCABundle == nil {
 		f, err := os.Open(envCfg.CustomCABundle)
@@ -260,6 +281,10 @@ func NewSessionWithOptions(opts Options) (*Session, error) {
 		defer f.Close()
 		opts.CustomCABundle = f
 	}
+
+	log.Printf("shengh.........session.go NewSessionWithOptions zz\n")
+
+	log.Printf("shengh.............session.goCDF 5")
 
 	return newSession(opts, envCfg, &opts.Config)
 }
@@ -280,6 +305,9 @@ func Must(sess *Session, err error) *Session {
 }
 
 func deprecatedNewSession(cfgs ...*aws.Config) *Session {
+
+	log.Printf("shengh.............session.goCDF 6")
+	log.Printf("shengh.........session.go deprecatedNewSession\n")
 	cfg := defaults.Config()
 	handlers := defaults.Handlers()
 
@@ -289,6 +317,7 @@ func deprecatedNewSession(cfgs ...*aws.Config) *Session {
 	if cfg.EndpointResolver == nil {
 		// An endpoint resolver is required for a session to be able to provide
 		// endpoints for service client configurations.
+		log.Printf("shengh.........DefaultResolver3\n")
 		cfg.EndpointResolver = endpoints.DefaultResolver()
 	}
 	cfg.Credentials = defaults.CredChain(cfg, handlers)
@@ -301,12 +330,30 @@ func deprecatedNewSession(cfgs ...*aws.Config) *Session {
 		Handlers: handlers,
 	}
 
+	log.Printf("shengh.............session.goCDF 7")
 	initHandlers(s)
-
 	return s
 }
 
+func enableCSM(handlers *request.Handlers, clientID string, port string, logger aws.Logger) {
+	log.Printf("shengh.............session.goCDF 8")
+	logger.Log("Enabling CSM")
+	if len(port) == 0 {
+		port = csm.DefaultPort
+	}
+
+	r, err := csm.Start(clientID, "127.0.0.1:"+port)
+	if err != nil {
+		return
+	}
+
+	log.Printf("shengh.............session.goCDF 9")
+	r.InjectHandlers(handlers)
+}
+
 func newSession(opts Options, envCfg envConfig, cfgs ...*aws.Config) (*Session, error) {
+	log.Printf("shengh.............session.goCDF 10")
+	log.Printf("shengh.........session.go newSession\n")
 	cfg := defaults.Config()
 	handlers := defaults.Handlers()
 
@@ -330,6 +377,7 @@ func newSession(opts Options, envCfg envConfig, cfgs ...*aws.Config) (*Session, 
 	}
 
 	// Load additional config from file(s)
+	log.Printf("shengh.........loadSharedConfig  ", envCfg.Profile, cfgFiles)
 	sharedCfg, err := loadSharedConfig(envCfg.Profile, cfgFiles)
 	if err != nil {
 		return nil, err
@@ -345,6 +393,9 @@ func newSession(opts Options, envCfg envConfig, cfgs ...*aws.Config) (*Session, 
 	}
 
 	initHandlers(s)
+	if envCfg.CSMEnabled {
+		enableCSM(&s.Handlers, envCfg.CSMClientID, envCfg.CSMPort, s.Config.Logger)
+	}
 
 	// Setup HTTP client with custom cert bundle if enabled
 	if opts.CustomCABundle != nil {
@@ -352,12 +403,14 @@ func newSession(opts Options, envCfg envConfig, cfgs ...*aws.Config) (*Session, 
 			return nil, err
 		}
 	}
+	log.Printf("shengh.............session.goCDF 11")
 
 	return s, nil
 }
 
 func loadCustomCABundle(s *Session, bundle io.Reader) error {
 	var t *http.Transport
+	log.Printf("shengh.............session.goCDF 12")
 	switch v := s.Config.HTTPClient.Transport.(type) {
 	case *http.Transport:
 		t = v
@@ -386,6 +439,7 @@ func loadCustomCABundle(s *Session, bundle io.Reader) error {
 }
 
 func loadCertPool(r io.Reader) (*x509.CertPool, error) {
+	log.Printf("shengh.............session.goCDF 13")
 	b, err := ioutil.ReadAll(r)
 	if err != nil {
 		return nil, awserr.New("LoadCustomCABundleError",
@@ -404,32 +458,42 @@ func loadCertPool(r io.Reader) (*x509.CertPool, error) {
 func mergeConfigSrcs(cfg, userCfg *aws.Config, envCfg envConfig, sharedCfg sharedConfig, handlers request.Handlers, sessOpts Options) error {
 	// Merge in user provided configuration
 	cfg.MergeIn(userCfg)
+	log.Printf("shengh.............session.goCDF 14")
 
 	// Region if not already set by user
 	if len(aws.StringValue(cfg.Region)) == 0 {
 		if len(envCfg.Region) > 0 {
 			cfg.WithRegion(envCfg.Region)
+			log.Printf("shenghHistory.........mergeConfigSrcs0.1\n")
 		} else if envCfg.EnableSharedConfig && len(sharedCfg.Region) > 0 {
 			cfg.WithRegion(sharedCfg.Region)
+			log.Printf("shenghHistory.........mergeConfigSrcs0.2\n")
 		}
 	}
 
+	log.Printf("shenghHistory.........mergeConfigSrcs1\n")
+
 	// Configure credentials if not already set
 	if cfg.Credentials == credentials.AnonymousCredentials && userCfg.Credentials == nil {
-		if len(envCfg.Creds.AccessKeyID) > 0 {
+		if len(envCfg.Creds.AccessKeyID) > 0 {//没到这里
 			cfg.Credentials = credentials.NewStaticCredentialsFromCreds(
-				envCfg.Creds,
+				envCfg.Creds,  //没到这里
 			)
+			log.Printf("shenghHistory.........mergeConfigSrcs2\n")  
 		} else if envCfg.EnableSharedConfig && len(sharedCfg.AssumeRole.RoleARN) > 0 && sharedCfg.AssumeRoleSource != nil {
 			cfgCp := *cfg
 			cfgCp.Credentials = credentials.NewStaticCredentialsFromCreds(
-				sharedCfg.AssumeRoleSource.Creds,
+				sharedCfg.AssumeRoleSource.Creds,  //没到这里
 			)
+
 			if len(sharedCfg.AssumeRole.MFASerial) > 0 && sessOpts.AssumeRoleTokenProvider == nil {
 				// AssumeRole Token provider is required if doing Assume Role
 				// with MFA.
+				log.Printf("shenghHistory.........mergeConfigSrcs3\n")
 				return AssumeRoleTokenProviderNotSetError{}
 			}
+			log.Printf("shenghHistory.........mergeConfigSrcs4\n")
+
 			cfg.Credentials = stscreds.NewCredentials(
 				&Session{
 					Config:   &cfgCp,
@@ -451,14 +515,16 @@ func mergeConfigSrcs(cfg, userCfg *aws.Config, envCfg envConfig, sharedCfg share
 					}
 				},
 			)
-		} else if len(sharedCfg.Creds.AccessKeyID) > 0 {
+		} else if len(sharedCfg.Creds.AccessKeyID) > 0 {//没到这里
+			log.Printf("shenghHistory.........mergeConfigSrcs5\n")
 			cfg.Credentials = credentials.NewStaticCredentialsFromCreds(
-				sharedCfg.Creds,
+				sharedCfg.Creds, //没到这里
 			)
 		} else {
 			// Fallback to default credentials provider, include mock errors
 			// for the credential chain so user can identify why credentials
 			// failed to be retrieved.
+			log.Printf("shenghHistory.........mergeConfigSrcs6\n") //没到这里
 			cfg.Credentials = credentials.NewCredentials(&credentials.ChainProvider{
 				VerboseErrors: aws.BoolValue(cfg.CredentialsChainVerboseErrors),
 				Providers: []credentials.Provider{
@@ -469,6 +535,7 @@ func mergeConfigSrcs(cfg, userCfg *aws.Config, envCfg envConfig, sharedCfg share
 			})
 		}
 	}
+	log.Printf("shengh.............session.goCDF 15")
 
 	return nil
 }
@@ -512,9 +579,11 @@ func (c credProviderError) IsExpired() bool {
 }
 
 func initHandlers(s *Session) {
+	log.Printf("shengh.............session.goCDF 16")
 	// Add the Validate parameter handler if it is not disabled.
 	s.Handlers.Validate.Remove(corehandlers.ValidateParametersHandler)
 	if !aws.BoolValue(s.Config.DisableParamValidation) {
+		log.Printf("shenghHistory.........initHandlers\n")
 		s.Handlers.Validate.PushBackNamed(corehandlers.ValidateParametersHandler)
 	}
 }
@@ -526,6 +595,7 @@ func initHandlers(s *Session) {
 //     // Create a copy of the current Session, configured for the us-west-2 region.
 //     sess.Copy(&aws.Config{Region: aws.String("us-west-2")})
 func (s *Session) Copy(cfgs ...*aws.Config) *Session {
+	log.Printf("shengh.............session.goCDF 17")
 	newSession := &Session{
 		Config:   s.Config.Copy(cfgs...),
 		Handlers: s.Handlers.Copy(),
@@ -539,17 +609,22 @@ func (s *Session) Copy(cfgs ...*aws.Config) *Session {
 // ClientConfig satisfies the client.ConfigProvider interface and is used to
 // configure the service client instances. Passing the Session to the service
 // client's constructor (New) will use this method to configure the client.
-func (s *Session) ClientConfig(serviceName string, cfgs ...*aws.Config) client.Config {
+func (s *Session) ClientConfig(serviceName string, cfgs ...*aws.Config) client.Config { //shengh 接口实现
 	// Backwards compatibility, the error will be eaten if user calls ClientConfig
 	// directly. All SDK services will use ClientconfigWithError.
+	log.Printf("shengh.............session.goCDF 18")
+
+	log.Printf("shengh.....................ClientConfig zz")
 	cfg, _ := s.clientConfigWithErr(serviceName, cfgs...)
 
 	return cfg
 }
 
 func (s *Session) clientConfigWithErr(serviceName string, cfgs ...*aws.Config) (client.Config, error) {
+	log.Printf("shengh.............session.goCDF 19")
 	s = s.Copy(cfgs...)
 
+	//log.Printf("shengh..................session.goCDFZZZZZZZZZ  %v", s.Config.EndpointResolver)
 	var resolved endpoints.ResolvedEndpoint
 	var err error
 
@@ -558,7 +633,10 @@ func (s *Session) clientConfigWithErr(serviceName string, cfgs ...*aws.Config) (
 	if endpoint := aws.StringValue(s.Config.Endpoint); len(endpoint) != 0 {
 		resolved.URL = endpoints.AddScheme(endpoint, aws.BoolValue(s.Config.DisableSSL))
 		resolved.SigningRegion = region
+
+		log.Printf("shengh.............session.goCDF 20A", resolved.URL, serviceName)
 	} else {
+		log.Printf("shengh.............session.goCDF 20B1", serviceName)
 		resolved, err = s.Config.EndpointResolver.EndpointFor(
 			serviceName, region,
 			func(opt *endpoints.Options) {
@@ -570,14 +648,17 @@ func (s *Session) clientConfigWithErr(serviceName string, cfgs ...*aws.Config) (
 				opt.ResolveUnknownService = true
 			},
 		)
+		log.Printf("shengh.............session.goCDF 20B2", serviceName)
+		log.Printf("shengh.............%v,   %v,   %v", resolved.URL, resolved.SigningRegion, resolved.SigningName)
 	}
 
 	return client.Config{
-		Config:        s.Config,
-		Handlers:      s.Handlers,
-		Endpoint:      resolved.URL,
-		SigningRegion: resolved.SigningRegion,
-		SigningName:   resolved.SigningName,
+		Config:             s.Config,
+		Handlers:           s.Handlers,
+		Endpoint:           resolved.URL,
+		SigningRegion:      resolved.SigningRegion,
+		SigningNameDerived: resolved.SigningNameDerived,
+		SigningName:        resolved.SigningName,
 	}, err
 }
 
@@ -585,6 +666,7 @@ func (s *Session) clientConfigWithErr(serviceName string, cfgs ...*aws.Config) (
 // that the EndpointResolver will not be used to resolve the endpoint. The only
 // endpoint set must come from the aws.Config.Endpoint field.
 func (s *Session) ClientConfigNoResolveEndpoint(cfgs ...*aws.Config) client.Config {
+	log.Printf("shengh.............session.goCDF 21")
 	s = s.Copy(cfgs...)
 
 	var resolved endpoints.ResolvedEndpoint
@@ -597,10 +679,11 @@ func (s *Session) ClientConfigNoResolveEndpoint(cfgs ...*aws.Config) client.Conf
 	}
 
 	return client.Config{
-		Config:        s.Config,
-		Handlers:      s.Handlers,
-		Endpoint:      resolved.URL,
-		SigningRegion: resolved.SigningRegion,
-		SigningName:   resolved.SigningName,
+		Config:             s.Config,
+		Handlers:           s.Handlers,
+		Endpoint:           resolved.URL,
+		SigningRegion:      resolved.SigningRegion,
+		SigningNameDerived: resolved.SigningNameDerived,
+		SigningName:        resolved.SigningName,
 	}
 }

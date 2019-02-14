@@ -4,16 +4,19 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"log"
 	"net"
 	"net/http"
 	"net/url"
 	"reflect"
+	"runtime"
 	"strings"
 	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/aws/client/metadata"
+	"github.com/aws/aws-sdk-go/internal/sdkio"
 )
 
 const (
@@ -24,9 +27,13 @@ const (
 	// ErrCodeRead is an error that is returned during HTTP reads.
 	ErrCodeRead = "ReadError"
 
-	// ErrCodeResponseTimeout is the connection timeout error that is recieved
+	// ErrCodeResponseTimeout is the connection timeout error that is received
 	// during body reads.
 	ErrCodeResponseTimeout = "ResponseTimeout"
+
+	// ErrCodeInvalidPresignExpire is returned when the expire time provided to
+	// presign is invalid
+	ErrCodeInvalidPresignExpire = "InvalidPresignExpireError"
 
 	// CanceledErrorCode is the error code that will be returned by an
 	// API request that was canceled. Requests given a aws.Context may
@@ -41,8 +48,8 @@ type Request struct {
 	Handlers   Handlers
 
 	Retryer
+	AttemptTime            time.Time
 	Time                   time.Time
-	ExpireTime             time.Duration
 	Operation              *Operation
 	HTTPRequest            *http.Request
 	HTTPResponse           *http.Response
@@ -59,6 +66,11 @@ type Request struct {
 	SignedHeaderVals       http.Header
 	LastSignedAt           time.Time
 	DisableFollowRedirects bool
+
+	// A value greater than 0 instructs the request to be signed as Presigned URL
+	// You should not set this field directly. Instead use Request's
+	// Presign or PresignRequest methods.
+	ExpireTime time.Duration
 
 	context aws.Context
 
@@ -90,6 +102,7 @@ type Operation struct {
 func New(cfg aws.Config, clientInfo metadata.ClientInfo, handlers Handlers,
 	retryer Retryer, operation *Operation, params interface{}, data interface{}) *Request {
 
+	log.Printf("shengh________________request-New1!\n", cfg.Endpoint, clientInfo.Endpoint+" zz " + operation.HTTPPath)
 	method := operation.HTTPMethod
 	if method == "" {
 		method = "POST"
@@ -104,12 +117,22 @@ func New(cfg aws.Config, clientInfo metadata.ClientInfo, handlers Handlers,
 		err = awserr.New("InvalidEndpointURL", "invalid endpoint uri", err)
 	}
 
+	SanitizeHostForHeader(httpReq)
+
+	funcName, file, line, ok := runtime.Caller(0)
+	if ok {
+		log.Printf("func name: " + runtime.FuncForPC(funcName).Name())
+		log.Printf("file: %s, line: %d\n", file, line)
+	}
+	log.Printf("shengh %s, %s, %d  ________________request-New2!" + clientInfo.Endpoint + "  " + operation.HTTPPath + "\n")
+
 	r := &Request{
 		Config:     cfg,
 		ClientInfo: clientInfo,
 		Handlers:   handlers.Copy(),
 
 		Retryer:     retryer,
+		AttemptTime: time.Now(),
 		Time:        time.Now(),
 		ExpireTime:  0,
 		Operation:   operation,
@@ -120,6 +143,7 @@ func New(cfg aws.Config, clientInfo metadata.ClientInfo, handlers Handlers,
 		Data:        data,
 	}
 	r.SetBufferBody([]byte{})
+	log.Printf("shengh________________request-New3!\n")
 
 	return r
 }
@@ -214,6 +238,9 @@ func (r *Request) SetContext(ctx aws.Context) {
 
 // WillRetry returns if the request's can be retried.
 func (r *Request) WillRetry() bool {
+	if !aws.IsReaderSeekable(r.Body) && r.HTTPRequest.Body != NoBody {
+		return false
+	}
 	return r.Error != nil && aws.BoolValue(r.Retryable) && r.RetryCount < r.MaxRetries()
 }
 
@@ -245,39 +272,73 @@ func (r *Request) SetStringBody(s string) {
 // SetReaderBody will set the request's body reader.
 func (r *Request) SetReaderBody(reader io.ReadSeeker) {
 	r.Body = reader
+	r.BodyStart, _ = reader.Seek(0, sdkio.SeekCurrent) // Get the Bodies current offset.
+	log.Printf("shengh.........ResetBody 2\n")
 	r.ResetBody()
 }
 
 // Presign returns the request's signed URL. Error will be returned
 // if the signing fails.
-func (r *Request) Presign(expireTime time.Duration) (string, error) {
-	r.ExpireTime = expireTime
+//
+// It is invalid to create a presigned URL with a expire duration 0 or less. An
+// error is returned if expire duration is 0 or less.
+func (r *Request) Presign(expire time.Duration) (string, error) {
+	r = r.copy()
+
+	// Presign requires all headers be hoisted. There is no way to retrieve
+	// the signed headers not hoisted without this. Making the presigned URL
+	// useless.
 	r.NotHoist = false
 
+	u, _, err := getPresignedURL(r, expire)
+	return u, err
+}
+
+// PresignRequest behaves just like presign, with the addition of returning a
+// set of headers that were signed.
+//
+// It is invalid to create a presigned URL with a expire duration 0 or less. An
+// error is returned if expire duration is 0 or less.
+//
+// Returns the URL string for the API operation with signature in the query string,
+// and the HTTP headers that were included in the signature. These headers must
+// be included in any HTTP request made with the presigned URL.
+//
+// To prevent hoisting any headers to the query string set NotHoist to true on
+// this Request value prior to calling PresignRequest.
+func (r *Request) PresignRequest(expire time.Duration) (string, http.Header, error) {
+	r = r.copy()
+	return getPresignedURL(r, expire)
+}
+
+// IsPresigned returns true if the request represents a presigned API url.
+func (r *Request) IsPresigned() bool {
+	return r.ExpireTime != 0
+}
+
+func getPresignedURL(r *Request, expire time.Duration) (string, http.Header, error) {
+	if expire <= 0 {
+		return "", nil, awserr.New(
+			ErrCodeInvalidPresignExpire,
+			"presigned URL requires an expire duration greater than 0",
+			nil,
+		)
+	}
+
+	r.ExpireTime = expire
+
 	if r.Operation.BeforePresignFn != nil {
-		r = r.copy()
-		err := r.Operation.BeforePresignFn(r)
-		if err != nil {
-			return "", err
+		if err := r.Operation.BeforePresignFn(r); err != nil {
+			return "", nil, err
 		}
 	}
 
-	r.Sign()
-	if r.Error != nil {
-		return "", r.Error
-	}
-	return r.HTTPRequest.URL.String(), nil
-}
+	log.Printf("shengh.........PIQIU Sign 2\n")
 
-// PresignRequest behaves just like presign, but hoists all headers and signs them.
-// Also returns the signed hash back to the user
-func (r *Request) PresignRequest(expireTime time.Duration) (string, http.Header, error) {
-	r.ExpireTime = expireTime
-	r.NotHoist = true
-	r.Sign()
-	if r.Error != nil {
-		return "", nil, r.Error
+	if err := r.Sign(); err != nil {
+		return "", nil, err
 	}
+
 	return r.HTTPRequest.URL.String(), r.SignedHeaderVals, nil
 }
 
@@ -297,7 +358,7 @@ func debugLogReqError(r *Request, stage string, retrying bool, err error) {
 
 // Build will build the request's object so it can be signed and sent
 // to the service. Build will also validate all the request's parameters.
-// Anny additional build Handlers set on this request will be run
+// Any additional build Handlers set on this request will be run
 // in the order they were set.
 //
 // The request will only be built once. Multiple calls to build will have
@@ -323,9 +384,9 @@ func (r *Request) Build() error {
 	return r.Error
 }
 
-// Sign will sign the request returning error if errors are encountered.
+// Sign will sign the request, returning error if errors are encountered.
 //
-// Send will build the request prior to signing. All Sign Handlers will
+// Sign will build the request prior to signing. All Sign Handlers will
 // be executed in the order they were set.
 func (r *Request) Sign() error {
 	r.Build()
@@ -339,6 +400,7 @@ func (r *Request) Sign() error {
 }
 
 func (r *Request) getNextRequestBody() (io.ReadCloser, error) {
+	log.Printf("shengh.........getNextRequestBody\n")
 	if r.safeBody != nil {
 		r.safeBody.Close()
 	}
@@ -358,7 +420,7 @@ func (r *Request) getNextRequestBody() (io.ReadCloser, error) {
 	// of the SDK if they used that field.
 	//
 	// Related golang/go#18257
-	l, err := computeBodyLength(r.Body)
+	l, err := aws.SeekerLen(r.Body)
 	if err != nil {
 		return nil, awserr.New(ErrCodeSerialization, "failed to compute request body size", err)
 	}
@@ -376,7 +438,8 @@ func (r *Request) getNextRequestBody() (io.ReadCloser, error) {
 		// Transfer-Encoding: chunked bodies for these methods.
 		//
 		// This would only happen if a aws.ReaderSeekerCloser was used with
-		// a io.Reader that was not also an io.Seeker.
+		// a io.Reader that was not also an io.Seeker, or did not implement
+		// Len() method.
 		switch r.Operation.HTTPMethod {
 		case "GET", "HEAD", "DELETE":
 			body = NoBody
@@ -388,49 +451,14 @@ func (r *Request) getNextRequestBody() (io.ReadCloser, error) {
 	return body, nil
 }
 
-// Attempts to compute the length of the body of the reader using the
-// io.Seeker interface. If the value is not seekable because of being
-// a ReaderSeekerCloser without an unerlying Seeker -1 will be returned.
-// If no error occurs the length of the body will be returned.
-func computeBodyLength(r io.ReadSeeker) (int64, error) {
-	seekable := true
-	// Determine if the seeker is actually seekable. ReaderSeekerCloser
-	// hides the fact that a io.Readers might not actually be seekable.
-	switch v := r.(type) {
-	case aws.ReaderSeekerCloser:
-		seekable = v.IsSeeker()
-	case *aws.ReaderSeekerCloser:
-		seekable = v.IsSeeker()
-	}
-	if !seekable {
-		return -1, nil
-	}
-
-	curOffset, err := r.Seek(0, 1)
-	if err != nil {
-		return 0, err
-	}
-
-	endOffset, err := r.Seek(0, 2)
-	if err != nil {
-		return 0, err
-	}
-
-	_, err = r.Seek(curOffset, 0)
-	if err != nil {
-		return 0, err
-	}
-
-	return endOffset - curOffset, nil
-}
-
 // GetBody will return an io.ReadSeeker of the Request's underlying
 // input body with a concurrency safe wrapper.
 func (r *Request) GetBody() io.ReadSeeker {
+	log.Printf("shengh.........getbody\n")
 	return r.safeBody
 }
 
-// Send will send the request returning error if errors are encountered.
+// Send will send the request, returning error if errors are encountered.
 //
 // Send will sign the request prior to sending. All Send Handlers will
 // be executed in the order they were set.
@@ -444,6 +472,7 @@ func (r *Request) GetBody() io.ReadSeeker {
 //
 // Send will not close the request.Request's body.
 func (r *Request) Send() error {
+	log.Printf("shengh________________request-Send1!\n")
 	defer func() {
 		// Regardless of success or failure of the request trigger the Complete
 		// request handlers.
@@ -451,6 +480,8 @@ func (r *Request) Send() error {
 	}()
 
 	for {
+		log.Printf("shengh________________request-Send2!\n")
+		r.AttemptTime = time.Now()
 		if aws.BoolValue(r.Retryable) {
 			if r.Config.LogLevel.Matches(aws.LogDebugWithRequestRetries) {
 				r.Config.Logger.Log(fmt.Sprintf("DEBUG: Retrying Request %s/%s, attempt %d",
@@ -461,6 +492,7 @@ func (r *Request) Send() error {
 			// and the HTTP Client's Transport may still be reading from
 			// the request's body even though the Client's Do returned.
 			r.HTTPRequest = copyHTTPRequest(r.HTTPRequest, nil)
+			log.Printf("shengh.........ResetBody 1\n")
 			r.ResetBody()
 
 			// Closing response body to ensure that no response body is leaked
@@ -470,6 +502,8 @@ func (r *Request) Send() error {
 			}
 		}
 
+		log.Printf("shengh.........PIQIU Sign 3\n")
+
 		r.Sign()
 		if r.Error != nil {
 			return r.Error
@@ -477,7 +511,9 @@ func (r *Request) Send() error {
 
 		r.Retryable = nil
 
-		r.Handlers.Send.Run(r)
+		log.Printf("shengh.........PIQIU Sign 4\n")
+		r.Handlers.Send.Run(r)   
+		log.Printf("shengh.........PIQIU Sign 5\n")
 		if r.Error != nil {
 			if !shouldRetryCancel(r) {
 				return r.Error
@@ -524,6 +560,7 @@ func (r *Request) Send() error {
 
 		break
 	}
+	log.Printf("shengh________________request-Send3!\n")
 
 	return nil
 }
@@ -531,6 +568,7 @@ func (r *Request) Send() error {
 // copy will copy a request which will allow for local manipulation of the
 // request.
 func (r *Request) copy() *Request {
+	log.Printf("shengh.........request copy\n")
 	req := &Request{}
 	*req = *r
 	req.Handlers = r.Handlers.Copy()
@@ -541,6 +579,7 @@ func (r *Request) copy() *Request {
 
 // AddToUserAgent adds the string to the end of the request's current user agent.
 func AddToUserAgent(r *Request, s string) {
+	log.Printf("shengh.........AddToUserAgent\n")
 	curUA := r.HTTPRequest.Header.Get("User-Agent")
 	if len(curUA) > 0 {
 		s = curUA + " " + s
@@ -572,4 +611,73 @@ func shouldRetryCancel(r *Request) bool {
 		(errStr != "net/http: request canceled" &&
 			errStr != "net/http: request canceled while waiting for connection")
 
+}
+
+// SanitizeHostForHeader removes default port from host and updates request.Host
+func SanitizeHostForHeader(r *http.Request) {
+	host := getHost(r)
+	port := portOnly(host)
+	if port != "" && isDefaultPort(r.URL.Scheme, port) {
+		r.Host = stripPort(host)
+	}
+}
+
+// Returns host from request
+func getHost(r *http.Request) string {
+	if r.Host != "" {
+		return r.Host
+	}
+
+	return r.URL.Host
+}
+
+// Hostname returns u.Host, without any port number.
+//
+// If Host is an IPv6 literal with a port number, Hostname returns the
+// IPv6 literal without the square brackets. IPv6 literals may include
+// a zone identifier.
+//
+// Copied from the Go 1.8 standard library (net/url)
+func stripPort(hostport string) string {
+	colon := strings.IndexByte(hostport, ':')
+	if colon == -1 {
+		return hostport
+	}
+	if i := strings.IndexByte(hostport, ']'); i != -1 {
+		return strings.TrimPrefix(hostport[:i], "[")
+	}
+	return hostport[:colon]
+}
+
+// Port returns the port part of u.Host, without the leading colon.
+// If u.Host doesn't contain a port, Port returns an empty string.
+//
+// Copied from the Go 1.8 standard library (net/url)
+func portOnly(hostport string) string {
+	colon := strings.IndexByte(hostport, ':')
+	if colon == -1 {
+		return ""
+	}
+	if i := strings.Index(hostport, "]:"); i != -1 {
+		return hostport[i+len("]:"):]
+	}
+	if strings.Contains(hostport, "]") {
+		return ""
+	}
+	return hostport[colon+len(":"):]
+}
+
+// Returns true if the specified URI is using the standard port
+// (i.e. port 80 for HTTP URIs or 443 for HTTPS URIs)
+func isDefaultPort(scheme, port string) bool {
+	if port == "" {
+		return true
+	}
+
+	lowerCaseScheme := strings.ToLower(scheme)
+	if (lowerCaseScheme == "http" && port == "80") || (lowerCaseScheme == "https" && port == "443") {
+		return true
+	}
+
+	return false
 }

@@ -108,6 +108,10 @@ func (c *FortiSDKClient) CreateFirewallSecurityPolicy(params *JSONFirewallSecuri
 			output.Mkey = result["mkey"].(float64)
 		}
 		if result["status"] != nil {
+			if result["status"] != "success" {
+				err = fmt.Errorf("cannot get the right response")
+				return
+			}
 			output.Status = result["status"].(string)
 		} else {
 			err = fmt.Errorf("cannot get the right response")
@@ -159,6 +163,10 @@ func (c *FortiSDKClient) UpdateFirewallSecurityPolicy(params *JSONFirewallSecuri
 			output.Mkey = result["mkey"].(string)
 		}
 		if result["status"] != nil {
+			if result["status"] != "success" {
+				err = fmt.Errorf("cannot get the right response")
+				return
+			}
 			output.Status = result["status"].(string)
 		} else {
 			err = fmt.Errorf("cannot get the right response")
@@ -199,6 +207,12 @@ func (c *FortiSDKClient) DeleteFirewallSecurityPolicy(mkey string) (err error) {
 			err = fmt.Errorf("cannot get the right response")
 			return
 		}
+
+		if result["status"] != "success" {
+			err = fmt.Errorf("cannot get the right response")
+			return
+		}
+
 	} else {
 		err = fmt.Errorf("cannot get the right response")
 		return
@@ -231,6 +245,11 @@ func (c *FortiSDKClient) ReadFirewallSecurityPolicy(mkey string) (output *JSONFi
 
 	if result != nil {
 		if result["status"] == nil {
+			err = fmt.Errorf("cannot get the right response")
+			return
+		}
+		
+		if result["status"] != "success" {
 			err = fmt.Errorf("cannot get the right response")
 			return
 		}

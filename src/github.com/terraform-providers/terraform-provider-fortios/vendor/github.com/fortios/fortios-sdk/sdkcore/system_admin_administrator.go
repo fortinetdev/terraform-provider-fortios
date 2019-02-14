@@ -69,6 +69,47 @@ func (c *FortiSDKClient) CreateSystemAdminAdministrator(params *JSONSystemAdminA
 	HTTPMethod := "POST"
 	path := "/api/v2/cmdb/system/admin"
 	output = &JSONCreateSystemAdminAdministratorOutput{}
+
+	if params.Trusthost1 == "" {
+		params.Trusthost1 = "0.0.0.0 0.0.0.0"
+	}
+
+	if params.Trusthost2 == "" {
+		params.Trusthost2 = "0.0.0.0 0.0.0.0"
+	}
+
+	if params.Trusthost3 == "" {
+		params.Trusthost3 = "0.0.0.0 0.0.0.0"
+	}
+
+	if params.Trusthost4 == "" {
+		params.Trusthost4 = "0.0.0.0 0.0.0.0"
+	}
+
+	if params.Trusthost5 == "" {
+		params.Trusthost5 = "0.0.0.0 0.0.0.0"
+	}
+
+	if params.Trusthost6 == "" {
+		params.Trusthost6 = "0.0.0.0 0.0.0.0"
+	}
+
+	if params.Trusthost7 == "" {
+		params.Trusthost7 = "0.0.0.0 0.0.0.0"
+	}
+
+	if params.Trusthost8 == "" {
+		params.Trusthost8 = "0.0.0.0 0.0.0.0"
+	}
+
+	if params.Trusthost9 == "" {
+		params.Trusthost9 = "0.0.0.0 0.0.0.0"
+	}
+
+	if params.Trusthost10 == "" {
+		params.Trusthost10 = "0.0.0.0 0.0.0.0"
+	}
+
 	locJSON, err := json.Marshal(params)
 	if err != nil {
 		log.Fatal(err)
@@ -79,7 +120,8 @@ func (c *FortiSDKClient) CreateSystemAdminAdministrator(params *JSONSystemAdminA
 	req := c.NewRequest(HTTPMethod, path, nil, bytes)
 	err = req.Send()
 
-	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	body, err := ioutil.ReadAll(req.HTTPResponse.Body)	
+	log.Printf("FOS-fortios response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -94,6 +136,10 @@ func (c *FortiSDKClient) CreateSystemAdminAdministrator(params *JSONSystemAdminA
 			output.Mkey = result["mkey"].(string)
 		}
 		if result["status"] != nil {
+			if result["status"] != "success" {
+				err = fmt.Errorf("cannot get the right response")
+				return
+			}
 			output.Status = result["status"].(string)
 		} else {
 			err = fmt.Errorf("cannot get the right response")
@@ -119,6 +165,47 @@ func (c *FortiSDKClient) UpdateSystemAdminAdministrator(params *JSONSystemAdminA
 	path := "/api/v2/cmdb/system/admin"
 	path += "/" + mkey
 	output = &JSONUpdateSystemAdminAdministratorOutput{}
+	
+	if params.Trusthost1 == "" {
+		params.Trusthost1 = "0.0.0.0 0.0.0.0"
+	}
+
+	if params.Trusthost2 == "" {
+		params.Trusthost2 = "0.0.0.0 0.0.0.0"
+	}
+
+	if params.Trusthost3 == "" {
+		params.Trusthost3 = "0.0.0.0 0.0.0.0"
+	}
+
+	if params.Trusthost4 == "" {
+		params.Trusthost4 = "0.0.0.0 0.0.0.0"
+	}
+
+	if params.Trusthost5 == "" {
+		params.Trusthost5 = "0.0.0.0 0.0.0.0"
+	}
+
+	if params.Trusthost6 == "" {
+		params.Trusthost6 = "0.0.0.0 0.0.0.0"
+	}
+
+	if params.Trusthost7 == "" {
+		params.Trusthost7 = "0.0.0.0 0.0.0.0"
+	}
+
+	if params.Trusthost8 == "" {
+		params.Trusthost8 = "0.0.0.0 0.0.0.0"
+	}
+
+	if params.Trusthost9 == "" {
+		params.Trusthost9 = "0.0.0.0 0.0.0.0"
+	}
+
+	if params.Trusthost10 == "" {
+		params.Trusthost10 = "0.0.0.0 0.0.0.0"
+	}
+
 	locJSON, err := json.Marshal(params)
 	if err != nil {
 		log.Fatal(err)
@@ -145,6 +232,10 @@ func (c *FortiSDKClient) UpdateSystemAdminAdministrator(params *JSONSystemAdminA
 			output.Mkey = result["mkey"].(string)
 		}
 		if result["status"] != nil {
+			if result["status"] != "success" {
+				err = fmt.Errorf("cannot get the right response")
+				return
+			}
 			output.Status = result["status"].(string)
 		} else {
 			err = fmt.Errorf("cannot get the right response")
@@ -185,6 +276,12 @@ func (c *FortiSDKClient) DeleteSystemAdminAdministrator(mkey string) (err error)
 			err = fmt.Errorf("cannot get the right response")
 			return
 		}
+
+		if result["status"] != "success" {
+			err = fmt.Errorf("cannot get the right response")
+			return
+		}
+
 	} else {
 		err = fmt.Errorf("cannot get the right response")
 		return
@@ -217,6 +314,11 @@ func (c *FortiSDKClient) ReadSystemAdminAdministrator(mkey string) (output *JSON
 
 	if result != nil {
 		if result["status"] == nil {
+			err = fmt.Errorf("cannot get the right response")
+			return
+		}
+		
+		if result["status"] != "success" {
 			err = fmt.Errorf("cannot get the right response")
 			return
 		}
@@ -277,3 +379,4 @@ func (c *FortiSDKClient) ReadSystemAdminAdministrator(mkey string) (output *JSON
 
 	return
 }
+
