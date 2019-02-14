@@ -18,11 +18,11 @@ func resourceFirewallObjectService() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
-				Optional: true,
+				Required: true,
 			},
 			"category": &schema.Schema{
 				Type:     schema.TypeString,
-				Optional: true,
+				Required: true,
 			},
 			"protocol": &schema.Schema{
 				Type:     schema.TypeString,

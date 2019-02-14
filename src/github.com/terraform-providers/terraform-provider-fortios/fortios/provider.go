@@ -60,6 +60,6 @@ func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 		Token:    d.Get("token").(string),
 	}
 
-	// Create Client for later connection
+	// Create Client for later connections
 	return config.CreateClient()
 }

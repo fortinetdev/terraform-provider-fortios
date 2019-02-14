@@ -71,6 +71,10 @@ func (c *FortiSDKClient) CreateNetworkingRouteStatic(params *JSONNetworkingRoute
 			output.Mkey = result["mkey"].(float64)
 		}
 		if result["status"] != nil {
+			if result["status"] != "success" {
+				err = fmt.Errorf("cannot get the right response")
+				return
+			}
 			output.Status = result["status"].(string)
 		} else {
 			err = fmt.Errorf("cannot get the right response")
@@ -122,6 +126,10 @@ func (c *FortiSDKClient) UpdateNetworkingRouteStatic(params *JSONNetworkingRoute
 			output.Mkey = result["mkey"].(string)
 		}
 		if result["status"] != nil {
+			if result["status"] != "success" {
+				err = fmt.Errorf("cannot get the right response")
+				return
+			}
 			output.Status = result["status"].(string)
 		} else {
 			err = fmt.Errorf("cannot get the right response")
@@ -162,6 +170,12 @@ func (c *FortiSDKClient) DeleteNetworkingRouteStatic(mkey string) (err error) {
 			err = fmt.Errorf("cannot get the right response")
 			return
 		}
+
+		if result["status"] != "success" {
+			err = fmt.Errorf("cannot get the right response")
+			return
+		}
+
 	} else {
 		err = fmt.Errorf("cannot get the right response")
 		return
@@ -197,6 +211,13 @@ func (c *FortiSDKClient) ReadNetworkingRouteStatic(mkey string) (output *JSONNet
 			err = fmt.Errorf("cannot get the right response")
 			return
 		}
+
+		if result["status"] != "success" {
+			err = fmt.Errorf("cannot get the right response")
+			return
+		}
+
+		// fmt.Println(result)
 
 		mapTmp := (result["results"].([]interface{}))[0].(map[string]interface{})
 

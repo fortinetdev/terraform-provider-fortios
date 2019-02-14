@@ -7,14 +7,16 @@ import (
 
 // Auth describes the authentication information for FortiOS
 type Auth struct {
-	Token   string
-	Refresh bool
+	Hostname string
+	Token    string
+	Refresh  bool
 }
 
 // NewAuth inits Auth object with the given metadata
-func NewAuth(token string) *Auth {
+func NewAuth(hostname string, token string) *Auth {
 	return &Auth{
-		Token: token,
+		Hostname: hostname,
+		Token:    token,
 	}
 }
 
@@ -30,4 +32,18 @@ func (m *Auth) GetEnvToken() (string, error) {
 	m.Token = token
 
 	return token, nil
+}
+
+// GetEnvHostname gets FortiOS hostname from OS environment
+// It returns the hostname
+func (m *Auth) GetEnvHostname() (string, error) {
+	h := os.Getenv("FORTIOS_ACCESS_HOSTNAME")
+
+	if h == "" {
+		return h, fmt.Errorf("GetEnvHostname error")
+	}
+
+	m.Hostname = h
+
+	return h, nil
 }

@@ -34,13 +34,17 @@ func (c *Config) CreateClient() (interface{}, error) {
 		Transport: tr,
 	}
 
-	auth := auth.NewAuth(c.Token)
+	auth := auth.NewAuth(c.Hostname, c.Token)
+
+	if auth.Hostname == "" {
+		auth.GetEnvHostname()
+	}
 
 	if auth.Token == "" {
 		auth.GetEnvToken()
 	}
 
-	fc := forticlient.NewClient(c.Hostname, auth, client)
+	fc := forticlient.NewClient(auth, client)
 
 	fClient.Client = fc
 

@@ -87,6 +87,10 @@ func (c *FortiSDKClient) CreateNetworkingInterfacePort(params *JSONNetworkingInt
 			output.Mkey = result["mkey"].(string)
 		}
 		if result["status"] != nil {
+			if result["status"] != "success" {
+				err = fmt.Errorf("cannot get the right response")
+				return
+			}
 			output.Status = result["status"].(string)
 		} else {
 			err = fmt.Errorf("cannot get the right response")
@@ -140,6 +144,10 @@ func (c *FortiSDKClient) UpdateNetworkingInterfacePort(params *JSONNetworkingInt
 			output.Mkey = result["mkey"].(string)
 		}
 		if result["status"] != nil {
+			if result["status"] != "success" {
+				err = fmt.Errorf("cannot get the right response")
+				return
+			}
 			output.Status = result["status"].(string)
 		} else {
 			err = fmt.Errorf("cannot get the right response")
@@ -180,6 +188,12 @@ func (c *FortiSDKClient) DeleteNetworkingInterfacePort(mkey string) (err error) 
 			err = fmt.Errorf("cannot get the right response")
 			return
 		}
+
+		if result["status"] != "success" {
+			err = fmt.Errorf("cannot get the right response")
+			return
+		}
+
 	} else {
 		err = fmt.Errorf("cannot get the right response")
 		return
@@ -212,6 +226,11 @@ func (c *FortiSDKClient) ReadNetworkingInterfacePort(mkey string) (output *JSONN
 
 	if result != nil {
 		if result["status"] == nil {
+			err = fmt.Errorf("cannot get the right response")
+			return
+		}
+		
+		if result["status"] != "success" {
 			err = fmt.Errorf("cannot get the right response")
 			return
 		}

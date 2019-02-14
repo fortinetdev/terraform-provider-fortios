@@ -28,6 +28,10 @@ func resourceSystemAPIUserSetting() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
+			"comments": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 			"trusthost": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -57,6 +61,7 @@ func resourceSystemAPIUserSettingCreate(d *schema.ResourceData, m interface{}) e
 	accprofile := d.Get("accprofile").(string)
 	vdom := d.Get("vdom").(string)
 	trusthost := d.Get("trusthost").([]interface{})
+	comments := d.Get("comments").(string)
 
 	var trusthosts []forticlient.APIUserMultValue
 
@@ -80,6 +85,7 @@ func resourceSystemAPIUserSettingCreate(d *schema.ResourceData, m interface{}) e
 		Accprofile: accprofile,
 		Vdom:       vdom,
 		Trusthost:  trusthosts,
+		Comments:   comments,
 	}
 
 	//Call process by sdk
@@ -106,6 +112,7 @@ func resourceSystemAPIUserSettingUpdate(d *schema.ResourceData, m interface{}) e
 	accprofile := d.Get("accprofile").(string)
 	vdom := d.Get("vdom").(string)
 	trusthost := d.Get("trusthost").([]interface{})
+	comments := d.Get("comments").(string)
 
 	var trusthosts []forticlient.APIUserMultValue
 
@@ -129,6 +136,7 @@ func resourceSystemAPIUserSettingUpdate(d *schema.ResourceData, m interface{}) e
 		Accprofile: accprofile,
 		Vdom:       vdom,
 		Trusthost:  trusthosts,
+		Comments:   comments,
 	}
 
 	//Call process by sdk
@@ -188,6 +196,7 @@ func resourceSystemAPIUserSettingRead(d *schema.ResourceData, m interface{}) err
 	}
 
 	d.Set("trusthost", items)
+	d.Set("comments", o.Comments)
 
 	return nil
 }

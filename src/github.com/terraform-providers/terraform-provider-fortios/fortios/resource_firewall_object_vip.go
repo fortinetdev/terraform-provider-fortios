@@ -18,7 +18,7 @@ func resourceFirewallObjectVip() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
-				Optional: true,
+				Required: true,
 			},
 			"comment": &schema.Schema{
 				Type:     schema.TypeString,

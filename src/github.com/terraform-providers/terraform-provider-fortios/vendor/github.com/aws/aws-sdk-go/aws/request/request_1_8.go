@@ -3,6 +3,7 @@
 package request
 
 import (
+	"log"
 	"net/http"
 )
 
@@ -11,7 +12,7 @@ import (
 var NoBody = http.NoBody
 
 // ResetBody rewinds the request body back to its starting position, and
-// set's the HTTP Request body reference. When the body is read prior
+// sets the HTTP Request body reference. When the body is read prior
 // to being sent in the HTTP request it will need to be rewound.
 //
 // ResetBody will automatically be called by the SDK's build handler, but if
@@ -22,7 +23,9 @@ var NoBody = http.NoBody
 // Will also set the Go 1.8's http.Request.GetBody member to allow retrying
 // PUT/POST redirects.
 func (r *Request) ResetBody() {
+	log.Printf("shengh.........ResetBody\n")
 	body, err := r.getNextRequestBody()
+	log.Printf("shengh.........ResetBody2\n")
 	if err != nil {
 		r.Error = err
 		return

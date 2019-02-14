@@ -35,12 +35,12 @@ func ExtractString(members []MultValue) []string {
 
 // NewClient initializes a new global plugin client
 // It returns the created client object
-func NewClient(host string, auth *auth.Auth, client *http.Client) *FortiSDKClient{
+func NewClient(auth *auth.Auth, client *http.Client) *FortiSDKClient{
 	c := &FortiSDKClient{ }
 
 	c.Config.Auth = auth
 	c.Config.HTTPCon = client
-	c.Config.FwTarget = host
+	c.Config.FwTarget = auth.Hostname
 
 	return c
 }

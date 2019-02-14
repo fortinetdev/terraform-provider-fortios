@@ -18,7 +18,7 @@ func resourceFirewallObjectServiceGroup() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
-				Optional: true,
+				Required: true,
 			},
 			"member": &schema.Schema{
 				Type:     schema.TypeList,

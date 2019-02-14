@@ -15,6 +15,7 @@ type JSONSystemAPIUserSetting struct {
 	Accprofile string            `json:"accprofile"`
 	Vdom       string            `json:"vdom"`
 	Trusthost  APIUserMultValues `json:"trusthost"`
+	Comments   string            `json:"comments"`
 }
 
 // JSONCreateSystemAPIUserSettingOutput contains the output results for Create API function
@@ -76,6 +77,10 @@ func (c *FortiSDKClient) CreateSystemAPIUserSetting(params *JSONSystemAPIUserSet
 			output.Mkey = result["mkey"].(string)
 		}
 		if result["status"] != nil {
+			if result["status"] != "success" {
+				err = fmt.Errorf("cannot get the right response")
+				return
+			}
 			output.Status = result["status"].(string)
 		} else {
 			err = fmt.Errorf("cannot get the right response")
@@ -127,6 +132,10 @@ func (c *FortiSDKClient) UpdateSystemAPIUserSetting(params *JSONSystemAPIUserSet
 			output.Mkey = result["mkey"].(string)
 		}
 		if result["status"] != nil {
+			if result["status"] != "success" {
+				err = fmt.Errorf("cannot get the right response")
+				return
+			}
 			output.Status = result["status"].(string)
 		} else {
 			err = fmt.Errorf("cannot get the right response")
@@ -167,6 +176,12 @@ func (c *FortiSDKClient) DeleteSystemAPIUserSetting(mkey string) (err error) {
 			err = fmt.Errorf("cannot get the right response")
 			return
 		}
+
+		if result["status"] != "success" {
+			err = fmt.Errorf("cannot get the right response")
+			return
+		}
+
 	} else {
 		err = fmt.Errorf("cannot get the right response")
 		return
@@ -199,6 +214,11 @@ func (c *FortiSDKClient) ReadSystemAPIUserSetting(mkey string) (output *JSONSyst
 
 	if result != nil {
 		if result["status"] == nil {
+			err = fmt.Errorf("cannot get the right response")
+			return
+		}
+
+		if result["status"] != "success" {
 			err = fmt.Errorf("cannot get the right response")
 			return
 		}
@@ -245,6 +265,9 @@ func (c *FortiSDKClient) ReadSystemAPIUserSetting(mkey string) (output *JSONSyst
 					})
 			}
 			output.Trusthost = members
+		}
+		if mapTmp["comments"] != nil {
+			output.Comments = mapTmp["comments"].(string)
 		}
 
 	} else {

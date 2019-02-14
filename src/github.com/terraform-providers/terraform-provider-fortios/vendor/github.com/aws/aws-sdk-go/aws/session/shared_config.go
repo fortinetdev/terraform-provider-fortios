@@ -3,6 +3,7 @@ package session
 import (
 	"fmt"
 	"io/ioutil"
+	"log"
 
 	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/aws/aws-sdk-go/aws/credentials"
@@ -78,6 +79,8 @@ type sharedConfigFile struct {
 // See sharedConfig.setFromFile for information how the config files
 // will be loaded.
 func loadSharedConfig(profile string, filenames []string) (sharedConfig, error) {
+
+	log.Printf("shengh.............shared_config 1")
 	if len(profile) == 0 {
 		profile = DefaultSharedConfigProfile
 	}
@@ -86,6 +89,8 @@ func loadSharedConfig(profile string, filenames []string) (sharedConfig, error) 
 	if err != nil {
 		return sharedConfig{}, err
 	}
+	log.Printf("shengh.............shared_config 2")
+	
 
 	cfg := sharedConfig{}
 	if err = cfg.setFromIniFiles(profile, files); err != nil {
@@ -97,6 +102,8 @@ func loadSharedConfig(profile string, filenames []string) (sharedConfig, error) 
 			return sharedConfig{}, err
 		}
 	}
+	log.Printf("shengh.............shared_config 3")
+	
 
 	return cfg, nil
 }
@@ -104,6 +111,8 @@ func loadSharedConfig(profile string, filenames []string) (sharedConfig, error) 
 func loadSharedConfigIniFiles(filenames []string) ([]sharedConfigFile, error) {
 	files := make([]sharedConfigFile, 0, len(filenames))
 
+	log.Printf("shengh.............shared_config 4")
+	
 	for _, filename := range filenames {
 		b, err := ioutil.ReadFile(filename)
 		if err != nil {
@@ -127,6 +136,8 @@ func loadSharedConfigIniFiles(filenames []string) ([]sharedConfigFile, error) {
 func (cfg *sharedConfig) setAssumeRoleSource(origProfile string, files []sharedConfigFile) error {
 	var assumeRoleSrc sharedConfig
 
+	log.Printf("shengh.............shared_config 5")
+	
 	// Multiple level assume role chains are not support
 	if cfg.AssumeRole.SourceProfile == origProfile {
 		assumeRoleSrc = *cfg
@@ -149,6 +160,8 @@ func (cfg *sharedConfig) setAssumeRoleSource(origProfile string, files []sharedC
 
 func (cfg *sharedConfig) setFromIniFiles(profile string, files []sharedConfigFile) error {
 	// Trim files from the list that don't exist.
+	log.Printf("shengh.............shared_config 6")
+	
 	for _, f := range files {
 		if err := cfg.setFromIniFile(profile, f); err != nil {
 			if _, ok := err.(SharedConfigProfileNotExistsError); ok {
@@ -180,6 +193,8 @@ func (cfg *sharedConfig) setFromIniFile(profile string, file sharedConfigFile) e
 		}
 	}
 
+	log.Printf("shengh.............shared_config 7")
+	
 	// Shared Credentials
 	akid := section.Key(accessKeyIDKey).String()
 	secret := section.Key(secretAccessKey).String()
