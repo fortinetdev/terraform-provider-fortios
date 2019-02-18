@@ -12,6 +12,7 @@ import (
 type Config struct {
 	Hostname string
 	Token    string
+	Vdom     string
 }
 
 // FortiClient contains the basic FortiOS SDK connection information to FortiOS
@@ -34,7 +35,7 @@ func (c *Config) CreateClient() (interface{}, error) {
 		Transport: tr,
 	}
 
-	auth := auth.NewAuth(c.Hostname, c.Token)
+	auth := auth.NewAuth(c.Hostname, c.Token, c.Vdom)
 
 	if auth.Hostname == "" {
 		auth.GetEnvHostname()

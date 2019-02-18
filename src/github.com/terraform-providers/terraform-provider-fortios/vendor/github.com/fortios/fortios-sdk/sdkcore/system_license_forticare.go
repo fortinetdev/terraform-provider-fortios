@@ -94,7 +94,7 @@ func (c *FortiSDKClient) CreateSystemLicenseFortiCare(params *JSONSystemLicenseF
 		if mapTmp["forticare_error"] != nil {
 			s :=  mapTmp["forticare_error"].(string)
 			if s != "" {
-				err = fmt.Errorf("cannot get the right response" + s)
+				err = fmt.Errorf("cannot get the right response " + s)
 			}
 			return
 		}

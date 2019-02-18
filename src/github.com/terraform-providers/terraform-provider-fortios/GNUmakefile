@@ -16,9 +16,6 @@ test: fmtcheck
 testacc: fmtcheck
 	TF_ACC=1 go test $(TEST) -v $(TESTARGS) -timeout 120m
 
-copy:
-	cp -rf main.tf $(GOPATH)/bin
-	
 vet:
 	@echo "go vet ."
 	@go vet $$(go list ./... | grep -v vendor/) ; if [ $$? -eq 1 ]; then \
@@ -31,7 +28,7 @@ vet:
 fmt:
 	gofmt -w $(GOFMT_FILES)
 
-fmtcheck: copy
+fmtcheck:
 	@sh -c "'$(CURDIR)/scripts/gofmtcheck.sh'"
 
 errcheck:

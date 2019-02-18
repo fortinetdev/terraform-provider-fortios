@@ -54,7 +54,7 @@ func (r *Request) Send() error {
 	//httpReq.URL, err = url.Parse(clientInfo.Endpoint + operation.HTTPPath)
 
 	r.HTTPRequest.Header.Set("Content-Type", "application/json")
-	u := buildURL(r.Config.FwTarget, r.Path, r.Config.Auth.Token)
+	u := buildURL(r.Config.FwTarget, r.Path, r.Config.Auth.Token, r.Config.Auth.Vdom)
 
 	var err error
 	r.HTTPRequest.URL, err = url.Parse(u)
@@ -73,11 +73,19 @@ func (r *Request) Send() error {
 	return err
 }
 
-func buildURL(host string, path string, token string) string {
+func buildURL(host string, path string, token string, vdom string) string {
 	u := "https://"
 	u += host
 	u += path
-	u += "?access_token="
+	u += "?"
+
+	if vdom != "" {
+		u += "vdom="
+		u += vdom
+		u += "&"
+	}
+
+	u += "access_token="
 	u += token
 
 	return u
