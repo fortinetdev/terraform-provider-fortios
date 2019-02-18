@@ -9,14 +9,16 @@ import (
 type Auth struct {
 	Hostname string
 	Token    string
+	Vdom     string
 	Refresh  bool
 }
 
 // NewAuth inits Auth object with the given metadata
-func NewAuth(hostname string, token string) *Auth {
+func NewAuth(hostname string, token string, vdom string) *Auth {
 	return &Auth{
 		Hostname: hostname,
 		Token:    token,
+		Vdom:     vdom,
 	}
 }
 

@@ -66,7 +66,7 @@ func resourceSystemAdminAdministrator() *schema.Resource {
 			},
 			"accprofile": &schema.Schema{
 				Type:     schema.TypeString,
-				Optional: true,
+				Required: true,
 			},
 			"comments": &schema.Schema{
 				Type:     schema.TypeString,

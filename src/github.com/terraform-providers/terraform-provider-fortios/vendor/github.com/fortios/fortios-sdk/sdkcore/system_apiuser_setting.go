@@ -13,7 +13,7 @@ import (
 type JSONSystemAPIUserSetting struct {
 	Name       string            `json:"name"`
 	Accprofile string            `json:"accprofile"`
-	Vdom       string            `json:"vdom"`
+	Vdom       MultValues `json:"vdom"`
 	Trusthost  APIUserMultValues `json:"trusthost"`
 	Comments   string            `json:"comments"`
 }
@@ -235,6 +235,23 @@ func (c *FortiSDKClient) ReadSystemAPIUserSetting(mkey string) (output *JSONSyst
 		if mapTmp["accprofile"] != nil {
 			output.Accprofile = mapTmp["accprofile"].(string)
 		}
+
+		if mapTmp["vdom"] != nil {
+			member := mapTmp["vdom"].([]interface {})
+
+			var members []MultValue
+			for _, v := range member {
+				c := v.(map[string]interface {})
+
+				members = append(members,
+					MultValue{
+						Name: c["name"].(string),
+					})
+			}
+			output.Vdom = members
+		}
+				
+		/*
 		if mapTmp["vdom"] != nil {
 
 			member := mapTmp["vdom"].([]interface{})
@@ -249,7 +266,7 @@ func (c *FortiSDKClient) ReadSystemAPIUserSetting(mkey string) (output *JSONSyst
 				// the break here because of the vdom in response becomes array, but vdom in request is string
 				break
 			}
-		}
+		}*/
 
 		if mapTmp["trusthost"] != nil {
 			member := mapTmp["trusthost"].([]interface{})

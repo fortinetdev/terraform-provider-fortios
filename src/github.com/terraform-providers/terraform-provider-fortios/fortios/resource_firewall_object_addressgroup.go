@@ -22,7 +22,7 @@ func resourceFirewallObjectAddressGroup() *schema.Resource {
 			},
 			"member": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
+				Required: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},

@@ -22,11 +22,14 @@ func resourceSystemAPIUserSetting() *schema.Resource {
 			},
 			"accprofile": &schema.Schema{
 				Type:     schema.TypeString,
-				Optional: true,
+				Required: true,
 			},
 			"vdom": &schema.Schema{
-				Type:     schema.TypeString,
+				Type:     schema.TypeList,
 				Optional: true,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
 			},
 			"comments": &schema.Schema{
 				Type:     schema.TypeString,
@@ -59,9 +62,18 @@ func resourceSystemAPIUserSettingCreate(d *schema.ResourceData, m interface{}) e
 	//Get Params from d
 	name := d.Get("name").(string)
 	accprofile := d.Get("accprofile").(string)
-	vdom := d.Get("vdom").(string)
+	vdom := d.Get("vdom").([]interface{})
 	trusthost := d.Get("trusthost").([]interface{})
 	comments := d.Get("comments").(string)
+
+	var vdoms []forticlient.MultValue
+
+	for _, v := range vdom {
+		vdoms = append(vdoms,
+			forticlient.MultValue{
+				Name: v.(string),
+			})
+	}
 
 	var trusthosts []forticlient.APIUserMultValue
 
@@ -83,7 +95,7 @@ func resourceSystemAPIUserSettingCreate(d *schema.ResourceData, m interface{}) e
 	i := &forticlient.JSONSystemAPIUserSetting{
 		Name:       name,
 		Accprofile: accprofile,
-		Vdom:       vdom,
+		Vdom:       vdoms,
 		Trusthost:  trusthosts,
 		Comments:   comments,
 	}
@@ -110,9 +122,18 @@ func resourceSystemAPIUserSettingUpdate(d *schema.ResourceData, m interface{}) e
 	//Get Params from d
 	name := d.Get("name").(string)
 	accprofile := d.Get("accprofile").(string)
-	vdom := d.Get("vdom").(string)
+	vdom := d.Get("vdom").([]interface{})
 	trusthost := d.Get("trusthost").([]interface{})
 	comments := d.Get("comments").(string)
+
+	var vdoms []forticlient.MultValue
+
+	for _, v := range vdom {
+		vdoms = append(vdoms,
+			forticlient.MultValue{
+				Name: v.(string),
+			})
+	}
 
 	var trusthosts []forticlient.APIUserMultValue
 
@@ -134,7 +155,7 @@ func resourceSystemAPIUserSettingUpdate(d *schema.ResourceData, m interface{}) e
 	i := &forticlient.JSONSystemAPIUserSetting{
 		Name:       name,
 		Accprofile: accprofile,
-		Vdom:       vdom,
+		Vdom:       vdoms,
 		Trusthost:  trusthosts,
 		Comments:   comments,
 	}
@@ -184,7 +205,8 @@ func resourceSystemAPIUserSettingRead(d *schema.ResourceData, m interface{}) err
 	//Refresh property
 	d.Set("name", o.Name)
 	d.Set("accprofile", o.Accprofile)
-	d.Set("vdom", o.Vdom)
+	vdom := forticlient.ExtractString(o.Vdom)
+	d.Set("vdom", vdom)
 
 	var items []interface{}
 	for _, z := range o.Trusthost {

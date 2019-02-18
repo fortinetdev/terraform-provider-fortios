@@ -20,6 +20,12 @@ func Provider() terraform.ResourceProvider {
 				Optional:    true,
 				Description: "",
 			},
+
+			"vdom": &schema.Schema{
+				Type:        schema.TypeString,
+				Optional:    true,
+				Description: "",
+			},
 		},
 
 		ResourcesMap: map[string]*schema.Resource{
@@ -58,6 +64,7 @@ func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 	config := Config{
 		Hostname: d.Get("hostname").(string),
 		Token:    d.Get("token").(string),
+		Vdom:     d.Get("vdom").(string),
 	}
 
 	// Create Client for later connections
