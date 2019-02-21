@@ -27,18 +27,22 @@ func resourceFirewallObjectService() *schema.Resource {
 			"protocol": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "TCP/UDP/SCTP",
 			},
 			"fqdn": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "",
 			},
 			"iprange": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "0.0.0.0",
 			},
 			"comment": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "Created by Terraform Provider for FortiOS",
 			},
 		},
 	}

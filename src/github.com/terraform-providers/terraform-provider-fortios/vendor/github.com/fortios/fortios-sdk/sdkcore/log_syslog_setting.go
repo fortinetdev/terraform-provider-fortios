@@ -105,6 +105,7 @@ func (c *FortiSDKClient) UpdateLogSyslogSetting(params *JSONLogSyslogSetting, mk
 		return
 	}
 
+	log.Printf("FOS-fortios params: %v", params)
 	bytes := bytes.NewBuffer(locJSON)
 	req := c.NewRequest(HTTPMethod, path, nil, bytes)
 	err = req.Send()

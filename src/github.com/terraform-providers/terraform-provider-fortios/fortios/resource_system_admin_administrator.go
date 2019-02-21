@@ -27,42 +27,52 @@ func resourceSystemAdminAdministrator() *schema.Resource {
 			"trusthost1": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "0.0.0.0 0.0.0.0",
 			},
 			"trusthost2": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "0.0.0.0 0.0.0.0",
 			},
 			"trusthost3": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "0.0.0.0 0.0.0.0",
 			},
 			"trusthost4": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "0.0.0.0 0.0.0.0",
 			},
 			"trusthost5": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "0.0.0.0 0.0.0.0",
 			},
 			"trusthost6": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "0.0.0.0 0.0.0.0",
 			},
 			"trusthost7": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "0.0.0.0 0.0.0.0",
 			},
 			"trusthost8": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "0.0.0.0 0.0.0.0",
 			},
 			"trusthost9": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "0.0.0.0 0.0.0.0",
 			},
 			"trusthost10": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "0.0.0.0 0.0.0.0",
 			},
 			"accprofile": &schema.Schema{
 				Type:     schema.TypeString,
@@ -71,6 +81,7 @@ func resourceSystemAdminAdministrator() *schema.Resource {
 			"comments": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "Created by Terraform Provider for FortiOS",
 			},
 		},
 	}

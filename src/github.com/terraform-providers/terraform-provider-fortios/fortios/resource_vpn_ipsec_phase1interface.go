@@ -22,35 +22,39 @@ func resourceVPNIPsecPhase1Interface() *schema.Resource {
 			},
 			"type": &schema.Schema{
 				Type:     schema.TypeString,
-				Optional: true,
+				Required: true,
 			},
 			"interface": &schema.Schema{
 				Type:     schema.TypeString,
-				Optional: true,
+				Required: true,
+			},
+			"remote_gw": &schema.Schema{
+				Type:     schema.TypeString,
+				Required: true,
+			},
+			"psksecret": &schema.Schema{
+				Type:     schema.TypeString,
+				Required: true,
 			},
 			"peertype": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "any",
 			},
 			"proposal": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "aes128-sha256 aes256-sha256 aes128-sha1 aes256-sha1",
 			},
 			"comments": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "Created by Terraform Provider for FortiOS",
 			},
 			"wizard_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-			},
-			"remote_gw": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"psksecret": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Default:  "custom",
 			},
 			"certificate": &schema.Schema{
 				Type:     schema.TypeList,
@@ -62,26 +66,32 @@ func resourceVPNIPsecPhase1Interface() *schema.Resource {
 			"peerid": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "",
 			},
 			"peer": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "",
 			},
 			"peergrp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "",
 			},
 			"ipv4_split_include": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "",
 			},
 			"split_include_service": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "",
 			},
 			"ipv4_split_exclude": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "",
 			},
 		},
 	}
@@ -256,7 +266,7 @@ func resourceVPNIPsecPhase1InterfaceRead(d *schema.ResourceData, m interface{}) 
 	d.Set("comments", o.Comments)
 	d.Set("wizard_type", o.WizardType)
 	d.Set("remote_gw", o.RemoteGw)
-	d.Set("psksecret", o.Psksecret)
+	//d.Set("psksecret", o.Psksecret)
 	certificate := forticlient.ExtractString(o.Certificate)
 	d.Set("certificate", certificate)
 	d.Set("peerid", o.Peerid)

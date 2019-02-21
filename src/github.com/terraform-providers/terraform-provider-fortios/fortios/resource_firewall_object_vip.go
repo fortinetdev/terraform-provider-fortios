@@ -23,14 +23,15 @@ func resourceFirewallObjectVip() *schema.Resource {
 			"comment": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "Created by Terraform Provider for FortiOS",
 			},
 			"extip": &schema.Schema{
 				Type:     schema.TypeString,
-				Optional: true,
+				Required: true,
 			},
 			"mappedip": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
+				Required: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
@@ -38,10 +39,12 @@ func resourceFirewallObjectVip() *schema.Resource {
 			"extintf": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "any",
 			},
 			"portforward": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "disable",
 			},
 		},
 	}

@@ -17,89 +17,107 @@ func resourceNetworkingInterfacePort() *schema.Resource {
 		Delete: resourceNetworkingInterfacePortDelete,
 
 		Schema: map[string]*schema.Schema{
-			"portname": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"ip": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
-			},
-			"alias": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"status": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"device_identification": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"tcp_mss": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"speed": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"mtu_override": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"mtu": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"role": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"allowaccess": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"mode": &schema.Schema{
+			// "portname": &schema.Schema{
+			// 	Type:     schema.TypeString,
+			// 	Optional: true,
+			// },
+			"name": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
-			},
-			"dns_server_override": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"defaultgw": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"distance": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"description": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
 			},
 			"type": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"ip": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "0.0.0.0",
+			},
+			"alias": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "",
+			},
+			"status": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "up",
+			},
+			"device_identification": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "disable",
+			},
+			"tcp_mss": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "0",
+			},
+			"speed": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "auto",
+			},
+			"mtu_override": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "enable",
+			},
+			"mtu": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "1500",
+			},
+			"role": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "undefined",
+			},
+			"allowaccess": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "ping https ssh",
+			},
+			"mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "dhcp",
+			},
+			"dns_server_override": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "enable",
+			},
+			"defaultgw": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "enable",
+			},
+			"distance": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "5",
+			},
+			"description": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "Created by Terraform Provider for FortiOS",
+			},
 			"interface": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-			},
-			"name": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Default:  "",
 			},
 			"vdom": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "root",
 			},
 			"vlanid": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "0",
 			},
 		},
 	}
@@ -116,7 +134,8 @@ func resourceNetworkingInterfacePortCreate(d *schema.ResourceData, m interface{}
 
 	if typef == "physical" {
 		//Get Params from d
-		portname := d.Get("portname").(string)
+		//portname := d.Get("portname").(string)
+		portname := d.Get("name").(string)
 
 		d.SetId(portname)
 
@@ -288,6 +307,14 @@ func resourceNetworkingInterfacePortDelete(d *schema.ResourceData, m interface{}
 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
+
+	typef := d.Get("type").(string)
+
+	if typef == "physical" {
+		d.SetId("")
+
+		return nil
+	}
 
 	//Call process by sdk
 	err := c.DeleteNetworkingInterfacePort(mkey)

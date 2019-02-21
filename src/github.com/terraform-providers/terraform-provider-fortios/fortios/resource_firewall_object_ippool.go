@@ -26,19 +26,21 @@ func resourceFirewallObjectIPPool() *schema.Resource {
 			},
 			"startip": &schema.Schema{
 				Type:     schema.TypeString,
-				Optional: true,
+				Required: true,
 			},
 			"endip": &schema.Schema{
 				Type:     schema.TypeString,
-				Optional: true,
+				Required: true,
 			},
 			"arp_reply": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "enable",
 			},
 			"comments": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "Created by Terraform Provider for FortiOS",
 			},
 		},
 	}

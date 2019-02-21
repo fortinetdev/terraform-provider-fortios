@@ -30,6 +30,7 @@ func resourceFirewallObjectServiceGroup() *schema.Resource {
 			"comment": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "Created by Terraform Provider for FortiOS",
 			},
 		},
 	}
