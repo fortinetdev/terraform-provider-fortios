@@ -23,14 +23,16 @@ func resourceFirewallObjectVipGroup() *schema.Resource {
 			"comments": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "Created by Terraform Provider for FortiOS",
 			},
 			"interface": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "any",
 			},
 			"member": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
+				Required: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},

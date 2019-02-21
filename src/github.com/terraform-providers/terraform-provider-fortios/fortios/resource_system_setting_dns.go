@@ -18,11 +18,13 @@ func resourceSystemSettingDNS() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"primary": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Default:  "208.91.112.53",
 			},
 			"secondary": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "208.91.112.52",
 			},
 		},
 	}

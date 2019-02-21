@@ -18,31 +18,37 @@ func resourceLogFortiAnalyzerSetting() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
-				Optional: true,
+				Required: true,
 			},
 			"server": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "0.0.0.0",
 			},
 			"source_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "",
 			},
 			"upload_option": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "5-minute",
 			},
 			"reliable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "disable",
 			},
 			"hmac_algorithm": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "sha256",
 			},
 			"enc_algorithm": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "high",
 			},
 		},
 	}

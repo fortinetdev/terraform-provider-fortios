@@ -70,46 +70,6 @@ func (c *FortiSDKClient) CreateSystemAdminAdministrator(params *JSONSystemAdminA
 	path := "/api/v2/cmdb/system/admin"
 	output = &JSONCreateSystemAdminAdministratorOutput{}
 
-	if params.Trusthost1 == "" {
-		params.Trusthost1 = "0.0.0.0 0.0.0.0"
-	}
-
-	if params.Trusthost2 == "" {
-		params.Trusthost2 = "0.0.0.0 0.0.0.0"
-	}
-
-	if params.Trusthost3 == "" {
-		params.Trusthost3 = "0.0.0.0 0.0.0.0"
-	}
-
-	if params.Trusthost4 == "" {
-		params.Trusthost4 = "0.0.0.0 0.0.0.0"
-	}
-
-	if params.Trusthost5 == "" {
-		params.Trusthost5 = "0.0.0.0 0.0.0.0"
-	}
-
-	if params.Trusthost6 == "" {
-		params.Trusthost6 = "0.0.0.0 0.0.0.0"
-	}
-
-	if params.Trusthost7 == "" {
-		params.Trusthost7 = "0.0.0.0 0.0.0.0"
-	}
-
-	if params.Trusthost8 == "" {
-		params.Trusthost8 = "0.0.0.0 0.0.0.0"
-	}
-
-	if params.Trusthost9 == "" {
-		params.Trusthost9 = "0.0.0.0 0.0.0.0"
-	}
-
-	if params.Trusthost10 == "" {
-		params.Trusthost10 = "0.0.0.0 0.0.0.0"
-	}
-
 	locJSON, err := json.Marshal(params)
 	if err != nil {
 		log.Fatal(err)
@@ -165,46 +125,6 @@ func (c *FortiSDKClient) UpdateSystemAdminAdministrator(params *JSONSystemAdminA
 	path := "/api/v2/cmdb/system/admin"
 	path += "/" + mkey
 	output = &JSONUpdateSystemAdminAdministratorOutput{}
-	
-	if params.Trusthost1 == "" {
-		params.Trusthost1 = "0.0.0.0 0.0.0.0"
-	}
-
-	if params.Trusthost2 == "" {
-		params.Trusthost2 = "0.0.0.0 0.0.0.0"
-	}
-
-	if params.Trusthost3 == "" {
-		params.Trusthost3 = "0.0.0.0 0.0.0.0"
-	}
-
-	if params.Trusthost4 == "" {
-		params.Trusthost4 = "0.0.0.0 0.0.0.0"
-	}
-
-	if params.Trusthost5 == "" {
-		params.Trusthost5 = "0.0.0.0 0.0.0.0"
-	}
-
-	if params.Trusthost6 == "" {
-		params.Trusthost6 = "0.0.0.0 0.0.0.0"
-	}
-
-	if params.Trusthost7 == "" {
-		params.Trusthost7 = "0.0.0.0 0.0.0.0"
-	}
-
-	if params.Trusthost8 == "" {
-		params.Trusthost8 = "0.0.0.0 0.0.0.0"
-	}
-
-	if params.Trusthost9 == "" {
-		params.Trusthost9 = "0.0.0.0 0.0.0.0"
-	}
-
-	if params.Trusthost10 == "" {
-		params.Trusthost10 = "0.0.0.0 0.0.0.0"
-	}
 
 	locJSON, err := json.Marshal(params)
 	if err != nil {

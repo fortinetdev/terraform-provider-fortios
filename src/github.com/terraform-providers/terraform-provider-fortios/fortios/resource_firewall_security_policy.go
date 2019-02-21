@@ -36,14 +36,14 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 			},
 			"srcaddr": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
+				Required: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
 			},
 			"dstaddr": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
+				Required: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
@@ -51,6 +51,7 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 			"internet_service": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "disable",
 			},
 			"internet_service_id": &schema.Schema{
 				Type:     schema.TypeList,
@@ -65,11 +66,11 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 			},
 			"schedule": &schema.Schema{
 				Type:     schema.TypeString,
-				Optional: true,
+				Required: true,
 			},
 			"service": &schema.Schema{
 				Type:     schema.TypeList,
-				Optional: true,
+				Required: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
@@ -77,22 +78,27 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 			"utm_status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "disable",
 			},
 			"logtraffic": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "utm",
 			},
 			"logtraffic_start": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "disable",
 			},
 			"capture_packet": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "disable",
 			},
 			"ippool": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "disable",
 			},
 			"poolname": &schema.Schema{
 				Type:     schema.TypeList,
@@ -118,34 +124,42 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 			"comments": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "Created by Terraform Provider for FortiOS",
 			},
 			"av_profile": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "",
 			},
 			"webfilter_profile": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "",
 			},
 			"dnsfilter_profile": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "",
 			},
 			"ips_sensor": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "",
 			},
 			"application_list": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "",
 			},
 			"ssl_ssh_profile": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "",
 			},
 			"nat": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "enable",
 			},
 		},
 	}

@@ -22,23 +22,27 @@ func resourceNetworkingRouteStatic() *schema.Resource {
 			},
 			"gateway": &schema.Schema{
 				Type:     schema.TypeString,
-				Optional: true,
+				Required: true,
 			},
 			"blackhole": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "disable",
 			},
 			"distance": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Default:  "10",
 			},
 			"weight": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "0",
 			},
 			"priority": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "0",
 			},
 			"device": &schema.Schema{
 				Type:     schema.TypeString,
@@ -47,6 +51,7 @@ func resourceNetworkingRouteStatic() *schema.Resource {
 			"comment": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "Created by Terraform Provider for FortiOS",
 			},
 		},
 	}

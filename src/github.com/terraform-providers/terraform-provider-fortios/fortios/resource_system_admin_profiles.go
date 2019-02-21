@@ -23,58 +23,72 @@ func resourceSystemAdminProfiles() *schema.Resource {
 			"scope": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "vdom",
 			},
 			"comments": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "Created by Terraform Provider for FortiOS",
 			},
 			"secfabgrp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "none",
 			},
 			"ftviewgrp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "none",
 			},
 			"authgrp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "none",
 			},
 			"sysgrp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "none",
 			},
 			"netgrp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "none",
 			},
 			"loggrp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "none",
 			},
 			"fwgrp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "none",
 			},
 			"vpngrp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "none",
 			},
 			"utmgrp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "none",
 			},
 			"wanoptgrp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "none",
 			},
 			"wifi": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "none",
 			},
 			"admintimeout_override": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "disable",
 			},
 		},
 	}

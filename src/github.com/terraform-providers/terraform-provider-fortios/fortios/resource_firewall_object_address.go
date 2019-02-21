@@ -27,26 +27,32 @@ func resourceFirewallObjectAddress() *schema.Resource {
 			"subnet": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "0.0.0.0 0.0.0.0",
 			},
 			"start_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "0.0.0.0",
 			},
 			"end_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "0.0.0.0",
 			},
 			"fqdn": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "",
 			},
 			"country": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "",
 			},
 			"comment": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "Created by Terraform Provider for FortiOS",
 			},
 		},
 	}

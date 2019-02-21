@@ -16,25 +16,29 @@ func resourceSystemSettingGlobal() *schema.Resource {
 		Delete: resourceSystemSettingGlobalDelete,
 
 		Schema: map[string]*schema.Schema{
-			"admintimeout": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
-			"timezone": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-			},
 			"hostname": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"admintimeout": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "5",
+			},
+			"timezone": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "04",
+			},
 			"admin_sport": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "443",
 			},
 			"admin_ssh_port": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "22",
 			},
 		},
 	}

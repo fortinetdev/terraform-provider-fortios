@@ -22,55 +22,67 @@ func resourceVPNIPsecPhase2Interface() *schema.Resource {
 			},
 			"phase1name": &schema.Schema{
 				Type:     schema.TypeString,
-				Optional: true,
+				Required: true,
 			},
 			"proposal": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "aes128-sha1 aes256-sha1 aes128-sha256 aes256-sha256 aes128gcm aes256gcm chacha20poly1305",
 			},
 			"comments": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "Created by Terraform Provider for FortiOS",
 			},
 			"src_addr_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "subnet",
 			},
 			"src_start_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "0.0.0.0",
 			},
 			"src_end_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "0.0.0.0",
 			},
 			"src_subnet": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "0.0.0.0 0.0.0.0",
 			},
 			"dst_addr_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "subnet",
 			},
 			"src_name": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "",
 			},
 			"dst_name": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "",
 			},
 			"dst_start_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "0.0.0.0",
 			},
 			"dst_end_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "0.0.0.0",
 			},
 			"dst_subnet": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "0.0.0.0 0.0.0.0",
 			},
 		},
 	}
