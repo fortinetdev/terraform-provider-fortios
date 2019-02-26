@@ -1,0 +1,118 @@
+<% wrap_layout :inner do %>
+    <% content_for :sidebar do %>
+        <div class="docs-sidebar hidden-print affix-top" role="complementary">
+            <ul class="nav docs-sidenav">
+                <li<%= sidebar_current("docs-home") %>>
+                    <a href="/docs/providers/index.html">All Providers</a>
+                </li>
+
+                <li<%= sidebar_current("docs-fortios-index") %>>
+                    <a href="/docs/providers/fortios/index.html">FortiOS Provider</a>
+                </li>
+
+                <li<%= sidebar_current("docs-fortios-resource") %>>
+                <a href="#">Resources</a>
+                    <ul class="nav nav-visible">
+
+                        <li<%= sidebar_current("docs-fortios-resource-system-setting-global") %>>
+                            <a href="/docs/providers/fortios/r/fortios_system_setting_global.html">fortios_system_setting_global</a>
+                        </li>
+
+                        <li<%= sidebar_current("docs-fortios-resource-system-setting-dns") %>>
+                            <a href="/docs/providers/fortios/r/fortios_system_setting_dns.html">fortios_system_setting_dns</a>
+                        </li>
+
+                        <li<%= sidebar_current("docs-fortios-resource-system-setting-ntp") %>>
+                            <a href="/docs/providers/fortios/r/fortios_system_setting_ntp.html">fortios_system_setting_ntp</a>
+                        </li>
+
+                        <li<%= sidebar_current("docs-fortios-resource-networking-interface-port") %>>
+                            <a href="/docs/providers/fortios/r/fortios_networking_interface_port.html">fortios_networking_interface_port</a>
+                        </li>
+
+                        <li<%= sidebar_current("docs-fortios-resource-networking-route-static") %>>
+                            <a href="/docs/providers/fortios/r/fortios_networking_route_static.html">fortios_networking_route_static</a>
+                        </li>
+
+                        <li<%= sidebar_current("docs-fortios-resource-firewall-object-address") %>>
+                            <a href="/docs/providers/fortios/r/fortios_firewall_object_address.html">fortios_firewall_object_address</a>
+                        </li>
+
+                        <li<%= sidebar_current("docs-fortios-resource-firewall-object-addressgroup") %>>
+                            <a href="/docs/providers/fortios/r/fortios_firewall_object_addressgroup.html">fortios_firewall_object_addressgroup</a>
+                        </li>
+
+                        <li<%= sidebar_current("docs-fortios-resource-firewall-object-ippool") %>>
+                            <a href="/docs/providers/fortios/r/fortios_firewall_object_ippool.html">fortios_firewall_object_ippool</a>
+                        </li>
+
+                        <li<%= sidebar_current("docs-fortios-resource-firewall-object-service") %>>
+                            <a href="/docs/providers/fortios/r/fortios_firewall_object_service.html">fortios_firewall_object_service</a>
+                        </li>
+
+                        <li<%= sidebar_current("docs-fortios-resource-firewall-object-servicegroup") %>>
+                            <a href="/docs/providers/fortios/r/fortios_firewall_object_servicegroup.html">fortios_firewall_object_servicegroup</a>
+                        </li>
+
+                        <li<%= sidebar_current("docs-fortios-resource-firewall-object-vip") %>>
+                            <a href="/docs/providers/fortios/r/fortios_firewall_object_vip.html">fortios_firewall_object_vip</a>
+                        </li>
+
+                        <li<%= sidebar_current("docs-fortios-resource-firewall-object-vipgroup") %>>
+                            <a href="/docs/providers/fortios/r/fortios_firewall_object_vipgroup.html">fortios_firewall_object_vipgroup</a>
+                        </li>
+
+                        <li<%= sidebar_current("docs-fortios-resource-firewall-security-policy") %>>
+                            <a href="/docs/providers/fortios/r/fortios_firewall_security_policy.html">fortios_firewall_security_policy</a>
+                        </li>
+
+                        <li<%= sidebar_current("docs-fortios-resource-system-admin-administrator") %>>
+                            <a href="/docs/providers/fortios/r/fortios_system_admin_administrator.html">fortios_system_admin_administrator</a>
+                        </li>
+
+                        <li<%= sidebar_current("docs-fortios-resource-system-admin-profiles") %>>
+                            <a href="/docs/providers/fortios/r/fortios_system_admin_profiles.html">fortios_system_admin_profiles</a>
+                        </li>
+
+                        <li<%= sidebar_current("docs-fortios-resource-system-apiuser-setting") %>>
+                            <a href="/docs/providers/fortios/r/fortios_system_apiuser_setting.html">fortios_system_apiuser_setting</a>
+                        </li>
+
+                        <li<%= sidebar_current("docs-fortios-resource-system-vdom-setting") %>>
+                            <a href="/docs/providers/fortios/r/fortios_system_vdom_setting.html">fortios_system_vdom_setting</a>
+                        </li>
+
+                        <li<%= sidebar_current("docs-fortios-resource-system-license-forticare") %>>
+                            <a href="/docs/providers/fortios/r/fortios_system_license_forticare.html">fortios_system_license_forticare</a>
+                        </li>
+
+                        <li<%= sidebar_current("docs-fortios-resource-system-license-vm") %>>
+                            <a href="/docs/providers/fortios/r/fortios_system_license_vm.html">fortios_system_license_vm</a>
+                        </li>
+
+                        <li<%= sidebar_current("docs-fortios-resource-log-fortianalyzer-setting") %>>
+                            <a href="/docs/providers/fortios/r/fortios_log_fortianalyzer_setting.html">fortios_log_fortianalyzer_setting</a>
+                        </li>
+
+                        <li<%= sidebar_current("docs-fortios-resource-log-syslog-setting") %>>
+                            <a href="/docs/providers/fortios/r/fortios_log_syslog_setting.html">fortios_log_syslog_setting</a>
+                        </li>
+
+                        <li<%= sidebar_current("docs-fortios-resource-vpn-ipsec-phase1interface") %>>
+                            <a href="/docs/providers/fortios/r/fortios_vpn_ipsec_phase1interface.html">fortios_vpn_ipsec_phase1interface</a>
+                        </li>
+
+                        <li<%= sidebar_current("docs-fortios-resource-vpn-ipsec-phase2interface") %>>
+                            <a href="/docs/providers/fortios/r/fortios_vpn_ipsec_phase2interface.html">fortios_vpn_ipsec_phase2interface</a>
+                        </li>
+                    </ul>
+                </li>
+
+                    </ul>
+                </li>
+
+        </div>
+    <% end %>
+
+    <%= yield %>
+<% end %>
