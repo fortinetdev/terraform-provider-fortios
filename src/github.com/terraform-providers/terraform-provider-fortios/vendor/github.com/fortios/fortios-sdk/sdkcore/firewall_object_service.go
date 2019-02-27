@@ -6,15 +6,22 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"strconv"
 	// "strconv"
 )
 
 // JSONFirewallObjectServiceCommon contains the General parameters for Create and Update API function
 type JSONFirewallObjectServiceCommon struct {
-	Name     string `json:"name"`
-	Category string `json:"category"`
-	Protocol string `json:"protocol"`
-	Comment  string `json:"comment"`
+	Name           string `json:"name"`
+	Category       string `json:"category"`
+	Protocol       string `json:"protocol"`
+	Comment        string `json:"comment"`
+	ProtocolNumber string `json:"protocol-number"`
+	Icmptype       string `json:"icmptype"`
+	Icmpcode       string `json:"icmpcode"`
+	TCPPortrange   string `json:"tcp-portrange"`
+	UDPPortrange   string `json:"udp-portrange"`
+	SctpPortrange  string `json:"sctp-portrange"`
 }
 
 // JSONFirewallObjectServiceFqdn contains the FQDN parameters for Create and Update API function
@@ -233,7 +240,7 @@ func (c *FortiSDKClient) ReadFirewallObjectService(mkey string) (output *JSONFir
 			err = fmt.Errorf("cannot get the right response")
 			return
 		}
-		
+
 		if result["status"] != "success" {
 			err = fmt.Errorf("cannot get the right response")
 			return
@@ -263,7 +270,34 @@ func (c *FortiSDKClient) ReadFirewallObjectService(mkey string) (output *JSONFir
 		if mapTmp["comment"] != nil {
 			output.Comment = mapTmp["comment"].(string)
 		}
+		if mapTmp["protocol-number"] != nil {
+			output.ProtocolNumber = strconv.Itoa(int(mapTmp["protocol-number"].(float64)))
+		}
 
+		if output.Protocol == "ICMP" {
+			if mapTmp["icmptype"] != nil {
+				output.Icmptype = strconv.Itoa(int(mapTmp["icmptype"].(float64)))
+			}
+			if mapTmp["icmpcode"] != nil {
+				output.Icmpcode = strconv.Itoa(int(mapTmp["icmpcode"].(float64)))
+			}
+		} else {
+			if mapTmp["icmptype"] != nil {
+				output.Icmptype = mapTmp["icmptype"].(string)
+			}
+			if mapTmp["icmpcode"] != nil {
+				output.Icmpcode = mapTmp["icmpcode"].(string)
+			}
+		}
+		if mapTmp["tcp-portrange"] != nil {
+			output.TCPPortrange = mapTmp["tcp-portrange"].(string)
+		}
+		if mapTmp["udp-portrange"] != nil {
+			output.UDPPortrange = mapTmp["udp-portrange"].(string)
+		}
+		if mapTmp["sctp-portrange"] != nil {
+			output.SctpPortrange = mapTmp["sctp-portrange"].(string)
+		}
 	} else {
 		err = fmt.Errorf("cannot get the right response")
 		return
