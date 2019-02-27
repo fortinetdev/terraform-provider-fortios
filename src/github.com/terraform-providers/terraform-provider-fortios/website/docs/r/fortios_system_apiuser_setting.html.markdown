@@ -13,13 +13,13 @@ Provides a resource to configure API users of FortiOS. The API user of the token
 ```hcl
 provider "fortios" {
 	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
+	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
 }
 
 resource "fortios_system_apiuser_setting" "test2" {
 	name = "cccc"
 	accprofile = "restAPIprofile"
-	vdom = "root"
+	vdom = ["root"]
 	trusthost = [
 		{
 			type = "ipv4-trusthost"
