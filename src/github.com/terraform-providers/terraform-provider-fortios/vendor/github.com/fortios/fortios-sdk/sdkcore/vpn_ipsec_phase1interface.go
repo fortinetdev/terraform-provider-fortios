@@ -27,6 +27,9 @@ type JSONVPNIPsecPhase1Interface struct {
 	IPv4SplitInclude    string     `json:"ipv4-split-include"`
 	SplitIncludeService string     `json:"split-include-service"`
 	IPv4SplitExclude    string     `json:"ipv4-split-exclude"`
+	ModeCfg             string     `json:"mode-cfg"`
+	Authmethod          string     `json:"authmethod"`
+	AuthmethodRemote    string     `json:"authmethod-remote"`
 }
 
 // JSONCreateVPNIPsecPhase1InterfaceOutput contains the output results for Create API function
@@ -219,7 +222,7 @@ func (c *FortiSDKClient) ReadVPNIPsecPhase1Interface(mkey string) (output *JSONV
 			err = fmt.Errorf("cannot get the right response")
 			return
 		}
-		
+
 		if result["status"] != "success" {
 			err = fmt.Errorf("cannot get the right response")
 			return
@@ -289,6 +292,15 @@ func (c *FortiSDKClient) ReadVPNIPsecPhase1Interface(mkey string) (output *JSONV
 		}
 		if mapTmp["ipv4-split-exclude"] != nil {
 			output.IPv4SplitExclude = mapTmp["ipv4-split-exclude"].(string)
+		}
+		if mapTmp["mode-cfg"] != nil {
+			output.ModeCfg = mapTmp["mode-cfg"].(string)
+		}
+		if mapTmp["authmethod"] != nil {
+			output.Authmethod = mapTmp["authmethod"].(string)
+		}
+		if mapTmp["authmethod-remote"] != nil {
+			output.AuthmethodRemote = mapTmp["authmethod-remote"].(string)
 		}
 
 	} else {

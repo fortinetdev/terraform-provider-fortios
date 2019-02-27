@@ -13,6 +13,7 @@ import (
 type JSONSystemSettingNTP struct {
 	Type      string        `json:"type"`
 	Ntpserver NTPMultValues `json:"ntpserver"`
+	Ntpsync       string `json:"ntpsync"`
 }
 
 // JSONCreateSystemSettingNTPOutput contains the output results for Create API function
@@ -235,6 +236,9 @@ func (c *FortiSDKClient) ReadSystemSettingNTP(mkey string) (output *JSONSystemSe
 					})
 			}
 			output.Ntpserver = members
+		}
+		if mapTmp["ntpsync"] != nil {
+			output.Ntpsync = mapTmp["ntpsync"].(string)
 		}
 
 	} else {
