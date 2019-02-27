@@ -3,40 +3,45 @@ package forticlient
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
-	"fmt"
 	// "strconv"
 )
 
 // JSONFirewallSecurityPolicy contains the parameters for Create and Update API function
 type JSONFirewallSecurityPolicy struct {
-	Name              string                     `json:"name"`
-	Srcintf           MultValues                 `json:"srcintf"`
-	Dstintf           MultValues                 `json:"dstintf"`
-	Srcaddr           MultValues                 `json:"srcaddr"`
-	Dstaddr           MultValues                 `json:"dstaddr"`
-	InternetService   string                     `json:"internet-service"`
-	InternetServiceID PolicyInternetIDMultValues `json:"internet-service-id"`
-	Action            string                     `json:"action"`
-	Schedule          string                     `json:"schedule"`
-	Service           MultValues                 `json:"service"`
-	UtmStatus         string                     `json:"utm-status"`
-	Logtraffic        string                     `json:"logtraffic"`
-	LogtrafficStart   string                     `json:"logtraffic-start"`
-	CapturePacket     string                     `json:"capture-packet"`
-	Ippool            string                     `json:"ippool"`
-	Poolname          MultValues                 `json:"poolname"`
-	Groups            MultValues                 `json:"groups"`
-	Devices           MultValues                 `json:"devices"`
-	Comments          string                     `json:"comments"`
-	AvProfile         string                     `json:"av-profile"`
-	WebfilterProfile  string                     `json:"webfilter-profile"`
-	DnsfilterProfile  string                     `json:"dnsfilter-profile"`
-	IpsSensor         string                     `json:"ips-sensor"`
-	ApplicationList   string                     `json:"application-list"`
-	SslSSHProfile     string                     `json:"ssl-ssh-profile"`
-	Nat               string                     `json:"nat"`
+	Name                   string                     `json:"name"`
+	Srcintf                MultValues                 `json:"srcintf"`
+	Dstintf                MultValues                 `json:"dstintf"`
+	Srcaddr                MultValues                 `json:"srcaddr"`
+	Dstaddr                MultValues                 `json:"dstaddr"`
+	InternetService        string                     `json:"internet-service"`
+	InternetServiceID      PolicyInternetIDMultValues `json:"internet-service-id"`
+	InternetServiceSrc     string                     `json:"internet-service-src"`
+	InternetServiceSrcID   PolicyInternetIDMultValues `json:"internet-service-src-id"`
+	Users                  MultValues                 `json:"users"`
+	Status                 string                     `json:"status"`
+	Action                 string                     `json:"action"`
+	Schedule               string                     `json:"schedule"`
+	Service                MultValues                 `json:"service"`
+	UtmStatus              string                     `json:"utm-status"`
+	Logtraffic             string                     `json:"logtraffic"`
+	LogtrafficStart        string                     `json:"logtraffic-start"`
+	CapturePacket          string                     `json:"capture-packet"`
+	Ippool                 string                     `json:"ippool"`
+	Poolname               MultValues                 `json:"poolname"`
+	Groups                 MultValues                 `json:"groups"`
+	Devices                MultValues                 `json:"devices"`
+	Comments               string                     `json:"comments"`
+	AvProfile              string                     `json:"av-profile"`
+	WebfilterProfile       string                     `json:"webfilter-profile"`
+	DnsfilterProfile       string                     `json:"dnsfilter-profile"`
+	IpsSensor              string                     `json:"ips-sensor"`
+	ApplicationList        string                     `json:"application-list"`
+	SslSSHProfile          string                     `json:"ssl-ssh-profile"`
+	Nat                    string                     `json:"nat"`
+	ProfileProtocolOptions string                     `json:"profile-protocol-options"`
 }
 
 // JSONCreateFirewallSecurityPolicyOutput contains the output results for Create API function
@@ -248,13 +253,13 @@ func (c *FortiSDKClient) ReadFirewallSecurityPolicy(mkey string) (output *JSONFi
 			err = fmt.Errorf("cannot get the right response")
 			return
 		}
-		
+
 		if result["status"] != "success" {
 			err = fmt.Errorf("cannot get the right response")
 			return
 		}
 
-		mapTmp := (result["results"].([]interface {}))[0].(map[string]interface {})
+		mapTmp := (result["results"].([]interface{}))[0].(map[string]interface{})
 
 		if mapTmp == nil {
 			return
@@ -264,11 +269,11 @@ func (c *FortiSDKClient) ReadFirewallSecurityPolicy(mkey string) (output *JSONFi
 			output.Name = mapTmp["name"].(string)
 		}
 		if mapTmp["srcintf"] != nil {
-			member := mapTmp["srcintf"].([]interface {})
+			member := mapTmp["srcintf"].([]interface{})
 
 			var members []MultValue
 			for _, v := range member {
-				c := v.(map[string]interface {})
+				c := v.(map[string]interface{})
 
 				members = append(members,
 					MultValue{
@@ -278,11 +283,11 @@ func (c *FortiSDKClient) ReadFirewallSecurityPolicy(mkey string) (output *JSONFi
 			output.Srcintf = members
 		}
 		if mapTmp["dstintf"] != nil {
-			member := mapTmp["dstintf"].([]interface {})
+			member := mapTmp["dstintf"].([]interface{})
 
 			var members []MultValue
 			for _, v := range member {
-				c := v.(map[string]interface {})
+				c := v.(map[string]interface{})
 
 				members = append(members,
 					MultValue{
@@ -292,11 +297,11 @@ func (c *FortiSDKClient) ReadFirewallSecurityPolicy(mkey string) (output *JSONFi
 			output.Dstintf = members
 		}
 		if mapTmp["srcaddr"] != nil {
-			member := mapTmp["srcaddr"].([]interface {})
+			member := mapTmp["srcaddr"].([]interface{})
 
 			var members []MultValue
 			for _, v := range member {
-				c := v.(map[string]interface {})
+				c := v.(map[string]interface{})
 
 				members = append(members,
 					MultValue{
@@ -306,11 +311,11 @@ func (c *FortiSDKClient) ReadFirewallSecurityPolicy(mkey string) (output *JSONFi
 			output.Srcaddr = members
 		}
 		if mapTmp["dstaddr"] != nil {
-			member := mapTmp["dstaddr"].([]interface {})
+			member := mapTmp["dstaddr"].([]interface{})
 
 			var members []MultValue
 			for _, v := range member {
-				c := v.(map[string]interface {})
+				c := v.(map[string]interface{})
 
 				members = append(members,
 					MultValue{
@@ -323,11 +328,11 @@ func (c *FortiSDKClient) ReadFirewallSecurityPolicy(mkey string) (output *JSONFi
 			output.InternetService = mapTmp["internet-service"].(string)
 		}
 		if mapTmp["internet-service-id"] != nil {
-			member := mapTmp["internet-service-id"].([]interface {})
+			member := mapTmp["internet-service-id"].([]interface{})
 
 			var members []PolicyInternetIDMultValue
 			for _, v := range member {
-				c := v.(map[string]interface {})
+				c := v.(map[string]interface{})
 
 				members = append(members,
 					PolicyInternetIDMultValue{
@@ -336,6 +341,41 @@ func (c *FortiSDKClient) ReadFirewallSecurityPolicy(mkey string) (output *JSONFi
 			}
 			output.InternetServiceID = members
 		}
+		if mapTmp["internet-service-src"] != nil {
+			output.InternetServiceSrc = mapTmp["internet-service-src"].(string)
+		}
+		if mapTmp["internet-service-src-id"] != nil {
+			member := mapTmp["internet-service-src-id"].([]interface{})
+
+			var members []PolicyInternetIDMultValue
+			for _, v := range member {
+				c := v.(map[string]interface{})
+
+				members = append(members,
+					PolicyInternetIDMultValue{
+						ID: c["id"].(float64),
+					})
+			}
+			output.InternetServiceSrcID = members
+		}
+
+		if mapTmp["users"] != nil {
+			member := mapTmp["users"].([]interface{})
+
+			var members []MultValue
+			for _, v := range member {
+				c := v.(map[string]interface{})
+
+				members = append(members,
+					MultValue{
+						Name: c["name"].(string),
+					})
+			}
+			output.Users = members
+		}
+		if mapTmp["status"] != nil {
+			output.Status = mapTmp["status"].(string)
+		}
 		if mapTmp["action"] != nil {
 			output.Action = mapTmp["action"].(string)
 		}
@@ -343,11 +383,11 @@ func (c *FortiSDKClient) ReadFirewallSecurityPolicy(mkey string) (output *JSONFi
 			output.Schedule = mapTmp["schedule"].(string)
 		}
 		if mapTmp["service"] != nil {
-			member := mapTmp["service"].([]interface {})
+			member := mapTmp["service"].([]interface{})
 
 			var members []MultValue
 			for _, v := range member {
-				c := v.(map[string]interface {})
+				c := v.(map[string]interface{})
 
 				members = append(members,
 					MultValue{
@@ -372,11 +412,11 @@ func (c *FortiSDKClient) ReadFirewallSecurityPolicy(mkey string) (output *JSONFi
 			output.Ippool = mapTmp["ippool"].(string)
 		}
 		if mapTmp["poolname"] != nil {
-			member := mapTmp["poolname"].([]interface {})
+			member := mapTmp["poolname"].([]interface{})
 
 			var members []MultValue
 			for _, v := range member {
-				c := v.(map[string]interface {})
+				c := v.(map[string]interface{})
 
 				members = append(members,
 					MultValue{
@@ -386,11 +426,11 @@ func (c *FortiSDKClient) ReadFirewallSecurityPolicy(mkey string) (output *JSONFi
 			output.Poolname = members
 		}
 		if mapTmp["groups"] != nil {
-			member := mapTmp["groups"].([]interface {})
+			member := mapTmp["groups"].([]interface{})
 
 			var members []MultValue
 			for _, v := range member {
-				c := v.(map[string]interface {})
+				c := v.(map[string]interface{})
 
 				members = append(members,
 					MultValue{
@@ -400,11 +440,11 @@ func (c *FortiSDKClient) ReadFirewallSecurityPolicy(mkey string) (output *JSONFi
 			output.Groups = members
 		}
 		if mapTmp["devices"] != nil {
-			member := mapTmp["devices"].([]interface {})
+			member := mapTmp["devices"].([]interface{})
 
 			var members []MultValue
 			for _, v := range member {
-				c := v.(map[string]interface {})
+				c := v.(map[string]interface{})
 
 				members = append(members,
 					MultValue{
@@ -436,6 +476,9 @@ func (c *FortiSDKClient) ReadFirewallSecurityPolicy(mkey string) (output *JSONFi
 		}
 		if mapTmp["nat"] != nil {
 			output.Nat = mapTmp["nat"].(string)
+		}
+		if mapTmp["profile-protocol-options"] != nil {
+			output.ProfileProtocolOptions = mapTmp["profile-protocol-options"].(string)
 		}
 
 	} else {
