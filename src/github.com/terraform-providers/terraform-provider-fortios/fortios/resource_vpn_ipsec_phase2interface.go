@@ -132,6 +132,14 @@ func resourceVPNIPsecPhase2InterfaceCreate(d *schema.ResourceData, m interface{}
 		dstSubnet = "0.0.0.0 0.0.0.0"
 	}
 
+	if srcAddrType == "range" {
+		srcSubnet = srcStartIP + " " + srcEndIP
+	}
+
+	if dstAddrType == "range" {
+		dstSubnet = dstStartIP + " " + dstEndIP
+	}
+
 	//Build input data by sdk
 	i := &forticlient.JSONVPNIPsecPhase2Interface{
 		Name:        name,
@@ -208,6 +216,14 @@ func resourceVPNIPsecPhase2InterfaceUpdate(d *schema.ResourceData, m interface{}
 
 	if dstSubnet == "" {
 		dstSubnet = "0.0.0.0 0.0.0.0"
+	}
+
+	if srcAddrType == "range" {
+		srcSubnet = srcStartIP + " " + srcEndIP
+	}
+
+	if dstAddrType == "range" {
+		dstSubnet = dstStartIP + " " + dstEndIP
 	}
 
 	//Build input data by sdk

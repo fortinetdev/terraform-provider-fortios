@@ -27,6 +27,11 @@ func resourceSystemSettingNTP() *schema.Resource {
 					Type: schema.TypeString,
 				},
 			},
+			"ntpsync": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "enable",
+			},
 		},
 	}
 }
@@ -52,6 +57,7 @@ func resourceSystemSettingNTPCreate(d *schema.ResourceData, m interface{}) error
 	// i := &forticlient.JSONSystemSettingNTP{
 	// 	Type:      typef,
 	// 	Ntpserver: ntpservers,
+	// 	Ntpsync:       ntpsync,
 	// }
 
 	// //Call process by sdk
@@ -82,6 +88,7 @@ func resourceSystemSettingNTPUpdate(d *schema.ResourceData, m interface{}) error
 
 	typef := d.Get("type").(string)
 	ntpserver := d.Get("ntpserver").([]interface{})
+	ntpsync := d.Get("ntpsync").(string)
 
 	var ntpservers []forticlient.NTPMultValue
 
@@ -96,6 +103,7 @@ func resourceSystemSettingNTPUpdate(d *schema.ResourceData, m interface{}) error
 	i := &forticlient.JSONSystemSettingNTP{
 		Type:      typef,
 		Ntpserver: ntpservers,
+		Ntpsync:   ntpsync,
 	}
 
 	//Call process by sdk
@@ -151,6 +159,7 @@ func resourceSystemSettingNTPRead(d *schema.ResourceData, m interface{}) error {
 	}
 
 	d.Set("ntpserver", vs)
+	d.Set("ntpsync", o.Ntpsync)
 
 	return nil
 }

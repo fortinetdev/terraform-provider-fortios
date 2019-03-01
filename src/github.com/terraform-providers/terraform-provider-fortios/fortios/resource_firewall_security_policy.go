@@ -60,6 +60,30 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 					Type: schema.TypeInt,
 				},
 			},
+			"internet_service_src": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "disable",
+			},
+			"internet_service_src_id": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Schema{
+					Type: schema.TypeInt,
+				},
+			},
+			"users": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
+			},
+			"status": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "disable",
+			},
 			"action": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -161,6 +185,11 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 				Optional: true,
 				Default:  "enable",
 			},
+			"profile_protocol_options": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "default",
+			},
 		},
 	}
 }
@@ -177,6 +206,10 @@ func resourceFirewallSecurityPolicyCreate(d *schema.ResourceData, m interface{})
 	dstaddr := d.Get("dstaddr").([]interface{})
 	internetService := d.Get("internet_service").(string)
 	internetServiceID := d.Get("internet_service_id").([]interface{})
+	internetServiceSrc := d.Get("internet_service_src").(string)
+	internetServiceSrcID := d.Get("internet_service_src_id").([]interface{})
+	users := d.Get("users").([]interface{})
+	status := d.Get("status").(string)
 	action := d.Get("action").(string)
 	schedule := d.Get("schedule").(string)
 	service := d.Get("service").([]interface{})
@@ -196,6 +229,7 @@ func resourceFirewallSecurityPolicyCreate(d *schema.ResourceData, m interface{})
 	applicationList := d.Get("application_list").(string)
 	sslSSHProfile := d.Get("ssl_ssh_profile").(string)
 	nat := d.Get("nat").(string)
+	profileProtocolOptions := d.Get("profile_protocol_options").(string)
 
 	var srcintfs []forticlient.MultValue
 
@@ -242,6 +276,24 @@ func resourceFirewallSecurityPolicyCreate(d *schema.ResourceData, m interface{})
 			})
 	}
 
+	var internetServiceSrcIds []forticlient.PolicyInternetIDMultValue
+
+	for _, v := range internetServiceSrcID {
+		internetServiceSrcIds = append(internetServiceSrcIds,
+			forticlient.PolicyInternetIDMultValue{
+				ID: float64(v.(int)),
+			})
+	}
+
+	var userss []forticlient.MultValue
+
+	for _, v := range users {
+		userss = append(userss,
+			forticlient.MultValue{
+				Name: v.(string),
+			})
+	}
+
 	var services []forticlient.MultValue
 
 	for _, v := range service {
@@ -280,32 +332,37 @@ func resourceFirewallSecurityPolicyCreate(d *schema.ResourceData, m interface{})
 
 	//Build input data by sdk
 	i := &forticlient.JSONFirewallSecurityPolicy{
-		Name:              name,
-		Srcintf:           srcintfs,
-		Dstintf:           dstintfs,
-		Srcaddr:           srcaddrs,
-		Dstaddr:           dstaddrs,
-		InternetService:   internetService,
-		InternetServiceID: internetServiceIds,
-		Action:            action,
-		Schedule:          schedule,
-		Service:           services,
-		UtmStatus:         utmStatus,
-		Logtraffic:        logtraffic,
-		LogtrafficStart:   logtrafficStart,
-		CapturePacket:     capturePacket,
-		Ippool:            ippool,
-		Poolname:          poolnames,
-		Groups:            groupss,
-		Devices:           devicess,
-		Comments:          comments,
-		AvProfile:         avProfile,
-		WebfilterProfile:  webfilterProfile,
-		DnsfilterProfile:  dnsfilterProfile,
-		IpsSensor:         ipsSensor,
-		ApplicationList:   applicationList,
-		SslSSHProfile:     sslSSHProfile,
-		Nat:               nat,
+		Name:                   name,
+		Srcintf:                srcintfs,
+		Dstintf:                dstintfs,
+		Srcaddr:                srcaddrs,
+		Dstaddr:                dstaddrs,
+		InternetService:        internetService,
+		InternetServiceID:      internetServiceIds,
+		InternetServiceSrc:     internetServiceSrc,
+		InternetServiceSrcID:   internetServiceSrcIds,
+		Users:                  userss,
+		Status:                 status,
+		Action:                 action,
+		Schedule:               schedule,
+		Service:                services,
+		UtmStatus:              utmStatus,
+		Logtraffic:             logtraffic,
+		LogtrafficStart:        logtrafficStart,
+		CapturePacket:          capturePacket,
+		Ippool:                 ippool,
+		Poolname:               poolnames,
+		Groups:                 groupss,
+		Devices:                devicess,
+		Comments:               comments,
+		AvProfile:              avProfile,
+		WebfilterProfile:       webfilterProfile,
+		DnsfilterProfile:       dnsfilterProfile,
+		IpsSensor:              ipsSensor,
+		ApplicationList:        applicationList,
+		SslSSHProfile:          sslSSHProfile,
+		Nat:                    nat,
+		ProfileProtocolOptions: profileProtocolOptions,
 	}
 
 	//Call process by sdk
@@ -335,6 +392,10 @@ func resourceFirewallSecurityPolicyUpdate(d *schema.ResourceData, m interface{})
 	dstaddr := d.Get("dstaddr").([]interface{})
 	internetService := d.Get("internet_service").(string)
 	internetServiceID := d.Get("internet_service_id").([]interface{})
+	internetServiceSrc := d.Get("internet_service_src").(string)
+	internetServiceSrcID := d.Get("internet_service_src_id").([]interface{})
+	users := d.Get("users").([]interface{})
+	status := d.Get("status").(string)
 	action := d.Get("action").(string)
 	schedule := d.Get("schedule").(string)
 	service := d.Get("service").([]interface{})
@@ -354,6 +415,7 @@ func resourceFirewallSecurityPolicyUpdate(d *schema.ResourceData, m interface{})
 	applicationList := d.Get("application_list").(string)
 	sslSSHProfile := d.Get("ssl_ssh_profile").(string)
 	nat := d.Get("nat").(string)
+	profileProtocolOptions := d.Get("profile_protocol_options").(string)
 
 	var srcintfs []forticlient.MultValue
 
@@ -400,6 +462,23 @@ func resourceFirewallSecurityPolicyUpdate(d *schema.ResourceData, m interface{})
 			})
 	}
 
+	var internetServiceSrcIds []forticlient.PolicyInternetIDMultValue
+
+	for _, v := range internetServiceSrcID {
+		internetServiceSrcIds = append(internetServiceSrcIds,
+			forticlient.PolicyInternetIDMultValue{
+				ID: float64(v.(int)),
+			})
+	}
+
+	var userss []forticlient.MultValue
+
+	for _, v := range users {
+		userss = append(userss,
+			forticlient.MultValue{
+				Name: v.(string),
+			})
+	}
 	var services []forticlient.MultValue
 
 	for _, v := range service {
@@ -438,32 +517,37 @@ func resourceFirewallSecurityPolicyUpdate(d *schema.ResourceData, m interface{})
 
 	//Build input data by sdk
 	i := &forticlient.JSONFirewallSecurityPolicy{
-		Name:              name,
-		Srcintf:           srcintfs,
-		Dstintf:           dstintfs,
-		Srcaddr:           srcaddrs,
-		Dstaddr:           dstaddrs,
-		InternetService:   internetService,
-		InternetServiceID: internetServiceIds,
-		Action:            action,
-		Schedule:          schedule,
-		Service:           services,
-		UtmStatus:         utmStatus,
-		Logtraffic:        logtraffic,
-		LogtrafficStart:   logtrafficStart,
-		CapturePacket:     capturePacket,
-		Ippool:            ippool,
-		Poolname:          poolnames,
-		Groups:            groupss,
-		Devices:           devicess,
-		Comments:          comments,
-		AvProfile:         avProfile,
-		WebfilterProfile:  webfilterProfile,
-		DnsfilterProfile:  dnsfilterProfile,
-		IpsSensor:         ipsSensor,
-		ApplicationList:   applicationList,
-		SslSSHProfile:     sslSSHProfile,
-		Nat:               nat,
+		Name:                   name,
+		Srcintf:                srcintfs,
+		Dstintf:                dstintfs,
+		Srcaddr:                srcaddrs,
+		Dstaddr:                dstaddrs,
+		InternetService:        internetService,
+		InternetServiceID:      internetServiceIds,
+		InternetServiceSrc:     internetServiceSrc,
+		InternetServiceSrcID:   internetServiceSrcIds,
+		Users:                  userss,
+		Status:                 status,
+		Action:                 action,
+		Schedule:               schedule,
+		Service:                services,
+		UtmStatus:              utmStatus,
+		Logtraffic:             logtraffic,
+		LogtrafficStart:        logtrafficStart,
+		CapturePacket:          capturePacket,
+		Ippool:                 ippool,
+		Poolname:               poolnames,
+		Groups:                 groupss,
+		Devices:                devicess,
+		Comments:               comments,
+		AvProfile:              avProfile,
+		WebfilterProfile:       webfilterProfile,
+		DnsfilterProfile:       dnsfilterProfile,
+		IpsSensor:              ipsSensor,
+		ApplicationList:        applicationList,
+		SslSSHProfile:          sslSSHProfile,
+		Nat:                    nat,
+		ProfileProtocolOptions: profileProtocolOptions,
 	}
 
 	//Call process by sdk
@@ -521,6 +605,12 @@ func resourceFirewallSecurityPolicyRead(d *schema.ResourceData, m interface{}) e
 	d.Set("internet_service", o.InternetService)
 	internetServiceID := forticlient.ExpandPolicyInternetIDList(o.InternetServiceID)
 	d.Set("internet_service_id", internetServiceID)
+	d.Set("internet_service_src", o.InternetServiceSrc)
+	internetServiceSrcID := forticlient.ExpandPolicyInternetIDList(o.InternetServiceSrcID)
+	d.Set("internet_service_src_id", internetServiceSrcID)
+	users := forticlient.ExtractString(o.Users)
+	d.Set("users", users)
+	d.Set("status", o.Status)
 	d.Set("action", o.Action)
 	d.Set("schedule", o.Schedule)
 	service := forticlient.ExtractString(o.Service)
@@ -544,6 +634,7 @@ func resourceFirewallSecurityPolicyRead(d *schema.ResourceData, m interface{}) e
 	d.Set("application_list", o.ApplicationList)
 	d.Set("ssl_ssh_profile", o.SslSSHProfile)
 	d.Set("nat", o.Nat)
+	d.Set("profile_protocol_options", o.ProfileProtocolOptions)
 
 	return nil
 }
