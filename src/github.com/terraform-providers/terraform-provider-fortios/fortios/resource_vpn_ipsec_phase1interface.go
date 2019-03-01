@@ -93,6 +93,21 @@ func resourceVPNIPsecPhase1Interface() *schema.Resource {
 				Optional: true,
 				Default:  "",
 			},
+			"mode_cfg": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "disable",
+			},
+			"authmethod": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "psk",
+			},
+			"authmethod_remote": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "",
+			},
 		},
 	}
 }
@@ -118,6 +133,9 @@ func resourceVPNIPsecPhase1InterfaceCreate(d *schema.ResourceData, m interface{}
 	ipv4SplitInclude := d.Get("ipv4_split_include").(string)
 	splitIncludeService := d.Get("split_include_service").(string)
 	ipv4SplitExclude := d.Get("ipv4_split_exclude").(string)
+	modeCfg := d.Get("mode_cfg").(string)
+	authmethod := d.Get("authmethod").(string)
+	authmethodRemote := d.Get("authmethod_remote").(string)
 
 	var certificates []forticlient.MultValue
 
@@ -146,6 +164,9 @@ func resourceVPNIPsecPhase1InterfaceCreate(d *schema.ResourceData, m interface{}
 		IPv4SplitInclude:    ipv4SplitInclude,
 		SplitIncludeService: splitIncludeService,
 		IPv4SplitExclude:    ipv4SplitExclude,
+		ModeCfg:             modeCfg,
+		Authmethod:          authmethod,
+		AuthmethodRemote:    authmethodRemote,
 	}
 
 	//Call process by sdk
@@ -185,6 +206,9 @@ func resourceVPNIPsecPhase1InterfaceUpdate(d *schema.ResourceData, m interface{}
 	ipv4SplitInclude := d.Get("ipv4_split_include").(string)
 	splitIncludeService := d.Get("split_include_service").(string)
 	ipv4SplitExclude := d.Get("ipv4_split_exclude").(string)
+	modeCfg := d.Get("mode_cfg").(string)
+	authmethod := d.Get("authmethod").(string)
+	authmethodRemote := d.Get("authmethod_remote").(string)
 
 	var certificates []forticlient.MultValue
 
@@ -213,6 +237,9 @@ func resourceVPNIPsecPhase1InterfaceUpdate(d *schema.ResourceData, m interface{}
 		IPv4SplitInclude:    ipv4SplitInclude,
 		SplitIncludeService: splitIncludeService,
 		IPv4SplitExclude:    ipv4SplitExclude,
+		ModeCfg:             modeCfg,
+		Authmethod:          authmethod,
+		AuthmethodRemote:    authmethodRemote,
 	}
 
 	//Call process by sdk
@@ -275,6 +302,9 @@ func resourceVPNIPsecPhase1InterfaceRead(d *schema.ResourceData, m interface{}) 
 	d.Set("ipv4_split_include", o.IPv4SplitInclude)
 	d.Set("split_include_service", o.SplitIncludeService)
 	d.Set("ipv4_split_exclude", o.IPv4SplitExclude)
+	d.Set("mode_cfg", o.ModeCfg)
+	d.Set("authmethod", o.Authmethod)
+	d.Set("authmethod_remote", o.AuthmethodRemote)
 
 	return nil
 }

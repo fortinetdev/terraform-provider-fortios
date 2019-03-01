@@ -2,9 +2,10 @@ package fortios
 
 import (
 	"fmt"
+	// "log"
 	// "strconv"
 
-	"github.com/fortios/fortios-sdk/sdkcore"
+	forticlient "github.com/fortios/fortios-sdk/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -26,8 +27,7 @@ func resourceFirewallObjectService() *schema.Resource {
 			},
 			"protocol": &schema.Schema{
 				Type:     schema.TypeString,
-				Optional: true,
-				Default:  "TCP/UDP/SCTP",
+				Required: true,
 			},
 			"fqdn": &schema.Schema{
 				Type:     schema.TypeString,
@@ -44,6 +44,36 @@ func resourceFirewallObjectService() *schema.Resource {
 				Optional: true,
 				Default:  "Created by Terraform Provider for FortiOS",
 			},
+			"protocol_number": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "6",
+			},
+			"icmptype": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "",
+			},
+			"icmpcode": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "",
+			},
+			"tcp_portrange": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "",
+			},
+			"udp_portrange": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "",
+			},
+			"sctp_portrange": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "",
+			},
 		},
 	}
 }
@@ -59,12 +89,24 @@ func resourceFirewallObjectServiceCreate(d *schema.ResourceData, m interface{}) 
 	fqdn := d.Get("fqdn").(string)
 	iprange := d.Get("iprange").(string)
 	comment := d.Get("comment").(string)
+	protocolNumber := d.Get("protocol_number").(string)
+	icmptype := d.Get("icmptype").(string)
+	icmpcode := d.Get("icmpcode").(string)
+	tcpPortrange := d.Get("tcp_portrange").(string)
+	udpPortrange := d.Get("udp_portrange").(string)
+	sctpPortrange := d.Get("sctp_portrange").(string)
 
 	j1 := &forticlient.JSONFirewallObjectServiceCommon{
-		Name:     name,
-		Category: category,
-		Protocol: protocol,
-		Comment:  comment,
+		Name:           name,
+		Category:       category,
+		Protocol:       protocol,
+		Comment:        comment,
+		ProtocolNumber: protocolNumber,
+		Icmptype:       icmptype,
+		Icmpcode:       icmpcode,
+		TCPPortrange:   tcpPortrange,
+		UDPPortrange:   udpPortrange,
+		SctpPortrange:  sctpPortrange,
 	}
 	var j2 *forticlient.JSONFirewallObjectServiceFqdn
 	var j3 *forticlient.JSONFirewallObjectServiceIprange
@@ -113,12 +155,24 @@ func resourceFirewallObjectServiceUpdate(d *schema.ResourceData, m interface{}) 
 	fqdn := d.Get("fqdn").(string)
 	iprange := d.Get("iprange").(string)
 	comment := d.Get("comment").(string)
+	protocolNumber := d.Get("protocol_number").(string)
+	icmptype := d.Get("icmptype").(string)
+	icmpcode := d.Get("icmpcode").(string)
+	tcpPortrange := d.Get("tcp_portrange").(string)
+	udpPortrange := d.Get("udp_portrange").(string)
+	sctpPortrange := d.Get("sctp_portrange").(string)
 
 	j1 := &forticlient.JSONFirewallObjectServiceCommon{
-		Name:     name,
-		Category: category,
-		Protocol: protocol,
-		Comment:  comment,
+		Name:           name,
+		Category:       category,
+		Protocol:       protocol,
+		Comment:        comment,
+		ProtocolNumber: protocolNumber,
+		Icmptype:       icmptype,
+		Icmpcode:       icmpcode,
+		TCPPortrange:   tcpPortrange,
+		UDPPortrange:   udpPortrange,
+		SctpPortrange:  sctpPortrange,
 	}
 	var j2 *forticlient.JSONFirewallObjectServiceFqdn
 	var j3 *forticlient.JSONFirewallObjectServiceIprange
@@ -189,6 +243,12 @@ func resourceFirewallObjectServiceRead(d *schema.ResourceData, m interface{}) er
 	d.Set("fqdn", o.Fqdn)
 	d.Set("iprange", o.Iprange)
 	d.Set("comment", o.Comment)
+	d.Set("protocol_number", o.ProtocolNumber)
+	d.Set("icmptype", o.Icmptype)
+	d.Set("icmpcode", o.Icmpcode)
+	d.Set("tcp_portrange", o.TCPPortrange)
+	d.Set("udp_portrange", o.UDPPortrange)
+	d.Set("sctp_portrange", o.SctpPortrange)
 
 	return nil
 }

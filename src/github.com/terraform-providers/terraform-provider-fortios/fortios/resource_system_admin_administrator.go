@@ -83,6 +83,13 @@ func resourceSystemAdminAdministrator() *schema.Resource {
 				Optional: true,
 				Default:  "Created by Terraform Provider for FortiOS",
 			},
+			"vdom": &schema.Schema{
+				Type:     schema.TypeList,
+				Required: true,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
+			},
 		},
 	}
 }
@@ -106,6 +113,16 @@ func resourceSystemAdminAdministratorCreate(d *schema.ResourceData, m interface{
 	trusthost10 := d.Get("trusthost10").(string)
 	accprofile := d.Get("accprofile").(string)
 	comments := d.Get("comments").(string)
+	vdom := d.Get("vdom").([]interface{})
+
+	var vdoms []forticlient.MultValue
+
+	for _, v := range vdom {
+		vdoms = append(vdoms,
+			forticlient.MultValue{
+				Name: v.(string),
+			})
+	}
 
 	//Build input data by sdk
 	i := &forticlient.JSONSystemAdminAdministrator{
@@ -123,6 +140,7 @@ func resourceSystemAdminAdministratorCreate(d *schema.ResourceData, m interface{
 		Trusthost10: trusthost10,
 		Accprofile:  accprofile,
 		Comments:    comments,
+		Vdom:        vdoms,
 	}
 
 	//Call process by sdk
@@ -159,11 +177,20 @@ func resourceSystemAdminAdministratorUpdate(d *schema.ResourceData, m interface{
 	trusthost10 := d.Get("trusthost10").(string)
 	accprofile := d.Get("accprofile").(string)
 	comments := d.Get("comments").(string)
+	vdom := d.Get("vdom").([]interface{})
 
+	var vdoms []forticlient.MultValue
+
+	for _, v := range vdom {
+		vdoms = append(vdoms,
+			forticlient.MultValue{
+				Name: v.(string),
+			})
+	}
 	//Build input data by sdk
 	i := &forticlient.JSONSystemAdminAdministrator2{
 		Name: name,
-		//Password:    password,
+		// Password:    password,
 		Trusthost1:  trusthost1,
 		Trusthost2:  trusthost2,
 		Trusthost3:  trusthost3,
@@ -176,6 +203,7 @@ func resourceSystemAdminAdministratorUpdate(d *schema.ResourceData, m interface{
 		Trusthost10: trusthost10,
 		Accprofile:  accprofile,
 		Comments:    comments,
+		Vdom:        vdoms,
 	}
 
 	//Call process by sdk
@@ -235,6 +263,8 @@ func resourceSystemAdminAdministratorRead(d *schema.ResourceData, m interface{})
 	d.Set("trusthost10", o.Trusthost10)
 	d.Set("accprofile", o.Accprofile)
 	d.Set("comments", o.Comments)
+	vdom := forticlient.ExtractString(o.Vdom)
+	d.Set("vdom", vdom)
 
 	return nil
 }

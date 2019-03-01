@@ -46,6 +46,21 @@ func resourceFirewallObjectVip() *schema.Resource {
 				Optional: true,
 				Default:  "disable",
 			},
+			"protocol": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "tcp",
+			},
+			"extport": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "0",
+			},
+			"mappedport": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "0",
+			},
 		},
 	}
 }
@@ -61,6 +76,9 @@ func resourceFirewallObjectVipCreate(d *schema.ResourceData, m interface{}) erro
 	mappedip := d.Get("mappedip").([]interface{})
 	extintf := d.Get("extintf").(string)
 	portforward := d.Get("portforward").(string)
+	protocol := d.Get("protocol").(string)
+	extport := d.Get("extport").(string)
+	mappedport := d.Get("mappedport").(string)
 
 	var mappedips []forticlient.VIPMultValue
 
@@ -79,6 +97,9 @@ func resourceFirewallObjectVipCreate(d *schema.ResourceData, m interface{}) erro
 		Mappedip:    mappedips,
 		Extintf:     extintf,
 		Portforward: portforward,
+		Protocol:    protocol,
+		Extport:     extport,
+		Mappedport:  mappedport,
 	}
 
 	//Call process by sdk
@@ -108,6 +129,9 @@ func resourceFirewallObjectVipUpdate(d *schema.ResourceData, m interface{}) erro
 	mappedip := d.Get("mappedip").([]interface{})
 	extintf := d.Get("extintf").(string)
 	portforward := d.Get("portforward").(string)
+	protocol := d.Get("protocol").(string)
+	extport := d.Get("extport").(string)
+	mappedport := d.Get("mappedport").(string)
 
 	var mappedips []forticlient.VIPMultValue
 
@@ -126,6 +150,9 @@ func resourceFirewallObjectVipUpdate(d *schema.ResourceData, m interface{}) erro
 		Mappedip:    mappedips,
 		Extintf:     extintf,
 		Portforward: portforward,
+		Protocol:    protocol,
+		Extport:     extport,
+		Mappedport:  mappedport,
 	}
 
 	//Call process by sdk
@@ -184,6 +211,9 @@ func resourceFirewallObjectVipRead(d *schema.ResourceData, m interface{}) error 
 	d.Set("mappedip", vs)
 	d.Set("extintf", o.Extintf)
 	d.Set("portforward", o.Portforward)
+	d.Set("protocol", o.Protocol)
+	d.Set("extport", o.Extport)
+	d.Set("mappedport", o.Mappedport)
 
 	return nil
 }

@@ -25,6 +25,7 @@ type JSONSystemAdminAdministrator struct {
 	Trusthost10 string `json:"trusthost10"`
 	Accprofile  string `json:"accprofile"`
 	Comments    string `json:"comments"`
+	Vdom       MultValues `json:"vdom"`
 }
 
 // JSONSystemAdminAdministrator2 contains the parameters for Create and Update API function
@@ -42,6 +43,7 @@ type JSONSystemAdminAdministrator2 struct {
 	Trusthost10 string `json:"trusthost10"`
 	Accprofile  string `json:"accprofile"`
 	Comments    string `json:"comments"`
+	Vdom       MultValues `json:"vdom"`
 }
 
 // JSONCreateSystemAdminAdministratorOutput contains the output results for Create API function
@@ -290,6 +292,20 @@ func (c *FortiSDKClient) ReadSystemAdminAdministrator(mkey string) (output *JSON
 		}
 		if mapTmp["comments"] != nil {
 			output.Comments = mapTmp["comments"].(string)
+		}
+		if mapTmp["vdom"] != nil {
+			member := mapTmp["vdom"].([]interface {})
+
+			var members []MultValue
+			for _, v := range member {
+				c := v.(map[string]interface {})
+
+				members = append(members,
+					MultValue{
+						Name: c["name"].(string),
+					})
+			}
+			output.Vdom = members
 		}
 
 	} else {

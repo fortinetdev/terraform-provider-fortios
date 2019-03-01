@@ -49,6 +49,7 @@ func Provider() terraform.ResourceProvider {
 			"fortios_system_apiuser_setting":       resourceSystemAPIUserSetting(),
 			"fortios_system_vdom_setting":          resourceSystemVdomSetting(),
 			"fortios_system_license_forticare":     resourceSystemLicenseFortiCare(),
+			"fortios_system_license_vdom":          resourceSystemLicenseVDOM(),
 			"fortios_system_license_vm":            resourceSystemLicenseVM(),
 			"fortios_vpn_ipsec_phase1interface":    resourceVPNIPsecPhase1Interface(),
 			"fortios_vpn_ipsec_phase2interface":    resourceVPNIPsecPhase2Interface(),

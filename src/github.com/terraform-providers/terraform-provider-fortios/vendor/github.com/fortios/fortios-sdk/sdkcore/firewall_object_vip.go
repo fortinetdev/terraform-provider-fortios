@@ -17,6 +17,9 @@ type JSONFirewallObjectVip struct {
 	Mappedip    VIPMultValues `json:"mappedip"`
 	Extintf     string        `json:"extintf"`
 	Portforward string        `json:"portforward"`
+	Protocol    string        `json:"protocol"`
+	Extport     string        `json:"extport"`
+	Mappedport  string        `json:"mappedport"`
 }
 
 // JSONCreateFirewallObjectVipOutput contains the output results for Create API function
@@ -221,7 +224,7 @@ func (c *FortiSDKClient) ReadFirewallObjectVip(mkey string) (output *JSONFirewal
 			err = fmt.Errorf("cannot get the right response")
 			return
 		}
-		
+
 		if result["status"] != "success" {
 			err = fmt.Errorf("cannot get the right response")
 			return
@@ -261,6 +264,15 @@ func (c *FortiSDKClient) ReadFirewallObjectVip(mkey string) (output *JSONFirewal
 		}
 		if mapTmp["portforward"] != nil {
 			output.Portforward = mapTmp["portforward"].(string)
+		}
+		if mapTmp["protocol"] != nil {
+			output.Protocol = mapTmp["protocol"].(string)
+		}
+		if mapTmp["extport"] != nil {
+			output.Extport = mapTmp["extport"].(string)
+		}
+		if mapTmp["mappedport"] != nil {
+			output.Mappedport = mapTmp["mappedport"].(string)
 		}
 
 	} else {
