@@ -19,7 +19,7 @@ func TestAccFortiOSVPNIPsecPhase2Interface_basic1(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFortiOSVPNIPsecPhase2InterfaceExists("fortios_vpn_ipsec_phase2interface.test1"),
 					resource.TestCheckResourceAttr("fortios_vpn_ipsec_phase2interface.test1", "name", "002Test11"),
-					resource.TestCheckResourceAttr("fortios_vpn_ipsec_phase2interface.test1", "phase1name", "001Test1"),
+					resource.TestCheckResourceAttr("fortios_vpn_ipsec_phase2interface.test1", "phase1name", "001AccTest1"),
 					resource.TestCheckResourceAttr("fortios_vpn_ipsec_phase2interface.test1", "proposal", "aes128-sha1 aes256-sha1 aes128-sha256 aes256-sha256 aes128gcm aes256gcm chacha20poly1305"),
 					resource.TestCheckResourceAttr("fortios_vpn_ipsec_phase2interface.test1", "comments", "VPN 001Test P2"),
 					resource.TestCheckResourceAttr("fortios_vpn_ipsec_phase2interface.test1", "src_addr_type", "name"),
@@ -43,7 +43,7 @@ func TestAccFortiOSVPNIPsecPhase2Interface_basic2(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFortiOSVPNIPsecPhase2InterfaceExists("fortios_vpn_ipsec_phase2interface.test2"),
 					resource.TestCheckResourceAttr("fortios_vpn_ipsec_phase2interface.test2", "name", "002Test12"),
-					resource.TestCheckResourceAttr("fortios_vpn_ipsec_phase2interface.test2", "phase1name", "001Test2"),
+					resource.TestCheckResourceAttr("fortios_vpn_ipsec_phase2interface.test2", "phase1name", "001AccTest2"),
 					resource.TestCheckResourceAttr("fortios_vpn_ipsec_phase2interface.test2", "proposal", "aes128-sha1 aes256-sha1 aes128-sha256 aes256-sha256 aes128gcm aes256gcm chacha20poly1305"),
 					resource.TestCheckResourceAttr("fortios_vpn_ipsec_phase2interface.test2", "comments", "VPN 001Test P2"),
 					resource.TestCheckResourceAttr("fortios_vpn_ipsec_phase2interface.test2", "src_addr_type", "subnet"),
@@ -110,9 +110,24 @@ func testAccCheckVPNIPsecPhase2InterfaceDestroy(s *terraform.State) error {
 }
 
 const testAccFortiOSVPNIPsecPhase2InterfaceConfig1 = `
+resource "fortios_vpn_ipsec_phase1interface" "test1" {
+	name = "001AccTest1"
+	type = "static"
+	interface = "port3"
+	peertype = "any"
+	proposal = "aes128-sha256 aes256-sha256 aes128-sha1 aes256-sha1"
+	comments = "VPN 001Test P1"
+	wizard_type = "static-fortigate"
+	remote_gw = "5.2.2.2"
+	psksecret = "testscecret112233445566778899"
+	authmethod = "psk"
+	authmethod_remote = ""
+	mode_cfg = "disable"
+}
+
 resource "fortios_vpn_ipsec_phase2interface" "test1" {
 	name = "002Test11"
-	phase1name = "001Test1"
+	phase1name = "${fortios_vpn_ipsec_phase1interface.test1.name}"
 	proposal = "aes128-sha1 aes256-sha1 aes128-sha256 aes256-sha256 aes128gcm aes256gcm chacha20poly1305"
 	comments = "VPN 001Test P2"
 	src_addr_type = "name"
@@ -123,9 +138,23 @@ resource "fortios_vpn_ipsec_phase2interface" "test1" {
 `
 
 const testAccFortiOSVPNIPsecPhase2InterfaceConfig2 = `
+resource "fortios_vpn_ipsec_phase1interface" "test1" {
+	name = "001AccTest2"
+	type = "dynamic"
+	interface = "port3"
+	peertype = "any"
+	proposal = "aes128-sha256 aes256-sha256 aes128-sha1 aes256-sha1"
+	comments = "VPN 001Test P2"
+	wizard_type = "dialup-forticlient"
+	remote_gw = "0.0.0.0"
+	psksecret = "testscecret112233445566778899"
+	ipv4_split_include = ""
+	split_include_service = ""
+	ipv4_split_exclude = ""
+}
 resource "fortios_vpn_ipsec_phase2interface" "test2" {
 	name = "002Test12"
-	phase1name = "001Test2"
+	phase1name = "${fortios_vpn_ipsec_phase1interface.test1.name}"
 	proposal = "aes128-sha1 aes256-sha1 aes128-sha256 aes256-sha256 aes128gcm aes256gcm chacha20poly1305"
 	comments = "VPN 001Test P2"
 	src_addr_type = "subnet"

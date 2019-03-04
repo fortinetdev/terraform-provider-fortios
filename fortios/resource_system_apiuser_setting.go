@@ -70,6 +70,9 @@ func resourceSystemAPIUserSettingCreate(d *schema.ResourceData, m interface{}) e
 	var vdoms []forticlient.MultValue
 
 	for _, v := range vdom {
+		if v == nil {
+			return fmt.Errorf("null value")
+		}
 		vdoms = append(vdoms,
 			forticlient.MultValue{
 				Name: v.(string),
@@ -130,6 +133,9 @@ func resourceSystemAPIUserSettingUpdate(d *schema.ResourceData, m interface{}) e
 	var vdoms []forticlient.MultValue
 
 	for _, v := range vdom {
+		if v == nil {
+			return fmt.Errorf("null value")
+		}
 		vdoms = append(vdoms,
 			forticlient.MultValue{
 				Name: v.(string),

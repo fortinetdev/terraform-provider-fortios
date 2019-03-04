@@ -19,7 +19,7 @@ func TestAccFortiOSSystemAPIUserSetting_basic(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFortiOSSystemAPIUserSettingExists("fortios_system_apiuser_setting.test1"),
 					resource.TestCheckResourceAttr("fortios_system_apiuser_setting.test1", "name", "restAPIadmin2"),
-					resource.TestCheckResourceAttr("fortios_system_apiuser_setting.test1", "accprofile", "accprofilefortest"),
+					resource.TestCheckResourceAttr("fortios_system_apiuser_setting.test1", "accprofile", "accprofileforacctest"),
 					resource.TestCheckResourceAttr("fortios_system_apiuser_setting.test1", "comments", "Terraform Test"),
 				),
 			},
@@ -77,9 +77,27 @@ func testAccCheckSystemAPIUserSettingDestroy(s *terraform.State) error {
 }
 
 const testAccFortiOSSystemAPIUserSettingConfig = `
+resource "fortios_system_admin_profiles" "test1" { 
+	name = "accprofileforacctest"
+	scope = "vdom"
+	comments = "Terraform Test"
+	secfabgrp = "none"
+	ftviewgrp = "read"
+	authgrp = "none"
+	sysgrp = "read"
+	netgrp = "none"
+	loggrp = "none"
+	fwgrp = "none"
+	vpngrp = "none"
+	utmgrp = "none"
+	wanoptgrp = "none"
+	wifi = "none"
+	admintimeout_override = "disable"
+}
+
 resource "fortios_system_apiuser_setting" "test1" { 
 	name = "restAPIadmin2"
-	accprofile = "accprofilefortest"
+	accprofile = "${fortios_system_admin_profiles.test1.name}"
 	vdom = ["root"]
 	trusthost = [
 		{

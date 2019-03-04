@@ -118,6 +118,9 @@ func resourceSystemAdminAdministratorCreate(d *schema.ResourceData, m interface{
 	var vdoms []forticlient.MultValue
 
 	for _, v := range vdom {
+		if v == nil {
+			return fmt.Errorf("null value")
+		}
 		vdoms = append(vdoms,
 			forticlient.MultValue{
 				Name: v.(string),
@@ -182,6 +185,9 @@ func resourceSystemAdminAdministratorUpdate(d *schema.ResourceData, m interface{
 	var vdoms []forticlient.MultValue
 
 	for _, v := range vdom {
+		if v == nil {
+			return fmt.Errorf("null value")
+		}
 		vdoms = append(vdoms,
 			forticlient.MultValue{
 				Name: v.(string),

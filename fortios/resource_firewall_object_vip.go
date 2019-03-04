@@ -83,6 +83,9 @@ func resourceFirewallObjectVipCreate(d *schema.ResourceData, m interface{}) erro
 	var mappedips []forticlient.VIPMultValue
 
 	for _, v := range mappedip {
+		if v == nil {
+			return fmt.Errorf("null value")
+		}
 		mappedips = append(mappedips,
 			forticlient.VIPMultValue{
 				Range: v.(string),
@@ -136,6 +139,9 @@ func resourceFirewallObjectVipUpdate(d *schema.ResourceData, m interface{}) erro
 	var mappedips []forticlient.VIPMultValue
 
 	for _, v := range mappedip {
+		if v == nil {
+			return fmt.Errorf("null value")
+		}
 		mappedips = append(mappedips,
 			forticlient.VIPMultValue{
 				Range: v.(string),
