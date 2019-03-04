@@ -23,7 +23,7 @@ func TestAccFortiOSLogSyslogSetting_basic(t *testing.T) {
 					resource.TestCheckResourceAttr("fortios_log_syslog_setting.test1", "mode", "udp"),
 					resource.TestCheckResourceAttr("fortios_log_syslog_setting.test1", "port", "514"),
 					resource.TestCheckResourceAttr("fortios_log_syslog_setting.test1", "facility", "local7"),
-					resource.TestCheckResourceAttr("fortios_log_syslog_setting.test1", "source_ip", "10.2.2.99"),
+					resource.TestCheckResourceAttr("fortios_log_syslog_setting.test1", "source_ip", "1.1.1.1"),
 					resource.TestCheckResourceAttr("fortios_log_syslog_setting.test1", "format", "csv"),
 				),
 			},
@@ -81,13 +81,22 @@ func testAccCheckLogSyslogSettingDestroy(s *terraform.State) error {
 }
 
 const testAccFortiOSLogSyslogSettingConfig = `
+resource "fortios_networking_interface_port" "test1" { 
+	name = "port4"
+	ip = "1.1.1.1 255.255.255.0"
+	status = "down"
+	allowaccess = "ping https"
+	mode = "static"
+	type = "physical"
+}
+
 resource "fortios_log_syslog_setting" "test1" {
 	status = "enable"
 	server = "2.2.2.2"
 	mode = "udp"
 	port = "514"
 	facility = "local7"
-	source_ip = "10.2.2.99"
+	source_ip = "${replace("${fortios_networking_interface_port.test1.ip}", " 255.255.255.0", "")}"
 	format = "csv"
 }
 `

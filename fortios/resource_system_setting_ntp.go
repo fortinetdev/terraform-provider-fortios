@@ -93,6 +93,9 @@ func resourceSystemSettingNTPUpdate(d *schema.ResourceData, m interface{}) error
 	var ntpservers []forticlient.NTPMultValue
 
 	for _, v := range ntpserver {
+		if v == nil {
+			return fmt.Errorf("null ntpserver")
+		}
 		ntpservers = append(ntpservers,
 			forticlient.NTPMultValue{
 				Server: v.(string),

@@ -19,8 +19,8 @@ func TestAccFortiOSLogFortiAnalyzerSetting_basic(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFortiOSLogFortiAnalyzerSettingExists("fortios_log_fortianalyzer_setting.test1"),
 					resource.TestCheckResourceAttr("fortios_log_fortianalyzer_setting.test1", "status", "enable"),
-					resource.TestCheckResourceAttr("fortios_log_fortianalyzer_setting.test1", "server", "10.2.2.99"),
-					resource.TestCheckResourceAttr("fortios_log_fortianalyzer_setting.test1", "source_ip", "10.2.2.99"),
+					resource.TestCheckResourceAttr("fortios_log_fortianalyzer_setting.test1", "server", "1.1.1.1"),
+					resource.TestCheckResourceAttr("fortios_log_fortianalyzer_setting.test1", "source_ip", "1.1.1.1"),
 					resource.TestCheckResourceAttr("fortios_log_fortianalyzer_setting.test1", "upload_option", "realtime"),
 					resource.TestCheckResourceAttr("fortios_log_fortianalyzer_setting.test1", "reliable", "enable"),
 					resource.TestCheckResourceAttr("fortios_log_fortianalyzer_setting.test1", "hmac_algorithm", "sha256"),
@@ -81,10 +81,19 @@ func testAccCheckLogFortiAnalyzerSettingDestroy(s *terraform.State) error {
 }
 
 const testAccFortiOSLogFortiAnalyzerSettingConfig = `
+resource "fortios_networking_interface_port" "test1" { 
+	name = "port4"
+	ip = "1.1.1.1 255.255.255.0"
+	status = "down"
+	allowaccess = "ping https"
+	mode = "static"
+	type = "physical"
+}
+
 resource "fortios_log_fortianalyzer_setting" "test1" {
 	status = "enable"
-	server = "10.2.2.99"
-	source_ip = "10.2.2.99"
+	server = "${replace("${fortios_networking_interface_port.test1.ip}", " 255.255.255.0", "")}"
+	source_ip = "${replace("${fortios_networking_interface_port.test1.ip}", " 255.255.255.0", "")}"
 	upload_option = "realtime"
 	reliable = "enable"
 	hmac_algorithm = "sha256"

@@ -234,6 +234,9 @@ func resourceFirewallSecurityPolicyCreate(d *schema.ResourceData, m interface{})
 	var srcintfs []forticlient.MultValue
 
 	for _, v := range srcintf {
+		if v == nil {
+			return fmt.Errorf("null value")
+		}
 		srcintfs = append(srcintfs,
 			forticlient.MultValue{
 				Name: v.(string),
@@ -243,6 +246,9 @@ func resourceFirewallSecurityPolicyCreate(d *schema.ResourceData, m interface{})
 	var dstintfs []forticlient.MultValue
 
 	for _, v := range dstintf {
+		if v == nil {
+			return fmt.Errorf("null value")
+		}
 		dstintfs = append(dstintfs,
 			forticlient.MultValue{
 				Name: v.(string),
@@ -252,6 +258,9 @@ func resourceFirewallSecurityPolicyCreate(d *schema.ResourceData, m interface{})
 	var srcaddrs []forticlient.MultValue
 
 	for _, v := range srcaddr {
+		if v == nil {
+			return fmt.Errorf("null value")
+		}
 		srcaddrs = append(srcaddrs,
 			forticlient.MultValue{
 				Name: v.(string),
@@ -261,6 +270,9 @@ func resourceFirewallSecurityPolicyCreate(d *schema.ResourceData, m interface{})
 	var dstaddrs []forticlient.MultValue
 
 	for _, v := range dstaddr {
+		if v == nil {
+			return fmt.Errorf("null value")
+		}
 		dstaddrs = append(dstaddrs,
 			forticlient.MultValue{
 				Name: v.(string),
@@ -270,6 +282,9 @@ func resourceFirewallSecurityPolicyCreate(d *schema.ResourceData, m interface{})
 	var internetServiceIds []forticlient.PolicyInternetIDMultValue
 
 	for _, v := range internetServiceID {
+		if v == nil {
+			return fmt.Errorf("null value")
+		}
 		internetServiceIds = append(internetServiceIds,
 			forticlient.PolicyInternetIDMultValue{
 				ID: float64(v.(int)),
@@ -279,6 +294,9 @@ func resourceFirewallSecurityPolicyCreate(d *schema.ResourceData, m interface{})
 	var internetServiceSrcIds []forticlient.PolicyInternetIDMultValue
 
 	for _, v := range internetServiceSrcID {
+		if v == nil {
+			return fmt.Errorf("null value")
+		}
 		internetServiceSrcIds = append(internetServiceSrcIds,
 			forticlient.PolicyInternetIDMultValue{
 				ID: float64(v.(int)),
@@ -288,6 +306,9 @@ func resourceFirewallSecurityPolicyCreate(d *schema.ResourceData, m interface{})
 	var userss []forticlient.MultValue
 
 	for _, v := range users {
+		if v == nil {
+			return fmt.Errorf("null value")
+		}
 		userss = append(userss,
 			forticlient.MultValue{
 				Name: v.(string),
@@ -297,6 +318,9 @@ func resourceFirewallSecurityPolicyCreate(d *schema.ResourceData, m interface{})
 	var services []forticlient.MultValue
 
 	for _, v := range service {
+		if v == nil {
+			return fmt.Errorf("null value")
+		}
 		services = append(services,
 			forticlient.MultValue{
 				Name: v.(string),
@@ -306,6 +330,9 @@ func resourceFirewallSecurityPolicyCreate(d *schema.ResourceData, m interface{})
 	var poolnames []forticlient.MultValue
 
 	for _, v := range poolname {
+		if v == nil {
+			return fmt.Errorf("null value")
+		}
 		poolnames = append(poolnames,
 			forticlient.MultValue{
 				Name: v.(string),
@@ -315,6 +342,9 @@ func resourceFirewallSecurityPolicyCreate(d *schema.ResourceData, m interface{})
 	var groupss []forticlient.MultValue
 
 	for _, v := range groups {
+		if v == nil {
+			return fmt.Errorf("null value")
+		}
 		groupss = append(groupss,
 			forticlient.MultValue{
 				Name: v.(string),
@@ -324,6 +354,9 @@ func resourceFirewallSecurityPolicyCreate(d *schema.ResourceData, m interface{})
 	var devicess []forticlient.MultValue
 
 	for _, v := range devices {
+		if v == nil {
+			return fmt.Errorf("null value")
+		}
 		devicess = append(devicess,
 			forticlient.MultValue{
 				Name: v.(string),
@@ -420,6 +453,9 @@ func resourceFirewallSecurityPolicyUpdate(d *schema.ResourceData, m interface{})
 	var srcintfs []forticlient.MultValue
 
 	for _, v := range srcintf {
+		if v == nil {
+			return fmt.Errorf("null value")
+		}
 		srcintfs = append(srcintfs,
 			forticlient.MultValue{
 				Name: v.(string),
@@ -429,6 +465,9 @@ func resourceFirewallSecurityPolicyUpdate(d *schema.ResourceData, m interface{})
 	var dstintfs []forticlient.MultValue
 
 	for _, v := range dstintf {
+		if v == nil {
+			return fmt.Errorf("null value")
+		}
 		dstintfs = append(dstintfs,
 			forticlient.MultValue{
 				Name: v.(string),
@@ -438,6 +477,9 @@ func resourceFirewallSecurityPolicyUpdate(d *schema.ResourceData, m interface{})
 	var srcaddrs []forticlient.MultValue
 
 	for _, v := range srcaddr {
+		if v == nil {
+			return fmt.Errorf("null value")
+		}
 		srcaddrs = append(srcaddrs,
 			forticlient.MultValue{
 				Name: v.(string),
@@ -447,6 +489,9 @@ func resourceFirewallSecurityPolicyUpdate(d *schema.ResourceData, m interface{})
 	var dstaddrs []forticlient.MultValue
 
 	for _, v := range dstaddr {
+		if v == nil {
+			return fmt.Errorf("null value")
+		}
 		dstaddrs = append(dstaddrs,
 			forticlient.MultValue{
 				Name: v.(string),
@@ -456,6 +501,9 @@ func resourceFirewallSecurityPolicyUpdate(d *schema.ResourceData, m interface{})
 	var internetServiceIds []forticlient.PolicyInternetIDMultValue
 
 	for _, v := range internetServiceID {
+		if v == nil {
+			return fmt.Errorf("null value")
+		}
 		internetServiceIds = append(internetServiceIds,
 			forticlient.PolicyInternetIDMultValue{
 				ID: float64(v.(int)),
@@ -465,6 +513,9 @@ func resourceFirewallSecurityPolicyUpdate(d *schema.ResourceData, m interface{})
 	var internetServiceSrcIds []forticlient.PolicyInternetIDMultValue
 
 	for _, v := range internetServiceSrcID {
+		if v == nil {
+			return fmt.Errorf("null value")
+		}
 		internetServiceSrcIds = append(internetServiceSrcIds,
 			forticlient.PolicyInternetIDMultValue{
 				ID: float64(v.(int)),
@@ -474,6 +525,9 @@ func resourceFirewallSecurityPolicyUpdate(d *schema.ResourceData, m interface{})
 	var userss []forticlient.MultValue
 
 	for _, v := range users {
+		if v == nil {
+			return fmt.Errorf("null value")
+		}
 		userss = append(userss,
 			forticlient.MultValue{
 				Name: v.(string),
@@ -482,6 +536,9 @@ func resourceFirewallSecurityPolicyUpdate(d *schema.ResourceData, m interface{})
 	var services []forticlient.MultValue
 
 	for _, v := range service {
+		if v == nil {
+			return fmt.Errorf("null value")
+		}
 		services = append(services,
 			forticlient.MultValue{
 				Name: v.(string),
@@ -491,6 +548,9 @@ func resourceFirewallSecurityPolicyUpdate(d *schema.ResourceData, m interface{})
 	var poolnames []forticlient.MultValue
 
 	for _, v := range poolname {
+		if v == nil {
+			return fmt.Errorf("null value")
+		}
 		poolnames = append(poolnames,
 			forticlient.MultValue{
 				Name: v.(string),
@@ -500,6 +560,9 @@ func resourceFirewallSecurityPolicyUpdate(d *schema.ResourceData, m interface{})
 	var groupss []forticlient.MultValue
 
 	for _, v := range groups {
+		if v == nil {
+			return fmt.Errorf("null value")
+		}
 		groupss = append(groupss,
 			forticlient.MultValue{
 				Name: v.(string),
@@ -509,6 +572,9 @@ func resourceFirewallSecurityPolicyUpdate(d *schema.ResourceData, m interface{})
 	var devicess []forticlient.MultValue
 
 	for _, v := range devices {
+		if v == nil {
+			return fmt.Errorf("null value")
+		}
 		devicess = append(devicess,
 			forticlient.MultValue{
 				Name: v.(string),

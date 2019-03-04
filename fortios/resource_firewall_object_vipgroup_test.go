@@ -77,10 +77,35 @@ func testAccCheckFirewallObjectVipGroupDestroy(s *terraform.State) error {
 }
 
 const testAccFortiOSFirewallObjectVipGroupConfig = `
+resource "fortios_firewall_object_vip" "viptest1" { 
+	name = "vip1fortest"
+	comment = "Terraform Test"
+	extip = "1.1.5.0-1.1.6.0"
+	mappedip = ["1.1.8.0-1.1.9.0"]
+	extintf = "port3"
+	portforward = "enable"
+	protocol = "tcp"
+	extport = "2-3"
+	mappedport = "4-5"
+}
+
+resource "fortios_firewall_object_vip" "viptest2" { 
+	name = "vip2fortest"
+	comment = "Terraform Test"
+	extip = "1.1.7.0-1.1.8.0"
+	mappedip = ["1.1.10.0-1.1.11.0"]
+	extintf = "port3"
+	portforward = "enable"
+	protocol = "tcp"
+	extport = "2-3"
+	mappedport = "4-5"
+}
+
+
 resource "fortios_firewall_object_vipgroup" "test1" {
 	name = "s1"
 	interface = "port3"
 	comments = "Terraform Test"
-	member = ["vip1fortest", "vip2fortest"]
+	member = ["${fortios_firewall_object_vip.viptest1.name}", "${fortios_firewall_object_vip.viptest2.name}"]
 }
 `

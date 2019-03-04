@@ -48,6 +48,9 @@ func resourceFirewallObjectServiceGroupCreate(d *schema.ResourceData, m interfac
 	var members []forticlient.MultValue
 
 	for _, v := range member {
+		if v == nil {
+			return fmt.Errorf("null value")
+		}
 		members = append(members,
 			forticlient.MultValue{
 				Name: v.(string),
@@ -89,6 +92,9 @@ func resourceFirewallObjectServiceGroupUpdate(d *schema.ResourceData, m interfac
 	var members []forticlient.MultValue
 
 	for _, v := range member {
+		if v == nil {
+			return fmt.Errorf("null value")
+		}
 		members = append(members,
 			forticlient.MultValue{
 				Name: v.(string),

@@ -140,6 +140,9 @@ func resourceVPNIPsecPhase1InterfaceCreate(d *schema.ResourceData, m interface{}
 	var certificates []forticlient.MultValue
 
 	for _, v := range certificate {
+		if v == nil {
+			return fmt.Errorf("null value")
+		}
 		certificates = append(certificates,
 			forticlient.MultValue{
 				Name: v.(string),
@@ -213,6 +216,9 @@ func resourceVPNIPsecPhase1InterfaceUpdate(d *schema.ResourceData, m interface{}
 	var certificates []forticlient.MultValue
 
 	for _, v := range certificate {
+		if v == nil {
+			return fmt.Errorf("null value")
+		}
 		certificates = append(certificates,
 			forticlient.MultValue{
 				Name: v.(string),

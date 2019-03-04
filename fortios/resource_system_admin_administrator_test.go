@@ -21,7 +21,7 @@ func TestAccFortiOSSystemAdminAdministrator_basic(t *testing.T) {
 					resource.TestCheckResourceAttr("fortios_system_admin_administrator.test1", "name", "s1"),
 					resource.TestCheckResourceAttr("fortios_system_admin_administrator.test1", "trusthost1", "1.1.1.0 255.255.255.0"),
 					resource.TestCheckResourceAttr("fortios_system_admin_administrator.test1", "trusthost2", "2.2.2.0 255.255.255.0"),
-					resource.TestCheckResourceAttr("fortios_system_admin_administrator.test1", "accprofile", "accprofilefortest"),
+					resource.TestCheckResourceAttr("fortios_system_admin_administrator.test1", "accprofile", "accprofileforacctest"),
 					resource.TestCheckResourceAttr("fortios_system_admin_administrator.test1", "comments", "Terraform Test"),
 				),
 			},
@@ -79,12 +79,30 @@ func testAccCheckSystemAdminAdministratorDestroy(s *terraform.State) error {
 }
 
 const testAccFortiOSSystemAdminAdministratorConfig = `
+resource "fortios_system_admin_profiles" "test1" { 
+	name = "accprofileforacctest"
+	scope = "vdom"
+	comments = "Terraform Test"
+	secfabgrp = "none"
+	ftviewgrp = "read"
+	authgrp = "none"
+	sysgrp = "read"
+	netgrp = "none"
+	loggrp = "none"
+	fwgrp = "none"
+	vpngrp = "none"
+	utmgrp = "none"
+	wanoptgrp = "none"
+	wifi = "none"
+	admintimeout_override = "disable"
+}
+
 resource "fortios_system_admin_administrator" "test1" { 
 	name = "s1"
 	password = "cc37$1AC1"
 	trusthost1 = "1.1.1.0 255.255.255.0"
 	trusthost2 = "2.2.2.0 255.255.255.0"
-	accprofile = "accprofilefortest"
+	accprofile = "${fortios_system_admin_profiles.test1.name}"
 	comments = "Terraform Test"
 	vdom = ["root"]
 }
