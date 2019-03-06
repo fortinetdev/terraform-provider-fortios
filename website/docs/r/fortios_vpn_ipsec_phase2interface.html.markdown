@@ -13,7 +13,7 @@ Provides a resource to use phase2-interface to add or edit a phase 2 configurati
 ```hcl
 provider "fortios" {
 	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
+	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
 }
 
 resource "fortios_vpn_ipsec_phase1interface" "test1" {
@@ -36,7 +36,7 @@ resource "fortios_vpn_ipsec_phase1interface" "test1" {
 ```hcl
 provider "fortios" {
 	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
+	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
 }
 
 resource "fortios_vpn_ipsec_phase2interface" "test2" {
@@ -55,7 +55,7 @@ resource "fortios_vpn_ipsec_phase2interface" "test2" {
 ```hcl
 provider "fortios" {
 	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
+	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
 }
 
 resource "fortios_vpn_ipsec_phase1interface" "test1" {
@@ -71,14 +71,14 @@ resource "fortios_vpn_ipsec_phase1interface" "test1" {
 	peertype = "peer"
 	peerid = ""
 	peer = "2b_peer"
-	peergrp = ""                                      
+	peergrp = ""
 }
 ```
 
 ```hcl
 provider "fortios" {
 	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
+	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
 }
 
 resource "fortios_vpn_ipsec_phase2interface" "test2" {
@@ -89,7 +89,7 @@ resource "fortios_vpn_ipsec_phase2interface" "test2" {
 	src_addr_type = "range"
 	dst_addr_type = "subnet"
 	src_start_ip = "1.1.1.0"
-	src_end_ip = "1.1.1.1"	
+	src_end_ip = "1.1.1.1"
 	dst_subnet = "2.2.2.2/24"
 }
 ```
@@ -98,7 +98,7 @@ resource "fortios_vpn_ipsec_phase2interface" "test2" {
 ```hcl
 provider "fortios" {
 	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
+	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
 }
 
 resource "fortios_vpn_ipsec_phase1interface" "test1" {
@@ -120,7 +120,7 @@ resource "fortios_vpn_ipsec_phase1interface" "test1" {
 ```hcl
 provider "fortios" {
 	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
+	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
 }
 
 resource "fortios_vpn_ipsec_phase2interface" "test2" {
@@ -143,7 +143,7 @@ resource "fortios_vpn_ipsec_phase2interface" "test2" {
 ```hcl
 provider "fortios" {
 	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
+	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
 }
 
 resource "fortios_vpn_ipsec_phase1interface" "test1" {
@@ -160,7 +160,7 @@ resource "fortios_vpn_ipsec_phase1interface" "test1" {
 	peertype = "peer"
 	peerid = ""
 	peer = "2b_peer"
-	peergrp = "",        
+	peergrp = "",
 	ipv4_split_include = "d_split"
 	split_include_service = ""
 	ipv4_split_exclude = ""
@@ -170,7 +170,7 @@ resource "fortios_vpn_ipsec_phase1interface" "test1" {
 ```hcl
 provider "fortios" {
 	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
+	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
 }
 
 resource "fortios_vpn_ipsec_phase2interface" "test2" {
@@ -199,7 +199,7 @@ The following arguments are supported:
 * `src_end_ip` - Local proxy ID end.
 * `src_subnet` - Local proxy ID subnet.
 * `dst_addr_type` - Local proxy ID type.
-* `src_name` - Local proxy ID name. 
+* `src_name` - Local proxy ID name.
 * `dst_name` - Remote proxy ID name.
 * `dst_start_ip` - Remote proxy ID IPv4 start.
 * `dst_end_ip` - Remote proxy ID IPv4 end.
@@ -217,7 +217,7 @@ The following attributes are exported:
 * `src_end_ip` - Local proxy ID end.
 * `src_subnet` - Local proxy ID subnet.
 * `dst_addr_type` - Local proxy ID type.
-* `src_name` - Local proxy ID name. 
+* `src_name` - Local proxy ID name.
 * `dst_name` - Remote proxy ID name.
 * `dst_start_ip` - Remote proxy ID IPv4 start.
 * `dst_end_ip` - Remote proxy ID IPv4 end.

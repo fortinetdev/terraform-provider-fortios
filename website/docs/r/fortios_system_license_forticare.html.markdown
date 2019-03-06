@@ -13,11 +13,11 @@ Provides a resource to add a FortiCare license for FortiOS.
 ```hcl
 provider "fortios" {
 	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
+	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
 }
 
 resource "fortios_system_license_forticare" "test2" {
-	registration_code = "fdasfdsafdsafdsa"
+	registration_code = "license"
 }
 ```
 

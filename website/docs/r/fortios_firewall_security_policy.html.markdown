@@ -13,20 +13,20 @@ Provides a resource to configure firewall policies of FortiOS.
 ```hcl
 provider "fortios" {
 	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
+	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
 }
 
 resource "fortios_firewall_security_policy" "test1" {
 	name = "ap11"
 	srcintf = ["port2"]
 	dstintf = ["port1"]
-	srcaddr = ["swscan.apple.com", "google-play"]    
+	srcaddr = ["swscan.apple.com", "google-play"]
 	dstaddr = ["swscan.apple.com", "update.microsoft.com"]
 	internet_service = "disable"
 	internet_service_id = []
 	schedule = "always"
 	service = ["ALL_ICMP", "FTP"]
-	action = "accept"	
+	action = "accept"
 	utm_status = "enable"
 	logtraffic = "all"
 	logtraffic_start = "enable"
@@ -35,7 +35,7 @@ resource "fortios_firewall_security_policy" "test1" {
 	poolname = ["rewq", "rbb"]
 	groups = ["Guest-group", "SSO_Guest_Users"]
 	devices = ["android-phone", "android-tablet"]
-	comments = "fdasfdsa"
+	comments = "security policy"
 	av_profile = "wifi-default"
 	webfilter_profile = "monitor-all"
 	dnsfilter_profile = "default"
@@ -50,20 +50,20 @@ resource "fortios_firewall_security_policy" "test1" {
 ```hcl
 provider "fortios" {
 	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
+	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
 }
 
 resource "fortios_firewall_security_policy" "test2" {
 	name = "ap21"
 	srcintf = ["port2"]
 	dstintf = ["port1"]
-	srcaddr = ["swscan.apple.com", "google-play"]    
+	srcaddr = ["swscan.apple.com", "google-play"]
 	dstaddr = ["swscan.apple.com", "update.microsoft.com"]
 	internet_service = "enable"
 	internet_service_id = [917520, 6881402, 393219]
 	schedule = "always"
 	service = []
-	action = "accept"	
+	action = "accept"
 	utm_status = "enable"
 	logtraffic = "all"
 	logtraffic_start = "enable"
@@ -72,7 +72,7 @@ resource "fortios_firewall_security_policy" "test2" {
 	poolname = ["rewq", "rbb"]
 	groups = ["Guest-group", "SSO_Guest_Users"]
 	devices = ["android-phone", "android-tablet"]
-	comments = "fdasfdsa"
+	comments = "security policy"
 	av_profile = "wifi-default"
 	webfilter_profile = "monitor-all"
 	dnsfilter_profile = "default"
@@ -99,7 +99,7 @@ resource "fortios_firewall_security_policy" "test1" {
 	status = "enable"
 	schedule = "always"
 	service = []
-	action = "accept"	
+	action = "accept"
 	utm_status = "enable"
 	logtraffic = "all"
 	logtraffic_start = "enable"
@@ -108,7 +108,7 @@ resource "fortios_firewall_security_policy" "test1" {
 	poolname = []
 	groups = ["Guest-group", "SSO_Guest_Users"]
 	devices = []
-	comments = "fdasfdsa"
+	comments = "security policy"
 	av_profile = "wifi-default"
 	webfilter_profile = "monitor-all"
 	dnsfilter_profile = "default"
@@ -138,7 +138,7 @@ The following arguments are supported:
 * `capture_packet` - Enable/disable capture packets.
 * `ippool` - Enable to use IP Pools for source NAT.
 * `poolname` - IP Pool names.
-* `groups` - Names of user groups that can authenticate with this policy. 
+* `groups` - Names of user groups that can authenticate with this policy.
 * `devices` - Device type category.
 * `comments` - Comment.
 * `av_profile` - Name of an existing Antivirus profile.
@@ -173,7 +173,7 @@ The following attributes are exported:
 * `capture_packet` - Enable/disable capture packets.
 * `ippool` - Enable to use IP Pools for source NAT.
 * `poolname` - IP Pool names.
-* `groups` - Names of user groups that can authenticate with this policy. 
+* `groups` - Names of user groups that can authenticate with this policy.
 * `devices` - Device type category.
 * `comments` - Comment.
 * `av_profile` - Name of an existing Antivirus profile.
