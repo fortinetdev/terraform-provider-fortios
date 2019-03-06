@@ -214,7 +214,7 @@ func (c *FortiSDKClient) ReadSystemLicenseVDOM(mkey string) (output *JSONSystemL
 	// 		err = fmt.Errorf("cannot get the right response")
 	// 		return
 	// 	}
-		
+
 	// 	if result["status"] != "success" {
 	// 		err = fmt.Errorf("cannot get the right response")
 	// 		return

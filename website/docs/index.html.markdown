@@ -16,7 +16,7 @@ The FortiOS provider is used to interact with the resources supported by FortiOS
 # Configure the FortiOS Provider
 provider "fortios" {
 	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
+	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
 }
 
 # Create a Static Route Item
@@ -41,11 +41,11 @@ Usage:
 ```hcl
 provider "fortios" {
 	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
+	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
 }
 ```
-### Environment variables 
-You can provide your credentials via the `FORTIOS_ACCESS_HOSTNAME` and `FORTIOS_ACCESS_TOKEN` environment variables. Note that setting your FortiOS credentials using static credentials variables will override the environment variables. 
+### Environment variables
+You can provide your credentials via the `FORTIOS_ACCESS_HOSTNAME` and `FORTIOS_ACCESS_TOKEN` environment variables. Note that setting your FortiOS credentials using static credentials variables will override the environment variables.
 
 Usage:
 
@@ -90,5 +90,6 @@ resource "fortios_networking_route_static" "test1" {
 	comment = "Terraform test"
 }
 ```
+## Versioning
 
-
+The provider can cover both FortiOS 6.0 and 6.2 versions.
