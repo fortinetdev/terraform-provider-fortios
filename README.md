@@ -16,17 +16,17 @@
 
 1. Clone repository to: `$GOPATH/src/github.com/terraform-providers/terraform-provider-fortios`.
 
-```sh
-$ mkdir -p $GOPATH/src/github.com/terraform-providers; cd $GOPATH/src/github.com/terraform-providers
-$ git clone git@github.com:terraform-providers/terraform-provider-fortios
-```
+    ```sh
+    $ mkdir -p $GOPATH/src/github.com/terraform-providers; cd $GOPATH/src/github.com/terraform-providers
+    $ git clone git@github.com:terraform-providers/terraform-provider-fortios
+    ```
 
 2. Enter the provider directory and build the provider.
 
-```sh
-$ cd $GOPATH/src/github.com/terraform-providers/terraform-provider-fortios
-$ make build
-```
+    ```sh
+    $ cd $GOPATH/src/github.com/terraform-providers/terraform-provider-fortios
+    $ make build
+    ```
 
 ## Using the Provider
 
@@ -51,9 +51,12 @@ $ make build
 
 Running the acceptance test suite requires a FortiGate VM/device to test against.
 
-Please set `FORTIOS_ACCESS_HOSTNAME`, `FORTIOS_ACCESS_TOKEN` to a FortiGate VM/device to run the test, then run:
-```sh
-make testacc
-```
+To run the test:
+1. Set `FORTIOS_ACCESS_HOSTNAME` and `FORTIOS_ACCESS_TOKEN` to a FortiGate VM/device.
+2. Run `make testacc`.
+
+    ```sh
+    make testacc
+    ```
 
 For more information about acceptance testing in Terraform, see [Running an Acceptance Test](https://github.com/hashicorp/terraform/blob/master/.github/CONTRIBUTING.md#running-an-acceptance-test).
