@@ -10,7 +10,7 @@
 
 - [Terraform](https://www.terraform.io/downloads.html) 0.10+
 - [Go](https://golang.org/doc/install) 1.11 (to build the provider plugin)
-- FortiOS 6.0 and 6.2. This provider uses the FortiOS API. All the resources are validated with FortiOS 6.0 and 6.2.
+- FortiOS 6.0 or 6.2. This provider uses the FortiOS API. All the resources are validated with FortiOS 6.0 and 6.2.
 
 ## Building the Provider
 
@@ -52,8 +52,9 @@ $ make build
 Running the acceptance test suite requires a FortiGate VM/device to test against.
 
 To run the test:
-1. Set `FORTIOS_ACCESS_HOSTNAME` and `FORTIOS_ACCESS_TOKEN` to a FortiGate VM/device.
-2. Run `make testacc`.
+1. Set `FORTIOS_ACCESS_HOSTNAME` to point to a FortiGate VM/device.
+2. Set `FORTIOS_ACCESS_TOKEN` to the access token of a Rest API user on that device.
+3. Run `make testacc`.
 
     ```sh
     make testacc
