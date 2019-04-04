@@ -3,6 +3,7 @@ package fortios
 import (
 	"crypto/tls"
 	"net/http"
+	"time"
 
 	"github.com/fortios/fortios-sdk/auth"
 	"github.com/fortios/fortios-sdk/sdkcore"
@@ -33,6 +34,7 @@ func (c *Config) CreateClient() (interface{}, error) {
 
 	client := &http.Client{
 		Transport: tr,
+		Timeout:   time.Second * 10,
 	}
 
 	auth := auth.NewAuth(c.Hostname, c.Token, c.Vdom)
