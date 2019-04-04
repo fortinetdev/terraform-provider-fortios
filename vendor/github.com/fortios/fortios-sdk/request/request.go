@@ -5,6 +5,7 @@ import (
 	"net/url"
 	"log"
 	"bytes"
+	"fmt"
 	"github.com/fortios/fortios-sdk/config"
 )
 
@@ -63,11 +64,15 @@ func (r *Request) Send() error {
 		return err
 	}
 
+	resend:
 	//Send
 	rsp, err := r.Config.HTTPCon.Do(r.HTTPRequest)
 	r.HTTPResponse = rsp
 	if err != nil {
-		log.Fatal(err)
+		// log.Fatal(err)
+		err = fmt.Errorf("Error found: %s, will resend again", err)
+
+		goto resend
 	}
 
 	return err
