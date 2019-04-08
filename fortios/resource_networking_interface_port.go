@@ -3,9 +3,8 @@ package fortios
 import (
 	"fmt"
 	"log"
-	//"strconv"
 
-	"github.com/fortios/fortios-sdk/sdkcore"
+	"github.com/fgtdev/fortios-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -222,7 +221,7 @@ func resourceNetworkingInterfacePortCreate(d *schema.ResourceData, m interface{}
 		d.SetId(o.Mkey)
 
 	}
-	return nil
+	return resourceNetworkingInterfacePortRead(d, m)
 }
 
 func resourceNetworkingInterfacePortUpdate(d *schema.ResourceData, m interface{}) error {
@@ -296,10 +295,7 @@ func resourceNetworkingInterfacePortUpdate(d *schema.ResourceData, m interface{}
 		return fmt.Errorf("Error updating Networking Interface Port: %s", err)
 	}
 
-	//Set index for d
-	//d.SetId(o.Mkey)
-
-	return nil
+	return resourceNetworkingInterfacePortRead(d, m)
 }
 
 func resourceNetworkingInterfacePortDelete(d *schema.ResourceData, m interface{}) error {
@@ -338,6 +334,12 @@ func resourceNetworkingInterfacePortRead(d *schema.ResourceData, m interface{}) 
 	o, err := c.ReadNetworkingInterfacePort(mkey)
 	if err != nil {
 		return fmt.Errorf("Error reading Networking Interface Port: %s", err)
+	}
+
+	if o == nil {
+		log.Printf("[WARN] resource (%s) not found, removing from state", d.Id())
+		d.SetId("")
+		return nil
 	}
 
 	//Refresh property
