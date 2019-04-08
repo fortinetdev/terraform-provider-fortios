@@ -68,10 +68,12 @@ func testAccCheckLogFortiAnalyzerSettingDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		_, err := c.ReadLogFortiAnalyzerSetting(i)
+		o, err := c.ReadLogFortiAnalyzerSetting(i)
 
 		if err == nil {
-			return fmt.Errorf("Error Log FortiAnalyzer Setting %s still exists", rs.Primary.ID)
+			if o != nil {
+				return fmt.Errorf("Error Log FortiAnalyzer Setting %s still exists", rs.Primary.ID)
+			}
 		}
 
 		return nil
