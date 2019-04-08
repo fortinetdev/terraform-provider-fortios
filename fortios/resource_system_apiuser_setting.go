@@ -2,9 +2,9 @@ package fortios
 
 import (
 	"fmt"
-	// "strconv"
+	"log"
 
-	"github.com/fortios/fortios-sdk/sdkcore"
+	"github.com/fgtdev/fortios-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -114,7 +114,7 @@ func resourceSystemAPIUserSettingCreate(d *schema.ResourceData, m interface{}) e
 	// d.SetId(strconv.Itoa(int(o.Mkey)))
 	d.SetId(o.Mkey)
 
-	return nil
+	return resourceSystemAPIUserSettingRead(d, m)
 }
 
 func resourceSystemAPIUserSettingUpdate(d *schema.ResourceData, m interface{}) error {
@@ -173,10 +173,7 @@ func resourceSystemAPIUserSettingUpdate(d *schema.ResourceData, m interface{}) e
 		return fmt.Errorf("Error updating System APIUser Setting: %s", err)
 	}
 
-	//Set index for d
-	//d.SetId(o.Mkey)
-
-	return nil
+	return resourceSystemAPIUserSettingRead(d, m)
 }
 
 func resourceSystemAPIUserSettingDelete(d *schema.ResourceData, m interface{}) error {
@@ -209,11 +206,19 @@ func resourceSystemAPIUserSettingRead(d *schema.ResourceData, m interface{}) err
 		return fmt.Errorf("Error reading System APIUser Setting: %s", err)
 	}
 
+	if o == nil {
+		log.Printf("[WARN] resource (%s) not found, removing from state", d.Id())
+		d.SetId("")
+		return nil
+	}
+
 	//Refresh property
 	d.Set("name", o.Name)
 	d.Set("accprofile", o.Accprofile)
 	vdom := forticlient.ExtractString(o.Vdom)
-	d.Set("vdom", vdom)
+	if err := d.Set("vdom", vdom); err != nil {
+		log.Printf("[WARN] Error setting System APIUser Setting for (%s): %s", d.Id(), err)
+	}
 
 	var items []interface{}
 	for _, z := range o.Trusthost {
@@ -224,7 +229,9 @@ func resourceSystemAPIUserSettingRead(d *schema.ResourceData, m interface{}) err
 		items = append(items, m)
 	}
 
-	d.Set("trusthost", items)
+	if err := d.Set("trusthost", items); err != nil {
+		log.Printf("[WARN] Error setting System APIUser Setting for (%s): %s", d.Id(), err)
+	}
 	d.Set("comments", o.Comments)
 
 	return nil

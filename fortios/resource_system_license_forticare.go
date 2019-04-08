@@ -2,17 +2,17 @@ package fortios
 
 import (
 	"fmt"
-	// "strconv"
+	"log"
 
-	"github.com/fortios/fortios-sdk/sdkcore"
+	"github.com/fgtdev/fortios-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
 func resourceSystemLicenseFortiCare() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceSystemLicenseFortiCareCreate,
+		Create: resourceSystemLicenseFortiCareCreateUpdate,
 		Read:   resourceSystemLicenseFortiCareRead,
-		Update: resourceSystemLicenseFortiCareUpdate,
+		Update: resourceSystemLicenseFortiCareCreateUpdate,
 		Delete: resourceSystemLicenseFortiCareDelete,
 
 		Schema: map[string]*schema.Schema{
@@ -24,7 +24,7 @@ func resourceSystemLicenseFortiCare() *schema.Resource {
 	}
 }
 
-func resourceSystemLicenseFortiCareCreate(d *schema.ResourceData, m interface{}) error {
+func resourceSystemLicenseFortiCareCreateUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
@@ -44,76 +44,37 @@ func resourceSystemLicenseFortiCareCreate(d *schema.ResourceData, m interface{})
 
 	// Set index for d
 	// d.SetId(strconv.Itoa(int(o.Mkey)))
-	d.SetId("1")
-
-	return nil
-}
-
-func resourceSystemLicenseFortiCareUpdate(d *schema.ResourceData, m interface{}) error {
-	// mkey := d.Id()
-
-	// c := m.(*FortiClient).Client
-	// c.Retries = 1
-
-	// //Get Params from d
-
-	// registrationCode := d.Get("registration_code").(string)
-
-	// //Build input data by sdk
-	// i := &forticlient.JSONSystemLicenseFortiCare{
-	// 	RegistrationCode: registrationCode,
-	// }
-
-	// //Call process by sdk
-	// _, err := c.UpdateSystemLicenseFortiCare(i, mkey)
-	// if err != nil {
-	// 	return fmt.Errorf("Error updating System License FortiCare: %s", err)
-	// }
-
-	// //Set index for d
-	// //d.SetId(o.Mkey)
-	// d.SetId("1")
-
-	err := resourceSystemLicenseFortiCareCreate(d, m)
-	if err != nil {
-		return fmt.Errorf("Error creating System License FortiCare: %s", err)
-	}
-
-	return nil
+	d.SetId("FortiCareLicense")
+	return resourceSystemLicenseFortiCareRead(d, m)
 }
 
 func resourceSystemLicenseFortiCareDelete(d *schema.ResourceData, m interface{}) error {
-	// mkey := d.Id()
-
-	// c := m.(*FortiClient).Client
-	// c.Retries = 1
-
-	// //Call process by sdk
-	// err := c.DeleteSystemLicenseFortiCare(mkey)
-	// if err != nil {
-	// 	return fmt.Errorf("Error deleting System License FortiCare: %s", err)
-	// }
-
-	// //Set index for d
-	// d.SetId("")
+	// no API for this
+	d.SetId("")
 
 	return nil
 }
 
 func resourceSystemLicenseFortiCareRead(d *schema.ResourceData, m interface{}) error {
-	// mkey := d.Id()
+	mkey := d.Id()
 
-	// c := m.(*FortiClient).Client
-	// c.Retries = 1
+	c := m.(*FortiClient).Client
+	c.Retries = 1
 
-	// //Call process by sdk
-	// o, err := c.ReadSystemLicenseFortiCare(mkey)
-	// if err != nil {
-	// 	return fmt.Errorf("Error reading System License FortiCare: %s", err)
-	// }
+	//Call process by sdk
+	o, err := c.ReadSystemLicenseFortiCare(mkey)
+	if err != nil {
+		return fmt.Errorf("Error reading System License FortiCare: %s", err)
+	}
 
-	// //Refresh property
-	// d.Set("registration_code", o.RegistrationCode)
+	if o == nil {
+		log.Printf("[WARN] resource (%s) not found, removing from state", d.Id())
+		d.SetId("")
+		return nil
+	}
+
+	//Refresh property
+	d.Set("registration_code", o.RegistrationCode)
 
 	return nil
 }

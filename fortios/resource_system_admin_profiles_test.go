@@ -78,10 +78,12 @@ func testAccCheckSystemAdminProfilesDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		_, err := c.ReadSystemAdminProfiles(i)
+		o, err := c.ReadSystemAdminProfiles(i)
 
 		if err == nil {
-			return fmt.Errorf("Error System Admin Profiles %s still exists", rs.Primary.ID)
+			if o != nil {
+				return fmt.Errorf("Error System Admin Profiles %s still exists", rs.Primary.ID)
+			}
 		}
 
 		return nil

@@ -2,9 +2,9 @@ package fortios
 
 import (
 	"fmt"
-	//"strconv"
+	"log"
 
-	"github.com/fortios/fortios-sdk/sdkcore"
+	"github.com/fgtdev/fortios-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -155,7 +155,7 @@ func resourceSystemAdminAdministratorCreate(d *schema.ResourceData, m interface{
 	//Set index for d
 	d.SetId(o.Mkey)
 
-	return nil
+	return resourceSystemAdminAdministratorRead(d, m)
 }
 
 func resourceSystemAdminAdministratorUpdate(d *schema.ResourceData, m interface{}) error {
@@ -218,10 +218,7 @@ func resourceSystemAdminAdministratorUpdate(d *schema.ResourceData, m interface{
 		return fmt.Errorf("Error updating System Admin Administrator: %s", err)
 	}
 
-	//Set index for d
-	//d.SetId(o.Mkey)
-
-	return nil
+	return resourceSystemAdminAdministratorRead(d, m)
 }
 
 func resourceSystemAdminAdministratorDelete(d *schema.ResourceData, m interface{}) error {
@@ -254,6 +251,12 @@ func resourceSystemAdminAdministratorRead(d *schema.ResourceData, m interface{})
 		return fmt.Errorf("Error reading System Admin Administrator: %s", err)
 	}
 
+	if o == nil {
+		log.Printf("[WARN] resource (%s) not found, removing from state", d.Id())
+		d.SetId("")
+		return nil
+	}
+
 	//Refresh property
 	d.Set("name", o.Name)
 	//d.Set("password", o.Password)
@@ -270,7 +273,9 @@ func resourceSystemAdminAdministratorRead(d *schema.ResourceData, m interface{})
 	d.Set("accprofile", o.Accprofile)
 	d.Set("comments", o.Comments)
 	vdom := forticlient.ExtractString(o.Vdom)
-	d.Set("vdom", vdom)
+	if err := d.Set("vdom", vdom); err != nil {
+		log.Printf("[WARN] Error setting System Admin Administrator for (%s): %s", d.Id(), err)
+	}
 
 	return nil
 }

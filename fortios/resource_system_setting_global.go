@@ -2,17 +2,17 @@ package fortios
 
 import (
 	"fmt"
-	// "strconv"
+	"log"
 
-	"github.com/fortios/fortios-sdk/sdkcore"
+	"github.com/fgtdev/fortios-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
 func resourceSystemSettingGlobal() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceSystemSettingGlobalCreate,
+		Create: resourceSystemSettingGlobalCreateUpdate,
 		Read:   resourceSystemSettingGlobalRead,
-		Update: resourceSystemSettingGlobalUpdate,
+		Update: resourceSystemSettingGlobalCreateUpdate,
 		Delete: resourceSystemSettingGlobalDelete,
 
 		Schema: map[string]*schema.Schema{
@@ -44,52 +44,13 @@ func resourceSystemSettingGlobal() *schema.Resource {
 	}
 }
 
-func resourceSystemSettingGlobalCreate(d *schema.ResourceData, m interface{}) error {
-	// c := m.(*FortiClient).Client
-	// c.Retries = 1
-
-	// //Get Params from d
-	// admintimeout := d.Get("admintimeout").(string)
-	// timezone := d.Get("timezone").(string)
-	// hostname := d.Get("hostname").(string)
-	// adminSport := d.Get("admin_sport").(string)
-	// adminSSHPort := d.Get("admin_ssh_port").(string)
-
-	// //Build input data by sdk
-	// i := &forticlient.JSONSystemSettingGlobal{
-	// 	Admintimeout: admintimeout,
-	// 	Timezone:     timezone,
-	// 	Hostname:     hostname,
-	// 	AdminSport:   adminSport,
-	// 	AdminSSHPort: adminSSHPort,
-	// }
-
-	// //Call process by sdk
-	// o, err := c.CreateSystemSettingGlobal(i)
-	// if err != nil {
-	// 	return fmt.Errorf("Error creating System Setting Global: %s", err)
-	// }
-
-	// // Set index for d
-	// // d.SetId(strconv.Itoa(int(o.Mkey)))
-	// d.SetId(o.Mkey)
-
-	err := resourceSystemSettingGlobalUpdate(d, m)
-	if err != nil {
-		return fmt.Errorf("Error updating System Setting Global: %s", err)
-	}
-
-	return nil
-}
-
-func resourceSystemSettingGlobalUpdate(d *schema.ResourceData, m interface{}) error {
+func resourceSystemSettingGlobalCreateUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
 	//Get Params from d
-
 	admintimeout := d.Get("admintimeout").(string)
 	timezone := d.Get("timezone").(string)
 	hostname := d.Get("hostname").(string)
@@ -111,26 +72,13 @@ func resourceSystemSettingGlobalUpdate(d *schema.ResourceData, m interface{}) er
 		return fmt.Errorf("Error updating System Setting Global: %s", err)
 	}
 
-	//Set index for d
-	//d.SetId(o.Mkey)
-	d.SetId("1")
+	d.SetId(hostname)
 
-	return nil
+	return resourceSystemSettingGlobalRead(d, m)
 }
 
 func resourceSystemSettingGlobalDelete(d *schema.ResourceData, m interface{}) error {
-	// mkey := d.Id()
-
-	// c := m.(*FortiClient).Client
-	// c.Retries = 1
-
-	// //Call process by sdk
-	// err := c.DeleteSystemSettingGlobal(mkey)
-	// if err != nil {
-	// 	return fmt.Errorf("Error deleting System Setting Global: %s", err)
-	// }
-
-	// //Set index for d
+	// no API for this
 	d.SetId("")
 
 	return nil
@@ -146,6 +94,12 @@ func resourceSystemSettingGlobalRead(d *schema.ResourceData, m interface{}) erro
 	o, err := c.ReadSystemSettingGlobal(mkey)
 	if err != nil {
 		return fmt.Errorf("Error reading System Setting Global: %s", err)
+	}
+
+	if o == nil {
+		log.Printf("[WARN] resource (%s) not found, removing from state", d.Id())
+		d.SetId("")
+		return nil
 	}
 
 	//Refresh property

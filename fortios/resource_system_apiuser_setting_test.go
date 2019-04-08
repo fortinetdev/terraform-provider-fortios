@@ -67,10 +67,12 @@ func testAccCheckSystemAPIUserSettingDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		_, err := c.ReadSystemAPIUserSetting(i)
+		o, err := c.ReadSystemAPIUserSetting(i)
 
 		if err == nil {
-			return fmt.Errorf("Error System APIUser Setting %s still exists", rs.Primary.ID)
+			if o != nil {
+				return fmt.Errorf("Error System APIUser Setting %s still exists", rs.Primary.ID)
+			}
 		}
 
 		return nil

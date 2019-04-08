@@ -69,10 +69,12 @@ func testAccCheckSystemAdminAdministratorDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		_, err := c.ReadSystemAdminAdministrator(i)
+		o, err := c.ReadSystemAdminAdministrator(i)
 
 		if err == nil {
-			return fmt.Errorf("Error System Admin Administrator %s still exists", rs.Primary.ID)
+			if o != nil {
+				return fmt.Errorf("Error System Admin Administrator %s still exists", rs.Primary.ID)
+			}
 		}
 
 		return nil
