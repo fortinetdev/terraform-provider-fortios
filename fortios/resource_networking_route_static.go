@@ -2,9 +2,10 @@ package fortios
 
 import (
 	"fmt"
+	"log"
 	"strconv"
 
-	"github.com/fortios/fortios-sdk/sdkcore"
+	"github.com/fgtdev/fortios-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -92,7 +93,7 @@ func resourceNetworkingRouteStaticCreate(d *schema.ResourceData, m interface{}) 
 	//Set index for d
 	d.SetId(strconv.Itoa(int(o.Mkey)))
 
-	return nil
+	return resourceNetworkingRouteStaticRead(d, m)
 }
 
 func resourceNetworkingRouteStaticUpdate(d *schema.ResourceData, m interface{}) error {
@@ -130,10 +131,7 @@ func resourceNetworkingRouteStaticUpdate(d *schema.ResourceData, m interface{}) 
 		return fmt.Errorf("Error updating Networking Route Static: %s", err)
 	}
 
-	//Set index for d
-	//d.SetId(o.Mkey)
-
-	return nil
+	return resourceNetworkingRouteStaticRead(d, m)
 }
 
 func resourceNetworkingRouteStaticDelete(d *schema.ResourceData, m interface{}) error {
@@ -164,6 +162,12 @@ func resourceNetworkingRouteStaticRead(d *schema.ResourceData, m interface{}) er
 	o, err := c.ReadNetworkingRouteStatic(mkey)
 	if err != nil {
 		return fmt.Errorf("Error reading Networking Route Static: %s", err)
+	}
+
+	if o == nil {
+		log.Printf("[WARN] resource (%s) not found, removing from state", d.Id())
+		d.SetId("")
+		return nil
 	}
 
 	//Refresh property

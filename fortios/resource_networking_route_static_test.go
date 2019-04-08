@@ -68,10 +68,12 @@ func testAccCheckNetworkingRouteStaticDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		_, err := c.ReadNetworkingRouteStatic(i)
+		o, err := c.ReadNetworkingRouteStatic(i)
 
 		if err == nil {
-			return fmt.Errorf("route static %s still exists", rs.Primary.ID)
+			if o != nil {
+				return fmt.Errorf("Error Networking Route Static %s still exists", rs.Primary.ID)
+			}
 		}
 
 		return nil
