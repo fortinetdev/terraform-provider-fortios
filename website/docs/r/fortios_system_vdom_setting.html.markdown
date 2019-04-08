@@ -25,12 +25,14 @@ resource "fortios_system_vdom_setting" "test2" {
 
 ## Argument Reference
 The following arguments are supported:
+
 * `name` - (Required) VDOM name.
 * `short_name` - VDOM short name.
 * `temporary` - Temporary.
 
 ## Attributes Reference
 The following attributes are exported:
+
 * `id` - The ID of the VDOM.
 * `name` - VDOM name.
 * `short_name` - VDOM short name.

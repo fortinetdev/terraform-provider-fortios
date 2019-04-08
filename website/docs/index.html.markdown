@@ -55,6 +55,7 @@ $ export FORTIOS_ACCESS_TOKEN=q3Hs49jxts195gkd9Hjsxnjtmr6k39
 ```
 
 Then configure the FortiOS Provider as following:
+
 ```hcl
 provider "fortios" { }
 
@@ -72,6 +73,7 @@ resource "fortios_networking_route_static" "test1" {
 If the FortiGate unit is running in VDOM mode, the `vdom` configuration needs to be added.
 
 Usage:
+
 ```hcl
 provider "fortios" {
 	hostname = "192.168.52.177"

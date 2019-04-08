@@ -191,6 +191,7 @@ resource "fortios_vpn_ipsec_phase2interface" "test2" {
 
 ## Argument Reference
 The following arguments are supported:
+
 * `name` - (Required) IPsec tunnel name.
 * `phase1name` - (Required) Phase 1 determines the options required for phase 2.
 * `proposal` - Phase2 proposal.
@@ -208,6 +209,7 @@ The following arguments are supported:
 
 ## Attributes Reference
 The following attributes are exported:
+
 * `id` - The ID of the phase2-interface.
 * `name` - IPsec tunnel name.
 * `phase1name` - Phase 1 determines the options required for phase 2.

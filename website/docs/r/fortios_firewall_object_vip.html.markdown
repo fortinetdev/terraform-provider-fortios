@@ -31,6 +31,7 @@ resource "fortios_firewall_object_vip" "v11" {
 
 ## Argument Reference
 The following arguments are supported:
+
 * `name` - (Required) Virtual IP name.
 * `extip` - (Required) IP address or address range on the external interface that you want to map to an address or address range on the
 destination network.
@@ -44,6 +45,7 @@ destination network.
 
 ## Attributes Reference
 The following attributes are exported:
+
 * `id` - The ID of the firewall virtual IPs item.
 * `name` - Virtual IP name.
 * `extip` - IP address or address range on the external interface that you want to map to an address or address range on the

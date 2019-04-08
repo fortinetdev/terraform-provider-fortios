@@ -72,6 +72,7 @@ resource "fortios_firewall_object_address" "s4" {
 
 ## Argument Reference
 The following arguments are supported:
+
 * `name` - (Required) Address name.
 * `type` - (Required) Type of address(Support ipmask, iprange, fqdn and geography).
 * `subnet` - IP address and subnet mask of address.
@@ -83,6 +84,7 @@ The following arguments are supported:
 
 ## Attributes Reference
 The following attributes are exported:
+
 * `id` - The ID of the address item.
 * `name` - Address name.
 * `type` - Type of address(Support ipmask, iprange, fqdn and geography).

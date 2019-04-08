@@ -122,6 +122,7 @@ resource "fortios_firewall_security_policy" "test1" {
 
 ## Argument Reference
 The following arguments are supported:
+
 * `name` - (Required) Policy name.
 * `srcintf` - (Required) Incoming (ingress) interface.
 * `dstintf` - (Required) Outgoing (egress) interface.
@@ -156,6 +157,7 @@ The following arguments are supported:
 
 ## Attributes Reference
 The following attributes are exported:
+
 * `id` - The ID of the firewall policy item.
 * `name` - Policy name.
 * `srcintf` - Incoming (ingress) interface.

@@ -60,6 +60,7 @@ resource "fortios_firewall_object_service" "ICMP" {
 
 ## Argument Reference
 The following arguments are supported:
+
 * `name` - (Required) Number of minutes before an idle administrator session time out.
 * `category` - (Required) Service category.
 * `protocol` - Protocol type based on IANA numbers.
@@ -75,6 +76,7 @@ The following arguments are supported:
 
 ## Attributes Reference
 The following attributes are exported:
+
 * `id` - The ID of the firewall service item.
 * `name` - Number of minutes before an idle administrator session time out.
 * `category` - Service category.

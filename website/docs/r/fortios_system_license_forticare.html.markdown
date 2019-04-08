@@ -23,4 +23,5 @@ resource "fortios_system_license_forticare" "test2" {
 
 ## Argument Reference
 The following arguments are supported:
+
 * `registration_code` - (Required) Registration code.

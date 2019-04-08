@@ -26,6 +26,7 @@ resource "fortios_firewall_object_vipgroup" "v11" {
 
 ## Argument Reference
 The following arguments are supported:
+
 * `name` - (Required) VIP group name.
 * `interface` - Interface name.
 * `member` - (Required) Member VIP objects of the group.
@@ -33,6 +34,7 @@ The following arguments are supported:
 
 ## Attributes Reference
 The following attributes are exported:
+
 * `id` - The ID of the virtual IP groups item.
 * `name` - VIP group name.
 * `interface` - Interface name.

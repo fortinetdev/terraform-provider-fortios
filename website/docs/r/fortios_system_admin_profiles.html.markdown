@@ -37,6 +37,7 @@ resource "fortios_system_admin_profiles" "test1" {
 
 ## Argument Reference
 The following arguments are supported:
+
 * `name` - (Required) Profile name.
 * `scope` - Scope of admin access.
 * `secfabgrp` - Security Fabric.
@@ -55,6 +56,7 @@ The following arguments are supported:
 
 ## Attributes Reference
 The following attributes are exported:
+
 * `id` - The ID of the access profile item.
 * `name` - Profile name.
 * `scope` - Scope of admin access.

@@ -29,6 +29,7 @@ resource "fortios_log_fortianalyzer_setting" "test1" {
 
 ## Argument Reference
 The following arguments are supported:
+
 * `status` - (Required) Enable/disable logging to FortiAnalyzer.
 * `server` - The remote FortiAnalyzer.
 * `source_ip` - Source IPv4 or IPv6 address used to communicate with FortiAnalyzer.
@@ -39,6 +40,7 @@ The following arguments are supported:
 
 ## Attributes Reference
 The following attributes are exported:
+
 * `status` - Enable/disable logging to FortiAnalyzer.
 * `server` - The remote FortiAnalyzer.
 * `source_ip` - Source IPv4 or IPv6 address used to communicate with FortiAnalyzer.

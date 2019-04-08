@@ -23,4 +23,5 @@ resource "fortios_system_license_vdom" "test2" {
 
 ## Argument Reference
 The following arguments are supported:
+
 * `license` - (Required) Registration code.

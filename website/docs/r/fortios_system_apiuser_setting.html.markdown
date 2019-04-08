@@ -35,6 +35,7 @@ resource "fortios_system_apiuser_setting" "test2" {
 
 ## Argument Reference
 The following arguments are supported:
+
 * `name` - (Required) User name.
 * `accprofile` - (Required) Admin user access profile.
 * `vdom` - (Required) Virtual domains.
@@ -44,6 +45,7 @@ The following arguments are supported:
 
 ## Attributes Reference
 The following attributes are exported:
+
 * `id` - The ID of the API user.
 * `name` - User name.
 * `accprofile` - Admin user access profile.
