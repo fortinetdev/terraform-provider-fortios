@@ -4,21 +4,23 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/hashicorp/terraform/helper/acctest"
 	"github.com/hashicorp/terraform/helper/resource"
 	"github.com/hashicorp/terraform/terraform"
 )
 
 func TestAccFortiOSSystemAdminProfiles_basic(t *testing.T) {
+	rname := "sap" + acctest.RandString(12)
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
 		CheckDestroy: testAccCheckSystemAdminProfilesDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccFortiOSSystemAdminProfilesConfig,
+				Config: testAccFortiOSSystemAdminProfilesConfig(rname),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFortiOSSystemAdminProfilesExists("fortios_system_admin_profiles.test1"),
-					resource.TestCheckResourceAttr("fortios_system_admin_profiles.test1", "name", "s2"),
+					resource.TestCheckResourceAttr("fortios_system_admin_profiles.test1", "name", rname),
 					resource.TestCheckResourceAttr("fortios_system_admin_profiles.test1", "scope", "vdom"),
 					resource.TestCheckResourceAttr("fortios_system_admin_profiles.test1", "comments", "Terraform Test"),
 					resource.TestCheckResourceAttr("fortios_system_admin_profiles.test1", "secfabgrp", "none"),
@@ -88,9 +90,10 @@ func testAccCheckSystemAdminProfilesDestroy(s *terraform.State) error {
 	return nil
 }
 
-const testAccFortiOSSystemAdminProfilesConfig = `
-resource "fortios_system_admin_profiles" "test1" { 
-	name = "s2"
+func testAccFortiOSSystemAdminProfilesConfig(name string) string {
+	return fmt.Sprintf(`
+resource "fortios_system_admin_profiles" "test1" {
+	name = "%s"
 	scope = "vdom"
 	comments = "Terraform Test"
 	secfabgrp = "none"
@@ -106,4 +109,5 @@ resource "fortios_system_admin_profiles" "test1" {
 	wifi = "none"
 	admintimeout_override = "disable"
 }
-`
+`, name)
+}

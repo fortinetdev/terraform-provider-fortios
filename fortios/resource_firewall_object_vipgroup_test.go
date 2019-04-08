@@ -4,21 +4,23 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/hashicorp/terraform/helper/acctest"
 	"github.com/hashicorp/terraform/helper/resource"
 	"github.com/hashicorp/terraform/terraform"
 )
 
 func TestAccFortiOSFirewallObjectVipGroup_basic(t *testing.T) {
+	rname := "fovgb_" + acctest.RandString(12)
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
 		CheckDestroy: testAccCheckFirewallObjectVipGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccFortiOSFirewallObjectVipGroupConfig,
+				Config: testAccFortiOSFirewallObjectVipGroupConfig(rname),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFortiOSFirewallObjectVipGroupExists("fortios_firewall_object_vipgroup.test1"),
-					resource.TestCheckResourceAttr("fortios_firewall_object_vipgroup.test1", "name", "s1"),
+					resource.TestCheckResourceAttr("fortios_firewall_object_vipgroup.test1", "name", rname),
 					resource.TestCheckResourceAttr("fortios_firewall_object_vipgroup.test1", "comments", "Terraform Test"),
 					resource.TestCheckResourceAttr("fortios_firewall_object_vipgroup.test1", "interface", "port3"),
 				),
@@ -76,12 +78,13 @@ func testAccCheckFirewallObjectVipGroupDestroy(s *terraform.State) error {
 	return nil
 }
 
-const testAccFortiOSFirewallObjectVipGroupConfig = `
+func testAccFortiOSFirewallObjectVipGroupConfig(name string) string {
+	return fmt.Sprintf(`
 resource "fortios_firewall_object_vip" "viptest1" { 
-	name = "vip1fortest"
+	name = "vip1fortest%s"
 	comment = "Terraform Test"
-	extip = "1.1.5.0-1.1.6.0"
-	mappedip = ["1.1.8.0-1.1.9.0"]
+	extip = "1.1.15.0-1.1.16.0"
+	mappedip = ["1.1.18.0-1.1.19.0"]
 	extintf = "port3"
 	portforward = "enable"
 	protocol = "tcp"
@@ -90,10 +93,10 @@ resource "fortios_firewall_object_vip" "viptest1" {
 }
 
 resource "fortios_firewall_object_vip" "viptest2" { 
-	name = "vip2fortest"
+	name = "vip2fortest%s"
 	comment = "Terraform Test"
-	extip = "1.1.7.0-1.1.8.0"
-	mappedip = ["1.1.10.0-1.1.11.0"]
+	extip = "1.1.17.0-1.1.18.0"
+	mappedip = ["1.1.20.0-1.1.21.0"]
 	extintf = "port3"
 	portforward = "enable"
 	protocol = "tcp"
@@ -103,9 +106,10 @@ resource "fortios_firewall_object_vip" "viptest2" {
 
 
 resource "fortios_firewall_object_vipgroup" "test1" {
-	name = "s1"
+	name = "%s"
 	interface = "port3"
 	comments = "Terraform Test"
 	member = ["${fortios_firewall_object_vip.viptest1.name}", "${fortios_firewall_object_vip.viptest2.name}"]
 }
-`
+`, name, name, name)
+}

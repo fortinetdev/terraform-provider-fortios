@@ -4,21 +4,23 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/hashicorp/terraform/helper/acctest"
 	"github.com/hashicorp/terraform/helper/resource"
 	"github.com/hashicorp/terraform/terraform"
 )
 
 func TestAccFortiOSFirewallObjectService_Fqdn(t *testing.T) {
+	rname := "fosfq_" + acctest.RandString(12)
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
 		CheckDestroy: testAccCheckFirewallObjectServiceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccFortiOSFirewallObjectServiceConfigFqdn,
+				Config: testAccFortiOSFirewallObjectServiceConfigFqdn(rname),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFortiOSFirewallObjectServiceExists("fortios_firewall_object_service.test1"),
-					resource.TestCheckResourceAttr("fortios_firewall_object_service.test1", "name", "s1"),
+					resource.TestCheckResourceAttr("fortios_firewall_object_service.test1", "name", rname),
 					resource.TestCheckResourceAttr("fortios_firewall_object_service.test1", "category", "General"),
 					resource.TestCheckResourceAttr("fortios_firewall_object_service.test1", "protocol", "ICMP"),
 					resource.TestCheckResourceAttr("fortios_firewall_object_service.test1", "icmptype", "2"),
@@ -32,16 +34,17 @@ func TestAccFortiOSFirewallObjectService_Fqdn(t *testing.T) {
 }
 
 func TestAccFortiOSFirewallObjectService_IPRange(t *testing.T) {
+	rname := "fosipr_" + acctest.RandString(12)
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
 		CheckDestroy: testAccCheckFirewallObjectServiceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccFortiOSFirewallObjectServiceConfigIPRange,
+				Config: testAccFortiOSFirewallObjectServiceConfigIPRange(rname),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFortiOSFirewallObjectServiceExists("fortios_firewall_object_service.test2"),
-					resource.TestCheckResourceAttr("fortios_firewall_object_service.test2", "name", "s2"),
+					resource.TestCheckResourceAttr("fortios_firewall_object_service.test2", "name", rname),
 					resource.TestCheckResourceAttr("fortios_firewall_object_service.test2", "category", "General"),
 					resource.TestCheckResourceAttr("fortios_firewall_object_service.test2", "protocol", "TCP/UDP/SCTP"),
 					resource.TestCheckResourceAttr("fortios_firewall_object_service.test2", "iprange", "1.1.1.1-2.2.2.2"),
@@ -104,9 +107,10 @@ func testAccCheckFirewallObjectServiceDestroy(s *terraform.State) error {
 	return nil
 }
 
-const testAccFortiOSFirewallObjectServiceConfigFqdn = `
+func testAccFortiOSFirewallObjectServiceConfigFqdn(name string) string {
+	return fmt.Sprintf(`
 resource "fortios_firewall_object_service" "test1" {
-	name = "s1"
+	name = "%s"
 	category = "General"
 	protocol = "ICMP"
 	icmptype = "2"
@@ -114,11 +118,13 @@ resource "fortios_firewall_object_service" "test1" {
 	protocol_number = "1"
 	comment = "Terraform Test"
 }
-`
+`, name)
+}
 
-const testAccFortiOSFirewallObjectServiceConfigIPRange = `
+func testAccFortiOSFirewallObjectServiceConfigIPRange(name string) string {
+	return fmt.Sprintf(`
 resource "fortios_firewall_object_service" "test2" {
-	name = "s2"
+	name = "%s"
 	category = "General"
 	protocol = "TCP/UDP/SCTP"
 	iprange = "1.1.1.1-2.2.2.2"
@@ -127,4 +133,5 @@ resource "fortios_firewall_object_service" "test2" {
 	sctp_portrange = "66-88"
 	comment = "Terraform Test"
 }
-`
+`, name)
+}

@@ -4,24 +4,27 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/hashicorp/terraform/helper/acctest"
 	"github.com/hashicorp/terraform/helper/resource"
 	"github.com/hashicorp/terraform/terraform"
 )
 
 func TestAccFortiOSSystemAdminAdministrator_basic(t *testing.T) {
+	rname := acctest.RandString(8)
+	profilername := "profile" + rname
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
 		CheckDestroy: testAccCheckSystemAdminAdministratorDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccFortiOSSystemAdminAdministratorConfig,
+				Config: testAccFortiOSSystemAdminAdministratorConfig(rname),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFortiOSSystemAdminAdministratorExists("fortios_system_admin_administrator.test1"),
-					resource.TestCheckResourceAttr("fortios_system_admin_administrator.test1", "name", "s1"),
+					resource.TestCheckResourceAttr("fortios_system_admin_administrator.test1", "name", rname),
 					resource.TestCheckResourceAttr("fortios_system_admin_administrator.test1", "trusthost1", "1.1.1.0 255.255.255.0"),
 					resource.TestCheckResourceAttr("fortios_system_admin_administrator.test1", "trusthost2", "2.2.2.0 255.255.255.0"),
-					resource.TestCheckResourceAttr("fortios_system_admin_administrator.test1", "accprofile", "accprofileforacctest"),
+					resource.TestCheckResourceAttr("fortios_system_admin_administrator.test1", "accprofile", profilername),
 					resource.TestCheckResourceAttr("fortios_system_admin_administrator.test1", "comments", "Terraform Test"),
 				),
 			},
@@ -78,9 +81,10 @@ func testAccCheckSystemAdminAdministratorDestroy(s *terraform.State) error {
 	return nil
 }
 
-const testAccFortiOSSystemAdminAdministratorConfig = `
+func testAccFortiOSSystemAdminAdministratorConfig(name string) string {
+	return fmt.Sprintf(`
 resource "fortios_system_admin_profiles" "test1" { 
-	name = "accprofileforacctest"
+	name = "profile%s"
 	scope = "vdom"
 	comments = "Terraform Test"
 	secfabgrp = "none"
@@ -98,7 +102,7 @@ resource "fortios_system_admin_profiles" "test1" {
 }
 
 resource "fortios_system_admin_administrator" "test1" { 
-	name = "s1"
+	name = "%s"
 	password = "cc37$1AC1"
 	trusthost1 = "1.1.1.0 255.255.255.0"
 	trusthost2 = "2.2.2.0 255.255.255.0"
@@ -106,4 +110,5 @@ resource "fortios_system_admin_administrator" "test1" {
 	comments = "Terraform Test"
 	vdom = ["root"]
 }
-`
+`, name, name)
+}

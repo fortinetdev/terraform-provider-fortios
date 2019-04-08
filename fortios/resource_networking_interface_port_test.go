@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/hashicorp/terraform/helper/acctest"
 	"github.com/hashicorp/terraform/helper/resource"
 	"github.com/hashicorp/terraform/terraform"
 )
@@ -42,16 +43,17 @@ func TestAccFortiOSNetworkingInterfacePort_Physical(t *testing.T) {
 }
 
 func TestAccFortiOSNetworkingInterfacePort_Vlan(t *testing.T) {
+	rname := acctest.RandString(12)
 	resource.Test(t, resource.TestCase{
-		PreCheck:  func() { testAccPreCheck(t) },
-		Providers: testAccProviders,
-		// CheckDestroy: testAccCheckNetworkingInterfacePortDestroy,
+		PreCheck:     func() { testAccPreCheck(t) },
+		Providers:    testAccProviders,
+		CheckDestroy: testAccCheckNetworkingInterfacePortDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccFortiOSNetworkingInterfacePortConfigVlan,
+				Config: testAccFortiOSNetworkingInterfacePortConfigVlan(rname),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFortiOSNetworkingInterfacePortExists("fortios_networking_interface_port.test2"),
-					resource.TestCheckResourceAttr("fortios_networking_interface_port.test2", "name", "vlanport"),
+					resource.TestCheckResourceAttr("fortios_networking_interface_port.test2", "name", rname),
 					resource.TestCheckResourceAttr("fortios_networking_interface_port.test2", "role", "lan"),
 					resource.TestCheckResourceAttr("fortios_networking_interface_port.test2", "mode", "static"),
 					resource.TestCheckResourceAttr("fortios_networking_interface_port.test2", "defaultgw", "enable"),
@@ -60,7 +62,7 @@ func TestAccFortiOSNetworkingInterfacePort_Vlan(t *testing.T) {
 					resource.TestCheckResourceAttr("fortios_networking_interface_port.test2", "vlanid", "3"),
 					resource.TestCheckResourceAttr("fortios_networking_interface_port.test2", "vdom", "root"),
 					resource.TestCheckResourceAttr("fortios_networking_interface_port.test2", "ip", "3.123.33.10 255.255.255.0"),
-					resource.TestCheckResourceAttr("fortios_networking_interface_port.test2", "interface", "port3"),
+					resource.TestCheckResourceAttr("fortios_networking_interface_port.test2", "interface", "port2"),
 					resource.TestCheckResourceAttr("fortios_networking_interface_port.test2", "allowaccess", "ping"),
 				),
 			},
@@ -69,16 +71,17 @@ func TestAccFortiOSNetworkingInterfacePort_Vlan(t *testing.T) {
 }
 
 func TestAccFortiOSNetworkingInterfacePort_Loopback(t *testing.T) {
+	rname := acctest.RandString(12)
 	resource.Test(t, resource.TestCase{
-		PreCheck:  func() { testAccPreCheck(t) },
-		Providers: testAccProviders,
-		// CheckDestroy: testAccCheckNetworkingInterfacePortDestroy,
+		PreCheck:     func() { testAccPreCheck(t) },
+		Providers:    testAccProviders,
+		CheckDestroy: testAccCheckNetworkingInterfacePortDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccFortiOSNetworkingInterfacePortConfigLoopback,
+				Config: testAccFortiOSNetworkingInterfacePortConfigLoopback(rname),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFortiOSNetworkingInterfacePortExists("fortios_networking_interface_port.test3"),
-					resource.TestCheckResourceAttr("fortios_networking_interface_port.test3", "name", "loopbackport"),
+					resource.TestCheckResourceAttr("fortios_networking_interface_port.test3", "name", rname),
 					resource.TestCheckResourceAttr("fortios_networking_interface_port.test3", "ip", "23.123.33.10 255.255.255.0"),
 					resource.TestCheckResourceAttr("fortios_networking_interface_port.test3", "allowaccess", "ping https http"),
 					resource.TestCheckResourceAttr("fortios_networking_interface_port.test3", "alias", "loopbackportalias"),
@@ -145,7 +148,7 @@ func testAccCheckNetworkingInterfacePortDestroy(s *terraform.State) error {
 }
 
 const testAccFortiOSNetworkingInterfacePortConfigPhysical = `
-resource "fortios_networking_interface_port" "test1" { 
+resource "fortios_networking_interface_port" "test1" {
 	name = "port3"
 	ip = "93.133.133.110 255.255.255.0"
 	alias = "physicalport3"
@@ -166,9 +169,10 @@ resource "fortios_networking_interface_port" "test1" {
 }
 `
 
-const testAccFortiOSNetworkingInterfacePortConfigVlan = `
-resource "fortios_networking_interface_port" "test2" { 
-	name = "vlanport"
+func testAccFortiOSNetworkingInterfacePortConfigVlan(name string) string {
+	return fmt.Sprintf(`
+resource "fortios_networking_interface_port" "test2" {
+	name = "%s"
 	role = "lan"
 	mode = "static"
 	defaultgw = "enable"
@@ -177,14 +181,16 @@ resource "fortios_networking_interface_port" "test2" {
 	vlanid = "3"
 	vdom = "root"
 	ip = "3.123.33.10 255.255.255.0"
-	interface = "port3"
+	interface = "port2"
 	allowaccess = "ping"
 }
-`
+`, name)
+}
 
-const testAccFortiOSNetworkingInterfacePortConfigLoopback = `
-resource "fortios_networking_interface_port" "test3" { 
-	name = "loopbackport"
+func testAccFortiOSNetworkingInterfacePortConfigLoopback(name string) string {
+	return fmt.Sprintf(`
+resource "fortios_networking_interface_port" "test3" {
+	name = "%s"
 	ip = "23.123.33.10 255.255.255.0"
 	allowaccess = "ping https http"
 	alias = "loopbackportalias"
@@ -196,4 +202,5 @@ resource "fortios_networking_interface_port" "test3" {
 	mode = "static"
 	mtu_override = "disable"
 }
-`
+`, name)
+}

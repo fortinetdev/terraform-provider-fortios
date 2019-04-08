@@ -4,22 +4,25 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/hashicorp/terraform/helper/acctest"
 	"github.com/hashicorp/terraform/helper/resource"
 	"github.com/hashicorp/terraform/terraform"
 )
 
 func TestAccFortiOSSystemAPIUserSetting_basic(t *testing.T) {
+	rname := acctest.RandString(12)
+	prname := "apsbp" + rname
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
 		CheckDestroy: testAccCheckSystemAPIUserSettingDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccFortiOSSystemAPIUserSettingConfig,
+				Config: testAccFortiOSSystemAPIUserSettingConfig(rname),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFortiOSSystemAPIUserSettingExists("fortios_system_apiuser_setting.test1"),
-					resource.TestCheckResourceAttr("fortios_system_apiuser_setting.test1", "name", "restAPIadmin2"),
-					resource.TestCheckResourceAttr("fortios_system_apiuser_setting.test1", "accprofile", "accprofileforacctest"),
+					resource.TestCheckResourceAttr("fortios_system_apiuser_setting.test1", "name", rname),
+					resource.TestCheckResourceAttr("fortios_system_apiuser_setting.test1", "accprofile", prname),
 					resource.TestCheckResourceAttr("fortios_system_apiuser_setting.test1", "comments", "Terraform Test"),
 				),
 			},
@@ -76,9 +79,10 @@ func testAccCheckSystemAPIUserSettingDestroy(s *terraform.State) error {
 	return nil
 }
 
-const testAccFortiOSSystemAPIUserSettingConfig = `
-resource "fortios_system_admin_profiles" "test1" { 
-	name = "accprofileforacctest"
+func testAccFortiOSSystemAPIUserSettingConfig(name string) string {
+	return fmt.Sprintf(`
+resource "fortios_system_admin_profiles" "test1" {
+	name = "apsbp%s"
 	scope = "vdom"
 	comments = "Terraform Test"
 	secfabgrp = "none"
@@ -95,8 +99,8 @@ resource "fortios_system_admin_profiles" "test1" {
 	admintimeout_override = "disable"
 }
 
-resource "fortios_system_apiuser_setting" "test1" { 
-	name = "restAPIadmin2"
+resource "fortios_system_apiuser_setting" "test1" {
+	name = "%s"
 	accprofile = "${fortios_system_admin_profiles.test1.name}"
 	vdom = ["root"]
 	trusthost = [
@@ -107,8 +111,9 @@ resource "fortios_system_apiuser_setting" "test1" {
 		{
 			type = "ipv4-trusthost"
 			ipv4_trusthost = "22.22.0.0 255.255.0.0"
-		}				
+		}
 	]
 	comments = "Terraform Test"
 }
-`
+`, name, name)
+}
