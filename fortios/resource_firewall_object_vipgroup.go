@@ -2,9 +2,9 @@ package fortios
 
 import (
 	"fmt"
-	// "strconv"
+	"log"
 
-	"github.com/fortios/fortios-sdk/sdkcore"
+	"github.com/fgtdev/fortios-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -77,11 +77,10 @@ func resourceFirewallObjectVipGroupCreate(d *schema.ResourceData, m interface{})
 		return fmt.Errorf("Error creating Firewall Object VipGroup: %s", err)
 	}
 
-	// Set index for d
-	// d.SetId(strconv.Itoa(int(o.Mkey)))
+	//Set index for d
 	d.SetId(o.Mkey)
 
-	return nil
+	return resourceFirewallObjectVipGroupRead(d, m)
 }
 
 func resourceFirewallObjectVipGroupUpdate(d *schema.ResourceData, m interface{}) error {
@@ -123,10 +122,7 @@ func resourceFirewallObjectVipGroupUpdate(d *schema.ResourceData, m interface{})
 		return fmt.Errorf("Error updating Firewall Object VipGroup: %s", err)
 	}
 
-	//Set index for d
-	//d.SetId(o.Mkey)
-
-	return nil
+	return resourceFirewallObjectVipGroupRead(d, m)
 }
 
 func resourceFirewallObjectVipGroupDelete(d *schema.ResourceData, m interface{}) error {
@@ -159,12 +155,20 @@ func resourceFirewallObjectVipGroupRead(d *schema.ResourceData, m interface{}) e
 		return fmt.Errorf("Error reading Firewall Object VipGroup: %s", err)
 	}
 
+	if o == nil {
+		log.Printf("[WARN] resource (%s) not found, removing from state", d.Id())
+		d.SetId("")
+		return nil
+	}
+
 	//Refresh property
 	d.Set("name", o.Name)
 	d.Set("comments", o.Comments)
 	d.Set("interface", o.Interface)
 	member := forticlient.ExtractString(o.Member)
-	d.Set("member", member)
+	if err := d.Set("member", member); err != nil {
+		log.Printf("[WARN] Error setting Firewall Object VipGroup for (%s): %s", d.Id(), err)
+	}
 
 	return nil
 }

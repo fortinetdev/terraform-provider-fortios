@@ -2,9 +2,9 @@ package fortios
 
 import (
 	"fmt"
-	// "strconv"
+	"log"
 
-	"github.com/fortios/fortios-sdk/sdkcore"
+	"github.com/fgtdev/fortios-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -111,11 +111,10 @@ func resourceFirewallObjectVipCreate(d *schema.ResourceData, m interface{}) erro
 		return fmt.Errorf("Error creating Firewall Object Vip: %s", err)
 	}
 
-	// Set index for d
-	// d.SetId(strconv.Itoa(int(o.Mkey)))
+	//Set index for d
 	d.SetId(o.Mkey)
 
-	return nil
+	return resourceFirewallObjectVipRead(d, m)
 }
 
 func resourceFirewallObjectVipUpdate(d *schema.ResourceData, m interface{}) error {
@@ -167,10 +166,7 @@ func resourceFirewallObjectVipUpdate(d *schema.ResourceData, m interface{}) erro
 		return fmt.Errorf("Error updating Firewall Object Vip: %s", err)
 	}
 
-	//Set index for d
-	//d.SetId(o.Mkey)
-
-	return nil
+	return resourceFirewallObjectVipRead(d, m)
 }
 
 func resourceFirewallObjectVipDelete(d *schema.ResourceData, m interface{}) error {
@@ -203,6 +199,12 @@ func resourceFirewallObjectVipRead(d *schema.ResourceData, m interface{}) error 
 		return fmt.Errorf("Error reading Firewall Object Vip: %s", err)
 	}
 
+	if o == nil {
+		log.Printf("[WARN] resource (%s) not found, removing from state", d.Id())
+		d.SetId("")
+		return nil
+	}
+
 	//Refresh property
 	d.Set("name", o.Name)
 	d.Set("comment", o.Comment)
@@ -214,7 +216,9 @@ func resourceFirewallObjectVipRead(d *schema.ResourceData, m interface{}) error 
 		vs = append(vs, c)
 	}
 
-	d.Set("mappedip", vs)
+	if err := d.Set("mappedip", vs); err != nil {
+		log.Printf("[WARN] Error setting Firewall Object Vip for (%s): %s", d.Id(), err)
+	}
 	d.Set("extintf", o.Extintf)
 	d.Set("portforward", o.Portforward)
 	d.Set("protocol", o.Protocol)

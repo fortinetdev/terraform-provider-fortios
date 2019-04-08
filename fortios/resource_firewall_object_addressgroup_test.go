@@ -65,10 +65,12 @@ func testAccCheckFirewallObjectAddressGroupDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		_, err := c.ReadFirewallObjectAddressGroup(i)
+		o, err := c.ReadFirewallObjectAddressGroup(i)
 
 		if err == nil {
-			return fmt.Errorf("Error Firewall Object AddressGroup %s still exists", rs.Primary.ID)
+			if o != nil {
+				return fmt.Errorf("Error Firewall Object AddressGroup %s still exists", rs.Primary.ID)
+			}
 		}
 
 		return nil

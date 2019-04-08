@@ -2,10 +2,9 @@ package fortios
 
 import (
 	"fmt"
-	// "log"
-	// "strconv"
+	"log"
 
-	forticlient "github.com/fortios/fortios-sdk/sdkcore"
+	forticlient "github.com/fgtdev/fortios-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -134,11 +133,10 @@ func resourceFirewallObjectServiceCreate(d *schema.ResourceData, m interface{}) 
 		return fmt.Errorf("Error creating Firewall Object Service: %s", err)
 	}
 
-	// Set index for d
-	// d.SetId(strconv.Itoa(int(o.Mkey)))
+	//Set index for d
 	d.SetId(o.Mkey)
 
-	return nil
+	return resourceFirewallObjectServiceRead(d, m)
 }
 
 func resourceFirewallObjectServiceUpdate(d *schema.ResourceData, m interface{}) error {
@@ -200,10 +198,7 @@ func resourceFirewallObjectServiceUpdate(d *schema.ResourceData, m interface{}) 
 		return fmt.Errorf("Error updating Firewall Object Service: %s", err)
 	}
 
-	//Set index for d
-	//d.SetId(o.Mkey)
-
-	return nil
+	return resourceFirewallObjectServiceRead(d, m)
 }
 
 func resourceFirewallObjectServiceDelete(d *schema.ResourceData, m interface{}) error {
@@ -234,6 +229,12 @@ func resourceFirewallObjectServiceRead(d *schema.ResourceData, m interface{}) er
 	o, err := c.ReadFirewallObjectService(mkey)
 	if err != nil {
 		return fmt.Errorf("Error reading Firewall Object Service: %s", err)
+	}
+
+	if o == nil {
+		log.Printf("[WARN] resource (%s) not found, removing from state", d.Id())
+		d.SetId("")
+		return nil
 	}
 
 	//Refresh property
