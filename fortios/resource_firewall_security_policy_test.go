@@ -4,21 +4,23 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/hashicorp/terraform/helper/acctest"
 	"github.com/hashicorp/terraform/helper/resource"
 	"github.com/hashicorp/terraform/terraform"
 )
 
 func TestAccFortiOSFirewallSecurityPolicy_basic(t *testing.T) {
+	rname := "fspb_" + acctest.RandString(12)
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
 		CheckDestroy: testAccCheckFirewallSecurityPolicyDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccFortiOSFirewallSecurityPolicyConfig,
+				Config: testAccFortiOSFirewallSecurityPolicyConfig(rname),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFortiOSFirewallSecurityPolicyExists("fortios_firewall_security_policy.test1"),
-					resource.TestCheckResourceAttr("fortios_firewall_security_policy.test1", "name", "policy1"),
+					resource.TestCheckResourceAttr("fortios_firewall_security_policy.test1", "name", rname),
 					resource.TestCheckResourceAttr("fortios_firewall_security_policy.test1", "internet_service", "enable"),
 					resource.TestCheckResourceAttr("fortios_firewall_security_policy.test1", "internet_service_src", "enable"),
 					resource.TestCheckResourceAttr("fortios_firewall_security_policy.test1", "status", "enable"),
@@ -95,9 +97,10 @@ func testAccCheckFirewallSecurityPolicyDestroy(s *terraform.State) error {
 	return nil
 }
 
-const testAccFortiOSFirewallSecurityPolicyConfig = `
+func testAccFortiOSFirewallSecurityPolicyConfig(name string) string {
+	return fmt.Sprintf(`
 resource "fortios_firewall_security_policy" "test1" {
-	name = "policy1"
+	name = "%s"
 	srcintf = ["port3"]
 	dstintf = ["port4"]
 	srcaddr = []    
@@ -129,4 +132,5 @@ resource "fortios_firewall_security_policy" "test1" {
 	nat = "enable"
 	profile_protocol_options = "default"
 }
-`
+`, name)
+}

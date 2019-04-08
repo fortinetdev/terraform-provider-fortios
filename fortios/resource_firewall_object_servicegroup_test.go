@@ -4,21 +4,23 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/hashicorp/terraform/helper/acctest"
 	"github.com/hashicorp/terraform/helper/resource"
 	"github.com/hashicorp/terraform/terraform"
 )
 
 func TestAccFortiOSFirewallObjectServiceGroup_basic(t *testing.T) {
+	rname := "fosgb_" + acctest.RandString(12)
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
 		CheckDestroy: testAccCheckFirewallObjectServiceGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccFortiOSFirewallObjectServiceGroupConfig,
+				Config: testAccFortiOSFirewallObjectServiceGroupConfig(rname),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFortiOSFirewallObjectServiceGroupExists("fortios_firewall_object_servicegroup.test1"),
-					resource.TestCheckResourceAttr("fortios_firewall_object_servicegroup.test1", "name", "fobs1"),
+					resource.TestCheckResourceAttr("fortios_firewall_object_servicegroup.test1", "name", rname),
 					resource.TestCheckResourceAttr("fortios_firewall_object_servicegroup.test1", "comment", "Terraform Test")),
 			},
 		},
@@ -72,10 +74,12 @@ func testAccCheckFirewallObjectServiceGroupDestroy(s *terraform.State) error {
 	return nil
 }
 
-const testAccFortiOSFirewallObjectServiceGroupConfig = `
-resource "fortios_firewall_object_servicegroup" "test1" { 
-	name = "fobs1"
+func testAccFortiOSFirewallObjectServiceGroupConfig(name string) string {
+	return fmt.Sprintf(`
+resource "fortios_firewall_object_servicegroup" "test1" {
+	name = "%s"
 	comment = "Terraform Test"
 	member = ["DCE-RPC", "DNS", "HTTPS"] 
-  } 
-`
+}
+`, name)
+}

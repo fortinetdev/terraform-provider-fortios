@@ -4,21 +4,23 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/hashicorp/terraform/helper/acctest"
 	"github.com/hashicorp/terraform/helper/resource"
 	"github.com/hashicorp/terraform/terraform"
 )
 
-func TestAccFortiOSVPNIPsecPhase1Interface_basic1(t *testing.T) {
+func TestAccFortiOSVPNIPsecPhase1Interface_basic(t *testing.T) {
+	rname := "i1" + acctest.RandString(12)
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
 		CheckDestroy: testAccCheckVPNIPsecPhase1InterfaceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccFortiOSVPNIPsecPhase1InterfaceConfig1,
+				Config: testAccFortiOSVPNIPsecPhase1InterfaceConfig1(rname),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFortiOSVPNIPsecPhase1InterfaceExists("fortios_vpn_ipsec_phase1interface.test1"),
-					resource.TestCheckResourceAttr("fortios_vpn_ipsec_phase1interface.test1", "name", "001Test11"),
+					resource.TestCheckResourceAttr("fortios_vpn_ipsec_phase1interface.test1", "name", rname),
 					resource.TestCheckResourceAttr("fortios_vpn_ipsec_phase1interface.test1", "type", "static"),
 					resource.TestCheckResourceAttr("fortios_vpn_ipsec_phase1interface.test1", "interface", "port3"),
 					resource.TestCheckResourceAttr("fortios_vpn_ipsec_phase1interface.test1", "peertype", "any"),
@@ -36,15 +38,16 @@ func TestAccFortiOSVPNIPsecPhase1Interface_basic1(t *testing.T) {
 }
 
 func TestAccFortiOSVPNIPsecPhase1Interface_basic2(t *testing.T) {
+	rname := "i2" + acctest.RandString(12)
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
 		CheckDestroy: testAccCheckVPNIPsecPhase1InterfaceDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccFortiOSVPNIPsecPhase1InterfaceConfig2,
+				Config: testAccFortiOSVPNIPsecPhase1InterfaceConfig2(rname),
 				Check: resource.ComposeTestCheckFunc(
-					resource.TestCheckResourceAttr("fortios_vpn_ipsec_phase1interface.test1", "name", "001Test12"),
+					resource.TestCheckResourceAttr("fortios_vpn_ipsec_phase1interface.test1", "name", rname),
 					resource.TestCheckResourceAttr("fortios_vpn_ipsec_phase1interface.test1", "type", "dynamic"),
 					resource.TestCheckResourceAttr("fortios_vpn_ipsec_phase1interface.test1", "interface", "port3"),
 					resource.TestCheckResourceAttr("fortios_vpn_ipsec_phase1interface.test1", "peertype", "any"),
@@ -107,9 +110,10 @@ func testAccCheckVPNIPsecPhase1InterfaceDestroy(s *terraform.State) error {
 	return nil
 }
 
-const testAccFortiOSVPNIPsecPhase1InterfaceConfig1 = `
+func testAccFortiOSVPNIPsecPhase1InterfaceConfig1(name string) string {
+	return fmt.Sprintf(`
 resource "fortios_vpn_ipsec_phase1interface" "test1" {
-	name = "001Test11"
+	name = "%s"
 	type = "static"
 	interface = "port3"
 	peertype = "any"
@@ -122,11 +126,13 @@ resource "fortios_vpn_ipsec_phase1interface" "test1" {
 	authmethod_remote = ""
 	mode_cfg = "disable"
 }
-`
+`, name)
+}
 
-const testAccFortiOSVPNIPsecPhase1InterfaceConfig2 = `
+func testAccFortiOSVPNIPsecPhase1InterfaceConfig2(name string) string {
+	return fmt.Sprintf(`
 resource "fortios_vpn_ipsec_phase1interface" "test1" {
-	name = "001Test12"
+	name = "%s"
 	type = "dynamic"
 	interface = "port3"
 	peertype = "any"
@@ -139,4 +145,5 @@ resource "fortios_vpn_ipsec_phase1interface" "test1" {
 	split_include_service = ""
 	ipv4_split_exclude = ""
 }
-`
+`, name)
+}

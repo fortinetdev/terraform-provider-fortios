@@ -4,21 +4,23 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/hashicorp/terraform/helper/acctest"
 	"github.com/hashicorp/terraform/helper/resource"
 	"github.com/hashicorp/terraform/terraform"
 )
 
 func TestAccFortiOSFirewallObjectAddressGroup_basic(t *testing.T) {
+	rname := "foag_" + acctest.RandString(12)
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
 		CheckDestroy: testAccCheckFirewallObjectAddressGroupDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccFortiOSFirewallObjectAddressGroupConfig,
+				Config: testAccFortiOSFirewallObjectAddressGroupConfig(rname),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFortiOSFirewallObjectAddressGroupExists("fortios_firewall_object_addressgroup.test1"),
-					resource.TestCheckResourceAttr("fortios_firewall_object_addressgroup.test1", "name", "s1"),
+					resource.TestCheckResourceAttr("fortios_firewall_object_addressgroup.test1", "name", rname),
 					resource.TestCheckResourceAttr("fortios_firewall_object_addressgroup.test1", "comment", "Terraform Test"),
 				),
 			},
@@ -75,10 +77,12 @@ func testAccCheckFirewallObjectAddressGroupDestroy(s *terraform.State) error {
 	return nil
 }
 
-const testAccFortiOSFirewallObjectAddressGroupConfig = `
+func testAccFortiOSFirewallObjectAddressGroupConfig(name string) string {
+	return fmt.Sprintf(`
 resource "fortios_firewall_object_addressgroup" "test1" {
-	name = "s1"
+	name = "%s"
 	member = ["google-play","swscan.apple.com"]
 	comment = "Terraform Test"
 }
-`
+`, name)
+}

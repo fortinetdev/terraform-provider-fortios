@@ -4,21 +4,23 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/hashicorp/terraform/helper/acctest"
 	"github.com/hashicorp/terraform/helper/resource"
 	"github.com/hashicorp/terraform/terraform"
 )
 
 func TestAccFortiOSFirewallObjectVip_basic(t *testing.T) {
+	rname := "fovb_" + acctest.RandString(12)
 	resource.Test(t, resource.TestCase{
 		PreCheck:     func() { testAccPreCheck(t) },
 		Providers:    testAccProviders,
 		CheckDestroy: testAccCheckFirewallObjectVipDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccFortiOSFirewallObjectVipConfig,
+				Config: testAccFortiOSFirewallObjectVipConfig(rname),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFortiOSFirewallObjectVipExists("fortios_firewall_object_vip.test1"),
-					resource.TestCheckResourceAttr("fortios_firewall_object_vip.test1", "name", "s1"),
+					resource.TestCheckResourceAttr("fortios_firewall_object_vip.test1", "name", rname),
 					resource.TestCheckResourceAttr("fortios_firewall_object_vip.test1", "comment", "Terraform Test"),
 					resource.TestCheckResourceAttr("fortios_firewall_object_vip.test1", "extip", "1.1.5.0-1.1.6.0"),
 					resource.TestCheckResourceAttr("fortios_firewall_object_vip.test1", "extintf", "port3"),
@@ -81,9 +83,10 @@ func testAccCheckFirewallObjectVipDestroy(s *terraform.State) error {
 	return nil
 }
 
-const testAccFortiOSFirewallObjectVipConfig = `
+func testAccFortiOSFirewallObjectVipConfig(name string) string {
+	return fmt.Sprintf(`
 resource "fortios_firewall_object_vip" "test1" { 
-	name = "s1"
+	name = "%s"
 	comment = "Terraform Test"
 	extip = "1.1.5.0-1.1.6.0"
 	mappedip = ["1.1.8.0-1.1.9.0"]
@@ -93,4 +96,5 @@ resource "fortios_firewall_object_vip" "test1" {
 	extport = "2-3"
 	mappedport = "4-5"
 }
-`
+`, name)
+}
