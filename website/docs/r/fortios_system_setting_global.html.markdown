@@ -27,6 +27,7 @@ resource "fortios_system_setting_global" "test1" {
 
 ## Argument Reference
 The following arguments are supported:
+
 * `hostname` - (Required) FortiGate unit's hostname.
 * `admintimeout` - Number of minutes before an idle administrator session time out.
 * `timezone` - Number corresponding to your time zone from 00 to 86.
@@ -35,6 +36,7 @@ The following arguments are supported:
 
 ## Attributes Reference
 The following attributes are exported:
+
 * `admintimeout` - Number of minutes before an idle administrator session time out.
 * `timezone` - Number corresponding to your time zone from 00 to 86.
 * `hostname` - FortiGate unit's hostname.

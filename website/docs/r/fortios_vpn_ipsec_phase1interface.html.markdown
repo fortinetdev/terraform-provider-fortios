@@ -15,6 +15,7 @@ fortios_vpn_ipsec_phase1interface needs to be set with fortios_vpn_ipsec_phase2i
 
 ## Argument Reference
 The following arguments are supported:
+
 * `name` - (Required) IPsec remote gateway name.
 * `type` - (Required) Remote gateway type.
 * `interface` - (Required) Local physical, aggregate, or VLAN outgoing interface.
@@ -37,6 +38,7 @@ The following arguments are supported:
 
 ## Attributes Reference
 The following attributes are exported:
+
 * `id` - The ID of the phase1-interface item.
 * `name` - IPsec remote gateway name.
 * `type` - Remote gateway type.

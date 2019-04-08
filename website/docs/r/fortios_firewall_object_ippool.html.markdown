@@ -45,6 +45,7 @@ resource "fortios_firewall_object_ippool" "s2" {
 
 ## Argument Reference
 The following arguments are supported:
+
 * `name` - (Required) IP pool name.
 * `type` - (Required) IP pool type(Support overload and one-to-one).
 * `startip` - (Required) First IPv4 address (inclusive) in the range for the address pool (format xxx.xxx.xxx.xxx).
@@ -54,6 +55,7 @@ The following arguments are supported:
 
 ## Attributes Reference
 The following attributes are exported:
+
 * `id` - The ID of the IP pool item.
 * `name` - IP pool name.
 * `type` - IP pool type(Support overload and one-to-one).

@@ -25,12 +25,14 @@ resource "fortios_firewall_object_addressgroup" "s1" {
 
 ## Argument Reference
 The following arguments are supported:
+
 * `name` - (Required) Address group name.
 * `member` - (Required) Address objects contained within the group.
 * `comment` - Comment.
 
 ## Attributes Reference
 The following attributes are exported:
+
 * `id` - The ID of the firewall address group item.
 * `name` - Address group name.
 * `member` - Address objects contained within the group.

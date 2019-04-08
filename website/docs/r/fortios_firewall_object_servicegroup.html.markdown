@@ -25,12 +25,14 @@ resource "fortios_firewall_object_servicegroup" "v11" {
 
 ## Argument Reference
 The following arguments are supported:
+
 * `name` - (Required) Service group name.
 * `member` - (Required) Service objects contained within the group.
 * `comment` - Comment.
 
 ## Attributes Reference
 The following attributes are exported:
+
 * `id` - The ID of the firewall service group item.
 * `name` - Service group name.
 * `member` - Service objects contained within the group.

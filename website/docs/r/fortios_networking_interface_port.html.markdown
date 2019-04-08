@@ -82,6 +82,7 @@ resource "fortios_networking_interface_port" "test1" {
 
 ## Argument Reference
 The following arguments are supported:
+
 * `name` - (Required) If the interface is physical, the argument is the name of the interface.
 * `type` - (Required) Interface type (support physical, vlan, loopback).
 * `ip` - Interface IPv4 address and subnet mask, syntax` - X.X.X.X/24.
@@ -106,6 +107,7 @@ The following arguments are supported:
 
 ## Attributes Reference
 The following attributes are exported:
+
 * `id` - The Name of the interface.
 * `ip` - Interface IPv4 address and subnet mask, syntax` - X.X.X.X/24.
 * `alias` - Alias will be displayed with the interface name to make it easier to distinguish.
