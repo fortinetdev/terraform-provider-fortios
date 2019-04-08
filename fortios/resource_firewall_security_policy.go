@@ -2,9 +2,10 @@ package fortios
 
 import (
 	"fmt"
+	"log"
 	"strconv"
 
-	forticlient "github.com/fortios/fortios-sdk/sdkcore"
+	forticlient "github.com/fgtdev/fortios-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -404,11 +405,10 @@ func resourceFirewallSecurityPolicyCreate(d *schema.ResourceData, m interface{})
 		return fmt.Errorf("Error creating Firewall Security Policy: %s", err)
 	}
 
-	// Set index for d
+	//Set index for d
 	d.SetId(strconv.Itoa(int(o.Mkey)))
-	// d.SetId(o.Mkey)
 
-	return nil
+	return resourceFirewallSecurityPolicyRead(d, m)
 }
 
 func resourceFirewallSecurityPolicyUpdate(d *schema.ResourceData, m interface{}) error {
@@ -622,10 +622,7 @@ func resourceFirewallSecurityPolicyUpdate(d *schema.ResourceData, m interface{})
 		return fmt.Errorf("Error updating Firewall Security Policy: %s", err)
 	}
 
-	//Set index for d
-	//d.SetId(o.Mkey)
-
-	return nil
+	return resourceFirewallSecurityPolicyRead(d, m)
 }
 
 func resourceFirewallSecurityPolicyDelete(d *schema.ResourceData, m interface{}) error {
@@ -658,40 +655,68 @@ func resourceFirewallSecurityPolicyRead(d *schema.ResourceData, m interface{}) e
 		return fmt.Errorf("Error reading Firewall Security Policy: %s", err)
 	}
 
+	if o == nil {
+		log.Printf("[WARN] resource (%s) not found, removing from state", d.Id())
+		d.SetId("")
+		return nil
+	}
+
 	//Refresh property
 	d.Set("name", o.Name)
 	srcintf := forticlient.ExtractString(o.Srcintf)
-	d.Set("srcintf", srcintf)
+	if err := d.Set("srcintf", srcintf); err != nil {
+		log.Printf("[WARN] Error setting Firewall Security Policy for (%s): %s", d.Id(), err)
+	}
 	dstintf := forticlient.ExtractString(o.Dstintf)
-	d.Set("dstintf", dstintf)
+	if err := d.Set("dstintf", dstintf); err != nil {
+		log.Printf("[WARN] Error setting Firewall Security Policy for (%s): %s", d.Id(), err)
+	}
 	srcaddr := forticlient.ExtractString(o.Srcaddr)
-	d.Set("srcaddr", srcaddr)
+	if err := d.Set("srcaddr", srcaddr); err != nil {
+		log.Printf("[WARN] Error setting Firewall Security Policy for (%s): %s", d.Id(), err)
+	}
 	dstaddr := forticlient.ExtractString(o.Dstaddr)
-	d.Set("dstaddr", dstaddr)
+	if err := d.Set("dstaddr", dstaddr); err != nil {
+		log.Printf("[WARN] Error setting Firewall Security Policy for (%s): %s", d.Id(), err)
+	}
 	d.Set("internet_service", o.InternetService)
 	internetServiceID := forticlient.ExpandPolicyInternetIDList(o.InternetServiceID)
-	d.Set("internet_service_id", internetServiceID)
+	if err := d.Set("internet_service_id", internetServiceID); err != nil {
+		log.Printf("[WARN] Error setting Firewall Security Policy for (%s): %s", d.Id(), err)
+	}
 	d.Set("internet_service_src", o.InternetServiceSrc)
 	internetServiceSrcID := forticlient.ExpandPolicyInternetIDList(o.InternetServiceSrcID)
-	d.Set("internet_service_src_id", internetServiceSrcID)
+	if err := d.Set("internet_service_src_id", internetServiceSrcID); err != nil {
+		log.Printf("[WARN] Error setting Firewall Security Policy for (%s): %s", d.Id(), err)
+	}
 	users := forticlient.ExtractString(o.Users)
-	d.Set("users", users)
+	if err := d.Set("users", users); err != nil {
+		log.Printf("[WARN] Error setting Firewall Security Policy for (%s): %s", d.Id(), err)
+	}
 	d.Set("status", o.Status)
 	d.Set("action", o.Action)
 	d.Set("schedule", o.Schedule)
 	service := forticlient.ExtractString(o.Service)
-	d.Set("service", service)
+	if err := d.Set("service", service); err != nil {
+		log.Printf("[WARN] Error setting Firewall Security Policy for (%s): %s", d.Id(), err)
+	}
 	d.Set("utm_status", o.UtmStatus)
 	d.Set("logtraffic", o.Logtraffic)
 	d.Set("logtraffic_start", o.LogtrafficStart)
 	d.Set("capture_packet", o.CapturePacket)
 	d.Set("ippool", o.Ippool)
 	poolname := forticlient.ExtractString(o.Poolname)
-	d.Set("poolname", poolname)
+	if err := d.Set("poolname", poolname); err != nil {
+		log.Printf("[WARN] Error setting Firewall Security Policy for (%s): %s", d.Id(), err)
+	}
 	groups := forticlient.ExtractString(o.Groups)
-	d.Set("groups", groups)
+	if err := d.Set("groups", groups); err != nil {
+		log.Printf("[WARN] Error setting Firewall Security Policy for (%s): %s", d.Id(), err)
+	}
 	devices := forticlient.ExtractString(o.Devices)
-	d.Set("devices", devices)
+	if err := d.Set("devices", devices); err != nil {
+		log.Printf("[WARN] Error setting Firewall Security Policy for (%s): %s", d.Id(), err)
+	}
 	d.Set("comments", o.Comments)
 	d.Set("av_profile", o.AvProfile)
 	d.Set("webfilter_profile", o.WebfilterProfile)
