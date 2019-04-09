@@ -24,10 +24,12 @@ resource "fortios_system_setting_dns" "test1" {
 
 ## Argument Reference
 The following arguments are supported:
+
 * `primary` - Primary DNS server IP address.
 * `secondary` - Secondary DNS server IP address.
 
 ## Attributes Reference
 The following attributes are exported:
+
 * `primary` - Primary DNS server IP address.
 * `secondary` - Secondary DNS server IP address.

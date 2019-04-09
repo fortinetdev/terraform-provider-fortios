@@ -29,6 +29,7 @@ resource "fortios_log_syslog_setting" "test2" {
 
 ## Argument Reference
 The following arguments are supported:
+
 * `status` - (Required) Enable/disable remote syslog logging.
 * `server` - Address of remote syslog server.
 * `mode` - Remote syslog logging over UDP/Reliable TCP.
@@ -39,6 +40,7 @@ The following arguments are supported:
 
 ## Attributes Reference
 The following attributes are exported:
+
 * `status` - Enable/disable remote syslog logging.
 * `server` - Address of remote syslog server.
 * `mode` - Remote syslog logging over UDP/Reliable TCP.

@@ -29,6 +29,7 @@ resource "fortios_system_admin_administrator" "admintest" {
 
 ## Argument Reference
 The following arguments are supported:
+
 * `name` - (Required) User name.
 * `password` - (Required) Admin user password.
 * `trusthostN` - Any IPv4 address or subnet address and netmask from which the administrator can connect to the FortiGate unit.
@@ -38,6 +39,7 @@ The following arguments are supported:
 
 ## Attributes Reference
 The following attributes are exported:
+
 * `id` - The ID of the administrator account item.
 * `name` - User name.
 * `password` - Admin user password.

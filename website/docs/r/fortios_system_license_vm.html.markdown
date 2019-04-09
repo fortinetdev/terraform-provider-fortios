@@ -23,5 +23,6 @@ resource "fortios_system_license_vm" "test2" {
 
 ## Argument Reference
 The following arguments are supported:
+
 * `file_content` - (Required) The license file, it needs to be base64 encoded, must not contain whitespace or other invalid base64 characters, and must be included in HTTP body.
 

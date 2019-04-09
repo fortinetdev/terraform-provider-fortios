@@ -30,6 +30,7 @@ resource "fortios_networking_route_static" "test1" {
 
 ## Argument Reference
 The following arguments are supported:
+
 * `dst` - (Required) Destination IP and mask for this route.
 * `gateway` - (Required) Gateway IP for this route.
 * `blackhole` - Enable/disable black hole.
@@ -41,6 +42,7 @@ The following arguments are supported:
 
 ## Attributes Reference
 The following attributes are exported:
+
 * `id` - The ID of the static route item.
 * `dst` - Destination IP and mask for this route.
 * `gateway` - Gateway IP for this route.
