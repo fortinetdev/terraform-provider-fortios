@@ -76,6 +76,13 @@ func (c *FortiSDKClient) CreateSystemLicenseVM(params *JSONSystemLicenseVM) (out
 				} else {
 					err = fmt.Errorf("status is %s and error no is not found", result["status"])
 				}
+
+				if result["http_status"] != nil {
+					err = fmt.Errorf("%s and http_status no is %.0f", err, result["http_status"])
+				} else {
+					err = fmt.Errorf("%s and and http_status no is not found", err)
+				}
+
 				return
 			}
 			output.Status = result["status"].(string)
@@ -215,7 +222,18 @@ func (c *FortiSDKClient) ReadSystemLicenseVM(mkey string) (output *JSONSystemLic
 		}
 
 		if result["status"] != "success" {
-			err = fmt.Errorf("cannot get the success status from the response")
+			if result["error"] != nil {
+				err = fmt.Errorf("status is %s and error no is %.0f", result["status"], result["error"])
+			} else {
+				err = fmt.Errorf("status is %s and error no is not found", result["status"])
+			}
+
+			if result["http_status"] != nil {
+				err = fmt.Errorf("%s and http_status no is %.0f", err, result["http_status"])
+			} else {
+				err = fmt.Errorf("%s and and http_status no is not found", err)
+			}
+
 			return
 		}
 
