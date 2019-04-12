@@ -98,10 +98,12 @@ func testAccCheckVPNIPsecPhase1InterfaceDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		_, err := c.ReadVPNIPsecPhase1Interface(i)
+		o, err := c.ReadVPNIPsecPhase1Interface(i)
 
 		if err == nil {
-			return fmt.Errorf("Error VPN IPsec Phase1Interface %s still exists", rs.Primary.ID)
+			if o != nil {
+				return fmt.Errorf("Error VPN IPsec Phase1Interface %s still exists", rs.Primary.ID)
+			}
 		}
 
 		return nil

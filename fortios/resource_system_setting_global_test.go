@@ -66,10 +66,12 @@ func testAccCheckSystemSettingGlobalDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		_, err := c.ReadSystemSettingGlobal(i)
+		o, err := c.ReadSystemSettingGlobal(i)
 
 		if err == nil {
-			return fmt.Errorf("Error System Setting Global %s still exists", rs.Primary.ID)
+			if o != nil {
+				return fmt.Errorf("Error System Setting Global %s still exists", rs.Primary.ID)
+			}
 		}
 
 		return nil

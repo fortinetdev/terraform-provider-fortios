@@ -2,9 +2,9 @@ package fortios
 
 import (
 	"fmt"
-	// "strconv"
+	"log"
 
-	"github.com/fortios/fortios-sdk/sdkcore"
+	"github.com/fgtdev/fortios-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -182,7 +182,7 @@ func resourceVPNIPsecPhase1InterfaceCreate(d *schema.ResourceData, m interface{}
 	// d.SetId(strconv.Itoa(int(o.Mkey)))
 	d.SetId(o.Mkey)
 
-	return nil
+	return resourceVPNIPsecPhase1InterfaceRead(d, m)
 }
 
 func resourceVPNIPsecPhase1InterfaceUpdate(d *schema.ResourceData, m interface{}) error {
@@ -254,10 +254,7 @@ func resourceVPNIPsecPhase1InterfaceUpdate(d *schema.ResourceData, m interface{}
 		return fmt.Errorf("Error updating VPN IPsec Phase1Interface: %s", err)
 	}
 
-	//Set index for d
-	//d.SetId(o.Mkey)
-
-	return nil
+	return resourceVPNIPsecPhase1InterfaceRead(d, m)
 }
 
 func resourceVPNIPsecPhase1InterfaceDelete(d *schema.ResourceData, m interface{}) error {
@@ -290,6 +287,12 @@ func resourceVPNIPsecPhase1InterfaceRead(d *schema.ResourceData, m interface{}) 
 		return fmt.Errorf("Error reading VPN IPsec Phase1Interface: %s", err)
 	}
 
+	if o == nil {
+		log.Printf("[WARN] resource (%s) not found, removing from state", d.Id())
+		d.SetId("")
+		return nil
+	}
+
 	//Refresh property
 	d.Set("name", o.Name)
 	d.Set("type", o.Type)
@@ -301,7 +304,9 @@ func resourceVPNIPsecPhase1InterfaceRead(d *schema.ResourceData, m interface{}) 
 	d.Set("remote_gw", o.RemoteGw)
 	//d.Set("psksecret", o.Psksecret)
 	certificate := forticlient.ExtractString(o.Certificate)
-	d.Set("certificate", certificate)
+	if err := d.Set("certificate", certificate); err != nil {
+		log.Printf("[WARN] Error setting VPN IPsec Phase1Interface for (%s): %s", d.Id(), err)
+	}
 	d.Set("peerid", o.Peerid)
 	d.Set("peer", o.Peer)
 	d.Set("peergrp", o.Peergrp)

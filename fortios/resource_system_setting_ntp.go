@@ -2,17 +2,17 @@ package fortios
 
 import (
 	"fmt"
-	// "strconv"
+	"log"
 
-	"github.com/fortios/fortios-sdk/sdkcore"
+	"github.com/fgtdev/fortios-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
 func resourceSystemSettingNTP() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceSystemSettingNTPCreate,
+		Create: resourceSystemSettingNTPCreateUpdate,
 		Read:   resourceSystemSettingNTPRead,
-		Update: resourceSystemSettingNTPUpdate,
+		Update: resourceSystemSettingNTPCreateUpdate,
 		Delete: resourceSystemSettingNTPDelete,
 
 		Schema: map[string]*schema.Schema{
@@ -36,56 +36,13 @@ func resourceSystemSettingNTP() *schema.Resource {
 	}
 }
 
-func resourceSystemSettingNTPCreate(d *schema.ResourceData, m interface{}) error {
-	// c := m.(*FortiClient).Client
-	// c.Retries = 1
-
-	// //Get Params from d
-	// typef := d.Get("type").(string)
-	// ntpserver := d.Get("ntpserver").([]interface{})
-
-	// var ntpservers []forticlient.MultValue
-
-	// for _, v := range ntpserver {
-	// 	ntpservers = append(ntpservers,
-	// 		forticlient.MultValue{
-	// 			Name: v.(string),
-	// 		})
-	// }
-
-	// //Build input data by sdk
-	// i := &forticlient.JSONSystemSettingNTP{
-	// 	Type:      typef,
-	// 	Ntpserver: ntpservers,
-	// 	Ntpsync:       ntpsync,
-	// }
-
-	// //Call process by sdk
-	// o, err := c.CreateSystemSettingNTP(i)
-	// if err != nil {
-	// 	return fmt.Errorf("Error creating System Setting NTP: %s", err)
-	// }
-
-	// // Set index for d
-	// // d.SetId(strconv.Itoa(int(o.Mkey)))
-	// d.SetId(o.Mkey)
-
-	err := resourceSystemSettingNTPUpdate(d, m)
-	if err != nil {
-		return fmt.Errorf("Error updating System Setting NTP: %s", err)
-	}
-
-	return nil
-}
-
-func resourceSystemSettingNTPUpdate(d *schema.ResourceData, m interface{}) error {
+func resourceSystemSettingNTPCreateUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
 	//Get Params from d
-
 	typef := d.Get("type").(string)
 	ntpserver := d.Get("ntpserver").([]interface{})
 	ntpsync := d.Get("ntpsync").(string)
@@ -115,26 +72,13 @@ func resourceSystemSettingNTPUpdate(d *schema.ResourceData, m interface{}) error
 		return fmt.Errorf("Error updating System Setting NTP: %s", err)
 	}
 
-	//Set index for d
-	//d.SetId(o.Mkey)
-	d.SetId("1")
+	d.SetId(typef)
 
-	return nil
+	return resourceSystemSettingNTPRead(d, m)
 }
 
 func resourceSystemSettingNTPDelete(d *schema.ResourceData, m interface{}) error {
-	// mkey := d.Id()
-
-	// c := m.(*FortiClient).Client
-	// c.Retries = 1
-
-	// //Call process by sdk
-	// err := c.DeleteSystemSettingNTP(mkey)
-	// if err != nil {
-	// 	return fmt.Errorf("Error deleting System Setting NTP: %s", err)
-	// }
-
-	// //Set index for d
+	// no API for this
 	d.SetId("")
 
 	return nil
@@ -152,16 +96,14 @@ func resourceSystemSettingNTPRead(d *schema.ResourceData, m interface{}) error {
 		return fmt.Errorf("Error reading System Setting NTP: %s", err)
 	}
 
+	if o == nil {
+		log.Printf("[WARN] resource (%s) not found, removing from state", d.Id())
+		d.SetId("")
+		return nil
+	}
+
 	//Refresh property
 	d.Set("type", o.Type)
-
-	// vs := make([]string, 0, len(o.Ntpserver))
-	// for _, v := range o.Ntpserver {
-	// 	c := v.Server
-	// 	vs = append(vs, c)
-	// }
-
-	// d.Set("ntpserver", vs)
 	d.Set("ntpsync", o.Ntpsync)
 
 	return nil

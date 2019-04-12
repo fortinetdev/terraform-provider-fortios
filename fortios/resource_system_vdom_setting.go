@@ -2,9 +2,9 @@ package fortios
 
 import (
 	"fmt"
-	// "strconv"
+	"log"
 
-	"github.com/fortios/fortios-sdk/sdkcore"
+	"github.com/fgtdev/fortios-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -60,7 +60,7 @@ func resourceSystemVdomSettingCreate(d *schema.ResourceData, m interface{}) erro
 	// d.SetId(strconv.Itoa(int(o.Mkey)))
 	d.SetId(o.Mkey)
 
-	return nil
+	return resourceSystemVdomSettingRead(d, m)
 }
 
 func resourceSystemVdomSettingUpdate(d *schema.ResourceData, m interface{}) error {
@@ -88,10 +88,7 @@ func resourceSystemVdomSettingUpdate(d *schema.ResourceData, m interface{}) erro
 		return fmt.Errorf("Error updating System Vdom Setting: %s", err)
 	}
 
-	//Set index for d
-	//d.SetId(o.Mkey)
-
-	return nil
+	return resourceSystemVdomSettingRead(d, m)
 }
 
 func resourceSystemVdomSettingDelete(d *schema.ResourceData, m interface{}) error {
@@ -122,6 +119,12 @@ func resourceSystemVdomSettingRead(d *schema.ResourceData, m interface{}) error 
 	o, err := c.ReadSystemVdomSetting(mkey)
 	if err != nil {
 		return fmt.Errorf("Error reading System Vdom Setting: %s", err)
+	}
+
+	if o == nil {
+		log.Printf("[WARN] resource (%s) not found, removing from state", d.Id())
+		d.SetId("")
+		return nil
 	}
 
 	//Refresh property
