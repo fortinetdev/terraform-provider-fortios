@@ -111,10 +111,12 @@ func testAccCheckFirewallObjectAddressDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		_, err := c.ReadFirewallObjectAddress(i)
+		o, err := c.ReadFirewallObjectAddress(i)
 
 		if err == nil {
-			return fmt.Errorf("Error Firewall Object Address %s still exists", rs.Primary.ID)
+			if o != nil {
+				return fmt.Errorf("Error Firewall Object Address %s still exists", rs.Primary.ID)
+			}
 		}
 
 		return nil

@@ -85,10 +85,12 @@ func testAccCheckFirewallSecurityPolicyDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		_, err := c.ReadFirewallSecurityPolicy(i)
+		o, err := c.ReadFirewallSecurityPolicy(i)
 
 		if err == nil {
-			return fmt.Errorf("Error Firewall Security Policy %s still exists", rs.Primary.ID)
+			if o != nil {
+				return fmt.Errorf("Error Firewall Security Policy %s still exists", rs.Primary.ID)
+			}
 		}
 
 		return nil

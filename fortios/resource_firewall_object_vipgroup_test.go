@@ -66,10 +66,12 @@ func testAccCheckFirewallObjectVipGroupDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		_, err := c.ReadFirewallObjectVipGroup(i)
+		o, err := c.ReadFirewallObjectVipGroup(i)
 
 		if err == nil {
-			return fmt.Errorf("Error Firewall Object VipGroup %s still exists", rs.Primary.ID)
+			if o != nil {
+				return fmt.Errorf("Error Firewall Object VipGroup %s still exists", rs.Primary.ID)
+			}
 		}
 
 		return nil

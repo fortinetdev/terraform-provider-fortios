@@ -2,9 +2,9 @@ package fortios
 
 import (
 	"fmt"
-	// "strconv"
+	"log"
 
-	"github.com/fortios/fortios-sdk/sdkcore"
+	"github.com/fgtdev/fortios-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -164,11 +164,10 @@ func resourceVPNIPsecPhase2InterfaceCreate(d *schema.ResourceData, m interface{}
 		return fmt.Errorf("Error creating VPN IPsec Phase2Interface: %s", err)
 	}
 
-	// Set index for d
-	// d.SetId(strconv.Itoa(int(o.Mkey)))
+	//Set index for d
 	d.SetId(o.Mkey)
 
-	return nil
+	return resourceVPNIPsecPhase2InterfaceRead(d, m)
 }
 
 func resourceVPNIPsecPhase2InterfaceUpdate(d *schema.ResourceData, m interface{}) error {
@@ -250,10 +249,7 @@ func resourceVPNIPsecPhase2InterfaceUpdate(d *schema.ResourceData, m interface{}
 		return fmt.Errorf("Error updating VPN IPsec Phase2Interface: %s", err)
 	}
 
-	//Set index for d
-	//d.SetId(o.Mkey)
-
-	return nil
+	return resourceVPNIPsecPhase2InterfaceRead(d, m)
 }
 
 func resourceVPNIPsecPhase2InterfaceDelete(d *schema.ResourceData, m interface{}) error {
@@ -284,6 +280,12 @@ func resourceVPNIPsecPhase2InterfaceRead(d *schema.ResourceData, m interface{}) 
 	o, err := c.ReadVPNIPsecPhase2Interface(mkey)
 	if err != nil {
 		return fmt.Errorf("Error reading VPN IPsec Phase2Interface: %s", err)
+	}
+
+	if o == nil {
+		log.Printf("[WARN] resource (%s) not found, removing from state", d.Id())
+		d.SetId("")
+		return nil
 	}
 
 	//Refresh property

@@ -68,10 +68,12 @@ func testAccCheckLogSyslogSettingDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		_, err := c.ReadLogSyslogSetting(i)
+		o, err := c.ReadLogSyslogSetting(i)
 
 		if err == nil {
-			return fmt.Errorf("Error Log Syslog Setting %s still exists", rs.Primary.ID)
+			if o != nil {
+				return fmt.Errorf("Error Log Syslog Setting %s still exists", rs.Primary.ID)
+			}
 		}
 
 		return nil

@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/fortios/fortios-sdk/auth"
-	"github.com/fortios/fortios-sdk/sdkcore"
+	"github.com/fgtdev/fortios-sdk-go/auth"
+	"github.com/fgtdev/fortios-sdk-go/sdkcore"
 )
 
 // Config gets the authentication information from the given metadata

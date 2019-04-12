@@ -63,10 +63,12 @@ func testAccCheckSystemSettingNTPDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		_, err := c.ReadSystemSettingNTP(i)
+		o, err := c.ReadSystemSettingNTP(i)
 
 		if err == nil {
-			return fmt.Errorf("Error System Setting NTP %s still exists", rs.Primary.ID)
+			if o != nil {
+				return fmt.Errorf("Error System Setting NTP %s still exists", rs.Primary.ID)
+			}
 		}
 
 		return nil

@@ -63,9 +63,12 @@ func testAccCheckFirewallObjectServiceGroupDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		_, err := c.ReadFirewallObjectServiceGroup(i)
+		o, err := c.ReadFirewallObjectServiceGroup(i)
+
 		if err == nil {
-			return fmt.Errorf("firewall object service group %s still exists", rs.Primary.ID)
+			if o != nil {
+				return fmt.Errorf("Error Firewall Object ServiceGroup %s still exists", rs.Primary.ID)
+			}
 		}
 
 		return nil

@@ -63,10 +63,12 @@ func testAccCheckSystemSettingDNSDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		_, err := c.ReadSystemSettingDNS(i)
+		o, err := c.ReadSystemSettingDNS(i)
 
 		if err == nil {
-			return fmt.Errorf("Error System Setting DNS %s still exists", rs.Primary.ID)
+			if o != nil {
+				return fmt.Errorf("Error System Setting DNS %s still exists", rs.Primary.ID)
+			}
 		}
 
 		return nil

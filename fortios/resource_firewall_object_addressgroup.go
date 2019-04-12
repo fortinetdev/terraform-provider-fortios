@@ -2,9 +2,9 @@ package fortios
 
 import (
 	"fmt"
-	// "strconv"
+	"log"
 
-	"github.com/fortios/fortios-sdk/sdkcore"
+	"github.com/fgtdev/fortios-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -70,11 +70,10 @@ func resourceFirewallObjectAddressGroupCreate(d *schema.ResourceData, m interfac
 		return fmt.Errorf("Error creating Firewall Object AddressGroup: %s", err)
 	}
 
-	// Set index for d
-	// d.SetId(strconv.Itoa(int(o.Mkey)))
+	//Set index for d
 	d.SetId(o.Mkey)
 
-	return nil
+	return resourceFirewallObjectAddressGroupRead(d, m)
 }
 
 func resourceFirewallObjectAddressGroupUpdate(d *schema.ResourceData, m interface{}) error {
@@ -114,10 +113,7 @@ func resourceFirewallObjectAddressGroupUpdate(d *schema.ResourceData, m interfac
 		return fmt.Errorf("Error updating Firewall Object AddressGroup: %s", err)
 	}
 
-	//Set index for d
-	//d.SetId(o.Mkey)
-
-	return nil
+	return resourceFirewallObjectAddressGroupRead(d, m)
 }
 
 func resourceFirewallObjectAddressGroupDelete(d *schema.ResourceData, m interface{}) error {
@@ -150,10 +146,18 @@ func resourceFirewallObjectAddressGroupRead(d *schema.ResourceData, m interface{
 		return fmt.Errorf("Error reading Firewall Object AddressGroup: %s", err)
 	}
 
+	if o == nil {
+		log.Printf("[WARN] resource (%s) not found, removing from state", d.Id())
+		d.SetId("")
+		return nil
+	}
+
 	//Refresh property
 	d.Set("name", o.Name)
 	member := forticlient.ExtractString(o.Member)
-	d.Set("member", member)
+	if err := d.Set("member", member); err != nil {
+		log.Printf("[WARN] Error setting Firewall Object AddressGroup for (%s): %s", d.Id(), err)
+	}
 	d.Set("comment", o.Comment)
 
 	return nil

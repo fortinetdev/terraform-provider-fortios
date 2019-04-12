@@ -2,17 +2,17 @@ package fortios
 
 import (
 	"fmt"
-	// "strconv"
+	"log"
 
-	"github.com/fortios/fortios-sdk/sdkcore"
+	"github.com/fgtdev/fortios-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
 func resourceLogSyslogSetting() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceLogSyslogSettingCreate,
+		Create: resourceLogSyslogSettingCreateUpdate,
 		Read:   resourceLogSyslogSettingRead,
-		Update: resourceLogSyslogSettingUpdate,
+		Update: resourceLogSyslogSettingCreateUpdate,
 		Delete: resourceLogSyslogSettingDelete,
 
 		Schema: map[string]*schema.Schema{
@@ -54,56 +54,12 @@ func resourceLogSyslogSetting() *schema.Resource {
 	}
 }
 
-func resourceLogSyslogSettingCreate(d *schema.ResourceData, m interface{}) error {
-	// c := m.(*FortiClient).Client
-	// c.Retries = 1
-
-	// //Get Params from d
-	// status := d.Get("status").(string)
-	// server := d.Get("server").(string)
-	// mode := d.Get("mode").(string)
-	// port := d.Get("port").(string)
-	// facility := d.Get("facility").(string)
-	// sourceIP := d.Get("source_ip").(string)
-	// format := d.Get("format").(string)
-
-	// //Build input data by sdk
-	// i := &forticlient.JSONLogSyslogSetting{
-	// 	Status:       status,
-	// 	Server:       server,
-	// 	Mode:       mode,
-	// 	Port:       port,
-	// 	Facility:       facility,
-	// 	SourceIP:       sourceIP,
-	// 	Format:       format,
-	// }
-
-	// //Call process by sdk
-	// o, err := c.CreateLogSyslogSetting(i)
-	// if err != nil {
-	// 	return fmt.Errorf("Error creating Log Syslog Setting: %s", err)
-	// }
-
-	// // Set index for d
-	// // d.SetId(strconv.Itoa(int(o.Mkey)))
-	//     d.SetId(o.Mkey)
-
-	err := resourceLogSyslogSettingUpdate(d, m)
-	if err != nil {
-		return fmt.Errorf("Error updating Log Syslog Setting: %s", err)
-	}
-
-	return nil
-}
-
-func resourceLogSyslogSettingUpdate(d *schema.ResourceData, m interface{}) error {
+func resourceLogSyslogSettingCreateUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
 	//Get Params from d
-
 	status := d.Get("status").(string)
 	server := d.Get("server").(string)
 	mode := d.Get("mode").(string)
@@ -129,26 +85,13 @@ func resourceLogSyslogSettingUpdate(d *schema.ResourceData, m interface{}) error
 		return fmt.Errorf("Error updating Log Syslog Setting: %s", err)
 	}
 
-	//Set index for d
-	//d.SetId(o.Mkey)
-	d.SetId("1")
+	d.SetId(server)
 
-	return nil
+	return resourceLogSyslogSettingRead(d, m)
 }
 
 func resourceLogSyslogSettingDelete(d *schema.ResourceData, m interface{}) error {
-	// mkey := d.Id()
-
-	// c := m.(*FortiClient).Client
-	// c.Retries = 1
-
-	// //Call process by sdk
-	// err := c.DeleteLogSyslogSetting(mkey)
-	// if err != nil {
-	// 	return fmt.Errorf("Error deleting Log Syslog Setting: %s", err)
-	// }
-
-	// //Set index for d
+	// no API for this
 	d.SetId("")
 
 	return nil
@@ -164,6 +107,12 @@ func resourceLogSyslogSettingRead(d *schema.ResourceData, m interface{}) error {
 	o, err := c.ReadLogSyslogSetting(mkey)
 	if err != nil {
 		return fmt.Errorf("Error reading Log Syslog Setting: %s", err)
+	}
+
+	if o == nil {
+		log.Printf("[WARN] resource (%s) not found, removing from state", d.Id())
+		d.SetId("")
+		return nil
 	}
 
 	//Refresh property

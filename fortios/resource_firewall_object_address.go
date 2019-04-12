@@ -2,9 +2,9 @@ package fortios
 
 import (
 	"fmt"
-	//"strconv"
+	"log"
 
-	"github.com/fortios/fortios-sdk/sdkcore"
+	"github.com/fgtdev/fortios-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -124,7 +124,7 @@ func resourceFirewallObjectAddressCreate(d *schema.ResourceData, m interface{}) 
 	//Set index for d
 	d.SetId(o.Mkey)
 
-	return nil
+	return resourceFirewallObjectAddressRead(d, m)
 }
 
 func resourceFirewallObjectAddressUpdate(d *schema.ResourceData, m interface{}) error {
@@ -192,10 +192,7 @@ func resourceFirewallObjectAddressUpdate(d *schema.ResourceData, m interface{}) 
 		return fmt.Errorf("Error updating Firewall Object Address: %s", err)
 	}
 
-	//Set index for d
-	//d.SetId(o.Mkey)
-
-	return nil
+	return resourceFirewallObjectAddressRead(d, m)
 }
 
 func resourceFirewallObjectAddressDelete(d *schema.ResourceData, m interface{}) error {
@@ -226,6 +223,12 @@ func resourceFirewallObjectAddressRead(d *schema.ResourceData, m interface{}) er
 	o, err := c.ReadFirewallObjectAddress(mkey)
 	if err != nil {
 		return fmt.Errorf("Error reading Firewall Object Address: %s", err)
+	}
+
+	if o == nil {
+		log.Printf("[WARN] resource (%s) not found, removing from state", d.Id())
+		d.SetId("")
+		return nil
 	}
 
 	//Refresh property
