@@ -92,8 +92,6 @@ func resourceLogSyslogSettingCreateUpdate(d *schema.ResourceData, m interface{})
 
 func resourceLogSyslogSettingDelete(d *schema.ResourceData, m interface{}) error {
 	// no API for this
-	d.SetId("")
-
 	return nil
 }
 

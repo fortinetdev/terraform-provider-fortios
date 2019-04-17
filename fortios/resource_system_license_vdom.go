@@ -50,8 +50,6 @@ func resourceSystemLicenseVDOMCreateUpdate(d *schema.ResourceData, m interface{}
 
 func resourceSystemLicenseVDOMDelete(d *schema.ResourceData, m interface{}) error {
 	// no API for this
-	d.SetId("")
-
 	return nil
 }
 

@@ -153,7 +153,6 @@ func resourceSystemAdminProfilesUpdate(d *schema.ResourceData, m interface{}) er
 	c.Retries = 1
 
 	//Get Params from d
-
 	name := d.Get("name").(string)
 	scope := d.Get("scope").(string)
 	comments := d.Get("comments").(string)

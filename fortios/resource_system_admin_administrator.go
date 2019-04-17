@@ -165,9 +165,7 @@ func resourceSystemAdminAdministratorUpdate(d *schema.ResourceData, m interface{
 	c.Retries = 1
 
 	//Get Params from d
-
 	name := d.Get("name").(string)
-	//password := d.Get("password").(string)
 	trusthost1 := d.Get("trusthost1").(string)
 	trusthost2 := d.Get("trusthost2").(string)
 	trusthost3 := d.Get("trusthost3").(string)

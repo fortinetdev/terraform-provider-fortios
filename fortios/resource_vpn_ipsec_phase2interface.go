@@ -177,7 +177,6 @@ func resourceVPNIPsecPhase2InterfaceUpdate(d *schema.ResourceData, m interface{}
 	c.Retries = 1
 
 	//Get Params from d
-
 	name := d.Get("name").(string)
 	phase1name := d.Get("phase1name").(string)
 	proposal := d.Get("proposal").(string)

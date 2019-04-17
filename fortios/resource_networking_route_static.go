@@ -103,7 +103,6 @@ func resourceNetworkingRouteStaticUpdate(d *schema.ResourceData, m interface{}) 
 	c.Retries = 1
 
 	//Get Params from d
-
 	dst := d.Get("dst").(string)
 	gateway := d.Get("gateway").(string)
 	blackhole := d.Get("blackhole").(string)

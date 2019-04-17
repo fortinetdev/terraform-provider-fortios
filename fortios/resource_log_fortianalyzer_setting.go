@@ -92,8 +92,6 @@ func resourceLogFortiAnalyzerSettingCreateUpdate(d *schema.ResourceData, m inter
 
 func resourceLogFortiAnalyzerSettingDelete(d *schema.ResourceData, m interface{}) error {
 	// no API for this
-	d.SetId("")
-
 	return nil
 }
 

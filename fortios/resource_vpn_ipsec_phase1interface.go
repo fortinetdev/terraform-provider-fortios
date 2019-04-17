@@ -179,7 +179,6 @@ func resourceVPNIPsecPhase1InterfaceCreate(d *schema.ResourceData, m interface{}
 	}
 
 	// Set index for d
-	// d.SetId(strconv.Itoa(int(o.Mkey)))
 	d.SetId(o.Mkey)
 
 	return resourceVPNIPsecPhase1InterfaceRead(d, m)
@@ -192,7 +191,6 @@ func resourceVPNIPsecPhase1InterfaceUpdate(d *schema.ResourceData, m interface{}
 	c.Retries = 1
 
 	//Get Params from d
-
 	name := d.Get("name").(string)
 	typef := d.Get("type").(string)
 	interfacef := d.Get("interface").(string)
