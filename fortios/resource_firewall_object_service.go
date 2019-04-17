@@ -146,7 +146,6 @@ func resourceFirewallObjectServiceUpdate(d *schema.ResourceData, m interface{}) 
 	c.Retries = 1
 
 	//Get Params from d
-
 	name := d.Get("name").(string)
 	category := d.Get("category").(string)
 	protocol := d.Get("protocol").(string)

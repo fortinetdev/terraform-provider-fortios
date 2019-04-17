@@ -83,7 +83,6 @@ func resourceFirewallObjectServiceGroupUpdate(d *schema.ResourceData, m interfac
 	c.Retries = 1
 
 	//Get Params from d
-
 	name := d.Get("name").(string)
 	member := d.Get("member").([]interface{})
 	comment := d.Get("comment").(string)

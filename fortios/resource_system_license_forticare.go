@@ -43,15 +43,12 @@ func resourceSystemLicenseFortiCareCreateUpdate(d *schema.ResourceData, m interf
 	}
 
 	// Set index for d
-	// d.SetId(strconv.Itoa(int(o.Mkey)))
 	d.SetId("FortiCareLicense")
 	return resourceSystemLicenseFortiCareRead(d, m)
 }
 
 func resourceSystemLicenseFortiCareDelete(d *schema.ResourceData, m interface{}) error {
 	// no API for this
-	d.SetId("")
-
 	return nil
 }
 

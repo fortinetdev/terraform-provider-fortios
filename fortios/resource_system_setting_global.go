@@ -79,8 +79,6 @@ func resourceSystemSettingGlobalCreateUpdate(d *schema.ResourceData, m interface
 
 func resourceSystemSettingGlobalDelete(d *schema.ResourceData, m interface{}) error {
 	// no API for this
-	d.SetId("")
-
 	return nil
 }
 

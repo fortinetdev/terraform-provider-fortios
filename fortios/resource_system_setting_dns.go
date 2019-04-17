@@ -59,8 +59,6 @@ func resourceSystemSettingDNSCreateUpdate(d *schema.ResourceData, m interface{})
 
 func resourceSystemSettingDNSDelete(d *schema.ResourceData, m interface{}) error {
 	// no API for this
-	d.SetId("")
-
 	return nil
 }
 

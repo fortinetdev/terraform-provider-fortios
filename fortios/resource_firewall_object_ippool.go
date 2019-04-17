@@ -87,7 +87,6 @@ func resourceFirewallObjectIPPoolUpdate(d *schema.ResourceData, m interface{}) e
 	c.Retries = 1
 
 	//Get Params from d
-
 	name := d.Get("name").(string)
 	typef := d.Get("type").(string)
 	startip := d.Get("startip").(string)

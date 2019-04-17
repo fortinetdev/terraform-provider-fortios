@@ -79,8 +79,6 @@ func resourceSystemSettingNTPCreateUpdate(d *schema.ResourceData, m interface{})
 
 func resourceSystemSettingNTPDelete(d *schema.ResourceData, m interface{}) error {
 	// no API for this
-	d.SetId("")
-
 	return nil
 }
 

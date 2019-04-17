@@ -90,7 +90,6 @@ func resourceFirewallObjectVipGroupUpdate(d *schema.ResourceData, m interface{})
 	c.Retries = 1
 
 	//Get Params from d
-
 	name := d.Get("name").(string)
 	comments := d.Get("comments").(string)
 	interfacef := d.Get("interface").(string)

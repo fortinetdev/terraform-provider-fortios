@@ -124,7 +124,6 @@ func resourceFirewallObjectVipUpdate(d *schema.ResourceData, m interface{}) erro
 	c.Retries = 1
 
 	//Get Params from d
-
 	name := d.Get("name").(string)
 	comment := d.Get("comment").(string)
 	extip := d.Get("extip").(string)

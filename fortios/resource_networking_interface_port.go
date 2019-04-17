@@ -16,10 +16,6 @@ func resourceNetworkingInterfacePort() *schema.Resource {
 		Delete: resourceNetworkingInterfacePortDelete,
 
 		Schema: map[string]*schema.Schema{
-			// "portname": &schema.Schema{
-			// 	Type:     schema.TypeString,
-			// 	Optional: true,
-			// },
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -133,7 +129,6 @@ func resourceNetworkingInterfacePortCreate(d *schema.ResourceData, m interface{}
 
 	if typef == "physical" {
 		//Get Params from d
-		//portname := d.Get("portname").(string)
 		portname := d.Get("name").(string)
 
 		d.SetId(portname)
@@ -148,7 +143,6 @@ func resourceNetworkingInterfacePortCreate(d *schema.ResourceData, m interface{}
 		c.Retries = 1
 
 		//Get Params from d
-		//portname := d.Get("portname").(string)
 		ip := d.Get("ip").(string)
 		alias := d.Get("alias").(string)
 		status := d.Get("status").(string)
@@ -231,8 +225,6 @@ func resourceNetworkingInterfacePortUpdate(d *schema.ResourceData, m interface{}
 	c.Retries = 1
 
 	//Get Params from d
-
-	//portname := d.Get("portname").(string)
 	ip := d.Get("ip").(string)
 	alias := d.Get("alias").(string)
 	status := d.Get("status").(string)

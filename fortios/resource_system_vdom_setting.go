@@ -57,7 +57,6 @@ func resourceSystemVdomSettingCreate(d *schema.ResourceData, m interface{}) erro
 	}
 
 	// Set index for d
-	// d.SetId(strconv.Itoa(int(o.Mkey)))
 	d.SetId(o.Mkey)
 
 	return resourceSystemVdomSettingRead(d, m)
@@ -70,7 +69,6 @@ func resourceSystemVdomSettingUpdate(d *schema.ResourceData, m interface{}) erro
 	c.Retries = 1
 
 	//Get Params from d
-
 	name := d.Get("name").(string)
 	shortName := d.Get("short_name").(string)
 	temporary := d.Get("temporary").(string)

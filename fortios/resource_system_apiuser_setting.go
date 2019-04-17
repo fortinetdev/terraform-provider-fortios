@@ -111,7 +111,6 @@ func resourceSystemAPIUserSettingCreate(d *schema.ResourceData, m interface{}) e
 	}
 
 	// Set index for d
-	// d.SetId(strconv.Itoa(int(o.Mkey)))
 	d.SetId(o.Mkey)
 
 	return resourceSystemAPIUserSettingRead(d, m)
