@@ -111,7 +111,7 @@ func (c *FortiSDKClient) CreateFirewallObjectAddressGroup(params *JSONFirewallOb
 func (c *FortiSDKClient) UpdateFirewallObjectAddressGroup(params *JSONFirewallObjectAddressGroup, mkey string) (output *JSONUpdateFirewallObjectAddressGroupOutput, err error) {
 	HTTPMethod := "PUT"
 	path := "/api/v2/cmdb/firewall/addrgrp"
-	path += "/" + mkey
+	path += "/" + EscapeURLString(mkey)
 	output = &JSONUpdateFirewallObjectAddressGroupOutput{}
 	locJSON, err := json.Marshal(params)
 	if err != nil {
@@ -184,7 +184,7 @@ func (c *FortiSDKClient) UpdateFirewallObjectAddressGroup(params *JSONFirewallOb
 func (c *FortiSDKClient) DeleteFirewallObjectAddressGroup(mkey string) (err error) {
 	HTTPMethod := "DELETE"
 	path := "/api/v2/cmdb/firewall/addrgrp"
-	path += "/" + mkey
+	path += "/" + EscapeURLString(mkey)
 
 	req := c.NewRequest(HTTPMethod, path, nil, nil)
 	err = req.Send()
@@ -243,7 +243,7 @@ func (c *FortiSDKClient) DeleteFirewallObjectAddressGroup(mkey string) (err erro
 func (c *FortiSDKClient) ReadFirewallObjectAddressGroup(mkey string) (output *JSONFirewallObjectAddressGroup, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/firewall/addrgrp"
-	path += "/" + mkey
+	path += "/" + EscapeURLString(mkey)
 
 	output = &JSONFirewallObjectAddressGroup{}
 

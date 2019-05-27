@@ -133,7 +133,7 @@ func (c *FortiSDKClient) CreateNetworkingInterfacePort(params *JSONNetworkingInt
 func (c *FortiSDKClient) UpdateNetworkingInterfacePort(params *JSONNetworkingInterfacePort, mkey string) (output *JSONUpdateNetworkingInterfacePortOutput, err error) {
 	HTTPMethod := "PUT"
 	path := "/api/v2/cmdb/system/interface"
-	path += "/" + mkey
+	path += "/" + EscapeURLString(mkey)
 	output = &JSONUpdateNetworkingInterfacePortOutput{}
 	locJSON, err := json.Marshal(params)
 	if err != nil {
@@ -208,7 +208,7 @@ func (c *FortiSDKClient) UpdateNetworkingInterfacePort(params *JSONNetworkingInt
 func (c *FortiSDKClient) DeleteNetworkingInterfacePort(mkey string) (err error) {
 	HTTPMethod := "DELETE"
 	path := "/api/v2/cmdb/system/interface"
-	path += "/" + mkey
+	path += "/" + EscapeURLString(mkey)
 
 	req := c.NewRequest(HTTPMethod, path, nil, nil)
 	err = req.Send()
@@ -267,7 +267,7 @@ func (c *FortiSDKClient) DeleteNetworkingInterfacePort(mkey string) (err error) 
 func (c *FortiSDKClient) ReadNetworkingInterfacePort(mkey string) (output *JSONNetworkingInterfacePort, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/system/interface"
-	path += "/" + mkey
+	path += "/" + EscapeURLString(mkey)
 
 	output = &JSONNetworkingInterfacePort{}
 

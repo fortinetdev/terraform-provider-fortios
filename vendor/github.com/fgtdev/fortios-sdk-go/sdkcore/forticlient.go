@@ -1,15 +1,18 @@
 package forticlient
 
 import (
-	"net/http"
-	"github.com/fgtdev/fortios-sdk-go/config"
-	"github.com/fgtdev/fortios-sdk-go/auth"
-	"github.com/fgtdev/fortios-sdk-go/request"
 	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
+	"net/http"
+	"net/url"
+	"strings"
+
+	"github.com/fgtdev/fortios-sdk-go/auth"
+	"github.com/fgtdev/fortios-sdk-go/config"
+	"github.com/fgtdev/fortios-sdk-go/request"
 	// "strconv"
 )
 
@@ -23,8 +26,8 @@ type MultValues []MultValue
 
 // FortiSDKClient describes the global FortiOS plugin client instance
 type FortiSDKClient struct {
-	Config   config.Config
-	Retries  int
+	Config  config.Config
+	Retries int
 }
 
 // ExtractString extracts strings from result and put them into a string array,
@@ -38,11 +41,15 @@ func ExtractString(members []MultValue) []string {
 	return vs
 }
 
+// EscapeURLString escapes the string so it can be safely placed inside a URL query
+func EscapeURLString(v string) string { // doesn't support "<>()"'#"
+	return strings.Replace(url.QueryEscape(v), "+", "%20", -1)
+}
 
 // NewClient initializes a new global plugin client
 // It returns the created client object
-func NewClient(auth *auth.Auth, client *http.Client) *FortiSDKClient{
-	c := &FortiSDKClient{ }
+func NewClient(auth *auth.Auth, client *http.Client) *FortiSDKClient {
+	c := &FortiSDKClient{}
 
 	c.Config.Auth = auth
 	c.Config.HTTPCon = client
@@ -54,7 +61,7 @@ func NewClient(auth *auth.Auth, client *http.Client) *FortiSDKClient{
 // NewRequest creates the request to FortiOS for the client
 // and return it to the client
 func (c *FortiSDKClient) NewRequest(method string, path string, params interface{}, data *bytes.Buffer) *request.Request {
-	return request.New(c.Config, method, path, params, data);
+	return request.New(c.Config, method, path, params, data)
 }
 
 // GetDeviceVersion gets the version of FortiOS

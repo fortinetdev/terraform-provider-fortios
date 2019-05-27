@@ -141,7 +141,7 @@ func (c *FortiSDKClient) CreateFirewallObjectAddress(params *JSONFirewallObjectA
 func (c *FortiSDKClient) UpdateFirewallObjectAddress(params *JSONFirewallObjectAddress, mkey string) (output *JSONUpdateFirewallObjectAddressOutput, err error) {
 	HTTPMethod := "PUT"
 	path := "/api/v2/cmdb/firewall/address"
-	path += "/" + mkey
+	path += "/" + EscapeURLString(mkey)
 	output = &JSONUpdateFirewallObjectAddressOutput{}
 	locJSON, err := json.Marshal(params)
 	if err != nil {
@@ -214,7 +214,7 @@ func (c *FortiSDKClient) UpdateFirewallObjectAddress(params *JSONFirewallObjectA
 func (c *FortiSDKClient) DeleteFirewallObjectAddress(mkey string) (err error) {
 	HTTPMethod := "DELETE"
 	path := "/api/v2/cmdb/firewall/address"
-	path += "/" + mkey
+	path += "/" + EscapeURLString(mkey)
 
 	req := c.NewRequest(HTTPMethod, path, nil, nil)
 	err = req.Send()
@@ -273,7 +273,7 @@ func (c *FortiSDKClient) DeleteFirewallObjectAddress(mkey string) (err error) {
 func (c *FortiSDKClient) ReadFirewallObjectAddress(mkey string) (output *JSONFirewallObjectAddress, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/firewall/address"
-	path += "/" + mkey
+	path += "/" + EscapeURLString(mkey)
 
 	j1 := JSONFirewallObjectAddressCommon{}
 	j2 := JSONFirewallObjectAddressIPRange{}

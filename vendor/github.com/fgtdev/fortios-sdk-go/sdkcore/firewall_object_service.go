@@ -136,7 +136,7 @@ func (c *FortiSDKClient) CreateFirewallObjectService(params *JSONFirewallObjectS
 func (c *FortiSDKClient) UpdateFirewallObjectService(params *JSONFirewallObjectService, mkey string) (output *JSONUpdateFirewallObjectServiceOutput, err error) {
 	HTTPMethod := "PUT"
 	path := "/api/v2/cmdb/firewall.service/custom"
-	path += "/" + mkey
+	path += "/" + EscapeURLString(mkey)
 	output = &JSONUpdateFirewallObjectServiceOutput{}
 	locJSON, err := json.Marshal(params)
 	if err != nil {
@@ -209,7 +209,7 @@ func (c *FortiSDKClient) UpdateFirewallObjectService(params *JSONFirewallObjectS
 func (c *FortiSDKClient) DeleteFirewallObjectService(mkey string) (err error) {
 	HTTPMethod := "DELETE"
 	path := "/api/v2/cmdb/firewall.service/custom"
-	path += "/" + mkey
+	path += "/" + EscapeURLString(mkey)
 
 	req := c.NewRequest(HTTPMethod, path, nil, nil)
 	err = req.Send()
@@ -268,7 +268,7 @@ func (c *FortiSDKClient) DeleteFirewallObjectService(mkey string) (err error) {
 func (c *FortiSDKClient) ReadFirewallObjectService(mkey string) (output *JSONFirewallObjectService, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/firewall.service/custom"
-	path += "/" + mkey
+	path += "/" + EscapeURLString(mkey)
 
 	j1 := JSONFirewallObjectServiceCommon{}
 	j2 := JSONFirewallObjectServiceFqdn{}

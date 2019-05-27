@@ -122,7 +122,7 @@ func (c *FortiSDKClient) CreateVPNIPsecPhase2Interface(params *JSONVPNIPsecPhase
 func (c *FortiSDKClient) UpdateVPNIPsecPhase2Interface(params *JSONVPNIPsecPhase2Interface, mkey string) (output *JSONUpdateVPNIPsecPhase2InterfaceOutput, err error) {
 	HTTPMethod := "PUT"
 	path := "/api/v2/cmdb/vpn.ipsec/phase2-interface"
-	path += "/" + mkey
+	path += "/" + EscapeURLString(mkey)
 	output = &JSONUpdateVPNIPsecPhase2InterfaceOutput{}
 	locJSON, err := json.Marshal(params)
 	if err != nil {
@@ -195,7 +195,7 @@ func (c *FortiSDKClient) UpdateVPNIPsecPhase2Interface(params *JSONVPNIPsecPhase
 func (c *FortiSDKClient) DeleteVPNIPsecPhase2Interface(mkey string) (err error) {
 	HTTPMethod := "DELETE"
 	path := "/api/v2/cmdb/vpn.ipsec/phase2-interface"
-	path += "/" + mkey
+	path += "/" + EscapeURLString(mkey)
 
 	req := c.NewRequest(HTTPMethod, path, nil, nil)
 	err = req.Send()
@@ -254,7 +254,7 @@ func (c *FortiSDKClient) DeleteVPNIPsecPhase2Interface(mkey string) (err error) 
 func (c *FortiSDKClient) ReadVPNIPsecPhase2Interface(mkey string) (output *JSONVPNIPsecPhase2Interface, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/vpn.ipsec/phase2-interface"
-	path += "/" + mkey
+	path += "/" + EscapeURLString(mkey)
 
 	output = &JSONVPNIPsecPhase2Interface{}
 

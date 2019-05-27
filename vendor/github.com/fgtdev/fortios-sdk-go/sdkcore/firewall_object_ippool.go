@@ -114,7 +114,7 @@ func (c *FortiSDKClient) CreateFirewallObjectIPPool(params *JSONFirewallObjectIP
 func (c *FortiSDKClient) UpdateFirewallObjectIPPool(params *JSONFirewallObjectIPPool, mkey string) (output *JSONUpdateFirewallObjectIPPoolOutput, err error) {
 	HTTPMethod := "PUT"
 	path := "/api/v2/cmdb/firewall/ippool"
-	path += "/" + mkey
+	path += "/" + EscapeURLString(mkey)
 	output = &JSONUpdateFirewallObjectIPPoolOutput{}
 	locJSON, err := json.Marshal(params)
 	if err != nil {
@@ -187,7 +187,7 @@ func (c *FortiSDKClient) UpdateFirewallObjectIPPool(params *JSONFirewallObjectIP
 func (c *FortiSDKClient) DeleteFirewallObjectIPPool(mkey string) (err error) {
 	HTTPMethod := "DELETE"
 	path := "/api/v2/cmdb/firewall/ippool"
-	path += "/" + mkey
+	path += "/" + EscapeURLString(mkey)
 
 	req := c.NewRequest(HTTPMethod, path, nil, nil)
 	err = req.Send()
@@ -246,7 +246,7 @@ func (c *FortiSDKClient) DeleteFirewallObjectIPPool(mkey string) (err error) {
 func (c *FortiSDKClient) ReadFirewallObjectIPPool(mkey string) (output *JSONFirewallObjectIPPool, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/firewall/ippool"
-	path += "/" + mkey
+	path += "/" + EscapeURLString(mkey)
 
 	output = &JSONFirewallObjectIPPool{}
 

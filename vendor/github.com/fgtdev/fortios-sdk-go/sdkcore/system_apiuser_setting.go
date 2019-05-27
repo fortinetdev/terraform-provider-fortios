@@ -122,7 +122,7 @@ func (c *FortiSDKClient) CreateSystemAPIUserSetting(params *JSONSystemAPIUserSet
 func (c *FortiSDKClient) UpdateSystemAPIUserSetting(params *JSONSystemAPIUserSetting, mkey string) (output *JSONUpdateSystemAPIUserSettingOutput, err error) {
 	HTTPMethod := "PUT"
 	path := "/api/v2/cmdb/system/api-user"
-	path += "/" + mkey
+	path += "/" + EscapeURLString(mkey)
 	output = &JSONUpdateSystemAPIUserSettingOutput{}
 	locJSON, err := json.Marshal(params)
 	if err != nil {
@@ -195,7 +195,7 @@ func (c *FortiSDKClient) UpdateSystemAPIUserSetting(params *JSONSystemAPIUserSet
 func (c *FortiSDKClient) DeleteSystemAPIUserSetting(mkey string) (err error) {
 	HTTPMethod := "DELETE"
 	path := "/api/v2/cmdb/system/api-user"
-	path += "/" + mkey
+	path += "/" + EscapeURLString(mkey)
 
 	req := c.NewRequest(HTTPMethod, path, nil, nil)
 	err = req.Send()
@@ -254,7 +254,7 @@ func (c *FortiSDKClient) DeleteSystemAPIUserSetting(mkey string) (err error) {
 func (c *FortiSDKClient) ReadSystemAPIUserSetting(mkey string) (output *JSONSystemAPIUserSetting, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/system/api-user"
-	path += "/" + mkey
+	path += "/" + EscapeURLString(mkey)
 
 	output = &JSONSystemAPIUserSetting{}
 

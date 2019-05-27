@@ -129,7 +129,7 @@ func (c *FortiSDKClient) CreateFirewallObjectVip(params *JSONFirewallObjectVip) 
 func (c *FortiSDKClient) UpdateFirewallObjectVip(params *JSONFirewallObjectVip, mkey string) (output *JSONUpdateFirewallObjectVipOutput, err error) {
 	HTTPMethod := "PUT"
 	path := "/api/v2/cmdb/firewall/vip"
-	path += "/" + mkey
+	path += "/" + EscapeURLString(mkey)
 	output = &JSONUpdateFirewallObjectVipOutput{}
 	locJSON, err := json.Marshal(params)
 	if err != nil {
@@ -202,7 +202,7 @@ func (c *FortiSDKClient) UpdateFirewallObjectVip(params *JSONFirewallObjectVip, 
 func (c *FortiSDKClient) DeleteFirewallObjectVip(mkey string) (err error) {
 	HTTPMethod := "DELETE"
 	path := "/api/v2/cmdb/firewall/vip"
-	path += "/" + mkey
+	path += "/" + EscapeURLString(mkey)
 
 	req := c.NewRequest(HTTPMethod, path, nil, nil)
 	err = req.Send()
@@ -261,7 +261,7 @@ func (c *FortiSDKClient) DeleteFirewallObjectVip(mkey string) (err error) {
 func (c *FortiSDKClient) ReadFirewallObjectVip(mkey string) (output *JSONFirewallObjectVip, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/firewall/vip"
-	path += "/" + mkey
+	path += "/" + EscapeURLString(mkey)
 
 	output = &JSONFirewallObjectVip{}
 

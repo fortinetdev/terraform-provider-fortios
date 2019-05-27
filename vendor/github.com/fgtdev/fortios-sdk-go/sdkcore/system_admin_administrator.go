@@ -141,7 +141,7 @@ func (c *FortiSDKClient) CreateSystemAdminAdministrator(params *JSONSystemAdminA
 func (c *FortiSDKClient) UpdateSystemAdminAdministrator(params *JSONSystemAdminAdministrator2, mkey string) (output *JSONUpdateSystemAdminAdministratorOutput, err error) {
 	HTTPMethod := "PUT"
 	path := "/api/v2/cmdb/system/admin"
-	path += "/" + mkey
+	path += "/" + EscapeURLString(mkey)
 	output = &JSONUpdateSystemAdminAdministratorOutput{}
 	locJSON, err := json.Marshal(params)
 	if err != nil {
@@ -214,7 +214,7 @@ func (c *FortiSDKClient) UpdateSystemAdminAdministrator(params *JSONSystemAdminA
 func (c *FortiSDKClient) DeleteSystemAdminAdministrator(mkey string) (err error) {
 	HTTPMethod := "DELETE"
 	path := "/api/v2/cmdb/system/admin"
-	path += "/" + mkey
+	path += "/" + EscapeURLString(mkey)
 
 	req := c.NewRequest(HTTPMethod, path, nil, nil)
 	err = req.Send()
@@ -273,7 +273,7 @@ func (c *FortiSDKClient) DeleteSystemAdminAdministrator(mkey string) (err error)
 func (c *FortiSDKClient) ReadSystemAdminAdministrator(mkey string) (output *JSONSystemAdminAdministrator2, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/system/admin"
-	path += "/" + mkey
+	path += "/" + EscapeURLString(mkey)
 
 	output = &JSONSystemAdminAdministrator2{}
 
