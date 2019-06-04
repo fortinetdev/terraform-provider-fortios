@@ -92,6 +92,20 @@ resource "fortios_networking_route_static" "test1" {
 	comment = "Terraform test"
 }
 ```
+
+## Argument Reference
+The following arguments are supported:
+
+* `hostname` - (Optional) This is the hostname or IP address of FortiOS unit. It must be provided, but it can also be sourced from the `FORTIOS_ACCESS_HOSTNAME` environment variable.
+
+* `token` - (Optional) This is the token of FortiOS unit. It must be provided, but it can also be sourced from the `FORTIOS_ACCESS_TOKEN` environment variable.
+
+* `insecure` - (Optional) This is used to control whether the Provider to perform insecure SSL requests. If omitted, the `FORTIOS_INSECURE` environment variable is used. If neither is set, default value is `false`.
+
+* `cabundlefile` - (Optional) The path of a custom CA bundle file. You can specify a path to the file, or you can specify it by the `FORTIOS_CA_CABUNDLE` environment variable.
+
+* `vdom` - (Optional) If the FortiGate unit is running in VDOM mode, you can use this argument to specify the name of the vdom to be set .
+
 ## Versioning
 
 The provider can cover both FortiOS 6.0 and 6.2 versions.
