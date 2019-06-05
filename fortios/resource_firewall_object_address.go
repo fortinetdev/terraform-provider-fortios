@@ -234,9 +234,15 @@ func resourceFirewallObjectAddressRead(d *schema.ResourceData, m interface{}) er
 	//Refresh property
 	d.Set("name", o.Name)
 	d.Set("type", o.Type)
-	d.Set("subnet", o.Subnet)
-	d.Set("start_ip", o.StartIP)
-	d.Set("end_ip", o.EndIP)
+	if o.Type == "ipmask" {
+		d.Set("subnet", o.Subnet)
+	}
+
+	if o.Type == "iprange" {
+		d.Set("start_ip", o.StartIP)
+		d.Set("end_ip", o.EndIP)
+	}
+
 	d.Set("fqdn", o.Fqdn)
 	d.Set("country", o.Country)
 	d.Set("comment", o.Comment)

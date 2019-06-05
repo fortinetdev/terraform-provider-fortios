@@ -352,7 +352,11 @@ func (c *FortiSDKClient) ReadFirewallObjectAddress(mkey string) (output *JSONFir
 		}
 		if mapTmp["type"] != nil {
 			output.Type = mapTmp["type"].(string)
+		} else {
+			err = fmt.Errorf("cannot get the right response, type doesn't exist.")
+			return
 		}
+
 		if mapTmp["subnet"] != nil {
 			output.Subnet = mapTmp["subnet"].(string)
 		}

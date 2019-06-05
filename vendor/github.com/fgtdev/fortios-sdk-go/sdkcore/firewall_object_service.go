@@ -362,10 +362,18 @@ func (c *FortiSDKClient) ReadFirewallObjectService(mkey string) (output *JSONFir
 
 		if output.Protocol == "ICMP" {
 			if mapTmp["icmptype"] != nil {
-				output.Icmptype = strconv.Itoa(int(mapTmp["icmptype"].(float64)))
+				if mapTmp["icmptype"] != "" {
+					output.Icmptype = strconv.Itoa(int(mapTmp["icmptype"].(float64)))
+				} else {
+					output.Icmptype = ""
+				}
 			}
 			if mapTmp["icmpcode"] != nil {
-				output.Icmpcode = strconv.Itoa(int(mapTmp["icmpcode"].(float64)))
+				if mapTmp["icmpcode"] != "" {
+					output.Icmpcode = strconv.Itoa(int(mapTmp["icmpcode"].(float64)))
+				} else {
+					output.Icmpcode = ""
+				}
 			}
 		} else {
 			if mapTmp["icmptype"] != nil {
