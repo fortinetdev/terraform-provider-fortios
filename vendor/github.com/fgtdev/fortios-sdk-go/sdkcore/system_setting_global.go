@@ -16,6 +16,7 @@ type JSONSystemSettingGlobal struct {
 	Hostname     string `json:"hostname"`
 	AdminSport   string `json:"admin-sport"`
 	AdminSSHPort string `json:"admin-ssh-port"`
+	AdminScp     string `json:"admin-scp"`
 }
 
 // JSONCreateSystemSettingGlobalOutput contains the output results for Create API function
@@ -279,7 +280,9 @@ func (c *FortiSDKClient) ReadSystemSettingGlobal(mkey string) (output *JSONSyste
 		if mapTmp["admin-ssh-port"] != nil {
 			output.AdminSSHPort = strconv.Itoa(int(mapTmp["admin-ssh-port"].(float64)))
 		}
-
+		if mapTmp["admin-scp"] != nil {
+			output.AdminScp = mapTmp["admin-scp"].(string)
+		}
 	} else {
 		err = fmt.Errorf("cannot get the right response")
 		return

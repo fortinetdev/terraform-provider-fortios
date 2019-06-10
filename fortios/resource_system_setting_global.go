@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/fgtdev/fortios-sdk-go/sdkcore"
+	forticlient "github.com/fgtdev/fortios-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -40,6 +40,11 @@ func resourceSystemSettingGlobal() *schema.Resource {
 				Optional: true,
 				Default:  "22",
 			},
+			"admin_scp": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "disable",
+			},
 		},
 	}
 }
@@ -56,6 +61,7 @@ func resourceSystemSettingGlobalCreateUpdate(d *schema.ResourceData, m interface
 	hostname := d.Get("hostname").(string)
 	adminSport := d.Get("admin_sport").(string)
 	adminSSHPort := d.Get("admin_ssh_port").(string)
+	adminScp := d.Get("admin_scp").(string)
 
 	//Build input data by sdk
 	i := &forticlient.JSONSystemSettingGlobal{
@@ -64,6 +70,7 @@ func resourceSystemSettingGlobalCreateUpdate(d *schema.ResourceData, m interface
 		Hostname:     hostname,
 		AdminSport:   adminSport,
 		AdminSSHPort: adminSSHPort,
+		AdminScp:     adminScp,
 	}
 
 	//Call process by sdk
@@ -106,6 +113,7 @@ func resourceSystemSettingGlobalRead(d *schema.ResourceData, m interface{}) erro
 	d.Set("hostname", o.Hostname)
 	d.Set("admin_sport", o.AdminSport)
 	d.Set("admin_ssh_port", o.AdminSSHPort)
+	d.Set("admin_scp", o.AdminScp)
 
 	return nil
 }
