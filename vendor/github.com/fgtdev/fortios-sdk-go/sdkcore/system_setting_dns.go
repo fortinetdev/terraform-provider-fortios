@@ -3,15 +3,35 @@ package forticlient
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
-	"fmt"
 )
+
+//DomainMultValue Section
+type DomainMultValue struct {
+	Domain string `json:"domain"`
+}
+
+//DomainsMultValues Sections
+type DomainsMultValues []DomainMultValue
+
+// ExpandDomain extracts Domain value from result and put them into a string array,
+// and return the string array
+func ExpandDomain(members []DomainMultValue) []string {
+	vs := make([]string, 0, len(members))
+	for _, v := range members {
+		c := v.Domain
+		vs = append(vs, c)
+	}
+	return vs
+}
 
 // JSONSystemSettingDNS contains the parameters for Create and Update API function
 type JSONSystemSettingDNS struct {
-	Primary   string `json:"primary"`
-	Secondary string `json:"secondary"`
+	Primary   string            `json:"primary"`
+	Secondary string            `json:"secondary"`
+	Domain    DomainsMultValues `json:"domain"`
 }
 
 // JSONCreateSystemSettingDNSOutput contains the output results for Create API function
@@ -265,6 +285,20 @@ func (c *FortiSDKClient) ReadSystemSettingDNS(mkey string) (output *JSONSystemSe
 		}
 		if mapTmp["secondary"] != nil {
 			output.Secondary = mapTmp["secondary"].(string)
+		}
+		if mapTmp["domain"] != nil {
+			member := mapTmp["domain"].([]interface{})
+
+			var members []DomainMultValue
+			for _, v := range member {
+				c := v.(map[string]interface{})
+
+				members = append(members,
+					DomainMultValue{
+						Domain: c["domain"].(string),
+					})
+			}
+			output.Domain = members
 		}
 
 	} else {

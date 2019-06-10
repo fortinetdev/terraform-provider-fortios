@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/fgtdev/fortios-sdk-go/sdkcore"
+	forticlient "github.com/fgtdev/fortios-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -26,6 +26,13 @@ func resourceSystemSettingDNS() *schema.Resource {
 				Optional: true,
 				Default:  "208.91.112.52",
 			},
+			"domain": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
+			},
 		},
 	}
 }
@@ -39,11 +46,25 @@ func resourceSystemSettingDNSCreateUpdate(d *schema.ResourceData, m interface{})
 	//Get Params from d
 	primary := d.Get("primary").(string)
 	secondary := d.Get("secondary").(string)
+	domain := d.Get("domain").([]interface{})
+
+	var domains []forticlient.DomainMultValue
+
+	for _, v := range domain {
+		if v == nil {
+			return fmt.Errorf("null value")
+		}
+		domains = append(domains,
+			forticlient.DomainMultValue{
+				Domain: v.(string),
+			})
+	}
 
 	//Build input data by sdk
 	i := &forticlient.JSONSystemSettingDNS{
 		Primary:   primary,
 		Secondary: secondary,
+		Domain:    domains,
 	}
 
 	//Call process by sdk
@@ -83,6 +104,9 @@ func resourceSystemSettingDNSRead(d *schema.ResourceData, m interface{}) error {
 	//Refresh property
 	d.Set("primary", o.Primary)
 	d.Set("secondary", o.Secondary)
-
+	domain := forticlient.ExpandDomain(o.Domain)
+	if err := d.Set("domain", domain); err != nil {
+		log.Printf("[WARN] Error setting System DNS domain for (%s): %s", d.Id(), err)
+	}
 	return nil
 }

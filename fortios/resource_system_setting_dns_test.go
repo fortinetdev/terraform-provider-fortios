@@ -20,6 +20,7 @@ func TestAccFortiOSSystemSettingDNS_basic(t *testing.T) {
 					testAccCheckFortiOSSystemSettingDNSExists("fortios_system_setting_dns.test1"),
 					resource.TestCheckResourceAttr("fortios_system_setting_dns.test1", "primary", "208.91.112.53"),
 					resource.TestCheckResourceAttr("fortios_system_setting_dns.test1", "secondary", "208.91.112.22"),
+					resource.TestCheckResourceAttr("fortios_system_setting_dns.test1", "domain", "abc.example.com"),
 				),
 			},
 		},
@@ -81,5 +82,6 @@ const testAccFortiOSSystemSettingDNSConfig = `
 resource "fortios_system_setting_dns" "test1" { 
 	primary = "208.91.112.53"
 	secondary = "208.91.112.22"
+	domain = "abc.example.com"
 }
 `
