@@ -53,6 +53,7 @@ func Provider() terraform.ResourceProvider {
 			"fortios_system_license_vm":            resourceSystemLicenseVM(),
 			"fortios_vpn_ipsec_phase1interface":    resourceVPNIPsecPhase1Interface(),
 			"fortios_vpn_ipsec_phase2interface":    resourceVPNIPsecPhase2Interface(),
+			"fortios_system_password_policy":       resourceSystemPasswordPolicy(),
 		},
 
 		ConfigureFunc: providerConfigure,
