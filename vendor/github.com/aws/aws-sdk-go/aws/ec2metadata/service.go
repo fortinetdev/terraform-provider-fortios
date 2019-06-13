@@ -4,7 +4,7 @@
 // This package's client can be disabled completely by setting the environment
 // variable "AWS_EC2_METADATA_DISABLED=true". This environment variable set to
 // true instructs the SDK to disable the EC2 Metadata client. The client cannot
-// be used while the environemnt variable is set to true, (case insensitive).
+// be used while the environment variable is set to true, (case insensitive).
 package ec2metadata
 
 import (
@@ -15,7 +15,6 @@ import (
 	"os"
 	"strings"
 	"time"
-	"log"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/awserr"
@@ -46,7 +45,6 @@ type EC2Metadata struct {
 //     svc := ec2metadata.New(mySession, aws.NewConfig().WithLogLevel(aws.LogDebugHTTPBody))
 func New(p client.ConfigProvider, cfgs ...*aws.Config) *EC2Metadata {
 	c := p.ClientConfig(ServiceName, cfgs...)
-	log.Print("shengh.........service.go New")
 	return NewClient(*c.Config, c.Handlers, c.Endpoint, c.SigningRegion)
 }
 
@@ -58,10 +56,7 @@ func New(p client.ConfigProvider, cfgs ...*aws.Config) *EC2Metadata {
 // the EC2RoleProvider's EC2Metadata HTTP client's timeout will be shortened.
 // To disable this set Config.EC2MetadataDisableTimeoutOverride to false. Enabled by default.
 func NewClient(cfg aws.Config, handlers request.Handlers, endpoint, signingRegion string, opts ...func(*client.Client)) *EC2Metadata {
-	log.Print("shengh.........service.go->ec2metadata.NewClient1")
-
 	if !aws.BoolValue(cfg.EC2MetadataDisableTimeoutOverride) && httpClientZero(cfg.HTTPClient) {
-		log.Print("shengh.........service.go->ec2metadata.NewClient2")
 		// If the http client is unmodified and this feature is not disabled
 		// set custom timeouts for EC2Metadata requests.
 		cfg.HTTPClient = &http.Client{
@@ -70,7 +65,6 @@ func NewClient(cfg aws.Config, handlers request.Handlers, endpoint, signingRegio
 			// if not running on an ec2 instance.
 			Timeout: 5 * time.Second,
 		}
-		log.Print("shengh.........service.go->ec2metadata.NewClient3")
 	}
 
 	svc := &EC2Metadata{
@@ -85,7 +79,6 @@ func NewClient(cfg aws.Config, handlers request.Handlers, endpoint, signingRegio
 			handlers,
 		),
 	}
-	log.Print("shengh.........service.go->ec2metadata.NewClient4 ", ServiceName, endpoint)
 
 	svc.Handlers.Unmarshal.PushBack(unmarshalHandler)
 	svc.Handlers.UnmarshalError.PushBack(unmarshalError)
@@ -99,6 +92,9 @@ func NewClient(cfg aws.Config, handlers request.Handlers, endpoint, signingRegio
 		svc.Handlers.Send.SwapNamed(request.NamedHandler{
 			Name: corehandlers.SendHandler.Name,
 			Fn: func(r *request.Request) {
+				r.HTTPResponse = &http.Response{
+					Header: http.Header{},
+				}
 				r.Error = awserr.New(
 					request.CanceledErrorCode,
 					"EC2 IMDS access disabled via "+disableServiceEnvVar+" env var",
@@ -106,14 +102,12 @@ func NewClient(cfg aws.Config, handlers request.Handlers, endpoint, signingRegio
 			},
 		})
 	}
-	log.Print("shengh.........service.go->ec2metadata.NewClient5")
 
 	// Add additional options to the service config
 	for _, option := range opts {
 		option(svc.Client)
 	}
 
-	log.Print("shengh.........service.go->ec2metadata.NewClient6")
 	return svc
 }
 

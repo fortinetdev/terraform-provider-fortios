@@ -61,7 +61,6 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/url"
 	"sort"
@@ -135,6 +134,7 @@ var requiredSignedHeaders = rules{
 			"X-Amz-Server-Side-Encryption-Customer-Key":                   struct{}{},
 			"X-Amz-Server-Side-Encryption-Customer-Key-Md5":               struct{}{},
 			"X-Amz-Storage-Class":                                         struct{}{},
+			"X-Amz-Tagging":                                               struct{}{},
 			"X-Amz-Website-Redirect-Location":                             struct{}{},
 			"X-Amz-Content-Sha256":                                        struct{}{},
 		},
@@ -182,7 +182,7 @@ type Signer struct {
 	// http://docs.aws.amazon.com/general/latest/gr/sigv4-create-canonical-request.html
 	DisableURIPathEscaping bool
 
-	// Disales the automatical setting of the HTTP request's Body field with the
+	// Disables the automatical setting of the HTTP request's Body field with the
 	// io.ReadSeeker passed in to the signer. This is useful if you're using a
 	// custom wrapper around the body for the io.ReadSeeker and want to preserve
 	// the Body value on the Request.Body.
@@ -206,8 +206,6 @@ type Signer struct {
 // option values provided. If not options are provided the Signer will use its
 // default configuration.
 func NewSigner(credentials *credentials.Credentials, options ...func(*Signer)) *Signer {
-
-	log.Printf("shengh.........v4 1\n")
 	v4 := &Signer{
 		Credentials: credentials,
 	}
@@ -272,10 +270,7 @@ type signingCtx struct {
 // generated. To bypass the signer computing the hash you can set the
 // "X-Amz-Content-Sha256" header with a precomputed value. The signer will
 // only compute the hash if the request header value is empty.
-// <=== 没到这里
 func (v4 Signer) Sign(r *http.Request, body io.ReadSeeker, service, region string, signTime time.Time) (http.Header, error) {
-	log.Printf("shengh.........v4 2\n")
-
 	return v4.signWithBody(r, body, service, region, 0, false, signTime)
 }
 
@@ -309,9 +304,7 @@ func (v4 Signer) Sign(r *http.Request, body io.ReadSeeker, service, region strin
 // PUT/GET capabilities. If you would like to include the body's SHA256 in the
 // presigned request's signature you can set the "X-Amz-Content-Sha256"
 // HTTP header and that will be included in the request's signature.
-// <=== 没到这里
 func (v4 Signer) Presign(r *http.Request, body io.ReadSeeker, service, region string, exp time.Duration, signTime time.Time) (http.Header, error) {
-	log.Printf("shengh.........v4 4\n")
 	return v4.signWithBody(r, body, service, region, exp, true, signTime)
 }
 
@@ -377,12 +370,10 @@ func (v4 Signer) signWithBody(r *http.Request, body io.ReadSeeker, service, regi
 }
 
 func (ctx *signingCtx) sanitizeHostForHeader() {
-	log.Printf("shengh.............v4.go 1")
 	request.SanitizeHostForHeader(ctx.Request)
 }
 
 func (ctx *signingCtx) handlePresignRemoval() {
-	log.Printf("shengh.............v4.go 2")
 	if !ctx.isPresign {
 		return
 	}
@@ -397,7 +388,6 @@ func (ctx *signingCtx) handlePresignRemoval() {
 }
 
 func (ctx *signingCtx) assignAmzQueryValues() {
-	log.Printf("shengh.............v4.go 3")
 	if ctx.isPresign {
 		ctx.Query.Set("X-Amz-Algorithm", authHeaderPrefix)
 		if ctx.credValues.SessionToken != "" {
@@ -432,48 +422,38 @@ var SignRequestHandler = request.NamedHandler{
 // If the credentials of the request's config are set to
 // credentials.AnonymousCredentials the request will not be signed.
 func SignSDKRequest(req *request.Request) {
-	log.Printf("shengh.........v4 5\n")
-	log.Printf("shengh.........signWithBody31\n")
-	signSDKRequestWithCurrTime(req, time.Now)
-	log.Printf("shengh.........signWithBody32\n")
+	SignSDKRequestWithCurrentTime(req, time.Now)
 }
 
 // BuildNamedHandler will build a generic handler for signing.
 func BuildNamedHandler(name string, opts ...func(*Signer)) request.NamedHandler {
-	log.Printf("shengh.........v4 6\n")
 	return request.NamedHandler{
 		Name: name,
 		Fn: func(req *request.Request) {
-			signSDKRequestWithCurrTime(req, time.Now, opts...)
+			SignSDKRequestWithCurrentTime(req, time.Now, opts...)
 		},
 	}
 }
 
-func signSDKRequestWithCurrTime(req *request.Request, curTimeFn func() time.Time, opts ...func(*Signer)) {
-	log.Printf("shengh.............v4.go 5")
+// SignSDKRequestWithCurrentTime will sign the SDK's request using the time
+// function passed in. Behaves the same as SignSDKRequest with the exception
+// the request is signed with the value returned by the current time function.
+func SignSDKRequestWithCurrentTime(req *request.Request, curTimeFn func() time.Time, opts ...func(*Signer)) {
 	// If the request does not need to be signed ignore the signing of the
 	// request if the AnonymousCredentials object is used.
 	if req.Config.Credentials == credentials.AnonymousCredentials {
 		return
 	}
 
-	log.Printf("shengh.........signSDKRequestWithCurrTime 1\n")
-
 	region := req.ClientInfo.SigningRegion
 	if region == "" {
-		log.Printf("shengh.........signSDKRequestWithCurrTime 2\n")
-
 		region = aws.StringValue(req.Config.Region)
 	}
 
 	name := req.ClientInfo.SigningName
 	if name == "" {
-		log.Printf("shengh.........signSDKRequestWithCurrTime 3\n")
-
 		name = req.ClientInfo.ServiceName
 	}
-
-	log.Printf("shengh.........signSDKRequestWithCurrTime 4\n")
 
 	v4 := NewSigner(req.Config.Credentials, func(v4 *Signer) {
 		v4.Debug = req.Config.LogLevel.Value()
@@ -490,38 +470,22 @@ func signSDKRequestWithCurrTime(req *request.Request, curTimeFn func() time.Time
 		v4.DisableRequestBodyOverwrite = true
 	})
 
-	log.Printf("shengh.........signSDKRequestWithCurrTime 5\n")
-
 	for _, opt := range opts {
-		log.Printf("shengh.........signSDKRequestWithCurrTime 6\n")
-
 		opt(v4)
 	}
 
-	signingTime := req.Time
-	if !req.LastSignedAt.IsZero() {
-		log.Printf("shengh.........signSDKRequestWithCurrTime 7\n")
-
-		signingTime = req.LastSignedAt
-	}
-
-	log.Printf("shengh.........signWithBody1\n")
+	curTime := curTimeFn()
 	signedHeaders, err := v4.signWithBody(req.HTTPRequest, req.GetBody(),
-		name, region, req.ExpireTime, req.ExpireTime > 0, signingTime,
+		name, region, req.ExpireTime, req.ExpireTime > 0, curTime,
 	)
-
-	log.Printf("shengh.........signSDKRequestWithCurrTime 8\n", signedHeaders)
-
 	if err != nil {
 		req.Error = err
 		req.SignedHeaderVals = nil
 		return
 	}
 
-	log.Printf("shengh.........signSDKRequestWithCurrTime 9\n")
-
-	req.SignedHeaderVals = signedHeaders  //目的：设置request的SignedHeaderVals
-	req.LastSignedAt = curTimeFn()
+	req.SignedHeaderVals = signedHeaders
+	req.LastSignedAt = curTime
 }
 
 const logSignInfoMsg = `DEBUG: Request Signature:
@@ -535,7 +499,6 @@ const logSignedURLMsg = `
 %s`
 
 func (v4 *Signer) logSigningInfo(ctx *signingCtx) {
-	log.Printf("shengh.............v4.go 6")
 	signedURLMsg := ""
 	if ctx.isPresign {
 		signedURLMsg = fmt.Sprintf(logSignedURLMsg, ctx.Request.URL.String())
@@ -545,8 +508,6 @@ func (v4 *Signer) logSigningInfo(ctx *signingCtx) {
 }
 
 func (ctx *signingCtx) build(disableHeaderHoisting bool) error {
-	log.Printf("shengh.............v4.go 7")
-
 	ctx.buildTime()             // no depends
 	ctx.buildCredentialString() // no depends
 
@@ -585,8 +546,6 @@ func (ctx *signingCtx) build(disableHeaderHoisting bool) error {
 }
 
 func (ctx *signingCtx) buildTime() {
-	log.Printf("shengh.............v4.go 8")
-
 	ctx.formattedTime = ctx.Time.UTC().Format(timeFormat)
 	ctx.formattedShortTime = ctx.Time.UTC().Format(shortTimeFormat)
 
@@ -600,8 +559,6 @@ func (ctx *signingCtx) buildTime() {
 }
 
 func (ctx *signingCtx) buildCredentialString() {
-	log.Printf("shengh.............v4.go 9")
-
 	ctx.credentialString = strings.Join([]string{
 		ctx.formattedShortTime,
 		ctx.Region,
@@ -615,8 +572,6 @@ func (ctx *signingCtx) buildCredentialString() {
 }
 
 func buildQuery(r rule, header http.Header) (url.Values, http.Header) {
-	log.Printf("shengh.............v4.go 10")
-
 	query := url.Values{}
 	unsignedHeaders := http.Header{}
 	for k, h := range header {
@@ -630,8 +585,6 @@ func buildQuery(r rule, header http.Header) (url.Values, http.Header) {
 	return query, unsignedHeaders
 }
 func (ctx *signingCtx) buildCanonicalHeaders(r rule, header http.Header) {
-	log.Printf("shengh.............v4.go 11")
-
 	var headers []string
 	headers = append(headers, "host")
 	for k, v := range header {
@@ -679,7 +632,6 @@ func (ctx *signingCtx) buildCanonicalHeaders(r rule, header http.Header) {
 }
 
 func (ctx *signingCtx) buildCanonicalString() {
-	log.Printf("shengh.............v4.go 11")
 	ctx.Request.URL.RawQuery = strings.Replace(ctx.Query.Encode(), "+", "%20", -1)
 
 	uri := getURIPath(ctx.Request.URL)
@@ -699,8 +651,6 @@ func (ctx *signingCtx) buildCanonicalString() {
 }
 
 func (ctx *signingCtx) buildStringToSign() {
-	log.Printf("shengh.............v4.go 12")
-
 	ctx.stringToSign = strings.Join([]string{
 		authHeaderPrefix,
 		ctx.formattedTime,
@@ -710,12 +660,7 @@ func (ctx *signingCtx) buildStringToSign() {
 }
 
 func (ctx *signingCtx) buildSignature() {
-	log.Printf("shengh.............v4.go 13")
-
 	secret := ctx.credValues.SecretAccessKey
-
-	log.Printf("shengh.........buildSignature %s!\n", ctx.credValues.SecretAccessKey)
-
 	date := makeHmac([]byte("AWS4"+secret), []byte(ctx.formattedShortTime))
 	region := makeHmac(date, []byte(ctx.Region))
 	service := makeHmac(region, []byte(ctx.ServiceName))
@@ -725,8 +670,6 @@ func (ctx *signingCtx) buildSignature() {
 }
 
 func (ctx *signingCtx) buildBodyDigest() error {
-	log.Printf("shengh.............v4.go 14")
-
 	hash := ctx.Request.Header.Get("X-Amz-Content-Sha256")
 	if hash == "" {
 		includeSHA256Header := ctx.unsignedPayload ||
@@ -758,8 +701,6 @@ func (ctx *signingCtx) buildBodyDigest() error {
 
 // isRequestSigned returns if the request is currently signed or presigned
 func (ctx *signingCtx) isRequestSigned() bool {
-	log.Printf("shengh.............v4.go 15")
-
 	if ctx.isPresign && ctx.Query.Get("X-Amz-Signature") != "" {
 		return true
 	}
@@ -772,8 +713,6 @@ func (ctx *signingCtx) isRequestSigned() bool {
 
 // unsign removes signing flags for both signed and presigned requests.
 func (ctx *signingCtx) removePresign() {
-	log.Printf("shengh.............v4.go 16")
-
 	ctx.Query.Del("X-Amz-Algorithm")
 	ctx.Query.Del("X-Amz-Signature")
 	ctx.Query.Del("X-Amz-Security-Token")
@@ -815,7 +754,7 @@ func makeSha256Reader(reader io.ReadSeeker) []byte {
 const doubleSpace = "  "
 
 // stripExcessSpaces will rewrite the passed in slice's string values to not
-// contain muliple side-by-side spaces.
+// contain multiple side-by-side spaces.
 func stripExcessSpaces(vals []string) {
 	var j, k, l, m, spaces int
 	for i, str := range vals {

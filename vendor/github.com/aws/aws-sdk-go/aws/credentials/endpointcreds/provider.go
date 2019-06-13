@@ -32,7 +32,6 @@ package endpointcreds
 import (
 	"encoding/json"
 	"time"
-	"log"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/awserr"
@@ -75,7 +74,6 @@ type Provider struct {
 // NewProviderClient returns a credentials Provider for retrieving AWS credentials
 // from arbitrary endpoint.
 func NewProviderClient(cfg aws.Config, handlers request.Handlers, endpoint string, options ...func(*Provider)) credentials.Provider {
-	log.Printf("shengh............DUUUU\n") //没有到这里
 	p := &Provider{
 		Client: client.New(
 			cfg,

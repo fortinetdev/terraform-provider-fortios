@@ -2,13 +2,11 @@ package request
 
 import (
 	"io"
-	"log"
 	"net/http"
 	"net/url"
 )
 
 func copyHTTPRequest(r *http.Request, body io.ReadCloser) *http.Request {
-	log.Printf("shengh.........copyHTTPRequest1!\n")
 	req := new(http.Request)
 	*req = *r
 	req.URL = &url.URL{}

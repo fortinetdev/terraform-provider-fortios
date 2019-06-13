@@ -3,7 +3,6 @@
 package request
 
 import (
-	"log"
 	"net/http"
 )
 
@@ -23,9 +22,7 @@ var NoBody = http.NoBody
 // Will also set the Go 1.8's http.Request.GetBody member to allow retrying
 // PUT/POST redirects.
 func (r *Request) ResetBody() {
-	log.Printf("shengh.........ResetBody\n")
 	body, err := r.getNextRequestBody()
-	log.Printf("shengh.........ResetBody2\n")
 	if err != nil {
 		r.Error = err
 		return

@@ -13,7 +13,6 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	"log"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/awserr"
@@ -133,13 +132,10 @@ func buildBody(r *request.Request, v reflect.Value) {
 					switch reader := payload.Interface().(type) {
 					case io.ReadSeeker:
 						r.SetReaderBody(reader)
-						log.Printf("shengh.........SetStringBody1\n")
 					case []byte:
 						r.SetBufferBody(reader)
-						log.Printf("shengh.........SetStringBody2\n")
 					case string:
 						r.SetStringBody(reader)
-						log.Printf("shengh.........SetStringBody3\n")
 					default:
 						r.Error = awserr.New("SerializationError",
 							"failed to encode REST request",
@@ -159,6 +155,9 @@ func buildHeader(header *http.Header, v reflect.Value, name string, tag reflect.
 		return awserr.New("SerializationError", "failed to encode REST request", err)
 	}
 
+	name = strings.TrimSpace(name)
+	str = strings.TrimSpace(str)
+
 	header.Add(name, str)
 
 	return nil
@@ -174,8 +173,10 @@ func buildHeaderMap(header *http.Header, v reflect.Value, tag reflect.StructTag)
 			return awserr.New("SerializationError", "failed to encode REST request", err)
 
 		}
+		keyStr := strings.TrimSpace(key.String())
+		str = strings.TrimSpace(str)
 
-		header.Add(prefix+key.String(), str)
+		header.Add(prefix+keyStr, str)
 	}
 	return nil
 }
