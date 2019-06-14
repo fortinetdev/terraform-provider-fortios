@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/url"
 	"time"
+	"strings"
 
 	"github.com/fgtdev/fortios-sdk-go/config"
 )
@@ -72,6 +73,23 @@ func (r *Request) Send() error {
 		rsp, errdo := r.Config.HTTPCon.Do(r.HTTPRequest)
 		r.HTTPResponse = rsp
 		if errdo != nil {
+			/*
+			"x509: certificate is not authorized to sign other certificates"
+			"x509: certificate has expired or is not yet valid"
+			"x509: a root or intermediate certificate is not authorized to sign for this name: "
+			"x509: a root or intermediate certificate is not authorized for an extended key usage: "
+			"x509: too many intermediates for path length constraint"
+			"x509: certificate specifies an incompatible key usage"
+			"x509: issuer name does not match subject from issuing certificate"
+			"x509: issuer has name constraints but leaf doesn't have a SAN extension"
+			"x509: issuer has name constraints but leaf contains unknown or unconstrained name: "
+			"x509: unknown error"
+			*/
+			if strings.Contains(errdo.Error(), "x509: ") {
+				err = fmt.Errorf("Error found: %s", errdo)
+				break
+			}
+
 			if retry > 500 {
 				err = fmt.Errorf("Error found: %s", errdo)
 				break

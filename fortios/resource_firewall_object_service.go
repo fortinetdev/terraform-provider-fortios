@@ -239,11 +239,15 @@ func resourceFirewallObjectServiceRead(d *schema.ResourceData, m interface{}) er
 	//Refresh property
 	d.Set("name", o.Name)
 	d.Set("category", o.Category)
+
+	if o.TCPPortrange == "" && o.UDPPortrange == "" && o.SctpPortrange == "" {
+		d.Set("protocol_number", o.ProtocolNumber)
+	}
+
 	d.Set("protocol", o.Protocol)
 	d.Set("fqdn", o.Fqdn)
 	d.Set("iprange", o.Iprange)
 	d.Set("comment", o.Comment)
-	d.Set("protocol_number", o.ProtocolNumber)
 	d.Set("icmptype", o.Icmptype)
 	d.Set("icmpcode", o.Icmpcode)
 	d.Set("tcp_portrange", o.TCPPortrange)

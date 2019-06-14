@@ -12,7 +12,7 @@ require (
 	github.com/bgentry/speakeasy v0.1.0
 	github.com/blang/semver v3.5.1+incompatible
 	github.com/davecgh/go-spew v1.1.1
-	github.com/fgtdev/fortios-sdk-go v1.0.0
+	github.com/fgtdev/fortios-sdk-go v1.0.1
 	github.com/go-ini/ini v1.25.4
 	github.com/golang/protobuf v0.0.0-20171113180720-1e59b77b52bf
 	github.com/golang/snappy v0.0.0-20180518054509-2e65f85255db

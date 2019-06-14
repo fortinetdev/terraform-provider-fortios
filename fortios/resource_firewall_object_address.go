@@ -3,6 +3,9 @@ package fortios
 import (
 	"fmt"
 	"log"
+	"net"
+	"strconv"
+	"strings"
 
 	"github.com/fgtdev/fortios-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
@@ -235,7 +238,7 @@ func resourceFirewallObjectAddressRead(d *schema.ResourceData, m interface{}) er
 	d.Set("name", o.Name)
 	d.Set("type", o.Type)
 	if o.Type == "ipmask" {
-		d.Set("subnet", o.Subnet)
+		d.Set("subnet", validateConvIPMask2CDIR(d, o.Subnet))
 	}
 
 	if o.Type == "iprange" {
@@ -248,4 +251,18 @@ func resourceFirewallObjectAddressRead(d *schema.ResourceData, m interface{}) er
 	d.Set("comment", o.Comment)
 
 	return nil
+}
+
+func validateConvIPMask2CDIR(d *schema.ResourceData, subnet string) string {
+	oSubnet := d.Get("subnet").(string)
+	if oSubnet != subnet && strings.Contains(oSubnet, "/") && strings.Contains(subnet, " ") {
+		line := strings.Split(subnet, " ")
+		if len(line) >= 2 {
+			ip := line[0]
+			mask := line[1]
+			prefixSize, _ := net.IPMask(net.ParseIP(mask).To4()).Size()
+			return ip + "/" + strconv.Itoa(prefixSize)
+		}
+	}
+	return subnet
 }
