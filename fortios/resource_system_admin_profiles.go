@@ -169,6 +169,10 @@ func resourceSystemAdminProfilesUpdate(d *schema.ResourceData, m interface{}) er
 	wifi := d.Get("wifi").(string)
 	admintimeoutOverride := d.Get("admintimeout_override").(string)
 
+	if d.HasChange("name") {
+		return fmt.Errorf("the name argument is the key and should not be modified here")
+	}
+
 	//Build input data by sdk
 	i := &forticlient.JSONSystemAdminProfiles{
 		Name:                 name,

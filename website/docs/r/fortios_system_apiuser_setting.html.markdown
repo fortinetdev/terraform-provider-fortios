@@ -17,19 +17,18 @@ provider "fortios" {
 }
 
 resource "fortios_system_apiuser_setting" "test2" {
-	name = "cccc"
+	name = "testapiuser"
 	accprofile = "restAPIprofile"
 	vdom = ["root"]
-	trusthost = [
-		{
-			type = "ipv4-trusthost"
-			ipv4_trusthost = "61.149.0.0 255.255.0.0"
-		},
-		{
-			type = "ipv4-trusthost"
-			ipv4_trusthost = "22.22.0.0 255.255.0.0"
-		}				
-	]
+	trusthost {
+		type = "ipv4-trusthost"
+		ipv4_trusthost = "61.149.0.0 255.255.0.0"
+	}
+
+	trusthost {
+		type = "ipv4-trusthost"
+		ipv4_trusthost = "22.22.0.0 255.255.0.0"
+	}
 }
 ```
 

@@ -19,12 +19,12 @@ type Handlers struct {
 	UnmarshalError   HandlerList
 	Retry            HandlerList
 	AfterRetry       HandlerList
+	CompleteAttempt  HandlerList
 	Complete         HandlerList
 }
 
 // Copy returns of this handler's lists.
 func (h *Handlers) Copy() Handlers {
-	//log.Printf("shengh............HandlerList14 Copy\n")
 	return Handlers{
 		Validate:         h.Validate.copy(),
 		Build:            h.Build.copy(),
@@ -37,13 +37,13 @@ func (h *Handlers) Copy() Handlers {
 		UnmarshalMeta:    h.UnmarshalMeta.copy(),
 		Retry:            h.Retry.copy(),
 		AfterRetry:       h.AfterRetry.copy(),
+		CompleteAttempt:  h.CompleteAttempt.copy(),
 		Complete:         h.Complete.copy(),
 	}
 }
 
 // Clear removes callback functions for all handlers
 func (h *Handlers) Clear() {
-	//log.Printf("shengh............HandlerList13 Clear\n")
 	h.Validate.Clear()
 	h.Build.Clear()
 	h.Send.Clear()
@@ -55,6 +55,7 @@ func (h *Handlers) Clear() {
 	h.ValidateResponse.Clear()
 	h.Retry.Clear()
 	h.AfterRetry.Clear()
+	h.CompleteAttempt.Clear()
 	h.Complete.Clear()
 }
 
@@ -90,8 +91,6 @@ type NamedHandler struct {
 
 // copy creates a copy of the handler list.
 func (l *HandlerList) copy() HandlerList {
-	//log.Printf("shengh............HandlerList12 copy\n")
-
 	n := HandlerList{
 		AfterEachFn: l.AfterEachFn,
 	}
@@ -105,8 +104,6 @@ func (l *HandlerList) copy() HandlerList {
 
 // Clear clears the handler list.
 func (l *HandlerList) Clear() {
-	//log.Printf("shengh............HandlerList11 Clear\n")
-
 	l.list = l.list[0:0]
 }
 
@@ -117,14 +114,11 @@ func (l *HandlerList) Len() int {
 
 // PushBack pushes handler f to the back of the handler list.
 func (l *HandlerList) PushBack(f func(*Request)) {
-	//log.Printf("shengh............HandlerList10 PushBack\n")
-
 	l.PushBackNamed(NamedHandler{"__anonymous", f})
 }
 
 // PushBackNamed pushes named handler f to the back of the handler list.
 func (l *HandlerList) PushBackNamed(n NamedHandler) {
-	//log.Printf("shengh.........PushBackNamed! %s\n", n.Name)
 	if cap(l.list) == 0 {
 		l.list = make([]NamedHandler, 0, 5)
 	}
@@ -133,13 +127,11 @@ func (l *HandlerList) PushBackNamed(n NamedHandler) {
 
 // PushFront pushes handler f to the front of the handler list.
 func (l *HandlerList) PushFront(f func(*Request)) {
-	//log.Printf("shengh............HandlerList9 PushFront\n")
 	l.PushFrontNamed(NamedHandler{"__anonymous", f})
 }
 
 // PushFrontNamed pushes named handler f to the front of the handler list.
 func (l *HandlerList) PushFrontNamed(n NamedHandler) {
-	//log.Printf("shengh............HandlerList8 PushFrontNamed\n")
 	if cap(l.list) == len(l.list) {
 		// Allocating new list required
 		l.list = append([]NamedHandler{n}, l.list...)
@@ -153,13 +145,11 @@ func (l *HandlerList) PushFrontNamed(n NamedHandler) {
 
 // Remove removes a NamedHandler n
 func (l *HandlerList) Remove(n NamedHandler) {
-	//log.Printf("shengh............HandlerList7 Remove\n")
 	l.RemoveByName(n.Name)
 }
 
 // RemoveByName removes a NamedHandler by name.
 func (l *HandlerList) RemoveByName(name string) {
-	//log.Printf("shengh............HandlerList6 RemoveByName\n")
 	for i := 0; i < len(l.list); i++ {
 		m := l.list[i]
 		if m.Name == name {
@@ -191,7 +181,6 @@ func (l *HandlerList) SwapNamed(n NamedHandler) (swapped bool) {
 // Swap will swap out all handlers matching the name passed in. The matched
 // handlers will be swapped in. True is returned if the handlers were swapped.
 func (l *HandlerList) Swap(name string, replace NamedHandler) bool {
-	//log.Printf("shengh............HandlerList5 Swap\n")
 	var swapped bool
 
 	for i := 0; i < len(l.list); i++ {
@@ -207,7 +196,6 @@ func (l *HandlerList) Swap(name string, replace NamedHandler) bool {
 // SetBackNamed will replace the named handler if it exists in the handler list.
 // If the handler does not exist the handler will be added to the end of the list.
 func (l *HandlerList) SetBackNamed(n NamedHandler) {
-	//log.Printf("shengh............HandlerList4 SetBackNamed\n")
 	if !l.SwapNamed(n) {
 		l.PushBackNamed(n)
 	}
@@ -217,8 +205,6 @@ func (l *HandlerList) SetBackNamed(n NamedHandler) {
 // If the handler does not exist the handler will be added to the beginning of
 // the list.
 func (l *HandlerList) SetFrontNamed(n NamedHandler) {
-	//log.Printf("shengh............HandlerList3 SetFrontNamed\n")
-
 	if !l.SwapNamed(n) {
 		l.PushFrontNamed(n)
 	}
@@ -226,10 +212,8 @@ func (l *HandlerList) SetFrontNamed(n NamedHandler) {
 
 // Run executes all handlers in the list with a given request object.
 func (l *HandlerList) Run(r *Request) {
-	//log.Printf("shengh............HandlerList2 Run\n")
 	for i, h := range l.list {
 		h.Fn(r)
-		//log.Printf("shengh.........RUN: %s!\n", h.Name)
 		item := HandlerListRunItem{
 			Index: i, Handler: h, Request: r,
 		}
@@ -243,7 +227,6 @@ func (l *HandlerList) Run(r *Request) {
 // request's Error value. Always returns true to continue iterating
 // request handlers in a HandlerList.
 func HandlerListLogItem(item HandlerListRunItem) bool {
-	//log.Printf("shengh............HandlerList1 HandlerListLogItem\n")
 	if item.Request.Config.Logger == nil {
 		return true
 	}
@@ -263,8 +246,6 @@ func HandlerListStopOnError(item HandlerListRunItem) bool {
 // WithAppendUserAgent will add a string to the user agent prefixed with a
 // single white space.
 func WithAppendUserAgent(s string) Option {
-	//log.Printf("shengh.........AddToUserAgent1 ", s)
-
 	return func(r *Request) {
 		r.Handlers.Build.PushBack(func(r2 *Request) {
 			AddToUserAgent(r, s)
@@ -278,12 +259,10 @@ func WithAppendUserAgent(s string) Option {
 // "name/version (extra0; extra1; ...)"
 // The user agent part will be concatenated with this current request's user agent string.
 func MakeAddToUserAgentHandler(name, version string, extra ...string) func(*Request) {
-
 	ua := fmt.Sprintf("%s/%s", name, version)
 	if len(extra) > 0 {
 		ua += fmt.Sprintf(" (%s)", strings.Join(extra, "; "))
 	}
-	//log.Printf("shengh.........AddToUserAgent2 ", ua)
 	return func(r *Request) {
 		AddToUserAgent(r, ua)
 	}
@@ -292,8 +271,6 @@ func MakeAddToUserAgentHandler(name, version string, extra ...string) func(*Requ
 // MakeAddToUserAgentFreeFormHandler adds the input to the User-Agent request header.
 // The input string will be concatenated with the current request's user agent string.
 func MakeAddToUserAgentFreeFormHandler(s string) func(*Request) {
-	//log.Printf("shengh.........AddToUserAgent3 ", s)
-
 	return func(r *Request) {
 		AddToUserAgent(r, s)
 	}

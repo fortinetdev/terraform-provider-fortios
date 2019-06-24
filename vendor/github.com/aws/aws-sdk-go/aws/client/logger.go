@@ -6,7 +6,6 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http/httputil"
-	"log"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/request"
@@ -71,7 +70,6 @@ func logRequest(r *request.Request) {
 		// Reset the request body because dumpRequest will re-wrap the r.HTTPRequest's
 		// Body as a NoOpCloser and will not be reset after read by the HTTP
 		// client reader.
-		log.Printf("shengh.........logRequest 1\n")
 		r.ResetBody()
 	}
 
@@ -119,6 +117,12 @@ var LogHTTPResponseHandler = request.NamedHandler{
 
 func logResponse(r *request.Request) {
 	lw := &logWriter{r.Config.Logger, bytes.NewBuffer(nil)}
+
+	if r.HTTPResponse == nil {
+		lw.Logger.Log(fmt.Sprintf(logRespErrMsg,
+			r.ClientInfo.ServiceName, r.Operation.Name, "request's HTTPResponse is nil"))
+		return
+	}
 
 	logBody := r.Config.LogLevel.Matches(aws.LogDebugWithHTTPBody)
 	if logBody {

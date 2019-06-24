@@ -75,13 +75,13 @@ func (c *FortiSDKClient) CreateFirewallObjectService(params *JSONFirewallObjectS
 	req := c.NewRequest(HTTPMethod, path, nil, bytes)
 	err = req.Send()
 	if err != nil || req.HTTPResponse == nil {
-		err = fmt.Errorf("cannot send request")
+		err = fmt.Errorf("cannot send request %s", err)
 		return
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
 	if err != nil || body == nil {
-		err = fmt.Errorf("cannot get response body")
+		err = fmt.Errorf("cannot get response body %s", err)
 		return
 	}
 
@@ -136,7 +136,7 @@ func (c *FortiSDKClient) CreateFirewallObjectService(params *JSONFirewallObjectS
 func (c *FortiSDKClient) UpdateFirewallObjectService(params *JSONFirewallObjectService, mkey string) (output *JSONUpdateFirewallObjectServiceOutput, err error) {
 	HTTPMethod := "PUT"
 	path := "/api/v2/cmdb/firewall.service/custom"
-	path += "/" + mkey
+	path += "/" + EscapeURLString(mkey)
 	output = &JSONUpdateFirewallObjectServiceOutput{}
 	locJSON, err := json.Marshal(params)
 	if err != nil {
@@ -148,13 +148,13 @@ func (c *FortiSDKClient) UpdateFirewallObjectService(params *JSONFirewallObjectS
 	req := c.NewRequest(HTTPMethod, path, nil, bytes)
 	err = req.Send()
 	if err != nil || req.HTTPResponse == nil {
-		err = fmt.Errorf("cannot send request")
+		err = fmt.Errorf("cannot send request %s", err)
 		return
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
 	if err != nil || body == nil {
-		err = fmt.Errorf("cannot get response body")
+		err = fmt.Errorf("cannot get response body %s", err)
 		return
 	}
 	log.Printf("FOS-fortios response: %s", string(body))
@@ -209,18 +209,18 @@ func (c *FortiSDKClient) UpdateFirewallObjectService(params *JSONFirewallObjectS
 func (c *FortiSDKClient) DeleteFirewallObjectService(mkey string) (err error) {
 	HTTPMethod := "DELETE"
 	path := "/api/v2/cmdb/firewall.service/custom"
-	path += "/" + mkey
+	path += "/" + EscapeURLString(mkey)
 
 	req := c.NewRequest(HTTPMethod, path, nil, nil)
 	err = req.Send()
 	if err != nil || req.HTTPResponse == nil {
-		err = fmt.Errorf("cannot send request")
+		err = fmt.Errorf("cannot send request %s", err)
 		return
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
 	if err != nil || body == nil {
-		err = fmt.Errorf("cannot get response body")
+		err = fmt.Errorf("cannot get response body %s", err)
 		return
 	}
 	log.Printf("FOS-fortios response: %s", string(body))
@@ -268,7 +268,7 @@ func (c *FortiSDKClient) DeleteFirewallObjectService(mkey string) (err error) {
 func (c *FortiSDKClient) ReadFirewallObjectService(mkey string) (output *JSONFirewallObjectService, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/firewall.service/custom"
-	path += "/" + mkey
+	path += "/" + EscapeURLString(mkey)
 
 	j1 := JSONFirewallObjectServiceCommon{}
 	j2 := JSONFirewallObjectServiceFqdn{}
@@ -283,13 +283,13 @@ func (c *FortiSDKClient) ReadFirewallObjectService(mkey string) (output *JSONFir
 	req := c.NewRequest(HTTPMethod, path, nil, nil)
 	err = req.Send()
 	if err != nil || req.HTTPResponse == nil {
-		err = fmt.Errorf("cannot send request")
+		err = fmt.Errorf("cannot send request %s", err)
 		return
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
 	if err != nil || body == nil {
-		err = fmt.Errorf("cannot get response body")
+		err = fmt.Errorf("cannot get response body %s", err)
 		return
 	}
 	log.Printf("FOS-fortios reading response: %s", string(body))
@@ -362,10 +362,18 @@ func (c *FortiSDKClient) ReadFirewallObjectService(mkey string) (output *JSONFir
 
 		if output.Protocol == "ICMP" {
 			if mapTmp["icmptype"] != nil {
-				output.Icmptype = strconv.Itoa(int(mapTmp["icmptype"].(float64)))
+				if mapTmp["icmptype"] != "" {
+					output.Icmptype = strconv.Itoa(int(mapTmp["icmptype"].(float64)))
+				} else {
+					output.Icmptype = ""
+				}
 			}
 			if mapTmp["icmpcode"] != nil {
-				output.Icmpcode = strconv.Itoa(int(mapTmp["icmpcode"].(float64)))
+				if mapTmp["icmpcode"] != "" {
+					output.Icmpcode = strconv.Itoa(int(mapTmp["icmpcode"].(float64)))
+				} else {
+					output.Icmpcode = ""
+				}
 			}
 		} else {
 			if mapTmp["icmptype"] != nil {

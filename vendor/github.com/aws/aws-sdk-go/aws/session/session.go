@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"os"
 
@@ -15,12 +14,31 @@ import (
 	"github.com/aws/aws-sdk-go/aws/client"
 	"github.com/aws/aws-sdk-go/aws/corehandlers"
 	"github.com/aws/aws-sdk-go/aws/credentials"
+	"github.com/aws/aws-sdk-go/aws/credentials/processcreds"
 	"github.com/aws/aws-sdk-go/aws/credentials/stscreds"
 	"github.com/aws/aws-sdk-go/aws/csm"
 	"github.com/aws/aws-sdk-go/aws/defaults"
 	"github.com/aws/aws-sdk-go/aws/endpoints"
 	"github.com/aws/aws-sdk-go/aws/request"
+	"github.com/aws/aws-sdk-go/internal/shareddefaults"
 )
+
+const (
+	// ErrCodeSharedConfig represents an error that occurs in the shared
+	// configuration logic
+	ErrCodeSharedConfig = "SharedConfigErr"
+)
+
+// ErrSharedConfigSourceCollision will be returned if a section contains both
+// source_profile and credential_source
+var ErrSharedConfigSourceCollision = awserr.New(ErrCodeSharedConfig, "only source profile or credential source can be specified, not both", nil)
+
+// ErrSharedConfigECSContainerEnvVarEmpty will be returned if the environment
+// variables are empty and Environment was set as the credential source
+var ErrSharedConfigECSContainerEnvVarEmpty = awserr.New(ErrCodeSharedConfig, "EcsContainer was specified as the credential_source, but 'AWS_CONTAINER_CREDENTIALS_RELATIVE_URI' was not set", nil)
+
+// ErrSharedConfigInvalidCredSource will be returned if an invalid credential source was provided
+var ErrSharedConfigInvalidCredSource = awserr.New(ErrCodeSharedConfig, "credential source values must be EcsContainer, Ec2InstanceMetadata, or Environment", nil)
 
 // A Session provides a central location to create service clients from and
 // store configurations and request handlers for those services.
@@ -55,21 +73,13 @@ type Session struct {
 // Deprecated: Use NewSession functions to create sessions instead. NewSession
 // has the same functionality as New except an error can be returned when the
 // func is called instead of waiting to receive an error until a request is made.
-func New(cfgs ...*aws.Config) *Session { //169.254.169.254/latest 系列用，可以认为没有用
+func New(cfgs ...*aws.Config) *Session {
 	// load initial config from environment
-	log.Printf("shengh.............session.goCDF 1")
-
-	log.Printf("shengh.........session.go New11\n")
-
-	log.Printf("frank 004.........New!\n")
-
 	envCfg := loadEnvConfig()
 
 	if envCfg.EnableSharedConfig {
 		var cfg aws.Config
 		cfg.MergeIn(cfgs...)
-
-		log.Printf("shengh.........session.go NewSessionWithOptions A\n")
 		s, err := NewSessionWithOptions(Options{
 			Config:            cfg,
 			SharedConfigState: SharedConfigEnable,
@@ -85,7 +95,6 @@ func New(cfgs ...*aws.Config) *Session { //169.254.169.254/latest 系列用，�
 			// Session creation failed, need to report the error and prevent
 			// any requests from succeeding.
 			s = &Session{Config: defaults.Config()}
-			log.Printf("shengh.........session.go New12\n")
 			s.Config.MergeIn(cfgs...)
 			s.Config.Logger.Log("ERROR:", msg, "Error:", err)
 			s.Handlers.Validate.PushBack(func(r *request.Request) {
@@ -96,9 +105,7 @@ func New(cfgs ...*aws.Config) *Session { //169.254.169.254/latest 系列用，�
 		return s
 	}
 
-	log.Printf("shengh.............session.goCDF 2")
 	s := deprecatedNewSession(cfgs...)
-	log.Printf("shengh.........session.go New13\n")
 	if envCfg.CSMEnabled {
 		enableCSM(&s.Handlers, envCfg.CSMClientID, envCfg.CSMPort, s.Config.Logger)
 	}
@@ -121,12 +128,10 @@ func New(cfgs ...*aws.Config) *Session { //169.254.169.254/latest 系列用，�
 // See the NewSessionWithOptions func for information on how to override or
 // control through code how the Session will be created. Such as specifying the
 // config profile, and controlling if shared config is enabled or not.
-func NewSession(cfgs ...*aws.Config) (*Session, error) { //没到这里
-	log.Printf("shengh.............session.goCDF 3")
+func NewSession(cfgs ...*aws.Config) (*Session, error) {
 	opts := Options{}
 	opts.Config.MergeIn(cfgs...)
 
-	log.Printf("shengh.........session.go NewSessionWithOptions B\n")
 	return NewSessionWithOptions(opts)
 }
 
@@ -251,12 +256,10 @@ type Options struct {
 //         SharedConfigState: session.SharedConfigEnable,
 //     }))
 func NewSessionWithOptions(opts Options) (*Session, error) {
-	log.Printf("shengh.............session.goCDF 4")
 	var envCfg envConfig
 	if opts.SharedConfigState == SharedConfigEnable {
 		envCfg = loadSharedEnvConfig()
 	} else {
-		log.Printf("shengh.............session.goCDF kk loadEnvConfig")
 		envCfg = loadEnvConfig()
 	}
 
@@ -282,10 +285,6 @@ func NewSessionWithOptions(opts Options) (*Session, error) {
 		opts.CustomCABundle = f
 	}
 
-	log.Printf("shengh.........session.go NewSessionWithOptions zz\n")
-
-	log.Printf("shengh.............session.goCDF 5")
-
 	return newSession(opts, envCfg, &opts.Config)
 }
 
@@ -305,9 +304,6 @@ func Must(sess *Session, err error) *Session {
 }
 
 func deprecatedNewSession(cfgs ...*aws.Config) *Session {
-
-	log.Printf("shengh.............session.goCDF 6")
-	log.Printf("shengh.........session.go deprecatedNewSession\n")
 	cfg := defaults.Config()
 	handlers := defaults.Handlers()
 
@@ -317,7 +313,6 @@ func deprecatedNewSession(cfgs ...*aws.Config) *Session {
 	if cfg.EndpointResolver == nil {
 		// An endpoint resolver is required for a session to be able to provide
 		// endpoints for service client configurations.
-		log.Printf("shengh.........DefaultResolver3\n")
 		cfg.EndpointResolver = endpoints.DefaultResolver()
 	}
 	cfg.Credentials = defaults.CredChain(cfg, handlers)
@@ -330,13 +325,11 @@ func deprecatedNewSession(cfgs ...*aws.Config) *Session {
 		Handlers: handlers,
 	}
 
-	log.Printf("shengh.............session.goCDF 7")
 	initHandlers(s)
 	return s
 }
 
 func enableCSM(handlers *request.Handlers, clientID string, port string, logger aws.Logger) {
-	log.Printf("shengh.............session.goCDF 8")
 	logger.Log("Enabling CSM")
 	if len(port) == 0 {
 		port = csm.DefaultPort
@@ -346,14 +339,10 @@ func enableCSM(handlers *request.Handlers, clientID string, port string, logger 
 	if err != nil {
 		return
 	}
-
-	log.Printf("shengh.............session.goCDF 9")
 	r.InjectHandlers(handlers)
 }
 
 func newSession(opts Options, envCfg envConfig, cfgs ...*aws.Config) (*Session, error) {
-	log.Printf("shengh.............session.goCDF 10")
-	log.Printf("shengh.........session.go newSession\n")
 	cfg := defaults.Config()
 	handlers := defaults.Handlers()
 
@@ -377,7 +366,6 @@ func newSession(opts Options, envCfg envConfig, cfgs ...*aws.Config) (*Session, 
 	}
 
 	// Load additional config from file(s)
-	log.Printf("shengh.........loadSharedConfig  ", envCfg.Profile, cfgFiles)
 	sharedCfg, err := loadSharedConfig(envCfg.Profile, cfgFiles)
 	if err != nil {
 		return nil, err
@@ -403,14 +391,12 @@ func newSession(opts Options, envCfg envConfig, cfgs ...*aws.Config) (*Session, 
 			return nil, err
 		}
 	}
-	log.Printf("shengh.............session.goCDF 11")
 
 	return s, nil
 }
 
 func loadCustomCABundle(s *Session, bundle io.Reader) error {
 	var t *http.Transport
-	log.Printf("shengh.............session.goCDF 12")
 	switch v := s.Config.HTTPClient.Transport.(type) {
 	case *http.Transport:
 		t = v
@@ -421,7 +407,10 @@ func loadCustomCABundle(s *Session, bundle io.Reader) error {
 		}
 	}
 	if t == nil {
-		t = &http.Transport{}
+		// Nil transport implies `http.DefaultTransport` should be used. Since
+		// the SDK cannot modify, nor copy the `DefaultTransport` specifying
+		// the values the next closest behavior.
+		t = getCABundleTransport()
 	}
 
 	p, err := loadCertPool(bundle)
@@ -439,7 +428,6 @@ func loadCustomCABundle(s *Session, bundle io.Reader) error {
 }
 
 func loadCertPool(r io.Reader) (*x509.CertPool, error) {
-	log.Printf("shengh.............session.goCDF 13")
 	b, err := ioutil.ReadAll(r)
 	if err != nil {
 		return nil, awserr.New("LoadCustomCABundleError",
@@ -458,73 +446,106 @@ func loadCertPool(r io.Reader) (*x509.CertPool, error) {
 func mergeConfigSrcs(cfg, userCfg *aws.Config, envCfg envConfig, sharedCfg sharedConfig, handlers request.Handlers, sessOpts Options) error {
 	// Merge in user provided configuration
 	cfg.MergeIn(userCfg)
-	log.Printf("shengh.............session.goCDF 14")
 
 	// Region if not already set by user
 	if len(aws.StringValue(cfg.Region)) == 0 {
 		if len(envCfg.Region) > 0 {
 			cfg.WithRegion(envCfg.Region)
-			log.Printf("shenghHistory.........mergeConfigSrcs0.1\n")
 		} else if envCfg.EnableSharedConfig && len(sharedCfg.Region) > 0 {
 			cfg.WithRegion(sharedCfg.Region)
-			log.Printf("shenghHistory.........mergeConfigSrcs0.2\n")
 		}
 	}
 
-	log.Printf("shenghHistory.........mergeConfigSrcs1\n")
+	if cfg.EnableEndpointDiscovery == nil {
+		if envCfg.EnableEndpointDiscovery != nil {
+			cfg.WithEndpointDiscovery(*envCfg.EnableEndpointDiscovery)
+		} else if envCfg.EnableSharedConfig && sharedCfg.EnableEndpointDiscovery != nil {
+			cfg.WithEndpointDiscovery(*sharedCfg.EnableEndpointDiscovery)
+		}
+	}
 
 	// Configure credentials if not already set
 	if cfg.Credentials == credentials.AnonymousCredentials && userCfg.Credentials == nil {
-		if len(envCfg.Creds.AccessKeyID) > 0 {//没到这里
-			cfg.Credentials = credentials.NewStaticCredentialsFromCreds(
-				envCfg.Creds,  //没到这里
+
+		// inspect the profile to see if a credential source has been specified.
+		if envCfg.EnableSharedConfig && len(sharedCfg.AssumeRole.CredentialSource) > 0 {
+
+			// if both credential_source and source_profile have been set, return an error
+			// as this is undefined behavior.
+			if len(sharedCfg.AssumeRole.SourceProfile) > 0 {
+				return ErrSharedConfigSourceCollision
+			}
+
+			// valid credential source values
+			const (
+				credSourceEc2Metadata  = "Ec2InstanceMetadata"
+				credSourceEnvironment  = "Environment"
+				credSourceECSContainer = "EcsContainer"
 			)
-			log.Printf("shenghHistory.........mergeConfigSrcs2\n")  
+
+			switch sharedCfg.AssumeRole.CredentialSource {
+			case credSourceEc2Metadata:
+				cfgCp := *cfg
+				p := defaults.RemoteCredProvider(cfgCp, handlers)
+				cfgCp.Credentials = credentials.NewCredentials(p)
+
+				if len(sharedCfg.AssumeRole.MFASerial) > 0 && sessOpts.AssumeRoleTokenProvider == nil {
+					// AssumeRole Token provider is required if doing Assume Role
+					// with MFA.
+					return AssumeRoleTokenProviderNotSetError{}
+				}
+
+				cfg.Credentials = assumeRoleCredentials(cfgCp, handlers, sharedCfg, sessOpts)
+			case credSourceEnvironment:
+				cfg.Credentials = credentials.NewStaticCredentialsFromCreds(
+					envCfg.Creds,
+				)
+			case credSourceECSContainer:
+				if len(os.Getenv(shareddefaults.ECSCredsProviderEnvVar)) == 0 {
+					return ErrSharedConfigECSContainerEnvVarEmpty
+				}
+
+				cfgCp := *cfg
+				p := defaults.RemoteCredProvider(cfgCp, handlers)
+				creds := credentials.NewCredentials(p)
+
+				cfg.Credentials = creds
+			default:
+				return ErrSharedConfigInvalidCredSource
+			}
+
+			return nil
+		}
+
+		if len(envCfg.Creds.AccessKeyID) > 0 {
+			cfg.Credentials = credentials.NewStaticCredentialsFromCreds(
+				envCfg.Creds,
+			)
 		} else if envCfg.EnableSharedConfig && len(sharedCfg.AssumeRole.RoleARN) > 0 && sharedCfg.AssumeRoleSource != nil {
 			cfgCp := *cfg
 			cfgCp.Credentials = credentials.NewStaticCredentialsFromCreds(
-				sharedCfg.AssumeRoleSource.Creds,  //没到这里
+				sharedCfg.AssumeRoleSource.Creds,
 			)
 
 			if len(sharedCfg.AssumeRole.MFASerial) > 0 && sessOpts.AssumeRoleTokenProvider == nil {
 				// AssumeRole Token provider is required if doing Assume Role
 				// with MFA.
-				log.Printf("shenghHistory.........mergeConfigSrcs3\n")
 				return AssumeRoleTokenProviderNotSetError{}
 			}
-			log.Printf("shenghHistory.........mergeConfigSrcs4\n")
 
-			cfg.Credentials = stscreds.NewCredentials(
-				&Session{
-					Config:   &cfgCp,
-					Handlers: handlers.Copy(),
-				},
-				sharedCfg.AssumeRole.RoleARN,
-				func(opt *stscreds.AssumeRoleProvider) {
-					opt.RoleSessionName = sharedCfg.AssumeRole.RoleSessionName
-
-					// Assume role with external ID
-					if len(sharedCfg.AssumeRole.ExternalID) > 0 {
-						opt.ExternalID = aws.String(sharedCfg.AssumeRole.ExternalID)
-					}
-
-					// Assume role with MFA
-					if len(sharedCfg.AssumeRole.MFASerial) > 0 {
-						opt.SerialNumber = aws.String(sharedCfg.AssumeRole.MFASerial)
-						opt.TokenProvider = sessOpts.AssumeRoleTokenProvider
-					}
-				},
-			)
-		} else if len(sharedCfg.Creds.AccessKeyID) > 0 {//没到这里
-			log.Printf("shenghHistory.........mergeConfigSrcs5\n")
+			cfg.Credentials = assumeRoleCredentials(cfgCp, handlers, sharedCfg, sessOpts)
+		} else if len(sharedCfg.Creds.AccessKeyID) > 0 {
 			cfg.Credentials = credentials.NewStaticCredentialsFromCreds(
-				sharedCfg.Creds, //没到这里
+				sharedCfg.Creds,
+			)
+		} else if len(sharedCfg.CredentialProcess) > 0 {
+			cfg.Credentials = processcreds.NewCredentials(
+				sharedCfg.CredentialProcess,
 			)
 		} else {
 			// Fallback to default credentials provider, include mock errors
 			// for the credential chain so user can identify why credentials
 			// failed to be retrieved.
-			log.Printf("shenghHistory.........mergeConfigSrcs6\n") //没到这里
 			cfg.Credentials = credentials.NewCredentials(&credentials.ChainProvider{
 				VerboseErrors: aws.BoolValue(cfg.CredentialsChainVerboseErrors),
 				Providers: []credentials.Provider{
@@ -535,9 +556,32 @@ func mergeConfigSrcs(cfg, userCfg *aws.Config, envCfg envConfig, sharedCfg share
 			})
 		}
 	}
-	log.Printf("shengh.............session.goCDF 15")
 
 	return nil
+}
+
+func assumeRoleCredentials(cfg aws.Config, handlers request.Handlers, sharedCfg sharedConfig, sessOpts Options) *credentials.Credentials {
+	return stscreds.NewCredentials(
+		&Session{
+			Config:   &cfg,
+			Handlers: handlers.Copy(),
+		},
+		sharedCfg.AssumeRole.RoleARN,
+		func(opt *stscreds.AssumeRoleProvider) {
+			opt.RoleSessionName = sharedCfg.AssumeRole.RoleSessionName
+
+			// Assume role with external ID
+			if len(sharedCfg.AssumeRole.ExternalID) > 0 {
+				opt.ExternalID = aws.String(sharedCfg.AssumeRole.ExternalID)
+			}
+
+			// Assume role with MFA
+			if len(sharedCfg.AssumeRole.MFASerial) > 0 {
+				opt.SerialNumber = aws.String(sharedCfg.AssumeRole.MFASerial)
+				opt.TokenProvider = sessOpts.AssumeRoleTokenProvider
+			}
+		},
+	)
 }
 
 // AssumeRoleTokenProviderNotSetError is an error returned when creating a session when the
@@ -579,11 +623,9 @@ func (c credProviderError) IsExpired() bool {
 }
 
 func initHandlers(s *Session) {
-	log.Printf("shengh.............session.goCDF 16")
 	// Add the Validate parameter handler if it is not disabled.
 	s.Handlers.Validate.Remove(corehandlers.ValidateParametersHandler)
 	if !aws.BoolValue(s.Config.DisableParamValidation) {
-		log.Printf("shenghHistory.........initHandlers\n")
 		s.Handlers.Validate.PushBackNamed(corehandlers.ValidateParametersHandler)
 	}
 }
@@ -595,7 +637,6 @@ func initHandlers(s *Session) {
 //     // Create a copy of the current Session, configured for the us-west-2 region.
 //     sess.Copy(&aws.Config{Region: aws.String("us-west-2")})
 func (s *Session) Copy(cfgs ...*aws.Config) *Session {
-	log.Printf("shengh.............session.goCDF 17")
 	newSession := &Session{
 		Config:   s.Config.Copy(cfgs...),
 		Handlers: s.Handlers.Copy(),
@@ -609,22 +650,17 @@ func (s *Session) Copy(cfgs ...*aws.Config) *Session {
 // ClientConfig satisfies the client.ConfigProvider interface and is used to
 // configure the service client instances. Passing the Session to the service
 // client's constructor (New) will use this method to configure the client.
-func (s *Session) ClientConfig(serviceName string, cfgs ...*aws.Config) client.Config { //shengh 接口实现
+func (s *Session) ClientConfig(serviceName string, cfgs ...*aws.Config) client.Config {
 	// Backwards compatibility, the error will be eaten if user calls ClientConfig
 	// directly. All SDK services will use ClientconfigWithError.
-	log.Printf("shengh.............session.goCDF 18")
-
-	log.Printf("shengh.....................ClientConfig zz")
 	cfg, _ := s.clientConfigWithErr(serviceName, cfgs...)
 
 	return cfg
 }
 
 func (s *Session) clientConfigWithErr(serviceName string, cfgs ...*aws.Config) (client.Config, error) {
-	log.Printf("shengh.............session.goCDF 19")
 	s = s.Copy(cfgs...)
 
-	//log.Printf("shengh..................session.goCDFZZZZZZZZZ  %v", s.Config.EndpointResolver)
 	var resolved endpoints.ResolvedEndpoint
 	var err error
 
@@ -633,10 +669,7 @@ func (s *Session) clientConfigWithErr(serviceName string, cfgs ...*aws.Config) (
 	if endpoint := aws.StringValue(s.Config.Endpoint); len(endpoint) != 0 {
 		resolved.URL = endpoints.AddScheme(endpoint, aws.BoolValue(s.Config.DisableSSL))
 		resolved.SigningRegion = region
-
-		log.Printf("shengh.............session.goCDF 20A", resolved.URL, serviceName)
 	} else {
-		log.Printf("shengh.............session.goCDF 20B1", serviceName)
 		resolved, err = s.Config.EndpointResolver.EndpointFor(
 			serviceName, region,
 			func(opt *endpoints.Options) {
@@ -648,8 +681,6 @@ func (s *Session) clientConfigWithErr(serviceName string, cfgs ...*aws.Config) (
 				opt.ResolveUnknownService = true
 			},
 		)
-		log.Printf("shengh.............session.goCDF 20B2", serviceName)
-		log.Printf("shengh.............%v,   %v,   %v", resolved.URL, resolved.SigningRegion, resolved.SigningName)
 	}
 
 	return client.Config{
@@ -666,7 +697,6 @@ func (s *Session) clientConfigWithErr(serviceName string, cfgs ...*aws.Config) (
 // that the EndpointResolver will not be used to resolve the endpoint. The only
 // endpoint set must come from the aws.Config.Endpoint field.
 func (s *Session) ClientConfigNoResolveEndpoint(cfgs ...*aws.Config) client.Config {
-	log.Printf("shengh.............session.goCDF 21")
 	s = s.Copy(cfgs...)
 
 	var resolved endpoints.ResolvedEndpoint

@@ -104,13 +104,13 @@ func (c *FortiSDKClient) UpdateSystemSettingGlobal(params *JSONSystemSettingGlob
 	req := c.NewRequest(HTTPMethod, path, nil, bytes)
 	err = req.Send()
 	if err != nil || req.HTTPResponse == nil {
-		err = fmt.Errorf("cannot send request")
+		err = fmt.Errorf("cannot send request %s", err)
 		return
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
 	if err != nil || body == nil {
-		err = fmt.Errorf("cannot get response body")
+		err = fmt.Errorf("cannot get response body %s", err)
 		return
 	}
 	log.Printf("FOS-fortios response: %s", string(body))
@@ -209,13 +209,13 @@ func (c *FortiSDKClient) ReadSystemSettingGlobal(mkey string) (output *JSONSyste
 	req := c.NewRequest(HTTPMethod, path, nil, nil)
 	err = req.Send()
 	if err != nil || req.HTTPResponse == nil {
-		err = fmt.Errorf("cannot send request")
+		err = fmt.Errorf("cannot send request %s", err)
 		return
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
 	if err != nil || body == nil {
-		err = fmt.Errorf("cannot get response body")
+		err = fmt.Errorf("cannot get response body %s", err)
 		return
 	}
 	log.Printf("FOS-fortios reading response: %s", string(body))

@@ -32,7 +32,6 @@ package endpointcreds
 import (
 	"encoding/json"
 	"time"
-	"log"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/awserr"
@@ -40,6 +39,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/client/metadata"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/request"
+	"github.com/aws/aws-sdk-go/private/protocol/json/jsonutil"
 )
 
 // ProviderName is the name of the credentials provider.
@@ -75,7 +75,6 @@ type Provider struct {
 // NewProviderClient returns a credentials Provider for retrieving AWS credentials
 // from arbitrary endpoint.
 func NewProviderClient(cfg aws.Config, handlers request.Handlers, endpoint string, options ...func(*Provider)) credentials.Provider {
-	log.Printf("shengh............DUUUU\n") //没有到这里
 	p := &Provider{
 		Client: client.New(
 			cfg,
@@ -176,7 +175,7 @@ func unmarshalHandler(r *request.Request) {
 
 	out := r.Data.(*getCredentialsOutput)
 	if err := json.NewDecoder(r.HTTPResponse.Body).Decode(&out); err != nil {
-		r.Error = awserr.New("SerializationError",
+		r.Error = awserr.New(request.ErrCodeSerialization,
 			"failed to decode endpoint credentials",
 			err,
 		)
@@ -187,11 +186,15 @@ func unmarshalError(r *request.Request) {
 	defer r.HTTPResponse.Body.Close()
 
 	var errOut errorOutput
-	if err := json.NewDecoder(r.HTTPResponse.Body).Decode(&errOut); err != nil {
-		r.Error = awserr.New("SerializationError",
-			"failed to decode endpoint credentials",
-			err,
+	err := jsonutil.UnmarshalJSONError(&errOut, r.HTTPResponse.Body)
+	if err != nil {
+		r.Error = awserr.NewRequestFailure(
+			awserr.New(request.ErrCodeSerialization,
+				"failed to decode error message", err),
+			r.HTTPResponse.StatusCode,
+			r.RequestID,
 		)
+		return
 	}
 
 	// Response body format is not consistent between metadata endpoints.

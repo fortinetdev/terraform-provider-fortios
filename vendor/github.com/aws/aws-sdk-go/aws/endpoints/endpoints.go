@@ -2,13 +2,11 @@ package endpoints
 
 import (
 	"fmt"
-	"log"
 	"regexp"
 
 	"github.com/aws/aws-sdk-go/aws/awserr"
 )
 
-// 这里最重要的是，只是定义了接口
 // Options provide the configuration needed to direct how the
 // endpoints will be resolved.
 type Options struct {
@@ -37,7 +35,7 @@ type Options struct {
 	//
 	// If resolving an endpoint on the partition list the provided region will
 	// be used to determine which partition's domain name pattern to the service
-	// endpoint ID with. If both the service and region are unkonwn and resolving
+	// endpoint ID with. If both the service and region are unknown and resolving
 	// the endpoint on partition list an UnknownEndpointError error will be returned.
 	//
 	// If resolving and endpoint on a partition specific resolver that partition's
@@ -94,7 +92,6 @@ type ResolverFunc func(service, region string, opts ...func(*Options)) (Resolved
 
 // EndpointFor wraps the ResolverFunc function to satisfy the Resolver interface.
 func (fn ResolverFunc) EndpointFor(service, region string, opts ...func(*Options)) (ResolvedEndpoint, error) {
-	log.Printf("shengh.............EndpointFor 20B  %v, %v\n\n", service, region) //<<====没到这里
 	return fn(service, region, opts...)
 }
 

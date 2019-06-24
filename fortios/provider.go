@@ -12,18 +12,34 @@ func Provider() terraform.ResourceProvider {
 			"hostname": &schema.Schema{
 				Type:        schema.TypeString,
 				Optional:    true,
+				Default:     "",
 				Description: "Hostname/IP address of the Fortinet Device to connect to",
 			},
 
 			"token": &schema.Schema{
 				Type:        schema.TypeString,
 				Optional:    true,
+				Default:     "",
 				Description: "",
+			},
+
+			"insecure": {
+				Type:        schema.TypeBool,
+				Optional:    true,
+				Description: "",
+			},
+
+			"cabundlefile": {
+				Type:        schema.TypeString,
+				Optional:    true,
+				Default:     "",
+				Description: "CA Bundle file",
 			},
 
 			"vdom": &schema.Schema{
 				Type:        schema.TypeString,
 				Optional:    true,
+				Default:     "",
 				Description: "",
 			},
 		},
@@ -65,7 +81,14 @@ func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 	config := Config{
 		Hostname: d.Get("hostname").(string),
 		Token:    d.Get("token").(string),
+		CABundle: d.Get("cabundlefile").(string),
 		Vdom:     d.Get("vdom").(string),
+	}
+
+	v, ok := d.GetOkExists("insecure")
+	if ok {
+		insecure := v.(bool)
+		config.Insecure = &insecure
 	}
 
 	// Create Client for later connections

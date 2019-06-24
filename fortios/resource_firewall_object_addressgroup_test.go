@@ -83,7 +83,7 @@ func testAccFortiOSFirewallObjectAddressGroupConfig(name string) string {
 	return fmt.Sprintf(`
 resource "fortios_firewall_object_addressgroup" "test1" {
 	name = "%s"
-	member = ["google-play","swscan.apple.com"]
+	member = ["all"]
 	comment = "Terraform Test"
 }
 `, name)

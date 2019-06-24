@@ -191,6 +191,11 @@ func resourceSystemAdminAdministratorUpdate(d *schema.ResourceData, m interface{
 				Name: v.(string),
 			})
 	}
+
+	if d.HasChange("name") {
+		return fmt.Errorf("the name argument is the key and should not be modified here")
+	}
+
 	//Build input data by sdk
 	i := &forticlient.JSONSystemAdminAdministrator2{
 		Name: name,

@@ -157,6 +157,10 @@ func resourceSystemAPIUserSettingUpdate(d *schema.ResourceData, m interface{}) e
 		trusthosts = append(trusthosts, tItem)
 	}
 
+	if d.HasChange("name") {
+		return fmt.Errorf("the name argument is the key and should not be modified here")
+	}
+
 	//Build input data by sdk
 	i := &forticlient.JSONSystemAPIUserSetting{
 		Name:       name,
