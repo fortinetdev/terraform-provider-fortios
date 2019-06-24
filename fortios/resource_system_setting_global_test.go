@@ -23,6 +23,7 @@ func TestAccFortiOSSystemSettingGlobal_basic(t *testing.T) {
 					resource.TestCheckResourceAttr("fortios_system_setting_global.test1", "hostname", "mytestFortiGate"),
 					resource.TestCheckResourceAttr("fortios_system_setting_global.test1", "admin_sport", "443"),
 					resource.TestCheckResourceAttr("fortios_system_setting_global.test1", "admin_ssh_port", "22"),
+					resource.TestCheckResourceAttr("fortios_system_setting_global.test1", "admin_scp", "disable"),
 				),
 			},
 		},
@@ -87,5 +88,6 @@ resource "fortios_system_setting_global" "test1" {
 	hostname = "mytestFortiGate"
 	admin_sport = 443
 	admin_ssh_port = 22
+	admin_scp = "disable"
 }
 `
