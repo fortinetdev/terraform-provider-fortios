@@ -94,6 +94,10 @@ func resourceFirewallObjectIPPoolUpdate(d *schema.ResourceData, m interface{}) e
 	arpReply := d.Get("arp_reply").(string)
 	comments := d.Get("comments").(string)
 
+	if d.HasChange("name") {
+		return fmt.Errorf("the name argument is the key and should not be modified here")
+	}
+
 	//Build input data by sdk
 	i := &forticlient.JSONFirewallObjectIPPool{
 		Name:     name,

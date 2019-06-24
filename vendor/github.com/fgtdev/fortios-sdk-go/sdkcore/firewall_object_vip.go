@@ -64,13 +64,13 @@ func (c *FortiSDKClient) CreateFirewallObjectVip(params *JSONFirewallObjectVip) 
 	req := c.NewRequest(HTTPMethod, path, nil, bytes)
 	err = req.Send()
 	if err != nil || req.HTTPResponse == nil {
-		err = fmt.Errorf("cannot send request")
+		err = fmt.Errorf("cannot send request %s", err)
 		return
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
 	if err != nil || body == nil {
-		err = fmt.Errorf("cannot get response body")
+		err = fmt.Errorf("cannot get response body %s", err)
 		return
 	}
 
@@ -129,7 +129,7 @@ func (c *FortiSDKClient) CreateFirewallObjectVip(params *JSONFirewallObjectVip) 
 func (c *FortiSDKClient) UpdateFirewallObjectVip(params *JSONFirewallObjectVip, mkey string) (output *JSONUpdateFirewallObjectVipOutput, err error) {
 	HTTPMethod := "PUT"
 	path := "/api/v2/cmdb/firewall/vip"
-	path += "/" + mkey
+	path += "/" + EscapeURLString(mkey)
 	output = &JSONUpdateFirewallObjectVipOutput{}
 	locJSON, err := json.Marshal(params)
 	if err != nil {
@@ -141,13 +141,13 @@ func (c *FortiSDKClient) UpdateFirewallObjectVip(params *JSONFirewallObjectVip, 
 	req := c.NewRequest(HTTPMethod, path, nil, bytes)
 	err = req.Send()
 	if err != nil || req.HTTPResponse == nil {
-		err = fmt.Errorf("cannot send request")
+		err = fmt.Errorf("cannot send request %s", err)
 		return
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
 	if err != nil || body == nil {
-		err = fmt.Errorf("cannot get response body")
+		err = fmt.Errorf("cannot get response body %s", err)
 		return
 	}
 	log.Printf("FOS-fortios response: %s", string(body))
@@ -202,18 +202,18 @@ func (c *FortiSDKClient) UpdateFirewallObjectVip(params *JSONFirewallObjectVip, 
 func (c *FortiSDKClient) DeleteFirewallObjectVip(mkey string) (err error) {
 	HTTPMethod := "DELETE"
 	path := "/api/v2/cmdb/firewall/vip"
-	path += "/" + mkey
+	path += "/" + EscapeURLString(mkey)
 
 	req := c.NewRequest(HTTPMethod, path, nil, nil)
 	err = req.Send()
 	if err != nil || req.HTTPResponse == nil {
-		err = fmt.Errorf("cannot send request")
+		err = fmt.Errorf("cannot send request %s", err)
 		return
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
 	if err != nil || body == nil {
-		err = fmt.Errorf("cannot get response body")
+		err = fmt.Errorf("cannot get response body %s", err)
 		return
 	}
 	log.Printf("FOS-fortios response: %s", string(body))
@@ -261,20 +261,20 @@ func (c *FortiSDKClient) DeleteFirewallObjectVip(mkey string) (err error) {
 func (c *FortiSDKClient) ReadFirewallObjectVip(mkey string) (output *JSONFirewallObjectVip, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/firewall/vip"
-	path += "/" + mkey
+	path += "/" + EscapeURLString(mkey)
 
 	output = &JSONFirewallObjectVip{}
 
 	req := c.NewRequest(HTTPMethod, path, nil, nil)
 	err = req.Send()
 	if err != nil || req.HTTPResponse == nil {
-		err = fmt.Errorf("cannot send request")
+		err = fmt.Errorf("cannot send request %s", err)
 		return
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
 	if err != nil || body == nil {
-		err = fmt.Errorf("cannot get response body")
+		err = fmt.Errorf("cannot get response body %s", err)
 		return
 	}
 	log.Printf("FOS-fortios reading response: %s", string(body))

@@ -4,12 +4,9 @@ import (
 	"bytes"
 	"fmt"
 	"io"
-	"log"
-	"net"
 	"net/http"
 	"net/url"
 	"reflect"
-	"runtime"
 	"strings"
 	"time"
 
@@ -102,7 +99,6 @@ type Operation struct {
 func New(cfg aws.Config, clientInfo metadata.ClientInfo, handlers Handlers,
 	retryer Retryer, operation *Operation, params interface{}, data interface{}) *Request {
 
-	log.Printf("shengh________________request-New1!\n", cfg.Endpoint, clientInfo.Endpoint+" zz " + operation.HTTPPath)
 	method := operation.HTTPMethod
 	if method == "" {
 		method = "POST"
@@ -119,20 +115,12 @@ func New(cfg aws.Config, clientInfo metadata.ClientInfo, handlers Handlers,
 
 	SanitizeHostForHeader(httpReq)
 
-	funcName, file, line, ok := runtime.Caller(0)
-	if ok {
-		log.Printf("func name: " + runtime.FuncForPC(funcName).Name())
-		log.Printf("file: %s, line: %d\n", file, line)
-	}
-	log.Printf("shengh %s, %s, %d  ________________request-New2!" + clientInfo.Endpoint + "  " + operation.HTTPPath + "\n")
-
 	r := &Request{
 		Config:     cfg,
 		ClientInfo: clientInfo,
 		Handlers:   handlers.Copy(),
 
 		Retryer:     retryer,
-		AttemptTime: time.Now(),
 		Time:        time.Now(),
 		ExpireTime:  0,
 		Operation:   operation,
@@ -143,7 +131,6 @@ func New(cfg aws.Config, clientInfo metadata.ClientInfo, handlers Handlers,
 		Data:        data,
 	}
 	r.SetBufferBody([]byte{})
-	log.Printf("shengh________________request-New3!\n")
 
 	return r
 }
@@ -273,12 +260,13 @@ func (r *Request) SetStringBody(s string) {
 func (r *Request) SetReaderBody(reader io.ReadSeeker) {
 	r.Body = reader
 	r.BodyStart, _ = reader.Seek(0, sdkio.SeekCurrent) // Get the Bodies current offset.
-	log.Printf("shengh.........ResetBody 2\n")
 	r.ResetBody()
 }
 
 // Presign returns the request's signed URL. Error will be returned
-// if the signing fails.
+// if the signing fails. The expire parameter is only used for presigned Amazon
+// S3 API requests. All other AWS services will use a fixed expiration
+// time of 15 minutes.
 //
 // It is invalid to create a presigned URL with a expire duration 0 or less. An
 // error is returned if expire duration is 0 or less.
@@ -295,7 +283,9 @@ func (r *Request) Presign(expire time.Duration) (string, error) {
 }
 
 // PresignRequest behaves just like presign, with the addition of returning a
-// set of headers that were signed.
+// set of headers that were signed. The expire parameter is only used for
+// presigned Amazon S3 API requests. All other AWS services will use a fixed
+// expiration time of 15 minutes.
 //
 // It is invalid to create a presigned URL with a expire duration 0 or less. An
 // error is returned if expire duration is 0 or less.
@@ -332,8 +322,6 @@ func getPresignedURL(r *Request, expire time.Duration) (string, http.Header, err
 			return "", nil, err
 		}
 	}
-
-	log.Printf("shengh.........PIQIU Sign 2\n")
 
 	if err := r.Sign(); err != nil {
 		return "", nil, err
@@ -400,7 +388,6 @@ func (r *Request) Sign() error {
 }
 
 func (r *Request) getNextRequestBody() (io.ReadCloser, error) {
-	log.Printf("shengh.........getNextRequestBody\n")
 	if r.safeBody != nil {
 		r.safeBody.Close()
 	}
@@ -454,7 +441,6 @@ func (r *Request) getNextRequestBody() (io.ReadCloser, error) {
 // GetBody will return an io.ReadSeeker of the Request's underlying
 // input body with a concurrency safe wrapper.
 func (r *Request) GetBody() io.ReadSeeker {
-	log.Printf("shengh.........getbody\n")
 	return r.safeBody
 }
 
@@ -472,95 +458,85 @@ func (r *Request) GetBody() io.ReadSeeker {
 //
 // Send will not close the request.Request's body.
 func (r *Request) Send() error {
-	log.Printf("shengh________________request-Send1!\n")
 	defer func() {
 		// Regardless of success or failure of the request trigger the Complete
 		// request handlers.
 		r.Handlers.Complete.Run(r)
 	}()
 
-	for {
-		log.Printf("shengh________________request-Send2!\n")
-		r.AttemptTime = time.Now()
-		if aws.BoolValue(r.Retryable) {
-			if r.Config.LogLevel.Matches(aws.LogDebugWithRequestRetries) {
-				r.Config.Logger.Log(fmt.Sprintf("DEBUG: Retrying Request %s/%s, attempt %d",
-					r.ClientInfo.ServiceName, r.Operation.Name, r.RetryCount))
-			}
-
-			// The previous http.Request will have a reference to the r.Body
-			// and the HTTP Client's Transport may still be reading from
-			// the request's body even though the Client's Do returned.
-			r.HTTPRequest = copyHTTPRequest(r.HTTPRequest, nil)
-			log.Printf("shengh.........ResetBody 1\n")
-			r.ResetBody()
-
-			// Closing response body to ensure that no response body is leaked
-			// between retry attempts.
-			if r.HTTPResponse != nil && r.HTTPResponse.Body != nil {
-				r.HTTPResponse.Body.Close()
-			}
-		}
-
-		log.Printf("shengh.........PIQIU Sign 3\n")
-
-		r.Sign()
-		if r.Error != nil {
-			return r.Error
-		}
-
-		r.Retryable = nil
-
-		log.Printf("shengh.........PIQIU Sign 4\n")
-		r.Handlers.Send.Run(r)   
-		log.Printf("shengh.........PIQIU Sign 5\n")
-		if r.Error != nil {
-			if !shouldRetryCancel(r) {
-				return r.Error
-			}
-
-			err := r.Error
-			r.Handlers.Retry.Run(r)
-			r.Handlers.AfterRetry.Run(r)
-			if r.Error != nil {
-				debugLogReqError(r, "Send Request", false, err)
-				return r.Error
-			}
-			debugLogReqError(r, "Send Request", true, err)
-			continue
-		}
-		r.Handlers.UnmarshalMeta.Run(r)
-		r.Handlers.ValidateResponse.Run(r)
-		if r.Error != nil {
-			r.Handlers.UnmarshalError.Run(r)
-			err := r.Error
-
-			r.Handlers.Retry.Run(r)
-			r.Handlers.AfterRetry.Run(r)
-			if r.Error != nil {
-				debugLogReqError(r, "Validate Response", false, err)
-				return r.Error
-			}
-			debugLogReqError(r, "Validate Response", true, err)
-			continue
-		}
-
-		r.Handlers.Unmarshal.Run(r)
-		if r.Error != nil {
-			err := r.Error
-			r.Handlers.Retry.Run(r)
-			r.Handlers.AfterRetry.Run(r)
-			if r.Error != nil {
-				debugLogReqError(r, "Unmarshal Response", false, err)
-				return r.Error
-			}
-			debugLogReqError(r, "Unmarshal Response", true, err)
-			continue
-		}
-
-		break
+	if err := r.Error; err != nil {
+		return err
 	}
-	log.Printf("shengh________________request-Send3!\n")
+
+	for {
+		r.Error = nil
+		r.AttemptTime = time.Now()
+
+		if err := r.Sign(); err != nil {
+			debugLogReqError(r, "Sign Request", false, err)
+			return err
+		}
+
+		if err := r.sendRequest(); err == nil {
+			return nil
+		} else if !shouldRetryCancel(r.Error) {
+			return err
+		} else {
+			r.Handlers.Retry.Run(r)
+			r.Handlers.AfterRetry.Run(r)
+
+			if r.Error != nil || !aws.BoolValue(r.Retryable) {
+				return r.Error
+			}
+
+			r.prepareRetry()
+			continue
+		}
+	}
+}
+
+func (r *Request) prepareRetry() {
+	if r.Config.LogLevel.Matches(aws.LogDebugWithRequestRetries) {
+		r.Config.Logger.Log(fmt.Sprintf("DEBUG: Retrying Request %s/%s, attempt %d",
+			r.ClientInfo.ServiceName, r.Operation.Name, r.RetryCount))
+	}
+
+	// The previous http.Request will have a reference to the r.Body
+	// and the HTTP Client's Transport may still be reading from
+	// the request's body even though the Client's Do returned.
+	r.HTTPRequest = copyHTTPRequest(r.HTTPRequest, nil)
+	r.ResetBody()
+
+	// Closing response body to ensure that no response body is leaked
+	// between retry attempts.
+	if r.HTTPResponse != nil && r.HTTPResponse.Body != nil {
+		r.HTTPResponse.Body.Close()
+	}
+}
+
+func (r *Request) sendRequest() (sendErr error) {
+	defer r.Handlers.CompleteAttempt.Run(r)
+
+	r.Retryable = nil
+	r.Handlers.Send.Run(r)
+	if r.Error != nil {
+		debugLogReqError(r, "Send Request", r.WillRetry(), r.Error)
+		return r.Error
+	}
+
+	r.Handlers.UnmarshalMeta.Run(r)
+	r.Handlers.ValidateResponse.Run(r)
+	if r.Error != nil {
+		r.Handlers.UnmarshalError.Run(r)
+		debugLogReqError(r, "Validate Response", r.WillRetry(), r.Error)
+		return r.Error
+	}
+
+	r.Handlers.Unmarshal.Run(r)
+	if r.Error != nil {
+		debugLogReqError(r, "Unmarshal Response", r.WillRetry(), r.Error)
+		return r.Error
+	}
 
 	return nil
 }
@@ -568,7 +544,6 @@ func (r *Request) Send() error {
 // copy will copy a request which will allow for local manipulation of the
 // request.
 func (r *Request) copy() *Request {
-	log.Printf("shengh.........request copy\n")
 	req := &Request{}
 	*req = *r
 	req.Handlers = r.Handlers.Copy()
@@ -579,7 +554,6 @@ func (r *Request) copy() *Request {
 
 // AddToUserAgent adds the string to the end of the request's current user agent.
 func AddToUserAgent(r *Request, s string) {
-	log.Printf("shengh.........AddToUserAgent\n")
 	curUA := r.HTTPRequest.Header.Get("User-Agent")
 	if len(curUA) > 0 {
 		s = curUA + " " + s
@@ -587,30 +561,46 @@ func AddToUserAgent(r *Request, s string) {
 	r.HTTPRequest.Header.Set("User-Agent", s)
 }
 
-func shouldRetryCancel(r *Request) bool {
-	awsErr, ok := r.Error.(awserr.Error)
-	timeoutErr := false
-	errStr := r.Error.Error()
-	if ok {
-		if awsErr.Code() == CanceledErrorCode {
+type temporary interface {
+	Temporary() bool
+}
+
+func shouldRetryCancel(err error) bool {
+	switch err := err.(type) {
+	case awserr.Error:
+		if err.Code() == CanceledErrorCode {
 			return false
 		}
-		err := awsErr.OrigErr()
-		netErr, netOK := err.(net.Error)
-		timeoutErr = netOK && netErr.Temporary()
-		if urlErr, ok := err.(*url.Error); !timeoutErr && ok {
-			errStr = urlErr.Err.Error()
+		return shouldRetryCancel(err.OrigErr())
+	case *url.Error:
+		if strings.Contains(err.Error(), "connection refused") {
+			// Refused connections should be retried as the service may not yet
+			// be running on the port. Go TCP dial considers refused
+			// connections as not temporary.
+			return true
 		}
+		// *url.Error only implements Temporary after golang 1.6 but since
+		// url.Error only wraps the error:
+		return shouldRetryCancel(err.Err)
+	case temporary:
+		// If the error is temporary, we want to allow continuation of the
+		// retry process
+		return err.Temporary()
+	case nil:
+		// `awserr.Error.OrigErr()` can be nil, meaning there was an error but
+		// because we don't know the cause, it is marked as retryable. See
+		// TestRequest4xxUnretryable for an example.
+		return true
+	default:
+		switch err.Error() {
+		case "net/http: request canceled",
+			"net/http: request canceled while waiting for connection":
+			// known 1.5 error case when an http request is cancelled
+			return false
+		}
+		// here we don't know the error; so we allow a retry.
+		return true
 	}
-
-	// There can be two types of canceled errors here.
-	// The first being a net.Error and the other being an error.
-	// If the request was timed out, we want to continue the retry
-	// process. Otherwise, return the canceled error.
-	return timeoutErr ||
-		(errStr != "net/http: request canceled" &&
-			errStr != "net/http: request canceled while waiting for connection")
-
 }
 
 // SanitizeHostForHeader removes default port from host and updates request.Host

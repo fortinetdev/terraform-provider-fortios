@@ -17,7 +17,7 @@ provider "fortios" {
 }
 
 resource "fortios_firewall_object_service" "v11" {
-	name = "servicetest"
+	name = "servicetest1"
 	category = "General"
 	protocol = "TCP/UDP/SCTP"
 	fqdn = "abc.com"
@@ -33,7 +33,7 @@ provider "fortios" {
 }
 
 resource "fortios_firewall_object_service" "v13" {
-	name = "1fdsafd11a"
+	name = "servicetest2"
 	category = "General"
 	protocol = "TCP/UDP/SCTP"
 	iprange = "1.1.1.1-2.2.2.2"
@@ -50,7 +50,6 @@ resource "fortios_firewall_object_service" "ICMP" {
 	name = "ICMPService"
 	category = "General"
 	protocol = "ICMP"
-	fqdn = "www.baidu.com"
 	icmptype = "2"
 	icmpcode = "3"
 	protocol_number = "1"

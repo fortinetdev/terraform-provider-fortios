@@ -13,7 +13,6 @@ import (
 	"net/http"
 	"net/url"
 	"os"
-	"log"
 	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -25,6 +24,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/ec2metadata"
 	"github.com/aws/aws-sdk-go/aws/endpoints"
 	"github.com/aws/aws-sdk-go/aws/request"
+	"github.com/aws/aws-sdk-go/internal/shareddefaults"
 )
 
 // A Defaults provides a collection of default values for SDK clients.
@@ -35,8 +35,6 @@ type Defaults struct {
 
 // Get returns the SDK's default values with Config and handlers pre-configured.
 func Get() Defaults {
-	log.Printf("shengh.........Defaults!\n")
-
 	cfg := Config()
 	handlers := Handlers()
 	cfg.Credentials = CredChain(cfg, handlers)
@@ -55,8 +53,6 @@ func Get() Defaults {
 // is available if you need to reset the configuration of an
 // existing service client or session.
 func Config() *aws.Config {
-	log.Printf("shengh.........Config() *aws.Config!\n")
-	log.Printf("shengh.........DefaultResolver1\n")
 	return aws.NewConfig().
 		WithCredentials(credentials.AnonymousCredentials).
 		WithRegion(os.Getenv("AWS_REGION")).
@@ -75,7 +71,6 @@ func Config() *aws.Config {
 func Handlers() request.Handlers {
 	var handlers request.Handlers
 
-	log.Printf("shengh.........default.Handlers \n")
 	handlers.Validate.PushBackNamed(corehandlers.ValidateEndpointHandler)
 	handlers.Validate.AfterEachFn = request.HandlerListStopOnError
 	handlers.Build.PushBackNamed(corehandlers.SDKVersionUserAgentHandler)
@@ -120,27 +115,19 @@ func CredProviders(cfg *aws.Config, handlers request.Handlers) []credentials.Pro
 const (
 	httpProviderAuthorizationEnvVar = "AWS_CONTAINER_AUTHORIZATION_TOKEN"
 	httpProviderEnvVar              = "AWS_CONTAINER_CREDENTIALS_FULL_URI"
-	ecsCredsProviderEnvVar          = "AWS_CONTAINER_CREDENTIALS_RELATIVE_URI"
 )
 
 // RemoteCredProvider returns a credentials provider for the default remote
 // endpoints such as EC2 or ECS Roles.
 func RemoteCredProvider(cfg aws.Config, handlers request.Handlers) credentials.Provider {
 	if u := os.Getenv(httpProviderEnvVar); len(u) > 0 {
-		log.Printf("shengh.........RemoteCredProvider1! %s !\n", u)
 		return localHTTPCredProvider(cfg, handlers, u)
 	}
 
-	if uri := os.Getenv(ecsCredsProviderEnvVar); len(uri) > 0 {
-		
-		log.Printf("shengh.........RemoteCredProvider2! %s !\n", uri)
-		u := fmt.Sprintf("http://169.254.170.2%s", uri)
-		log.Printf("shengh.........RemoteCredProvider3! %s !\n", uri)
+	if uri := os.Getenv(shareddefaults.ECSCredsProviderEnvVar); len(uri) > 0 {
+		u := fmt.Sprintf("%s%s", shareddefaults.ECSContainerCredentialsURI, uri)
 		return httpCredProvider(cfg, handlers, u)
 	}
-
-
-	log.Printf("shengh.........RemoteCredProvider4!")
 
 	return ec2RoleProvider(cfg, handlers)
 }
@@ -210,11 +197,9 @@ func ec2RoleProvider(cfg aws.Config, handlers request.Handlers) credentials.Prov
 	resolver := cfg.EndpointResolver
 	if resolver == nil {
 		resolver = endpoints.DefaultResolver()
-		log.Printf("shengh.........DefaultResolver2\n")
 	}
 
 	e, _ := resolver.EndpointFor(endpoints.Ec2metadataServiceID, "")
-	log.Print("shengh.........defaults.go ec2RoleProvider", e.URL)
 	return &ec2rolecreds.EC2RoleProvider{
 		Client:       ec2metadata.NewClient(cfg, handlers, e.URL, e.SigningRegion),
 		ExpiryWindow: 5 * time.Minute,

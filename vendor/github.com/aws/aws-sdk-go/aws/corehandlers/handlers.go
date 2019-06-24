@@ -9,7 +9,6 @@ import (
 	"regexp"
 	"strconv"
 	"time"
-	"log"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/awserr"
@@ -73,16 +72,13 @@ var ValidateReqSigHandler = request.NamedHandler{
 			signedTime = r.LastSignedAt
 		}
 
-		// 10 minutes to allow for some clock skew/delays in transmission.
+		// 5 minutes to allow for some clock skew/delays in transmission.
 		// Would be improved with aws/aws-sdk-go#423
-		if signedTime.Add(10 * time.Minute).After(time.Now()) {
+		if signedTime.Add(5 * time.Minute).After(time.Now()) {
 			return
 		}
 
 		fmt.Println("request expired, resigning")
-
-		log.Printf("shengh.........PIQIU Sign 1\n")
-
 		r.Sign()
 	},
 }
@@ -91,7 +87,6 @@ var ValidateReqSigHandler = request.NamedHandler{
 var SendHandler = request.NamedHandler{
 	Name: "core.SendHandler",
 	Fn: func(r *request.Request) {
-		log.Printf("shengh.........PIQIU Sign SendHandler1\n")
 		sender := sendFollowRedirects
 		if r.DisableFollowRedirects {
 			sender = sendWithoutFollowRedirects
@@ -118,7 +113,6 @@ var SendHandler = request.NamedHandler{
 		if err != nil {
 			handleSendError(r, err)
 		}
-		log.Printf("shengh.........PIQIU Sign SendHandler2\n")
 	},
 }
 

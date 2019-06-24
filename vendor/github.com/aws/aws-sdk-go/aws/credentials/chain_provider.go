@@ -1,8 +1,6 @@
 package credentials
 
 import (
-	"log"
-
 	"github.com/aws/aws-sdk-go/aws/awserr"
 )
 
@@ -11,9 +9,7 @@ var (
 	// providers in the ChainProvider.
 	//
 	// This has been deprecated. For verbose error messaging set
-	// aws.Config.CredentialsChainVerboseErrors to true
-	//
-	// @readonly
+	// aws.Config.CredentialsChainVerboseErrors to true.
 	ErrNoValidProvidersFoundInChain = awserr.New("NoCredentialProviders",
 		`no valid providers in chain. Deprecated.
 	For verbose messaging see aws.Config.CredentialsChainVerboseErrors`,
@@ -77,10 +73,8 @@ func (c *ChainProvider) Retrieve() (Value, error) {
 	var errs []error
 	for _, p := range c.Providers {
 		creds, err := p.Retrieve()
-		log.Printf("shengh.........ChainProvider Retrieve!\n")
 		if err == nil {
 			c.curr = p
-			log.Printf("shengh.........ChainProvider Retrieve outhere\n  sure!!!!!")
 			return creds, nil
 		}
 		errs = append(errs, err)

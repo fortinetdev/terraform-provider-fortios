@@ -2,7 +2,6 @@ package endpoints
 
 import (
 	"fmt"
-	"log"
 	"regexp"
 	"strconv"
 	"strings"
@@ -11,7 +10,6 @@ import (
 type partitions []partition
 
 func (ps partitions) EndpointFor(service, region string, opts ...func(*Options)) (ResolvedEndpoint, error) {
-	log.Printf("shengh.............v3model1")
 	var opt Options
 	opt.Set(opts...)
 
@@ -19,7 +17,6 @@ func (ps partitions) EndpointFor(service, region string, opts ...func(*Options))
 		if !ps[i].canResolveEndpoint(service, region, opt.StrictMatching) {
 			continue
 		}
-		log.Printf("shengh............partitionsEndpointForAAA 1 %v,    %v,    %v,    \n", service, region, ps[i].DNSSuffix)
 
 		return ps[i].EndpointFor(service, region, opts...)
 	}
@@ -27,11 +24,9 @@ func (ps partitions) EndpointFor(service, region string, opts ...func(*Options))
 	// If loose matching fallback to first partition format to use
 	// when resolving the endpoint.
 	if !opt.StrictMatching && len(ps) > 0 {
-		log.Printf("shengh............partitionsEndpointForAAA 2")
 		return ps[0].EndpointFor(service, region, opts...)
 	}
 
-	log.Printf("shengh............partitionsEndpointForAAA 3")
 	return ResolvedEndpoint{}, NewUnknownEndpointError("all partitions", service, region, []string{})
 }
 
@@ -80,8 +75,6 @@ func (p partition) canResolveEndpoint(service, region string, strictMatch bool) 
 }
 
 func (p partition) EndpointFor(service, region string, opts ...func(*Options)) (resolved ResolvedEndpoint, err error) {
-	log.Printf("shengh.............v3model2")
-
 	var opt Options
 	opt.Set(opts...)
 
@@ -93,19 +86,11 @@ func (p partition) EndpointFor(service, region string, opts ...func(*Options)) (
 	}
 
 	e, hasEndpoint := s.endpointForRegion(region)
-
-	log.Printf("shengh............EndpointForZCD1 %v\n", e)
-
 	if !hasEndpoint && opt.StrictMatching {
-		log.Printf("shengh............EndpointForZCDz\n")
 		return resolved, NewUnknownEndpointError(p.ID, service, region, endpointList(s.Endpoints))
 	}
 
 	defs := []endpoint{p.Defaults, s.Defaults}
-
-	log.Printf("shengh............EndpointForZCD2 %v,    %v\n", p.Defaults, s.Defaults)
-	log.Printf("shengh............EndpointForZCD3 %v,    %v,    %v,    \n", service, region, p.DNSSuffix)
-
 	return e.resolve(service, region, p.DNSSuffix, defs, opt), nil
 }
 
@@ -158,18 +143,16 @@ type service struct {
 }
 
 func (s *service) endpointForRegion(region string) (endpoint, bool) {
-	log.Printf("shengh............endpointForRegion1 %v\n", region)
 	if s.IsRegionalized == boxedFalse {
 		return s.Endpoints[s.PartitionEndpoint], region == s.PartitionEndpoint
 	}
-	log.Printf("shengh............endpointForRegion2 %v\n", s.Endpoints[region])
+
 	if e, ok := s.Endpoints[region]; ok {
 		return e, true
 	}
 
 	// Unable to find any matching endpoint, return
 	// blank that will be used for generic endpoint creation.
-
 	return endpoint{}, false
 }
 
@@ -251,7 +234,6 @@ func (e endpoint) resolve(service, region, dnsSuffix string, defs []endpoint, op
 		signingNameDerived = true
 	}
 
-	log.Printf("shengh......................eresolve1 %v\n%v\n%v\n%v\n\n", u, signingRegion, signingName, signingNameDerived)
 	return ResolvedEndpoint{
 		URL:                u,
 		SigningRegion:      signingRegion,

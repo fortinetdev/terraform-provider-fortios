@@ -1,4 +1,20 @@
 ## 1.0.1 (Unreleased)
+
+IMPROVEMENTS:
+
+* Add support for Terraform v0.12.2 ([#7](https://github.com/terraform-providers/terraform-provider-fortios/issues/7))
+* Add tips for prohibiting modification of the key value ([#20](https://github.com/terraform-providers/terraform-provider-fortios/issues/20))
+* Add support for CA certificate
+
+BUG FIXES:
+
+* resource/object_address: Fix incorrect behavior with slash in address object ([#1](https://github.com/terraform-providers/terraform-provider-fortios/issues/1))
+* resource/object_service: Fix terraform crashes ([#5](https://github.com/terraform-providers/terraform-provider-fortios/issues/5))
+* resource/object_address: Fix getting diff ([#6](https://github.com/terraform-providers/terraform-provider-fortios/issues/6))
+* resource/object_service: Fix getting diff in service port section ([#12](https://github.com/terraform-providers/terraform-provider-fortios/issues/12))
+* resource/object_address: Fix wrong prefix handling in firewall addresses ([#13](https://github.com/terraform-providers/terraform-provider-fortios/issues/13))
+
+
 ## 1.0.0 (April 18, 2019)
 
 FEATURES:

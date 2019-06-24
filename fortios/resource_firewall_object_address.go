@@ -3,6 +3,9 @@ package fortios
 import (
 	"fmt"
 	"log"
+	"net"
+	"strconv"
+	"strings"
 
 	"github.com/fgtdev/fortios-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
@@ -143,6 +146,10 @@ func resourceFirewallObjectAddressUpdate(d *schema.ResourceData, m interface{}) 
 	country := d.Get("country").(string)
 	comment := d.Get("comment").(string)
 
+	if d.HasChange("name") {
+		return fmt.Errorf("the name argument is the key and should not be modified here")
+	}
+
 	j1 := &forticlient.JSONFirewallObjectAddressCommon{
 		Name:    name,
 		Type:    typef,
@@ -234,12 +241,32 @@ func resourceFirewallObjectAddressRead(d *schema.ResourceData, m interface{}) er
 	//Refresh property
 	d.Set("name", o.Name)
 	d.Set("type", o.Type)
-	d.Set("subnet", o.Subnet)
-	d.Set("start_ip", o.StartIP)
-	d.Set("end_ip", o.EndIP)
+	if o.Type == "ipmask" {
+		d.Set("subnet", validateConvIPMask2CDIR(d, o.Subnet))
+	}
+
+	if o.Type == "iprange" {
+		d.Set("start_ip", o.StartIP)
+		d.Set("end_ip", o.EndIP)
+	}
+
 	d.Set("fqdn", o.Fqdn)
 	d.Set("country", o.Country)
 	d.Set("comment", o.Comment)
 
 	return nil
+}
+
+func validateConvIPMask2CDIR(d *schema.ResourceData, subnet string) string {
+	oSubnet := d.Get("subnet").(string)
+	if oSubnet != subnet && strings.Contains(oSubnet, "/") && strings.Contains(subnet, " ") {
+		line := strings.Split(subnet, " ")
+		if len(line) >= 2 {
+			ip := line[0]
+			mask := line[1]
+			prefixSize, _ := net.IPMask(net.ParseIP(mask).To4()).Size()
+			return ip + "/" + strconv.Itoa(prefixSize)
+		}
+	}
+	return subnet
 }

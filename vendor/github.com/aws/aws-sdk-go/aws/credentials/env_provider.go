@@ -1,7 +1,6 @@
 package credentials
 
 import (
-	"log"
 	"os"
 
 	"github.com/aws/aws-sdk-go/aws/awserr"
@@ -13,14 +12,10 @@ const EnvProviderName = "EnvProvider"
 var (
 	// ErrAccessKeyIDNotFound is returned when the AWS Access Key ID can't be
 	// found in the process's environment.
-	//
-	// @readonly
 	ErrAccessKeyIDNotFound = awserr.New("EnvAccessKeyNotFound", "AWS_ACCESS_KEY_ID or AWS_ACCESS_KEY not found in environment", nil)
 
 	// ErrSecretAccessKeyNotFound is returned when the AWS Secret Access Key
 	// can't be found in the process's environment.
-	//
-	// @readonly
 	ErrSecretAccessKeyNotFound = awserr.New("EnvSecretNotFound", "AWS_SECRET_ACCESS_KEY or AWS_SECRET_KEY not found in environment", nil)
 )
 
@@ -45,7 +40,6 @@ func NewEnvCredentials() *Credentials {
 // Retrieve retrieves the keys from the environment.
 func (e *EnvProvider) Retrieve() (Value, error) {
 	e.retrieved = false
-	log.Printf("shengh.........EnvProvider Retrieve!\n")
 
 	id := os.Getenv("AWS_ACCESS_KEY_ID")
 	if id == "" {

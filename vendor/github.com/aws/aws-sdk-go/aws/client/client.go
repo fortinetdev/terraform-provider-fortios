@@ -2,7 +2,6 @@ package client
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/client/metadata"
@@ -19,7 +18,7 @@ type Config struct {
 
 	// States that the signing name did not come from a modeled source but
 	// was derived based on other data. Used by service client constructors
-	// to determine if the signin name can be overriden based on metadata the
+	// to determine if the signin name can be overridden based on metadata the
 	// service has.
 	SigningNameDerived bool
 }
@@ -82,8 +81,6 @@ func New(cfg aws.Config, info metadata.ClientInfo, handlers request.Handlers, op
 // NewRequest returns a new Request pointer for the service API
 // operation and parameters.
 func (c *Client) NewRequest(operation *request.Operation, params interface{}, data interface{}) *request.Request {
-	log.Printf("shengh________________client.go NewRequest1!\n")
-	log.Printf("shengh.........EC2 newRequest33!\n")
 	return request.New(c.Config, c.ClientInfo, c.Handlers, c.Retryer, operation, params, data)
 }
 

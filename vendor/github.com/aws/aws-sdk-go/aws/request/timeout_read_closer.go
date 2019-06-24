@@ -3,7 +3,6 @@ package request
 import (
 	"io"
 	"time"
-	"log"
 
 	"github.com/aws/aws-sdk-go/aws/awserr"
 )
@@ -30,10 +29,8 @@ type timeoutReadCloser struct {
 // select on the timer's channel or the read's channel. Whoever completes first
 // will be returned.
 func (r *timeoutReadCloser) Read(b []byte) (int, error) {
-	log.Printf("shengh.........PIQIU Sign 8\n")
 	timer := time.NewTimer(r.duration)
 	c := make(chan readResult, 1)
-	log.Printf("shengh.........PIQIU Sign 9\n")
 
 	go func() {
 		n, err := r.reader.Read(b)
@@ -81,12 +78,10 @@ func WithResponseReadTimeout(duration time.Duration) Option {
 		var timeoutHandler = NamedHandler{
 			HandlerResponseTimeout,
 			func(req *Request) {
-				log.Printf("shengh.........PIQIU Sign 6\n")
 				req.HTTPResponse.Body = &timeoutReadCloser{
 					reader:   req.HTTPResponse.Body,
 					duration: duration,
 				}
-				log.Printf("shengh.........PIQIU Sign 7\n")
 			}}
 
 		// remove the handler so we are not stomping over any new durations.

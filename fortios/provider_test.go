@@ -31,4 +31,7 @@ func testAccPreCheck(t *testing.T) {
 	if v := os.Getenv("FORTIOS_ACCESS_TOKEN"); v == "" {
 		t.Fatal("FORTIOS_ACCESS_TOKEN must be set for acceptance tests")
 	}
+	if v := os.Getenv("FORTIOS_INSECURE"); v == "" {
+		t.Fatal("FORTIOS_INSECURE must be set for acceptance tests")
+	}
 }

@@ -105,16 +105,15 @@ resource "fortios_system_apiuser_setting" "test1" {
 	name = "%s"
 	accprofile = "${fortios_system_admin_profiles.test1.name}"
 	vdom = ["root"]
-	trusthost = [
-		{
-			type = "ipv4-trusthost"
-			ipv4_trusthost = "61.149.0.0 255.255.0.0"
-		},
-		{
-			type = "ipv4-trusthost"
-			ipv4_trusthost = "22.22.0.0 255.255.0.0"
-		}
-	]
+	trusthost {
+		type = "ipv4-trusthost"
+		ipv4_trusthost = "61.149.0.0 255.255.0.0"
+	}
+
+	trusthost {
+		type = "ipv4-trusthost"
+		ipv4_trusthost = "22.22.0.0 255.255.0.0"
+	}
 	comments = "Terraform Test"
 }
 `, name, name)

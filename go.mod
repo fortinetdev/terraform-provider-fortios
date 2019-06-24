@@ -1,59 +1,14 @@
 module github.com/terraform-providers/terraform-provider-fortios
 
 require (
-	github.com/agext/levenshtein v1.2.1
-	github.com/agl/ed25519 v0.0.0-20150830182803-278e1ec8e8a6
-	github.com/apparentlymart/go-cidr v1.0.0
-	github.com/apparentlymart/go-textseg v1.0.0
-	github.com/armon/go-radix v1.0.0
-	github.com/aws/aws-sdk-go v1.15.48
-	github.com/beevik/etree v1.0.1
-	github.com/bgentry/go-netrc v0.0.0-20140422174119-9fd32a8b3d3d
-	github.com/bgentry/speakeasy v0.1.0
-	github.com/blang/semver v3.5.1+incompatible
-	github.com/davecgh/go-spew v1.1.1
+	github.com/aws/aws-sdk-go v1.19.49 // indirect
 	github.com/fgtdev/fortios-sdk-go v1.0.1
-	github.com/go-ini/ini v1.25.4
-	github.com/golang/protobuf v0.0.0-20171113180720-1e59b77b52bf
-	github.com/golang/snappy v0.0.0-20180518054509-2e65f85255db
-	github.com/hashicorp/errwrap v1.0.0
-	github.com/hashicorp/go-cleanhttp v0.5.0
-	github.com/hashicorp/go-getter v0.0.0-20180327010114-90bb99a48d86
-	github.com/hashicorp/go-hclog v0.0.0-20171005151751-ca137eb4b438
-	github.com/hashicorp/go-multierror v1.0.0
-	github.com/hashicorp/go-plugin v0.0.0-20170816151819-a5174f84d7f8
-	github.com/hashicorp/go-safetemp v1.0.0
-	github.com/hashicorp/go-uuid v1.0.0
-	github.com/hashicorp/go-version v1.0.0
-	github.com/hashicorp/hcl v0.0.0-20170504190234-a4b07c25de5f
-	github.com/hashicorp/hcl2 v0.0.0-20171003232734-44bad6dbf549
-	github.com/hashicorp/hil v0.0.0-20170512213305-fac2259da677
-	github.com/hashicorp/logutils v1.0.0
-	github.com/hashicorp/terraform v0.11.8
-	github.com/hashicorp/vault v0.10.4
-	github.com/hashicorp/yamux v0.0.0-20160720233140-d1caa6c97c9f
-	github.com/jen20/awspolicyequivalence v1.0.0
-	github.com/jmespath/go-jmespath v0.0.0-20160803190731-bd40a432e4c7
-	github.com/keybase/go-crypto v0.0.0-20161004153544-93f5b35093ba
-	github.com/mattn/go-isatty v0.0.4
-	github.com/mitchellh/cli v0.0.0-20170803042910-8a539dbef410
-	github.com/mitchellh/copystructure v1.0.0
-	github.com/mitchellh/go-homedir v1.0.0
-	github.com/mitchellh/go-testing-interface v0.0.0-20171004221916-a61a99592b77
-	github.com/mitchellh/go-wordwrap v1.0.0
-	github.com/mitchellh/hashstructure v1.0.0
-	github.com/mitchellh/mapstructure v1.0.0
-	github.com/mitchellh/reflectwalk v1.0.0
-	github.com/posener/complete v0.0.0-20170730193024-f4461a52b632
-	github.com/terraform-providers/terraform-provider-template v0.1.1
-	github.com/terraform-providers/terraform-provider-tls v0.1.0
-	github.com/ulikunitz/xz v0.5.4
-	github.com/zclconf/go-cty v0.0.0-20180106055834-709e4033eeb0
-	golang.org/x/crypto v0.0.0-20180110145155-b3c9a1d25cfb
-	golang.org/x/net v0.0.0-20171024115130-4b14673ba32b
-	golang.org/x/sys v0.0.0-20170803140359-d8f5ea21b929
-	golang.org/x/text v0.0.0-20171024115504-6eab0e8f74e8
-	google.golang.org/genproto v0.0.0-20171002232614-f676e0f3ac63
-	google.golang.org/grpc v0.0.0-20171025225919-b5eab4ccac6d
-	gopkg.in/yaml.v2 v2.2.1
+	github.com/hashicorp/hcl v1.0.0 // indirect
+	github.com/hashicorp/terraform v0.12.2
+	github.com/hashicorp/vault v1.0.1 // indirect
+	github.com/keybase/go-crypto v0.0.0-20181127160227-255a5089e85a // indirect
+	github.com/pierrec/lz4 v2.0.5+incompatible // indirect
+	github.com/stoewer/go-strcase v1.0.2 // indirect
+	github.com/terraform-providers/terraform-provider-random v2.0.0+incompatible // indirect
+	google.golang.org/api v0.6.0 // indirect
 )

@@ -2,7 +2,11 @@ package fortios
 
 import (
 	"crypto/tls"
+	"crypto/x509"
+	"fmt"
+	"io/ioutil"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/fgtdev/fortios-sdk-go/auth"
@@ -13,6 +17,8 @@ import (
 type Config struct {
 	Hostname string
 	Token    string
+	Insecure *bool
+	CABundle string
 	Vdom     string
 }
 
@@ -28,16 +34,9 @@ type FortiClient struct {
 func (c *Config) CreateClient() (interface{}, error) {
 	var fClient FortiClient
 
-	tr := &http.Transport{
-		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
-	}
+	config := &tls.Config{}
 
-	client := &http.Client{
-		Transport: tr,
-		Timeout:   time.Second * 10,
-	}
-
-	auth := auth.NewAuth(c.Hostname, c.Token, c.Vdom)
+	auth := auth.NewAuth(c.Hostname, c.Token, c.CABundle, c.Vdom)
 
 	if auth.Hostname == "" {
 		auth.GetEnvHostname()
@@ -45,6 +44,49 @@ func (c *Config) CreateClient() (interface{}, error) {
 
 	if auth.Token == "" {
 		auth.GetEnvToken()
+	}
+
+	if auth.CABundle == "" {
+		auth.GetEnvCABundle()
+	}
+
+	if auth.CABundle != "" {
+		f, err := os.Open(auth.CABundle)
+		if err != nil {
+			return nil, fmt.Errorf("Error reading CA Bundle: %s", err)
+		}
+		defer f.Close()
+
+		caBundle, err := ioutil.ReadAll(f)
+		if err != nil {
+			return nil, fmt.Errorf("Error reading CA Bundle: %s", err)
+		}
+
+		pool := x509.NewCertPool()
+		if !pool.AppendCertsFromPEM([]byte(caBundle)) {
+			return nil, fmt.Errorf("Error reading CA Bundle")
+		}
+		config.RootCAs = pool
+	}
+
+	if c.Insecure == nil {
+		b, _ := auth.GetEnvInsecure()
+		config.InsecureSkipVerify = b
+	} else {
+		config.InsecureSkipVerify = *c.Insecure
+	}
+
+	if config.InsecureSkipVerify == false && auth.CABundle == "" {
+		return nil, fmt.Errorf("Error getting CA Bundle, CA Bundle should be set when insecure is false")
+	}
+
+	tr := &http.Transport{
+		TLSClientConfig: config,
+	}
+
+	client := &http.Client{
+		Transport: tr,
+		Timeout:   time.Second * 10,
 	}
 
 	fc := forticlient.NewClient(auth, client)

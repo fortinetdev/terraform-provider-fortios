@@ -1,12 +1,14 @@
 package request
 
 import (
-	"net/http"
-	"net/url"
-	"log"
 	"bytes"
 	"fmt"
+	"log"
+	"net/http"
+	"net/url"
 	"time"
+	"strings"
+
 	"github.com/fgtdev/fortios-sdk-go/config"
 )
 
@@ -27,7 +29,7 @@ type Request struct {
 func New(c config.Config, method string, path string, params interface{}, data *bytes.Buffer) *Request {
 	var h *http.Request
 
-	if (data == nil) {
+	if data == nil {
 		h, _ = http.NewRequest(method, "", nil)
 	} else {
 		h, _ = http.NewRequest(method, "", data)
@@ -68,15 +70,20 @@ func (r *Request) Send() error {
 	retry := 0
 	for {
 		//Send
-		rsp, err := r.Config.HTTPCon.Do(r.HTTPRequest)
+		rsp, errdo := r.Config.HTTPCon.Do(r.HTTPRequest)
 		r.HTTPResponse = rsp
-		if err != nil {
-			if retry > 500 {
-				err = fmt.Errorf("Error found: %s, Connection failed for %s", err, u)
+		if errdo != nil {
+			if strings.Contains(errdo.Error(), "x509: ") {
+				err = fmt.Errorf("Error found: %s", errdo)
 				break
 			}
-			time.Sleep(time.Duration(1)*time.Second)
-			log.Printf("Error found: %s, will resend again %d", err, retry)
+
+			if retry > 500 {
+				err = fmt.Errorf("Error found: %s", errdo)
+				break
+			}
+			time.Sleep(time.Duration(1) * time.Second)
+			log.Printf("Error found: %s, will resend again %s, %d", errdo, u, retry)
 
 			retry++
 

@@ -3,14 +3,11 @@
 package v4
 
 import (
-	"log"
 	"net/url"
 	"strings"
 )
 
 func getURIPath(u *url.URL) string {
-	log.Printf("shengh.............v4.go 17")
-
 	var uri string
 
 	if len(u.Opaque) > 0 {

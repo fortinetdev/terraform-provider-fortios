@@ -254,6 +254,10 @@ func resourceNetworkingInterfacePortUpdate(d *schema.ResourceData, m interface{}
 		if vdom == "" {
 			vdom = "root"
 		}
+	} else {
+		if d.HasChange("name") {
+			return fmt.Errorf("the name argument is the key and should not be modified here")
+		}
 	}
 
 	//Build input data by sdk

@@ -146,6 +146,10 @@ func resourceFirewallObjectVipUpdate(d *schema.ResourceData, m interface{}) erro
 			})
 	}
 
+	if d.HasChange("name") {
+		return fmt.Errorf("the name argument is the key and should not be modified here")
+	}
+
 	//Build input data by sdk
 	i := &forticlient.JSONFirewallObjectVip{
 		Name:        name,
