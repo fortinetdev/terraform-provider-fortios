@@ -15,6 +15,10 @@ func resourceLogFortiAnalyzerSetting() *schema.Resource {
 		Update: resourceLogFortiAnalyzerSettingCreateUpdate,
 		Delete: resourceLogFortiAnalyzerSettingDelete,
 
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
+
 		Schema: map[string]*schema.Schema{
 			"status": &schema.Schema{
 				Type:     schema.TypeString,

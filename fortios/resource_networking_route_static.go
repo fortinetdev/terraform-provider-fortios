@@ -16,6 +16,10 @@ func resourceNetworkingRouteStatic() *schema.Resource {
 		Update: resourceNetworkingRouteStaticUpdate,
 		Delete: resourceNetworkingRouteStaticDelete,
 
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
+
 		Schema: map[string]*schema.Schema{
 			"dst": &schema.Schema{
 				Type:     schema.TypeString,
@@ -170,7 +174,7 @@ func resourceNetworkingRouteStaticRead(d *schema.ResourceData, m interface{}) er
 	}
 
 	//Refresh property
-	d.Set("dst", o.Dst)
+	d.Set("dst", validateConvIPMask2CDIR(d.Get("dst").(string), o.Dst))
 	d.Set("gateway", o.Gateway)
 	d.Set("blackhole", o.Blackhole)
 	d.Set("distance", o.Distance)
