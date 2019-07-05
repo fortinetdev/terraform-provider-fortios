@@ -15,6 +15,10 @@ func resourceSystemSettingGlobal() *schema.Resource {
 		Update: resourceSystemSettingGlobalCreateUpdate,
 		Delete: resourceSystemSettingGlobalDelete,
 
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
+
 		Schema: map[string]*schema.Schema{
 			"hostname": &schema.Schema{
 				Type:     schema.TypeString,

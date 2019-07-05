@@ -15,6 +15,10 @@ func resourceFirewallObjectIPPool() *schema.Resource {
 		Update: resourceFirewallObjectIPPoolUpdate,
 		Delete: resourceFirewallObjectIPPoolDelete,
 
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
+
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
@@ -94,10 +98,6 @@ func resourceFirewallObjectIPPoolUpdate(d *schema.ResourceData, m interface{}) e
 	arpReply := d.Get("arp_reply").(string)
 	comments := d.Get("comments").(string)
 
-	if d.HasChange("name") {
-		return fmt.Errorf("the name argument is the key and should not be modified here")
-	}
-
 	//Build input data by sdk
 	i := &forticlient.JSONFirewallObjectIPPool{
 		Name:     name,
@@ -136,7 +136,11 @@ func resourceFirewallObjectIPPoolDelete(d *schema.ResourceData, m interface{}) e
 }
 
 func resourceFirewallObjectIPPoolRead(d *schema.ResourceData, m interface{}) error {
-	mkey := d.Id()
+	mkey := d.Get("name").(string)
+
+	if mkey == "" {
+		mkey = d.Id()
+	}
 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
@@ -154,6 +158,7 @@ func resourceFirewallObjectIPPoolRead(d *schema.ResourceData, m interface{}) err
 	}
 
 	//Refresh property
+	d.SetId(o.Name)
 	d.Set("name", o.Name)
 	d.Set("type", o.Type)
 	d.Set("startip", o.Startip)

@@ -15,6 +15,10 @@ func resourceSystemSettingDNS() *schema.Resource {
 		Update: resourceSystemSettingDNSCreateUpdate,
 		Delete: resourceSystemSettingDNSDelete,
 
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
+
 		Schema: map[string]*schema.Schema{
 			"primary": &schema.Schema{
 				Type:     schema.TypeString,

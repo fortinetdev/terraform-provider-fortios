@@ -15,6 +15,10 @@ func resourceFirewallObjectService() *schema.Resource {
 		Update: resourceFirewallObjectServiceUpdate,
 		Delete: resourceFirewallObjectServiceDelete,
 
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
+
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
@@ -163,10 +167,6 @@ func resourceFirewallObjectServiceUpdate(d *schema.ResourceData, m interface{}) 
 	udpPortrange := d.Get("udp_portrange").(string)
 	sctpPortrange := d.Get("sctp_portrange").(string)
 
-	if d.HasChange("name") {
-		return fmt.Errorf("the name key should not be modified")
-	}
-
 	j1 := &forticlient.JSONFirewallObjectServiceCommon{
 		Name:           name,
 		Category:       category,
@@ -227,7 +227,11 @@ func resourceFirewallObjectServiceDelete(d *schema.ResourceData, m interface{}) 
 }
 
 func resourceFirewallObjectServiceRead(d *schema.ResourceData, m interface{}) error {
-	mkey := d.Id()
+	mkey := d.Get("name").(string)
+
+	if mkey == "" {
+		mkey = d.Id()
+	}
 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
@@ -245,6 +249,7 @@ func resourceFirewallObjectServiceRead(d *schema.ResourceData, m interface{}) er
 	}
 
 	//Refresh property
+	d.SetId(o.Name)
 	d.Set("name", o.Name)
 	d.Set("category", o.Category)
 

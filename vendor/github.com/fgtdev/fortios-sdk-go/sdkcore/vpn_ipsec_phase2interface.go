@@ -15,15 +15,15 @@ type JSONVPNIPsecPhase2Interface struct {
 	Proposal    string `json:"proposal"`
 	Comments    string `json:"comments"`
 	SrcAddrType string `json:"src-addr-type"`
-	SrcStartIP  string `json:"src-start-ip"`
-	SrcEndIP    string `json:"src-end-ip"`
-	SrcSubnet   string `json:"src-subnet"`
+	SrcStartIP  string `json:"src-start-ip,omitempty"`
+	SrcEndIP    string `json:"src-end-ip,omitempty"`
+	SrcSubnet   string `json:"src-subnet,omitempty"`
 	DstAddrType string `json:"dst-addr-type"`
 	SrcName     string `json:"src-name"`
 	DstName     string `json:"dst-name"`
-	DstStartIP  string `json:"dst-start-ip"`
-	DstEndIP    string `json:"dst-end-ip"`
-	DstSubnet   string `json:"dst-subnet"`
+	DstStartIP  string `json:"dst-start-ip,omitempty"`
+	DstEndIP    string `json:"dst-end-ip,omitempty"`
+	DstSubnet   string `json:"dst-subnet,omitempty"`
 }
 
 // JSONCreateVPNIPsecPhase2InterfaceOutput contains the output results for Create API function
