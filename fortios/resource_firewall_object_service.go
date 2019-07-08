@@ -73,6 +73,11 @@ func resourceFirewallObjectService() *schema.Resource {
 				Optional: true,
 				Default:  "",
 			},
+			"session_ttl": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "0",
+			},
 		},
 	}
 }
@@ -94,6 +99,7 @@ func resourceFirewallObjectServiceCreate(d *schema.ResourceData, m interface{}) 
 	tcpPortrange := d.Get("tcp_portrange").(string)
 	udpPortrange := d.Get("udp_portrange").(string)
 	sctpPortrange := d.Get("sctp_portrange").(string)
+	sessionTTL := d.Get("session_ttl").(string)
 
 	if protocol == "ICMP" {
 		protocolNumber = "1"
@@ -110,6 +116,7 @@ func resourceFirewallObjectServiceCreate(d *schema.ResourceData, m interface{}) 
 		TCPPortrange:   tcpPortrange,
 		UDPPortrange:   udpPortrange,
 		SctpPortrange:  sctpPortrange,
+		SessionTTL:     sessionTTL,
 	}
 	var j2 *forticlient.JSONFirewallObjectServiceFqdn
 	var j3 *forticlient.JSONFirewallObjectServiceIprange
@@ -162,6 +169,7 @@ func resourceFirewallObjectServiceUpdate(d *schema.ResourceData, m interface{}) 
 	tcpPortrange := d.Get("tcp_portrange").(string)
 	udpPortrange := d.Get("udp_portrange").(string)
 	sctpPortrange := d.Get("sctp_portrange").(string)
+	sessionTTL := d.Get("session_ttl").(string)
 
 	if d.HasChange("name") {
 		return fmt.Errorf("the name key should not be modified")
@@ -178,6 +186,7 @@ func resourceFirewallObjectServiceUpdate(d *schema.ResourceData, m interface{}) 
 		TCPPortrange:   tcpPortrange,
 		UDPPortrange:   udpPortrange,
 		SctpPortrange:  sctpPortrange,
+		SessionTTL:     sessionTTL,
 	}
 	var j2 *forticlient.JSONFirewallObjectServiceFqdn
 	var j3 *forticlient.JSONFirewallObjectServiceIprange
@@ -261,6 +270,7 @@ func resourceFirewallObjectServiceRead(d *schema.ResourceData, m interface{}) er
 	d.Set("tcp_portrange", o.TCPPortrange)
 	d.Set("udp_portrange", o.UDPPortrange)
 	d.Set("sctp_portrange", o.SctpPortrange)
+	d.Set("session_ttl", o.SessionTTL)
 
 	return nil
 }
