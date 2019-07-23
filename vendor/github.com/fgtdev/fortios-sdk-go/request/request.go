@@ -6,8 +6,9 @@ import (
 	"log"
 	"net/http"
 	"net/url"
-	"time"
+	"strconv"
 	"strings"
+	"time"
 
 	"github.com/fgtdev/fortios-sdk-go/config"
 )
@@ -45,6 +46,20 @@ func New(c config.Config, method string, path string, params interface{}, data *
 	return r
 }
 
+// Store URL request params
+// Currently only used for altering firewall security policy position
+// @dstId: policy dst id
+// @alterPos: before or after
+func (r *Request) FillUrlParams(dstId int, alterPos string) {
+
+	if r.HTTPRequest.Form == nil {
+		r.HTTPRequest.Form = make(map[string][]string)
+	}
+
+	r.HTTPRequest.Form.Set("policy_dst_id", strconv.Itoa(dstId))
+	r.HTTPRequest.Form.Set("alter_position", alterPos)
+}
+
 // Build Request header
 
 // Build Request Sign/Login Info
@@ -58,7 +73,7 @@ func (r *Request) Send() error {
 	//httpReq.URL, err = url.Parse(clientInfo.Endpoint + operation.HTTPPath)
 
 	r.HTTPRequest.Header.Set("Content-Type", "application/json")
-	u := buildURL(r.Config.FwTarget, r.Path, r.Config.Auth.Token, r.Config.Auth.Vdom)
+	u := buildURL(r)
 
 	var err error
 	r.HTTPRequest.URL, err = url.Parse(u)
@@ -95,20 +110,28 @@ func (r *Request) Send() error {
 	return err
 }
 
-func buildURL(host string, path string, token string, vdom string) string {
+func buildURL(r *Request) string {
 	u := "https://"
-	u += host
-	u += path
+	u += r.Config.FwTarget
+	u += r.Path
 	u += "?"
 
-	if vdom != "" {
+	if r.Config.Auth.Vdom != "" {
 		u += "vdom="
-		u += vdom
+		u += r.Config.Auth.Vdom
+		u += "&"
+	}
+
+	if r.HTTPRequest.Form.Get("alter_position") != "" && r.HTTPRequest.Form.Get("policy_dst_id") != "" {
+		u += "action=move&"
+		u += r.HTTPRequest.Form.Get("alter_position")
+		u += "="
+		u += r.HTTPRequest.Form.Get("policy_dst_id")
 		u += "&"
 	}
 
 	u += "access_token="
-	u += token
+	u += r.Config.Auth.Token
 
 	return u
 }
