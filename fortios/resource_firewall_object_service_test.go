@@ -51,6 +51,7 @@ func TestAccFortiOSFirewallObjectService_IPRange(t *testing.T) {
 					resource.TestCheckResourceAttr("fortios_firewall_object_service.test2", "tcp_portrange", "22-33"),
 					resource.TestCheckResourceAttr("fortios_firewall_object_service.test2", "udp_portrange", "44-55"),
 					resource.TestCheckResourceAttr("fortios_firewall_object_service.test2", "sctp_portrange", "66-88"),
+					resource.TestCheckResourceAttr("fortios_firewall_object_service.test2", "session_ttl", "1000"),
 					resource.TestCheckResourceAttr("fortios_firewall_object_service.test2", "comment", "Terraform Test"),
 				),
 			},
@@ -133,6 +134,7 @@ resource "fortios_firewall_object_service" "test2" {
 	tcp_portrange = "22-33"
 	udp_portrange = "44-55"
 	sctp_portrange = "66-88"
+	session_ttl = "1000"
 	comment = "Terraform Test"
 }
 `, name)
