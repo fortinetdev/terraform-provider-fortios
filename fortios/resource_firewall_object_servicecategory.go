@@ -15,6 +15,10 @@ func resourceFirewallObjectServiceCategory() *schema.Resource {
 		Update: resourceFirewallObjectServiceCategoryUpdate,
 		Delete: resourceFirewallObjectServiceCategoryDelete,
 
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
+
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
