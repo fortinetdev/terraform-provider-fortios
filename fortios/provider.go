@@ -42,6 +42,24 @@ func Provider() terraform.ResourceProvider {
 				Default:     "",
 				Description: "",
 			},
+			"username": &schema.Schema{
+				Type:        schema.TypeString,
+				Optional:    true,
+				Default:     "",
+				Description: "",
+			},
+			"passwd": &schema.Schema{
+				Type:        schema.TypeString,
+				Optional:    true,
+				Default:     "",
+				Description: "",
+			},
+			"provider": &schema.Schema{
+				Type:        schema.TypeString,
+				Optional:    true,
+				Default:     "",
+				Description: "Choose provider: fortios or fortimanager. default is fortios",
+			},
 		},
 
 		ResourcesMap: map[string]*schema.Resource{
@@ -71,6 +89,8 @@ func Provider() terraform.ResourceProvider {
 			"fortios_system_license_vm":               resourceSystemLicenseVM(),
 			"fortios_vpn_ipsec_phase1interface":       resourceVPNIPsecPhase1Interface(),
 			"fortios_vpn_ipsec_phase2interface":       resourceVPNIPsecPhase2Interface(),
+			// Following is for fortimanager
+			"fortios_fortimanager_system_admin_profiles": resourceFortimanagerSystemAdminProfiles(),
 		},
 
 		ConfigureFunc: providerConfigure,
@@ -85,6 +105,9 @@ func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 		Token:    d.Get("token").(string),
 		CABundle: d.Get("cabundlefile").(string),
 		Vdom:     d.Get("vdom").(string),
+		Username: d.Get("username").(string),
+		Passwd:   d.Get("passwd").(string),
+		Provider: d.Get("provider").(string),
 	}
 
 	v, ok := d.GetOkExists("insecure")
