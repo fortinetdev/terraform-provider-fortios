@@ -22,13 +22,18 @@ type FortiMngClient struct {
 	Ipaddr string
 	User   string
 	Passwd string
+	Debug  string
 }
 
 func NewClient(ip, user, passwd string) *FortiMngClient {
+
+	d := os.Getenv("TRACEDEBUG")
+
 	return &FortiMngClient{
 		Ipaddr: ip,
 		User:   user,
 		Passwd: passwd,
+		Debug:  d,
 	}
 }
 
@@ -134,14 +139,54 @@ func (c *FortiMngClient) Do(method string, params map[string]interface{}) (outpu
 		Session: session,
 	}
 
+	if c.Debug == "ON" {
+		log.Printf("[TRACEDEBUG] +++++++++++++++ req = %s", req)
+	}
+
 	output, err = c.Execute(req)
 	return
 }
 
+func (f *FortiMngClient) AccessRight2Str(ar int) (s string) {
+	switch ar {
+	case 0:
+		s = "none"
+	case 1:
+		s = "read"
+	case 2:
+		s = "read-write"
+	default:
+		log.Printf("[op2Str][Warning] not support number")
+	}
+
+	return
+}
+
+func (f *FortiMngClient) UserType2Str(ut int) (s string) {
+	switch ut {
+	case 0:
+		s = "local"
+	case 1:
+		s = "radius"
+	case 2:
+		s = "ldap"
+	case 3:
+		s = "tacacs-plus"
+	case 4:
+		s = "pki-auth"
+	case 5:
+		s = "group"
+	default:
+		log.Printf("[UserType2Str][Warning] not support number")
+	}
+
+	return
+}
+
 func (f *FortiMngClient) Trace(s string) func() {
-	if os.Getenv("TRACEDEBUG") == "ON" {
-		log.Printf("[TRACEDEBUG] Enter %s", s)
-		return func() { log.Printf("[TRACEDEBUG] Leave %s", s) }
+	if f.Debug == "ON" {
+		log.Printf("[TRACEDEBUG] -> Enter %s", s)
+		return func() { log.Printf("[TRACEDEBUG]    Leave %s <--", s) }
 	}
 
 	return func() {}

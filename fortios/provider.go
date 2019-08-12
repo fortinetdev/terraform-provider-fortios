@@ -91,6 +91,7 @@ func Provider() terraform.ResourceProvider {
 			"fortios_vpn_ipsec_phase2interface":       resourceVPNIPsecPhase2Interface(),
 			// Following is for fortimanager
 			"fortios_fortimanager_system_admin_profiles": resourceFortimanagerSystemAdminProfiles(),
+			"fortios_fortimanager_system_admin_user":     resourceFortimanagerSystemAdminUser(),
 		},
 
 		ConfigureFunc: providerConfigure,
