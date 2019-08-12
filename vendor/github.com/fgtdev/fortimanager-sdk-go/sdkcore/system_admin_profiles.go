@@ -2,7 +2,6 @@ package fortimngclient
 
 import (
 	"fmt"
-	"log"
 )
 
 type JSONSysAdminProfiles struct {
@@ -117,7 +116,7 @@ func (c *FortiMngClient) ReadSystemAdminProfiles(id string) (out *JSONSysAdminPr
 		out.Description = data["description"].(string)
 	}
 	if data["device-manager"] != nil {
-		out.DeviceManager = op2Str(int(data["device-manager"].(float64)))
+		out.DeviceManager = c.AccessRight2Str(int(data["device-manager"].(float64)))
 	}
 
 	return
@@ -134,21 +133,6 @@ func (c *FortiMngClient) DeleteSystemAdminProfiles(id string) (err error) {
 	if err != nil {
 		err = fmt.Errorf("DeleteSystemAdminProfiles failed :%s", err)
 		return
-	}
-
-	return
-}
-
-func op2Str(op int) (s string) {
-	switch op {
-	case 0:
-		s = "none"
-	case 1:
-		s = "read"
-	case 2:
-		s = "read-write"
-	default:
-		log.Printf("[Function op2Str][Warning] not support number")
 	}
 
 	return
