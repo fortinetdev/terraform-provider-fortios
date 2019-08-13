@@ -10,10 +10,10 @@ import (
 
 func resourceFortimanagerSystemAdminProfiles() *schema.Resource {
 	return &schema.Resource{
-		Create: createFTMSystemAdminProfiles,
-		Read:   readFTMSystemAdminProfiles,
-		Update: updateFTMSystemAdminProfiles,
-		Delete: deleteFTMSystemAdminProfiles,
+		Create: createFMGSystemAdminProfiles,
+		Read:   readFMGSystemAdminProfiles,
+		Update: updateFMGSystemAdminProfiles,
+		Delete: deleteFMGSystemAdminProfiles,
 
 		Schema: map[string]*schema.Schema{
 			"profile_id": &schema.Schema{
@@ -34,9 +34,9 @@ func resourceFortimanagerSystemAdminProfiles() *schema.Resource {
 	}
 }
 
-func createFTMSystemAdminProfiles(d *schema.ResourceData, m interface{}) error {
+func createFMGSystemAdminProfiles(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("createFTMSystemAdminProfiles")()
+	defer c.Trace("createFMGSystemAdminProfiles")()
 
 	//Get Params from d
 	profileId := d.Get("profile_id").(string)
@@ -57,12 +57,12 @@ func createFTMSystemAdminProfiles(d *schema.ResourceData, m interface{}) error {
 
 	d.SetId(profileId)
 
-	return readFTMSystemAdminProfiles(d, m)
+	return readFMGSystemAdminProfiles(d, m)
 }
 
-func readFTMSystemAdminProfiles(d *schema.ResourceData, m interface{}) error {
+func readFMGSystemAdminProfiles(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("readFTMSystemAdminProfiles")()
+	defer c.Trace("readFMGSystemAdminProfiles")()
 
 	profileId := d.Id()
 	o, err := c.ReadSystemAdminProfiles(profileId)
@@ -83,9 +83,9 @@ func readFTMSystemAdminProfiles(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-func updateFTMSystemAdminProfiles(d *schema.ResourceData, m interface{}) error {
+func updateFMGSystemAdminProfiles(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("updateFTMSystemAdminProfiles")()
+	defer c.Trace("updateFMGSystemAdminProfiles")()
 
 	//Get Params from d
 	profileId := d.Get("profile_id").(string)
@@ -108,12 +108,12 @@ func updateFTMSystemAdminProfiles(d *schema.ResourceData, m interface{}) error {
 		return fmt.Errorf("Error updating System Admin Profiles: %s", err)
 	}
 
-	return readFTMSystemAdminProfiles(d, m)
+	return readFMGSystemAdminProfiles(d, m)
 }
 
-func deleteFTMSystemAdminProfiles(d *schema.ResourceData, m interface{}) error {
+func deleteFMGSystemAdminProfiles(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("deleteFTMSystemAdminProfiles")()
+	defer c.Trace("deleteFMGSystemAdminProfiles")()
 
 	profileId := d.Id()
 

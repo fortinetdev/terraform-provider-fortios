@@ -92,6 +92,7 @@ func Provider() terraform.ResourceProvider {
 			// Following is for fortimanager
 			"fortios_fortimanager_system_admin_profiles": resourceFortimanagerSystemAdminProfiles(),
 			"fortios_fortimanager_system_admin_user":     resourceFortimanagerSystemAdminUser(),
+			"fortios_fortimanager_devicemanager_device":  resourceFortimanagerDVMDevice(),
 		},
 
 		ConfigureFunc: providerConfigure,
