@@ -57,6 +57,10 @@ func (c *FortiMngClient) Execute(req *Request) (result map[string]interface{}, e
 	result = map[string]interface{}{}
 	json.Unmarshal([]byte(string(body)), &result)
 
+	if c.Debug == "ON" {
+		log.Printf("[TRACEDEBUG] +++++++++++++++ result = %s", result)
+	}
+
 	if result != nil {
 		if id := uint64(result["id"].(float64)); id != req.Id {
 			err = fmt.Errorf("id not match, should be 1, but is %d", id)
