@@ -38,16 +38,11 @@ func createFMGSystemAdminProfiles(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
 	defer c.Trace("createFMGSystemAdminProfiles")()
 
-	//Get Params from d
-	profileId := d.Get("profile_id").(string)
-	description := d.Get("description").(string)
-	deviceManager := d.Get("device_manager").(string)
-
 	//Build input data by sdk
 	i := &fortimngclient.JSONSysAdminProfiles{
-		ProfileId:     profileId,
-		Description:   description,
-		DeviceManager: deviceManager,
+		ProfileId:     d.Get("profile_id").(string),
+		Description:   d.Get("description").(string),
+		DeviceManager: d.Get("device_manager").(string),
 	}
 
 	err := c.CreateUpdateSystemAdminProfiles(i, "add")
@@ -55,7 +50,7 @@ func createFMGSystemAdminProfiles(d *schema.ResourceData, m interface{}) error {
 		return fmt.Errorf("Error creating System Admin Profiles: %s", err)
 	}
 
-	d.SetId(profileId)
+	d.SetId(i.ProfileId)
 
 	return readFMGSystemAdminProfiles(d, m)
 }
@@ -87,20 +82,15 @@ func updateFMGSystemAdminProfiles(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
 	defer c.Trace("updateFMGSystemAdminProfiles")()
 
-	//Get Params from d
-	profileId := d.Get("profile_id").(string)
-	description := d.Get("description").(string)
-	deviceManager := d.Get("device_manager").(string)
-
 	if d.HasChange("profile_id") {
 		return fmt.Errorf("the profile_id argument is the key and should not be modified here")
 	}
 
 	//Build input data by sdk
 	i := &fortimngclient.JSONSysAdminProfiles{
-		ProfileId:     profileId,
-		Description:   description,
-		DeviceManager: deviceManager,
+		ProfileId:     d.Get("profile_id").(string),
+		Description:   d.Get("description").(string),
+		DeviceManager: d.Get("device_manager").(string),
 	}
 
 	err := c.CreateUpdateSystemAdminProfiles(i, "update")

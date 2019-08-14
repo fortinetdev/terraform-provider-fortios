@@ -39,18 +39,12 @@ func AddFMGDVMDevice(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
 	defer c.Trace("AddDVMDevice")()
 
-	//Get Params from d
-	userId := d.Get("userid").(string)
-	passwd := d.Get("password").(string)
-	ip := d.Get("ipaddr").(string)
-	name := d.Get("dev_name").(string)
-
 	//Build input data by sdk
 	i := &fortimngclient.JSONDVMDeviceAdd{
-		UserId:   userId,
-		Passwd:   passwd,
-		Ipaddr:   ip,
-		Name:     name,
+		UserId:   d.Get("userid").(string),
+		Passwd:   d.Get("password").(string),
+		Ipaddr:   d.Get("ipaddr").(string),
+		Name:     d.Get("dev_name").(string),
 		MgmtMode: "fmg",
 	}
 
@@ -59,7 +53,7 @@ func AddFMGDVMDevice(d *schema.ResourceData, m interface{}) error {
 		return fmt.Errorf("Error adding dvm device: %s", err)
 	}
 
-	d.SetId(name)
+	d.SetId(i.Name)
 
 	return nil
 }

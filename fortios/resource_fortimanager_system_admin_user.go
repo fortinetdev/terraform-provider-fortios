@@ -61,26 +61,16 @@ func createFTMSystemAdminUser(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
 	defer c.Trace("createFTMSystemAdminUser")()
 
-	//Get Params from d
-	userId := d.Get("userid").(string)
-	passwd := d.Get("password").(string)
-	description := d.Get("description").(string)
-	userType := d.Get("user_type").(string)
-	profileId := d.Get("profileid").(string)
-	rpcPermit := d.Get("rpc_permit").(string)
-	trusthost1 := d.Get("trusthost1").(string)
-	trusthost2 := d.Get("trusthost2").(string)
-
 	//Build input data by sdk
 	i := &fortimngclient.JSONSysAdminUser{
-		UserId:      userId,
-		Passwd:      passwd,
-		Description: description,
-		UserType:    userType,
-		ProfileId:   profileId,
-		RpcPermit:   rpcPermit,
-		Trusthost1:  trusthost1,
-		Trusthost2:  trusthost2,
+		UserId:      d.Get("userid").(string),
+		Passwd:      d.Get("password").(string),
+		Description: d.Get("description").(string),
+		UserType:    d.Get("user_type").(string),
+		ProfileId:   d.Get("profileid").(string),
+		RpcPermit:   d.Get("rpc_permit").(string),
+		Trusthost1:  d.Get("trusthost1").(string),
+		Trusthost2:  d.Get("trusthost2").(string),
 	}
 
 	err := c.CreateUpdateSystemAdminUser(i, "add")
@@ -88,7 +78,7 @@ func createFTMSystemAdminUser(d *schema.ResourceData, m interface{}) error {
 		return fmt.Errorf("Error creating System Admin User: %s", err)
 	}
 
-	d.SetId(userId)
+	d.SetId(i.UserId)
 
 	return readFTMSystemAdminUser(d, m)
 }
@@ -124,31 +114,22 @@ func updateFTMSystemAdminUser(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
 	defer c.Trace("updateFTMSystemAdminUser")()
 
-	//Get Params from d
-	userId := d.Get("userid").(string)
-	passwd := d.Get("password").(string)
-	description := d.Get("description").(string)
-	userType := d.Get("user_type").(string)
-	profileId := d.Get("profileid").(string)
-	rpcPermit := d.Get("rpc_permit").(string)
-	trusthost1 := d.Get("trusthost1").(string)
-	trusthost2 := d.Get("trusthost2").(string)
-
 	if d.HasChange("userid") {
 		return fmt.Errorf("the userid argument is the key and should not be modified here")
 	}
 
 	//Build input data by sdk
 	i := &fortimngclient.JSONSysAdminUser{
-		UserId:      userId,
-		Passwd:      passwd,
-		Description: description,
-		UserType:    userType,
-		ProfileId:   profileId,
-		RpcPermit:   rpcPermit,
-		Trusthost1:  trusthost1,
-		Trusthost2:  trusthost2,
+		UserId:      d.Get("userid").(string),
+		Passwd:      d.Get("password").(string),
+		Description: d.Get("description").(string),
+		UserType:    d.Get("user_type").(string),
+		ProfileId:   d.Get("profileid").(string),
+		RpcPermit:   d.Get("rpc_permit").(string),
+		Trusthost1:  d.Get("trusthost1").(string),
+		Trusthost2:  d.Get("trusthost2").(string),
 	}
+
 	err := c.CreateUpdateSystemAdminUser(i, "update")
 	if err != nil {
 		return fmt.Errorf("Error updating System Admin User: %s", err)
