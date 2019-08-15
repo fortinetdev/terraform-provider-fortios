@@ -95,6 +95,7 @@ func Provider() terraform.ResourceProvider {
 			"fortios_fortimanager_devicemanager_device":         resourceFortimanagerDVMDevice(),
 			"fortios_fortimanager_devicemanager_script":         resourceFortimanagerDVMScript(),
 			"fortios_fortimanager_devicemanager_install_device": resourceFortimanagerDVMInstallDev(),
+			"fortios_fortimanager_firewall_security_policy":     resourceFortimanagerFirewallSecurityPolicy(),
 		},
 
 		ConfigureFunc: providerConfigure,
