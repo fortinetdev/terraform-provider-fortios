@@ -90,10 +90,11 @@ func Provider() terraform.ResourceProvider {
 			"fortios_vpn_ipsec_phase1interface":       resourceVPNIPsecPhase1Interface(),
 			"fortios_vpn_ipsec_phase2interface":       resourceVPNIPsecPhase2Interface(),
 			// Following is for fortimanager
-			"fortios_fortimanager_system_admin_profiles": resourceFortimanagerSystemAdminProfiles(),
-			"fortios_fortimanager_system_admin_user":     resourceFortimanagerSystemAdminUser(),
-			"fortios_fortimanager_devicemanager_device":  resourceFortimanagerDVMDevice(),
-			"fortios_fortimanager_devicemanager_script":  resourceFortimanagerDVMScript(),
+			"fortios_fortimanager_system_admin_profiles":        resourceFortimanagerSystemAdminProfiles(),
+			"fortios_fortimanager_system_admin_user":            resourceFortimanagerSystemAdminUser(),
+			"fortios_fortimanager_devicemanager_device":         resourceFortimanagerDVMDevice(),
+			"fortios_fortimanager_devicemanager_script":         resourceFortimanagerDVMScript(),
+			"fortios_fortimanager_devicemanager_install_device": resourceFortimanagerDVMInstallDev(),
 		},
 
 		ConfigureFunc: providerConfigure,
