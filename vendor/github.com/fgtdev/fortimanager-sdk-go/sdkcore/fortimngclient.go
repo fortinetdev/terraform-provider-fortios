@@ -187,6 +187,31 @@ func (f *FortiMngClient) UserType2Str(ut int) (s string) {
 	return
 }
 
+func (f *FortiMngClient) PolicyAction2Str(pa int) (s string) {
+	switch pa {
+	case 0:
+		s = "deny"
+	case 1:
+		s = "accept"
+	case 2:
+		s = "ipsec"
+	default:
+		log.Printf("[PolicyAction2Str][Warning] not support number")
+	}
+
+	return
+}
+
+func (f *FortiMngClient) InterfaceArray2StrArray(intf []interface{}) (s []string) {
+	s = make([]string, len(intf))
+
+	for i := range intf {
+		s[i] = intf[i].(string)
+	}
+
+	return
+}
+
 func (f *FortiMngClient) Trace(s string) func() {
 	if f.Debug == "ON" {
 		log.Printf("[TRACEDEBUG] -> Enter %s", s)
