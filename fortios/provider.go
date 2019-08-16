@@ -98,6 +98,7 @@ func Provider() terraform.ResourceProvider {
 			"fortios_fortimanager_devicemanager_install_policypackage": resourceFortimanagerDVMInstallPolicyPackage(),
 			"fortios_fortimanager_firewall_security_policy":            resourceFortimanagerFirewallSecurityPolicy(),
 			"fortios_fortimanager_firewall_security_policypackage":     resourceFortimanagerFirewallSecurityPolicyPackage(),
+			"fortios_fortimanager_system_syslog":                       resourceFortimanagerSystemSyslog(),
 		},
 
 		ConfigureFunc: providerConfigure,
