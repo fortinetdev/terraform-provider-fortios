@@ -10,6 +10,10 @@ import (
 	"os"
 )
 
+// store tmp data
+var Tmp = map[string][]string{}
+var Tmp1 = map[string][]string{}
+
 // Request represents a JSON-RPC request sent by a client.
 type Request struct {
 	Id      uint64         `json:"id"`
@@ -210,6 +214,83 @@ func (f *FortiMngClient) InterfaceArray2StrArray(intf []interface{}) (s []string
 	}
 
 	return
+}
+
+func (f *FortiMngClient) IntfStatus2Str(ts int) (s string) {
+	switch ts {
+	case 0:
+		s = "down"
+	case 16:
+		s = "up"
+	default:
+		log.Printf("[IntfStatus2Str][Warning] not support number")
+	}
+
+	return
+}
+
+/*
+func (f *FortiMngClient) IntfServiceAccess2Str(isa int) (s string) {
+	switch isa {
+	case 1:
+		s = "fgtupdates"
+	case 4:
+		s = "webfilter"
+	default:
+		log.Printf("[IntfServiceAccess2Str][Warning] not support number")
+	}
+
+	return
+}
+*/
+
+func (f *FortiMngClient) AllowAccess2int(aa []string) int {
+	allow_access := map[string]int{
+		"ping":   1,
+		"https":  2,
+		"ssh":    4,
+		"snmp":   8,
+		"telnet": 16,
+		"http":   32,
+		"web":    64,
+	}
+
+	sum := 0
+	for i := 0; i < len(aa); i++ {
+		sum += allow_access[aa[i]]
+	}
+
+	return sum
+}
+
+func (f *FortiMngClient) ServiceAccess2int(sa []string) int {
+	service_access := map[string]int{
+		"fgtupdates": 1,
+		"webfilter":  4,
+	}
+
+	sum := 0
+	for i := 0; i < len(sa); i++ {
+		sum += service_access[sa[i]]
+	}
+
+	return sum
+}
+
+func (f *FortiMngClient) SetTmp(k string, v []string) {
+	Tmp[k] = v
+}
+
+func (f *FortiMngClient) SetTmp1(k string, v []string) {
+	Tmp1[k] = v
+}
+
+func (f *FortiMngClient) Tmp(k string) []string {
+	return Tmp[k]
+}
+
+func (f *FortiMngClient) Tmp1(k string) []string {
+	return Tmp1[k]
 }
 
 func (f *FortiMngClient) Trace(s string) func() {
