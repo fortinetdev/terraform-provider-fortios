@@ -277,6 +277,28 @@ func (f *FortiMngClient) ServiceAccess2int(sa []string) int {
 	return sum
 }
 
+func (f *FortiMngClient) FirewallObjectAddrType2Str(fbj int) (s string) {
+	switch fbj {
+	case 0:
+		s = "subnet"
+	case 1:
+		s = "ip range"
+	case 2:
+		s = "fqdn"
+	case 3:
+		s = "wildcard"
+	case 4:
+		s = "geography"
+	case 6:
+		s = "wildcard fqdn"
+
+	default:
+		log.Printf("[FirewallObjectAddrType2Str][Warning] not support number")
+	}
+
+	return
+}
+
 func (f *FortiMngClient) SetTmp(k string, v []string) {
 	Tmp[k] = v
 }
