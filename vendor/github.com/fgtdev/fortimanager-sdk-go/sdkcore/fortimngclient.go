@@ -317,6 +317,34 @@ func (f *FortiMngClient) FirewallObjectProtocol2Str(c int) (s string) {
 	return
 }
 
+func (f *FortiMngClient) ControlSwitch2Str(c int) (s string) {
+	switch c {
+	case 0:
+		s = "disable"
+	case 1:
+		s = "enable"
+
+	default:
+		log.Printf("[ControlSwitch2Str][Warning] not support number")
+	}
+
+	return
+}
+
+func (f *FortiMngClient) FirewallObjectIppoolType2Str(c int) (s string) {
+	switch c {
+	case 0:
+		s = "overload"
+	case 1:
+		s = "one-to-one"
+
+	default:
+		log.Printf("[FirewallObjectIppoolType2Str][Warning] not support number")
+	}
+
+	return
+}
+
 func (f *FortiMngClient) SetTmp(k string, v []string) {
 	Tmp[k] = v
 }
