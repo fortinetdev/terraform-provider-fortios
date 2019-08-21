@@ -299,6 +299,24 @@ func (f *FortiMngClient) FirewallObjectAddrType2Str(fbj int) (s string) {
 	return
 }
 
+func (f *FortiMngClient) FirewallObjectProtocol2Str(c int) (s string) {
+	switch c {
+	case 1:
+		s = "ICMP"
+	case 2:
+		s = "IP"
+	case 5:
+		s = "TCP/UDP/SCTP"
+	case 6:
+		s = "ICMP6"
+
+	default:
+		log.Printf("[FirewallObjectProtocol2Str][Warning] not support number")
+	}
+
+	return
+}
+
 func (f *FortiMngClient) SetTmp(k string, v []string) {
 	Tmp[k] = v
 }
