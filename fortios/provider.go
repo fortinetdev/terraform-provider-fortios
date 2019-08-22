@@ -106,6 +106,7 @@ func Provider() terraform.ResourceProvider {
 			"fortios_fortimanager_system_syslog":                       resourceFortimanagerSystemSyslog(),
 			"fortios_fortimanager_system_network_interface":            resourceFortimanagerSystemNetworkInterface(),
 			"fortios_fortimanager_system_network_route":                resourceFortimanagerSystemNetworkRoute(),
+			"fortios_fortimanager_system_adom":                         resourceFortimanagerSystemAdom(),
 		},
 
 		ConfigureFunc: providerConfigure,
