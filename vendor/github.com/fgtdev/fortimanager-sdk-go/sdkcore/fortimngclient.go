@@ -345,6 +345,22 @@ func (f *FortiMngClient) FirewallObjectIppoolType2Str(c int) (s string) {
 	return
 }
 
+func (f *FortiMngClient) FirewallObjectVipType2Str(c int) (s string) {
+	switch c {
+	case 0:
+		s = "static-nat"
+	case 4:
+		s = "dns-translation"
+	case 5:
+		s = "fqdn"
+
+	default:
+		log.Printf("[FirewallObjectVipType2Str][Warning] not support number")
+	}
+
+	return
+}
+
 func (f *FortiMngClient) SetTmp(k string, v []string) {
 	Tmp[k] = v
 }

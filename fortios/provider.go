@@ -101,6 +101,7 @@ func Provider() terraform.ResourceProvider {
 			"fortios_fortimanager_firewall_object_address":             resourceFortimanagerFirewallObjectAddress(),
 			"fortios_fortimanager_firewall_object_service":             resourceFortimanagerFirewallObjectService(),
 			"fortios_fortimanager_firewall_object_ippool":              resourceFortimanagerFirewallObjectIppool(),
+			"fortios_fortimanager_firewall_object_vip":                 resourceFortimanagerFirewallObjectVip(),
 			"fortios_fortimanager_system_syslog":                       resourceFortimanagerSystemSyslog(),
 			"fortios_fortimanager_system_network_interface":            resourceFortimanagerSystemNetworkInterface(),
 			"fortios_fortimanager_system_network_route":                resourceFortimanagerSystemNetworkRoute(),
