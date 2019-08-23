@@ -51,7 +51,7 @@ func setFTMSystemAdminSetting(d *schema.ResourceData, m interface{}) error {
 	}
 
 	// Set an id for this resource
-	d.SetId("98")
+	d.SetId("fortimanager-admin-setting")
 
 	return readFTMSystemAdminSetting(d, m)
 }

@@ -47,8 +47,7 @@ func setFTMSystemGlobalSetting(d *schema.ResourceData, m interface{}) error {
 		return fmt.Errorf("Error setting System Global Setting: %s", err)
 	}
 
-	// Set an id for this resource
-	d.SetId("99")
+	d.SetId("fortimanager-global-setting")
 
 	return readFTMSystemGlobalSetting(d, m)
 }

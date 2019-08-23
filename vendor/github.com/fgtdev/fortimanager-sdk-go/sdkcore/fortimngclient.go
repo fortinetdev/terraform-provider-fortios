@@ -44,6 +44,11 @@ func NewClient(ip, user, passwd string) *FortiMngClient {
 func (c *FortiMngClient) Execute(req *Request) (result map[string]interface{}, err error) {
 	// send
 	j, _ := json.Marshal(req)
+
+	if c.Debug == "ON" {
+		log.Printf("[TRACEDEBUG] +++++++++++++++ req = %s", j)
+	}
+
 	httpResp, err := http.Post("http://"+c.Ipaddr+"/jsonrpc", "application/json", bytes.NewBuffer(j))
 	if err != nil {
 		err = fmt.Errorf("Login failed: %s", err)
@@ -58,12 +63,12 @@ func (c *FortiMngClient) Execute(req *Request) (result map[string]interface{}, e
 		return
 	}
 
+	if c.Debug == "ON" {
+		log.Printf("[TRACEDEBUG] +++++++++++++++ result = %s", body)
+	}
+
 	result = map[string]interface{}{}
 	json.Unmarshal([]byte(string(body)), &result)
-
-	if c.Debug == "ON" {
-		log.Printf("[TRACEDEBUG] +++++++++++++++ result = %s", result)
-	}
 
 	if result != nil {
 		if id := uint64(result["id"].(float64)); id != req.Id {
@@ -145,10 +150,6 @@ func (c *FortiMngClient) Do(method string, params map[string]interface{}) (outpu
 		Method:  method,
 		Params:  [1]interface{}{params},
 		Session: session,
-	}
-
-	if c.Debug == "ON" {
-		log.Printf("[TRACEDEBUG] +++++++++++++++ req = %s", req)
 	}
 
 	output, err = c.Execute(req)
