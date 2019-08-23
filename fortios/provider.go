@@ -109,6 +109,7 @@ func Provider() terraform.ResourceProvider {
 			"fortios_fortimanager_system_adom":                         resourceFortimanagerSystemAdom(),
 			"fortios_fortimanager_system_global_setting":               resourceFortimanagerSystemGlobalSetting(),
 			"fortios_fortimanager_system_admin_setting":                resourceFortimanagerSystemAdminSetting(),
+			"fortios_fortimanager_system_dns_setting":                  resourceFortimanagerSystemDNSSetting(),
 		},
 
 		ConfigureFunc: providerConfigure,
