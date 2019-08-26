@@ -111,6 +111,7 @@ func Provider() terraform.ResourceProvider {
 			"fortios_fortimanager_system_admin_setting":                resourceFortimanagerSystemAdminSetting(),
 			"fortios_fortimanager_system_dns_setting":                  resourceFortimanagerSystemDNSSetting(),
 			"fortios_fortimanager_system_ntp_setting":                  resourceFortimanagerSystemNTPSetting(),
+			"fortios_fortimanager_system_license_vm":                   resourceFortimanagerSystemLicenseVM(),
 		},
 
 		ConfigureFunc: providerConfigure,
