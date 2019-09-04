@@ -9,10 +9,10 @@ import (
 
 func resourceFortimanagerDVMDevice() *schema.Resource {
 	return &schema.Resource{
-		Create: AddFMGDVMDevice,
-		Read:   ReadFMGDVMDevice,
-		Update: UpdateFMGDVMDevice,
-		Delete: DeleteFMGDVMDevice,
+		Create: createFMGDVMDevice,
+		Read:   readFMGDVMDevice,
+		Update: updateFMGDVMDevice,
+		Delete: deleteFMGDVMDevice,
 
 		Schema: map[string]*schema.Schema{
 			"userid": &schema.Schema{
@@ -27,7 +27,7 @@ func resourceFortimanagerDVMDevice() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
-			"dev_name": &schema.Schema{
+			"device_name": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
 			},
@@ -35,20 +35,20 @@ func resourceFortimanagerDVMDevice() *schema.Resource {
 	}
 }
 
-func AddFMGDVMDevice(d *schema.ResourceData, m interface{}) error {
+func createFMGDVMDevice(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("AddDVMDevice")()
+	defer c.Trace("createFMGDVMDevice")()
 
 	//Build input data by sdk
-	i := &fortimngclient.JSONDVMDeviceAdd{
+	i := &fortimngclient.JSONDVMDeviceCreate{
 		UserId:   d.Get("userid").(string),
 		Passwd:   d.Get("password").(string),
 		Ipaddr:   d.Get("ipaddr").(string),
-		Name:     d.Get("dev_name").(string),
+		Name:     d.Get("device_name").(string),
 		MgmtMode: "fmg",
 	}
 
-	err := c.AddDVMDevice(i)
+	err := c.CreateDVMDevice(i)
 	if err != nil {
 		return fmt.Errorf("Error adding dvm device: %s", err)
 	}
@@ -58,9 +58,9 @@ func AddFMGDVMDevice(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-func DeleteFMGDVMDevice(d *schema.ResourceData, m interface{}) error {
+func deleteFMGDVMDevice(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("DeleteDVMDevice")()
+	defer c.Trace("deleteFMGDVMDevice")()
 
 	name := d.Id()
 
@@ -76,10 +76,10 @@ func DeleteFMGDVMDevice(d *schema.ResourceData, m interface{}) error {
 
 	return nil
 }
-func ReadFMGDVMDevice(d *schema.ResourceData, m interface{}) error {
+func readFMGDVMDevice(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-func UpdateFMGDVMDevice(d *schema.ResourceData, m interface{}) error {
+func updateFMGDVMDevice(d *schema.ResourceData, m interface{}) error {
 	return nil
 }

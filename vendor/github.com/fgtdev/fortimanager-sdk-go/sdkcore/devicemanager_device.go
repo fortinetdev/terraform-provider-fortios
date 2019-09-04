@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-type JSONDVMDeviceAdd struct {
+type JSONDVMDeviceCreate struct {
 	UserId   string `json:"adm_usr"`
 	Passwd   string `json:"adm_pass"`
 	Ipaddr   string `json:"ip"`
@@ -17,8 +17,8 @@ type JSONDVMDeviceDel struct {
 	Adom string `json:"adom"`
 }
 
-func (c *FortiMngClient) AddDVMDevice(params *JSONDVMDeviceAdd) (err error) {
-	defer c.Trace("AddDVMDevice")()
+func (c *FortiMngClient) CreateDVMDevice(params *JSONDVMDeviceCreate) (err error) {
+	defer c.Trace("CreateDVMDevice")()
 
 	data := map[string]interface{}{
 		"adom":   "root",
@@ -33,7 +33,7 @@ func (c *FortiMngClient) AddDVMDevice(params *JSONDVMDeviceAdd) (err error) {
 	_, err = c.Do("exec", p)
 
 	if err != nil {
-		return fmt.Errorf("AddDVMDevice failed: %s", err)
+		return fmt.Errorf("CreateDVMDevice failed: %s", err)
 	}
 
 	return
