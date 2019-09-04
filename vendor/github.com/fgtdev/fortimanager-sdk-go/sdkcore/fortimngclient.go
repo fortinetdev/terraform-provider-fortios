@@ -171,6 +171,21 @@ func (f *FortiMngClient) AccessRight2Str(ar int) (s string) {
 	return
 }
 
+func (f *FortiMngClient) RpcPermit2Str(i int) (s string) {
+	switch i {
+	case 0:
+		s = "read-write"
+	case 1:
+		s = "none"
+	case 2:
+		s = "read"
+	default:
+		log.Printf("[op2Str][Warning] not support number")
+	}
+
+	return
+}
+
 func (f *FortiMngClient) UserType2Str(ut int) (s string) {
 	switch ut {
 	case 0:
