@@ -5,15 +5,16 @@ import (
 	"log"
 
 	fortimngclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
+	"github.com/fgtdev/fortimanager-sdk-go/util"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
 func resourceFortimanagerSystemAdminUser() *schema.Resource {
 	return &schema.Resource{
-		Create: createFTMSystemAdminUser,
-		Read:   readFTMSystemAdminUser,
-		Update: updateFTMSystemAdminUser,
-		Delete: deleteFTMSystemAdminUser,
+		Create: createFMGSystemAdminUser,
+		Read:   readFMGSystemAdminUser,
+		Update: updateFMGSystemAdminUser,
+		Delete: deleteFMGSystemAdminUser,
 
 		Schema: map[string]*schema.Schema{
 			"userid": &schema.Schema{
@@ -29,9 +30,10 @@ func resourceFortimanagerSystemAdminUser() *schema.Resource {
 				Optional: true,
 			},
 			"user_type": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Default:  "local",
+				Type:         schema.TypeString,
+				Optional:     true,
+				Default:      "local",
+				ValidateFunc: util.ValidateStringIn("local", "radius", "ldap", "tacacs-plus", "pki-auth", "group"),
 			},
 			"profileid": &schema.Schema{
 				Type:     schema.TypeString,
@@ -39,9 +41,10 @@ func resourceFortimanagerSystemAdminUser() *schema.Resource {
 				Default:  "Restricted_User",
 			},
 			"rpc_permit": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Default:  "none",
+				Type:         schema.TypeString,
+				Optional:     true,
+				Default:      "none",
+				ValidateFunc: util.ValidateStringIn("none", "read", "read-write"),
 			},
 			"trusthost1": &schema.Schema{
 				Type:     schema.TypeString,
@@ -51,15 +54,20 @@ func resourceFortimanagerSystemAdminUser() *schema.Resource {
 			"trusthost2": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0.0.0.0 0.0.0.0",
+				Default:  "255.255.255.255 255.255.255.255",
+			},
+			"trusthost3": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "255.255.255.255 255.255.255.255",
 			},
 		},
 	}
 }
 
-func createFTMSystemAdminUser(d *schema.ResourceData, m interface{}) error {
+func createFMGSystemAdminUser(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("createFTMSystemAdminUser")()
+	defer c.Trace("createFMGSystemAdminUser")()
 
 	//Build input data by sdk
 	i := &fortimngclient.JSONSysAdminUser{
@@ -71,6 +79,7 @@ func createFTMSystemAdminUser(d *schema.ResourceData, m interface{}) error {
 		RpcPermit:   d.Get("rpc_permit").(string),
 		Trusthost1:  d.Get("trusthost1").(string),
 		Trusthost2:  d.Get("trusthost2").(string),
+		Trusthost3:  d.Get("trusthost3").(string),
 	}
 
 	err := c.CreateUpdateSystemAdminUser(i, "add")
@@ -80,12 +89,12 @@ func createFTMSystemAdminUser(d *schema.ResourceData, m interface{}) error {
 
 	d.SetId(i.UserId)
 
-	return readFTMSystemAdminUser(d, m)
+	return readFMGSystemAdminUser(d, m)
 }
 
-func readFTMSystemAdminUser(d *schema.ResourceData, m interface{}) error {
+func readFMGSystemAdminUser(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("readFTMSystemAdminUser")()
+	defer c.Trace("readFMGSystemAdminUser")()
 
 	userid := d.Id()
 	o, err := c.ReadSystemAdminUser(userid)
@@ -106,13 +115,14 @@ func readFTMSystemAdminUser(d *schema.ResourceData, m interface{}) error {
 	d.Set("rpc_permit", o.RpcPermit)
 	d.Set("trusthost1", o.Trusthost1)
 	d.Set("trusthost2", o.Trusthost2)
+	d.Set("trusthost3", o.Trusthost3)
 
 	return nil
 }
 
-func updateFTMSystemAdminUser(d *schema.ResourceData, m interface{}) error {
+func updateFMGSystemAdminUser(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("updateFTMSystemAdminUser")()
+	defer c.Trace("updateFMGSystemAdminUser")()
 
 	if d.HasChange("userid") {
 		return fmt.Errorf("the userid argument is the key and should not be modified here")
@@ -128,6 +138,7 @@ func updateFTMSystemAdminUser(d *schema.ResourceData, m interface{}) error {
 		RpcPermit:   d.Get("rpc_permit").(string),
 		Trusthost1:  d.Get("trusthost1").(string),
 		Trusthost2:  d.Get("trusthost2").(string),
+		Trusthost3:  d.Get("trusthost3").(string),
 	}
 
 	err := c.CreateUpdateSystemAdminUser(i, "update")
@@ -135,12 +146,12 @@ func updateFTMSystemAdminUser(d *schema.ResourceData, m interface{}) error {
 		return fmt.Errorf("Error updating System Admin User: %s", err)
 	}
 
-	return readFTMSystemAdminUser(d, m)
+	return readFMGSystemAdminUser(d, m)
 }
 
-func deleteFTMSystemAdminUser(d *schema.ResourceData, m interface{}) error {
+func deleteFMGSystemAdminUser(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("deleteFTMSystemAdminUser")()
+	defer c.Trace("deleteFMGSystemAdminUser")()
 
 	userid := d.Id()
 

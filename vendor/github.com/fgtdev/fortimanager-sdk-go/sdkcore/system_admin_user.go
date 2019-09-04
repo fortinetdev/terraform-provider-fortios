@@ -13,6 +13,7 @@ type JSONSysAdminUser struct {
 	RpcPermit   string `json:"rpc-permit"`
 	Trusthost1  string `json:"trusthost1"`
 	Trusthost2  string `json:"trusthost2"`
+	Trusthost3  string `json:"trusthost3"`
 }
 
 // Create and Update function
@@ -63,15 +64,12 @@ func (c *FortiMngClient) ReadSystemAdminUser(id string) (out *JSONSysAdminUser, 
 	if data["user_type"] != nil {
 		out.UserType = c.UserType2Str(int(data["user_type"].(float64)))
 	}
-
 	if data["profileid"] != nil {
 		out.ProfileId = data["profileid"].(string)
 	}
-
-	if data["rpc_permit"] != nil {
-		out.RpcPermit = c.AccessRight2Str(int(data["rpc_permit"].(float64)))
+	if data["rpc-permit"] != nil {
+		out.RpcPermit = c.RpcPermit2Str(int(data["rpc-permit"].(float64)))
 	}
-	// []string here, should be modified.....
 	if data["trusthost1"] != nil {
 		hosts := data["trusthost1"].([]interface{})
 		out.Trusthost1 = hosts[0].(string) + " " + hosts[1].(string)
@@ -80,7 +78,10 @@ func (c *FortiMngClient) ReadSystemAdminUser(id string) (out *JSONSysAdminUser, 
 		hosts := data["trusthost2"].([]interface{})
 		out.Trusthost2 = hosts[0].(string) + " " + hosts[1].(string)
 	}
-	// for password: encrypted? ...
+	if data["trusthost3"] != nil {
+		hosts := data["trusthost3"].([]interface{})
+		out.Trusthost3 = hosts[0].(string) + " " + hosts[1].(string)
+	}
 
 	return
 }
