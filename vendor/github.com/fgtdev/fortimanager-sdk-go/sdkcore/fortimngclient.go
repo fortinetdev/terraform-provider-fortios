@@ -377,6 +377,22 @@ func (f *FortiMngClient) FirewallObjectVipType2Str(c int) (s string) {
 	return
 }
 
+func (f *FortiMngClient) ScriptTarget2Str(c int) (s string) {
+	switch c {
+	case 0:
+		s = "device_database"
+	case 1:
+		s = "remote_device"
+	case 2:
+		s = "adom_database"
+
+	default:
+		log.Printf("[ScriptTarget2Str][Warning] not support number")
+	}
+
+	return
+}
+
 func (f *FortiMngClient) SetTmp(k string, v []string) {
 	Tmp[k] = v
 }
