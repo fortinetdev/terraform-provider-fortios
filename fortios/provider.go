@@ -94,6 +94,7 @@ func Provider() terraform.ResourceProvider {
 			"fortios_fortimanager_system_admin_user":                   resourceFortimanagerSystemAdminUser(),
 			"fortios_fortimanager_devicemanager_device":                resourceFortimanagerDVMDevice(),
 			"fortios_fortimanager_devicemanager_script":                resourceFortimanagerDVMScript(),
+			"fortios_fortimanager_devicemanager_script_execute":        resourceFortimanagerDVMScriptExecute(),
 			"fortios_fortimanager_devicemanager_install_device":        resourceFortimanagerDVMInstallDev(),
 			"fortios_fortimanager_devicemanager_install_policypackage": resourceFortimanagerDVMInstallPolicyPackage(),
 			"fortios_fortimanager_firewall_security_policy":            resourceFortimanagerFirewallSecurityPolicy(),
