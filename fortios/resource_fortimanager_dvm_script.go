@@ -5,15 +5,16 @@ import (
 	"log"
 
 	fortimngclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
+	"github.com/fgtdev/fortimanager-sdk-go/util"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
 func resourceFortimanagerDVMScript() *schema.Resource {
 	return &schema.Resource{
-		Create: createFTMDVMScript,
-		Read:   readFTMDVMScript,
-		Update: updateFTMDVMScript,
-		Delete: deleteFTMDVMScript,
+		Create: createFMGDVMScript,
+		Read:   readFMGDVMScript,
+		Update: updateFMGDVMScript,
+		Delete: deleteFMGDVMScript,
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
@@ -28,27 +29,26 @@ func resourceFortimanagerDVMScript() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
-			"execute": &schema.Schema{
-				Type:     schema.TypeBool,
-				Optional: true,
-			},
-			"exec_target": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+			"target": &schema.Schema{
+				Type:         schema.TypeString,
+				Optional:     true,
+				Default:      "device_database",
+				ValidateFunc: util.ValidateStringIn("device_database", "remote_device", "adom_database"),
 			},
 		},
 	}
 }
 
-func createFTMDVMScript(d *schema.ResourceData, m interface{}) error {
+func createFMGDVMScript(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("createFTMDVMScript")()
+	defer c.Trace("createFMGDVMScript")()
 
 	//Build input data by sdk
 	i := &fortimngclient.JSONDVMScript{
 		Name:        d.Get("name").(string),
 		Description: d.Get("description").(string),
 		Content:     d.Get("content").(string),
+		Target:      d.Get("target").(string),
 		Type:        "cli",
 	}
 
@@ -59,30 +59,12 @@ func createFTMDVMScript(d *schema.ResourceData, m interface{}) error {
 
 	d.SetId(i.Name)
 
-	if d.Get("execute").(bool) {
-		target := d.Get("exec_target").(string)
-		if target == "" {
-			return fmt.Errorf("exec_target should be set when execute is true: %s", err)
-		}
-
-		params := &fortimngclient.JSONDVMScriptExecute{
-			Target:     target,
-			ScriptName: d.Get("name").(string),
-		}
-
-		err := c.ExecuteDVMScript(params)
-
-		if err != nil {
-			return fmt.Errorf("Error executing devicemanager script: %s", err)
-		}
-	}
-
-	return readFTMDVMScript(d, m)
+	return readFMGDVMScript(d, m)
 }
 
-func readFTMDVMScript(d *schema.ResourceData, m interface{}) error {
+func readFMGDVMScript(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("readFTMDVMScript")()
+	defer c.Trace("readFMGDVMScript")()
 
 	name := d.Id()
 	o, err := c.ReadDVMScript(name)
@@ -99,13 +81,14 @@ func readFTMDVMScript(d *schema.ResourceData, m interface{}) error {
 	d.Set("name", o.Name)
 	d.Set("description", o.Description)
 	d.Set("content", o.Content)
+	d.Set("target", o.Target)
 
 	return nil
 }
 
-func updateFTMDVMScript(d *schema.ResourceData, m interface{}) error {
+func updateFMGDVMScript(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("updateFTMDVMScript")()
+	defer c.Trace("updateFMGDVMScript")()
 
 	if d.HasChange("name") {
 		return fmt.Errorf("the name argument is the key and should not be modified here")
@@ -116,6 +99,7 @@ func updateFTMDVMScript(d *schema.ResourceData, m interface{}) error {
 		Name:        d.Get("name").(string),
 		Description: d.Get("description").(string),
 		Content:     d.Get("content").(string),
+		Target:      d.Get("target").(string),
 		Type:        "cli",
 	}
 
@@ -124,30 +108,12 @@ func updateFTMDVMScript(d *schema.ResourceData, m interface{}) error {
 		return fmt.Errorf("Error updating devicemanager script: %s", err)
 	}
 
-	if d.Get("execute").(bool) {
-		target := d.Get("exec_target").(string)
-		if target == "" {
-			return fmt.Errorf("exec_target should be set when execute is true: %s", err)
-		}
-
-		params := &fortimngclient.JSONDVMScriptExecute{
-			Target:     target,
-			ScriptName: d.Get("name").(string),
-		}
-
-		err := c.ExecuteDVMScript(params)
-
-		if err != nil {
-			return fmt.Errorf("Error executing devicemanager script: %s", err)
-		}
-	}
-
-	return readFTMDVMScript(d, m)
+	return readFMGDVMScript(d, m)
 }
 
-func deleteFTMDVMScript(d *schema.ResourceData, m interface{}) error {
+func deleteFMGDVMScript(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("deleteFTMDVMScript")()
+	defer c.Trace("deleteFMGDVMScript")()
 
 	name := d.Id()
 
