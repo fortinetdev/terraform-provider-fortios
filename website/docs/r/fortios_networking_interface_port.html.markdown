@@ -17,7 +17,7 @@ provider "fortios" {
 }
 
 resource "fortios_networking_interface_port" "loopback1" {
-	ip = "23.123.33.10/24"
+	ip = "23.123.33.10 255.255.255.0"
 	allowaccess = "ping http"
 	alias = "cc1"
 	description = "description"
@@ -46,7 +46,7 @@ resource "fortios_networking_interface_port" "vlan1" {
 	vlanid = "3"
 	name = "myinterface2"
 	vdom = "root"
-	ip = "3.123.33.10/24"
+	ip = "3.123.33.10 255.255.255.0"
 	interface = "port2"
 	allowaccess = "ping"
 }
@@ -61,7 +61,7 @@ provider "fortios" {
 
 resource "fortios_networking_interface_port" "test1" {
 	name = "port2"
-	ip = "93.133.133.110/24"
+	ip = "93.133.133.110 255.255.255.0"
 	alias = "dkeeew"
 	description = "description"
 	status = "up"
@@ -85,7 +85,7 @@ The following arguments are supported:
 
 * `name` - (Required) If the interface is physical, the argument is the name of the interface.
 * `type` - (Required) Interface type (support physical, vlan, loopback).
-* `ip` - Interface IPv4 address and subnet mask, syntax` - X.X.X.X/24.
+* `ip` - Interface IPv4 address and subnet mask, syntax` - X.X.X.X X.X.X.X.
 * `alias` - Alias will be displayed with the interface name to make it easier to distinguish.
 * `status` - Bring the interface up or shut the interface down.
 * `device_identification` - Enable/disable passively gathering of device identity information about the devices on the network connected to this interface.
@@ -109,7 +109,7 @@ The following arguments are supported:
 The following attributes are exported:
 
 * `id` - The Name of the interface.
-* `ip` - Interface IPv4 address and subnet mask, syntax` - X.X.X.X/24.
+* `ip` - Interface IPv4 address and subnet mask, syntax` - X.X.X.X X.X.X.X.
 * `alias` - Alias will be displayed with the interface name to make it easier to distinguish.
 * `status` - Bring the interface up or shut the interface down.
 * `device_identification` - Enable/disable passively gathering of device identity information about the devices on the network connected to this interface.

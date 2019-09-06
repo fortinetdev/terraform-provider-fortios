@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/fgtdev/fortios-sdk-go/sdkcore"
+	forticlient "github.com/fgtdev/fortios-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -31,7 +31,7 @@ func resourceNetworkingInterfacePort() *schema.Resource {
 			"ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0.0.0.0",
+				Default:  "0.0.0.0 0.0.0.0",
 			},
 			"alias": &schema.Schema{
 				Type:     schema.TypeString,
