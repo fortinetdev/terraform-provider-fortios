@@ -5,7 +5,8 @@ import (
 )
 
 type JSONDVMInstallDev struct {
-	Name string `json:"name"`
+	Name    string `json:"name"`
+	Timeout int
 }
 
 func (c *FortiMngClient) CreateDVMInstallDev(params *JSONDVMInstallDev) (err error) {
@@ -24,10 +25,27 @@ func (c *FortiMngClient) CreateDVMInstallDev(params *JSONDVMInstallDev) (err err
 		"url":  "/securityconsole/install/device",
 	}
 
-	_, err = c.Do("exec", p)
+	result, err := c.Do("exec", p)
 
 	if err != nil {
 		err = fmt.Errorf("CreateDVMInstallDev failed: %s", err)
+		return
+	}
+
+	data := (result["result"].([]interface{}))[0].(map[string]interface{})["data"].(map[string]interface{})
+	if data == nil {
+		err = fmt.Errorf("cannot get the results from the response")
+		return
+	}
+
+	if data["task"] != nil {
+		taskid := int(data["task"].(float64))
+		err = c.QueryTask(taskid, params.Timeout)
+		if err != nil {
+			return err
+		}
+	} else {
+		err = fmt.Errorf("cannot get the task id after executing the script")
 		return
 	}
 
