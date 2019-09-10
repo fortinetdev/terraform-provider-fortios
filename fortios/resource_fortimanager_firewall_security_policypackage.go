@@ -10,10 +10,10 @@ import (
 
 func resourceFortimanagerFirewallSecurityPolicyPackage() *schema.Resource {
 	return &schema.Resource{
-		Create: createFTMFirewallSecurityPolicyPackage,
-		Read:   readFTMFirewallSecurityPolicyPackage,
-		Update: updateFTMFirewallSecurityPolicyPackage,
-		Delete: deleteFTMFirewallSecurityPolicyPackage,
+		Create: createFMGFirewallSecurityPolicyPackage,
+		Read:   readFMGFirewallSecurityPolicyPackage,
+		Update: updateFMGFirewallSecurityPolicyPackage,
+		Delete: deleteFMGFirewallSecurityPolicyPackage,
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
@@ -28,9 +28,9 @@ func resourceFortimanagerFirewallSecurityPolicyPackage() *schema.Resource {
 	}
 }
 
-func createFTMFirewallSecurityPolicyPackage(d *schema.ResourceData, m interface{}) error {
+func createFMGFirewallSecurityPolicyPackage(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("createFTMFirewallSecurityPolicyPackage")()
+	defer c.Trace("createFMGFirewallSecurityPolicyPackage")()
 
 	i := &fortimngclient.JSONFirewallSecurityPolicyPackage{
 		Name:   d.Get("name").(string),
@@ -44,12 +44,12 @@ func createFTMFirewallSecurityPolicyPackage(d *schema.ResourceData, m interface{
 
 	d.SetId(i.Name)
 
-	return readFTMFirewallSecurityPolicyPackage(d, m)
+	return readFMGFirewallSecurityPolicyPackage(d, m)
 }
 
-func readFTMFirewallSecurityPolicyPackage(d *schema.ResourceData, m interface{}) error {
+func readFMGFirewallSecurityPolicyPackage(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("readFTMFirewallSecurityPolicyPackage")()
+	defer c.Trace("readFMGFirewallSecurityPolicyPackage")()
 
 	name := d.Id()
 
@@ -70,9 +70,9 @@ func readFTMFirewallSecurityPolicyPackage(d *schema.ResourceData, m interface{})
 	return nil
 }
 
-func updateFTMFirewallSecurityPolicyPackage(d *schema.ResourceData, m interface{}) error {
+func updateFMGFirewallSecurityPolicyPackage(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("updateFTMFirewallSecurtyPolicyPackage")()
+	defer c.Trace("updateFMGFirewallSecurtyPolicyPackage")()
 
 	if d.HasChange("name") {
 		return fmt.Errorf("the name argument is the key and should not be modified here")
@@ -88,12 +88,12 @@ func updateFTMFirewallSecurityPolicyPackage(d *schema.ResourceData, m interface{
 		return fmt.Errorf("Error updating firewall security policy package: %s", err)
 	}
 
-	return readFTMFirewallSecurityPolicyPackage(d, m)
+	return readFMGFirewallSecurityPolicyPackage(d, m)
 }
 
-func deleteFTMFirewallSecurityPolicyPackage(d *schema.ResourceData, m interface{}) error {
+func deleteFMGFirewallSecurityPolicyPackage(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("deleteFTMFirewallSecurityPolicyPackage")()
+	defer c.Trace("deleteFMGFirewallSecurityPolicyPackage")()
 
 	name := d.Id()
 
