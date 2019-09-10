@@ -2,18 +2,17 @@ package fortimngclient
 
 import (
 	"fmt"
-	"strconv"
 )
 
-type JSONSystemSyslog struct {
+type JSONSystemSyslogServer struct {
 	Name string `json:"name"`
 	Ip   string `json:"ip"`
-	Port string `json:"port"`
+	Port int    `json:"port"`
 }
 
 // Create and Update function
-func (c *FortiMngClient) CreateUpdateSystemSyslog(params *JSONSystemSyslog, method string) (err error) {
-	defer c.Trace("CreateUpdateSystemSyslog")()
+func (c *FortiMngClient) CreateUpdateSystemSyslogServer(params *JSONSystemSyslogServer, method string) (err error) {
+	defer c.Trace("CreateUpdateSystemSyslogServer")()
 
 	p := map[string]interface{}{
 		"data": *params,
@@ -23,15 +22,15 @@ func (c *FortiMngClient) CreateUpdateSystemSyslog(params *JSONSystemSyslog, meth
 	_, err = c.Do(method, p)
 
 	if err != nil {
-		err = fmt.Errorf("CreateUpdateSystemSyslog failed: %s", err)
+		err = fmt.Errorf("CreateUpdateSystemSyslogServer failed: %s", err)
 		return
 	}
 
 	return
 }
 
-func (c *FortiMngClient) ReadSystemSyslog(name string) (out *JSONSystemSyslog, err error) {
-	defer c.Trace("ReadSystemSyslog")()
+func (c *FortiMngClient) ReadSystemSyslogServer(name string) (out *JSONSystemSyslogServer, err error) {
+	defer c.Trace("ReadSystemSyslogServer")()
 
 	p := map[string]interface{}{
 		"url": "/cli/global/system/syslog/" + name,
@@ -39,7 +38,7 @@ func (c *FortiMngClient) ReadSystemSyslog(name string) (out *JSONSystemSyslog, e
 
 	result, err := c.Do("get", p)
 	if err != nil {
-		err = fmt.Errorf("ReadSystemSyslog failed :%s", err)
+		err = fmt.Errorf("ReadSystemSyslogServer failed :%s", err)
 		return
 	}
 
@@ -49,7 +48,7 @@ func (c *FortiMngClient) ReadSystemSyslog(name string) (out *JSONSystemSyslog, e
 		return
 	}
 
-	out = &JSONSystemSyslog{}
+	out = &JSONSystemSyslogServer{}
 	if data["name"] != nil {
 		out.Name = data["name"].(string)
 	}
@@ -57,14 +56,14 @@ func (c *FortiMngClient) ReadSystemSyslog(name string) (out *JSONSystemSyslog, e
 		out.Ip = data["ip"].(string)
 	}
 	if data["port"] != nil {
-		out.Port = strconv.Itoa(int(data["port"].(float64)))
+		out.Port = int(data["port"].(float64))
 	}
 
 	return
 }
 
-func (c *FortiMngClient) DeleteSystemSyslog(name string) (err error) {
-	defer c.Trace("DeleteSystemSyslog")()
+func (c *FortiMngClient) DeleteSystemSyslogServer(name string) (err error) {
+	defer c.Trace("DeleteSystemSyslogServer")()
 
 	p := map[string]interface{}{
 		"url": "/cli/global/system/syslog/" + name,
@@ -72,7 +71,7 @@ func (c *FortiMngClient) DeleteSystemSyslog(name string) (err error) {
 
 	_, err = c.Do("delete", p)
 	if err != nil {
-		err = fmt.Errorf("DeleteSystemSyslog failed :%s", err)
+		err = fmt.Errorf("DeleteSystemSyslogServer failed :%s", err)
 		return
 	}
 
