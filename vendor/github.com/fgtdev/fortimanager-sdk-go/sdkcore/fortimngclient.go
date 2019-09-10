@@ -393,6 +393,34 @@ func (f *FortiMngClient) ScriptTarget2Str(c int) (s string) {
 	return
 }
 
+func (f *FortiMngClient) LogTraffic2Str(c int) (s string) {
+	switch c {
+	case 0:
+		s = "disable"
+	case 2:
+		s = "all"
+	case 3:
+		s = "utm"
+	default:
+		log.Printf("[LogTraffic2Str][Warning] not support number")
+	}
+
+	return
+}
+
+func (f *FortiMngClient) ProfileType2Str(c int) (s string) {
+	switch c {
+	case 0:
+		s = "single"
+	case 1:
+		s = "group"
+	default:
+		log.Printf("[ProfileType2Str][Warning] not support number")
+	}
+
+	return
+}
+
 func (f *FortiMngClient) SetTmp(k string, v []string) {
 	Tmp[k] = v
 }
