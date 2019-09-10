@@ -9,26 +9,33 @@ import (
 
 func resourceFortimanagerDVMInstallPolicyPackage() *schema.Resource {
 	return &schema.Resource{
-		Create: createFTMDVMInstallPolicyPackage,
-		Read:   readFTMDVMInstallPolicyPackage,
-		Update: updateFTMDVMInstallPolicyPackage,
-		Delete: deleteFTMDVMInstallPolicyPackage,
+		Create: createFMGDVMInstallPolicyPackage,
+		Read:   readFMGDVMInstallPolicyPackage,
+		Update: updateFMGDVMInstallPolicyPackage,
+		Delete: deleteFMGDVMInstallPolicyPackage,
 
 		Schema: map[string]*schema.Schema{
 			"package_name": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"timeout": &schema.Schema{
+				Type:        schema.TypeInt,
+				Optional:    true,
+				Default:     3,
+				Description: "Timeout for installing the package to the target, default: 3 minutes",
+			},
 		},
 	}
 }
 
-func createFTMDVMInstallPolicyPackage(d *schema.ResourceData, m interface{}) error {
+func createFMGDVMInstallPolicyPackage(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("createFTMDVMInstallPolicyPackage")()
+	defer c.Trace("createFMGDVMInstallPolicyPackage")()
 
 	i := &fortimngclient.JSONDVMInstallPolicyPackage{
-		Name: d.Get("package_name").(string),
+		Name:    d.Get("package_name").(string),
+		Timeout: d.Get("timeout").(int),
 	}
 
 	err := c.CreateDVMInstallPolicyPackage(i)
@@ -41,17 +48,17 @@ func createFTMDVMInstallPolicyPackage(d *schema.ResourceData, m interface{}) err
 	return nil
 }
 
-func readFTMDVMInstallPolicyPackage(d *schema.ResourceData, m interface{}) error {
+func readFMGDVMInstallPolicyPackage(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-func updateFTMDVMInstallPolicyPackage(d *schema.ResourceData, m interface{}) error {
+func updateFMGDVMInstallPolicyPackage(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-func deleteFTMDVMInstallPolicyPackage(d *schema.ResourceData, m interface{}) error {
+func deleteFMGDVMInstallPolicyPackage(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("deleteFTMDVMInstallPolicyPackage")()
+	defer c.Trace("deleteFMGDVMInstallPolicyPackage")()
 
 	d.SetId("")
 

@@ -21,6 +21,9 @@ func (c *FortiMngClient) QueryTask(task, timeout int) (err error) {
 		if err != nil {
 			return err
 		}
+		if ret == nil {
+			continue
+		}
 		if ret.err != 0 {
 			return fmt.Errorf("Executing script failed, detail: %s", ret.detail)
 		}
@@ -47,6 +50,11 @@ func (c *FortiMngClient) queryTask(task int) (query_ret *QueryResult, err error)
 	result, err := c.Do("get", p)
 	if err != nil {
 		return nil, fmt.Errorf("queryTask failed :%s", err)
+	}
+
+	// data maybe empty if query too quickly
+	if len((result["result"].([]interface{}))[0].(map[string]interface{})["data"].([]interface{})) == 0 {
+		return nil, nil
 	}
 
 	data := ((result["result"].([]interface{}))[0].(map[string]interface{})["data"].([]interface{}))[0].(map[string]interface{})
