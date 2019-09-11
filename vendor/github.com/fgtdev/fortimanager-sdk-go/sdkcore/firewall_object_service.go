@@ -5,10 +5,19 @@ import (
 )
 
 type JSONFirewallObjectService struct {
-	Name     string `json:"name"`
-	Comment  string `json:"comment"`
-	Category string `json:"category"`
-	Protocol string `json:"protocol"`
+	Name          string   `json:"name"`
+	Comment       string   `json:"comment"`
+	Category      string   `json:"category"`
+	Protocol      string   `json:"protocol"`
+	Proxy         string   `json:"proxy"`
+	Fqdn          string   `json:"fqdn"`
+	Iprange       string   `json:"iprange"`
+	TcpPortRange  []string `json:"tcp-portrange"`
+	UdpPortRange  []string `json:"udp-portrange"`
+	SctpPortRange []string `json:"sctp-portrange"`
+	IcmpCode      int      `json:"icmpcode"`
+	IcmpType      int      `json:"icmptype"`
+	ProtocolNum   int      `json:"protocol-number"`
 }
 
 // Create and Update function
@@ -63,6 +72,33 @@ func (c *FortiMngClient) ReadFirewallObjectService(name string) (out *JSONFirewa
 		m := c.InterfaceArray2StrArray(data["category"].([]interface{}))
 		// only 1 item is allowed here
 		out.Category = m[0]
+	}
+	if data["proxy"] != nil {
+		out.Proxy = c.ControlSwitch2Str(int(data["proxy"].(float64)))
+	}
+	if data["fqdn"] != nil {
+		out.Fqdn = data["fqdn"].(string)
+	}
+	if data["iprange"] != nil {
+		out.Iprange = data["iprange"].(string)
+	}
+	if data["tcp-portrange"] != nil {
+		out.TcpPortRange = c.InterfaceArray2StrArray(data["tcp-portrange"].([]interface{}))
+	}
+	if data["udp-portrange"] != nil {
+		out.UdpPortRange = c.InterfaceArray2StrArray(data["udp-portrange"].([]interface{}))
+	}
+	if data["sctp-portrange"] != nil {
+		out.SctpPortRange = c.InterfaceArray2StrArray(data["sctp-portrange"].([]interface{}))
+	}
+	if data["icmpcode"] != nil {
+		out.IcmpCode = int(data["icmpcode"].(float64))
+	}
+	if data["icmptype"] != nil {
+		out.IcmpType = int(data["icmptype"].(float64))
+	}
+	if data["protocol-number"] != nil {
+		out.ProtocolNum = int(data["protocol-number"].(float64))
 	}
 
 	return
