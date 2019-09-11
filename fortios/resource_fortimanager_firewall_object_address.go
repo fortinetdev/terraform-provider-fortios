@@ -5,15 +5,16 @@ import (
 	"log"
 
 	fortimngclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
+	"github.com/fgtdev/fortimanager-sdk-go/util"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
 func resourceFortimanagerFirewallObjectAddress() *schema.Resource {
 	return &schema.Resource{
-		Create: createFTMFirewallObjectAddress,
-		Read:   readFTMFirewallObjectAddress,
-		Update: updateFTMFirewallObjectAddress,
-		Delete: deleteFTMFirewallObjectAddress,
+		Create: createFMGFirewallObjectAddress,
+		Read:   readFMGFirewallObjectAddress,
+		Update: updateFMGFirewallObjectAddress,
+		Delete: deleteFMGFirewallObjectAddress,
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
@@ -21,8 +22,10 @@ func resourceFortimanagerFirewallObjectAddress() *schema.Resource {
 				Required: true,
 			},
 			"type": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Type:         schema.TypeString,
+				Optional:     true,
+				Default:      "ipmask",
+				ValidateFunc: util.ValidateStringIn("ipmask", "iprange", "fqdn"),
 			},
 			"comment": &schema.Schema{
 				Type:     schema.TypeString,
@@ -35,14 +38,36 @@ func resourceFortimanagerFirewallObjectAddress() *schema.Resource {
 			"associated_intf": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Default:  "any",
+			},
+			"subnet": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "0.0.0.0 0.0.0.0",
+			},
+			"start_ip": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "0.0.0.0",
+			},
+			"end_ip": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "255.255.255.255",
+			},
+			"allow_routing": &schema.Schema{
+				Type:         schema.TypeString,
+				Optional:     true,
+				Default:      "disable",
+				ValidateFunc: util.ValidateStringIn("enable", "disable"),
 			},
 		},
 	}
 }
 
-func createFTMFirewallObjectAddress(d *schema.ResourceData, m interface{}) error {
+func createFMGFirewallObjectAddress(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("createFTMFirewallObjectAddress")()
+	defer c.Trace("createFMGFirewallObjectAddress")()
 
 	i := &fortimngclient.JSONFirewallObjectAddress{
 		Name:           d.Get("name").(string),
@@ -50,6 +75,10 @@ func createFTMFirewallObjectAddress(d *schema.ResourceData, m interface{}) error
 		Comment:        d.Get("comment").(string),
 		Fqdn:           d.Get("fqdn").(string),
 		AssociatedIntf: d.Get("associated_intf").(string),
+		Subnet:         d.Get("subnet").(string),
+		StartIp:        d.Get("start_ip").(string),
+		EndIp:          d.Get("end_ip").(string),
+		AllowRouting:   d.Get("allow_routing").(string),
 	}
 
 	err := c.CreateUpdateFirewallObjectAddress(i, "add")
@@ -59,12 +88,12 @@ func createFTMFirewallObjectAddress(d *schema.ResourceData, m interface{}) error
 
 	d.SetId(i.Name)
 
-	return readFTMFirewallObjectAddress(d, m)
+	return readFMGFirewallObjectAddress(d, m)
 }
 
-func readFTMFirewallObjectAddress(d *schema.ResourceData, m interface{}) error {
+func readFMGFirewallObjectAddress(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("readFTMFirewallObjectAddress")()
+	defer c.Trace("readFMGFirewallObjectAddress")()
 
 	name := d.Id()
 	o, err := c.ReadFirewallObjectAddress(name)
@@ -79,17 +108,25 @@ func readFTMFirewallObjectAddress(d *schema.ResourceData, m interface{}) error {
 	}
 
 	d.Set("name", o.Name)
-	d.Set("type", o.Type)
 	d.Set("comment", o.Comment)
-	d.Set("fqdn", o.Fqdn)
-	d.Set("associated-intf", o.AssociatedIntf)
+	d.Set("type", o.Type)
+	d.Set("associated_intf", o.AssociatedIntf)
+	if o.Type == "fqdn" {
+		d.Set("fqdn", o.Fqdn)
+	} else if o.Type == "ipmask" {
+		d.Set("subnet", o.Subnet)
+		d.Set("allow_routing", o.AllowRouting)
+	} else if o.Type == "iprange" {
+		d.Set("start_ip", o.StartIp)
+		d.Set("end_id", o.EndIp)
+	}
 
 	return nil
 }
 
-func updateFTMFirewallObjectAddress(d *schema.ResourceData, m interface{}) error {
+func updateFMGFirewallObjectAddress(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("updateFTMFirewallObjectAddress")()
+	defer c.Trace("updateFMGFirewallObjectAddress")()
 
 	if d.HasChange("name") {
 		return fmt.Errorf("the name argument is the key and should not be modified here")
@@ -101,6 +138,10 @@ func updateFTMFirewallObjectAddress(d *schema.ResourceData, m interface{}) error
 		Comment:        d.Get("comment").(string),
 		Fqdn:           d.Get("fqdn").(string),
 		AssociatedIntf: d.Get("associated_intf").(string),
+		Subnet:         d.Get("subnet").(string),
+		StartIp:        d.Get("start_ip").(string),
+		EndIp:          d.Get("end_ip").(string),
+		AllowRouting:   d.Get("allow_routing").(string),
 	}
 
 	err := c.CreateUpdateFirewallObjectAddress(i, "update")
@@ -108,12 +149,12 @@ func updateFTMFirewallObjectAddress(d *schema.ResourceData, m interface{}) error
 		return fmt.Errorf("Error updating Firewall Object Address: %s", err)
 	}
 
-	return readFTMFirewallObjectAddress(d, m)
+	return readFMGFirewallObjectAddress(d, m)
 }
 
-func deleteFTMFirewallObjectAddress(d *schema.ResourceData, m interface{}) error {
+func deleteFMGFirewallObjectAddress(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("deleteFTMFirewallObjectAddress")()
+	defer c.Trace("deleteFMGFirewallObjectAddress")()
 
 	name := d.Id()
 
