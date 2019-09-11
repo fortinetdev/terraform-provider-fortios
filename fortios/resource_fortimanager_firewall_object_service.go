@@ -4,7 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	fortimngclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
+	fmgclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
+	"github.com/fgtdev/fortimanager-sdk-go/util"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -14,6 +15,10 @@ func resourceFortimanagerFirewallObjectService() *schema.Resource {
 		Read:   readFTMFirewallObjectService,
 		Update: updateFTMFirewallObjectService,
 		Delete: deleteFTMFirewallObjectService,
+
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
@@ -25,13 +30,63 @@ func resourceFortimanagerFirewallObjectService() *schema.Resource {
 				Optional: true,
 			},
 			"category": &schema.Schema{
+				Type:         schema.TypeString,
+				Optional:     true,
+				Default:      "",
+				ValidateFunc: util.ValidateStringIn("", "File Access", "Authentication", "Email", "General", "Network Services", "Remote Access", "Tunneling", "VoIP, Messaging & Other Applications", "Web Access", "Web Proxy"),
+			},
+			"protocol": &schema.Schema{
+				Type:         schema.TypeString,
+				Optional:     true,
+				Default:      "TCP/UDP/SCTP",
+				ValidateFunc: util.ValidateStringIn("TCP/UDP/SCTP", "ICMP", "ICMP6", "IP"),
+			},
+			"proxy": &schema.Schema{
+				Type:         schema.TypeString,
+				Optional:     true,
+				Default:      "disable",
+				ValidateFunc: util.ValidateStringIn("disable", "enable"),
+			},
+			"fqdn": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 			},
-			"protocol": &schema.Schema{
+			"iprange": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "TCP/UDP/SCTP",
+			},
+			"tcp_portrange": &schema.Schema{
+				Type: schema.TypeList,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
+				Optional: true,
+			},
+			"udp_portrange": &schema.Schema{
+				Type: schema.TypeList,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
+				Optional: true,
+			},
+			"sctp_portrange": &schema.Schema{
+				Type: schema.TypeList,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
+				Optional: true,
+			},
+			"icmp_type": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+			},
+			"icmp_code": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+			},
+			"protocol_number": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
 			},
 		},
 	}
@@ -41,11 +96,20 @@ func createFTMFirewallObjectService(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).ClientFortimanager
 	defer c.Trace("createFTMFirewallObjectService")()
 
-	i := &fortimngclient.JSONFirewallObjectService{
-		Name:     d.Get("name").(string),
-		Comment:  d.Get("comment").(string),
-		Category: d.Get("category").(string),
-		Protocol: d.Get("protocol").(string),
+	i := &fmgclient.JSONFirewallObjectService{
+		Name:          d.Get("name").(string),
+		Comment:       d.Get("comment").(string),
+		Category:      d.Get("category").(string),
+		Protocol:      d.Get("protocol").(string),
+		Proxy:         d.Get("proxy").(string),
+		Fqdn:          d.Get("fqdn").(string),
+		Iprange:       d.Get("iprange").(string),
+		TcpPortRange:  util.InterfaceArray2StrArray(d.Get("tcp_portrange").([]interface{})),
+		UdpPortRange:  util.InterfaceArray2StrArray(d.Get("udp_portrange").([]interface{})),
+		SctpPortRange: util.InterfaceArray2StrArray(d.Get("sctp_portrange").([]interface{})),
+		IcmpCode:      d.Get("icmp_code").(int),
+		IcmpType:      d.Get("icmp_type").(int),
+		ProtocolNum:   d.Get("protocol_number").(int),
 	}
 
 	err := c.CreateUpdateFirewallObjectService(i, "add")
@@ -78,6 +142,19 @@ func readFTMFirewallObjectService(d *schema.ResourceData, m interface{}) error {
 	d.Set("comment", o.Comment)
 	d.Set("protocol", o.Protocol)
 	d.Set("category", o.Category)
+	d.Set("proxy", o.Proxy)
+	if o.Protocol == "TCP/UDP/SCTP" {
+		d.Set("fqdn", o.Fqdn)
+		d.Set("iprange", o.Iprange)
+		d.Set("tcp_portrange", o.TcpPortRange)
+		d.Set("udp_portrange", o.UdpPortRange)
+		d.Set("sctp_portrange", o.SctpPortRange)
+	} else if o.Protocol == "ICMP" || o.Protocol == "ICMP6" {
+		d.Set("icmp_type", o.IcmpType)
+		d.Set("icmp_code", o.IcmpCode)
+	} else if o.Protocol == "IP" {
+		d.Set("protocol_number", o.ProtocolNum)
+	}
 
 	return nil
 }
@@ -89,12 +166,24 @@ func updateFTMFirewallObjectService(d *schema.ResourceData, m interface{}) error
 	if d.HasChange("name") {
 		return fmt.Errorf("the name argument is the key and should not be modified here")
 	}
+	if d.HasChange("proxy") {
+		return fmt.Errorf("proxy can't be modified once the service is created")
+	}
 
-	i := &fortimngclient.JSONFirewallObjectService{
-		Name:     d.Get("name").(string),
-		Comment:  d.Get("comment").(string),
-		Category: d.Get("category").(string),
-		Protocol: d.Get("protocol").(string),
+	i := &fmgclient.JSONFirewallObjectService{
+		Name:          d.Get("name").(string),
+		Comment:       d.Get("comment").(string),
+		Category:      d.Get("category").(string),
+		Protocol:      d.Get("protocol").(string),
+		Proxy:         d.Get("proxy").(string),
+		Fqdn:          d.Get("fqdn").(string),
+		Iprange:       d.Get("iprange").(string),
+		TcpPortRange:  util.InterfaceArray2StrArray(d.Get("tcp_portrange").([]interface{})),
+		UdpPortRange:  util.InterfaceArray2StrArray(d.Get("udp_portrange").([]interface{})),
+		SctpPortRange: util.InterfaceArray2StrArray(d.Get("sctp_portrange").([]interface{})),
+		IcmpCode:      d.Get("icmp_code").(int),
+		IcmpType:      d.Get("icmp_type").(int),
+		ProtocolNum:   d.Get("protocol_number").(int),
 	}
 
 	err := c.CreateUpdateFirewallObjectService(i, "update")
