@@ -2,16 +2,15 @@ package fortimngclient
 
 import (
 	"fmt"
-	"strconv"
 )
 
 type JSONSystemNetworkInterface struct {
 	Name          string   `json:"name"`
-	Ip            string   `json:"ip"`
-	Status        string   `json:"status"`
-	Description   string   `json:"description"`
-	AllowAccess   []string `json:"allowaccess"`
-	ServiceAccess []string `json:"serviceaccess"`
+	Ip            string   `json:"ip,omitempty"`
+	Status        string   `json:"status,omitempty"`
+	Description   string   `json:"description,omitempty"`
+	AllowAccess   []string `json:"allowaccess,omitempty"`
+	ServiceAccess []string `json:"serviceaccess,omitempty"`
 }
 
 func (c *FortiMngClient) UpdateSystemNetworkInterface(params *JSONSystemNetworkInterface) (err error) {
@@ -65,12 +64,14 @@ func (c *FortiMngClient) ReadSystemNetworkInterface(name string) (out *JSONSyste
 	if data["status"] != nil {
 		out.Status = c.IntfStatus2Str(int(data["status"].(float64)))
 	}
-	if data["allowaccess"] != nil {
-		out.AllowAccess = c.Tmp(strconv.Itoa(int(data["allowaccess"].(float64))))
-	}
-	if data["serviceaccess"] != nil {
-		out.ServiceAccess = c.Tmp1(strconv.Itoa(int(data["serviceaccess"].(float64))))
-	}
+	/*
+		if data["allowaccess"] != nil {
+			out.AllowAccess = c.Tmp(strconv.Itoa(int(data["allowaccess"].(float64))))
+		}
+		if data["serviceaccess"] != nil {
+			out.ServiceAccess = c.Tmp1(strconv.Itoa(int(data["serviceaccess"].(float64))))
+		}
+	*/
 
 	return
 }
