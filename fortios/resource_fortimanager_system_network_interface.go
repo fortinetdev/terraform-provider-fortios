@@ -3,18 +3,18 @@ package fortios
 import (
 	"fmt"
 	"log"
-	"strconv"
 
 	fortimngclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
+	"github.com/fgtdev/fortimanager-sdk-go/util"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
 func resourceFortimanagerSystemNetworkInterface() *schema.Resource {
 	return &schema.Resource{
-		Create: createFTMSystemNetworkInterface,
-		Read:   readFTMSystemNetworkInterface,
-		Update: updateFTMSystemNetworkInterface,
-		Delete: deleteFTMSystemNetworkInterface,
+		Create: createFMGSystemNetworkInterface,
+		Read:   readFMGSystemNetworkInterface,
+		Update: updateFMGSystemNetworkInterface,
+		Delete: deleteFMGSystemNetworkInterface,
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
@@ -30,8 +30,9 @@ func resourceFortimanagerSystemNetworkInterface() *schema.Resource {
 				Optional: true,
 			},
 			"status": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Type:         schema.TypeString,
+				Optional:     true,
+				ValidateFunc: util.ValidateStringIn("down", "up"),
 			},
 			"allow_access": &schema.Schema{
 				Type: schema.TypeList,
@@ -51,9 +52,9 @@ func resourceFortimanagerSystemNetworkInterface() *schema.Resource {
 	}
 }
 
-func createFTMSystemNetworkInterface(d *schema.ResourceData, m interface{}) error {
+func createFMGSystemNetworkInterface(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("createFTMSystemNetworkInterface")()
+	defer c.Trace("createFMGSystemNetworkInterface")()
 
 	i := &fortimngclient.JSONSystemNetworkInterface{
 		Name:          d.Get("name").(string),
@@ -64,11 +65,13 @@ func createFTMSystemNetworkInterface(d *schema.ResourceData, m interface{}) erro
 		ServiceAccess: c.InterfaceArray2StrArray(d.Get("service_access").([]interface{})),
 	}
 
-	aa := c.AllowAccess2int(i.AllowAccess)
-	c.SetTmp(strconv.Itoa(aa), i.AllowAccess)
+	/*
+		aa := c.AllowAccess2int(i.AllowAccess)
+		c.SetTmp(strconv.Itoa(aa), i.AllowAccess)
 
-	sa := c.ServiceAccess2int(i.ServiceAccess)
-	c.SetTmp1(strconv.Itoa(sa), i.ServiceAccess)
+		sa := c.ServiceAccess2int(i.ServiceAccess)
+		c.SetTmp1(strconv.Itoa(sa), i.ServiceAccess)
+	*/
 
 	err := c.UpdateSystemNetworkInterface(i)
 
@@ -78,12 +81,12 @@ func createFTMSystemNetworkInterface(d *schema.ResourceData, m interface{}) erro
 
 	d.SetId(i.Name)
 
-	return readFTMSystemNetworkInterface(d, m)
+	return readFMGSystemNetworkInterface(d, m)
 }
 
-func readFTMSystemNetworkInterface(d *schema.ResourceData, m interface{}) error {
+func readFMGSystemNetworkInterface(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("readFTMSystemNetworkInterface")()
+	defer c.Trace("readFMGSystemNetworkInterface")()
 
 	name := d.Id()
 	o, err := c.ReadSystemNetworkInterface(name)
@@ -98,18 +101,25 @@ func readFTMSystemNetworkInterface(d *schema.ResourceData, m interface{}) error 
 	}
 
 	d.Set("name", o.Name)
-	d.Set("ip", o.Ip)
-	d.Set("description", o.Description)
-	d.Set("status", o.Status)
-	d.Set("allow_access", o.AllowAccess)
-	d.Set("service_access", o.ServiceAccess)
+	if d.Get("ip").(string) != "" {
+		d.Set("ip", o.Ip)
+	}
+	if d.Get("description").(string) != "" {
+		d.Set("description", o.Description)
+	}
+	if d.Get("status").(string) != "" {
+		d.Set("status", o.Status)
+	}
+
+	//d.Set("allow_access", o.AllowAccess)
+	//d.Set("service_access", o.ServiceAccess)
 
 	return nil
 }
 
-func updateFTMSystemNetworkInterface(d *schema.ResourceData, m interface{}) error {
+func updateFMGSystemNetworkInterface(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("updateFTMSystemNetworkInterface")()
+	defer c.Trace("updateFMGSystemNetworkInterface")()
 
 	if d.HasChange("name") {
 		return fmt.Errorf("the name argument is the key and should not be modified here")
@@ -123,12 +133,13 @@ func updateFTMSystemNetworkInterface(d *schema.ResourceData, m interface{}) erro
 		AllowAccess:   c.InterfaceArray2StrArray(d.Get("allow_access").([]interface{})),
 		ServiceAccess: c.InterfaceArray2StrArray(d.Get("service_access").([]interface{})),
 	}
+	/*
+		aa := c.AllowAccess2int(i.AllowAccess)
+		c.SetTmp(strconv.Itoa(aa), i.AllowAccess)
 
-	aa := c.AllowAccess2int(i.AllowAccess)
-	c.SetTmp(strconv.Itoa(aa), i.AllowAccess)
-
-	sa := c.ServiceAccess2int(i.ServiceAccess)
-	c.SetTmp1(strconv.Itoa(sa), i.ServiceAccess)
+		sa := c.ServiceAccess2int(i.ServiceAccess)
+		c.SetTmp1(strconv.Itoa(sa), i.ServiceAccess)
+	*/
 
 	err := c.UpdateSystemNetworkInterface(i)
 
@@ -136,10 +147,10 @@ func updateFTMSystemNetworkInterface(d *schema.ResourceData, m interface{}) erro
 		return fmt.Errorf("Error updating System NetworkInterface: %s", err)
 	}
 
-	return readFTMSystemNetworkInterface(d, m)
+	return readFMGSystemNetworkInterface(d, m)
 }
 
 //FortiManger JSON API: No effort for delete operation
-func deleteFTMSystemNetworkInterface(d *schema.ResourceData, m interface{}) error {
+func deleteFMGSystemNetworkInterface(d *schema.ResourceData, m interface{}) error {
 	return nil
 }

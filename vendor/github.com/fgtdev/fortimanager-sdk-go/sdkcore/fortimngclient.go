@@ -10,9 +10,11 @@ import (
 	"os"
 )
 
+/*
 // store tmp data
 var Tmp = map[string][]string{}
 var Tmp1 = map[string][]string{}
+*/
 
 // Request represents a JSON-RPC request sent by a client.
 type Request struct {
@@ -421,6 +423,7 @@ func (f *FortiMngClient) ProfileType2Str(c int) (s string) {
 	return
 }
 
+/*
 func (f *FortiMngClient) SetTmp(k string, v []string) {
 	Tmp[k] = v
 }
@@ -436,6 +439,7 @@ func (f *FortiMngClient) Tmp(k string) []string {
 func (f *FortiMngClient) Tmp1(k string) []string {
 	return Tmp1[k]
 }
+*/
 
 func (f *FortiMngClient) Trace(s string) func() {
 	if f.Debug == "ON" {
