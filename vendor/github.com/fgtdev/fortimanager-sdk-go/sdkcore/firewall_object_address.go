@@ -10,6 +10,10 @@ type JSONFirewallObjectAddress struct {
 	Comment        string `json:"comment"`
 	Fqdn           string `json:"fqdn"`
 	AssociatedIntf string `json:"associated-interface"`
+	Subnet         string `json:"subnet"`
+	StartIp        string `json:"start-ip"`
+	EndIp          string `json:"end-ip"`
+	AllowRouting   string `json:"allow-routing"`
 }
 
 // Create and Update function
@@ -68,6 +72,19 @@ func (c *FortiMngClient) ReadFirewallObjectAddress(name string) (out *JSONFirewa
 		m := c.InterfaceArray2StrArray(data["associated-interface"].([]interface{}))
 		// only 1 item is allowed here
 		out.AssociatedIntf = m[0]
+	}
+	if data["subnet"] != nil {
+		sn := data["subnet"].([]interface{})
+		out.Subnet = sn[0].(string) + " " + sn[1].(string)
+	}
+	if data["start-ip"] != nil {
+		out.StartIp = data["start-ip"].(string)
+	}
+	if data["end-ip"] != nil {
+		out.EndIp = data["end-ip"].(string)
+	}
+	if data["allow-routing"] != nil {
+		out.AllowRouting = c.ControlSwitch2Str(int(data["allow-routing"].(float64)))
 	}
 
 	return

@@ -298,9 +298,9 @@ func (f *FortiMngClient) ServiceAccess2int(sa []string) int {
 func (f *FortiMngClient) FirewallObjectAddrType2Str(fbj int) (s string) {
 	switch fbj {
 	case 0:
-		s = "subnet"
+		s = "ipmask"
 	case 1:
-		s = "ip range"
+		s = "iprange"
 	case 2:
 		s = "fqdn"
 	case 3:
