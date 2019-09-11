@@ -11,13 +11,13 @@ import (
 
 func resourceFortimanagerSystemNetworkRoute() *schema.Resource {
 	return &schema.Resource{
-		Create: createFTMSystemNetworkRoute,
-		Read:   readFTMSystemNetworkRoute,
-		Update: updateFTMSystemNetworkRoute,
-		Delete: deleteFTMSystemNetworkRoute,
+		Create: createFMGSystemNetworkRoute,
+		Read:   readFMGSystemNetworkRoute,
+		Update: updateFMGSystemNetworkRoute,
+		Delete: deleteFMGSystemNetworkRoute,
 
 		Schema: map[string]*schema.Schema{
-			"dst": &schema.Schema{
+			"destination": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
 			},
@@ -29,7 +29,7 @@ func resourceFortimanagerSystemNetworkRoute() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
-			"seq_num": &schema.Schema{
+			"route_id": &schema.Schema{
 				Type:     schema.TypeInt,
 				Required: true,
 			},
@@ -37,16 +37,16 @@ func resourceFortimanagerSystemNetworkRoute() *schema.Resource {
 	}
 }
 
-func createFTMSystemNetworkRoute(d *schema.ResourceData, m interface{}) error {
+func createFMGSystemNetworkRoute(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("createFTMSystemNetworkRoute")()
+	defer c.Trace("createFMGSystemNetworkRoute")()
 
 	//Build input data by sdk
 	i := &fortimngclient.JSONSysNetworkRoute{
-		Dst:     d.Get("dst").(string),
+		Dst:     d.Get("destination").(string),
 		Gateway: d.Get("gateway").(string),
 		Device:  d.Get("device").(string),
-		SeqNum:  strconv.Itoa(d.Get("seq_num").(int)),
+		SeqNum:  strconv.Itoa(d.Get("route_id").(int)),
 	}
 
 	err := c.CreateUpdateSystemNetworkRoute(i, "add")
@@ -56,15 +56,15 @@ func createFTMSystemNetworkRoute(d *schema.ResourceData, m interface{}) error {
 
 	d.SetId(i.SeqNum)
 
-	return readFTMSystemNetworkRoute(d, m)
+	return readFMGSystemNetworkRoute(d, m)
 }
 
-func readFTMSystemNetworkRoute(d *schema.ResourceData, m interface{}) error {
+func readFMGSystemNetworkRoute(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("readFTMSystemNetworkRoute")()
+	defer c.Trace("readFMGSystemNetworkRoute")()
 
-	seq_num := d.Id()
-	o, err := c.ReadSystemNetworkRoute(seq_num)
+	route_id := d.Id()
+	o, err := c.ReadSystemNetworkRoute(route_id)
 	if err != nil {
 		return fmt.Errorf("Error reading System Network Route: %s", err)
 	}
@@ -75,26 +75,26 @@ func readFTMSystemNetworkRoute(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	d.Set("dst", o.Dst)
+	//d.Set("destination", o.Dst)
 	d.Set("gateway", o.Gateway)
 	d.Set("device", o.Device)
 
 	return nil
 }
 
-func updateFTMSystemNetworkRoute(d *schema.ResourceData, m interface{}) error {
+func updateFMGSystemNetworkRoute(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("updateFTMSystemNetworkRoute")()
+	defer c.Trace("updateFMGSystemNetworkRoute")()
 
-	if d.HasChange("seq_num") {
-		return fmt.Errorf("the seq_num argument is the key and should not be modified here")
+	if d.HasChange("route_id") {
+		return fmt.Errorf("the route_id argument is the key and should not be modified here")
 	}
 
 	i := &fortimngclient.JSONSysNetworkRoute{
-		Dst:     d.Get("dst").(string),
+		Dst:     d.Get("destination").(string),
 		Gateway: d.Get("gateway").(string),
 		Device:  d.Get("device").(string),
-		SeqNum:  strconv.Itoa(d.Get("seq_num").(int)),
+		SeqNum:  strconv.Itoa(d.Get("route_id").(int)),
 	}
 
 	err := c.CreateUpdateSystemNetworkRoute(i, "update")
@@ -102,16 +102,16 @@ func updateFTMSystemNetworkRoute(d *schema.ResourceData, m interface{}) error {
 		return fmt.Errorf("Error updating System Network Route: %s", err)
 	}
 
-	return readFTMSystemNetworkRoute(d, m)
+	return readFMGSystemNetworkRoute(d, m)
 }
 
-func deleteFTMSystemNetworkRoute(d *schema.ResourceData, m interface{}) error {
+func deleteFMGSystemNetworkRoute(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("deleteFTMSystemNetworkRoute")()
+	defer c.Trace("deleteFMGSystemNetworkRoute")()
 
-	seq_num := d.Id()
+	route_id := d.Id()
 
-	err := c.DeleteSystemNetworkRoute(seq_num)
+	err := c.DeleteSystemNetworkRoute(route_id)
 	if err != nil {
 		return fmt.Errorf("Error deleting System Network Route: %s", err)
 	}
