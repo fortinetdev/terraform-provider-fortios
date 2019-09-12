@@ -5,7 +5,7 @@ import (
 	"strconv"
 )
 
-type JSONFirewallSecurityAdomRevision struct {
+type JSONObjectAdomRevision struct {
 	Name        string `json:"name"`
 	Description string `json:"desc"`
 	CreatedBy   string `json:"created_by"`
@@ -14,8 +14,8 @@ type JSONFirewallSecurityAdomRevision struct {
 }
 
 // Create and Update function
-func (c *FortiMngClient) CreateUpdateFirewallSecurityAdomRevision(params *JSONFirewallSecurityAdomRevision, method string) (version string, err error) {
-	defer c.Trace("CreateUpdateFirewallSecurityAdomRevision")()
+func (c *FortiMngClient) CreateUpdateObjectAdomRevision(params *JSONObjectAdomRevision, method string) (version string, err error) {
+	defer c.Trace("CreateUpdateObjectAdomRevision")()
 
 	p := map[string]interface{}{
 		"data": params,
@@ -25,7 +25,7 @@ func (c *FortiMngClient) CreateUpdateFirewallSecurityAdomRevision(params *JSONFi
 	result, err := c.Do(method, p)
 
 	if err != nil {
-		err = fmt.Errorf("CreateUpdateFirewallSecurityAdomRevision failed: %s", err)
+		err = fmt.Errorf("CreateUpdateObjectAdomRevision failed: %s", err)
 		return
 	}
 
@@ -44,8 +44,8 @@ func (c *FortiMngClient) CreateUpdateFirewallSecurityAdomRevision(params *JSONFi
 	return
 }
 
-func (c *FortiMngClient) ReadFirewallSecurityAdomRevision(version string) (out *JSONFirewallSecurityAdomRevision, err error) {
-	defer c.Trace("ReadFirewallSecurityAdomRevision")()
+func (c *FortiMngClient) ReadObjectAdomRevision(version string) (out *JSONObjectAdomRevision, err error) {
+	defer c.Trace("ReadObjectAdomRevision")()
 
 	p := map[string]interface{}{
 		"url": "/dvmdb/adom/root/revision/" + version,
@@ -53,7 +53,7 @@ func (c *FortiMngClient) ReadFirewallSecurityAdomRevision(version string) (out *
 
 	result, err := c.Do("get", p)
 	if err != nil {
-		err = fmt.Errorf("ReadFirewallSecurityAdomRevision failed :%s", err)
+		err = fmt.Errorf("ReadObjectAdomRevision failed :%s", err)
 		return
 	}
 
@@ -63,7 +63,7 @@ func (c *FortiMngClient) ReadFirewallSecurityAdomRevision(version string) (out *
 		return
 	}
 
-	out = &JSONFirewallSecurityAdomRevision{}
+	out = &JSONObjectAdomRevision{}
 	if data["name"] != nil {
 		out.Name = data["name"].(string)
 	}
@@ -81,8 +81,8 @@ func (c *FortiMngClient) ReadFirewallSecurityAdomRevision(version string) (out *
 
 }
 
-func (c *FortiMngClient) DeleteFirewallSecurityAdomRevision(version string) (err error) {
-	defer c.Trace("DeleteFirewallSecurityAdomRevision")()
+func (c *FortiMngClient) DeleteObjectAdomRevision(version string) (err error) {
+	defer c.Trace("DeleteObjectAdomRevision")()
 
 	p := map[string]interface{}{
 		"url": "/dvmdb/adom/root/revision/" + version,
@@ -90,7 +90,7 @@ func (c *FortiMngClient) DeleteFirewallSecurityAdomRevision(version string) (err
 
 	_, err = c.Do("delete", p)
 	if err != nil {
-		err = fmt.Errorf("DeleteFirewallSecurityAdomRevision failed :%s", err)
+		err = fmt.Errorf("DeleteObjectAdomRevision failed :%s", err)
 		return
 	}
 
