@@ -5,15 +5,16 @@ import (
 	"log"
 
 	fortimngclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
+	"github.com/fgtdev/fortimanager-sdk-go/util"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
 func resourceFortimanagerFirewallObjectIppool() *schema.Resource {
 	return &schema.Resource{
-		Create: createFTMFirewallObjectIppool,
-		Read:   readFTMFirewallObjectIppool,
-		Update: updateFTMFirewallObjectIppool,
-		Delete: deleteFTMFirewallObjectIppool,
+		Create: createFMGFirewallObjectIppool,
+		Read:   readFMGFirewallObjectIppool,
+		Update: updateFMGFirewallObjectIppool,
+		Delete: deleteFMGFirewallObjectIppool,
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
@@ -29,17 +30,20 @@ func resourceFortimanagerFirewallObjectIppool() *schema.Resource {
 				Required: true,
 			},
 			"type": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Type:         schema.TypeString,
+				Optional:     true,
+				Default:      "overload",
+				ValidateFunc: util.ValidateStringIn("overload", "one-to-one"),
 			},
 			"comment": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 			},
 			"arp_reply": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Default:  "disable",
+				Type:         schema.TypeString,
+				Optional:     true,
+				Default:      "enable",
+				ValidateFunc: util.ValidateStringIn("disable", "enable"),
 			},
 			"arp_intf": &schema.Schema{
 				Type:     schema.TypeString,
@@ -53,9 +57,9 @@ func resourceFortimanagerFirewallObjectIppool() *schema.Resource {
 	}
 }
 
-func createFTMFirewallObjectIppool(d *schema.ResourceData, m interface{}) error {
+func createFMGFirewallObjectIppool(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("createFTMFirewallObjectIppool")()
+	defer c.Trace("createFMGFirewallObjectIppool")()
 
 	i := &fortimngclient.JSONFirewallObjectIppool{
 		Name:           d.Get("name").(string),
@@ -75,12 +79,12 @@ func createFTMFirewallObjectIppool(d *schema.ResourceData, m interface{}) error 
 
 	d.SetId(i.Name)
 
-	return readFTMFirewallObjectIppool(d, m)
+	return readFMGFirewallObjectIppool(d, m)
 }
 
-func readFTMFirewallObjectIppool(d *schema.ResourceData, m interface{}) error {
+func readFMGFirewallObjectIppool(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("readFTMFirewallObjectIppool")()
+	defer c.Trace("readFMGFirewallObjectIppool")()
 
 	name := d.Id()
 	o, err := c.ReadFirewallObjectIppool(name)
@@ -106,9 +110,9 @@ func readFTMFirewallObjectIppool(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-func updateFTMFirewallObjectIppool(d *schema.ResourceData, m interface{}) error {
+func updateFMGFirewallObjectIppool(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("updateFTMFirewallObjectIppool")()
+	defer c.Trace("updateFMGFirewallObjectIppool")()
 
 	if d.HasChange("name") {
 		return fmt.Errorf("the name argument is the key and should not be modified here")
@@ -130,12 +134,12 @@ func updateFTMFirewallObjectIppool(d *schema.ResourceData, m interface{}) error 
 		return fmt.Errorf("Error updating Firewall Object Ippool: %s", err)
 	}
 
-	return readFTMFirewallObjectIppool(d, m)
+	return readFMGFirewallObjectIppool(d, m)
 }
 
-func deleteFTMFirewallObjectIppool(d *schema.ResourceData, m interface{}) error {
+func deleteFMGFirewallObjectIppool(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("deleteFTMFirewallObjectIppool")()
+	defer c.Trace("deleteFMGFirewallObjectIppool")()
 
 	name := d.Id()
 
