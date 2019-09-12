@@ -99,7 +99,7 @@ func Provider() terraform.ResourceProvider {
 			"fortios_fortimanager_devicemanager_install_policypackage": resourceFortimanagerDVMInstallPolicyPackage(),
 			"fortios_fortimanager_firewall_security_policy":            resourceFortimanagerFirewallSecurityPolicy(),
 			"fortios_fortimanager_firewall_security_policypackage":     resourceFortimanagerFirewallSecurityPolicyPackage(),
-			"fortios_fortimanager_firewall_security_adomrevision":      resourceFortimanagerFirewallSecurityAdomRevision(),
+			"fortios_fortimanager_object_adom_revision":                resourceFortimanagerObjectAdomRevision(),
 			"fortios_fortimanager_firewall_object_address":             resourceFortimanagerFirewallObjectAddress(),
 			"fortios_fortimanager_firewall_object_service":             resourceFortimanagerFirewallObjectService(),
 			"fortios_fortimanager_firewall_object_ippool":              resourceFortimanagerFirewallObjectIppool(),
