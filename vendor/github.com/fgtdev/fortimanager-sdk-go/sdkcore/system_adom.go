@@ -6,9 +6,10 @@ import (
 )
 
 type JSONSystemAdom struct {
-	Name        string `json:"name"`
-	Description string `json:"desc"`
-	State       string `json:"state"`
+	Name           string   `json:"name"`
+	RestrictedPrds string   `json:"restricted_prds"`
+	Status         string   `json:"state"`
+	Flags          []string `json:"flags"`
 }
 
 // Create and Update function
@@ -53,11 +54,11 @@ func (c *FortiMngClient) ReadSystemAdom(name string) (out *JSONSystemAdom, err e
 	if data["name"] != nil {
 		out.Name = data["name"].(string)
 	}
-	if data["desc"] != nil {
-		out.Description = data["desc"].(string)
-	}
 	if data["state"] != nil {
-		out.State = strconv.Itoa(int(data["state"].(float64)))
+		out.Status = strconv.Itoa(int(data["state"].(float64)))
+	}
+	if data["restricted_prds"] != nil {
+		out.RestrictedPrds = c.RestrictedPrds2Str(int(data["restricted_prds"].(float64)))
 	}
 
 	return

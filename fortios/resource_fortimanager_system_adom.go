@@ -6,26 +6,67 @@ import (
 	"strconv"
 
 	fortimngclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
+	"github.com/fgtdev/fortimanager-sdk-go/util"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
 func resourceFortimanagerSystemAdom() *schema.Resource {
 	return &schema.Resource{
-		Create: createFTMSystemAdom,
-		Read:   readFTMSystemAdom,
-		Update: updateFTMSystemAdom,
-		Delete: deleteFTMSystemAdom,
+		Create: createFMGSystemAdom,
+		Read:   readFMGSystemAdom,
+		Update: updateFMGSystemAdom,
+		Delete: deleteFMGSystemAdom,
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
 			},
-			"description": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+			"type": &schema.Schema{
+				Type:         schema.TypeString,
+				Optional:     true,
+				Default:      "FortiGate",
+				ValidateFunc: util.ValidateStringIn("FortiGate", "FortiCarrier"),
 			},
-			"state": &schema.Schema{
+			"central_management_vpn": &schema.Schema{
+				Type:     schema.TypeBool,
+				Optional: true,
+				Default:  true,
+			},
+			"central_management_fortiap": &schema.Schema{
+				Type:     schema.TypeBool,
+				Optional: true,
+				Default:  true,
+			},
+			"central_management_sdwan": &schema.Schema{
+				Type:     schema.TypeBool,
+				Optional: true,
+				Default:  false,
+			},
+			"mode": &schema.Schema{
+				Type:         schema.TypeString,
+				Optional:     true,
+				Default:      "Normal",
+				ValidateFunc: util.ValidateStringIn("Normal", "Backup"),
+			},
+			"perform_policy_check_before_every_install": &schema.Schema{
+				Type:     schema.TypeBool,
+				Optional: true,
+				Default:  false,
+			},
+			"action_when_conflicts_occur_during_policy_check": &schema.Schema{
+				Type:         schema.TypeString,
+				Optional:     true,
+				Default:      "Continue",
+				ValidateFunc: util.ValidateStringIn("Continue", "Stop"),
+			},
+			"auto_push_policy_packages_when_device_back_online": &schema.Schema{
+				Type:         schema.TypeString,
+				Optional:     true,
+				Default:      "Disable",
+				ValidateFunc: util.ValidateStringIn("Disable", "Enable"),
+			},
+			"status": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
 			},
@@ -33,14 +74,43 @@ func resourceFortimanagerSystemAdom() *schema.Resource {
 	}
 }
 
-func createFTMSystemAdom(d *schema.ResourceData, m interface{}) error {
+func createFMGSystemAdom(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("createFTMSystemAdom")()
+	defer c.Trace("createFMGSystemAdom")()
+
+	flags := []string{}
+	if !d.Get("central_management_vpn").(bool) {
+		flags = append(flags, "no_vpn_console")
+	}
+	if !d.Get("central_management_fortiap").(bool) {
+		flags = append(flags, "per_device_wtp")
+	}
+	if d.Get("central_management_sdwan").(bool) {
+		flags = append(flags, "central_sdwan")
+	}
+	if d.Get("mode").(string) == "Backup" {
+		flags = append(flags, "backup")
+	}
+	if d.Get("perform_policy_check_before_every_install").(bool) {
+		flags = append(flags, "policy_check_on_install")
+	}
+	if d.Get("action_when_conflicts_occur_during_policy_check").(string) == "Stop" {
+		flags = append(flags, "install_on_policy_check_fail")
+	}
+	if d.Get("auto_push_policy_packages_when_device_back_online").(string) == "Enable" {
+		flags = append(flags, "auto_push_cfg")
+	}
+
+	type_s := ""
+	if d.Get("type").(string) == "FortiCarrier" {
+		type_s = "foc"
+	}
 
 	i := &fortimngclient.JSONSystemAdom{
-		Name:        d.Get("name").(string),
-		State:       strconv.Itoa(d.Get("state").(int)),
-		Description: d.Get("description").(string),
+		Name:           d.Get("name").(string),
+		RestrictedPrds: type_s,
+		Status:         strconv.Itoa(d.Get("status").(int)),
+		Flags:          flags,
 	}
 
 	err := c.CreateUpdateSystemAdom(i, "add")
@@ -50,12 +120,12 @@ func createFTMSystemAdom(d *schema.ResourceData, m interface{}) error {
 
 	d.SetId(i.Name)
 
-	return readFTMSystemAdom(d, m)
+	return readFMGSystemAdom(d, m)
 }
 
-func readFTMSystemAdom(d *schema.ResourceData, m interface{}) error {
+func readFMGSystemAdom(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("readFTMSystemAdom")()
+	defer c.Trace("readFMGSystemAdom")()
 
 	name := d.Id()
 	o, err := c.ReadSystemAdom(name)
@@ -64,30 +134,63 @@ func readFTMSystemAdom(d *schema.ResourceData, m interface{}) error {
 	}
 
 	if o == nil {
-		log.Printf("[WARN] resource (%s) not found, removing from state", d.Id())
+		log.Printf("[WARN] resource (%s) not found, removing from status", d.Id())
 		d.SetId("")
 		return nil
 	}
 
 	d.Set("name", o.Name)
-	d.Set("description", o.Description)
-	d.Set("state", o.State)
+	d.Set("status", o.Status)
+	d.Set("type", o.RestrictedPrds)
 
 	return nil
 }
 
-func updateFTMSystemAdom(d *schema.ResourceData, m interface{}) error {
+func updateFMGSystemAdom(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("updateFTMSystemAdom")()
+	defer c.Trace("updateFMGSystemAdom")()
 
 	if d.HasChange("name") {
 		return fmt.Errorf("the name argument is the key and should not be modified here")
 	}
 
+	if d.HasChange("type") {
+		return fmt.Errorf("type can't be modified here")
+	}
+
+	flags := []string{}
+	if !d.Get("central_management_vpn").(bool) {
+		flags = append(flags, "no_vpn_console")
+	}
+	if !d.Get("central_management_fortiap").(bool) {
+		flags = append(flags, "per_device_wtp")
+	}
+	if d.Get("central_management_sdwan").(bool) {
+		flags = append(flags, "central_sdwan")
+	}
+	if d.Get("mode").(string) == "Backup" {
+		flags = append(flags, "backup")
+	}
+	if d.Get("perform_policy_check_before_every_install").(bool) {
+		flags = append(flags, "policy_check_on_install")
+	}
+	if d.Get("action_when_conflicts_occur_during_policy_check").(string) == "Stop" {
+		flags = append(flags, "install_on_policy_check_fail")
+	}
+	if d.Get("auto_push_policy_packages_when_device_back_online").(string) == "Enable" {
+		flags = append(flags, "auto_push_cfg")
+	}
+
+	type_s := ""
+	if d.Get("type").(string) == "FortiCarrier" {
+		type_s = "foc"
+	}
+
 	i := &fortimngclient.JSONSystemAdom{
-		Name:        d.Get("name").(string),
-		State:       strconv.Itoa(d.Get("state").(int)),
-		Description: d.Get("description").(string),
+		Name:           d.Get("name").(string),
+		RestrictedPrds: type_s,
+		Status:         strconv.Itoa(d.Get("status").(int)),
+		Flags:          flags,
 	}
 
 	err := c.CreateUpdateSystemAdom(i, "update")
@@ -95,12 +198,12 @@ func updateFTMSystemAdom(d *schema.ResourceData, m interface{}) error {
 		return fmt.Errorf("Error updating System Adom: %s", err)
 	}
 
-	return readFTMSystemAdom(d, m)
+	return readFMGSystemAdom(d, m)
 }
 
-func deleteFTMSystemAdom(d *schema.ResourceData, m interface{}) error {
+func deleteFMGSystemAdom(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("deleteFTMSystemAdom")()
+	defer c.Trace("deleteFMGSystemAdom")()
 
 	name := d.Id()
 

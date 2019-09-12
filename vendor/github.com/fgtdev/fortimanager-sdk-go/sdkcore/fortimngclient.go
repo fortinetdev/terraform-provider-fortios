@@ -378,7 +378,6 @@ func (f *FortiMngClient) FirewallObjectVipType2Str(c int) (s string) {
 
 	return
 }
-
 func (f *FortiMngClient) ScriptTarget2Str(c int) (s string) {
 	switch c {
 	case 0:
@@ -418,6 +417,19 @@ func (f *FortiMngClient) ProfileType2Str(c int) (s string) {
 		s = "group"
 	default:
 		log.Printf("[ProfileType2Str][Warning] not support number")
+	}
+
+	return
+}
+
+func (f *FortiMngClient) RestrictedPrds2Str(c int) (s string) {
+	switch c {
+	case 1:
+		s = "FortiGate"
+	case 2:
+		s = "FortiCarrier"
+	default:
+		log.Printf("[RestrictedPrds2Str][Warning] not support number")
 	}
 
 	return
