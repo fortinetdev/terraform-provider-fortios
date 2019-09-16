@@ -4,14 +4,14 @@ import (
 	"fmt"
 )
 
-type JSONSystemAdminSetting struct {
-	HttpPort    int `json:"http_port"`
-	HttpsPort   int `json:"https_port"`
-	IdleTimeout int `json:"idle_timeout"`
+type JSONSystemAdmin struct {
+	HttpPort    int `json:"http_port,omitempty"`
+	HttpsPort   int `json:"https_port,omitempty"`
+	IdleTimeout int `json:"idle_timeout,omitempty"`
 }
 
-func (c *FortiMngClient) SetSystemAdminSetting(params *JSONSystemAdminSetting) (err error) {
-	defer c.Trace("SetSystemAdminSetting")()
+func (c *FortiMngClient) SetSystemAdmin(params *JSONSystemAdmin) (err error) {
+	defer c.Trace("SetSystemAdmin")()
 
 	p := map[string]interface{}{
 		"data": *params,
@@ -21,15 +21,15 @@ func (c *FortiMngClient) SetSystemAdminSetting(params *JSONSystemAdminSetting) (
 	_, err = c.Do("set", p)
 
 	if err != nil {
-		err = fmt.Errorf("SetSystemAdminSetting failed: %s", err)
+		err = fmt.Errorf("SetSystemAdmin failed: %s", err)
 		return
 	}
 
 	return
 }
 
-func (c *FortiMngClient) ReadSystemAdminSetting() (out *JSONSystemAdminSetting, err error) {
-	defer c.Trace("ReadSystemAdminSetting")()
+func (c *FortiMngClient) ReadSystemAdmin() (out *JSONSystemAdmin, err error) {
+	defer c.Trace("ReadSystemAdmin")()
 
 	p := map[string]interface{}{
 		"url": "/cli/global/system/admin/setting",
@@ -37,7 +37,7 @@ func (c *FortiMngClient) ReadSystemAdminSetting() (out *JSONSystemAdminSetting, 
 
 	result, err := c.Do("get", p)
 	if err != nil {
-		err = fmt.Errorf("ReadSystemAdminSetting failed :%s", err)
+		err = fmt.Errorf("ReadSystemAdmin failed :%s", err)
 		return
 	}
 
@@ -47,7 +47,7 @@ func (c *FortiMngClient) ReadSystemAdminSetting() (out *JSONSystemAdminSetting, 
 		return
 	}
 
-	out = &JSONSystemAdminSetting{}
+	out = &JSONSystemAdmin{}
 	if data["http_port"] != nil {
 		out.HttpPort = int(data["http_port"].(float64))
 	}
