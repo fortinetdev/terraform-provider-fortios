@@ -8,12 +8,12 @@ import (
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
-func resourceFortimanagerSystemDNSSetting() *schema.Resource {
+func resourceFortimanagerSystemDNS() *schema.Resource {
 	return &schema.Resource{
-		Create: setFTMSystemDNSSetting,
-		Read:   readFTMSystemDNSSetting,
-		Update: setFTMSystemDNSSetting,
-		Delete: deleteFTMSystemDNSSetting,
+		Create: setFMGSystemDNS,
+		Read:   readFMGSystemDNS,
+		Update: setFMGSystemDNS,
+		Delete: deleteFMGSystemDNS,
 
 		Schema: map[string]*schema.Schema{
 			"primary": &schema.Schema{
@@ -28,32 +28,32 @@ func resourceFortimanagerSystemDNSSetting() *schema.Resource {
 	}
 }
 
-func setFTMSystemDNSSetting(d *schema.ResourceData, m interface{}) error {
+func setFMGSystemDNS(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("setFTMSystemDNSSetting")()
+	defer c.Trace("setFMGSystemDNS")()
 
-	i := &fortimngclient.JSONSystemDNSSetting{
+	i := &fortimngclient.JSONSystemDNS{
 		Primary:   d.Get("primary").(string),
 		Secondary: d.Get("secondary").(string),
 	}
 
-	err := c.SetSystemDNSSetting(i)
+	err := c.SetSystemDNS(i)
 	if err != nil {
-		return fmt.Errorf("Error setting System DNS Setting: %s", err)
+		return fmt.Errorf("Error setting System DNS : %s", err)
 	}
 
-	d.SetId("fortimanager-dns-setting")
+	d.SetId("fortimanager-sys-dns")
 
-	return readFTMSystemDNSSetting(d, m)
+	return readFMGSystemDNS(d, m)
 }
 
-func readFTMSystemDNSSetting(d *schema.ResourceData, m interface{}) error {
+func readFMGSystemDNS(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("readFTMSystemDNSSetting")()
+	defer c.Trace("readFMGSystemDNS")()
 
-	o, err := c.ReadSystemDNSSetting()
+	o, err := c.ReadSystemDNS()
 	if err != nil {
-		return fmt.Errorf("Error reading System DNS Setting: %s", err)
+		return fmt.Errorf("Error reading System DNS : %s", err)
 	}
 
 	if o == nil {
@@ -72,6 +72,6 @@ func readFTMSystemDNSSetting(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-func deleteFTMSystemDNSSetting(d *schema.ResourceData, m interface{}) error {
+func deleteFMGSystemDNS(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
