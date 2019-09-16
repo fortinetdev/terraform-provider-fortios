@@ -9,10 +9,10 @@ import (
 
 func resourceFortimanagerSystemLicenseVM() *schema.Resource {
 	return &schema.Resource{
-		Create: addFTMSystemLicenseVM,
-		Read:   readFTMSystemLicenseVM,
-		Update: updateFTMSystemLicenseVM,
-		Delete: deleteFTMSystemLicenseVM,
+		Create: addFMGSystemLicenseVM,
+		Read:   readFMGSystemLicenseVM,
+		Update: updateFMGSystemLicenseVM,
+		Delete: deleteFMGSystemLicenseVM,
 
 		Schema: map[string]*schema.Schema{
 			"target": &schema.Schema{
@@ -27,9 +27,9 @@ func resourceFortimanagerSystemLicenseVM() *schema.Resource {
 	}
 }
 
-func addFTMSystemLicenseVM(d *schema.ResourceData, m interface{}) error {
+func addFMGSystemLicenseVM(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("addFTMSystemLicenseVM")()
+	defer c.Trace("addFMGSystemLicenseVM")()
 
 	i := &fortimngclient.JSONSystemLicenseVM{
 		Target:      d.Get("target").(string),
@@ -46,14 +46,14 @@ func addFTMSystemLicenseVM(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-func updateFTMSystemLicenseVM(d *schema.ResourceData, m interface{}) error {
+func updateFMGSystemLicenseVM(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-func readFTMSystemLicenseVM(d *schema.ResourceData, m interface{}) error {
+func readFMGSystemLicenseVM(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-func deleteFTMSystemLicenseVM(d *schema.ResourceData, m interface{}) error {
+func deleteFMGSystemLicenseVM(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
