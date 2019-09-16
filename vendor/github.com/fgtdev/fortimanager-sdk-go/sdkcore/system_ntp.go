@@ -4,15 +4,15 @@ import (
 	"fmt"
 )
 
-type JSONSystemNTPSetting struct {
+type JSONSystemNTP struct {
 	Id           int    `json:"id"`
 	Server       string `json:"server"`
 	Status       string `json:"status,omitempty"`
 	SyncInterval int    `json:"sync_interval,omitempty"`
 }
 
-func (c *FortiMngClient) SetSystemNTPSetting(params *JSONSystemNTPSetting) (err error) {
-	defer c.Trace("SetSystemNTPSetting")()
+func (c *FortiMngClient) SetSystemNTP(params *JSONSystemNTP) (err error) {
+	defer c.Trace("SetSystemNTP")()
 
 	d := map[string]interface{}{
 		"ntpserver": map[string]interface{}{
@@ -31,15 +31,15 @@ func (c *FortiMngClient) SetSystemNTPSetting(params *JSONSystemNTPSetting) (err 
 	_, err = c.Do("set", p)
 
 	if err != nil {
-		err = fmt.Errorf("SetSystemNTPSetting failed: %s", err)
+		err = fmt.Errorf("SetSystemNTP failed: %s", err)
 		return
 	}
 
 	return
 }
 
-func (c *FortiMngClient) ReadSystemNTPSetting() (out *JSONSystemNTPSetting, err error) {
-	defer c.Trace("ReadSystemNTPSetting")()
+func (c *FortiMngClient) ReadSystemNTP() (out *JSONSystemNTP, err error) {
+	defer c.Trace("ReadSystemNTP")()
 
 	p := map[string]interface{}{
 		"url": "/cli/global/system/ntp",
@@ -47,7 +47,7 @@ func (c *FortiMngClient) ReadSystemNTPSetting() (out *JSONSystemNTPSetting, err 
 
 	result, err := c.Do("get", p)
 	if err != nil {
-		err = fmt.Errorf("ReadSystemNTPSetting failed :%s", err)
+		err = fmt.Errorf("ReadSystemNTP failed :%s", err)
 		return
 	}
 
@@ -57,7 +57,7 @@ func (c *FortiMngClient) ReadSystemNTPSetting() (out *JSONSystemNTPSetting, err 
 		return
 	}
 
-	out = &JSONSystemNTPSetting{}
+	out = &JSONSystemNTP{}
 	if data["status"] != nil {
 		out.Status = c.ControlSwitch2Str(int(data["status"].(float64)))
 	}

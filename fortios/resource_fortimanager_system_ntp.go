@@ -5,15 +5,16 @@ import (
 	"log"
 
 	fortimngclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
+	"github.com/fgtdev/fortimanager-sdk-go/util"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
-func resourceFortimanagerSystemNTPSetting() *schema.Resource {
+func resourceFortimanagerSystemNTP() *schema.Resource {
 	return &schema.Resource{
-		Create: setFTMSystemNTPSetting,
-		Read:   readFTMSystemNTPSetting,
-		Update: setFTMSystemNTPSetting,
-		Delete: deleteFTMSystemNTPSetting,
+		Create: setFMGSystemNTP,
+		Read:   readFMGSystemNTP,
+		Update: setFMGSystemNTP,
+		Delete: deleteFMGSystemNTP,
 
 		Schema: map[string]*schema.Schema{
 			"server": &schema.Schema{
@@ -21,8 +22,9 @@ func resourceFortimanagerSystemNTPSetting() *schema.Resource {
 				Required: true,
 			},
 			"status": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
+				Type:         schema.TypeString,
+				Optional:     true,
+				ValidateFunc: util.ValidateStringIn("disable", "enable"),
 			},
 			"sync_interval": &schema.Schema{
 				Type:     schema.TypeInt,
@@ -32,34 +34,34 @@ func resourceFortimanagerSystemNTPSetting() *schema.Resource {
 	}
 }
 
-func setFTMSystemNTPSetting(d *schema.ResourceData, m interface{}) error {
+func setFMGSystemNTP(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("setFTMSystemNTPSetting")()
+	defer c.Trace("setFMGSystemNTP")()
 
-	i := &fortimngclient.JSONSystemNTPSetting{
+	i := &fortimngclient.JSONSystemNTP{
 		Id:           1,
 		Server:       d.Get("server").(string),
 		Status:       d.Get("status").(string),
 		SyncInterval: d.Get("sync_interval").(int),
 	}
 
-	err := c.SetSystemNTPSetting(i)
+	err := c.SetSystemNTP(i)
 	if err != nil {
-		return fmt.Errorf("Error setting System NTP Setting: %s", err)
+		return fmt.Errorf("Error setting System NTP : %s", err)
 	}
 
 	d.SetId("fortimanager-ntp-setting")
 
-	return readFTMSystemNTPSetting(d, m)
+	return readFMGSystemNTP(d, m)
 }
 
-func readFTMSystemNTPSetting(d *schema.ResourceData, m interface{}) error {
+func readFMGSystemNTP(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("readFTMSystemNTPSetting")()
+	defer c.Trace("readFMGSystemNTP")()
 
-	o, err := c.ReadSystemNTPSetting()
+	o, err := c.ReadSystemNTP()
 	if err != nil {
-		return fmt.Errorf("Error reading System NTP Setting: %s", err)
+		return fmt.Errorf("Error reading System NTP : %s", err)
 	}
 
 	if o == nil {
@@ -79,6 +81,6 @@ func readFTMSystemNTPSetting(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-func deleteFTMSystemNTPSetting(d *schema.ResourceData, m interface{}) error {
+func deleteFMGSystemNTP(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
