@@ -4,13 +4,13 @@ import (
 	"fmt"
 )
 
-type JSONSystemDNSSetting struct {
+type JSONSystemDNS struct {
 	Primary   string `json:"primary,omitempty"`
 	Secondary string `json:"secondary,omitempty"`
 }
 
-func (c *FortiMngClient) SetSystemDNSSetting(params *JSONSystemDNSSetting) (err error) {
-	defer c.Trace("SetSystemDNSSetting")()
+func (c *FortiMngClient) SetSystemDNS(params *JSONSystemDNS) (err error) {
+	defer c.Trace("SetSystemDNS")()
 
 	p := map[string]interface{}{
 		"data": *params,
@@ -20,15 +20,15 @@ func (c *FortiMngClient) SetSystemDNSSetting(params *JSONSystemDNSSetting) (err 
 	_, err = c.Do("set", p)
 
 	if err != nil {
-		err = fmt.Errorf("SetSystemDNSSetting failed: %s", err)
+		err = fmt.Errorf("SetSystemDNS failed: %s", err)
 		return
 	}
 
 	return
 }
 
-func (c *FortiMngClient) ReadSystemDNSSetting() (out *JSONSystemDNSSetting, err error) {
-	defer c.Trace("ReadSystemDNSSetting")()
+func (c *FortiMngClient) ReadSystemDNS() (out *JSONSystemDNS, err error) {
+	defer c.Trace("ReadSystemDNS")()
 
 	p := map[string]interface{}{
 		"url": "/cli/global/system/dns",
@@ -36,7 +36,7 @@ func (c *FortiMngClient) ReadSystemDNSSetting() (out *JSONSystemDNSSetting, err 
 
 	result, err := c.Do("get", p)
 	if err != nil {
-		err = fmt.Errorf("ReadSystemDNSSetting failed :%s", err)
+		err = fmt.Errorf("ReadSystemDNS failed :%s", err)
 		return
 	}
 
@@ -46,7 +46,7 @@ func (c *FortiMngClient) ReadSystemDNSSetting() (out *JSONSystemDNSSetting, err 
 		return
 	}
 
-	out = &JSONSystemDNSSetting{}
+	out = &JSONSystemDNS{}
 	if data["primary"] != nil {
 		out.Primary = data["primary"].(string)
 	}
