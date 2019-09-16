@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 )
 
 /*
@@ -430,6 +431,33 @@ func (f *FortiMngClient) RestrictedPrds2Str(c int) (s string) {
 		s = "FortiCarrier"
 	default:
 		log.Printf("[RestrictedPrds2Str][Warning] not support number")
+	}
+
+	return
+}
+
+func (f *FortiMngClient) AdomMode2Str(c int) (s string) {
+	switch c {
+	case 1:
+		s = "normal"
+	case 2:
+		s = "advanced"
+	default:
+		log.Printf("[AdomMode2Str][Warning] not support number")
+	}
+
+	return
+}
+
+func (f *FortiMngClient) TimeZone2Str(c int) (s string) {
+	if c < 0 {
+		log.Printf("[TimeZone2Str][Warning] not support number")
+	}
+
+	if c >= 0 && c < 10 {
+		s = "0" + strconv.Itoa(c)
+	} else {
+		s = strconv.Itoa(c)
 	}
 
 	return

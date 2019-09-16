@@ -4,19 +4,16 @@ import (
 	"fmt"
 )
 
-type JSONSystemGlobalSetting struct {
-	Hostname   string `json:"hostname"`
-	FazStatus  string `json:"faz-status"`
-	AdomStatus string `json:"adom-status"`
-	/*
-		AdomMode string `json:"adom-mode"`
-		TimeZone string `json:"timezone"`
-		Usg string `json:"usg"`
-	*/
+type JSONSystemGlobal struct {
+	Hostname   string `json:"hostname,omitempty"`
+	FazStatus  string `json:"faz-status,omitempty"`
+	AdomStatus string `json:"adom-status,omitempty"`
+	AdomMode   string `json:"adom-mode,omitempty"`
+	TimeZone   string `json:"timezone,omitempty"`
 }
 
-func (c *FortiMngClient) SetSystemGlobalSetting(params *JSONSystemGlobalSetting) (err error) {
-	defer c.Trace("SetSystemGlobalSetting")()
+func (c *FortiMngClient) SetSystemGlobal(params *JSONSystemGlobal) (err error) {
+	defer c.Trace("SetSystemGlobal")()
 
 	p := map[string]interface{}{
 		"data": *params,
@@ -26,15 +23,15 @@ func (c *FortiMngClient) SetSystemGlobalSetting(params *JSONSystemGlobalSetting)
 	_, err = c.Do("set", p)
 
 	if err != nil {
-		err = fmt.Errorf("SetSystemGlobalSetting failed: %s", err)
+		err = fmt.Errorf("SetSystemGlobal failed: %s", err)
 		return
 	}
 
 	return
 }
 
-func (c *FortiMngClient) ReadSystemGlobalSetting() (out *JSONSystemGlobalSetting, err error) {
-	defer c.Trace("ReadSystemGlobalSetting")()
+func (c *FortiMngClient) ReadSystemGlobal() (out *JSONSystemGlobal, err error) {
+	defer c.Trace("ReadSystemGlobal")()
 
 	p := map[string]interface{}{
 		"url": "/cli/global/system/global",
@@ -42,7 +39,7 @@ func (c *FortiMngClient) ReadSystemGlobalSetting() (out *JSONSystemGlobalSetting
 
 	result, err := c.Do("get", p)
 	if err != nil {
-		err = fmt.Errorf("ReadSystemGlobalSetting failed :%s", err)
+		err = fmt.Errorf("ReadSystemGlobal failed :%s", err)
 		return
 	}
 
@@ -52,7 +49,7 @@ func (c *FortiMngClient) ReadSystemGlobalSetting() (out *JSONSystemGlobalSetting
 		return
 	}
 
-	out = &JSONSystemGlobalSetting{}
+	out = &JSONSystemGlobal{}
 	if data["hostname"] != nil {
 		out.Hostname = data["hostname"].(string)
 	}
@@ -61,6 +58,12 @@ func (c *FortiMngClient) ReadSystemGlobalSetting() (out *JSONSystemGlobalSetting
 	}
 	if data["adom-status"] != nil {
 		out.AdomStatus = c.ControlSwitch2Str(int(data["adom-status"].(float64)))
+	}
+	if data["adom-mode"] != nil {
+		out.AdomMode = c.AdomMode2Str(int(data["adom-mode"].(float64)))
+	}
+	if data["timezone"] != nil {
+		out.TimeZone = c.TimeZone2Str(int(data["timezone"].(float64)))
 	}
 
 	return
