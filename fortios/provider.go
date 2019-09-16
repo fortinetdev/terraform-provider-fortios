@@ -109,7 +109,7 @@ func Provider() terraform.ResourceProvider {
 			"fortios_fortimanager_system_network_route":                resourceFortimanagerSystemNetworkRoute(),
 			"fortios_fortimanager_system_adom":                         resourceFortimanagerSystemAdom(),
 			"fortios_fortimanager_system_global":                       resourceFortimanagerSystemGlobal(),
-			"fortios_fortimanager_system_admin_setting":                resourceFortimanagerSystemAdminSetting(),
+			"fortios_fortimanager_system_admin":                        resourceFortimanagerSystemAdmin(),
 			"fortios_fortimanager_system_dns_setting":                  resourceFortimanagerSystemDNSSetting(),
 			"fortios_fortimanager_system_ntp_setting":                  resourceFortimanagerSystemNTPSetting(),
 			"fortios_fortimanager_system_license_vm":                   resourceFortimanagerSystemLicenseVM(),
