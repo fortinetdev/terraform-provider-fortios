@@ -22,6 +22,7 @@ resource "fortios_system_setting_global" "test1" {
 	hostname = "mytestFortiGate"
 	admin_sport = 443
 	admin_ssh_port = 22
+	admin_scp = "enable"
 }
 ```
 
@@ -33,6 +34,7 @@ The following arguments are supported:
 * `timezone` - Number corresponding to your time zone from 00 to 86.
 * `admin_sport` - Administrative access port for HTTPS.
 * `admin_ssh_port` - Administrative access port for SSH.
+* `admin_scp` - Enable SCP over SSH
 
 ## Attributes Reference
 The following attributes are exported:
@@ -42,3 +44,4 @@ The following attributes are exported:
 * `hostname` - FortiGate unit's hostname.
 * `admin_sport` - Administrative access port for HTTPS.
 * `admin_ssh_port` - Administrative access port for SSH.
+* `admin_scp` - Enable SCP over SSH
