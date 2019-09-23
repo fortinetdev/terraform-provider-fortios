@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	fortimngclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
+	fmgclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
 	"github.com/fgtdev/fortimanager-sdk-go/util"
 	"github.com/hashicorp/terraform/helper/schema"
 )
@@ -70,7 +70,7 @@ func createFMGSystemAdminUser(d *schema.ResourceData, m interface{}) error {
 	defer c.Trace("createFMGSystemAdminUser")()
 
 	//Build input data by sdk
-	i := &fortimngclient.JSONSysAdminUser{
+	i := &fmgclient.JSONSysAdminUser{
 		UserId:      d.Get("userid").(string),
 		Passwd:      d.Get("password").(string),
 		Description: d.Get("description").(string),
@@ -129,7 +129,7 @@ func updateFMGSystemAdminUser(d *schema.ResourceData, m interface{}) error {
 	}
 
 	//Build input data by sdk
-	i := &fortimngclient.JSONSysAdminUser{
+	i := &fmgclient.JSONSysAdminUser{
 		UserId:      d.Get("userid").(string),
 		Passwd:      d.Get("password").(string),
 		Description: d.Get("description").(string),

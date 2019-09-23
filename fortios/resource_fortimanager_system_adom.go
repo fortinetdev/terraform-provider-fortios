@@ -5,7 +5,7 @@ import (
 	"log"
 	"strconv"
 
-	fortimngclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
+	fmgclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
 	"github.com/fgtdev/fortimanager-sdk-go/util"
 	"github.com/hashicorp/terraform/helper/schema"
 )
@@ -106,7 +106,7 @@ func createFMGSystemAdom(d *schema.ResourceData, m interface{}) error {
 		type_s = "foc"
 	}
 
-	i := &fortimngclient.JSONSystemAdom{
+	i := &fmgclient.JSONSystemAdom{
 		Name:           d.Get("name").(string),
 		RestrictedPrds: type_s,
 		Status:         strconv.Itoa(d.Get("status").(int)),
@@ -186,7 +186,7 @@ func updateFMGSystemAdom(d *schema.ResourceData, m interface{}) error {
 		type_s = "foc"
 	}
 
-	i := &fortimngclient.JSONSystemAdom{
+	i := &fmgclient.JSONSystemAdom{
 		Name:           d.Get("name").(string),
 		RestrictedPrds: type_s,
 		Status:         strconv.Itoa(d.Get("status").(int)),

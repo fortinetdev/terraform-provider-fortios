@@ -1,7 +1,9 @@
-package fortimngclient
+package fmgclient
 
 import (
 	"fmt"
+
+	"github.com/fgtdev/fortimanager-sdk-go/util"
 )
 
 type JSONFirewallObjectService struct {
@@ -21,7 +23,7 @@ type JSONFirewallObjectService struct {
 }
 
 // Create and Update function
-func (c *FortiMngClient) CreateUpdateFirewallObjectService(params *JSONFirewallObjectService, method string) (err error) {
+func (c *FmgSDKClient) CreateUpdateFirewallObjectService(params *JSONFirewallObjectService, method string) (err error) {
 	defer c.Trace("CreateUpdateFirewallObjectService")()
 
 	p := map[string]interface{}{
@@ -39,7 +41,7 @@ func (c *FortiMngClient) CreateUpdateFirewallObjectService(params *JSONFirewallO
 	return
 }
 
-func (c *FortiMngClient) ReadFirewallObjectService(name string) (out *JSONFirewallObjectService, err error) {
+func (c *FmgSDKClient) ReadFirewallObjectService(name string) (out *JSONFirewallObjectService, err error) {
 	defer c.Trace("ReadFirewallObjectService")()
 
 	p := map[string]interface{}{
@@ -63,18 +65,18 @@ func (c *FortiMngClient) ReadFirewallObjectService(name string) (out *JSONFirewa
 		out.Name = data["name"].(string)
 	}
 	if data["protocol"] != nil {
-		out.Protocol = c.FirewallObjectProtocol2Str(int(data["protocol"].(float64)))
+		out.Protocol = util.FirewallObjectProtocol2Str(int(data["protocol"].(float64)))
 	}
 	if data["comment"] != nil {
 		out.Comment = data["comment"].(string)
 	}
 	if data["category"] != nil {
-		m := c.InterfaceArray2StrArray(data["category"].([]interface{}))
+		m := util.InterfaceArray2StrArray(data["category"].([]interface{}))
 		// only 1 item is allowed here
 		out.Category = m[0]
 	}
 	if data["proxy"] != nil {
-		out.Proxy = c.ControlSwitch2Str(int(data["proxy"].(float64)))
+		out.Proxy = util.ControlSwitch2Str(int(data["proxy"].(float64)))
 	}
 	if data["fqdn"] != nil {
 		out.Fqdn = data["fqdn"].(string)
@@ -83,13 +85,13 @@ func (c *FortiMngClient) ReadFirewallObjectService(name string) (out *JSONFirewa
 		out.Iprange = data["iprange"].(string)
 	}
 	if data["tcp-portrange"] != nil {
-		out.TcpPortRange = c.InterfaceArray2StrArray(data["tcp-portrange"].([]interface{}))
+		out.TcpPortRange = util.InterfaceArray2StrArray(data["tcp-portrange"].([]interface{}))
 	}
 	if data["udp-portrange"] != nil {
-		out.UdpPortRange = c.InterfaceArray2StrArray(data["udp-portrange"].([]interface{}))
+		out.UdpPortRange = util.InterfaceArray2StrArray(data["udp-portrange"].([]interface{}))
 	}
 	if data["sctp-portrange"] != nil {
-		out.SctpPortRange = c.InterfaceArray2StrArray(data["sctp-portrange"].([]interface{}))
+		out.SctpPortRange = util.InterfaceArray2StrArray(data["sctp-portrange"].([]interface{}))
 	}
 	if data["icmpcode"] != nil {
 		out.IcmpCode = int(data["icmpcode"].(float64))
@@ -104,7 +106,7 @@ func (c *FortiMngClient) ReadFirewallObjectService(name string) (out *JSONFirewa
 	return
 }
 
-func (c *FortiMngClient) DeleteFirewallObjectService(name string) (err error) {
+func (c *FmgSDKClient) DeleteFirewallObjectService(name string) (err error) {
 	defer c.Trace("DeleteFirewallObjectService")()
 
 	p := map[string]interface{}{

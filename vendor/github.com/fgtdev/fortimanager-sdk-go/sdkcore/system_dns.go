@@ -1,4 +1,4 @@
-package fortimngclient
+package fmgclient
 
 import (
 	"fmt"
@@ -9,7 +9,7 @@ type JSONSystemDNS struct {
 	Secondary string `json:"secondary,omitempty"`
 }
 
-func (c *FortiMngClient) SetSystemDNS(params *JSONSystemDNS) (err error) {
+func (c *FmgSDKClient) SetSystemDNS(params *JSONSystemDNS) (err error) {
 	defer c.Trace("SetSystemDNS")()
 
 	p := map[string]interface{}{
@@ -27,7 +27,7 @@ func (c *FortiMngClient) SetSystemDNS(params *JSONSystemDNS) (err error) {
 	return
 }
 
-func (c *FortiMngClient) ReadSystemDNS() (out *JSONSystemDNS, err error) {
+func (c *FmgSDKClient) ReadSystemDNS() (out *JSONSystemDNS, err error) {
 	defer c.Trace("ReadSystemDNS")()
 
 	p := map[string]interface{}{

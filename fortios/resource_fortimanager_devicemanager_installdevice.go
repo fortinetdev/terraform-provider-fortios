@@ -3,7 +3,7 @@ package fortios
 import (
 	"fmt"
 
-	fortimngclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
+	fmgclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -34,7 +34,7 @@ func createFMGDVMInstallDev(d *schema.ResourceData, m interface{}) error {
 	defer c.Trace("createFMGDVMInstallDev")()
 
 	//Build input data by sdk
-	i := &fortimngclient.JSONDVMInstallDev{
+	i := &fmgclient.JSONDVMInstallDev{
 		Name:    d.Get("target_devname").(string),
 		Timeout: d.Get("timeout").(int),
 	}

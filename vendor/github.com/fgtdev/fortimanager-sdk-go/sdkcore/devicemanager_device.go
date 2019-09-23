@@ -1,4 +1,4 @@
-package fortimngclient
+package fmgclient
 
 import (
 	"fmt"
@@ -17,7 +17,7 @@ type JSONDVMDeviceDel struct {
 	Adom string `json:"adom"`
 }
 
-func (c *FortiMngClient) CreateDVMDevice(params *JSONDVMDeviceCreate) (err error) {
+func (c *FmgSDKClient) CreateDVMDevice(params *JSONDVMDeviceCreate) (err error) {
 	defer c.Trace("CreateDVMDevice")()
 
 	data := map[string]interface{}{
@@ -39,7 +39,7 @@ func (c *FortiMngClient) CreateDVMDevice(params *JSONDVMDeviceCreate) (err error
 	return
 }
 
-func (c *FortiMngClient) DeleteDVMDevice(params *JSONDVMDeviceDel) (err error) {
+func (c *FmgSDKClient) DeleteDVMDevice(params *JSONDVMDeviceDel) (err error) {
 	defer c.Trace("DeleteDVMDevice")()
 
 	p := map[string]interface{}{

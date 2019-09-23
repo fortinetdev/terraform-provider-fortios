@@ -1,7 +1,9 @@
-package fortimngclient
+package fmgclient
 
 import (
 	"fmt"
+
+	"github.com/fgtdev/fortimanager-sdk-go/util"
 )
 
 type JSONFirewallObjectIppool struct {
@@ -16,7 +18,7 @@ type JSONFirewallObjectIppool struct {
 }
 
 // Create and Update function
-func (c *FortiMngClient) CreateUpdateFirewallObjectIppool(params *JSONFirewallObjectIppool, method string) (err error) {
+func (c *FmgSDKClient) CreateUpdateFirewallObjectIppool(params *JSONFirewallObjectIppool, method string) (err error) {
 	defer c.Trace("CreateUpdateFirewallObjectIppool")()
 
 	p := map[string]interface{}{
@@ -34,7 +36,7 @@ func (c *FortiMngClient) CreateUpdateFirewallObjectIppool(params *JSONFirewallOb
 	return
 }
 
-func (c *FortiMngClient) ReadFirewallObjectIppool(name string) (out *JSONFirewallObjectIppool, err error) {
+func (c *FmgSDKClient) ReadFirewallObjectIppool(name string) (out *JSONFirewallObjectIppool, err error) {
 	defer c.Trace("ReadFirewallObjectIppool")()
 
 	p := map[string]interface{}{
@@ -58,7 +60,7 @@ func (c *FortiMngClient) ReadFirewallObjectIppool(name string) (out *JSONFirewal
 		out.Name = data["name"].(string)
 	}
 	if data["type"] != nil {
-		out.Type = c.FirewallObjectIppoolType2Str(int(data["type"].(float64)))
+		out.Type = util.FirewallObjectIppoolType2Str(int(data["type"].(float64)))
 	}
 	if data["comments"] != nil {
 		out.Comment = data["comments"].(string)
@@ -70,24 +72,24 @@ func (c *FortiMngClient) ReadFirewallObjectIppool(name string) (out *JSONFirewal
 		out.EndIp = data["endip"].(string)
 	}
 	if data["arp-intf"] != nil {
-		m := c.InterfaceArray2StrArray(data["arp-intf"].([]interface{}))
+		m := util.InterfaceArray2StrArray(data["arp-intf"].([]interface{}))
 		// only 1 item is allowed here
 		out.ArpIntf = m[0]
 	}
 	if data["associated-interface"] != nil {
-		m := c.InterfaceArray2StrArray(data["associated-interface"].([]interface{}))
+		m := util.InterfaceArray2StrArray(data["associated-interface"].([]interface{}))
 		// only 1 item is allowed here
 		out.ArpIntf = m[0]
 	}
 	if data["arp-reply"] != nil {
-		out.ArpReply = c.ControlSwitch2Str(int(data["arp-reply"].(float64)))
+		out.ArpReply = util.ControlSwitch2Str(int(data["arp-reply"].(float64)))
 	}
 
 	return
 
 }
 
-func (c *FortiMngClient) DeleteFirewallObjectIppool(name string) (err error) {
+func (c *FmgSDKClient) DeleteFirewallObjectIppool(name string) (err error) {
 	defer c.Trace("DeleteFirewallObjectIppool")()
 
 	p := map[string]interface{}{

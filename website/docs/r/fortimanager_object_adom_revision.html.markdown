@@ -8,14 +8,14 @@ description: |-
 
 # fortios_fortimanager_object_adom_revision
 This resource supports Create/Read/Update/Delete object adom revision for FortiManager.    
-                                                                         
-## Example Usage                                                         
-```hcl                                                                   
-provider "fortios" {                                                     
-	hostname = "192.168.88.100"                                      
-	username = "APIUser"                                             
-	passwd = "admin"                                                 
-	provider = "fortimanager"
+
+## Example Usage
+```hcl
+provider "fortios" {
+	hostname = "192.168.88.100"
+	username = "APIUser"
+	passwd = "admin"
+	product = "fortimanager"
 }
 
 resource "fortios_fortimanager_object_adom_revision" "test1" {

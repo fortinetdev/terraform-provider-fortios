@@ -1,4 +1,4 @@
-package fortimngclient
+package fmgclient
 
 import (
 	"fmt"
@@ -9,7 +9,7 @@ type JSONSystemLicenseVM struct {
 	FileContent string
 }
 
-func (c *FortiMngClient) AddSystemLicenseVM(params *JSONSystemLicenseVM) (err error) {
+func (c *FmgSDKClient) AddSystemLicenseVM(params *JSONSystemLicenseVM) (err error) {
 	defer c.Trace("AddSystemLicenseVM")()
 
 	d := map[string]interface{}{

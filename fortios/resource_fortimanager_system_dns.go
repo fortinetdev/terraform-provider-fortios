@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	fortimngclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
+	fmgclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -32,7 +32,7 @@ func setFMGSystemDNS(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
 	defer c.Trace("setFMGSystemDNS")()
 
-	i := &fortimngclient.JSONSystemDNS{
+	i := &fmgclient.JSONSystemDNS{
 		Primary:   d.Get("primary").(string),
 		Secondary: d.Get("secondary").(string),
 	}

@@ -1,7 +1,9 @@
-package fortimngclient
+package fmgclient
 
 import (
 	"fmt"
+
+	"github.com/fgtdev/fortimanager-sdk-go/util"
 )
 
 type JSONSysAdminProfileGenernal struct {
@@ -55,7 +57,7 @@ type JSONSysAdminProfiles struct {
 }
 
 // Create and Update function
-func (c *FortiMngClient) CreateUpdateSystemAdminProfiles(params *JSONSysAdminProfiles, method string) (err error) {
+func (c *FmgSDKClient) CreateUpdateSystemAdminProfiles(params *JSONSysAdminProfiles, method string) (err error) {
 	defer c.Trace("CreateUpdateSystemAdminProfiles")()
 
 	p := map[string]interface{}{
@@ -73,7 +75,7 @@ func (c *FortiMngClient) CreateUpdateSystemAdminProfiles(params *JSONSysAdminPro
 	return
 }
 
-func (c *FortiMngClient) ReadSystemAdminProfiles(id string) (out *JSONSysAdminProfiles, err error) {
+func (c *FmgSDKClient) ReadSystemAdminProfiles(id string) (out *JSONSysAdminProfiles, err error) {
 	defer c.Trace("ReadSystemAdminProfiles")()
 
 	p := map[string]interface{}{
@@ -105,103 +107,103 @@ func (c *FortiMngClient) ReadSystemAdminProfiles(id string) (out *JSONSysAdminPr
 		out.Description = data["description"].(string)
 	}
 	if data["system-setting"] != nil {
-		out.SystemSetting = c.AccessRight2Str(int(data["system-setting"].(float64)))
+		out.SystemSetting = util.AccessRight2Str(int(data["system-setting"].(float64)))
 	}
 	if data["adom-switch"] != nil {
-		out.AdomSwitch = c.AccessRight2Str(int(data["adom-switch"].(float64)))
+		out.AdomSwitch = util.AccessRight2Str(int(data["adom-switch"].(float64)))
 	}
 	if data["deploy-management"] != nil {
-		out.DeployManagement = c.AccessRight2Str(int(data["deploy-management"].(float64)))
+		out.DeployManagement = util.AccessRight2Str(int(data["deploy-management"].(float64)))
 	}
 	if data["import-policy-packages"] != nil {
-		out.ImportPolicyPackages = c.AccessRight2Str(int(data["import-policy-packages"].(float64)))
+		out.ImportPolicyPackages = util.AccessRight2Str(int(data["import-policy-packages"].(float64)))
 	}
 	if data["intf-mapping"] != nil {
-		out.IntfMapping = c.AccessRight2Str(int(data["intf-mapping"].(float64)))
+		out.IntfMapping = util.AccessRight2Str(int(data["intf-mapping"].(float64)))
 	}
 	if data["device-ap"] != nil {
-		out.DeviceAp = c.AccessRight2Str(int(data["device-ap"].(float64)))
+		out.DeviceAp = util.AccessRight2Str(int(data["device-ap"].(float64)))
 	}
 	if data["device-forticlient"] != nil {
-		out.DeviceFortiClient = c.AccessRight2Str(int(data["device-forticlient"].(float64)))
+		out.DeviceFortiClient = util.AccessRight2Str(int(data["device-forticlient"].(float64)))
 	}
 	if data["device-fortiswitch"] != nil {
-		out.DeviceFortiSwitch = c.AccessRight2Str(int(data["device-fortiswitch"].(float64)))
+		out.DeviceFortiSwitch = util.AccessRight2Str(int(data["device-fortiswitch"].(float64)))
 	}
 	if data["vpn-manager"] != nil {
-		out.VpnManager = c.AccessRight2Str(int(data["vpn-manager"].(float64)))
+		out.VpnManager = util.AccessRight2Str(int(data["vpn-manager"].(float64)))
 	}
 	if data["log-viewer"] != nil {
-		out.LogViewer = c.AccessRight2Str(int(data["log-viewer"].(float64)))
+		out.LogViewer = util.AccessRight2Str(int(data["log-viewer"].(float64)))
 	}
 	if data["device-forticlient"] != nil {
-		out.DeviceFortiClient = c.AccessRight2Str(int(data["device-forticlient"].(float64)))
+		out.DeviceFortiClient = util.AccessRight2Str(int(data["device-forticlient"].(float64)))
 	}
 
 	if data["fgd_center"] != nil {
-		out.FgdCenter = c.AccessRight2Str(int(data["fgd_center"].(float64)))
+		out.FgdCenter = util.AccessRight2Str(int(data["fgd_center"].(float64)))
 	}
 	if data["fgd-center-advanced"] != nil {
-		out.FgdCenterAdvanced = c.AccessRight2Str(int(data["fgd-center-advanced"].(float64)))
+		out.FgdCenterAdvanced = util.AccessRight2Str(int(data["fgd-center-advanced"].(float64)))
 	}
 	if data["fgd-center-fmw-mgmt"] != nil {
-		out.FgdCenterFmwMgmt = c.AccessRight2Str(int(data["fgd-center-fmw-mgmt"].(float64)))
+		out.FgdCenterFmwMgmt = util.AccessRight2Str(int(data["fgd-center-fmw-mgmt"].(float64)))
 	}
 	if data["fgd-center-licensing"] != nil {
-		out.FgdCenterLicensing = c.AccessRight2Str(int(data["fgd-center-licensing"].(float64)))
+		out.FgdCenterLicensing = util.AccessRight2Str(int(data["fgd-center-licensing"].(float64)))
 	}
 
 	if data["device-manager"] != nil {
-		out.DeviceManager = c.AccessRight2Str(int(data["device-manager"].(float64)))
+		out.DeviceManager = util.AccessRight2Str(int(data["device-manager"].(float64)))
 	}
 	if data["device-op"] != nil {
-		out.DeviceOp = c.AccessRight2Str(int(data["device-op"].(float64)))
+		out.DeviceOp = util.AccessRight2Str(int(data["device-op"].(float64)))
 	}
 	if data["config-retrieve"] != nil {
-		out.ConfigRetrieve = c.AccessRight2Str(int(data["config-retrieve"].(float64)))
+		out.ConfigRetrieve = util.AccessRight2Str(int(data["config-retrieve"].(float64)))
 	}
 	if data["config-revert"] != nil {
-		out.ConfigRevert = c.AccessRight2Str(int(data["config-revert"].(float64)))
+		out.ConfigRevert = util.AccessRight2Str(int(data["config-revert"].(float64)))
 	}
 	if data["device-revision-deletion"] != nil {
-		out.DeviceRevisionDeletion = c.AccessRight2Str(int(data["device-revision-deletion"].(float64)))
+		out.DeviceRevisionDeletion = util.AccessRight2Str(int(data["device-revision-deletion"].(float64)))
 	}
 	if data["term-access"] != nil {
-		out.TermAccess = c.AccessRight2Str(int(data["term-access"].(float64)))
+		out.TermAccess = util.AccessRight2Str(int(data["term-access"].(float64)))
 	}
 	if data["device-config"] != nil {
-		out.DeviceConfig = c.AccessRight2Str(int(data["device-config"].(float64)))
+		out.DeviceConfig = util.AccessRight2Str(int(data["device-config"].(float64)))
 	}
 	if data["device-profile"] != nil {
-		out.DeviceProfile = c.AccessRight2Str(int(data["device-profile"].(float64)))
+		out.DeviceProfile = util.AccessRight2Str(int(data["device-profile"].(float64)))
 	}
 	if data["device-wan-link-load-balance"] != nil {
-		out.DeviceWanLinkLoadBalance = c.AccessRight2Str(int(data["device-wan-link-load-balance"].(float64)))
+		out.DeviceWanLinkLoadBalance = util.AccessRight2Str(int(data["device-wan-link-load-balance"].(float64)))
 	}
 
 	if data["policy-objects"] != nil {
-		out.PolicyObjects = c.AccessRight2Str(int(data["policy-objects"].(float64)))
+		out.PolicyObjects = util.AccessRight2Str(int(data["policy-objects"].(float64)))
 	}
 	if data["global-policy-packages"] != nil {
-		out.GlobalPolicyPackages = c.AccessRight2Str(int(data["global-policy-packages"].(float64)))
+		out.GlobalPolicyPackages = util.AccessRight2Str(int(data["global-policy-packages"].(float64)))
 	}
 	if data["assignment"] != nil {
-		out.Assignment = c.AccessRight2Str(int(data["assignment"].(float64)))
+		out.Assignment = util.AccessRight2Str(int(data["assignment"].(float64)))
 	}
 	if data["adom-policy-packages"] != nil {
-		out.AdomPolicyPackages = c.AccessRight2Str(int(data["adom-policy-packages"].(float64)))
+		out.AdomPolicyPackages = util.AccessRight2Str(int(data["adom-policy-packages"].(float64)))
 	}
 	if data["consistency-check"] != nil {
-		out.ConsistencyCheck = c.AccessRight2Str(int(data["consistency-check"].(float64)))
+		out.ConsistencyCheck = util.AccessRight2Str(int(data["consistency-check"].(float64)))
 	}
 	if data["set-install-targets"] != nil {
-		out.SetInstallTargets = c.AccessRight2Str(int(data["set-install-targets"].(float64)))
+		out.SetInstallTargets = util.AccessRight2Str(int(data["set-install-targets"].(float64)))
 	}
 
 	return
 }
 
-func (c *FortiMngClient) DeleteSystemAdminProfiles(id string) (err error) {
+func (c *FmgSDKClient) DeleteSystemAdminProfiles(id string) (err error) {
 	defer c.Trace("DeleteSystemAdminProfiles")()
 
 	p := map[string]interface{}{

@@ -1,4 +1,4 @@
-package fortimngclient
+package fmgclient
 
 import (
 	"fmt"
@@ -9,7 +9,7 @@ type SystemLicenseFortiCare struct {
 	RegistrationCode string
 }
 
-func (c *FortiMngClient) AddSystemLicenseFortiCare(params *SystemLicenseFortiCare) (err error) {
+func (c *FmgSDKClient) AddSystemLicenseFortiCare(params *SystemLicenseFortiCare) (err error) {
 	defer c.Trace("AddSystemLicenseFortiCare")()
 
 	d := map[string]interface{}{

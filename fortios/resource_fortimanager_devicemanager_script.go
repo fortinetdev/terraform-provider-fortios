@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	fortimngclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
+	fmgclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
 	"github.com/fgtdev/fortimanager-sdk-go/util"
 	"github.com/hashicorp/terraform/helper/schema"
 )
@@ -44,7 +44,7 @@ func createFMGDVMScript(d *schema.ResourceData, m interface{}) error {
 	defer c.Trace("createFMGDVMScript")()
 
 	//Build input data by sdk
-	i := &fortimngclient.JSONDVMScript{
+	i := &fmgclient.JSONDVMScript{
 		Name:        d.Get("name").(string),
 		Description: d.Get("description").(string),
 		Content:     d.Get("content").(string),
@@ -95,7 +95,7 @@ func updateFMGDVMScript(d *schema.ResourceData, m interface{}) error {
 	}
 
 	//Build input data by sdk
-	i := &fortimngclient.JSONDVMScript{
+	i := &fmgclient.JSONDVMScript{
 		Name:        d.Get("name").(string),
 		Description: d.Get("description").(string),
 		Content:     d.Get("content").(string),

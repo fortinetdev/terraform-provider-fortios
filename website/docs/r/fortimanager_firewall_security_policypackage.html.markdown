@@ -16,7 +16,7 @@ provider "fortios" {
 	hostname = "192.168.88.100"
 	username = "APIUser"
 	passwd = "admin"
-	provider = "fortimanager"
+	product = "fortimanager"
 }
 
 resource "fortios_fortimanager_firewall_security_policypackage" "test1" {

@@ -1,4 +1,4 @@
-package fortimngclient
+package fmgclient
 
 import (
 	"fmt"
@@ -9,7 +9,7 @@ type JSONDVMInstallPolicyPackage struct {
 	Timeout int
 }
 
-func (c *FortiMngClient) CreateDVMInstallPolicyPackage(params *JSONDVMInstallPolicyPackage) (err error) {
+func (c *FmgSDKClient) CreateDVMInstallPolicyPackage(params *JSONDVMInstallPolicyPackage) (err error) {
 	defer c.Trace("CreateDVMInstallPolicyPackage")()
 
 	d := map[string]interface{}{

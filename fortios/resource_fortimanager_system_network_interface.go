@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	fortimngclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
+	fmgclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
 	"github.com/fgtdev/fortimanager-sdk-go/util"
 	"github.com/hashicorp/terraform/helper/schema"
 )
@@ -56,13 +56,13 @@ func createFMGSystemNetworkInterface(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).ClientFortimanager
 	defer c.Trace("createFMGSystemNetworkInterface")()
 
-	i := &fortimngclient.JSONSystemNetworkInterface{
+	i := &fmgclient.JSONSystemNetworkInterface{
 		Name:          d.Get("name").(string),
 		Ip:            d.Get("ip").(string),
 		Description:   d.Get("description").(string),
 		Status:        d.Get("status").(string),
-		AllowAccess:   c.InterfaceArray2StrArray(d.Get("allow_access").([]interface{})),
-		ServiceAccess: c.InterfaceArray2StrArray(d.Get("service_access").([]interface{})),
+		AllowAccess:   util.InterfaceArray2StrArray(d.Get("allow_access").([]interface{})),
+		ServiceAccess: util.InterfaceArray2StrArray(d.Get("service_access").([]interface{})),
 	}
 
 	/*
@@ -125,13 +125,13 @@ func updateFMGSystemNetworkInterface(d *schema.ResourceData, m interface{}) erro
 		return fmt.Errorf("the name argument is the key and should not be modified here")
 	}
 
-	i := &fortimngclient.JSONSystemNetworkInterface{
+	i := &fmgclient.JSONSystemNetworkInterface{
 		Name:          d.Get("name").(string),
 		Ip:            d.Get("ip").(string),
 		Description:   d.Get("description").(string),
 		Status:        d.Get("status").(string),
-		AllowAccess:   c.InterfaceArray2StrArray(d.Get("allow_access").([]interface{})),
-		ServiceAccess: c.InterfaceArray2StrArray(d.Get("service_access").([]interface{})),
+		AllowAccess:   util.InterfaceArray2StrArray(d.Get("allow_access").([]interface{})),
+		ServiceAccess: util.InterfaceArray2StrArray(d.Get("service_access").([]interface{})),
 	}
 	/*
 		aa := c.AllowAccess2int(i.AllowAccess)

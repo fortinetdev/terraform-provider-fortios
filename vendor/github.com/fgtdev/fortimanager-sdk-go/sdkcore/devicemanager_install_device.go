@@ -1,4 +1,4 @@
-package fortimngclient
+package fmgclient
 
 import (
 	"fmt"
@@ -9,7 +9,7 @@ type JSONDVMInstallDev struct {
 	Timeout int
 }
 
-func (c *FortiMngClient) CreateDVMInstallDev(params *JSONDVMInstallDev) (err error) {
+func (c *FmgSDKClient) CreateDVMInstallDev(params *JSONDVMInstallDev) (err error) {
 	defer c.Trace("CreateDVMInstallDev")()
 
 	d := map[string]interface{}{

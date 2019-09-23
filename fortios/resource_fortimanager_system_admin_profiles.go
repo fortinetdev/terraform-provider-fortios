@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	fortimngclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
+	fmgclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
 	"github.com/fgtdev/fortimanager-sdk-go/util"
 	"github.com/hashicorp/terraform/helper/schema"
 )
@@ -207,8 +207,8 @@ func createFMGSystemAdminProfiles(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
 	defer c.Trace("createFMGSystemAdminProfiles")()
 
-	i := &fortimngclient.JSONSysAdminProfiles{
-		JSONSysAdminProfileGenernal: &fortimngclient.JSONSysAdminProfileGenernal{
+	i := &fmgclient.JSONSysAdminProfiles{
+		JSONSysAdminProfileGenernal: &fmgclient.JSONSysAdminProfileGenernal{
 			ProfileId:            d.Get("profileid").(string),
 			Description:          d.Get("description").(string),
 			SystemSetting:        d.Get("system_setting").(string),
@@ -222,13 +222,13 @@ func createFMGSystemAdminProfiles(d *schema.ResourceData, m interface{}) error {
 			VpnManager:           d.Get("vpn_manager").(string),
 			LogViewer:            d.Get("log_viewer").(string),
 		},
-		JSONSysAdminProfileFortiGuard: &fortimngclient.JSONSysAdminProfileFortiGuard{
+		JSONSysAdminProfileFortiGuard: &fmgclient.JSONSysAdminProfileFortiGuard{
 			FgdCenter:          d.Get("fortiguard_center").(string),
 			FgdCenterAdvanced:  d.Get("fortiguard_center_advanced").(string),
 			FgdCenterFmwMgmt:   d.Get("fortiguard_center_firmware_managerment").(string),
 			FgdCenterLicensing: d.Get("fortiguard_center_licensing").(string),
 		},
-		JSONSysAdminProfileDeviceManager: &fortimngclient.JSONSysAdminProfileDeviceManager{
+		JSONSysAdminProfileDeviceManager: &fmgclient.JSONSysAdminProfileDeviceManager{
 			DeviceManager:            d.Get("device_manager").(string),
 			DeviceOp:                 d.Get("device_operation").(string),
 			ConfigRetrieve:           d.Get("config_retrieve").(string),
@@ -239,7 +239,7 @@ func createFMGSystemAdminProfiles(d *schema.ResourceData, m interface{}) error {
 			DeviceProfile:            d.Get("device_profile").(string),
 			DeviceWanLinkLoadBalance: d.Get("device_wan_link_load_balance").(string),
 		},
-		JSONSysAdminProfilePolicyObject: &fortimngclient.JSONSysAdminProfilePolicyObject{
+		JSONSysAdminProfilePolicyObject: &fmgclient.JSONSysAdminProfilePolicyObject{
 			PolicyObjects:        d.Get("policy_objects").(string),
 			GlobalPolicyPackages: d.Get("global_policy_packages").(string),
 			Assignment:           d.Get("assignment").(string),
@@ -321,8 +321,8 @@ func updateFMGSystemAdminProfiles(d *schema.ResourceData, m interface{}) error {
 		return fmt.Errorf("the profileid argument is the key and should not be modified here")
 	}
 
-	i := &fortimngclient.JSONSysAdminProfiles{
-		JSONSysAdminProfileGenernal: &fortimngclient.JSONSysAdminProfileGenernal{
+	i := &fmgclient.JSONSysAdminProfiles{
+		JSONSysAdminProfileGenernal: &fmgclient.JSONSysAdminProfileGenernal{
 			ProfileId:            d.Get("profileid").(string),
 			Description:          d.Get("description").(string),
 			SystemSetting:        d.Get("system_setting").(string),
@@ -336,13 +336,13 @@ func updateFMGSystemAdminProfiles(d *schema.ResourceData, m interface{}) error {
 			VpnManager:           d.Get("vpn_manager").(string),
 			LogViewer:            d.Get("log_viewer").(string),
 		},
-		JSONSysAdminProfileFortiGuard: &fortimngclient.JSONSysAdminProfileFortiGuard{
+		JSONSysAdminProfileFortiGuard: &fmgclient.JSONSysAdminProfileFortiGuard{
 			FgdCenter:          d.Get("fortiguard_center").(string),
 			FgdCenterAdvanced:  d.Get("fortiguard_center_advanced").(string),
 			FgdCenterFmwMgmt:   d.Get("fortiguard_center_firmware_managerment").(string),
 			FgdCenterLicensing: d.Get("fortiguard_center_licensing").(string),
 		},
-		JSONSysAdminProfileDeviceManager: &fortimngclient.JSONSysAdminProfileDeviceManager{
+		JSONSysAdminProfileDeviceManager: &fmgclient.JSONSysAdminProfileDeviceManager{
 			DeviceManager:            d.Get("device_manager").(string),
 			DeviceOp:                 d.Get("device_operation").(string),
 			ConfigRetrieve:           d.Get("config_retrieve").(string),
@@ -353,7 +353,7 @@ func updateFMGSystemAdminProfiles(d *schema.ResourceData, m interface{}) error {
 			DeviceProfile:            d.Get("device_profile").(string),
 			DeviceWanLinkLoadBalance: d.Get("device_wan_link_load_balance").(string),
 		},
-		JSONSysAdminProfilePolicyObject: &fortimngclient.JSONSysAdminProfilePolicyObject{
+		JSONSysAdminProfilePolicyObject: &fmgclient.JSONSysAdminProfilePolicyObject{
 			PolicyObjects:        d.Get("policy_objects").(string),
 			GlobalPolicyPackages: d.Get("global_policy_packages").(string),
 			Assignment:           d.Get("assignment").(string),

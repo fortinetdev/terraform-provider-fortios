@@ -1,7 +1,9 @@
-package fortimngclient
+package fmgclient
 
 import (
 	"fmt"
+
+	"github.com/fgtdev/fortimanager-sdk-go/util"
 )
 
 type JSONSystemNTP struct {
@@ -11,7 +13,7 @@ type JSONSystemNTP struct {
 	SyncInterval int    `json:"sync_interval,omitempty"`
 }
 
-func (c *FortiMngClient) SetSystemNTP(params *JSONSystemNTP) (err error) {
+func (c *FmgSDKClient) SetSystemNTP(params *JSONSystemNTP) (err error) {
 	defer c.Trace("SetSystemNTP")()
 
 	d := map[string]interface{}{
@@ -38,7 +40,7 @@ func (c *FortiMngClient) SetSystemNTP(params *JSONSystemNTP) (err error) {
 	return
 }
 
-func (c *FortiMngClient) ReadSystemNTP() (out *JSONSystemNTP, err error) {
+func (c *FmgSDKClient) ReadSystemNTP() (out *JSONSystemNTP, err error) {
 	defer c.Trace("ReadSystemNTP")()
 
 	p := map[string]interface{}{
@@ -59,7 +61,7 @@ func (c *FortiMngClient) ReadSystemNTP() (out *JSONSystemNTP, err error) {
 
 	out = &JSONSystemNTP{}
 	if data["status"] != nil {
-		out.Status = c.ControlSwitch2Str(int(data["status"].(float64)))
+		out.Status = util.ControlSwitch2Str(int(data["status"].(float64)))
 	}
 	if data["sync_interval"] != nil {
 		out.SyncInterval = int(data["sync_interval"].(float64))

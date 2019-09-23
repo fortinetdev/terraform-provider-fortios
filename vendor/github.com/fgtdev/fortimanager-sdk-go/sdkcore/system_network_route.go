@@ -1,4 +1,4 @@
-package fortimngclient
+package fmgclient
 
 import (
 	"fmt"
@@ -12,7 +12,7 @@ type JSONSysNetworkRoute struct {
 }
 
 // Create and Update function
-func (c *FortiMngClient) CreateUpdateSystemNetworkRoute(params *JSONSysNetworkRoute, method string) (err error) {
+func (c *FmgSDKClient) CreateUpdateSystemNetworkRoute(params *JSONSysNetworkRoute, method string) (err error) {
 	defer c.Trace("CreateUpdateSystemNetworkRoute")()
 
 	p := map[string]interface{}{
@@ -30,7 +30,7 @@ func (c *FortiMngClient) CreateUpdateSystemNetworkRoute(params *JSONSysNetworkRo
 	return
 }
 
-func (c *FortiMngClient) ReadSystemNetworkRoute(id string) (out *JSONSysNetworkRoute, err error) {
+func (c *FmgSDKClient) ReadSystemNetworkRoute(id string) (out *JSONSysNetworkRoute, err error) {
 	defer c.Trace("ReadSystemNetworkRoute")()
 
 	p := map[string]interface{}{
@@ -64,7 +64,7 @@ func (c *FortiMngClient) ReadSystemNetworkRoute(id string) (out *JSONSysNetworkR
 	return
 }
 
-func (c *FortiMngClient) DeleteSystemNetworkRoute(id string) (err error) {
+func (c *FmgSDKClient) DeleteSystemNetworkRoute(id string) (err error) {
 	defer c.Trace("DeleteSystemNetworkRoute")()
 
 	p := map[string]interface{}{

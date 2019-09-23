@@ -1,4 +1,4 @@
-package fortimngclient
+package fmgclient
 
 import (
 	"fmt"
@@ -10,7 +10,7 @@ type JSONSystemAdmin struct {
 	IdleTimeout int `json:"idle_timeout,omitempty"`
 }
 
-func (c *FortiMngClient) SetSystemAdmin(params *JSONSystemAdmin) (err error) {
+func (c *FmgSDKClient) SetSystemAdmin(params *JSONSystemAdmin) (err error) {
 	defer c.Trace("SetSystemAdmin")()
 
 	p := map[string]interface{}{
@@ -28,7 +28,7 @@ func (c *FortiMngClient) SetSystemAdmin(params *JSONSystemAdmin) (err error) {
 	return
 }
 
-func (c *FortiMngClient) ReadSystemAdmin() (out *JSONSystemAdmin, err error) {
+func (c *FmgSDKClient) ReadSystemAdmin() (out *JSONSystemAdmin, err error) {
 	defer c.Trace("ReadSystemAdmin")()
 
 	p := map[string]interface{}{

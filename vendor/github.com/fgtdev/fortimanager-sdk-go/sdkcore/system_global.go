@@ -1,7 +1,9 @@
-package fortimngclient
+package fmgclient
 
 import (
 	"fmt"
+
+	"github.com/fgtdev/fortimanager-sdk-go/util"
 )
 
 type JSONSystemGlobal struct {
@@ -12,7 +14,7 @@ type JSONSystemGlobal struct {
 	TimeZone   string `json:"timezone,omitempty"`
 }
 
-func (c *FortiMngClient) SetSystemGlobal(params *JSONSystemGlobal) (err error) {
+func (c *FmgSDKClient) SetSystemGlobal(params *JSONSystemGlobal) (err error) {
 	defer c.Trace("SetSystemGlobal")()
 
 	p := map[string]interface{}{
@@ -30,7 +32,7 @@ func (c *FortiMngClient) SetSystemGlobal(params *JSONSystemGlobal) (err error) {
 	return
 }
 
-func (c *FortiMngClient) ReadSystemGlobal() (out *JSONSystemGlobal, err error) {
+func (c *FmgSDKClient) ReadSystemGlobal() (out *JSONSystemGlobal, err error) {
 	defer c.Trace("ReadSystemGlobal")()
 
 	p := map[string]interface{}{
@@ -54,16 +56,16 @@ func (c *FortiMngClient) ReadSystemGlobal() (out *JSONSystemGlobal, err error) {
 		out.Hostname = data["hostname"].(string)
 	}
 	if data["faz-status"] != nil {
-		out.FazStatus = c.ControlSwitch2Str(int(data["faz-status"].(float64)))
+		out.FazStatus = util.ControlSwitch2Str(int(data["faz-status"].(float64)))
 	}
 	if data["adom-status"] != nil {
-		out.AdomStatus = c.ControlSwitch2Str(int(data["adom-status"].(float64)))
+		out.AdomStatus = util.ControlSwitch2Str(int(data["adom-status"].(float64)))
 	}
 	if data["adom-mode"] != nil {
-		out.AdomMode = c.AdomMode2Str(int(data["adom-mode"].(float64)))
+		out.AdomMode = util.AdomMode2Str(int(data["adom-mode"].(float64)))
 	}
 	if data["timezone"] != nil {
-		out.TimeZone = c.TimeZone2Str(int(data["timezone"].(float64)))
+		out.TimeZone = util.TimeZone2Str(int(data["timezone"].(float64)))
 	}
 
 	return

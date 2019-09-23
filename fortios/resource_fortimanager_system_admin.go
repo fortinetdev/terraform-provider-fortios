@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	fortimngclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
+	fmgclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -36,7 +36,7 @@ func setFMGSystemAdmin(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
 	defer c.Trace("setFMGSystemAdmin")()
 
-	i := &fortimngclient.JSONSystemAdmin{
+	i := &fmgclient.JSONSystemAdmin{
 		HttpPort:    d.Get("http_port").(int),
 		HttpsPort:   d.Get("https_port").(int),
 		IdleTimeout: d.Get("idle_timeout").(int),

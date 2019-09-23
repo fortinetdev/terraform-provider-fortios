@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	fortimngclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
+	fmgclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
 	"github.com/fgtdev/fortimanager-sdk-go/util"
 	"github.com/hashicorp/terraform/helper/schema"
 )
@@ -69,7 +69,7 @@ func createFMGFirewallObjectAddress(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).ClientFortimanager
 	defer c.Trace("createFMGFirewallObjectAddress")()
 
-	i := &fortimngclient.JSONFirewallObjectAddress{
+	i := &fmgclient.JSONFirewallObjectAddress{
 		Name:           d.Get("name").(string),
 		Type:           d.Get("type").(string),
 		Comment:        d.Get("comment").(string),
@@ -132,7 +132,7 @@ func updateFMGFirewallObjectAddress(d *schema.ResourceData, m interface{}) error
 		return fmt.Errorf("the name argument is the key and should not be modified here")
 	}
 
-	i := &fortimngclient.JSONFirewallObjectAddress{
+	i := &fmgclient.JSONFirewallObjectAddress{
 		Name:           d.Get("name").(string),
 		Type:           d.Get("type").(string),
 		Comment:        d.Get("comment").(string),

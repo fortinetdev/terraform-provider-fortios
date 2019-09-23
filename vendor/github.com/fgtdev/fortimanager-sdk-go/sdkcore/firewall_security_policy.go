@@ -1,8 +1,10 @@
-package fortimngclient
+package fmgclient
 
 import (
 	"fmt"
 	"strconv"
+
+	"github.com/fgtdev/fortimanager-sdk-go/util"
 )
 
 type JSONFirewallSecurityPolicy struct {
@@ -56,7 +58,7 @@ type FirewallSecurityPolicyInput struct {
 }
 
 // Create and Update function
-func (c *FortiMngClient) CreateUpdateFirewallSecurityPolicy(params *FirewallSecurityPolicyInput, method string) (id string, err error) {
+func (c *FmgSDKClient) CreateUpdateFirewallSecurityPolicy(params *FirewallSecurityPolicyInput, method string) (id string, err error) {
 	defer c.Trace("CreateUpdateFirewallSecurityPolicy")()
 
 	p := map[string]interface{}{
@@ -87,7 +89,7 @@ func (c *FortiMngClient) CreateUpdateFirewallSecurityPolicy(params *FirewallSecu
 	return
 }
 
-func (c *FortiMngClient) ReadFirewallSecurityPolicy(id, pkg_name string) (out *JSONFirewallSecurityPolicy, err error) {
+func (c *FmgSDKClient) ReadFirewallSecurityPolicy(id, pkg_name string) (out *JSONFirewallSecurityPolicy, err error) {
 	defer c.Trace("ReadFirewallSecurityPolicy")()
 
 	p := map[string]interface{}{
@@ -114,181 +116,181 @@ func (c *FortiMngClient) ReadFirewallSecurityPolicy(id, pkg_name string) (out *J
 		out.Comments = data["comments"].(string)
 	}
 	if data["action"] != nil {
-		out.Action = c.PolicyAction2Str(int(data["action"].(float64)))
+		out.Action = util.PolicyAction2Str(int(data["action"].(float64)))
 	}
 	if data["srcaddr"] != nil {
-		m := c.InterfaceArray2StrArray(data["srcaddr"].([]interface{}))
+		m := util.InterfaceArray2StrArray(data["srcaddr"].([]interface{}))
 		for i := 0; i < len(m); i++ {
 			out.SrcAddr = append(out.SrcAddr, m[i])
 		}
 	}
 	if data["srcintf"] != nil {
-		m := c.InterfaceArray2StrArray(data["srcintf"].([]interface{}))
+		m := util.InterfaceArray2StrArray(data["srcintf"].([]interface{}))
 		for i := 0; i < len(m); i++ {
 			out.SrcIntf = append(out.SrcIntf, m[i])
 		}
 	}
 	if data["dstaddr"] != nil {
-		m := c.InterfaceArray2StrArray(data["dstaddr"].([]interface{}))
+		m := util.InterfaceArray2StrArray(data["dstaddr"].([]interface{}))
 		for i := 0; i < len(m); i++ {
 			out.DstAddr = append(out.DstAddr, m[i])
 		}
 	}
 	if data["dstintf"] != nil {
-		m := c.InterfaceArray2StrArray(data["dstintf"].([]interface{}))
+		m := util.InterfaceArray2StrArray(data["dstintf"].([]interface{}))
 		for i := 0; i < len(m); i++ {
 			out.DstIntf = append(out.DstIntf, m[i])
 		}
 	}
 	if data["service"] != nil {
-		m := c.InterfaceArray2StrArray(data["service"].([]interface{}))
+		m := util.InterfaceArray2StrArray(data["service"].([]interface{}))
 		for i := 0; i < len(m); i++ {
 			out.Service = append(out.Service, m[i])
 		}
 	}
 	if data["schedule"] != nil {
-		m := c.InterfaceArray2StrArray(data["schedule"].([]interface{}))
+		m := util.InterfaceArray2StrArray(data["schedule"].([]interface{}))
 		for i := 0; i < len(m); i++ {
 			out.Schedule = append(out.Schedule, m[i])
 		}
 	}
 	if data["internet-service"] != nil {
-		out.InternetService = c.ControlSwitch2Str(int(data["internet-service"].(float64)))
+		out.InternetService = util.ControlSwitch2Str(int(data["internet-service"].(float64)))
 	}
 	if data["internet-service-id"] != nil {
-		m := c.InterfaceArray2StrArray(data["internet-service-id"].([]interface{}))
+		m := util.InterfaceArray2StrArray(data["internet-service-id"].([]interface{}))
 		for i := 0; i < len(m); i++ {
 			out.InternetServiceID = append(out.InternetServiceID, m[i])
 		}
 	}
 	if data["internet-service-src"] != nil {
-		out.InternetServiceSrc = c.ControlSwitch2Str(int(data["internet-service-src"].(float64)))
+		out.InternetServiceSrc = util.ControlSwitch2Str(int(data["internet-service-src"].(float64)))
 	}
 	if data["internet-service-src-id"] != nil {
-		m := c.InterfaceArray2StrArray(data["internet-service-src-id"].([]interface{}))
+		m := util.InterfaceArray2StrArray(data["internet-service-src-id"].([]interface{}))
 		for i := 0; i < len(m); i++ {
 			out.InternetServiceSrcID = append(out.InternetServiceSrcID, m[i])
 		}
 	}
 	if data["users"] != nil {
-		m := c.InterfaceArray2StrArray(data["users"].([]interface{}))
+		m := util.InterfaceArray2StrArray(data["users"].([]interface{}))
 		for i := 0; i < len(m); i++ {
 			out.Users = append(out.Users, m[i])
 		}
 	}
 	if data["groups"] != nil {
-		m := c.InterfaceArray2StrArray(data["groups"].([]interface{}))
+		m := util.InterfaceArray2StrArray(data["groups"].([]interface{}))
 		for i := 0; i < len(m); i++ {
 			out.Groups = append(out.Groups, m[i])
 		}
 	}
 	if data["rsso"] != nil {
-		out.Rsso = c.ControlSwitch2Str(int(data["rsso"].(float64)))
+		out.Rsso = util.ControlSwitch2Str(int(data["rsso"].(float64)))
 	}
 	if data["fsso"] != nil {
-		out.Fsso = c.ControlSwitch2Str(int(data["fsso"].(float64)))
+		out.Fsso = util.ControlSwitch2Str(int(data["fsso"].(float64)))
 	}
 	if data["logtraffic"] != nil {
-		out.Logtraffic = c.LogTraffic2Str(int(data["logtraffic"].(float64)))
+		out.Logtraffic = util.LogTraffic2Str(int(data["logtraffic"].(float64)))
 	}
 	if data["logtraffic-start"] != nil {
-		out.LogtrafficStart = c.ControlSwitch2Str(int(data["logtraffic-start"].(float64)))
+		out.LogtrafficStart = util.ControlSwitch2Str(int(data["logtraffic-start"].(float64)))
 	}
 	if data["capture-packet"] != nil {
-		out.CapturePacket = c.ControlSwitch2Str(int(data["capture-packet"].(float64)))
+		out.CapturePacket = util.ControlSwitch2Str(int(data["capture-packet"].(float64)))
 	}
 	if data["nat"] != nil {
-		out.NAT = c.ControlSwitch2Str(int(data["nat"].(float64)))
+		out.NAT = util.ControlSwitch2Str(int(data["nat"].(float64)))
 	}
 	if data["ippool"] != nil {
-		out.IpPool = c.ControlSwitch2Str(int(data["ippool"].(float64)))
+		out.IpPool = util.ControlSwitch2Str(int(data["ippool"].(float64)))
 	}
 	if data["poolname"] != nil {
-		m := c.InterfaceArray2StrArray(data["poolname"].([]interface{}))
+		m := util.InterfaceArray2StrArray(data["poolname"].([]interface{}))
 		for i := 0; i < len(m); i++ {
 			out.PoolName = append(out.PoolName, m[i])
 		}
 	}
 	if data["fixedport"] != nil {
-		out.FixedPort = c.ControlSwitch2Str(int(data["fixedport"].(float64)))
+		out.FixedPort = util.ControlSwitch2Str(int(data["fixedport"].(float64)))
 	}
 	if data["vpntunnel"] != nil {
-		m := c.InterfaceArray2StrArray(data["vpntunnel"].([]interface{}))
+		m := util.InterfaceArray2StrArray(data["vpntunnel"].([]interface{}))
 		for i := 0; i < len(m); i++ {
 			out.VpnTunnel = append(out.VpnTunnel, m[i])
 		}
 	}
 	if data["inbound"] != nil {
-		out.Inbound = c.ControlSwitch2Str(int(data["inbound"].(float64)))
+		out.Inbound = util.ControlSwitch2Str(int(data["inbound"].(float64)))
 	}
 	if data["utm-status"] != nil {
-		out.UTMStatus = c.ControlSwitch2Str(int(data["utm-status"].(float64)))
+		out.UTMStatus = util.ControlSwitch2Str(int(data["utm-status"].(float64)))
 	}
 	if data["profile-type"] != nil {
-		out.ProfileType = c.ProfileType2Str(int(data["profile-type"].(float64)))
+		out.ProfileType = util.ProfileType2Str(int(data["profile-type"].(float64)))
 	}
 	if data["av-profile"] != nil {
-		m := c.InterfaceArray2StrArray(data["av-profile"].([]interface{}))
+		m := util.InterfaceArray2StrArray(data["av-profile"].([]interface{}))
 		for i := 0; i < len(m); i++ {
 			out.AvProfile = append(out.AvProfile, m[i])
 		}
 	}
 	if data["webfilter-profile"] != nil {
-		m := c.InterfaceArray2StrArray(data["webfilter-profile"].([]interface{}))
+		m := util.InterfaceArray2StrArray(data["webfilter-profile"].([]interface{}))
 		for i := 0; i < len(m); i++ {
 			out.WebFilterProfile = append(out.WebFilterProfile, m[i])
 		}
 	}
 	if data["application-list"] != nil {
-		m := c.InterfaceArray2StrArray(data["application-list"].([]interface{}))
+		m := util.InterfaceArray2StrArray(data["application-list"].([]interface{}))
 		for i := 0; i < len(m); i++ {
 			out.ApplicationList = append(out.ApplicationList, m[i])
 		}
 	}
 	if data["ips-sensor"] != nil {
-		m := c.InterfaceArray2StrArray(data["ips-sensor"].([]interface{}))
+		m := util.InterfaceArray2StrArray(data["ips-sensor"].([]interface{}))
 		for i := 0; i < len(m); i++ {
 			out.IpsSensor = append(out.IpsSensor, m[i])
 		}
 	}
 	if data["waf-profile"] != nil {
-		m := c.InterfaceArray2StrArray(data["waf-profile"].([]interface{}))
+		m := util.InterfaceArray2StrArray(data["waf-profile"].([]interface{}))
 		for i := 0; i < len(m); i++ {
 			out.WafProfile = append(out.WafProfile, m[i])
 		}
 	}
 	if data["dnsfilter-profile"] != nil {
-		m := c.InterfaceArray2StrArray(data["dnsfilter-profile"].([]interface{}))
+		m := util.InterfaceArray2StrArray(data["dnsfilter-profile"].([]interface{}))
 		for i := 0; i < len(m); i++ {
 			out.DnsFilterProfile = append(out.DnsFilterProfile, m[i])
 		}
 	}
 	if data["profile-protocol-options"] != nil {
-		m := c.InterfaceArray2StrArray(data["profile-protocol-options"].([]interface{}))
+		m := util.InterfaceArray2StrArray(data["profile-protocol-options"].([]interface{}))
 		for i := 0; i < len(m); i++ {
 			out.ProfileProtocolOptions = append(out.ProfileProtocolOptions, m[i])
 		}
 	}
 	if data["profile-group"] != nil {
-		m := c.InterfaceArray2StrArray(data["profile-group"].([]interface{}))
+		m := util.InterfaceArray2StrArray(data["profile-group"].([]interface{}))
 		for i := 0; i < len(m); i++ {
 			out.ProfileGroup = append(out.ProfileGroup, m[i])
 		}
 	}
 	if data["traffic-shaper"] != nil {
-		m := c.InterfaceArray2StrArray(data["traffic-shaper"].([]interface{}))
+		m := util.InterfaceArray2StrArray(data["traffic-shaper"].([]interface{}))
 		for i := 0; i < len(m); i++ {
 			out.TrafficShaper = append(out.TrafficShaper, m[i])
 		}
 	}
 	if data["traffic-shaper-reverse"] != nil {
-		m := c.InterfaceArray2StrArray(data["traffic-shaper-reverse"].([]interface{}))
+		m := util.InterfaceArray2StrArray(data["traffic-shaper-reverse"].([]interface{}))
 		for i := 0; i < len(m); i++ {
 			out.TrafficShaperReverse = append(out.TrafficShaperReverse, m[i])
 		}
 	}
 	if data["per-ip-shaper"] != nil {
-		m := c.InterfaceArray2StrArray(data["per-ip-shaper"].([]interface{}))
+		m := util.InterfaceArray2StrArray(data["per-ip-shaper"].([]interface{}))
 		for i := 0; i < len(m); i++ {
 			out.PerIpShaper = append(out.PerIpShaper, m[i])
 		}
@@ -298,7 +300,7 @@ func (c *FortiMngClient) ReadFirewallSecurityPolicy(id, pkg_name string) (out *J
 	return
 }
 
-func (c *FortiMngClient) DeleteFirewallSecurityPolicy(id, pkg_name string) (err error) {
+func (c *FmgSDKClient) DeleteFirewallSecurityPolicy(id, pkg_name string) (err error) {
 	defer c.Trace("DeleteFirewallSecurityPolicy")()
 
 	p := map[string]interface{}{

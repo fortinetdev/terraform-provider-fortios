@@ -1,7 +1,9 @@
-package fortimngclient
+package fmgclient
 
 import (
 	"fmt"
+
+	"github.com/fgtdev/fortimanager-sdk-go/util"
 )
 
 type JSONDVMScript struct {
@@ -13,7 +15,7 @@ type JSONDVMScript struct {
 }
 
 // Create and Update function
-func (c *FortiMngClient) CreateUpdateDVMScript(params *JSONDVMScript, method string) (err error) {
+func (c *FmgSDKClient) CreateUpdateDVMScript(params *JSONDVMScript, method string) (err error) {
 	defer c.Trace("CreateUpdateDVMScript")()
 
 	p := map[string]interface{}{
@@ -31,7 +33,7 @@ func (c *FortiMngClient) CreateUpdateDVMScript(params *JSONDVMScript, method str
 	return
 }
 
-func (c *FortiMngClient) ReadDVMScript(id string) (out *JSONDVMScript, err error) {
+func (c *FmgSDKClient) ReadDVMScript(id string) (out *JSONDVMScript, err error) {
 	defer c.Trace("ReadDVMScript")()
 
 	p := map[string]interface{}{
@@ -61,13 +63,13 @@ func (c *FortiMngClient) ReadDVMScript(id string) (out *JSONDVMScript, err error
 		out.Content = data["content"].(string)
 	}
 	if data["target"] != nil {
-		out.Target = c.ScriptTarget2Str(int(data["target"].(float64)))
+		out.Target = util.ScriptTarget2Str(int(data["target"].(float64)))
 	}
 
 	return
 }
 
-func (c *FortiMngClient) DeleteDVMScript(id string) (err error) {
+func (c *FmgSDKClient) DeleteDVMScript(id string) (err error) {
 	defer c.Trace("DeleteDVMScript")()
 
 	p := map[string]interface{}{
