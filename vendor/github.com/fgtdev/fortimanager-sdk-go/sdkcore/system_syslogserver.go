@@ -1,4 +1,4 @@
-package fortimngclient
+package fmgclient
 
 import (
 	"fmt"
@@ -11,7 +11,7 @@ type JSONSystemSyslogServer struct {
 }
 
 // Create and Update function
-func (c *FortiMngClient) CreateUpdateSystemSyslogServer(params *JSONSystemSyslogServer, method string) (err error) {
+func (c *FmgSDKClient) CreateUpdateSystemSyslogServer(params *JSONSystemSyslogServer, method string) (err error) {
 	defer c.Trace("CreateUpdateSystemSyslogServer")()
 
 	p := map[string]interface{}{
@@ -29,7 +29,7 @@ func (c *FortiMngClient) CreateUpdateSystemSyslogServer(params *JSONSystemSyslog
 	return
 }
 
-func (c *FortiMngClient) ReadSystemSyslogServer(name string) (out *JSONSystemSyslogServer, err error) {
+func (c *FmgSDKClient) ReadSystemSyslogServer(name string) (out *JSONSystemSyslogServer, err error) {
 	defer c.Trace("ReadSystemSyslogServer")()
 
 	p := map[string]interface{}{
@@ -62,7 +62,7 @@ func (c *FortiMngClient) ReadSystemSyslogServer(name string) (out *JSONSystemSys
 	return
 }
 
-func (c *FortiMngClient) DeleteSystemSyslogServer(name string) (err error) {
+func (c *FmgSDKClient) DeleteSystemSyslogServer(name string) (err error) {
 	defer c.Trace("DeleteSystemSyslogServer")()
 
 	p := map[string]interface{}{

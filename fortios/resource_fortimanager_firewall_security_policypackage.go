@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	fortimngclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
+	fmgclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -32,7 +32,7 @@ func createFMGFirewallSecurityPolicyPackage(d *schema.ResourceData, m interface{
 	c := m.(*FortiClient).ClientFortimanager
 	defer c.Trace("createFMGFirewallSecurityPolicyPackage")()
 
-	i := &fortimngclient.JSONFirewallSecurityPolicyPackage{
+	i := &fmgclient.JSONFirewallSecurityPolicyPackage{
 		Name:   d.Get("name").(string),
 		Target: d.Get("target").(string),
 	}
@@ -78,7 +78,7 @@ func updateFMGFirewallSecurityPolicyPackage(d *schema.ResourceData, m interface{
 		return fmt.Errorf("the name argument is the key and should not be modified here")
 	}
 
-	i := &fortimngclient.JSONFirewallSecurityPolicyPackage{
+	i := &fmgclient.JSONFirewallSecurityPolicyPackage{
 		Name:   d.Get("name").(string),
 		Target: d.Get("target").(string),
 	}

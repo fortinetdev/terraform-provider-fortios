@@ -1,7 +1,9 @@
-package fortimngclient
+package fmgclient
 
 import (
 	"fmt"
+
+	"github.com/fgtdev/fortimanager-sdk-go/util"
 )
 
 type JSONFirewallObjectVip struct {
@@ -15,7 +17,7 @@ type JSONFirewallObjectVip struct {
 }
 
 // Create and Update function
-func (c *FortiMngClient) CreateUpdateFirewallObjectVip(params *JSONFirewallObjectVip, method string) (err error) {
+func (c *FmgSDKClient) CreateUpdateFirewallObjectVip(params *JSONFirewallObjectVip, method string) (err error) {
 	defer c.Trace("CreateUpdateFirewallObjectVip")()
 
 	p := map[string]interface{}{
@@ -33,7 +35,7 @@ func (c *FortiMngClient) CreateUpdateFirewallObjectVip(params *JSONFirewallObjec
 	return
 }
 
-func (c *FortiMngClient) ReadFirewallObjectVip(name string) (out *JSONFirewallObjectVip, err error) {
+func (c *FmgSDKClient) ReadFirewallObjectVip(name string) (out *JSONFirewallObjectVip, err error) {
 	defer c.Trace("ReadFirewallObjectVip")()
 
 	p := map[string]interface{}{
@@ -57,24 +59,24 @@ func (c *FortiMngClient) ReadFirewallObjectVip(name string) (out *JSONFirewallOb
 		out.Name = data["name"].(string)
 	}
 	if data["type"] != nil {
-		out.Type = c.FirewallObjectVipType2Str(int(data["type"].(float64)))
+		out.Type = util.FirewallObjectVipType2Str(int(data["type"].(float64)))
 	}
 	if data["comment"] != nil {
 		out.Comment = data["comment"].(string)
 	}
 	if data["arp-reply"] != nil {
-		out.ArpReply = c.ControlSwitch2Str(int(data["arp-reply"].(float64)))
+		out.ArpReply = util.ControlSwitch2Str(int(data["arp-reply"].(float64)))
 	}
 	if data["mappedip"] != nil {
-		m := c.InterfaceArray2StrArray(data["mappedip"].([]interface{}))
+		m := util.InterfaceArray2StrArray(data["mappedip"].([]interface{}))
 		out.MappedIp = m[0]
 	}
 	if data["extip"] != nil {
-		m := c.InterfaceArray2StrArray(data["extip"].([]interface{}))
+		m := util.InterfaceArray2StrArray(data["extip"].([]interface{}))
 		out.ExtIp = m[0]
 	}
 	if data["extintf"] != nil {
-		m := c.InterfaceArray2StrArray(data["extintf"].([]interface{}))
+		m := util.InterfaceArray2StrArray(data["extintf"].([]interface{}))
 		out.ExtIntf = m[0]
 	}
 
@@ -82,7 +84,7 @@ func (c *FortiMngClient) ReadFirewallObjectVip(name string) (out *JSONFirewallOb
 
 }
 
-func (c *FortiMngClient) DeleteFirewallObjectVip(name string) (err error) {
+func (c *FmgSDKClient) DeleteFirewallObjectVip(name string) (err error) {
 	defer c.Trace("DeleteFirewallObjectVip")()
 
 	p := map[string]interface{}{

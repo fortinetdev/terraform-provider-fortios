@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	fortimngclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
+	fmgclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -36,7 +36,7 @@ func createFMGSystemSyslogServer(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
 	defer c.Trace("createFMGSystemSyslogServer")()
 
-	i := &fortimngclient.JSONSystemSyslogServer{
+	i := &fmgclient.JSONSystemSyslogServer{
 		Name: d.Get("name").(string),
 		Ip:   d.Get("ip").(string),
 		Port: d.Get("port").(int),
@@ -83,7 +83,7 @@ func updateFMGSystemSyslogServer(d *schema.ResourceData, m interface{}) error {
 		return fmt.Errorf("the userid argument is the key and should not be modified here")
 	}
 
-	i := &fortimngclient.JSONSystemSyslogServer{
+	i := &fmgclient.JSONSystemSyslogServer{
 		Name: d.Get("name").(string),
 		Ip:   d.Get("ip").(string),
 		Port: d.Get("port").(int),

@@ -3,7 +3,7 @@ package fortios
 import (
 	"fmt"
 
-	fortimngclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
+	fmgclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -31,7 +31,7 @@ func addFMGSystemLicenseVM(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
 	defer c.Trace("addFMGSystemLicenseVM")()
 
-	i := &fortimngclient.JSONSystemLicenseVM{
+	i := &fmgclient.JSONSystemLicenseVM{
 		Target:      d.Get("target").(string),
 		FileContent: d.Get("file_content").(string),
 	}

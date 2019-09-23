@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	fortimngclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
+	fmgclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
 	"github.com/fgtdev/fortimanager-sdk-go/util"
 	"github.com/hashicorp/terraform/helper/schema"
 )
@@ -49,7 +49,7 @@ func setFMGSystemGlobal(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
 	defer c.Trace("setFMGSystemGlobal")()
 
-	i := &fortimngclient.JSONSystemGlobal{
+	i := &fmgclient.JSONSystemGlobal{
 		FazStatus:  d.Get("fortianalyzer_status").(string),
 		AdomStatus: d.Get("adom_status").(string),
 		AdomMode:   d.Get("adom_mode").(string),

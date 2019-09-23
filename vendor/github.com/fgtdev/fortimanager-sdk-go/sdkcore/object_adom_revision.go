@@ -1,4 +1,4 @@
-package fortimngclient
+package fmgclient
 
 import (
 	"fmt"
@@ -14,7 +14,7 @@ type JSONObjectAdomRevision struct {
 }
 
 // Create and Update function
-func (c *FortiMngClient) CreateUpdateObjectAdomRevision(params *JSONObjectAdomRevision, method string) (version string, err error) {
+func (c *FmgSDKClient) CreateUpdateObjectAdomRevision(params *JSONObjectAdomRevision, method string) (version string, err error) {
 	defer c.Trace("CreateUpdateObjectAdomRevision")()
 
 	p := map[string]interface{}{
@@ -44,7 +44,7 @@ func (c *FortiMngClient) CreateUpdateObjectAdomRevision(params *JSONObjectAdomRe
 	return
 }
 
-func (c *FortiMngClient) ReadObjectAdomRevision(version string) (out *JSONObjectAdomRevision, err error) {
+func (c *FmgSDKClient) ReadObjectAdomRevision(version string) (out *JSONObjectAdomRevision, err error) {
 	defer c.Trace("ReadObjectAdomRevision")()
 
 	p := map[string]interface{}{
@@ -81,7 +81,7 @@ func (c *FortiMngClient) ReadObjectAdomRevision(version string) (out *JSONObject
 
 }
 
-func (c *FortiMngClient) DeleteObjectAdomRevision(version string) (err error) {
+func (c *FmgSDKClient) DeleteObjectAdomRevision(version string) (err error) {
 	defer c.Trace("DeleteObjectAdomRevision")()
 
 	p := map[string]interface{}{

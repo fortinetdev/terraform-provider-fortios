@@ -1,7 +1,9 @@
-package fortimngclient
+package fmgclient
 
 import (
 	"fmt"
+
+	"github.com/fgtdev/fortimanager-sdk-go/util"
 )
 
 type JSONSystemNetworkInterface struct {
@@ -13,7 +15,7 @@ type JSONSystemNetworkInterface struct {
 	ServiceAccess []string `json:"serviceaccess,omitempty"`
 }
 
-func (c *FortiMngClient) UpdateSystemNetworkInterface(params *JSONSystemNetworkInterface) (err error) {
+func (c *FmgSDKClient) UpdateSystemNetworkInterface(params *JSONSystemNetworkInterface) (err error) {
 	defer c.Trace("UpdateSystemNetworkInterface")()
 
 	p := map[string]interface{}{
@@ -31,7 +33,7 @@ func (c *FortiMngClient) UpdateSystemNetworkInterface(params *JSONSystemNetworkI
 	return
 }
 
-func (c *FortiMngClient) ReadSystemNetworkInterface(name string) (out *JSONSystemNetworkInterface, err error) {
+func (c *FmgSDKClient) ReadSystemNetworkInterface(name string) (out *JSONSystemNetworkInterface, err error) {
 	defer c.Trace("ReadSystemNetworkInterface")()
 
 	p := map[string]interface{}{
@@ -62,16 +64,8 @@ func (c *FortiMngClient) ReadSystemNetworkInterface(name string) (out *JSONSyste
 		out.Ip = ipaddr[0].(string) + " " + ipaddr[1].(string)
 	}
 	if data["status"] != nil {
-		out.Status = c.IntfStatus2Str(int(data["status"].(float64)))
+		out.Status = util.IntfStatus2Str(int(data["status"].(float64)))
 	}
-	/*
-		if data["allowaccess"] != nil {
-			out.AllowAccess = c.Tmp(strconv.Itoa(int(data["allowaccess"].(float64))))
-		}
-		if data["serviceaccess"] != nil {
-			out.ServiceAccess = c.Tmp1(strconv.Itoa(int(data["serviceaccess"].(float64))))
-		}
-	*/
 
 	return
 }

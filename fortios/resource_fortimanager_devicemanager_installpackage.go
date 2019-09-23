@@ -3,7 +3,7 @@ package fortios
 import (
 	"fmt"
 
-	fortimngclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
+	fmgclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -33,7 +33,7 @@ func createFMGDVMInstallPolicyPackage(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).ClientFortimanager
 	defer c.Trace("createFMGDVMInstallPolicyPackage")()
 
-	i := &fortimngclient.JSONDVMInstallPolicyPackage{
+	i := &fmgclient.JSONDVMInstallPolicyPackage{
 		Name:    d.Get("package_name").(string),
 		Timeout: d.Get("timeout").(int),
 	}

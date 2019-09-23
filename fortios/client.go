@@ -9,7 +9,7 @@ import (
 	"os"
 	"time"
 
-	fortimngclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
+	fmgclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
 	"github.com/fgtdev/fortios-sdk-go/auth"
 	forticlient "github.com/fgtdev/fortios-sdk-go/sdkcore"
 )
@@ -23,15 +23,18 @@ type Config struct {
 	Vdom     string
 	Username string
 	Passwd   string
-	Provider string
+	Product  string
 }
 
 // FortiClient contains the basic FortiOS SDK connection information to FortiOS
 // It can be used to as a client of FortiOS for the plugin
+// Now FortiClient contains two kinds of clients:
+// Client is for FortiGate
+// Client Fottimanager is for FortiManager
 type FortiClient struct {
 	//to sdk client
 	Client             *forticlient.FortiSDKClient
-	ClientFortimanager *fortimngclient.FortiMngClient
+	ClientFortimanager *fmgclient.FmgSDKClient
 }
 
 // CreateClient creates a FortiClient Object with the authentication information.
@@ -39,11 +42,11 @@ type FortiClient struct {
 func (c *Config) CreateClient() (interface{}, error) {
 	var fClient FortiClient
 
-	if c.Provider == "" {
-		c.Provider = os.Getenv("FORTIOS_PROVIDER")
+	if c.Product == "" {
+		c.Product = os.Getenv("FORTIOS_PRODUCT")
 	}
 
-	switch c.Provider {
+	switch c.Product {
 	case "fortimanager":
 		{
 			if c.Hostname == "" {
@@ -56,7 +59,7 @@ func (c *Config) CreateClient() (interface{}, error) {
 				c.Passwd = os.Getenv("FORTIOS_FMG_PASSWORD")
 			}
 			if c.Hostname != "" && c.Username != "" && c.Passwd != "" {
-				fClient.ClientFortimanager = fortimngclient.NewClient(c.Hostname, c.Username, c.Passwd)
+				fClient.ClientFortimanager = fmgclient.NewClient(c.Hostname, c.Username, c.Passwd)
 				return &fClient, nil
 			} else {
 				return nil, fmt.Errorf("Error: hostname, username and passwd are needed here for fortimanager")

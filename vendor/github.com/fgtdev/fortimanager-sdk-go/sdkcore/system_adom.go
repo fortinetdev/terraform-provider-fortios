@@ -1,8 +1,10 @@
-package fortimngclient
+package fmgclient
 
 import (
 	"fmt"
 	"strconv"
+
+	"github.com/fgtdev/fortimanager-sdk-go/util"
 )
 
 type JSONSystemAdom struct {
@@ -13,7 +15,7 @@ type JSONSystemAdom struct {
 }
 
 // Create and Update function
-func (c *FortiMngClient) CreateUpdateSystemAdom(params *JSONSystemAdom, method string) (err error) {
+func (c *FmgSDKClient) CreateUpdateSystemAdom(params *JSONSystemAdom, method string) (err error) {
 	defer c.Trace("CreateUpdateSystemAdom")()
 
 	p := map[string]interface{}{
@@ -31,7 +33,7 @@ func (c *FortiMngClient) CreateUpdateSystemAdom(params *JSONSystemAdom, method s
 	return
 }
 
-func (c *FortiMngClient) ReadSystemAdom(name string) (out *JSONSystemAdom, err error) {
+func (c *FmgSDKClient) ReadSystemAdom(name string) (out *JSONSystemAdom, err error) {
 	defer c.Trace("ReadSystemAdom")()
 
 	p := map[string]interface{}{
@@ -58,14 +60,14 @@ func (c *FortiMngClient) ReadSystemAdom(name string) (out *JSONSystemAdom, err e
 		out.Status = strconv.Itoa(int(data["state"].(float64)))
 	}
 	if data["restricted_prds"] != nil {
-		out.RestrictedPrds = c.RestrictedPrds2Str(int(data["restricted_prds"].(float64)))
+		out.RestrictedPrds = util.RestrictedPrds2Str(int(data["restricted_prds"].(float64)))
 	}
 
 	return
 
 }
 
-func (c *FortiMngClient) DeleteSystemAdom(name string) (err error) {
+func (c *FmgSDKClient) DeleteSystemAdom(name string) (err error) {
 	defer c.Trace("DeleteSystemAdom")()
 
 	p := map[string]interface{}{

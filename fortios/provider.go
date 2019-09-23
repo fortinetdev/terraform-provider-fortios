@@ -54,7 +54,7 @@ func Provider() terraform.ResourceProvider {
 				Default:     "",
 				Description: "",
 			},
-			"provider": &schema.Schema{
+			"product": &schema.Schema{
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "",
@@ -130,7 +130,7 @@ func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 		Vdom:     d.Get("vdom").(string),
 		Username: d.Get("username").(string),
 		Passwd:   d.Get("passwd").(string),
-		Provider: d.Get("provider").(string),
+		Product:  d.Get("product").(string),
 	}
 
 	v, ok := d.GetOkExists("insecure")

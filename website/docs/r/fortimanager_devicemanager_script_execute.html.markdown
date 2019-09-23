@@ -15,7 +15,7 @@ provider "fortios" {
 	hostname = "192.168.88.100"
 	username = "APIUser"
 	passwd = "admin"
-	provider = "fortimanager"
+	product = "fortimanager"
 }
 
 resource "fortios_fortimanager_devicemanager_script_execute" "test3" {

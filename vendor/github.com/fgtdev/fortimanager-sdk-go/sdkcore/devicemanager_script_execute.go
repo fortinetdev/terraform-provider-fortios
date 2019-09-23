@@ -1,4 +1,4 @@
-package fortimngclient
+package fmgclient
 
 import (
 	"fmt"
@@ -11,7 +11,7 @@ type JSONDVMScriptExecute struct {
 }
 
 // Create and Update function
-func (c *FortiMngClient) ExecuteDVMScript(params *JSONDVMScriptExecute) (err error) {
+func (c *FmgSDKClient) ExecuteDVMScript(params *JSONDVMScriptExecute) (err error) {
 	defer c.Trace("ExecuteDVMScript")()
 
 	d := map[string]interface{}{

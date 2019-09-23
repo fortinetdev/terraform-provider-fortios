@@ -3,7 +3,7 @@ package fortios
 import (
 	"fmt"
 
-	fortimngclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
+	fmgclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -36,7 +36,7 @@ func createUpdateFMGDVMScriptExecute(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).ClientFortimanager
 	defer c.Trace("createUpdateFMGDVMScriptExecute")()
 
-	i := &fortimngclient.JSONDVMScriptExecute{
+	i := &fmgclient.JSONDVMScriptExecute{
 		ScriptName:    d.Get("script_name").(string),
 		TargetDevName: d.Get("target_devname").(string),
 		Timeout:       d.Get("timeout").(int),

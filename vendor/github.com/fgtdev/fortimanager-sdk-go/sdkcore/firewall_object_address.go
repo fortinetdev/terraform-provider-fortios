@@ -1,7 +1,9 @@
-package fortimngclient
+package fmgclient
 
 import (
 	"fmt"
+
+	"github.com/fgtdev/fortimanager-sdk-go/util"
 )
 
 type JSONFirewallObjectAddress struct {
@@ -17,7 +19,7 @@ type JSONFirewallObjectAddress struct {
 }
 
 // Create and Update function
-func (c *FortiMngClient) CreateUpdateFirewallObjectAddress(params *JSONFirewallObjectAddress, method string) (err error) {
+func (c *FmgSDKClient) CreateUpdateFirewallObjectAddress(params *JSONFirewallObjectAddress, method string) (err error) {
 	defer c.Trace("CreateUpdateFirewallObjectAddress")()
 
 	p := map[string]interface{}{
@@ -35,7 +37,7 @@ func (c *FortiMngClient) CreateUpdateFirewallObjectAddress(params *JSONFirewallO
 	return
 }
 
-func (c *FortiMngClient) ReadFirewallObjectAddress(name string) (out *JSONFirewallObjectAddress, err error) {
+func (c *FmgSDKClient) ReadFirewallObjectAddress(name string) (out *JSONFirewallObjectAddress, err error) {
 	defer c.Trace("ReadFirewallObjectAddress")()
 
 	p := map[string]interface{}{
@@ -59,7 +61,7 @@ func (c *FortiMngClient) ReadFirewallObjectAddress(name string) (out *JSONFirewa
 		out.Name = data["name"].(string)
 	}
 	if data["type"] != nil {
-		out.Type = c.FirewallObjectAddrType2Str(int(data["type"].(float64)))
+		out.Type = util.FirewallObjectAddrType2Str(int(data["type"].(float64)))
 	}
 	if data["comment"] != nil {
 		out.Comment = data["comment"].(string)
@@ -69,7 +71,7 @@ func (c *FortiMngClient) ReadFirewallObjectAddress(name string) (out *JSONFirewa
 	}
 
 	if data["associated-interface"] != nil {
-		m := c.InterfaceArray2StrArray(data["associated-interface"].([]interface{}))
+		m := util.InterfaceArray2StrArray(data["associated-interface"].([]interface{}))
 		// only 1 item is allowed here
 		out.AssociatedIntf = m[0]
 	}
@@ -84,13 +86,13 @@ func (c *FortiMngClient) ReadFirewallObjectAddress(name string) (out *JSONFirewa
 		out.EndIp = data["end-ip"].(string)
 	}
 	if data["allow-routing"] != nil {
-		out.AllowRouting = c.ControlSwitch2Str(int(data["allow-routing"].(float64)))
+		out.AllowRouting = util.ControlSwitch2Str(int(data["allow-routing"].(float64)))
 	}
 
 	return
 }
 
-func (c *FortiMngClient) DeleteFirewallObjectAddress(name string) (err error) {
+func (c *FmgSDKClient) DeleteFirewallObjectAddress(name string) (err error) {
 	defer c.Trace("DeleteFirewallObjectAddress")()
 
 	p := map[string]interface{}{

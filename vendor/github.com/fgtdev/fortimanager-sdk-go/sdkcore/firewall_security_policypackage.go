@@ -1,4 +1,4 @@
-package fortimngclient
+package fmgclient
 
 import (
 	"fmt"
@@ -9,7 +9,7 @@ type JSONFirewallSecurityPolicyPackage struct {
 	Target string `json:"name"`
 }
 
-func (c *FortiMngClient) CreateUpdateFirewallSecurityPolicyPackage(params *JSONFirewallSecurityPolicyPackage, method string) (err error) {
+func (c *FmgSDKClient) CreateUpdateFirewallSecurityPolicyPackage(params *JSONFirewallSecurityPolicyPackage, method string) (err error) {
 	defer c.Trace("CreateUpdateFirewallSecurityPolicyPackage")()
 
 	d := map[string]interface{}{
@@ -35,7 +35,7 @@ func (c *FortiMngClient) CreateUpdateFirewallSecurityPolicyPackage(params *JSONF
 	return
 }
 
-func (c *FortiMngClient) DeleteFirewallSecurityPolicyPackage(name string) (err error) {
+func (c *FmgSDKClient) DeleteFirewallSecurityPolicyPackage(name string) (err error) {
 	defer c.Trace("DeleteFirewallSecurityPolicyPackage")()
 
 	p := map[string]interface{}{
@@ -51,7 +51,7 @@ func (c *FortiMngClient) DeleteFirewallSecurityPolicyPackage(name string) (err e
 	return
 }
 
-func (c *FortiMngClient) ReadFirewallSecurityPolicyPackage(name string) (out *JSONFirewallSecurityPolicyPackage, err error) {
+func (c *FmgSDKClient) ReadFirewallSecurityPolicyPackage(name string) (out *JSONFirewallSecurityPolicyPackage, err error) {
 	defer c.Trace("ReadFirewallSecurityPolicyPackage")()
 
 	p := map[string]interface{}{

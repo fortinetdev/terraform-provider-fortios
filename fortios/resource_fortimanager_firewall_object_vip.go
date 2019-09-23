@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	fortimngclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
+	fmgclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -54,7 +54,7 @@ func createFTMFirewallObjectVip(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
 	defer c.Trace("createFTMFirewallObjectVip")()
 
-	i := &fortimngclient.JSONFirewallObjectVip{
+	i := &fmgclient.JSONFirewallObjectVip{
 		Name:     d.Get("name").(string),
 		Comment:  d.Get("comment").(string),
 		Type:     d.Get("type").(string),
@@ -109,7 +109,7 @@ func updateFTMFirewallObjectVip(d *schema.ResourceData, m interface{}) error {
 		return fmt.Errorf("the name argument is the key and should not be modified here")
 	}
 
-	i := &fortimngclient.JSONFirewallObjectVip{
+	i := &fmgclient.JSONFirewallObjectVip{
 		Name:     d.Get("name").(string),
 		Comment:  d.Get("comment").(string),
 		Type:     d.Get("type").(string),

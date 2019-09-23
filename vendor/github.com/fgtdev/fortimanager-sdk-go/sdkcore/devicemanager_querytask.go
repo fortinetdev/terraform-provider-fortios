@@ -1,4 +1,4 @@
-package fortimngclient
+package fmgclient
 
 import (
 	"fmt"
@@ -12,7 +12,7 @@ type QueryResult struct {
 	detail       string
 }
 
-func (c *FortiMngClient) QueryTask(task, timeout int) (err error) {
+func (c *FmgSDKClient) QueryTask(task, timeout int) (err error) {
 	defer c.Trace("QueryTask")()
 	// interval time: 3s
 	for i := 0; i < (timeout*60)/3; i++ {
@@ -38,7 +38,7 @@ func (c *FortiMngClient) QueryTask(task, timeout int) (err error) {
 	return fmt.Errorf("%d minutes has passed, timeout", timeout)
 }
 
-func (c *FortiMngClient) queryTask(task int) (query_ret *QueryResult, err error) {
+func (c *FmgSDKClient) queryTask(task int) (query_ret *QueryResult, err error) {
 	if task <= 0 {
 		return nil, fmt.Errorf("task id(%d) is not right, should be > 0", task)
 	}

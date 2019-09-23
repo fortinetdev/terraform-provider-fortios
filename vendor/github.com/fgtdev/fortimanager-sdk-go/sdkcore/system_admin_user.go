@@ -1,7 +1,9 @@
-package fortimngclient
+package fmgclient
 
 import (
 	"fmt"
+
+	"github.com/fgtdev/fortimanager-sdk-go/util"
 )
 
 type JSONSysAdminUser struct {
@@ -17,7 +19,7 @@ type JSONSysAdminUser struct {
 }
 
 // Create and Update function
-func (c *FortiMngClient) CreateUpdateSystemAdminUser(params *JSONSysAdminUser, method string) (err error) {
+func (c *FmgSDKClient) CreateUpdateSystemAdminUser(params *JSONSysAdminUser, method string) (err error) {
 	defer c.Trace("CreateUpdateSystemAdminUser")()
 
 	p := map[string]interface{}{
@@ -35,7 +37,7 @@ func (c *FortiMngClient) CreateUpdateSystemAdminUser(params *JSONSysAdminUser, m
 	return
 }
 
-func (c *FortiMngClient) ReadSystemAdminUser(id string) (out *JSONSysAdminUser, err error) {
+func (c *FmgSDKClient) ReadSystemAdminUser(id string) (out *JSONSysAdminUser, err error) {
 	defer c.Trace("ReadSystemAdminUser")()
 
 	p := map[string]interface{}{
@@ -62,13 +64,13 @@ func (c *FortiMngClient) ReadSystemAdminUser(id string) (out *JSONSysAdminUser, 
 		out.Description = data["description"].(string)
 	}
 	if data["user_type"] != nil {
-		out.UserType = c.UserType2Str(int(data["user_type"].(float64)))
+		out.UserType = util.UserType2Str(int(data["user_type"].(float64)))
 	}
 	if data["profileid"] != nil {
 		out.ProfileId = data["profileid"].(string)
 	}
 	if data["rpc-permit"] != nil {
-		out.RpcPermit = c.RpcPermit2Str(int(data["rpc-permit"].(float64)))
+		out.RpcPermit = util.RpcPermit2Str(int(data["rpc-permit"].(float64)))
 	}
 	if data["trusthost1"] != nil {
 		hosts := data["trusthost1"].([]interface{})
@@ -86,7 +88,7 @@ func (c *FortiMngClient) ReadSystemAdminUser(id string) (out *JSONSysAdminUser, 
 	return
 }
 
-func (c *FortiMngClient) DeleteSystemAdminUser(id string) (err error) {
+func (c *FmgSDKClient) DeleteSystemAdminUser(id string) (err error) {
 	defer c.Trace("DeleteSystemAdminUser")()
 
 	p := map[string]interface{}{

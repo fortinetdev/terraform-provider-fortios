@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	fortimngclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
+	fmgclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
 	"github.com/fgtdev/fortimanager-sdk-go/util"
 	"github.com/hashicorp/terraform/helper/schema"
 )
@@ -38,7 +38,7 @@ func setFMGSystemNTP(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
 	defer c.Trace("setFMGSystemNTP")()
 
-	i := &fortimngclient.JSONSystemNTP{
+	i := &fmgclient.JSONSystemNTP{
 		Id:           1,
 		Server:       d.Get("server").(string),
 		Status:       d.Get("status").(string),

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	fortimngclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
+	fmgclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
 	"github.com/fgtdev/fortimanager-sdk-go/util"
 	"github.com/hashicorp/terraform/helper/schema"
 )
@@ -284,21 +284,21 @@ func createFMGFirewallSecurityPolicy(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).ClientFortimanager
 	defer c.Trace("createFMGFirewallSecurityPolicy")()
 
-	p := &fortimngclient.JSONFirewallSecurityPolicy{
+	p := &fmgclient.JSONFirewallSecurityPolicy{
 		Name:                   d.Get("name").(string),
 		Action:                 d.Get("action").(string),
-		SrcAddr:                c.InterfaceArray2StrArray(d.Get("srcaddr").([]interface{})),
-		SrcIntf:                c.InterfaceArray2StrArray(d.Get("srcintf").([]interface{})),
-		DstAddr:                c.InterfaceArray2StrArray(d.Get("dstaddr").([]interface{})),
-		DstIntf:                c.InterfaceArray2StrArray(d.Get("dstintf").([]interface{})),
-		Service:                c.InterfaceArray2StrArray(d.Get("service").([]interface{})),
-		Schedule:               c.InterfaceArray2StrArray(d.Get("schedule").([]interface{})),
+		SrcAddr:                util.InterfaceArray2StrArray(d.Get("srcaddr").([]interface{})),
+		SrcIntf:                util.InterfaceArray2StrArray(d.Get("srcintf").([]interface{})),
+		DstAddr:                util.InterfaceArray2StrArray(d.Get("dstaddr").([]interface{})),
+		DstIntf:                util.InterfaceArray2StrArray(d.Get("dstintf").([]interface{})),
+		Service:                util.InterfaceArray2StrArray(d.Get("service").([]interface{})),
+		Schedule:               util.InterfaceArray2StrArray(d.Get("schedule").([]interface{})),
 		InternetService:        d.Get("internet_service").(string),
-		InternetServiceID:      c.InterfaceArray2StrArray(d.Get("internet_service_id").([]interface{})),
+		InternetServiceID:      util.InterfaceArray2StrArray(d.Get("internet_service_id").([]interface{})),
 		InternetServiceSrc:     d.Get("internet_service_src").(string),
-		InternetServiceSrcID:   c.InterfaceArray2StrArray(d.Get("internet_service_src_id").([]interface{})),
-		Users:                  c.InterfaceArray2StrArray(d.Get("users").([]interface{})),
-		Groups:                 c.InterfaceArray2StrArray(d.Get("groups").([]interface{})),
+		InternetServiceSrcID:   util.InterfaceArray2StrArray(d.Get("internet_service_src_id").([]interface{})),
+		Users:                  util.InterfaceArray2StrArray(d.Get("users").([]interface{})),
+		Groups:                 util.InterfaceArray2StrArray(d.Get("groups").([]interface{})),
 		Rsso:                   d.Get("rsso").(string),
 		Fsso:                   d.Get("fsso").(string),
 		Logtraffic:             d.Get("logtraffic").(string),
@@ -307,23 +307,23 @@ func createFMGFirewallSecurityPolicy(d *schema.ResourceData, m interface{}) erro
 		Comments:               d.Get("comments").(string),
 		NAT:                    d.Get("nat").(string),
 		IpPool:                 d.Get("ippool").(string),
-		PoolName:               c.InterfaceArray2StrArray(d.Get("poolname").([]interface{})),
+		PoolName:               util.InterfaceArray2StrArray(d.Get("poolname").([]interface{})),
 		FixedPort:              d.Get("fixedport").(string),
-		VpnTunnel:              c.InterfaceArray2StrArray(d.Get("vpn_tunnel").([]interface{})),
+		VpnTunnel:              util.InterfaceArray2StrArray(d.Get("vpn_tunnel").([]interface{})),
 		Inbound:                d.Get("inbound").(string),
 		UTMStatus:              d.Get("utm_status").(string),
 		ProfileType:            d.Get("profile_type").(string),
-		AvProfile:              c.InterfaceArray2StrArray(d.Get("av_profile").([]interface{})),
-		WebFilterProfile:       c.InterfaceArray2StrArray(d.Get("webfilter_profile").([]interface{})),
-		ApplicationList:        c.InterfaceArray2StrArray(d.Get("application_list").([]interface{})),
-		IpsSensor:              c.InterfaceArray2StrArray(d.Get("ips_sensor").([]interface{})),
-		WafProfile:             c.InterfaceArray2StrArray(d.Get("waf_profile").([]interface{})),
-		DnsFilterProfile:       c.InterfaceArray2StrArray(d.Get("dnsfilter_profile").([]interface{})),
-		ProfileProtocolOptions: c.InterfaceArray2StrArray(d.Get("profile_protocol_options").([]interface{})),
-		ProfileGroup:           c.InterfaceArray2StrArray(d.Get("profile_group").([]interface{})),
-		TrafficShaper:          c.InterfaceArray2StrArray(d.Get("traffic_shaper").([]interface{})),
-		TrafficShaperReverse:   c.InterfaceArray2StrArray(d.Get("traffic_shaper_reverse").([]interface{})),
-		PerIpShaper:            c.InterfaceArray2StrArray(d.Get("per_ip_shaper").([]interface{})),
+		AvProfile:              util.InterfaceArray2StrArray(d.Get("av_profile").([]interface{})),
+		WebFilterProfile:       util.InterfaceArray2StrArray(d.Get("webfilter_profile").([]interface{})),
+		ApplicationList:        util.InterfaceArray2StrArray(d.Get("application_list").([]interface{})),
+		IpsSensor:              util.InterfaceArray2StrArray(d.Get("ips_sensor").([]interface{})),
+		WafProfile:             util.InterfaceArray2StrArray(d.Get("waf_profile").([]interface{})),
+		DnsFilterProfile:       util.InterfaceArray2StrArray(d.Get("dnsfilter_profile").([]interface{})),
+		ProfileProtocolOptions: util.InterfaceArray2StrArray(d.Get("profile_protocol_options").([]interface{})),
+		ProfileGroup:           util.InterfaceArray2StrArray(d.Get("profile_group").([]interface{})),
+		TrafficShaper:          util.InterfaceArray2StrArray(d.Get("traffic_shaper").([]interface{})),
+		TrafficShaperReverse:   util.InterfaceArray2StrArray(d.Get("traffic_shaper_reverse").([]interface{})),
+		PerIpShaper:            util.InterfaceArray2StrArray(d.Get("per_ip_shaper").([]interface{})),
 		PolicyId:               "0",
 	}
 
@@ -331,7 +331,7 @@ func createFMGFirewallSecurityPolicy(d *schema.ResourceData, m interface{}) erro
 		p.ProfileProtocolOptions = []string{"default"}
 	}
 
-	i := &fortimngclient.FirewallSecurityPolicyInput{
+	i := &fmgclient.FirewallSecurityPolicyInput{
 		Policy:      p,
 		PackageName: d.Get("package_name").(string),
 	}
@@ -444,21 +444,21 @@ func updateFMGFirewallSecurityPolicy(d *schema.ResourceData, m interface{}) erro
 		return fmt.Errorf("the package_name argument is the key and should not be modified here")
 	}
 
-	p := &fortimngclient.JSONFirewallSecurityPolicy{
+	p := &fmgclient.JSONFirewallSecurityPolicy{
 		Name:                   d.Get("name").(string),
 		Action:                 d.Get("action").(string),
-		SrcAddr:                c.InterfaceArray2StrArray(d.Get("srcaddr").([]interface{})),
-		SrcIntf:                c.InterfaceArray2StrArray(d.Get("srcintf").([]interface{})),
-		DstAddr:                c.InterfaceArray2StrArray(d.Get("dstaddr").([]interface{})),
-		DstIntf:                c.InterfaceArray2StrArray(d.Get("dstintf").([]interface{})),
-		Service:                c.InterfaceArray2StrArray(d.Get("service").([]interface{})),
-		Schedule:               c.InterfaceArray2StrArray(d.Get("schedule").([]interface{})),
+		SrcAddr:                util.InterfaceArray2StrArray(d.Get("srcaddr").([]interface{})),
+		SrcIntf:                util.InterfaceArray2StrArray(d.Get("srcintf").([]interface{})),
+		DstAddr:                util.InterfaceArray2StrArray(d.Get("dstaddr").([]interface{})),
+		DstIntf:                util.InterfaceArray2StrArray(d.Get("dstintf").([]interface{})),
+		Service:                util.InterfaceArray2StrArray(d.Get("service").([]interface{})),
+		Schedule:               util.InterfaceArray2StrArray(d.Get("schedule").([]interface{})),
 		InternetService:        d.Get("internet_service").(string),
-		InternetServiceID:      c.InterfaceArray2StrArray(d.Get("internet_service_id").([]interface{})),
+		InternetServiceID:      util.InterfaceArray2StrArray(d.Get("internet_service_id").([]interface{})),
 		InternetServiceSrc:     d.Get("internet_service_src").(string),
-		InternetServiceSrcID:   c.InterfaceArray2StrArray(d.Get("internet_service_src_id").([]interface{})),
-		Users:                  c.InterfaceArray2StrArray(d.Get("users").([]interface{})),
-		Groups:                 c.InterfaceArray2StrArray(d.Get("groups").([]interface{})),
+		InternetServiceSrcID:   util.InterfaceArray2StrArray(d.Get("internet_service_src_id").([]interface{})),
+		Users:                  util.InterfaceArray2StrArray(d.Get("users").([]interface{})),
+		Groups:                 util.InterfaceArray2StrArray(d.Get("groups").([]interface{})),
 		Rsso:                   d.Get("rsso").(string),
 		Fsso:                   d.Get("fsso").(string),
 		Logtraffic:             d.Get("logtraffic").(string),
@@ -467,23 +467,23 @@ func updateFMGFirewallSecurityPolicy(d *schema.ResourceData, m interface{}) erro
 		Comments:               d.Get("comments").(string),
 		NAT:                    d.Get("nat").(string),
 		IpPool:                 d.Get("ippool").(string),
-		PoolName:               c.InterfaceArray2StrArray(d.Get("poolname").([]interface{})),
+		PoolName:               util.InterfaceArray2StrArray(d.Get("poolname").([]interface{})),
 		FixedPort:              d.Get("fixedport").(string),
-		VpnTunnel:              c.InterfaceArray2StrArray(d.Get("vpn_tunnel").([]interface{})),
+		VpnTunnel:              util.InterfaceArray2StrArray(d.Get("vpn_tunnel").([]interface{})),
 		Inbound:                d.Get("inbound").(string),
 		UTMStatus:              d.Get("utm_status").(string),
 		ProfileType:            d.Get("profile_type").(string),
-		AvProfile:              c.InterfaceArray2StrArray(d.Get("av_profile").([]interface{})),
-		WebFilterProfile:       c.InterfaceArray2StrArray(d.Get("webfilter_profile").([]interface{})),
-		ApplicationList:        c.InterfaceArray2StrArray(d.Get("application_list").([]interface{})),
-		IpsSensor:              c.InterfaceArray2StrArray(d.Get("ips_sensor").([]interface{})),
-		WafProfile:             c.InterfaceArray2StrArray(d.Get("waf_profile").([]interface{})),
-		DnsFilterProfile:       c.InterfaceArray2StrArray(d.Get("dnsfilter_profile").([]interface{})),
-		ProfileProtocolOptions: c.InterfaceArray2StrArray(d.Get("profile_protocol_options").([]interface{})),
-		ProfileGroup:           c.InterfaceArray2StrArray(d.Get("profile_group").([]interface{})),
-		TrafficShaper:          c.InterfaceArray2StrArray(d.Get("traffic_shaper").([]interface{})),
-		TrafficShaperReverse:   c.InterfaceArray2StrArray(d.Get("traffic_shaper_reverse").([]interface{})),
-		PerIpShaper:            c.InterfaceArray2StrArray(d.Get("per_ip_shaper").([]interface{})),
+		AvProfile:              util.InterfaceArray2StrArray(d.Get("av_profile").([]interface{})),
+		WebFilterProfile:       util.InterfaceArray2StrArray(d.Get("webfilter_profile").([]interface{})),
+		ApplicationList:        util.InterfaceArray2StrArray(d.Get("application_list").([]interface{})),
+		IpsSensor:              util.InterfaceArray2StrArray(d.Get("ips_sensor").([]interface{})),
+		WafProfile:             util.InterfaceArray2StrArray(d.Get("waf_profile").([]interface{})),
+		DnsFilterProfile:       util.InterfaceArray2StrArray(d.Get("dnsfilter_profile").([]interface{})),
+		ProfileProtocolOptions: util.InterfaceArray2StrArray(d.Get("profile_protocol_options").([]interface{})),
+		ProfileGroup:           util.InterfaceArray2StrArray(d.Get("profile_group").([]interface{})),
+		TrafficShaper:          util.InterfaceArray2StrArray(d.Get("traffic_shaper").([]interface{})),
+		TrafficShaperReverse:   util.InterfaceArray2StrArray(d.Get("traffic_shaper_reverse").([]interface{})),
+		PerIpShaper:            util.InterfaceArray2StrArray(d.Get("per_ip_shaper").([]interface{})),
 		PolicyId:               d.Id(),
 	}
 
@@ -491,7 +491,7 @@ func updateFMGFirewallSecurityPolicy(d *schema.ResourceData, m interface{}) erro
 		p.ProfileProtocolOptions = []string{"default"}
 	}
 
-	i := &fortimngclient.FirewallSecurityPolicyInput{
+	i := &fmgclient.FirewallSecurityPolicyInput{
 		Policy:      p,
 		PackageName: d.Get("package_name").(string),
 	}

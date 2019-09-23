@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	fortimngclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
+	fmgclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -40,7 +40,7 @@ func createFMGObjectAdomRevision(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
 	defer c.Trace("createFMGObjectAdomRevision")()
 
-	i := &fortimngclient.JSONObjectAdomRevision{
+	i := &fmgclient.JSONObjectAdomRevision{
 		Name:        d.Get("name").(string),
 		Description: d.Get("description").(string),
 		CreatedBy:   d.Get("created_by").(string),
@@ -86,7 +86,7 @@ func updateFMGObjectAdomRevision(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
 	defer c.Trace("updateFMGObjectAdomRevision")()
 
-	i := &fortimngclient.JSONObjectAdomRevision{
+	i := &fmgclient.JSONObjectAdomRevision{
 		Name:        d.Get("name").(string),
 		Description: d.Get("description").(string),
 		CreatedBy:   d.Get("created_by").(string),

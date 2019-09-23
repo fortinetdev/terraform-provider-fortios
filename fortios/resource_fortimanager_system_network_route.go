@@ -5,7 +5,7 @@ import (
 	"log"
 	"strconv"
 
-	fortimngclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
+	fmgclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -42,7 +42,7 @@ func createFMGSystemNetworkRoute(d *schema.ResourceData, m interface{}) error {
 	defer c.Trace("createFMGSystemNetworkRoute")()
 
 	//Build input data by sdk
-	i := &fortimngclient.JSONSysNetworkRoute{
+	i := &fmgclient.JSONSysNetworkRoute{
 		Dst:     d.Get("destination").(string),
 		Gateway: d.Get("gateway").(string),
 		Device:  d.Get("device").(string),
@@ -90,7 +90,7 @@ func updateFMGSystemNetworkRoute(d *schema.ResourceData, m interface{}) error {
 		return fmt.Errorf("the route_id argument is the key and should not be modified here")
 	}
 
-	i := &fortimngclient.JSONSysNetworkRoute{
+	i := &fmgclient.JSONSysNetworkRoute{
 		Dst:     d.Get("destination").(string),
 		Gateway: d.Get("gateway").(string),
 		Device:  d.Get("device").(string),
