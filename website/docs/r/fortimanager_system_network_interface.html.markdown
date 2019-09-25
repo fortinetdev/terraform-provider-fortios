@@ -16,6 +16,8 @@ provider "fortios" {
 	username = "APIUser"
 	passwd = "admin"
 	product = "fortimanager"
+	insecure = false
+	cabundlefile = "/path/yourCA.crt"
 }
 
 resource "fortios_fortimanager_system_network_interface" "test1" {

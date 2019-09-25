@@ -3,24 +3,26 @@ layout: "fortios"
 page_title: "FortiOS: fortios_fortimanager_devicemanager_install_device"
 sidebar_current: "docs-fortios-fortimanager-resource-devicemanager-install-device"
 description: |-
-  Provides a resource to install devicemanager script to the related device
+  Provides a resource to install devicemanager script from FortiManager to the related device
 ---
 
 # fortios_fortimanager_devicemanager_install_device
-This resource supports installing devicemanager script to the related device
+This resource supports installing devicemanager script from FortiManager to the related device
 
 ## Example Usage
 ```hcl
 provider "fortios" {
-        hostname = "192.168.88.100"
-        username = "APIUser"
-        passwd = "admin"
-        product = "fortimanager"
+	hostname = "192.168.88.100"
+	username = "APIUser"
+	passwd = "admin"
+	product = "fortimanager"
+	insecure = false
+	cabundlefile = "/path/yourCA.crt"
 }
 
 resource "fortios_fortimanager_devicemanager_install_device" "test1" {
-    target_devname = "FGVM64-test"
-    timeout = 5
+	target_devname = "FGVM64-test"
+	timeout = 5
 }
 ```
 
