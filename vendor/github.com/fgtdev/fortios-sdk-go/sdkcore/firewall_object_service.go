@@ -21,6 +21,7 @@ type JSONFirewallObjectServiceCommon struct {
 	TCPPortrange   string `json:"tcp-portrange"`
 	UDPPortrange   string `json:"udp-portrange"`
 	SctpPortrange  string `json:"sctp-portrange"`
+	SessionTTL     string `json:"session-ttl"`
 }
 
 // JSONFirewallObjectServiceFqdn contains the FQDN parameters for Create and Update API function
@@ -391,6 +392,9 @@ func (c *FortiSDKClient) ReadFirewallObjectService(mkey string) (output *JSONFir
 		}
 		if mapTmp["sctp-portrange"] != nil {
 			output.SctpPortrange = mapTmp["sctp-portrange"].(string)
+		}
+		if mapTmp["session-ttl"] != nil {
+			output.SessionTTL = strconv.Itoa(int(mapTmp["session-ttl"].(float64)))
 		}
 	} else {
 		err = fmt.Errorf("cannot get the right response")
