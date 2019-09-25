@@ -3,20 +3,20 @@ package forticlient
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
-	"fmt"
 )
 
 // JSONSystemLicenseVM contains the parameters for Create and Update API function
 type JSONSystemLicenseVM struct {
-	FileContent       string `json:"file_content"`
+	FileContent string `json:"file_content"`
 }
 
 // JSONCreateSystemLicenseVMOutput contains the output results for Create API function
 type JSONCreateSystemLicenseVMOutput struct {
 	Vdom       string  `json:"vdom"`
-	Mkey       string `json:"mkey"`
+	Mkey       string  `json:"mkey"`
 	Status     string  `json:"status"`
 	HTTPStatus float64 `json:"http_status"`
 }
@@ -43,6 +43,7 @@ func (c *FortiSDKClient) CreateSystemLicenseVM(params *JSONSystemLicenseVM) (out
 		return
 	}
 
+	log.Printf("FOS-fortios resquest1: %s", locJSON)
 	bytes := bytes.NewBuffer(locJSON)
 	req := c.NewRequest(HTTPMethod, path, nil, bytes)
 	err = req.Send()
@@ -56,6 +57,7 @@ func (c *FortiSDKClient) CreateSystemLicenseVM(params *JSONSystemLicenseVM) (out
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
 	}
+	log.Printf("FOS-fortios response1: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -191,99 +193,5 @@ func (c *FortiSDKClient) DeleteSystemLicenseVM(mkey string) (err error) {
 
 // ReadSystemLicenseVM API operation for FortiOS
 func (c *FortiSDKClient) ReadSystemLicenseVM(mkey string) (output *JSONSystemLicenseVM, err error) {
-	HTTPMethod := "GET"
-	path := "/api/v2/monitor/license/status/select"
-
-	output = &JSONSystemLicenseVM{}
-
-	req := c.NewRequest(HTTPMethod, path, nil, nil)
-	err = req.Send()
-	if err != nil || req.HTTPResponse == nil {
-		err = fmt.Errorf("cannot send request %s", err)
-		return
-	}
-
-	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	if err != nil || body == nil {
-		err = fmt.Errorf("cannot get response body %s", err)
-		return
-	}
-	log.Printf("FOS-fortios reading response: %s", string(body))
-
-	var result map[string]interface{}
-	json.Unmarshal([]byte(string(body)), &result)
-
-	req.HTTPResponse.Body.Close()
-
-	if result != nil {
-		if result["status"] == nil {
-			err = fmt.Errorf("cannot get status from the response")
-			return
-		}
-
-		if result["status"] != "success" {
-			if result["error"] != nil {
-				err = fmt.Errorf("status is %s and error no is %.0f", result["status"], result["error"])
-			} else {
-				err = fmt.Errorf("status is %s and error no is not found", result["status"])
-			}
-
-			if result["http_status"] != nil {
-				err = fmt.Errorf("%s and http_status no is %.0f", err, result["http_status"])
-			} else {
-				err = fmt.Errorf("%s and and http_status no is not found", err)
-			}
-
-			return
-		}
-
-		if result["results"] == nil {
-			err = fmt.Errorf("cannot get results from the response")
-			return
-		}
-
-		mapTmp := (result["results"].(map[string]interface{}))
-
-		if mapTmp == nil {
-			err = fmt.Errorf("cannot get results from the response")
-			return
-		}
-
-		bFind := false
-
-		for k,v := range mapTmp {
-			if k == "vm" {
-				bFind = true;
-
-				z := v.(map[string]interface{})
-				if z == nil {
-					err = fmt.Errorf("cannot get vm property from the response")
-					return
-				}
-
-				if z["valid"] == nil {
-					err = fmt.Errorf("cannot get vm.valid property from the response")
-					return
-				}
-
-				if z["valid"] == true {
-					output.FileContent = "********"
-				} else {
-					output = nil
-					return
-				}
-			}
-		}
-
-		if bFind == false {
-			err = fmt.Errorf("cannot get vm property from the response")
-			return
-		}
-
-	} else {
-		err = fmt.Errorf("cannot get the right response")
-		return
-	}
-
 	return
 }

@@ -15,6 +15,10 @@ func resourceSystemSettingNTP() *schema.Resource {
 		Update: resourceSystemSettingNTPCreateUpdate,
 		Delete: resourceSystemSettingNTPDelete,
 
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
+
 		Schema: map[string]*schema.Schema{
 			"type": &schema.Schema{
 				Type:     schema.TypeString,

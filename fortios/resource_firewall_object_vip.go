@@ -15,6 +15,10 @@ func resourceFirewallObjectVip() *schema.Resource {
 		Update: resourceFirewallObjectVipUpdate,
 		Delete: resourceFirewallObjectVipDelete,
 
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
+
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
@@ -146,10 +150,6 @@ func resourceFirewallObjectVipUpdate(d *schema.ResourceData, m interface{}) erro
 			})
 	}
 
-	if d.HasChange("name") {
-		return fmt.Errorf("the name argument is the key and should not be modified here")
-	}
-
 	//Build input data by sdk
 	i := &forticlient.JSONFirewallObjectVip{
 		Name:        name,
@@ -191,7 +191,11 @@ func resourceFirewallObjectVipDelete(d *schema.ResourceData, m interface{}) erro
 }
 
 func resourceFirewallObjectVipRead(d *schema.ResourceData, m interface{}) error {
-	mkey := d.Id()
+	mkey := d.Get("name").(string)
+
+	if mkey == "" {
+		mkey = d.Id()
+	}
 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
@@ -209,6 +213,7 @@ func resourceFirewallObjectVipRead(d *schema.ResourceData, m interface{}) error 
 	}
 
 	//Refresh property
+	d.SetId(o.Name)
 	d.Set("name", o.Name)
 	d.Set("comment", o.Comment)
 	d.Set("extip", o.Extip)

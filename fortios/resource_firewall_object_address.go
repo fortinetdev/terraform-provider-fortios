@@ -3,9 +3,6 @@ package fortios
 import (
 	"fmt"
 	"log"
-	"net"
-	"strconv"
-	"strings"
 
 	"github.com/fgtdev/fortios-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
@@ -17,6 +14,10 @@ func resourceFirewallObjectAddress() *schema.Resource {
 		Read:   resourceFirewallObjectAddressRead,
 		Update: resourceFirewallObjectAddressUpdate,
 		Delete: resourceFirewallObjectAddressDelete,
+
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
@@ -146,10 +147,6 @@ func resourceFirewallObjectAddressUpdate(d *schema.ResourceData, m interface{}) 
 	country := d.Get("country").(string)
 	comment := d.Get("comment").(string)
 
-	if d.HasChange("name") {
-		return fmt.Errorf("the name argument is the key and should not be modified here")
-	}
-
 	j1 := &forticlient.JSONFirewallObjectAddressCommon{
 		Name:    name,
 		Type:    typef,
@@ -221,7 +218,11 @@ func resourceFirewallObjectAddressDelete(d *schema.ResourceData, m interface{}) 
 }
 
 func resourceFirewallObjectAddressRead(d *schema.ResourceData, m interface{}) error {
-	mkey := d.Id()
+	mkey := d.Get("name").(string)
+
+	if mkey == "" {
+		mkey = d.Id() //for import
+	}
 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
@@ -239,10 +240,11 @@ func resourceFirewallObjectAddressRead(d *schema.ResourceData, m interface{}) er
 	}
 
 	//Refresh property
+	d.SetId(o.Name)
 	d.Set("name", o.Name)
 	d.Set("type", o.Type)
 	if o.Type == "ipmask" {
-		d.Set("subnet", validateConvIPMask2CDIR(d, o.Subnet))
+		d.Set("subnet", validateConvIPMask2CDIR(d.Get("subnet").(string), o.Subnet))
 	}
 
 	if o.Type == "iprange" {
@@ -255,18 +257,4 @@ func resourceFirewallObjectAddressRead(d *schema.ResourceData, m interface{}) er
 	d.Set("comment", o.Comment)
 
 	return nil
-}
-
-func validateConvIPMask2CDIR(d *schema.ResourceData, subnet string) string {
-	oSubnet := d.Get("subnet").(string)
-	if oSubnet != subnet && strings.Contains(oSubnet, "/") && strings.Contains(subnet, " ") {
-		line := strings.Split(subnet, " ")
-		if len(line) >= 2 {
-			ip := line[0]
-			mask := line[1]
-			prefixSize, _ := net.IPMask(net.ParseIP(mask).To4()).Size()
-			return ip + "/" + strconv.Itoa(prefixSize)
-		}
-	}
-	return subnet
 }

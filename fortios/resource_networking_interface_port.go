@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/fgtdev/fortios-sdk-go/sdkcore"
+	forticlient "github.com/fgtdev/fortios-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -14,6 +14,10 @@ func resourceNetworkingInterfacePort() *schema.Resource {
 		Read:   resourceNetworkingInterfacePortRead,
 		Update: resourceNetworkingInterfacePortUpdate,
 		Delete: resourceNetworkingInterfacePortDelete,
+
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
@@ -27,7 +31,7 @@ func resourceNetworkingInterfacePort() *schema.Resource {
 			"ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0.0.0.0",
+				Default:  "0.0.0.0 0.0.0.0",
 			},
 			"alias": &schema.Schema{
 				Type:     schema.TypeString,
@@ -254,10 +258,6 @@ func resourceNetworkingInterfacePortUpdate(d *schema.ResourceData, m interface{}
 		if vdom == "" {
 			vdom = "root"
 		}
-	} else {
-		if d.HasChange("name") {
-			return fmt.Errorf("the name argument is the key and should not be modified here")
-		}
 	}
 
 	//Build input data by sdk
@@ -340,7 +340,7 @@ func resourceNetworkingInterfacePortRead(d *schema.ResourceData, m interface{}) 
 
 	//Refresh property
 	//d.Set("portname", o.Portname)
-	d.Set("ip", o.Ipf)
+	d.Set("ip", validateConvIPMask2CDIR(d.Get("ip").(string), o.Ipf))
 	d.Set("alias", o.Alias)
 	d.Set("status", o.Status)
 	d.Set("device_identification", o.DeviceIdentification)

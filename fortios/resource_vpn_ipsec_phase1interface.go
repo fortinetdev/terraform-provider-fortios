@@ -15,6 +15,10 @@ func resourceVPNIPsecPhase1Interface() *schema.Resource {
 		Update: resourceVPNIPsecPhase1InterfaceUpdate,
 		Delete: resourceVPNIPsecPhase1InterfaceDelete,
 
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
+
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
@@ -221,10 +225,6 @@ func resourceVPNIPsecPhase1InterfaceUpdate(d *schema.ResourceData, m interface{}
 			forticlient.MultValue{
 				Name: v.(string),
 			})
-	}
-
-	if d.HasChange("name") {
-		return fmt.Errorf("the name argument is the key and should not be modified here")
 	}
 
 	//Build input data by sdk
