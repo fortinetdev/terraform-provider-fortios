@@ -71,6 +71,7 @@ The following arguments are supported:
 * `icmptype` - ICMP type.
 * `icmpcode` - ICMP code.
 * `protocol_number` - IP protocol number.
+* `session_ttl` - Custom tcp session TTL.
 * `comment` - Comment.
 
 ## Attributes Reference
@@ -88,5 +89,6 @@ The following attributes are exported:
 * `icmptype` - ICMP type.
 * `icmpcode` - ICMP code.
 * `protocol_number` - IP protocol number.
+* `session_ttl` - Custom tcp session TTL.
 * `comment` - Comment.
 
