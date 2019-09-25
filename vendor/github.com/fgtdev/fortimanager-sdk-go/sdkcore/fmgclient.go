@@ -23,9 +23,10 @@ type FmgSDKClient struct {
 	User   string
 	Passwd string
 	Debug  string
+	Client *http.Client
 }
 
-func NewClient(ip, user, passwd string) *FmgSDKClient {
+func NewClient(ip, user, passwd string, client *http.Client) *FmgSDKClient {
 
 	d := os.Getenv("TRACEDEBUG")
 
@@ -33,19 +34,20 @@ func NewClient(ip, user, passwd string) *FmgSDKClient {
 		Ipaddr: ip,
 		User:   user,
 		Passwd: passwd,
+		Client: client,
 		Debug:  d,
 	}
 }
 
 func (c *FmgSDKClient) Execute(req *Request) (result map[string]interface{}, err error) {
-	// send
+
 	j, _ := json.Marshal(req)
 
 	if c.Debug == "ON" || c.Debug == "on" {
 		log.Printf("[TRACEDEBUG] ==> request: %s", j)
 	}
 
-	httpResp, err := http.Post("http://"+c.Ipaddr+"/jsonrpc", "application/json", bytes.NewBuffer(j))
+	httpResp, err := c.Client.Post("http://"+c.Ipaddr+"/jsonrpc", "application/json", bytes.NewBuffer(j))
 	if err != nil {
 		err = fmt.Errorf("Login failed: %s", err)
 		return
