@@ -15,6 +15,10 @@ func resourceFirewallObjectAddressGroup() *schema.Resource {
 		Update: resourceFirewallObjectAddressGroupUpdate,
 		Delete: resourceFirewallObjectAddressGroupDelete,
 
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
+
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
@@ -99,10 +103,6 @@ func resourceFirewallObjectAddressGroupUpdate(d *schema.ResourceData, m interfac
 			})
 	}
 
-	if d.HasChange("name") {
-		return fmt.Errorf("the name argument is the key and should not be modified here")
-	}
-
 	//Build input data by sdk
 	i := &forticlient.JSONFirewallObjectAddressGroup{
 		Name:    name,
@@ -138,7 +138,11 @@ func resourceFirewallObjectAddressGroupDelete(d *schema.ResourceData, m interfac
 }
 
 func resourceFirewallObjectAddressGroupRead(d *schema.ResourceData, m interface{}) error {
-	mkey := d.Id()
+	mkey := d.Get("name").(string)
+
+	if mkey == "" {
+		mkey = d.Id()
+	}
 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
@@ -156,6 +160,7 @@ func resourceFirewallObjectAddressGroupRead(d *schema.ResourceData, m interface{
 	}
 
 	//Refresh property
+	d.SetId(o.Name)
 	d.Set("name", o.Name)
 	member := forticlient.ExtractString(o.Member)
 	if err := d.Set("member", member); err != nil {

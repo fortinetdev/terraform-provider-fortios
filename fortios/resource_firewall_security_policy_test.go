@@ -21,8 +21,8 @@ func TestAccFortiOSFirewallSecurityPolicy_basic(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFortiOSFirewallSecurityPolicyExists("fortios_firewall_security_policy.test1"),
 					resource.TestCheckResourceAttr("fortios_firewall_security_policy.test1", "name", rname),
-					resource.TestCheckResourceAttr("fortios_firewall_security_policy.test1", "internet_service", "enable"),
-					resource.TestCheckResourceAttr("fortios_firewall_security_policy.test1", "internet_service_src", "enable"),
+					resource.TestCheckResourceAttr("fortios_firewall_security_policy.test1", "internet_service", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_security_policy.test1", "internet_service_src", "disable"),
 					resource.TestCheckResourceAttr("fortios_firewall_security_policy.test1", "status", "enable"),
 					resource.TestCheckResourceAttr("fortios_firewall_security_policy.test1", "schedule", "always"),
 					resource.TestCheckResourceAttr("fortios_firewall_security_policy.test1", "action", "accept"),
@@ -32,15 +32,13 @@ func TestAccFortiOSFirewallSecurityPolicy_basic(t *testing.T) {
 					resource.TestCheckResourceAttr("fortios_firewall_security_policy.test1", "capture_packet", "enable"),
 					resource.TestCheckResourceAttr("fortios_firewall_security_policy.test1", "ippool", "disable"),
 					resource.TestCheckResourceAttr("fortios_firewall_security_policy.test1", "comments", "Terraform Test"),
-					resource.TestCheckResourceAttr("fortios_firewall_security_policy.test1", "av_profile", "wifi-default"),
-					resource.TestCheckResourceAttr("fortios_firewall_security_policy.test1", "webfilter_profile", "monitor-all"),
+					resource.TestCheckResourceAttr("fortios_firewall_security_policy.test1", "av_profile", ""),
+					resource.TestCheckResourceAttr("fortios_firewall_security_policy.test1", "webfilter_profile", ""),
 					resource.TestCheckResourceAttr("fortios_firewall_security_policy.test1", "dnsfilter_profile", "default"),
-					resource.TestCheckResourceAttr("fortios_firewall_security_policy.test1", "ips_sensor", "protect_client"),
-					resource.TestCheckResourceAttr("fortios_firewall_security_policy.test1", "application_list", "block-high-risk"),
+					resource.TestCheckResourceAttr("fortios_firewall_security_policy.test1", "ips_sensor", ""),
+					resource.TestCheckResourceAttr("fortios_firewall_security_policy.test1", "application_list", ""),
 					resource.TestCheckResourceAttr("fortios_firewall_security_policy.test1", "ssl_ssh_profile", "certificate-inspection"),
 					resource.TestCheckResourceAttr("fortios_firewall_security_policy.test1", "nat", "enable"),
-					resource.TestCheckResourceAttr("fortios_firewall_security_policy.test1", "internet_service", "enable"),
-					resource.TestCheckResourceAttr("fortios_firewall_security_policy.test1", "status", "enable"),
 					resource.TestCheckResourceAttr("fortios_firewall_security_policy.test1", "profile_protocol_options", "default"),
 				),
 			},
@@ -103,18 +101,18 @@ func testAccFortiOSFirewallSecurityPolicyConfig(name string) string {
 	return fmt.Sprintf(`
 resource "fortios_firewall_security_policy" "test1" {
 	name = "%s"
-	srcintf = ["port3"]
-	dstintf = ["port4"]
-	srcaddr = []    
-	dstaddr = []
-	internet_service = "enable"
-	internet_service_id = [5242880]
-	internet_service_src = "enable"
-	internet_service_src_id = [65643]
-	users = ["guest"]
+	srcintf = ["port2"]
+	dstintf = ["port3"]
+	srcaddr = ["all"]    
+	dstaddr = ["all"]
+	internet_service = "disable"
+	internet_service_id = []
+	internet_service_src = "disable"
+	internet_service_src_id = []
+	users = []
 	status = "enable"
 	schedule = "always"
-	service = []
+	service = ["ALL"]
 	action = "accept"	
 	utm_status = "enable"
 	logtraffic = "all"
@@ -122,14 +120,14 @@ resource "fortios_firewall_security_policy" "test1" {
 	capture_packet = "enable"
 	ippool = "disable"
 	poolname = []
-	groups = ["Guest-group", "SSO_Guest_Users"]
+	groups = []
 	devices = []
 	comments = "Terraform Test"
-	av_profile = "wifi-default"
-	webfilter_profile = "monitor-all"
+	av_profile = ""
+	webfilter_profile = ""
 	dnsfilter_profile = "default"
-	ips_sensor = "protect_client"
-	application_list = "block-high-risk"
+	ips_sensor = ""
+	application_list = ""
 	ssl_ssh_profile = "certificate-inspection"
 	nat = "enable"
 	profile_protocol_options = "default"

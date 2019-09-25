@@ -15,6 +15,10 @@ func resourceLogSyslogSetting() *schema.Resource {
 		Update: resourceLogSyslogSettingCreateUpdate,
 		Delete: resourceLogSyslogSettingDelete,
 
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
+
 		Schema: map[string]*schema.Schema{
 			"status": &schema.Schema{
 				Type:     schema.TypeString,

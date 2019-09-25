@@ -15,6 +15,10 @@ func resourceNetworkingInterfacePort() *schema.Resource {
 		Update: resourceNetworkingInterfacePortUpdate,
 		Delete: resourceNetworkingInterfacePortDelete,
 
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
+
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
@@ -254,10 +258,6 @@ func resourceNetworkingInterfacePortUpdate(d *schema.ResourceData, m interface{}
 		if vdom == "" {
 			vdom = "root"
 		}
-	} else {
-		if d.HasChange("name") {
-			return fmt.Errorf("the name argument is the key and should not be modified here")
-		}
 	}
 
 	//Build input data by sdk
@@ -340,7 +340,7 @@ func resourceNetworkingInterfacePortRead(d *schema.ResourceData, m interface{}) 
 
 	//Refresh property
 	//d.Set("portname", o.Portname)
-	d.Set("ip", o.Ipf)
+	d.Set("ip", validateConvIPMask2CDIR(d.Get("ip").(string), o.Ipf))
 	d.Set("alias", o.Alias)
 	d.Set("status", o.Status)
 	d.Set("device_identification", o.DeviceIdentification)

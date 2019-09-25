@@ -3,59 +3,52 @@ package forticlient
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
-	"fmt"
 )
 
-// JSONVPNIPsecPhase2Interface contains the parameters for Create and Update API function
-type JSONVPNIPsecPhase2Interface struct {
-	Name        string `json:"name"`
-	Phase1name  string `json:"phase1name"`
-	Proposal    string `json:"proposal"`
-	Comments    string `json:"comments"`
-	SrcAddrType string `json:"src-addr-type"`
-	SrcStartIP  string `json:"src-start-ip,omitempty"`
-	SrcEndIP    string `json:"src-end-ip,omitempty"`
-	SrcSubnet   string `json:"src-subnet,omitempty"`
-	DstAddrType string `json:"dst-addr-type"`
-	SrcName     string `json:"src-name"`
-	DstName     string `json:"dst-name"`
-	DstStartIP  string `json:"dst-start-ip,omitempty"`
-	DstEndIP    string `json:"dst-end-ip,omitempty"`
-	DstSubnet   string `json:"dst-subnet,omitempty"`
+// JSONFirewallObjectServiceCategoryItem contains the General parameters for Create and Update API function
+type JSONFirewallObjectServiceCategoryItem struct {
+	Name    string `json:"name"`
+	Comment string `json:"comment"`
 }
 
-// JSONCreateVPNIPsecPhase2InterfaceOutput contains the output results for Create API function
-type JSONCreateVPNIPsecPhase2InterfaceOutput struct {
+// JSONFirewallObjectServiceCategory contains the parameters for Create and Update API function
+type JSONFirewallObjectServiceCategory struct {
+	*JSONFirewallObjectServiceCategoryItem
+}
+
+// JSONCreateFirewallObjectServiceCategoryOutput contains the output results for Create API function
+type JSONCreateFirewallObjectServiceCategoryOutput struct {
 	Vdom       string  `json:"vdom"`
 	Mkey       string  `json:"mkey"`
 	Status     string  `json:"status"`
 	HTTPStatus float64 `json:"http_status"`
 }
 
-// JSONUpdateVPNIPsecPhase2InterfaceOutput contains the output results for Update API function
-// Attention: Considering scalability, the previous structure and the current structure may change differently
-type JSONUpdateVPNIPsecPhase2InterfaceOutput struct {
+// JSONUpdateFirewallObjectServiceCategoryOutput contains the output results for Update API function
+type JSONUpdateFirewallObjectServiceCategoryOutput struct {
 	Vdom       string  `json:"vdom"`
 	Mkey       string  `json:"mkey"`
 	Status     string  `json:"status"`
 	HTTPStatus float64 `json:"http_status"`
 }
 
-// CreateVPNIPsecPhase2Interface API operation for FortiOS creates a new a new phase 2 definition for a route-based (interface mode) IPsec VPN tunnel.
-// Returns the index value of the phase2-interface setting and execution result when the request executes successfully.
+// CreateFirewallObjectServiceCategory API operation for FortiOS creates a new firewall service category.
+// Returns the index value of the firewall service category and execution result when the request executes successfully.
 // Returns error for service API and SDK errors.
-// See the vpn - ipsec phase2-interface chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) CreateVPNIPsecPhase2Interface(params *JSONVPNIPsecPhase2Interface) (output *JSONCreateVPNIPsecPhase2InterfaceOutput, err error) {
+func (c *FortiSDKClient) CreateFirewallObjectServiceCategory(params *JSONFirewallObjectServiceCategory) (output *JSONCreateFirewallObjectServiceCategoryOutput, err error) {
 	HTTPMethod := "POST"
-	path := "/api/v2/cmdb/vpn.ipsec/phase2-interface"
-	output = &JSONCreateVPNIPsecPhase2InterfaceOutput{}
+	path := "/api/v2/cmdb/firewall.service/category"
+	output = &JSONCreateFirewallObjectServiceCategoryOutput{}
 	locJSON, err := json.Marshal(params)
 	if err != nil {
 		log.Fatal(err)
 		return
 	}
+
+	log.Printf("POST: %s", string(locJSON))
 
 	bytes := bytes.NewBuffer(locJSON)
 	req := c.NewRequest(HTTPMethod, path, nil, bytes)
@@ -70,6 +63,9 @@ func (c *FortiSDKClient) CreateVPNIPsecPhase2Interface(params *JSONVPNIPsecPhase
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
 	}
+	log.SetPrefix("CreateFirewallObjectServiceCategory")
+	log.Printf("Path called %s", path)
+	log.Printf("FortiOS response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -86,7 +82,11 @@ func (c *FortiSDKClient) CreateVPNIPsecPhase2Interface(params *JSONVPNIPsecPhase
 		if result["status"] != nil {
 			if result["status"] != "success" {
 				if result["error"] != nil {
-					err = fmt.Errorf("status is %s and error no is %.0f", result["status"], result["error"])
+					if result["error"] == -5 {
+						err = fmt.Errorf("Category %s already exists.", result["mkey"])
+					} else {
+						err = fmt.Errorf("status is %s and error no is %.0f", result["status"], result["error"])
+					}
 				} else {
 					err = fmt.Errorf("status is %s and error no is not found", result["status"])
 				}
@@ -115,15 +115,14 @@ func (c *FortiSDKClient) CreateVPNIPsecPhase2Interface(params *JSONVPNIPsecPhase
 	return
 }
 
-// UpdateVPNIPsecPhase2Interface API operation for FortiOS updates the specified phase2-interface setting.
-// Returns the index value of the phase2-interface setting and execution result when the request executes successfully.
+// UpdateFirewallObjectServiceCategory API operation for FortiOS updates the specified firewall service category.
+// Returns the index value of the firewall service and execution result when the request executes successfully.
 // Returns error for service API and SDK errors.
-// See the vpn - ipsec phase2-interface chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) UpdateVPNIPsecPhase2Interface(params *JSONVPNIPsecPhase2Interface, mkey string) (output *JSONUpdateVPNIPsecPhase2InterfaceOutput, err error) {
+func (c *FortiSDKClient) UpdateFirewallObjectServiceCategory(params *JSONFirewallObjectServiceCategory, mkey string) (output *JSONUpdateFirewallObjectServiceCategoryOutput, err error) {
 	HTTPMethod := "PUT"
-	path := "/api/v2/cmdb/vpn.ipsec/phase2-interface"
+	path := "/api/v2/cmdb/firewall.service/category"
 	path += "/" + EscapeURLString(mkey)
-	output = &JSONUpdateVPNIPsecPhase2InterfaceOutput{}
+	output = &JSONUpdateFirewallObjectServiceCategoryOutput{}
 	locJSON, err := json.Marshal(params)
 	if err != nil {
 		log.Fatal(err)
@@ -143,7 +142,8 @@ func (c *FortiSDKClient) UpdateVPNIPsecPhase2Interface(params *JSONVPNIPsecPhase
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
 	}
-	log.Printf("FOS-fortios response: %s", string(body))
+	log.Printf("Path called %s", path)
+	log.Printf("FortiOS response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -189,12 +189,11 @@ func (c *FortiSDKClient) UpdateVPNIPsecPhase2Interface(params *JSONVPNIPsecPhase
 	return
 }
 
-// DeleteVPNIPsecPhase2Interface API operation for FortiOS deletes the specified phase2-interface setting.
+// DeleteFirewallObjectServiceCategory API operation for FortiOS deletes the specified firewall service category.
 // Returns error for service API and SDK errors.
-// See the vpn - ipsec phase2-interface chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) DeleteVPNIPsecPhase2Interface(mkey string) (err error) {
+func (c *FortiSDKClient) DeleteFirewallObjectServiceCategory(mkey string) (err error) {
 	HTTPMethod := "DELETE"
-	path := "/api/v2/cmdb/vpn.ipsec/phase2-interface"
+	path := "/api/v2/cmdb/firewall.service/category"
 	path += "/" + EscapeURLString(mkey)
 
 	req := c.NewRequest(HTTPMethod, path, nil, nil)
@@ -209,7 +208,9 @@ func (c *FortiSDKClient) DeleteVPNIPsecPhase2Interface(mkey string) (err error) 
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
 	}
-	log.Printf("FOS-fortios response: %s", string(body))
+
+	log.Printf("Path called %s", path)
+	log.Printf("FortiOS response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -246,17 +247,19 @@ func (c *FortiSDKClient) DeleteVPNIPsecPhase2Interface(mkey string) (err error) 
 	return
 }
 
-// ReadVPNIPsecPhase2Interface API operation for FortiOS gets the phase2-interface setting
+// ReadFirewallObjectServiceCategory API operation for FortiOS gets the firewall service category
 // with the specified index value.
-// Returns the requested phase2-interface setting value when the request executes successfully.
 // Returns error for service API and SDK errors.
-// See the vpn - ipsec phase2-interface chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) ReadVPNIPsecPhase2Interface(mkey string) (output *JSONVPNIPsecPhase2Interface, err error) {
+func (c *FortiSDKClient) ReadFirewallObjectServiceCategory(mkey string) (output *JSONFirewallObjectServiceCategory, err error) {
 	HTTPMethod := "GET"
-	path := "/api/v2/cmdb/vpn.ipsec/phase2-interface"
+	path := "/api/v2/cmdb/firewall.service/category"
 	path += "/" + EscapeURLString(mkey)
 
-	output = &JSONVPNIPsecPhase2Interface{}
+	j1 := JSONFirewallObjectServiceCategoryItem{}
+
+	output = &JSONFirewallObjectServiceCategory{
+		JSONFirewallObjectServiceCategoryItem: &j1,
+	}
 
 	req := c.NewRequest(HTTPMethod, path, nil, nil)
 	err = req.Send()
@@ -270,7 +273,9 @@ func (c *FortiSDKClient) ReadVPNIPsecPhase2Interface(mkey string) (output *JSONV
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
 	}
-	log.Printf("FOS-fortios reading response: %s", string(body))
+	log.SetPrefix("ReadFirewallObjectServiceCategory")
+	log.Printf("Path called %s", path)
+	log.Printf("FortiOS response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -319,44 +324,8 @@ func (c *FortiSDKClient) ReadVPNIPsecPhase2Interface(mkey string) (output *JSONV
 		if mapTmp["name"] != nil {
 			output.Name = mapTmp["name"].(string)
 		}
-		if mapTmp["phase1name"] != nil {
-			output.Phase1name = mapTmp["phase1name"].(string)
-		}
-		if mapTmp["proposal"] != nil {
-			output.Proposal = mapTmp["proposal"].(string)
-		}
-		if mapTmp["comments"] != nil {
-			output.Comments = mapTmp["comments"].(string)
-		}
-		if mapTmp["src-addr-type"] != nil {
-			output.SrcAddrType = mapTmp["src-addr-type"].(string)
-		}
-		if mapTmp["src-start-ip"] != nil {
-			output.SrcStartIP = mapTmp["src-start-ip"].(string)
-		}
-		if mapTmp["src-end-ip"] != nil {
-			output.SrcEndIP = mapTmp["src-end-ip"].(string)
-		}
-		if mapTmp["src-subnet"] != nil {
-			output.SrcSubnet = mapTmp["src-subnet"].(string)
-		}
-		if mapTmp["dst-addr-type"] != nil {
-			output.DstAddrType = mapTmp["dst-addr-type"].(string)
-		}
-		if mapTmp["src-name"] != nil {
-			output.SrcName = mapTmp["src-name"].(string)
-		}
-		if mapTmp["dst-name"] != nil {
-			output.DstName = mapTmp["dst-name"].(string)
-		}
-		if mapTmp["dst-start-ip"] != nil {
-			output.DstStartIP = mapTmp["dst-start-ip"].(string)
-		}
-		if mapTmp["dst-end-ip"] != nil {
-			output.DstEndIP = mapTmp["dst-end-ip"].(string)
-		}
-		if mapTmp["dst-subnet"] != nil {
-			output.DstSubnet = mapTmp["dst-subnet"].(string)
+		if mapTmp["comment"] != nil {
+			output.Comment = mapTmp["comment"].(string)
 		}
 
 	} else {
