@@ -16,6 +16,10 @@ func resourceFortimanagerSystemNetworkRoute() *schema.Resource {
 		Update: updateFMGSystemNetworkRoute,
 		Delete: deleteFMGSystemNetworkRoute,
 
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
+
 		Schema: map[string]*schema.Schema{
 			"destination": &schema.Schema{
 				Type:     schema.TypeString,

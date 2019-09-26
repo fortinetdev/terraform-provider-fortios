@@ -15,6 +15,10 @@ func resourceFortimanagerSystemAdmin() *schema.Resource {
 		Update: setFMGSystemAdmin,
 		Delete: deleteFMGSystemAdmin,
 
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
+
 		Schema: map[string]*schema.Schema{
 			"http_port": &schema.Schema{
 				Type:     schema.TypeInt,

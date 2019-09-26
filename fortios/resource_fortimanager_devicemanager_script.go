@@ -16,6 +16,10 @@ func resourceFortimanagerDVMScript() *schema.Resource {
 		Update: updateFMGDVMScript,
 		Delete: deleteFMGDVMScript,
 
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
+
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
 				Type:     schema.TypeString,

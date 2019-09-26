@@ -16,6 +16,10 @@ func resourceFortimanagerSystemGlobal() *schema.Resource {
 		Update: setFMGSystemGlobal,
 		Delete: deleteFMGSystemGlobal,
 
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
+
 		Schema: map[string]*schema.Schema{
 			"fortianalyzer_status": &schema.Schema{
 				Type:         schema.TypeString,

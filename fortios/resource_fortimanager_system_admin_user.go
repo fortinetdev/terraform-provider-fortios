@@ -16,6 +16,10 @@ func resourceFortimanagerSystemAdminUser() *schema.Resource {
 		Update: updateFMGSystemAdminUser,
 		Delete: deleteFMGSystemAdminUser,
 
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
+
 		Schema: map[string]*schema.Schema{
 			"userid": &schema.Schema{
 				Type:     schema.TypeString,

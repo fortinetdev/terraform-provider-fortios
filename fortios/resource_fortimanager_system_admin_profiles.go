@@ -16,6 +16,10 @@ func resourceFortimanagerSystemAdminProfiles() *schema.Resource {
 		Update: updateFMGSystemAdminProfiles,
 		Delete: deleteFMGSystemAdminProfiles,
 
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
+
 		Schema: map[string]*schema.Schema{
 			"profileid": &schema.Schema{
 				Type:     schema.TypeString,
