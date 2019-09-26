@@ -16,6 +16,10 @@ func resourceFortimanagerSystemNTP() *schema.Resource {
 		Update: setFMGSystemNTP,
 		Delete: deleteFMGSystemNTP,
 
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
+
 		Schema: map[string]*schema.Schema{
 			"server": &schema.Schema{
 				Type:     schema.TypeString,

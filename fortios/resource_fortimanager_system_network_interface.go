@@ -16,6 +16,10 @@ func resourceFortimanagerSystemNetworkInterface() *schema.Resource {
 		Update: updateFMGSystemNetworkInterface,
 		Delete: deleteFMGSystemNetworkInterface,
 
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
+
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
 				Type:     schema.TypeString,

@@ -15,6 +15,10 @@ func resourceFortimanagerSystemDNS() *schema.Resource {
 		Update: setFMGSystemDNS,
 		Delete: deleteFMGSystemDNS,
 
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
+
 		Schema: map[string]*schema.Schema{
 			"primary": &schema.Schema{
 				Type:     schema.TypeString,
