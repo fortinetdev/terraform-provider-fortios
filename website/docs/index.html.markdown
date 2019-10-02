@@ -15,8 +15,10 @@ The FortiOS provider is used to interact with the resources supported by FortiOS
 ```hcl
 # Configure the FortiOS Provider
 provider "fortios" {
-	hostname = "54.226.179.231"
+	hostname = "192.168.52.177"
 	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
+	insecure = "false"
+	cabundlefile = "/path/yourCA.crt"
 }
 
 # Create a Static Route Item
@@ -26,6 +28,17 @@ resource "fortios_networking_route_static" "test1" {
 	# ...
 }
 ```
+
+If it is used for testing, you can set `insecure` to "true" and unset `cabundlefile` to quickly set the provider up, for example:
+
+```hcl
+provider "fortios" {
+	hostname = "192.168.52.177"
+	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
+	insecure = "true"
+}
+```
+Please refer to the Argument Reference below for more help on `insecure` and `cabundlefile`.
 
 ## Authentication
 
@@ -40,10 +53,13 @@ Static credentials can be provided by adding a `token` key in-line in the FortiO
 Usage:
 ```hcl
 provider "fortios" {
-	hostname = "54.226.179.231"
+	hostname = "192.168.52.177"
 	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
+	insecure = "false"
+	cabundlefile = "/path/yourCA.crt"
 }
 ```
+
 ### Environment variables
 You can provide your credentials via the `FORTIOS_ACCESS_HOSTNAME` and `FORTIOS_ACCESS_TOKEN` environment variables. Note that setting your FortiOS credentials using static credentials variables will override the environment variables.
 
@@ -78,6 +94,8 @@ Usage:
 provider "fortios" {
 	hostname = "192.168.52.177"
 	token = "q3Hs49jxts195gkd9Hjsxnjtmr6k39"
+	insecure = "false"
+	cabundlefile = "/path/yourCA.crt"
 	vdom = "vdomtest"
 }
 
