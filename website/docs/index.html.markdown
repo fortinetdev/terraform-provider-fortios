@@ -59,6 +59,7 @@ provider "fortios" {
 	cabundlefile = "/path/yourCA.crt"
 }
 ```
+For the configuration of the token, please refer to the `system->system api-user` and `execute->api-user` chapters of the `FortiOS Handbook - CLI Reference`.
 
 ### Environment variables
 You can provide your credentials via the `FORTIOS_ACCESS_HOSTNAME` and `FORTIOS_ACCESS_TOKEN` environment variables. Note that setting your FortiOS credentials using static credentials variables will override the environment variables.
