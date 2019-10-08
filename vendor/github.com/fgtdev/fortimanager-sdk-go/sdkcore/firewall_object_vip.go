@@ -7,13 +7,15 @@ import (
 )
 
 type JSONFirewallObjectVip struct {
-	Name     string `json:"name"`
-	Comment  string `json:"comment"`
-	Type     string `json:"type"`
-	ArpReply string `json:"arp-reply"`
-	MappedIp string `json:"mappedip"`
-	ExtIp    string `json:"extip"`
-	ExtIntf  string `json:"extintf"`
+	Name          string `json:"name"`
+	Comment       string `json:"comment"`
+	Type          string `json:"type"`
+	ArpReply      string `json:"arp-reply"`
+	MappedIp      string `json:"mappedip"`
+	ExtIp         string `json:"extip"`
+	ExtIntf       string `json:"extintf"`
+	ConfigDefault string `json:"_if_no_default"`
+	MappedAddr    string `json:"mapped-addr"`
 }
 
 // Create and Update function
@@ -78,6 +80,18 @@ func (c *FmgSDKClient) ReadFirewallObjectVip(name string) (out *JSONFirewallObje
 	if data["extintf"] != nil {
 		m := util.InterfaceArray2StrArray(data["extintf"].([]interface{}))
 		out.ExtIntf = m[0]
+	}
+	if data["_if_no_default"] != nil {
+		v := util.ControlSwitch2Str(int(data["_if_no_default"].(float64)))
+		if v == "enable" {
+			out.ConfigDefault = "disable"
+		} else {
+			out.ConfigDefault = "enable"
+		}
+	}
+	if data["mapped-addr"] != nil {
+		m := util.InterfaceArray2StrArray(data["mapped-addr"].([]interface{}))
+		out.MappedAddr = m[0]
 	}
 
 	return
