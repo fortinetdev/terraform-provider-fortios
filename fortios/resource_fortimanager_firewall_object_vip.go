@@ -5,15 +5,16 @@ import (
 	"log"
 
 	fmgclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
+	"github.com/fgtdev/fortimanager-sdk-go/util"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
 func resourceFortimanagerFirewallObjectVip() *schema.Resource {
 	return &schema.Resource{
-		Create: createFTMFirewallObjectVip,
-		Read:   readFTMFirewallObjectVip,
-		Update: updateFTMFirewallObjectVip,
-		Delete: deleteFTMFirewallObjectVip,
+		Create: createFMGFirewallObjectVip,
+		Read:   readFMGFirewallObjectVip,
+		Update: updateFMGFirewallObjectVip,
+		Delete: deleteFMGFirewallObjectVip,
 
 		Importer: &schema.ResourceImporter{
 			State: schema.ImportStatePassthrough,
@@ -25,9 +26,10 @@ func resourceFortimanagerFirewallObjectVip() *schema.Resource {
 				Required: true,
 			},
 			"type": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Default:  "static-nat",
+				Type:         schema.TypeString,
+				Optional:     true,
+				Default:      "static-nat",
+				ValidateFunc: util.ValidateStringIn("static-nat", "dns-translation", "fqdn"),
 			},
 			"ext_ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -50,22 +52,38 @@ func resourceFortimanagerFirewallObjectVip() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
+			"config_default": &schema.Schema{
+				Type:         schema.TypeString,
+				Optional:     true,
+				Default:      "enable",
+				ValidateFunc: util.ValidateStringIn("disable", "enable"),
+			},
+			"mapped_addr": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 		},
 	}
 }
 
-func createFTMFirewallObjectVip(d *schema.ResourceData, m interface{}) error {
+func createFMGFirewallObjectVip(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("createFTMFirewallObjectVip")()
+	defer c.Trace("createFMGFirewallObjectVip")()
 
+	cd := ""
+	if d.Get("config_default").(string) == "disable" {
+		cd = "1"
+	}
 	i := &fmgclient.JSONFirewallObjectVip{
-		Name:     d.Get("name").(string),
-		Comment:  d.Get("comment").(string),
-		Type:     d.Get("type").(string),
-		ArpReply: d.Get("arp_reply").(string),
-		MappedIp: d.Get("mapped_ip").(string),
-		ExtIp:    d.Get("ext_ip").(string),
-		ExtIntf:  d.Get("ext_intf").(string),
+		Name:          d.Get("name").(string),
+		Comment:       d.Get("comment").(string),
+		Type:          d.Get("type").(string),
+		ArpReply:      d.Get("arp_reply").(string),
+		MappedIp:      d.Get("mapped_ip").(string),
+		ExtIp:         d.Get("ext_ip").(string),
+		ExtIntf:       d.Get("ext_intf").(string),
+		ConfigDefault: cd,
+		MappedAddr:    d.Get("mapped_addr").(string),
 	}
 
 	err := c.CreateUpdateFirewallObjectVip(i, "add")
@@ -75,12 +93,12 @@ func createFTMFirewallObjectVip(d *schema.ResourceData, m interface{}) error {
 
 	d.SetId(i.Name)
 
-	return readFTMFirewallObjectVip(d, m)
+	return readFMGFirewallObjectVip(d, m)
 }
 
-func readFTMFirewallObjectVip(d *schema.ResourceData, m interface{}) error {
+func readFMGFirewallObjectVip(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("readFTMFirewallObjectVip")()
+	defer c.Trace("readFMGFirewallObjectVip")()
 
 	name := d.Id()
 	o, err := c.ReadFirewallObjectVip(name)
@@ -101,26 +119,39 @@ func readFTMFirewallObjectVip(d *schema.ResourceData, m interface{}) error {
 	d.Set("ext_ip", o.ExtIp)
 	d.Set("ext_intf", o.ExtIntf)
 	d.Set("mapped_ip", o.MappedIp)
+	d.Set("config_default", o.ConfigDefault)
+	if o.Type == "fqdn" {
+		d.Set("mapped_addr", o.MappedAddr)
+	}
 
 	return nil
 }
 
-func updateFTMFirewallObjectVip(d *schema.ResourceData, m interface{}) error {
+func updateFMGFirewallObjectVip(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("updateFTMFirewallObjectVip")()
+	defer c.Trace("updateFMGFirewallObjectVip")()
 
 	if d.HasChange("name") {
 		return fmt.Errorf("the name argument is the key and should not be modified here")
 	}
+	if d.HasChange("type") {
+		return fmt.Errorf("the type argument should not be modified once the virtual ip is created")
+	}
 
+	cd := ""
+	if d.Get("config_default").(string) == "disable" {
+		cd = "1"
+	}
 	i := &fmgclient.JSONFirewallObjectVip{
-		Name:     d.Get("name").(string),
-		Comment:  d.Get("comment").(string),
-		Type:     d.Get("type").(string),
-		ArpReply: d.Get("arp_reply").(string),
-		MappedIp: d.Get("mapped_ip").(string),
-		ExtIp:    d.Get("ext_ip").(string),
-		ExtIntf:  d.Get("ext_intf").(string),
+		Name:          d.Get("name").(string),
+		Comment:       d.Get("comment").(string),
+		Type:          d.Get("type").(string),
+		ArpReply:      d.Get("arp_reply").(string),
+		MappedIp:      d.Get("mapped_ip").(string),
+		ExtIp:         d.Get("ext_ip").(string),
+		ExtIntf:       d.Get("ext_intf").(string),
+		ConfigDefault: cd,
+		MappedAddr:    d.Get("mapped_addr").(string),
 	}
 
 	err := c.CreateUpdateFirewallObjectVip(i, "update")
@@ -128,12 +159,12 @@ func updateFTMFirewallObjectVip(d *schema.ResourceData, m interface{}) error {
 		return fmt.Errorf("Error updating Firewall Object Vip: %s", err)
 	}
 
-	return readFTMFirewallObjectVip(d, m)
+	return readFMGFirewallObjectVip(d, m)
 }
 
-func deleteFTMFirewallObjectVip(d *schema.ResourceData, m interface{}) error {
+func deleteFMGFirewallObjectVip(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
-	defer c.Trace("deleteFTMFirewallObjectVip")()
+	defer c.Trace("deleteFMGFirewallObjectVip")()
 
 	name := d.Id()
 
