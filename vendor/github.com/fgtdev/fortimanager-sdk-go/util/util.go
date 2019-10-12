@@ -8,6 +8,7 @@ import (
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
+// AccessRight2Str converts access right to string
 func AccessRight2Str(ar int) (s string) {
 	switch ar {
 	case 0:
@@ -23,6 +24,7 @@ func AccessRight2Str(ar int) (s string) {
 	return
 }
 
+// RpcPermit2Str converts rpc permit to string
 func RpcPermit2Str(i int) (s string) {
 	switch i {
 	case 0:
@@ -38,6 +40,7 @@ func RpcPermit2Str(i int) (s string) {
 	return
 }
 
+// UserType2Str converts user type to string
 func UserType2Str(ut int) (s string) {
 	switch ut {
 	case 0:
@@ -59,6 +62,7 @@ func UserType2Str(ut int) (s string) {
 	return
 }
 
+// PolicyAction2Str converts policy action to string
 func PolicyAction2Str(pa int) (s string) {
 	switch pa {
 	case 0:
@@ -74,6 +78,7 @@ func PolicyAction2Str(pa int) (s string) {
 	return
 }
 
+// InterfaceArray2StrArray converts interface array to string array
 func InterfaceArray2StrArray(intf []interface{}) (s []string) {
 	s = make([]string, len(intf))
 
@@ -84,6 +89,7 @@ func InterfaceArray2StrArray(intf []interface{}) (s []string) {
 	return
 }
 
+// IntfStatus2Str converts interface status to string
 func IntfStatus2Str(ts int) (s string) {
 	switch ts {
 	case 0:
@@ -112,6 +118,7 @@ func IntfServiceAccess2Str(isa int) (s string) {
 }
 */
 
+// AllowAccess2int converts allow access to int
 func AllowAccess2int(aa []string) int {
 	allow_access := map[string]int{
 		"ping":   1,
@@ -131,6 +138,7 @@ func AllowAccess2int(aa []string) int {
 	return sum
 }
 
+// ServiceAccess2int converts service access to int
 func ServiceAccess2int(sa []string) int {
 	service_access := map[string]int{
 		"fgtupdates": 1,
@@ -145,6 +153,7 @@ func ServiceAccess2int(sa []string) int {
 	return sum
 }
 
+// FirewallObjectAddrType2Str converts firewall obj address type to string
 func FirewallObjectAddrType2Str(fbj int) (s string) {
 	switch fbj {
 	case 0:
@@ -167,6 +176,7 @@ func FirewallObjectAddrType2Str(fbj int) (s string) {
 	return
 }
 
+// FirewallObjectProtocol2Str converts firewall obj protocol to string
 func FirewallObjectProtocol2Str(c int) (s string) {
 	switch c {
 	case 1:
@@ -185,6 +195,7 @@ func FirewallObjectProtocol2Str(c int) (s string) {
 	return
 }
 
+// ControlSwitch2Str converts control switch to string
 func ControlSwitch2Str(c int) (s string) {
 	switch c {
 	case 0:
@@ -199,6 +210,7 @@ func ControlSwitch2Str(c int) (s string) {
 	return
 }
 
+// FirewallObjectIppoolType2Str converts firewall obj ippool type to string
 func FirewallObjectIppoolType2Str(c int) (s string) {
 	switch c {
 	case 0:
@@ -213,6 +225,7 @@ func FirewallObjectIppoolType2Str(c int) (s string) {
 	return
 }
 
+// FirewallObjectVipType2Str converts firewall obj vip type to string
 func FirewallObjectVipType2Str(c int) (s string) {
 	switch c {
 	case 0:
@@ -228,6 +241,8 @@ func FirewallObjectVipType2Str(c int) (s string) {
 
 	return
 }
+
+// ScriptTarget2Str converts script target to string
 func ScriptTarget2Str(c int) (s string) {
 	switch c {
 	case 0:
@@ -244,6 +259,7 @@ func ScriptTarget2Str(c int) (s string) {
 	return
 }
 
+// LogTraffic2Str converts log traffic to string
 func LogTraffic2Str(c int) (s string) {
 	switch c {
 	case 0:
@@ -259,6 +275,7 @@ func LogTraffic2Str(c int) (s string) {
 	return
 }
 
+// ProfileType2Str converts profile type to string
 func ProfileType2Str(c int) (s string) {
 	switch c {
 	case 0:
@@ -272,6 +289,7 @@ func ProfileType2Str(c int) (s string) {
 	return
 }
 
+// RestrictedPrds2Str converts restricted prds type to string
 func RestrictedPrds2Str(c int) (s string) {
 	switch c {
 	case 1:
@@ -285,6 +303,7 @@ func RestrictedPrds2Str(c int) (s string) {
 	return
 }
 
+// AdomMode2Str converts adom mode to string
 func AdomMode2Str(c int) (s string) {
 	switch c {
 	case 1:
@@ -298,6 +317,7 @@ func AdomMode2Str(c int) (s string) {
 	return
 }
 
+// TimeZone2Str converts time zone to string
 func TimeZone2Str(c int) (s string) {
 	if c < 0 {
 		log.Printf("[TimeZone2Str][Warning] not support number")
@@ -312,6 +332,7 @@ func TimeZone2Str(c int) (s string) {
 	return
 }
 
+// ValidateStringIn checks the validation of input string
 func ValidateStringIn(vals ...string) schema.SchemaValidateFunc {
 	return func(v interface{}, k string) (ws []string, errors []error) {
 		value := v.(string)

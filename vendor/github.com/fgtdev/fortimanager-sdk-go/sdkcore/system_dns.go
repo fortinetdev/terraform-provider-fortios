@@ -4,11 +4,17 @@ import (
 	"fmt"
 )
 
+// JSONSystemDNS contains the params for updating DNS setting
 type JSONSystemDNS struct {
 	Primary   string `json:"primary,omitempty"`
 	Secondary string `json:"secondary,omitempty"`
 }
 
+// SetSystemDNS is for updating DNS setting
+// Input:
+//   @params: infor needed
+// Output:
+//   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) SetSystemDNS(params *JSONSystemDNS) (err error) {
 	defer c.Trace("SetSystemDNS")()
 
@@ -27,6 +33,10 @@ func (c *FmgSDKClient) SetSystemDNS(params *JSONSystemDNS) (err error) {
 	return
 }
 
+// ReadSystemDNS is for reading DNS setting
+// Output:
+//   @out: DNS infor
+//   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) ReadSystemDNS() (out *JSONSystemDNS, err error) {
 	defer c.Trace("ReadSystemDNS")()
 

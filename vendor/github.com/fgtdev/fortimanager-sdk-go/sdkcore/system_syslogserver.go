@@ -4,13 +4,19 @@ import (
 	"fmt"
 )
 
+// JSONSystemSyslogServer contains the params for creating or updating syslog server
 type JSONSystemSyslogServer struct {
 	Name string `json:"name"`
 	Ip   string `json:"ip"`
 	Port int    `json:"port"`
 }
 
-// Create and Update function
+// CreateUpdateSystemSyslogServer is for creating or updating syslog server
+// Input:
+//   @params: infor needed
+//   @method: operation method, "add" or "update"
+// Output:
+//   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) CreateUpdateSystemSyslogServer(params *JSONSystemSyslogServer, method string) (err error) {
 	defer c.Trace("CreateUpdateSystemSyslogServer")()
 
@@ -29,6 +35,12 @@ func (c *FmgSDKClient) CreateUpdateSystemSyslogServer(params *JSONSystemSyslogSe
 	return
 }
 
+// ReadSystemSyslogServer is for reading the specific syslog server
+// Input:
+//   @name: syslog server name
+// Output:
+//   @out: syslog server infor
+//   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) ReadSystemSyslogServer(name string) (out *JSONSystemSyslogServer, err error) {
 	defer c.Trace("ReadSystemSyslogServer")()
 
@@ -62,6 +74,11 @@ func (c *FmgSDKClient) ReadSystemSyslogServer(name string) (out *JSONSystemSyslo
 	return
 }
 
+// DeleteSystemSyslogServer is for deleting the specific syslog server
+// Input:
+//   @name: syslog server name
+// Output:
+//   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) DeleteSystemSyslogServer(name string) (err error) {
 	defer c.Trace("DeleteSystemSyslogServer")()
 

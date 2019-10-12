@@ -6,6 +6,7 @@ import (
 	"github.com/fgtdev/fortimanager-sdk-go/util"
 )
 
+// JSONFirewallObjectAddress contains the params for creating firewall object address
 type JSONFirewallObjectAddress struct {
 	Name           string `json:"name"`
 	Type           string `json:"type"`
@@ -18,7 +19,12 @@ type JSONFirewallObjectAddress struct {
 	AllowRouting   string `json:"allow-routing"`
 }
 
-// Create and Update function
+// CreateUpdateFirewallObjectAddress is for creating/updating the firewall object address
+// Input:
+//   @params: infor needed
+//   @method: operation method, "add" or "update"
+// Output:
+//   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) CreateUpdateFirewallObjectAddress(params *JSONFirewallObjectAddress, method string) (err error) {
 	defer c.Trace("CreateUpdateFirewallObjectAddress")()
 
@@ -37,6 +43,12 @@ func (c *FmgSDKClient) CreateUpdateFirewallObjectAddress(params *JSONFirewallObj
 	return
 }
 
+// ReadFirewallObjectAddress is for reading the specific firewall object address
+// Input:
+//   @name: firewall object addesss name
+// Output:
+//   @out: firewall object address infor
+//   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) ReadFirewallObjectAddress(name string) (out *JSONFirewallObjectAddress, err error) {
 	defer c.Trace("ReadFirewallObjectAddress")()
 
@@ -92,6 +104,11 @@ func (c *FmgSDKClient) ReadFirewallObjectAddress(name string) (out *JSONFirewall
 	return
 }
 
+// DeleteFirewallObjectAddress is for deleting the specific firewall object address
+// Input:
+//   @name: firewall object addesss name
+// Output:
+//   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) DeleteFirewallObjectAddress(name string) (err error) {
 	defer c.Trace("DeleteFirewallObjectAddress")()
 

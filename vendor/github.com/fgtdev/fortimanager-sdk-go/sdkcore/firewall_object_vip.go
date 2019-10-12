@@ -6,6 +6,7 @@ import (
 	"github.com/fgtdev/fortimanager-sdk-go/util"
 )
 
+// JSONFirewallObjectVip contains the params for creating firewall object virtual ip
 type JSONFirewallObjectVip struct {
 	Name          string `json:"name"`
 	Comment       string `json:"comment"`
@@ -18,7 +19,12 @@ type JSONFirewallObjectVip struct {
 	MappedAddr    string `json:"mapped-addr"`
 }
 
-// Create and Update function
+// CreateUpdateFirewallObjectVip is for creating/updating the firewall object virtual ip
+// Input:
+//   @params: infor needed
+//   @method: operation method, "add" or "update"
+// Output:
+//   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) CreateUpdateFirewallObjectVip(params *JSONFirewallObjectVip, method string) (err error) {
 	defer c.Trace("CreateUpdateFirewallObjectVip")()
 
@@ -37,6 +43,12 @@ func (c *FmgSDKClient) CreateUpdateFirewallObjectVip(params *JSONFirewallObjectV
 	return
 }
 
+// ReadFirewallObjectVip is for reading the specific firewall object virtual ip
+// Input:
+//   @name: firewall object virtual ip name
+// Output:
+//   @out: firewall object virtual ip infor
+//   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) ReadFirewallObjectVip(name string) (out *JSONFirewallObjectVip, err error) {
 	defer c.Trace("ReadFirewallObjectVip")()
 
@@ -98,6 +110,11 @@ func (c *FmgSDKClient) ReadFirewallObjectVip(name string) (out *JSONFirewallObje
 
 }
 
+// DeleteFirewallObjectVip is for deleting the specific firewall object virtual ip
+// Input:
+//   @name: firewall object virtual ip name
+// Output:
+//   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) DeleteFirewallObjectVip(name string) (err error) {
 	defer c.Trace("DeleteFirewallObjectVip")()
 

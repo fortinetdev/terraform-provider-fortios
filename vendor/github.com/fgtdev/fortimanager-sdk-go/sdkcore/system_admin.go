@@ -4,12 +4,18 @@ import (
 	"fmt"
 )
 
+// JSONSystemAdmin contains the params for updating system admin setting
 type JSONSystemAdmin struct {
 	HttpPort    int `json:"http_port,omitempty"`
 	HttpsPort   int `json:"https_port,omitempty"`
 	IdleTimeout int `json:"idle_timeout,omitempty"`
 }
 
+// SetSystemAdmin is for updating the system admin setting
+// Input:
+//   @params: infor needed
+// Output:
+//   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) SetSystemAdmin(params *JSONSystemAdmin) (err error) {
 	defer c.Trace("SetSystemAdmin")()
 
@@ -28,6 +34,10 @@ func (c *FmgSDKClient) SetSystemAdmin(params *JSONSystemAdmin) (err error) {
 	return
 }
 
+// ReadSystemAdmin is for reading the system admin setting
+// Output:
+//   @out: system admin infor
+//   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) ReadSystemAdmin() (out *JSONSystemAdmin, err error) {
 	defer c.Trace("ReadSystemAdmin")()
 
