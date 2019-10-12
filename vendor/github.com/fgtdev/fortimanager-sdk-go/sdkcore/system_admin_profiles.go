@@ -6,6 +6,7 @@ import (
 	"github.com/fgtdev/fortimanager-sdk-go/util"
 )
 
+// JSONSysAdminProfileGenernal contains the params for creating system admin profiles with genernal part
 type JSONSysAdminProfileGenernal struct {
 	ProfileId            string `json:"profileid"`
 	Description          string `json:"description"`
@@ -21,6 +22,7 @@ type JSONSysAdminProfileGenernal struct {
 	LogViewer            string `json:"log-viewer"`
 }
 
+// JSONSysAdminProfileFortiGuard contains the params for creating system admin profiles with fortiguard part
 type JSONSysAdminProfileFortiGuard struct {
 	FgdCenter          string `json:"fgd_center"`
 	FgdCenterAdvanced  string `json:"fgd-center-advanced"`
@@ -28,6 +30,7 @@ type JSONSysAdminProfileFortiGuard struct {
 	FgdCenterLicensing string `json:"fgd-center-licensing"`
 }
 
+// JSONSysAdminProfileDeviceManager contains the params for creating system admin profiles with devicemanager part
 type JSONSysAdminProfileDeviceManager struct {
 	DeviceManager            string `json:"device-manager"`
 	DeviceOp                 string `json:"device-op"`
@@ -40,6 +43,7 @@ type JSONSysAdminProfileDeviceManager struct {
 	DeviceWanLinkLoadBalance string `json:"device-wan-link-load-balance"`
 }
 
+// JSONSysAdminProfilePolicyObject contains the params for creating system admin profiles with policy object part
 type JSONSysAdminProfilePolicyObject struct {
 	PolicyObjects        string `json:"policy-objects"`
 	GlobalPolicyPackages string `json:"global-policy-packages"`
@@ -49,6 +53,7 @@ type JSONSysAdminProfilePolicyObject struct {
 	SetInstallTargets    string `json:"set-install-targets"`
 }
 
+// JSONSysAdminProfiles contains the params for creating system admin profiles
 type JSONSysAdminProfiles struct {
 	*JSONSysAdminProfileGenernal
 	*JSONSysAdminProfileFortiGuard
@@ -56,7 +61,12 @@ type JSONSysAdminProfiles struct {
 	*JSONSysAdminProfilePolicyObject
 }
 
-// Create and Update function
+// CreateUpdateSystemAdminProfiles is for creating or updating the system admin profiles
+// Input:
+//   @params: infor needed
+//   @method: operation method, "add" or "update"
+// Output:
+//   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) CreateUpdateSystemAdminProfiles(params *JSONSysAdminProfiles, method string) (err error) {
 	defer c.Trace("CreateUpdateSystemAdminProfiles")()
 
@@ -75,6 +85,12 @@ func (c *FmgSDKClient) CreateUpdateSystemAdminProfiles(params *JSONSysAdminProfi
 	return
 }
 
+// ReadSystemAdminProfiles is for reading the system admin profiles
+// Input:
+//   @id: admin profile id
+// Output:
+//   @out: admin profile infor
+//   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) ReadSystemAdminProfiles(id string) (out *JSONSysAdminProfiles, err error) {
 	defer c.Trace("ReadSystemAdminProfiles")()
 
@@ -203,6 +219,11 @@ func (c *FmgSDKClient) ReadSystemAdminProfiles(id string) (out *JSONSysAdminProf
 	return
 }
 
+// DeleteSystemAdminProfiles is for deleting the specific admin profile
+// Input:
+//   @id: admin profile id
+// Output:
+//   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) DeleteSystemAdminProfiles(id string) (err error) {
 	defer c.Trace("DeleteSystemAdminProfiles")()
 

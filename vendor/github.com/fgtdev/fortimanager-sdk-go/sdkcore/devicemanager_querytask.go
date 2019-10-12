@@ -7,11 +7,18 @@ import (
 	"time"
 )
 
+// QueryResult is for query result
 type QueryResult struct {
 	err, percent int
 	detail       string
 }
 
+// QueryTask do the query task work
+// Input:
+//   @task: task id
+//   @timeout: timeout for the querying operation
+// Output:
+//   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) QueryTask(task, timeout int) (err error) {
 	defer c.Trace("QueryTask")()
 	// interval time: 3s

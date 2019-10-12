@@ -18,6 +18,7 @@ type Request struct {
 	Params  [1]interface{} `json:"params"`
 }
 
+// FmgSDKClient is for communicating with FortiManager
 type FmgSDKClient struct {
 	Ipaddr string
 	User   string
@@ -26,8 +27,15 @@ type FmgSDKClient struct {
 	Client *http.Client
 }
 
+// NewClient is for creating new client
+// Input:
+//   @ip: ipaddress of fortimanager
+//   @user: username of fortimanager
+//   @passwd: passwd of fortimanager
+//   @client: http client used
+// Output:
+//   @FmgSDKClient: fmg client
 func NewClient(ip, user, passwd string, client *http.Client) *FmgSDKClient {
-
 	d := os.Getenv("TRACEDEBUG")
 
 	return &FmgSDKClient{
@@ -39,8 +47,13 @@ func NewClient(ip, user, passwd string, client *http.Client) *FmgSDKClient {
 	}
 }
 
+// Execute is for sending the http request to FortiManager
+// Input:
+//   @req: http request
+// Output:
+//   @result: http response result
+//   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) Execute(req *Request) (result map[string]interface{}, err error) {
-
 	j, _ := json.Marshal(req)
 
 	if c.Debug == "ON" || c.Debug == "on" {
@@ -92,6 +105,10 @@ func (c *FmgSDKClient) Execute(req *Request) (result map[string]interface{}, err
 	return
 }
 
+// Login is for logging in
+// Output:
+//   @session: login session
+//   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) Login() (session string, err error) {
 	params := map[string]interface{}{
 		"data": map[string]string{
@@ -116,6 +133,11 @@ func (c *FmgSDKClient) Login() (session string, err error) {
 	return
 }
 
+// Logout is for logging out
+// Input:
+//   @s: login session
+// Output:
+//   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) Logout(s string) (err error) {
 	params := map[string]interface{}{
 		"url": "/sys/logout",
@@ -136,6 +158,13 @@ func (c *FmgSDKClient) Logout(s string) (err error) {
 	return
 }
 
+// Do is for executing the related request
+// Input:
+//   @method: operation method
+//   @params: request infor needed
+// Output:
+//   @output: result infor got back
+//   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) Do(method string, params map[string]interface{}) (output map[string]interface{}, err error) {
 	session, err := c.Login()
 	if err != nil {
@@ -154,6 +183,11 @@ func (c *FmgSDKClient) Do(method string, params map[string]interface{}) (output 
 	return
 }
 
+// Trace is for debugging
+// Input:
+//   @s: function name to be traced
+// Output:
+//   @func()
 func (f *FmgSDKClient) Trace(s string) func() {
 	if f.Debug == "ON" {
 		log.Printf("[TRACEDEBUG] -> Enter %s <-", s)

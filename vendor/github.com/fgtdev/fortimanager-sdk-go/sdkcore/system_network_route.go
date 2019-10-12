@@ -4,6 +4,7 @@ import (
 	"fmt"
 )
 
+// JSONSysNetworkRoute contains the params for creating or updating network route
 type JSONSysNetworkRoute struct {
 	Device  string `json:"device"`
 	Dst     string `json:"dst"`
@@ -11,7 +12,12 @@ type JSONSysNetworkRoute struct {
 	SeqNum  string `json:"seq_num"`
 }
 
-// Create and Update function
+// CreateUpdateSystemNetworkRoute is for creating or updating network route
+// Input:
+//   @params: infor needed
+//   @method: operation method, "add" or "update"
+// Output:
+//   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) CreateUpdateSystemNetworkRoute(params *JSONSysNetworkRoute, method string) (err error) {
 	defer c.Trace("CreateUpdateSystemNetworkRoute")()
 
@@ -30,6 +36,12 @@ func (c *FmgSDKClient) CreateUpdateSystemNetworkRoute(params *JSONSysNetworkRout
 	return
 }
 
+// ReadSystemNetworkRoute is for reading the specific network route
+// Input:
+//   @id: network route id
+// Output:
+//   @out: network route infor
+//   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) ReadSystemNetworkRoute(id string) (out *JSONSysNetworkRoute, err error) {
 	defer c.Trace("ReadSystemNetworkRoute")()
 
@@ -64,6 +76,11 @@ func (c *FmgSDKClient) ReadSystemNetworkRoute(id string) (out *JSONSysNetworkRou
 	return
 }
 
+// DeleteSystemNetworkRoute is for deleting the specific network route
+// Input:
+//   @id: network route id
+// Output:
+//   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) DeleteSystemNetworkRoute(id string) (err error) {
 	defer c.Trace("DeleteSystemNetworkRoute")()
 

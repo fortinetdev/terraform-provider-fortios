@@ -5,6 +5,7 @@ import (
 	"strconv"
 )
 
+// JSONObjectAdomRevision contains the params for creating obj adom revision
 type JSONObjectAdomRevision struct {
 	Name        string `json:"name"`
 	Description string `json:"desc"`
@@ -13,7 +14,13 @@ type JSONObjectAdomRevision struct {
 	Version     string `json:"version"`
 }
 
-// Create and Update function
+// CreateUpdateObjectAdomRevision is for creating/updating the obj adom revision
+// Input:
+//   @params: infor needed
+//   @method: operation method, "add" or "update"
+// Output:
+//   @version: adom revision version
+//   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) CreateUpdateObjectAdomRevision(params *JSONObjectAdomRevision, method string) (version string, err error) {
 	defer c.Trace("CreateUpdateObjectAdomRevision")()
 
@@ -44,6 +51,12 @@ func (c *FmgSDKClient) CreateUpdateObjectAdomRevision(params *JSONObjectAdomRevi
 	return
 }
 
+// ReadObjectAdomRevision is for reading the specific obj adom revision
+// Input:
+//   @version: adom revision version
+// Output:
+//   @out: adom revision infor
+//   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) ReadObjectAdomRevision(version string) (out *JSONObjectAdomRevision, err error) {
 	defer c.Trace("ReadObjectAdomRevision")()
 
@@ -81,6 +94,11 @@ func (c *FmgSDKClient) ReadObjectAdomRevision(version string) (out *JSONObjectAd
 
 }
 
+// DeleteObjectAdomRevision is for deleting the specific obj adom revision
+// Input:
+//   @version: adom revision version
+// Output:
+//   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) DeleteObjectAdomRevision(version string) (err error) {
 	defer c.Trace("DeleteObjectAdomRevision")()
 

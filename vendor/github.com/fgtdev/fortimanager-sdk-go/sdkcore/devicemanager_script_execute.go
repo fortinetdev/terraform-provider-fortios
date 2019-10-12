@@ -4,13 +4,18 @@ import (
 	"fmt"
 )
 
+// JSONDVMScriptExecute contains params for executing script
 type JSONDVMScriptExecute struct {
 	ScriptName    string `json:"script"`
 	TargetDevName string `json:"name"`
 	Timeout       int
 }
 
-// Create and Update function
+// ExecuteDVMScript is for executing the script
+// Input:
+//   @params: infor needed
+// Output:
+//   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) ExecuteDVMScript(params *JSONDVMScriptExecute) (err error) {
 	defer c.Trace("ExecuteDVMScript")()
 

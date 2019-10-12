@@ -6,6 +6,7 @@ import (
 	"github.com/fgtdev/fortimanager-sdk-go/util"
 )
 
+// JSONDVMScript contains the params for creating the script
 type JSONDVMScript struct {
 	Name        string `json:"name"`
 	Description string `json:"desc"`
@@ -14,7 +15,12 @@ type JSONDVMScript struct {
 	Type        string `json:"type"`
 }
 
-// Create and Update function
+// CreateUpdateDVMScript is for creating/updating the script
+// Input:
+//   @params: infor needed
+//   @method: operation method, "add" or "update"
+// Output:
+//   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) CreateUpdateDVMScript(params *JSONDVMScript, method string) (err error) {
 	defer c.Trace("CreateUpdateDVMScript")()
 
@@ -33,6 +39,12 @@ func (c *FmgSDKClient) CreateUpdateDVMScript(params *JSONDVMScript, method strin
 	return
 }
 
+// ReadDVMScript is for reading the script infor
+// Input:
+//   @id: script name
+// Output:
+//   @out: script infor
+//   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) ReadDVMScript(id string) (out *JSONDVMScript, err error) {
 	defer c.Trace("ReadDVMScript")()
 
@@ -69,6 +81,11 @@ func (c *FmgSDKClient) ReadDVMScript(id string) (out *JSONDVMScript, err error) 
 	return
 }
 
+// DeleteDVMScript is for deleting the related script
+// Input:
+//   @id: script name
+// Output:
+//   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) DeleteDVMScript(id string) (err error) {
 	defer c.Trace("DeleteDVMScript")()
 
