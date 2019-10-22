@@ -12,8 +12,9 @@ import (
 
 // JSONSystemSettingDNS contains the parameters for Create and Update API function
 type JSONSystemSettingDNS struct {
-	Primary   string `json:"primary"`
-	Secondary string `json:"secondary"`
+	Primary    string `json:"primary,omitempty"`
+	Secondary  string `json:"secondary,omitempty"`
+	DNSOverTLS string `json:"dns-over-tls,omitempty"`
 }
 
 // JSONCreateSystemSettingDNSOutput contains the output results for Create API function
@@ -267,6 +268,9 @@ func (c *FortiSDKClient) ReadSystemSettingDNS(mkey string) (output *JSONSystemSe
 		}
 		if mapTmp["secondary"] != nil {
 			output.Secondary = mapTmp["secondary"].(string)
+		}
+		if mapTmp["dns-over-tls"] != nil {
+			output.DNSOverTLS = mapTmp["dns-over-tls"].(string)
 		}
 
 	} else {
