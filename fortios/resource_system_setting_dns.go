@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/fgtdev/fortios-sdk-go/sdkcore"
+	forticlient "github.com/fgtdev/fortios-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -23,12 +23,14 @@ func resourceSystemSettingDNS() *schema.Resource {
 			"primary": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "208.91.112.53",
 			},
 			"secondary": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "208.91.112.52",
+			},
+			"dns_over_tls": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 		},
 	}
@@ -43,11 +45,13 @@ func resourceSystemSettingDNSCreateUpdate(d *schema.ResourceData, m interface{})
 	//Get Params from d
 	primary := d.Get("primary").(string)
 	secondary := d.Get("secondary").(string)
+	dns_over_tls := d.Get("dns_over_tls").(string)
 
 	//Build input data by sdk
 	i := &forticlient.JSONSystemSettingDNS{
-		Primary:   primary,
-		Secondary: secondary,
+		Primary:    primary,
+		Secondary:  secondary,
+		DNSOverTLS: dns_over_tls,
 	}
 
 	//Call process by sdk
@@ -56,7 +60,7 @@ func resourceSystemSettingDNSCreateUpdate(d *schema.ResourceData, m interface{})
 		return fmt.Errorf("Error updating System Setting DNS: %s", err)
 	}
 
-	d.SetId(primary)
+	d.SetId("fortios-sys-dns")
 
 	return resourceSystemSettingDNSRead(d, m)
 }
@@ -85,8 +89,15 @@ func resourceSystemSettingDNSRead(d *schema.ResourceData, m interface{}) error {
 	}
 
 	//Refresh property
-	d.Set("primary", o.Primary)
-	d.Set("secondary", o.Secondary)
+	if d.Get("primary") != "" {
+		d.Set("primary", o.Primary)
+	}
+	if d.Get("secondary") != "" {
+		d.Set("secondary", o.Secondary)
+	}
+	if d.Get("dns_over_tls") != "" {
+		d.Set("dns_over_tls", o.DNSOverTLS)
+	}
 
 	return nil
 }

@@ -19,6 +19,7 @@ provider "fortios" {
 resource "fortios_system_setting_dns" "test1" {
 	primary = "208.91.112.53"
 	secondary = "208.91.112.22"
+	dns_over_tls = "disable"
 }
 ```
 
@@ -27,9 +28,11 @@ The following arguments are supported:
 
 * `primary` - Primary DNS server IP address.
 * `secondary` - Secondary DNS server IP address.
+* `dns_over_tls` - Enable/disable/enforce DNS over TLS(available since v6.2.0). Enum: [ disable, enable, enforce ]
 
 ## Attributes Reference
 The following attributes are exported:
 
 * `primary` - Primary DNS server IP address.
 * `secondary` - Secondary DNS server IP address.
+* `dns_over_tls` - Enable/disable/enforce DNS over TLS(available since v6.2.0).
