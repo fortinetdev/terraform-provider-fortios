@@ -3,20 +3,22 @@ package forticlient
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
-	"fmt"
+
+	"github.com/fgtdev/fortios-sdk-go/util"
 )
 
 // JSONSystemLicenseFortiCare contains the parameters for Create and Update API function
 type JSONSystemLicenseFortiCare struct {
-	RegistrationCode       string `json:"registration_code"`
+	RegistrationCode string `json:"registration_code"`
 }
 
 // JSONCreateSystemLicenseFortiCareOutput contains the output results for Create API function
 type JSONCreateSystemLicenseFortiCareOutput struct {
 	Vdom       string  `json:"vdom"`
-	Mkey       string `json:"mkey"`
+	Mkey       string  `json:"mkey"`
 	Status     string  `json:"status"`
 	HTTPStatus float64 `json:"http_status"`
 }
@@ -51,7 +53,6 @@ func (c *FortiSDKClient) CreateSystemLicenseFortiCare(params *JSONSystemLicenseF
 	// 	err = fmt.Errorf(v)
 	// 	return
 	// }
-
 
 	bytes := bytes.NewBuffer(locJSON)
 	req := c.NewRequest(HTTPMethod, path, nil, bytes)
@@ -89,9 +90,9 @@ func (c *FortiSDKClient) CreateSystemLicenseFortiCare(params *JSONSystemLicenseF
 				}
 
 				if result["http_status"] != nil {
-					err = fmt.Errorf("%s and http_status no is %.0f", err, result["http_status"])
+					err = fmt.Errorf("%s, details: %s", err, util.HttpStatus2Str(int(result["http_status"].(float64))))
 				} else {
-					err = fmt.Errorf("%s and and http_status no is not found", err)
+					err = fmt.Errorf("%s, and http_status no is not found", err)
 				}
 
 				return
@@ -107,7 +108,7 @@ func (c *FortiSDKClient) CreateSystemLicenseFortiCare(params *JSONSystemLicenseF
 			return
 		}
 
-		mapTmp := result["results"].(map[string]interface {});
+		mapTmp := result["results"].(map[string]interface{})
 
 		if mapTmp == nil {
 			err = fmt.Errorf("cannot get results from the response")
@@ -115,9 +116,9 @@ func (c *FortiSDKClient) CreateSystemLicenseFortiCare(params *JSONSystemLicenseF
 		}
 
 		if mapTmp["forticare_error"] != nil {
-			s :=  mapTmp["forticare_error"].(string)
+			s := mapTmp["forticare_error"].(string)
 			if s != "" {
-					err = fmt.Errorf("cannot get the right response " + s)
+				err = fmt.Errorf("cannot get the right response " + s)
 			}
 			return
 		}
@@ -210,7 +211,7 @@ func (c *FortiSDKClient) DeleteSystemLicenseFortiCare(mkey string) (err error) {
 	//		err = fmt.Errorf("cannot get the right response")
 	//		return
 	//	}
- 	//
+	//
 	// } else {
 	// 	err = fmt.Errorf("cannot get the right response")
 	// 	return
@@ -259,9 +260,9 @@ func (c *FortiSDKClient) ReadSystemLicenseFortiCare(mkey string) (output *JSONSy
 			}
 
 			if result["http_status"] != nil {
-				err = fmt.Errorf("%s and http_status no is %.0f", err, result["http_status"])
+				err = fmt.Errorf("%s, details: %s", err, util.HttpStatus2Str(int(result["http_status"].(float64))))
 			} else {
-				err = fmt.Errorf("%s and and http_status no is not found", err)
+				err = fmt.Errorf("%s, and http_status no is not found", err)
 			}
 
 			return
@@ -281,9 +282,9 @@ func (c *FortiSDKClient) ReadSystemLicenseFortiCare(mkey string) (output *JSONSy
 
 		bFind := false
 
-		for k,v := range mapTmp {
+		for k, v := range mapTmp {
 			if k == "forticare" {
-				bFind = true;
+				bFind = true
 
 				z := v.(map[string]interface{})
 				if z == nil {

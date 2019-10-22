@@ -3,23 +3,25 @@ package forticlient
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
-	"fmt"
 	"strconv"
+
+	"github.com/fgtdev/fortios-sdk-go/util"
 )
 
 // JSONSystemVdomSetting contains the parameters for Create and Update API function
 type JSONSystemVdomSetting struct {
-	Name       string `json:"name"`
-	ShortName       string `json:"short-name"`
-	Temporary       string `json:"temporary"`
+	Name      string `json:"name"`
+	ShortName string `json:"short-name"`
+	Temporary string `json:"temporary"`
 }
 
 // JSONCreateSystemVdomSettingOutput contains the output results for Create API function
 type JSONCreateSystemVdomSettingOutput struct {
 	Vdom       string  `json:"vdom"`
-	Mkey       string `json:"mkey"`
+	Mkey       string  `json:"mkey"`
 	Status     string  `json:"status"`
 	HTTPStatus float64 `json:"http_status"`
 }
@@ -82,9 +84,9 @@ func (c *FortiSDKClient) CreateSystemVdomSetting(params *JSONSystemVdomSetting) 
 				}
 
 				if result["http_status"] != nil {
-					err = fmt.Errorf("%s and http_status no is %.0f", err, result["http_status"])
+					err = fmt.Errorf("%s, details: %s", err, util.HttpStatus2Str(int(result["http_status"].(float64))))
 				} else {
-					err = fmt.Errorf("%s and and http_status no is not found", err)
+					err = fmt.Errorf("%s, and http_status no is not found", err)
 				}
 
 				return
@@ -156,9 +158,9 @@ func (c *FortiSDKClient) UpdateSystemVdomSetting(params *JSONSystemVdomSetting, 
 				}
 
 				if result["http_status"] != nil {
-					err = fmt.Errorf("%s and http_status no is %.0f", err, result["http_status"])
+					err = fmt.Errorf("%s, details: %s", err, util.HttpStatus2Str(int(result["http_status"].(float64))))
 				} else {
-					err = fmt.Errorf("%s and and http_status no is not found", err)
+					err = fmt.Errorf("%s, and http_status no is not found", err)
 				}
 
 				return
@@ -220,9 +222,9 @@ func (c *FortiSDKClient) DeleteSystemVdomSetting(mkey string) (err error) {
 			}
 
 			if result["http_status"] != nil {
-				err = fmt.Errorf("%s and http_status no is %.0f", err, result["http_status"])
+				err = fmt.Errorf("%s, details: %s", err, util.HttpStatus2Str(int(result["http_status"].(float64))))
 			} else {
-				err = fmt.Errorf("%s and and http_status no is not found", err)
+				err = fmt.Errorf("%s, and http_status no is not found", err)
 			}
 
 			return
@@ -291,9 +293,9 @@ func (c *FortiSDKClient) ReadSystemVdomSetting(mkey string) (output *JSONSystemV
 			}
 
 			if result["http_status"] != nil {
-				err = fmt.Errorf("%s and http_status no is %.0f", err, result["http_status"])
+				err = fmt.Errorf("%s, details: %s", err, util.HttpStatus2Str(int(result["http_status"].(float64))))
 			} else {
-				err = fmt.Errorf("%s and and http_status no is not found", err)
+				err = fmt.Errorf("%s, and http_status no is not found", err)
 			}
 
 			return

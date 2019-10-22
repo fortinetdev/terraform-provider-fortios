@@ -3,16 +3,18 @@ package forticlient
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
-	"fmt"
+
+	"github.com/fgtdev/fortios-sdk-go/util"
 )
 
 // JSONSystemAPIUserSetting contains the parameters for Create and Update API function
 type JSONSystemAPIUserSetting struct {
 	Name       string            `json:"name"`
 	Accprofile string            `json:"accprofile"`
-	Vdom       MultValues `json:"vdom"`
+	Vdom       MultValues        `json:"vdom"`
 	Trusthost  APIUserMultValues `json:"trusthost"`
 	Comments   string            `json:"comments"`
 }
@@ -92,9 +94,9 @@ func (c *FortiSDKClient) CreateSystemAPIUserSetting(params *JSONSystemAPIUserSet
 				}
 
 				if result["http_status"] != nil {
-					err = fmt.Errorf("%s and http_status no is %.0f", err, result["http_status"])
+					err = fmt.Errorf("%s, details: %s", err, util.HttpStatus2Str(int(result["http_status"].(float64))))
 				} else {
-					err = fmt.Errorf("%s and and http_status no is not found", err)
+					err = fmt.Errorf("%s, and http_status no is not found", err)
 				}
 
 				return
@@ -166,9 +168,9 @@ func (c *FortiSDKClient) UpdateSystemAPIUserSetting(params *JSONSystemAPIUserSet
 				}
 
 				if result["http_status"] != nil {
-					err = fmt.Errorf("%s and http_status no is %.0f", err, result["http_status"])
+					err = fmt.Errorf("%s, details: %s", err, util.HttpStatus2Str(int(result["http_status"].(float64))))
 				} else {
-					err = fmt.Errorf("%s and and http_status no is not found", err)
+					err = fmt.Errorf("%s, and http_status no is not found", err)
 				}
 
 				return
@@ -230,9 +232,9 @@ func (c *FortiSDKClient) DeleteSystemAPIUserSetting(mkey string) (err error) {
 			}
 
 			if result["http_status"] != nil {
-				err = fmt.Errorf("%s and http_status no is %.0f", err, result["http_status"])
+				err = fmt.Errorf("%s, details: %s", err, util.HttpStatus2Str(int(result["http_status"].(float64))))
 			} else {
-				err = fmt.Errorf("%s and and http_status no is not found", err)
+				err = fmt.Errorf("%s, and http_status no is not found", err)
 			}
 
 			return
@@ -301,9 +303,9 @@ func (c *FortiSDKClient) ReadSystemAPIUserSetting(mkey string) (output *JSONSyst
 			}
 
 			if result["http_status"] != nil {
-				err = fmt.Errorf("%s and http_status no is %.0f", err, result["http_status"])
+				err = fmt.Errorf("%s, details: %s", err, util.HttpStatus2Str(int(result["http_status"].(float64))))
 			} else {
-				err = fmt.Errorf("%s and and http_status no is not found", err)
+				err = fmt.Errorf("%s, and http_status no is not found", err)
 			}
 
 			return
@@ -324,11 +326,11 @@ func (c *FortiSDKClient) ReadSystemAPIUserSetting(mkey string) (output *JSONSyst
 		}
 
 		if mapTmp["vdom"] != nil {
-			member := mapTmp["vdom"].([]interface {})
+			member := mapTmp["vdom"].([]interface{})
 
 			var members []MultValue
 			for _, v := range member {
-				c := v.(map[string]interface {})
+				c := v.(map[string]interface{})
 
 				members = append(members,
 					MultValue{
@@ -339,21 +341,21 @@ func (c *FortiSDKClient) ReadSystemAPIUserSetting(mkey string) (output *JSONSyst
 		}
 
 		/*
-		if mapTmp["vdom"] != nil {
+			if mapTmp["vdom"] != nil {
 
-			member := mapTmp["vdom"].([]interface{})
+				member := mapTmp["vdom"].([]interface{})
 
-			output.Vdom = "root"
+				output.Vdom = "root"
 
-			for _, v := range member {
-				c := v.(map[string]interface{})
+				for _, v := range member {
+					c := v.(map[string]interface{})
 
-				output.Vdom = c["name"].(string)
+					output.Vdom = c["name"].(string)
 
-				// the break here because of the vdom in response becomes array, but vdom in request is string
-				break
-			}
-		}*/
+					// the break here because of the vdom in response becomes array, but vdom in request is string
+					break
+				}
+			}*/
 
 		if mapTmp["trusthost"] != nil {
 			member := mapTmp["trusthost"].([]interface{})

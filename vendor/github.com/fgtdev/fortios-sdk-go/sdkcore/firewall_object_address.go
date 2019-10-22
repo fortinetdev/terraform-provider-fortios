@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+
+	"github.com/fgtdev/fortios-sdk-go/util"
 )
 
 // JSONFirewallObjectAddressCommon contains the General parameters for Create and Update API function
@@ -111,9 +113,9 @@ func (c *FortiSDKClient) CreateFirewallObjectAddress(params *JSONFirewallObjectA
 				}
 
 				if result["http_status"] != nil {
-					err = fmt.Errorf("%s and http_status no is %.0f", err, result["http_status"])
+					err = fmt.Errorf("%s, details: %s", err, util.HttpStatus2Str(int(result["http_status"].(float64))))
 				} else {
-					err = fmt.Errorf("%s and and http_status no is not found", err)
+					err = fmt.Errorf("%s, and http_status no is not found", err)
 				}
 
 				return
@@ -185,9 +187,9 @@ func (c *FortiSDKClient) UpdateFirewallObjectAddress(params *JSONFirewallObjectA
 				}
 
 				if result["http_status"] != nil {
-					err = fmt.Errorf("%s and http_status no is %.0f", err, result["http_status"])
+					err = fmt.Errorf("%s, details: %s", err, util.HttpStatus2Str(int(result["http_status"].(float64))))
 				} else {
-					err = fmt.Errorf("%s and and http_status no is not found", err)
+					err = fmt.Errorf("%s, and http_status no is not found", err)
 				}
 
 				return
@@ -249,9 +251,9 @@ func (c *FortiSDKClient) DeleteFirewallObjectAddress(mkey string) (err error) {
 			}
 
 			if result["http_status"] != nil {
-				err = fmt.Errorf("%s and http_status no is %.0f", err, result["http_status"])
+				err = fmt.Errorf("%s, details: %s", err, util.HttpStatus2Str(int(result["http_status"].(float64))))
 			} else {
-				err = fmt.Errorf("%s and and http_status no is not found", err)
+				err = fmt.Errorf("%s, and http_status no is not found", err)
 			}
 
 			return
@@ -332,9 +334,9 @@ func (c *FortiSDKClient) ReadFirewallObjectAddress(mkey string) (output *JSONFir
 			}
 
 			if result["http_status"] != nil {
-				err = fmt.Errorf("%s and http_status no is %.0f", err, result["http_status"])
+				err = fmt.Errorf("%s, details: %s", err, util.HttpStatus2Str(int(result["http_status"].(float64))))
 			} else {
-				err = fmt.Errorf("%s and and http_status no is not found", err)
+				err = fmt.Errorf("%s, and http_status no is not found", err)
 			}
 
 			return

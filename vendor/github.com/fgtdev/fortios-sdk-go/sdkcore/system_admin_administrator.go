@@ -3,46 +3,48 @@ package forticlient
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
-	"fmt"
+
+	"github.com/fgtdev/fortios-sdk-go/util"
 )
 
 // JSONSystemAdminAdministrator contains the parameters for Create and Update API function
 type JSONSystemAdminAdministrator struct {
-	Name        string `json:"name"`
-	Password    string `json:"password"`
-	Trusthost1  string `json:"trusthost1"`
-	Trusthost2  string `json:"trusthost2"`
-	Trusthost3  string `json:"trusthost3"`
-	Trusthost4  string `json:"trusthost4"`
-	Trusthost5  string `json:"trusthost5"`
-	Trusthost6  string `json:"trusthost6"`
-	Trusthost7  string `json:"trusthost7"`
-	Trusthost8  string `json:"trusthost8"`
-	Trusthost9  string `json:"trusthost9"`
-	Trusthost10 string `json:"trusthost10"`
-	Accprofile  string `json:"accprofile"`
-	Comments    string `json:"comments"`
-	Vdom       MultValues `json:"vdom"`
+	Name        string     `json:"name"`
+	Password    string     `json:"password"`
+	Trusthost1  string     `json:"trusthost1"`
+	Trusthost2  string     `json:"trusthost2"`
+	Trusthost3  string     `json:"trusthost3"`
+	Trusthost4  string     `json:"trusthost4"`
+	Trusthost5  string     `json:"trusthost5"`
+	Trusthost6  string     `json:"trusthost6"`
+	Trusthost7  string     `json:"trusthost7"`
+	Trusthost8  string     `json:"trusthost8"`
+	Trusthost9  string     `json:"trusthost9"`
+	Trusthost10 string     `json:"trusthost10"`
+	Accprofile  string     `json:"accprofile"`
+	Comments    string     `json:"comments"`
+	Vdom        MultValues `json:"vdom"`
 }
 
 // JSONSystemAdminAdministrator2 contains the parameters for Create and Update API function
 type JSONSystemAdminAdministrator2 struct {
-	Name        string `json:"name"`
-	Trusthost1  string `json:"trusthost1"`
-	Trusthost2  string `json:"trusthost2"`
-	Trusthost3  string `json:"trusthost3"`
-	Trusthost4  string `json:"trusthost4"`
-	Trusthost5  string `json:"trusthost5"`
-	Trusthost6  string `json:"trusthost6"`
-	Trusthost7  string `json:"trusthost7"`
-	Trusthost8  string `json:"trusthost8"`
-	Trusthost9  string `json:"trusthost9"`
-	Trusthost10 string `json:"trusthost10"`
-	Accprofile  string `json:"accprofile"`
-	Comments    string `json:"comments"`
-	Vdom       MultValues `json:"vdom"`
+	Name        string     `json:"name"`
+	Trusthost1  string     `json:"trusthost1"`
+	Trusthost2  string     `json:"trusthost2"`
+	Trusthost3  string     `json:"trusthost3"`
+	Trusthost4  string     `json:"trusthost4"`
+	Trusthost5  string     `json:"trusthost5"`
+	Trusthost6  string     `json:"trusthost6"`
+	Trusthost7  string     `json:"trusthost7"`
+	Trusthost8  string     `json:"trusthost8"`
+	Trusthost9  string     `json:"trusthost9"`
+	Trusthost10 string     `json:"trusthost10"`
+	Accprofile  string     `json:"accprofile"`
+	Comments    string     `json:"comments"`
+	Vdom        MultValues `json:"vdom"`
 }
 
 // JSONCreateSystemAdminAdministratorOutput contains the output results for Create API function
@@ -111,9 +113,9 @@ func (c *FortiSDKClient) CreateSystemAdminAdministrator(params *JSONSystemAdminA
 				}
 
 				if result["http_status"] != nil {
-					err = fmt.Errorf("%s and http_status no is %.0f", err, result["http_status"])
+					err = fmt.Errorf("%s, details: %s", err, util.HttpStatus2Str(int(result["http_status"].(float64))))
 				} else {
-					err = fmt.Errorf("%s and and http_status no is not found", err)
+					err = fmt.Errorf("%s, and http_status no is not found", err)
 				}
 
 				return
@@ -185,9 +187,9 @@ func (c *FortiSDKClient) UpdateSystemAdminAdministrator(params *JSONSystemAdminA
 				}
 
 				if result["http_status"] != nil {
-					err = fmt.Errorf("%s and http_status no is %.0f", err, result["http_status"])
+					err = fmt.Errorf("%s, details: %s", err, util.HttpStatus2Str(int(result["http_status"].(float64))))
 				} else {
-					err = fmt.Errorf("%s and and http_status no is not found", err)
+					err = fmt.Errorf("%s, and http_status no is not found", err)
 				}
 
 				return
@@ -249,9 +251,9 @@ func (c *FortiSDKClient) DeleteSystemAdminAdministrator(mkey string) (err error)
 			}
 
 			if result["http_status"] != nil {
-				err = fmt.Errorf("%s and http_status no is %.0f", err, result["http_status"])
+				err = fmt.Errorf("%s, details: %s", err, util.HttpStatus2Str(int(result["http_status"].(float64))))
 			} else {
-				err = fmt.Errorf("%s and and http_status no is not found", err)
+				err = fmt.Errorf("%s, and http_status no is not found", err)
 			}
 
 			return
@@ -320,9 +322,9 @@ func (c *FortiSDKClient) ReadSystemAdminAdministrator(mkey string) (output *JSON
 			}
 
 			if result["http_status"] != nil {
-				err = fmt.Errorf("%s and http_status no is %.0f", err, result["http_status"])
+				err = fmt.Errorf("%s, details: %s", err, util.HttpStatus2Str(int(result["http_status"].(float64))))
 			} else {
-				err = fmt.Errorf("%s and and http_status no is not found", err)
+				err = fmt.Errorf("%s, and http_status no is not found", err)
 			}
 
 			return
@@ -398,4 +400,3 @@ func (c *FortiSDKClient) ReadSystemAdminAdministrator(mkey string) (output *JSON
 
 	return
 }
-
