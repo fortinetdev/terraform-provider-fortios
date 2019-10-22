@@ -3,20 +3,22 @@ package forticlient
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
-	"fmt"
+
+	"github.com/fgtdev/fortios-sdk-go/util"
 )
 
 // JSONSystemLicenseVDOM contains the parameters for Create and Update API function
 type JSONSystemLicenseVDOM struct {
-	License       string `json:"license"`
+	License string `json:"license"`
 }
 
 // JSONCreateSystemLicenseVDOMOutput contains the output results for Create API function
 type JSONCreateSystemLicenseVDOMOutput struct {
 	Vdom       string  `json:"vdom"`
-	Mkey       string `json:"mkey"`
+	Mkey       string  `json:"mkey"`
 	Status     string  `json:"status"`
 	HTTPStatus float64 `json:"http_status"`
 }
@@ -88,9 +90,9 @@ func (c *FortiSDKClient) CreateSystemLicenseVDOM(params *JSONSystemLicenseVDOM) 
 				}
 
 				if result["http_status"] != nil {
-					err = fmt.Errorf("%s and http_status no is %.0f", err, result["http_status"])
+					err = fmt.Errorf("%s, details: %s", err, util.HttpStatus2Str(int(result["http_status"].(float64))))
 				} else {
-					err = fmt.Errorf("%s and and http_status no is not found", err)
+					err = fmt.Errorf("%s, and http_status no is not found", err)
 				}
 
 				return
@@ -249,9 +251,9 @@ func (c *FortiSDKClient) ReadSystemLicenseVDOM(mkey string) (output *JSONSystemL
 			}
 
 			if result["http_status"] != nil {
-				err = fmt.Errorf("%s and http_status no is %.0f", err, result["http_status"])
+				err = fmt.Errorf("%s, details: %s", err, util.HttpStatus2Str(int(result["http_status"].(float64))))
 			} else {
-				err = fmt.Errorf("%s and and http_status no is not found", err)
+				err = fmt.Errorf("%s, and http_status no is not found", err)
 			}
 
 			return
@@ -271,9 +273,9 @@ func (c *FortiSDKClient) ReadSystemLicenseVDOM(mkey string) (output *JSONSystemL
 
 		bFind := false
 
-		for k,v := range mapTmp {
+		for k, v := range mapTmp {
 			if k == "vdom" {
-				bFind = true;
+				bFind = true
 
 				z := v.(map[string]interface{})
 				if z == nil {

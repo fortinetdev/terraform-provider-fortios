@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+
+	"github.com/fgtdev/fortios-sdk-go/util"
 )
 
 // JSONSystemLicenseVM contains the parameters for Create and Update API function
@@ -80,9 +82,9 @@ func (c *FortiSDKClient) CreateSystemLicenseVM(params *JSONSystemLicenseVM) (out
 				}
 
 				if result["http_status"] != nil {
-					err = fmt.Errorf("%s and http_status no is %.0f", err, result["http_status"])
+					err = fmt.Errorf("%s, details: %s", err, util.HttpStatus2Str(int(result["http_status"].(float64))))
 				} else {
-					err = fmt.Errorf("%s and and http_status no is not found", err)
+					err = fmt.Errorf("%s, and http_status no is not found", err)
 				}
 
 				return

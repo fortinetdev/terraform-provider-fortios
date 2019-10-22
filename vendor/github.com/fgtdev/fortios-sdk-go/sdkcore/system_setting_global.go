@@ -7,6 +7,8 @@ import (
 	"io/ioutil"
 	"log"
 	"strconv"
+
+	"github.com/fgtdev/fortios-sdk-go/util"
 )
 
 // JSONSystemSettingGlobal contains the parameters for Create and Update API function
@@ -137,9 +139,9 @@ func (c *FortiSDKClient) UpdateSystemSettingGlobal(params *JSONSystemSettingGlob
 				}
 
 				if result["http_status"] != nil {
-					err = fmt.Errorf("%s and http_status no is %.0f", err, result["http_status"])
+					err = fmt.Errorf("%s, details: %s", err, util.HttpStatus2Str(int(result["http_status"].(float64))))
 				} else {
-					err = fmt.Errorf("%s and and http_status no is not found", err)
+					err = fmt.Errorf("%s, and http_status no is not found", err)
 				}
 
 				return
@@ -250,9 +252,9 @@ func (c *FortiSDKClient) ReadSystemSettingGlobal(mkey string) (output *JSONSyste
 			}
 
 			if result["http_status"] != nil {
-				err = fmt.Errorf("%s and http_status no is %.0f", err, result["http_status"])
+				err = fmt.Errorf("%s, details: %s", err, util.HttpStatus2Str(int(result["http_status"].(float64))))
 			} else {
-				err = fmt.Errorf("%s and and http_status no is not found", err)
+				err = fmt.Errorf("%s, and http_status no is not found", err)
 			}
 
 			return

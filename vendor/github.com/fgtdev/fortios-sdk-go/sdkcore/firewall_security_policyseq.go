@@ -6,6 +6,8 @@ import (
 	"io/ioutil"
 	"log"
 	"strconv"
+
+	"github.com/fgtdev/fortios-sdk-go/util"
 )
 
 // CreateUpdateFirewallSecurityPolicySeq API operation for FortiOS alters the specified firewall policy sequence.
@@ -49,9 +51,9 @@ func (c *FortiSDKClient) CreateUpdateFirewallSecurityPolicySeq(srcId, dstId int,
 			}
 
 			if result["http_status"] != nil {
-				err = fmt.Errorf("%s and http_status no is %.0f", err, result["http_status"])
+				err = fmt.Errorf("%s, details: %s", err, util.HttpStatus2Str(int(result["http_status"].(float64))))
 			} else {
-				err = fmt.Errorf("%s and and http_status no is not found", err)
+				err = fmt.Errorf("%s, and http_status no is not found", err)
 			}
 
 			return
