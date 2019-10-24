@@ -68,6 +68,8 @@ func TestAccFortiOSFirewallObjectAddress_withFqdn(t *testing.T) {
 					resource.TestCheckResourceAttr("fortios_firewall_object_address.test3", "type", "fqdn"),
 					resource.TestCheckResourceAttr("fortios_firewall_object_address.test3", "fqdn", "baid.com"),
 					resource.TestCheckResourceAttr("fortios_firewall_object_address.test3", "comment", "Terraform Test"),
+					resource.TestCheckResourceAttr("fortios_firewall_object_address.test3", "static_route_configure", "enable"),
+					resource.TestCheckResourceAttr("fortios_firewall_object_address.test3", "show_in_address_list", "disable"),
 				),
 			},
 		},
@@ -156,6 +158,8 @@ resource "fortios_firewall_object_address" "test3" {
 	type = "fqdn"
 	fqdn = "baid.com"
 	comment = "Terraform Test"
+	static_route_configure = "enable"
+	show_in_address_list   = "disable"
 }
 `, name)
 }

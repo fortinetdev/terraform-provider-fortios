@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/fgtdev/fortios-sdk-go/sdkcore"
+	forticlient "github.com/fgtdev/fortios-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -58,6 +58,20 @@ func resourceFirewallObjectAddress() *schema.Resource {
 				Optional: true,
 				Default:  "Created by Terraform Provider for FortiOS",
 			},
+			"associated_interface": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
+			"show_in_address_list": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "enable",
+			},
+			"static_route_configure": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "disable",
+			},
 		},
 	}
 }
@@ -75,11 +89,17 @@ func resourceFirewallObjectAddressCreate(d *schema.ResourceData, m interface{}) 
 	fqdn := d.Get("fqdn").(string)
 	country := d.Get("country").(string)
 	comment := d.Get("comment").(string)
+	associatedInterface := d.Get("associated_interface").(string)
+	showInAddressList := d.Get("show_in_address_list").(string)
+	staticRouteConfigure := d.Get("static_route_configure").(string)
 
 	j1 := &forticlient.JSONFirewallObjectAddressCommon{
-		Name:    name,
-		Type:    typef,
-		Comment: comment,
+		Name:              name,
+		Type:              typef,
+		Comment:           comment,
+		AssociatedIntf:    associatedInterface,
+		ShowInAddressList: showInAddressList,
+		AllowRouting:      staticRouteConfigure,
 	}
 	var j2 *forticlient.JSONFirewallObjectAddressIPRange
 	var j3 *forticlient.JSONFirewallObjectAddressCountry
@@ -146,11 +166,17 @@ func resourceFirewallObjectAddressUpdate(d *schema.ResourceData, m interface{}) 
 	fqdn := d.Get("fqdn").(string)
 	country := d.Get("country").(string)
 	comment := d.Get("comment").(string)
+	associatedInterface := d.Get("associated_interface").(string)
+	showInAddressList := d.Get("show_in_address_list").(string)
+	staticRouteConfigure := d.Get("static_route_configure").(string)
 
 	j1 := &forticlient.JSONFirewallObjectAddressCommon{
-		Name:    name,
-		Type:    typef,
-		Comment: comment,
+		Name:              name,
+		Type:              typef,
+		Comment:           comment,
+		AssociatedIntf:    associatedInterface,
+		ShowInAddressList: showInAddressList,
+		AllowRouting:      staticRouteConfigure,
 	}
 	var j2 *forticlient.JSONFirewallObjectAddressIPRange
 	var j3 *forticlient.JSONFirewallObjectAddressCountry
@@ -255,6 +281,11 @@ func resourceFirewallObjectAddressRead(d *schema.ResourceData, m interface{}) er
 	d.Set("fqdn", o.Fqdn)
 	d.Set("country", o.Country)
 	d.Set("comment", o.Comment)
+	d.Set("associated_interface", o.AssociatedIntf)
+	d.Set("show_in_address_list", o.ShowInAddressList)
+	if o.Type != "iprange" && o.Type != "geography" {
+		d.Set("static_route_configure", o.AllowRouting)
+	}
 
 	return nil
 }

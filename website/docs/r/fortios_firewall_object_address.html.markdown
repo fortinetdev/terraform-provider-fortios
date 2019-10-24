@@ -52,6 +52,9 @@ resource "fortios_firewall_object_address" "s3" {
 	type = "fqdn"
 	fqdn = "baid.com"
 	comment = "dd"
+	associated_interface = "port4"
+	show_in_address_list   = "disable"
+	static_route_configure = "enable"
 }
 ```
 
@@ -81,6 +84,9 @@ The following arguments are supported:
 * `fqdn` - Fully Qualified Domain Name address.
 * `country` - IP addresses associated to a specific country.
 * `comment` - Comment.
+* `associated_interface` - Network interface associated with address.
+* `show_in_address_list` - Enable/disable address visibility in the GUI. default is "enable".
+* `static_route_configure` - Enable/disable use of this address in the static route configuration. default is "disable".
 
 ## Attributes Reference
 The following attributes are exported:
@@ -94,3 +100,6 @@ The following attributes are exported:
 * `fqdn` - Fully Qualified Domain Name address.
 * `country` - IP addresses associated to a specific country.
 * `comment` - Comment.
+* `associated_interface` - Network interface associated with address.
+* `show_in_address_list` - Enable/disable address visibility in the GUI. default is "enable".
+* `static_route_configure` - Enable/disable use of this address in the static route configuration. default is "disable".
