@@ -25,7 +25,8 @@ func TestAccFortiOSNetworkingRouteStatic_basic(t *testing.T) {
 					resource.TestCheckResourceAttr("fortios_networking_route_static.test1", "weight", "3"),
 					resource.TestCheckResourceAttr("fortios_networking_route_static.test1", "priority", "3"),
 					resource.TestCheckResourceAttr("fortios_networking_route_static.test1", "device", "port2"),
-					resource.TestCheckResourceAttr("fortios_networking_route_static.test1", "comment", "Terraform Test")),
+					resource.TestCheckResourceAttr("fortios_networking_route_static.test1", "comment", "Terraform Test"),
+					resource.TestCheckResourceAttr("fortios_networking_route_static.test1", "status", "enable")),
 			},
 		},
 	})
@@ -92,5 +93,6 @@ resource "fortios_networking_route_static" "test1" {
 	priority = "3"
 	device = "port2"
 	comment = "Terraform Test"
+	status = "enable"
 }
 `

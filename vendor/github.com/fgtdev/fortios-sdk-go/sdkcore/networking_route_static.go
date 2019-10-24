@@ -13,14 +13,16 @@ import (
 
 // JSONNetworkingRouteStatic contains the parameters for Create and Update API function
 type JSONNetworkingRouteStatic struct {
-	Dst       string `json:"dst"`
-	Gateway   string `json:"gateway"`
-	Blackhole string `json:"blackhole"`
-	Distance  string `json:"distance"`
-	Weight    string `json:"weight"`
-	Priority  string `json:"priority"`
-	Device    string `json:"device"`
-	Comment   string `json:"comment"`
+	Dst             string `json:"dst"`
+	Gateway         string `json:"gateway"`
+	Blackhole       string `json:"blackhole"`
+	Distance        string `json:"distance"`
+	Weight          string `json:"weight"`
+	Priority        string `json:"priority"`
+	Device          string `json:"device"`
+	Comment         string `json:"comment"`
+	Status          string `json:"status"`
+	InternetService int    `json:"internet-service"`
 }
 
 // JSONCreateNetworkingRouteStaticOutput contains the output results for Create API function
@@ -336,6 +338,12 @@ func (c *FortiSDKClient) ReadNetworkingRouteStatic(mkey string) (output *JSONNet
 		}
 		if mapTmp["comment"] != nil {
 			output.Comment = mapTmp["comment"].(string)
+		}
+		if mapTmp["internet-service"] != nil {
+			output.InternetService = int(mapTmp["internet-service"].(float64))
+		}
+		if mapTmp["status"] != nil {
+			output.Status = mapTmp["status"].(string)
 		}
 
 	} else {
