@@ -16,7 +16,7 @@ provider "fortios" {
 	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
 }
 
-resource "fortios_networking_route_static" "test1" {
+resource "fortios_networking_route_static" "subnet" {
 	dst = "110.2.2.122/32"
 	gateway = "2.2.2.2"
 	blackhole = "disable"
@@ -25,6 +25,19 @@ resource "fortios_networking_route_static" "test1" {
 	priority = "3"
 	device = "port2"
 	comment = "Terraform test"
+	status = "enable"
+}
+
+resource "fortios_networking_route_static" "internet_service" {
+	internet_service = 5242881
+	gateway = "2.2.2.2"
+	blackhole = "disable"
+	distance = "22"
+	weight = "3"
+	priority = "3"
+	device = "port2"
+	comment = "Terraform Test"
+	status = "enable"
 }
 ```
 
@@ -39,6 +52,8 @@ The following arguments are supported:
 * `priority` - Administrative priority.
 * `device` - (Required) Gateway out interface or tunnel.
 * `comment` - Optional comments.
+* `internet_service` - Application ID in the Internet service database.
+* `status` - Enable/disable this static route. default is "enable".
 
 ## Attributes Reference
 The following attributes are exported:
@@ -52,3 +67,5 @@ The following attributes are exported:
 * `priority` - Administrative priority.
 * `device` - Gateway out interface or tunnel.
 * `comment` - Optional comments.
+* `internet_service` - Application ID in the Internet service database.
+* `status` - Enable/disable this static route.

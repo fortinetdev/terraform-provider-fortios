@@ -5,7 +5,7 @@ import (
 	"log"
 	"strconv"
 
-	"github.com/fgtdev/fortios-sdk-go/sdkcore"
+	forticlient "github.com/fgtdev/fortios-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -23,7 +23,8 @@ func resourceNetworkingRouteStatic() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"dst": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Default:  "0.0.0.0 0.0.0.0",
 			},
 			"gateway": &schema.Schema{
 				Type:     schema.TypeString,
@@ -58,6 +59,15 @@ func resourceNetworkingRouteStatic() *schema.Resource {
 				Optional: true,
 				Default:  "Created by Terraform Provider for FortiOS",
 			},
+			"internet_service": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+			},
+			"status": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "enable",
+			},
 		},
 	}
 }
@@ -75,17 +85,21 @@ func resourceNetworkingRouteStaticCreate(d *schema.ResourceData, m interface{}) 
 	priority := d.Get("priority").(string)
 	device := d.Get("device").(string)
 	comment := d.Get("comment").(string)
+	internet_service := d.Get("internet_service").(int)
+	status := d.Get("status").(string)
 
 	//Build input data by sdk
 	i := &forticlient.JSONNetworkingRouteStatic{
-		Dst:       dst,
-		Gateway:   gateway,
-		Blackhole: blackhole,
-		Distance:  distance,
-		Weight:    weight,
-		Priority:  priority,
-		Device:    device,
-		Comment:   comment,
+		Dst:             dst,
+		Gateway:         gateway,
+		Blackhole:       blackhole,
+		Distance:        distance,
+		Weight:          weight,
+		Priority:        priority,
+		Device:          device,
+		Comment:         comment,
+		InternetService: internet_service,
+		Status:          status,
 	}
 
 	//Call process by sdk
@@ -115,17 +129,21 @@ func resourceNetworkingRouteStaticUpdate(d *schema.ResourceData, m interface{}) 
 	priority := d.Get("priority").(string)
 	device := d.Get("device").(string)
 	comment := d.Get("comment").(string)
+	internet_service := d.Get("internet_service").(int)
+	status := d.Get("status").(string)
 
 	//Build input data by sdk
 	i := &forticlient.JSONNetworkingRouteStatic{
-		Dst:       dst,
-		Gateway:   gateway,
-		Blackhole: blackhole,
-		Distance:  distance,
-		Weight:    weight,
-		Priority:  priority,
-		Device:    device,
-		Comment:   comment,
+		Dst:             dst,
+		Gateway:         gateway,
+		Blackhole:       blackhole,
+		Distance:        distance,
+		Weight:          weight,
+		Priority:        priority,
+		Device:          device,
+		Comment:         comment,
+		InternetService: internet_service,
+		Status:          status,
 	}
 
 	//Call process by sdk
@@ -182,6 +200,10 @@ func resourceNetworkingRouteStaticRead(d *schema.ResourceData, m interface{}) er
 	d.Set("priority", o.Priority)
 	d.Set("device", o.Device)
 	d.Set("comment", o.Comment)
+	d.Set("status", o.Status)
+	if o.Dst == "0.0.0.0 0.0.0.0" {
+		d.Set("internet_service", o.InternetService)
+	}
 
 	return nil
 }
