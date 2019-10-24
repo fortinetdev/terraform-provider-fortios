@@ -12,9 +12,12 @@ import (
 
 // JSONFirewallObjectAddressCommon contains the General parameters for Create and Update API function
 type JSONFirewallObjectAddressCommon struct {
-	Name    string `json:"name"`
-	Type    string `json:"type"`
-	Comment string `json:"comment"`
+	Name              string `json:"name"`
+	Type              string `json:"type"`
+	Comment           string `json:"comment"`
+	AssociatedIntf    string `json:"associated-interface"`
+	ShowInAddressList string `json:"visibility"`
+	AllowRouting      string `json:"allow-routing"`
 }
 
 // JSONFirewallObjectAddressIPRange contains the IP Range parameters for Create and Update API function
@@ -376,6 +379,15 @@ func (c *FortiSDKClient) ReadFirewallObjectAddress(mkey string) (output *JSONFir
 		}
 		if mapTmp["comment"] != nil {
 			output.Comment = mapTmp["comment"].(string)
+		}
+		if mapTmp["associated-interface"] != nil {
+			output.AssociatedIntf = mapTmp["associated-interface"].(string)
+		}
+		if mapTmp["visibility"] != nil {
+			output.ShowInAddressList = mapTmp["visibility"].(string)
+		}
+		if mapTmp["allow-routing"] != nil {
+			output.AllowRouting = mapTmp["allow-routing"].(string)
 		}
 
 	} else {
