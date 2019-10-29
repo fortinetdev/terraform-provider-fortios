@@ -33,8 +33,8 @@ The following arguments are supported:
 * `name` - (Required) User name.
 * `password` - (Required) Admin user password.
 * `trusthostN` - Any IPv4 address or subnet address and netmask from which the administrator can connect to the FortiGate unit.
-* `vdom` - Virtual domain(s) that the administrator can access.
-* `accprofile` - Access profile for this administrator. Access profiles control administrator access to FortiGate features.
+* `vdom` - (Required) Virtual domain(s) that the administrator can access.
+* `accprofile` - (Required) Access profile for this administrator. Access profiles control administrator access to FortiGate features.
 * `comments` - Comment.
 
 ## Attributes Reference
