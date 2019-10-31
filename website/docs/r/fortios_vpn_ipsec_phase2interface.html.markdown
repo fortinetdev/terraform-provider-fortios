@@ -7,9 +7,11 @@ description: |-
 ---
 
 # fortios_vpn_ipsec_phase2interface
+
 Provides a resource to use phase2-interface to add or edit a phase 2 configuration on a route-based (interface mode) IPsec tunnel.
 
 ## Example Usage for Site to Site/Pre-shared Key
+
 ```hcl
 provider "fortios" {
 	hostname = "54.226.179.231"
@@ -31,17 +33,10 @@ resource "fortios_vpn_ipsec_phase1interface" "test1" {
 	mode_cfg = "disable"
 
 }
-```
-
-```hcl
-provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
-}
 
 resource "fortios_vpn_ipsec_phase2interface" "test2" {
 	name = "001Test"
-	phase1name = "001Test"
+	phase1name = "${fortios_vpn_ipsec_phase1interface.test1.name}"
 	proposal = "aes128-sha1 aes256-sha1 aes128-sha256 aes256-sha256 aes128gcm aes256gcm chacha20poly1305"
 	comments = "VPN 001Test P2"
 	src_addr_type = "name"
@@ -52,6 +47,7 @@ resource "fortios_vpn_ipsec_phase2interface" "test2" {
 ```
 
 ## Example Usage for Site to Site/Signature
+
 ```hcl
 provider "fortios" {
 	hostname = "54.226.179.231"
@@ -73,17 +69,10 @@ resource "fortios_vpn_ipsec_phase1interface" "test1" {
 	peer = "2b_peer"
 	peergrp = ""
 }
-```
-
-```hcl
-provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
-}
 
 resource "fortios_vpn_ipsec_phase2interface" "test2" {
 	name = "001Test"
-	phase1name = "001Test"
+	phase1name = "${fortios_vpn_ipsec_phase1interface.test1.name}"
 	proposal = "aes128-sha1 aes256-sha1 aes128-sha256 aes256-sha256 aes128gcm aes256gcm chacha20poly1305"
 	comments = "VPN 001Test P2"
 	src_addr_type = "range"
@@ -95,6 +84,7 @@ resource "fortios_vpn_ipsec_phase2interface" "test2" {
 ```
 
 ## Example Usage for Remote Access/Pre-shared Key
+
 ```hcl
 provider "fortios" {
 	hostname = "54.226.179.231"
@@ -115,17 +105,10 @@ resource "fortios_vpn_ipsec_phase1interface" "test1" {
 	split_include_service = ""
 	ipv4_split_exclude = ""
 }
-```
-
-```hcl
-provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
-}
 
 resource "fortios_vpn_ipsec_phase2interface" "test2" {
 	name = "001Test"
-	phase1name = "001Test"
+	phase1name = "${fortios_vpn_ipsec_phase1interface.test1.name}"
 	proposal = "aes128-sha1 aes256-sha1 aes128-sha256 aes256-sha256 aes128gcm aes256gcm chacha20poly1305"
 	comments = "VPN 001Test P2"
 	src_addr_type = "subnet"
@@ -140,6 +123,7 @@ resource "fortios_vpn_ipsec_phase2interface" "test2" {
 ```
 
 ## Example Usage for Remote Access/Signature
+
 ```hcl
 provider "fortios" {
 	hostname = "54.226.179.231"
@@ -165,17 +149,10 @@ resource "fortios_vpn_ipsec_phase1interface" "test1" {
 	split_include_service = ""
 	ipv4_split_exclude = ""
 }
-```
-
-```hcl
-provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
-}
 
 resource "fortios_vpn_ipsec_phase2interface" "test2" {
 	name = "001Test"
-	phase1name = "001Test"
+	phase1name = "${fortios_vpn_ipsec_phase1interface.test1.name}"
 	proposal = "aes128-sha1 aes256-sha1 aes128-sha256 aes256-sha256 aes128gcm aes256gcm chacha20poly1305"
 	comments = "VPN 001Test P2"
 	src_addr_type = "subnet"
@@ -190,6 +167,7 @@ resource "fortios_vpn_ipsec_phase2interface" "test2" {
 ```
 
 ## Argument Reference
+
 The following arguments are supported:
 
 * `name` - (Required) IPsec tunnel name.
@@ -208,6 +186,7 @@ The following arguments are supported:
 * `comments` - Comment.
 
 ## Attributes Reference
+
 The following attributes are exported:
 
 * `id` - The ID of the phase2-interface.
@@ -225,4 +204,3 @@ The following attributes are exported:
 * `dst_end_ip` - Remote proxy ID IPv4 end.
 * `dst_subnet` - Remote proxy ID IPv4 subnet.
 * `comments` - Comment.
-
