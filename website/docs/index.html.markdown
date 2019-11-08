@@ -242,3 +242,5 @@ The following arguments are supported:
 # Versioning
 
 The provider can cover both FortiOS 6.0 and 6.2 versions.
+
+When using for FortiManager, make sure the version of FortiManager and FortiGate should be the same.

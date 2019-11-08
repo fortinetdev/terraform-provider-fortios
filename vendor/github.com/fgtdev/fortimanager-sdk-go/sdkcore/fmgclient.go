@@ -82,6 +82,11 @@ func (c *FmgSDKClient) Execute(req *Request) (result map[string]interface{}, err
 	json.Unmarshal([]byte(string(body)), &result)
 
 	if result != nil {
+		if len(result) == 0 {
+			err = fmt.Errorf("No result got, details:\n%s", body)
+			return
+		}
+
 		if id := uint64(result["id"].(float64)); id != req.Id {
 			err = fmt.Errorf("id not match, should be 1, but is %d", id)
 			return
