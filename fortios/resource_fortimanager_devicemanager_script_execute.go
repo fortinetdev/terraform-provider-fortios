@@ -2,6 +2,7 @@ package fortios
 
 import (
 	"fmt"
+	"time"
 
 	fmgclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
@@ -36,20 +37,26 @@ func createUpdateFMGDVMScriptExecute(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).ClientFortimanager
 	defer c.Trace("createUpdateFMGDVMScriptExecute")()
 
+	var err error
+	maxTry := 3
+
 	i := &fmgclient.JSONDVMScriptExecute{
 		ScriptName:    d.Get("script_name").(string),
 		TargetDevName: d.Get("target_devname").(string),
 		Timeout:       d.Get("timeout").(int),
 	}
 
-	err := c.ExecuteDVMScript(i)
-	if err != nil {
-		return fmt.Errorf("Error executing devicemanager script: %s", err)
+	for j := 0; j < maxTry; j++ {
+		err = c.ExecuteDVMScript(i)
+		if err != nil {
+			time.Sleep(2 * time.Second)
+		} else {
+			d.SetId(i.ScriptName)
+			return nil
+		}
 	}
 
-	d.SetId(i.ScriptName)
-
-	return nil
+	return fmt.Errorf("Error executing devicemanager script: %s", err)
 }
 
 func readFMGDVMScriptExecute(d *schema.ResourceData, m interface{}) error {
