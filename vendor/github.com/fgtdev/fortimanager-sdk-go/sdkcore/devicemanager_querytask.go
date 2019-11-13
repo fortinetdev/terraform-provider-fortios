@@ -60,11 +60,12 @@ func (c *FmgSDKClient) queryTask(task int) (query_ret *QueryResult, err error) {
 	}
 
 	// data maybe empty if query too quickly
-	if len((result["result"].([]interface{}))[0].(map[string]interface{})["data"].([]interface{})) == 0 {
+	array_size := len((result["result"].([]interface{}))[0].(map[string]interface{})["data"].([]interface{}))
+	if array_size == 0 {
 		return nil, nil
 	}
 
-	data := ((result["result"].([]interface{}))[0].(map[string]interface{})["data"].([]interface{}))[0].(map[string]interface{})
+	data := ((result["result"].([]interface{}))[0].(map[string]interface{})["data"].([]interface{}))[array_size-1].(map[string]interface{})
 	if data == nil {
 		return nil, fmt.Errorf("cannot get the results from the response")
 	}
@@ -82,8 +83,6 @@ func (c *FmgSDKClient) queryTask(task int) (query_ret *QueryResult, err error) {
 	}
 	if data["detail"] != nil {
 		query_ret.detail = data["detail"].(string)
-	} else {
-		return nil, fmt.Errorf("cannot get the detail data")
 	}
 
 	return query_ret, nil

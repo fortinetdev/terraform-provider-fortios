@@ -2,6 +2,7 @@ package fortios
 
 import (
 	"fmt"
+	"time"
 
 	fmgclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
@@ -33,20 +34,26 @@ func createFMGDVMInstallDev(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
 	defer c.Trace("createFMGDVMInstallDev")()
 
+	var err error
+	maxTry := 3
+
 	//Build input data by sdk
 	i := &fmgclient.JSONDVMInstallDev{
 		Name:    d.Get("target_devname").(string),
 		Timeout: d.Get("timeout").(int),
 	}
 
-	err := c.CreateDVMInstallDev(i)
-	if err != nil {
-		return fmt.Errorf("Error creating devicemanager install device action: %s", err)
+	for j := 0; j < maxTry; j++ {
+		err = c.CreateDVMInstallDev(i)
+		if err != nil {
+			time.Sleep(2 * time.Second)
+		} else {
+			d.SetId(i.Name)
+			return nil
+		}
 	}
 
-	d.SetId(i.Name)
-
-	return nil
+	return fmt.Errorf("Error creating devicemanager install device action: %s", err)
 }
 
 func readFMGDVMInstallDev(d *schema.ResourceData, m interface{}) error {
