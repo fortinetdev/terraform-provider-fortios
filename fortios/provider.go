@@ -114,6 +114,7 @@ func Provider() terraform.ResourceProvider {
 			"fortios_fortimanager_system_ntp":                          resourceFortimanagerSystemNTP(),
 			"fortios_fortimanager_system_license_vm":                   resourceFortimanagerSystemLicenseVM(),
 			"fortios_fortimanager_system_license_forticare":            resourceFortimanagerSystemLicenseFortiCare(),
+			"fortios_fortimanager_jsonrpc_request":                     resourceFortimanagerJSONRPCRequest(),
 		},
 
 		ConfigureFunc: providerConfigure,
