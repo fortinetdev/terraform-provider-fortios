@@ -31,6 +31,7 @@ The following arguments are supported:
 
 * `target` - (Required) Target name, which is managed by FortiManager.
 * `file_content` - (Required) The license file, it needs to be base64 encoded.
+* `adom` - ADOM that the target device belongs to. default is 'root'.
 
 ## Attributes Reference
 The following attributes are exported:
@@ -38,3 +39,4 @@ The following attributes are exported:
 * `id` - The resource id.
 * `target` - Target name, which is managed by FortiManager.
 * `file_content` - The license file content, it needs to be base64 encoded.
+* `adom` - ADOM name.

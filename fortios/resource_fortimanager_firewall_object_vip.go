@@ -62,6 +62,11 @@ func resourceFortimanagerFirewallObjectVip() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
+			"adom": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "root",
+			},
 		},
 	}
 }
@@ -86,7 +91,7 @@ func createFMGFirewallObjectVip(d *schema.ResourceData, m interface{}) error {
 		MappedAddr:    d.Get("mapped_addr").(string),
 	}
 
-	err := c.CreateUpdateFirewallObjectVip(i, "add")
+	err := c.CreateUpdateFirewallObjectVip(i, "add", d.Get("adom").(string))
 	if err != nil {
 		return fmt.Errorf("Error creating Firewall Object Vip: %s", err)
 	}
@@ -101,7 +106,7 @@ func readFMGFirewallObjectVip(d *schema.ResourceData, m interface{}) error {
 	defer c.Trace("readFMGFirewallObjectVip")()
 
 	name := d.Id()
-	o, err := c.ReadFirewallObjectVip(name)
+	o, err := c.ReadFirewallObjectVip(d.Get("adom").(string), name)
 	if err != nil {
 		return fmt.Errorf("Error reading Firewall Object Vip: %s", err)
 	}
@@ -154,7 +159,7 @@ func updateFMGFirewallObjectVip(d *schema.ResourceData, m interface{}) error {
 		MappedAddr:    d.Get("mapped_addr").(string),
 	}
 
-	err := c.CreateUpdateFirewallObjectVip(i, "update")
+	err := c.CreateUpdateFirewallObjectVip(i, "update", d.Get("adom").(string))
 	if err != nil {
 		return fmt.Errorf("Error updating Firewall Object Vip: %s", err)
 	}
@@ -168,7 +173,7 @@ func deleteFMGFirewallObjectVip(d *schema.ResourceData, m interface{}) error {
 
 	name := d.Id()
 
-	err := c.DeleteFirewallObjectVip(name)
+	err := c.DeleteFirewallObjectVip(d.Get("adom").(string), name)
 	if err != nil {
 		return fmt.Errorf("Error deleting Firewall Object Vip: %s", err)
 	}

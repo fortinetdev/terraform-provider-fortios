@@ -46,7 +46,7 @@ func testAccCheckFortiManagerFirewallObjectServiceExists(n string) resource.Test
 		c := testAccProvider.Meta().(*FortiClient).ClientFortimanager
 
 		i := rs.Primary.ID
-		o, err := c.ReadFirewallObjectService(i)
+		o, err := c.ReadFirewallObjectService("root", i)
 
 		if err != nil {
 			return fmt.Errorf("Error reading Firewall Object Service: %s", err)
@@ -69,7 +69,7 @@ func testAccCheckFMGFirewallObjectServiceDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadFirewallObjectService(i)
+		o, err := c.ReadFirewallObjectService("root", i)
 
 		if err == nil {
 			if o != nil {

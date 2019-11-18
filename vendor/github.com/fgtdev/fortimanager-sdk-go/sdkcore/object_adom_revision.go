@@ -18,15 +18,16 @@ type JSONObjectAdomRevision struct {
 // Input:
 //   @params: infor needed
 //   @method: operation method, "add" or "update"
+//   @adom: adom
 // Output:
 //   @version: adom revision version
 //   @err: error details if failure, and nil if success
-func (c *FmgSDKClient) CreateUpdateObjectAdomRevision(params *JSONObjectAdomRevision, method string) (version string, err error) {
+func (c *FmgSDKClient) CreateUpdateObjectAdomRevision(params *JSONObjectAdomRevision, method, adom string) (version string, err error) {
 	defer c.Trace("CreateUpdateObjectAdomRevision")()
 
 	p := map[string]interface{}{
 		"data": params,
-		"url":  "/dvmdb/adom/root/revision",
+		"url":  "/dvmdb/adom/" + adom + "/revision",
 	}
 
 	result, err := c.Do(method, p)
@@ -54,14 +55,15 @@ func (c *FmgSDKClient) CreateUpdateObjectAdomRevision(params *JSONObjectAdomRevi
 // ReadObjectAdomRevision is for reading the specific obj adom revision
 // Input:
 //   @version: adom revision version
+//   @adom: adom
 // Output:
 //   @out: adom revision infor
 //   @err: error details if failure, and nil if success
-func (c *FmgSDKClient) ReadObjectAdomRevision(version string) (out *JSONObjectAdomRevision, err error) {
+func (c *FmgSDKClient) ReadObjectAdomRevision(adom, version string) (out *JSONObjectAdomRevision, err error) {
 	defer c.Trace("ReadObjectAdomRevision")()
 
 	p := map[string]interface{}{
-		"url": "/dvmdb/adom/root/revision/" + version,
+		"url": "/dvmdb/adom/" + adom + "/revision/" + version,
 	}
 
 	result, err := c.Do("get", p)
@@ -96,14 +98,15 @@ func (c *FmgSDKClient) ReadObjectAdomRevision(version string) (out *JSONObjectAd
 
 // DeleteObjectAdomRevision is for deleting the specific obj adom revision
 // Input:
+//   @adom: adom
 //   @version: adom revision version
 // Output:
 //   @err: error details if failure, and nil if success
-func (c *FmgSDKClient) DeleteObjectAdomRevision(version string) (err error) {
+func (c *FmgSDKClient) DeleteObjectAdomRevision(adom, version string) (err error) {
 	defer c.Trace("DeleteObjectAdomRevision")()
 
 	p := map[string]interface{}{
-		"url": "/dvmdb/adom/root/revision/" + version,
+		"url": "/dvmdb/adom/" + adom + "/revision/" + version,
 	}
 
 	_, err = c.Do("delete", p)

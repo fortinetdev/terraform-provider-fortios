@@ -19,6 +19,11 @@ func resourceFortimanagerSystemLicenseVM() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"adom": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "root",
+			},
 			"file_content": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -33,6 +38,7 @@ func addFMGSystemLicenseVM(d *schema.ResourceData, m interface{}) error {
 
 	i := &fmgclient.JSONSystemLicenseVM{
 		Target:      d.Get("target").(string),
+		Adom:        d.Get("adom").(string),
 		FileContent: d.Get("file_content").(string),
 	}
 

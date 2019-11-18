@@ -88,6 +88,11 @@ func resourceFortimanagerFirewallObjectService() *schema.Resource {
 				Type:     schema.TypeInt,
 				Optional: true,
 			},
+			"adom": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "root",
+			},
 		},
 	}
 }
@@ -112,7 +117,7 @@ func createFTMFirewallObjectService(d *schema.ResourceData, m interface{}) error
 		ProtocolNum:   d.Get("protocol_number").(int),
 	}
 
-	err := c.CreateUpdateFirewallObjectService(i, "add")
+	err := c.CreateUpdateFirewallObjectService(i, "add", d.Get("adom").(string))
 	if err != nil {
 		return fmt.Errorf("Error creating Firewall Object Service: %s", err)
 	}
@@ -127,7 +132,7 @@ func readFTMFirewallObjectService(d *schema.ResourceData, m interface{}) error {
 	defer c.Trace("readFTMFirewallObjectService")()
 
 	name := d.Id()
-	o, err := c.ReadFirewallObjectService(name)
+	o, err := c.ReadFirewallObjectService(d.Get("adom").(string), name)
 	if err != nil {
 		return fmt.Errorf("Error reading Firewall Object Service: %s", err)
 	}
@@ -186,7 +191,7 @@ func updateFTMFirewallObjectService(d *schema.ResourceData, m interface{}) error
 		ProtocolNum:   d.Get("protocol_number").(int),
 	}
 
-	err := c.CreateUpdateFirewallObjectService(i, "update")
+	err := c.CreateUpdateFirewallObjectService(i, "update", d.Get("adom").(string))
 	if err != nil {
 		return fmt.Errorf("Error updating Firewall Object Service: %s", err)
 	}
@@ -200,7 +205,7 @@ func deleteFTMFirewallObjectService(d *schema.ResourceData, m interface{}) error
 
 	name := d.Id()
 
-	err := c.DeleteFirewallObjectService(name)
+	err := c.DeleteFirewallObjectService(d.Get("adom").(string), name)
 	if err != nil {
 		return fmt.Errorf("Error deleting Firewall Object Service: %s", err)
 	}

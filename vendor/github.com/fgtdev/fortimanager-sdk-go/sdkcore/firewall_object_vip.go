@@ -23,14 +23,15 @@ type JSONFirewallObjectVip struct {
 // Input:
 //   @params: infor needed
 //   @method: operation method, "add" or "update"
+//   @adom: adom
 // Output:
 //   @err: error details if failure, and nil if success
-func (c *FmgSDKClient) CreateUpdateFirewallObjectVip(params *JSONFirewallObjectVip, method string) (err error) {
+func (c *FmgSDKClient) CreateUpdateFirewallObjectVip(params *JSONFirewallObjectVip, method, adom string) (err error) {
 	defer c.Trace("CreateUpdateFirewallObjectVip")()
 
 	p := map[string]interface{}{
 		"data": params,
-		"url":  "/pm/config/adom/root/obj/firewall/vip",
+		"url":  "/pm/config/adom/" + adom + "/obj/firewall/vip",
 	}
 
 	_, err = c.Do(method, p)
@@ -46,14 +47,15 @@ func (c *FmgSDKClient) CreateUpdateFirewallObjectVip(params *JSONFirewallObjectV
 // ReadFirewallObjectVip is for reading the specific firewall object virtual ip
 // Input:
 //   @name: firewall object virtual ip name
+//   @adom: adom
 // Output:
 //   @out: firewall object virtual ip infor
 //   @err: error details if failure, and nil if success
-func (c *FmgSDKClient) ReadFirewallObjectVip(name string) (out *JSONFirewallObjectVip, err error) {
+func (c *FmgSDKClient) ReadFirewallObjectVip(adom, name string) (out *JSONFirewallObjectVip, err error) {
 	defer c.Trace("ReadFirewallObjectVip")()
 
 	p := map[string]interface{}{
-		"url": "/pm/config/adom/root/obj/firewall/vip/" + name,
+		"url": "/pm/config/adom/" + adom + "/obj/firewall/vip/" + name,
 	}
 
 	result, err := c.Do("get", p)
@@ -112,14 +114,15 @@ func (c *FmgSDKClient) ReadFirewallObjectVip(name string) (out *JSONFirewallObje
 
 // DeleteFirewallObjectVip is for deleting the specific firewall object virtual ip
 // Input:
+//   @adom: adom
 //   @name: firewall object virtual ip name
 // Output:
 //   @err: error details if failure, and nil if success
-func (c *FmgSDKClient) DeleteFirewallObjectVip(name string) (err error) {
+func (c *FmgSDKClient) DeleteFirewallObjectVip(adom, name string) (err error) {
 	defer c.Trace("DeleteFirewallObjectVip")()
 
 	p := map[string]interface{}{
-		"url": "/pm/config/adom/root/obj/firewall/vip/" + name,
+		"url": "/pm/config/adom/" + adom + "/obj/firewall/vip/" + name,
 	}
 
 	_, err = c.Do("delete", p)

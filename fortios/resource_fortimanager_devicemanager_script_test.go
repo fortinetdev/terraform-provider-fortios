@@ -44,7 +44,7 @@ func testAccCheckFortiManagerDVMScriptExists(n string) resource.TestCheckFunc {
 		c := testAccProvider.Meta().(*FortiClient).ClientFortimanager
 
 		i := rs.Primary.ID
-		o, err := c.ReadDVMScript(i)
+		o, err := c.ReadDVMScript("root", i)
 
 		if err != nil {
 			return fmt.Errorf("Error reading Devicemanager Script: %s", err)
@@ -67,7 +67,7 @@ func testAccCheckFMGDVMScriptDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadDVMScript(i)
+		o, err := c.ReadDVMScript("root", i)
 
 		if err == nil {
 			if o != nil {

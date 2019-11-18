@@ -36,6 +36,11 @@ func resourceFortimanagerObjectAdomRevision() *schema.Resource {
 				Type:     schema.TypeInt,
 				Optional: true,
 			},
+			"adom": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "root",
+			},
 		},
 	}
 }
@@ -52,7 +57,7 @@ func createFMGObjectAdomRevision(d *schema.ResourceData, m interface{}) error {
 		Version:     "0",
 	}
 
-	version, err := c.CreateUpdateObjectAdomRevision(i, "add")
+	version, err := c.CreateUpdateObjectAdomRevision(i, "add", d.Get("adom").(string))
 	if err != nil {
 		return fmt.Errorf("Error creating Object Adom Revision: %s", err)
 	}
@@ -67,7 +72,7 @@ func readFMGObjectAdomRevision(d *schema.ResourceData, m interface{}) error {
 	defer c.Trace("readFMGObjectAdomRevision")()
 
 	version := d.Id()
-	o, err := c.ReadObjectAdomRevision(version)
+	o, err := c.ReadObjectAdomRevision(d.Get("adom").(string), version)
 	if err != nil {
 		return fmt.Errorf("Error reading Object Adom Revision: %s", err)
 	}
@@ -98,7 +103,7 @@ func updateFMGObjectAdomRevision(d *schema.ResourceData, m interface{}) error {
 		Version:     d.Id(),
 	}
 
-	_, err := c.CreateUpdateObjectAdomRevision(i, "update")
+	_, err := c.CreateUpdateObjectAdomRevision(i, "update", d.Get("adom").(string))
 	if err != nil {
 		return fmt.Errorf("Error updating Object Adom Revision: %s", err)
 	}
@@ -112,7 +117,7 @@ func deleteFMGObjectAdomRevision(d *schema.ResourceData, m interface{}) error {
 
 	version := d.Id()
 
-	err := c.DeleteObjectAdomRevision(version)
+	err := c.DeleteObjectAdomRevision(d.Get("adom").(string), version)
 	if err != nil {
 		return fmt.Errorf("Error deleting Object Adom Revision: %s", err)
 	}

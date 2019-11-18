@@ -48,7 +48,7 @@ func testAccCheckFortiManagerFirewallObjectVIpExists(n string) resource.TestChec
 		c := testAccProvider.Meta().(*FortiClient).ClientFortimanager
 
 		i := rs.Primary.ID
-		o, err := c.ReadFirewallObjectVip(i)
+		o, err := c.ReadFirewallObjectVip("root", i)
 
 		if err != nil {
 			return fmt.Errorf("Error reading Firewall Object VIp: %s", err)
@@ -71,7 +71,7 @@ func testAccCheckFMGFirewallObjectVIpDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadFirewallObjectVip(i)
+		o, err := c.ReadFirewallObjectVip("root", i)
 
 		if err == nil {
 			if o != nil {

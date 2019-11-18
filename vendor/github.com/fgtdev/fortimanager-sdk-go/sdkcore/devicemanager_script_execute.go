@@ -8,29 +8,31 @@ import (
 type JSONDVMScriptExecute struct {
 	ScriptName    string `json:"script"`
 	TargetDevName string `json:"name"`
+	Vdom          string `json:"vdom"`
 	Timeout       int
 }
 
 // ExecuteDVMScript is for executing the script
 // Input:
+//   @adom: adom
 //   @params: infor needed
 // Output:
 //   @err: error details if failure, and nil if success
-func (c *FmgSDKClient) ExecuteDVMScript(params *JSONDVMScriptExecute) (err error) {
+func (c *FmgSDKClient) ExecuteDVMScript(adom string, params *JSONDVMScriptExecute) (err error) {
 	defer c.Trace("ExecuteDVMScript")()
 
 	d := map[string]interface{}{
-		"adom": "root",
+		"adom": adom,
 		"scope": map[string]string{
-			"vdom": "root",
 			"name": params.TargetDevName,
+			"vdom": params.Vdom,
 		},
 		"script": params.ScriptName,
 	}
 
 	p := map[string]interface{}{
 		"data": d,
-		"url":  "/dvmdb/adom/root/script/execute",
+		"url":  "/dvmdb/adom/" + adom + "/script/execute",
 	}
 
 	result, err := c.Do("exec", p)

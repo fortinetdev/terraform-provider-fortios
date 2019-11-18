@@ -19,14 +19,15 @@ type JSONDVMScript struct {
 // Input:
 //   @params: infor needed
 //   @method: operation method, "add" or "update"
+//   @adom: adom
 // Output:
 //   @err: error details if failure, and nil if success
-func (c *FmgSDKClient) CreateUpdateDVMScript(params *JSONDVMScript, method string) (err error) {
+func (c *FmgSDKClient) CreateUpdateDVMScript(params *JSONDVMScript, method, adom string) (err error) {
 	defer c.Trace("CreateUpdateDVMScript")()
 
 	p := map[string]interface{}{
 		"data": *params,
-		"url":  "/dvmdb/adom/root/script",
+		"url":  "/dvmdb/adom/" + adom + "/script",
 	}
 
 	_, err = c.Do(method, p)
@@ -41,15 +42,16 @@ func (c *FmgSDKClient) CreateUpdateDVMScript(params *JSONDVMScript, method strin
 
 // ReadDVMScript is for reading the script infor
 // Input:
+//   @adom: adom
 //   @id: script name
 // Output:
 //   @out: script infor
 //   @err: error details if failure, and nil if success
-func (c *FmgSDKClient) ReadDVMScript(id string) (out *JSONDVMScript, err error) {
+func (c *FmgSDKClient) ReadDVMScript(adom, id string) (out *JSONDVMScript, err error) {
 	defer c.Trace("ReadDVMScript")()
 
 	p := map[string]interface{}{
-		"url": "/dvmdb/adom/root/script/" + id,
+		"url": "/dvmdb/adom/" + adom + "/script/" + id,
 	}
 
 	result, err := c.Do("get", p)
@@ -83,14 +85,15 @@ func (c *FmgSDKClient) ReadDVMScript(id string) (out *JSONDVMScript, err error) 
 
 // DeleteDVMScript is for deleting the related script
 // Input:
+//   @adom: adom
 //   @id: script name
 // Output:
 //   @err: error details if failure, and nil if success
-func (c *FmgSDKClient) DeleteDVMScript(id string) (err error) {
+func (c *FmgSDKClient) DeleteDVMScript(adom, id string) (err error) {
 	defer c.Trace("DeleteDVMScript")()
 
 	p := map[string]interface{}{
-		"url": "/dvmdb/adom/root/script/" + id,
+		"url": "/dvmdb/adom/" + adom + "/script/" + id,
 	}
 
 	_, err = c.Do("delete", p)

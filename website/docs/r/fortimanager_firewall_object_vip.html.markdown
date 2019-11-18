@@ -54,6 +54,7 @@ The following arguments are supported:
 * `mapped_ip` - Mapped Ip address.
 * `config_default` - Enable/Disable config default value. enabled by default.
 * `mapped_addr` - Mapped FQDN address name.
+* `adom` - ADOM name. default is 'root'.
 
 ## Attributes Reference
 The following attributes are exported:
@@ -68,4 +69,4 @@ The following attributes are exported:
 * `mapped_ip` - Mapped Ip address.
 * `config_default` - Enable/Disable config default value.
 * `mapped_addr` - Mapped FQDN address name.
-
+* `adom` - ADOM name.

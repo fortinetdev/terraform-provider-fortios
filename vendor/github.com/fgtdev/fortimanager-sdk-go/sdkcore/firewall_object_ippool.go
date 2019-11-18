@@ -22,14 +22,15 @@ type JSONFirewallObjectIppool struct {
 // Input:
 //   @params: infor needed
 //   @method: operation method, "add" or "update"
+//   @adom: adom
 // Output:
 //   @err: error details if failure, and nil if success
-func (c *FmgSDKClient) CreateUpdateFirewallObjectIppool(params *JSONFirewallObjectIppool, method string) (err error) {
+func (c *FmgSDKClient) CreateUpdateFirewallObjectIppool(params *JSONFirewallObjectIppool, method, adom string) (err error) {
 	defer c.Trace("CreateUpdateFirewallObjectIppool")()
 
 	p := map[string]interface{}{
 		"data": params,
-		"url":  "/pm/config/adom/root/obj/firewall/ippool",
+		"url":  "/pm/config/adom/" + adom + "/obj/firewall/ippool",
 	}
 
 	_, err = c.Do(method, p)
@@ -45,14 +46,15 @@ func (c *FmgSDKClient) CreateUpdateFirewallObjectIppool(params *JSONFirewallObje
 // ReadFirewallObjectIppool is for reading the specific firewall object ippool
 // Input:
 //   @name: firewall object ippool name
+//   @adom: adom
 // Output:
 //   @out: firewall object ippool infor
 //   @err: error details if failure, and nil if success
-func (c *FmgSDKClient) ReadFirewallObjectIppool(name string) (out *JSONFirewallObjectIppool, err error) {
+func (c *FmgSDKClient) ReadFirewallObjectIppool(adom, name string) (out *JSONFirewallObjectIppool, err error) {
 	defer c.Trace("ReadFirewallObjectIppool")()
 
 	p := map[string]interface{}{
-		"url": "/pm/config/adom/root/obj/firewall/ippool/" + name,
+		"url": "/pm/config/adom/" + adom + "/obj/firewall/ippool/" + name,
 	}
 
 	result, err := c.Do("get", p)
@@ -103,14 +105,15 @@ func (c *FmgSDKClient) ReadFirewallObjectIppool(name string) (out *JSONFirewallO
 
 // DeleteFirewallObjectIppool is for deleting the specific firewall object ippool
 // Input:
+//   @adom: adom
 //   @name: firewall object ippool name
 // Output:
 //   @err: error details if failure, and nil if success
-func (c *FmgSDKClient) DeleteFirewallObjectIppool(name string) (err error) {
+func (c *FmgSDKClient) DeleteFirewallObjectIppool(adom, name string) (err error) {
 	defer c.Trace("DeleteFirewallObjectIppool")()
 
 	p := map[string]interface{}{
-		"url": "/pm/config/adom/root/obj/firewall/ippool/" + name,
+		"url": "/pm/config/adom/" + adom + "/obj/firewall/ippool/" + name,
 	}
 
 	_, err = c.Do("delete", p)

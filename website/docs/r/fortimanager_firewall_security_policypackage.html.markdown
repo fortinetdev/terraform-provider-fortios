@@ -32,6 +32,8 @@ The following arguments are supported:
 
 * `name` - (Required) Security policy package name.
 * `target` - The installation target.
+* `adom` - Source ADOM name. default is 'root'
+* `vdom` - Vdom of managed device. default is 'root'
 
 ## Attributes Reference
 The following attributes are exported:
@@ -39,3 +41,5 @@ The following attributes are exported:
 * `id` - The resource id.
 * `name` - Security policy package name.
 * `target` - The installation target.
+* `adom` - Source ADOM name.
+* `vdom` - Vdom of managed device.

@@ -44,7 +44,7 @@ func testAccCheckFortiManagerObjectAdomRevisionExists(n string) resource.TestChe
 		c := testAccProvider.Meta().(*FortiClient).ClientFortimanager
 
 		i := rs.Primary.ID
-		o, err := c.ReadObjectAdomRevision(i)
+		o, err := c.ReadObjectAdomRevision("root", i)
 
 		if err != nil {
 			return fmt.Errorf("Error reading Object Adom Revision: %s", err)
@@ -67,7 +67,7 @@ func testAccCheckFMGObjectAdomRevisionDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadObjectAdomRevision(i)
+		o, err := c.ReadObjectAdomRevision("root", i)
 
 		if err == nil {
 			if o != nil {

@@ -97,6 +97,7 @@ The following arguments are supported:
 * `traffic_shaper_reverse` - Reverse traffic shaper.
 * `per_ip_shaper` - Per-IP traffic shaper.
 * `package_name` - The package name which the policy will be added to.
+* `adom` - ADOM name. default is 'root'.
 
 ## Attributes Reference
 The following attributes are exported:
@@ -142,3 +143,4 @@ The following attributes are exported:
 * `traffic_shaper_reverse` - Reverse traffic shaper.
 * `per_ip_shaper` - Per-IP traffic shaper.
 * `package_name` - The package name which the policy will be added to.
+* `adom` - ADOM name.

@@ -57,6 +57,11 @@ func resourceFortimanagerFirewallObjectIppool() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
+			"adom": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "root",
+			},
 		},
 	}
 }
@@ -76,7 +81,7 @@ func createFMGFirewallObjectIppool(d *schema.ResourceData, m interface{}) error 
 		EndIp:          d.Get("endip").(string),
 	}
 
-	err := c.CreateUpdateFirewallObjectIppool(i, "add")
+	err := c.CreateUpdateFirewallObjectIppool(i, "add", d.Get("adom").(string))
 	if err != nil {
 		return fmt.Errorf("Error creating Firewall Object Ippool: %s", err)
 	}
@@ -91,7 +96,7 @@ func readFMGFirewallObjectIppool(d *schema.ResourceData, m interface{}) error {
 	defer c.Trace("readFMGFirewallObjectIppool")()
 
 	name := d.Id()
-	o, err := c.ReadFirewallObjectIppool(name)
+	o, err := c.ReadFirewallObjectIppool(d.Get("adom").(string), name)
 	if err != nil {
 		return fmt.Errorf("Error reading Firewall Object Ippool: %s", err)
 	}
@@ -133,7 +138,7 @@ func updateFMGFirewallObjectIppool(d *schema.ResourceData, m interface{}) error 
 		EndIp:          d.Get("endip").(string),
 	}
 
-	err := c.CreateUpdateFirewallObjectIppool(i, "update")
+	err := c.CreateUpdateFirewallObjectIppool(i, "update", d.Get("adom").(string))
 	if err != nil {
 		return fmt.Errorf("Error updating Firewall Object Ippool: %s", err)
 	}
@@ -147,7 +152,7 @@ func deleteFMGFirewallObjectIppool(d *schema.ResourceData, m interface{}) error 
 
 	name := d.Id()
 
-	err := c.DeleteFirewallObjectIppool(name)
+	err := c.DeleteFirewallObjectIppool(d.Get("adom").(string), name)
 	if err != nil {
 		return fmt.Errorf("Error deleting Firewall Object Ippool: %s", err)
 	}

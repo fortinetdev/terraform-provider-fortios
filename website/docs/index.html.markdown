@@ -223,6 +223,45 @@ resource "fortios_fortimanager_system_dns" "test1" {
 }
 ```
 
+## Multi-Adom
+
+Multi-Adom feature is supported in case of using FortiManager, just take the following example as a reference:
+
+```hcl
+provider "fortios" {
+	hostname = "192.168.88.200"
+	username = "APIUser"
+	passwd = "admin"
+	product = "fortimanager"
+	insecure = true
+}
+
+resource "fortios_fortimanager_devicemanager_script" "test1" {
+	name = "config-intf3"
+	description = "configure interface3"
+	content = "config system interface \n edit port3 \n\t set vdom \"root\"\n\t set ip 10.10.0.200 255.255.0.0 \n\t set allowaccess ping http https\n\t next \n end"
+	target  = "device_database"
+	adom = "test-adom"
+}
+
+resource "fortios_fortimanager_devicemanager_script_execute" "test1" {
+	script_name = fortios_fortimanager_devicemanager_script.test1.name
+	target_devname = "FGVM64-test"
+	adom = "test-adom"
+	vdom = "root"
+}
+
+resource "fortios_fortimanager_devicemanager_install_device" "test1" {
+	target_devname = fortios_fortimanager_devicemanager_script_execute.test1.target_devname
+	adom = "test-adom"
+	vdom = "root"
+}
+```
+
+This will install the script from the FMG(test-adom) to the FGT(root).
+
+Note that one resource supports Multi-Adom feature if it has 'adom' argument.
+
 ## Argument Reference
 
 The following arguments are supported:

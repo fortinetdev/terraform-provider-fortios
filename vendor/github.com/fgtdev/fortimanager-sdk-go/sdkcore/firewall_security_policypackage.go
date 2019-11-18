@@ -7,30 +7,32 @@ import (
 // JSONFirewallSecurityPolicyPackage contains the params for creating firewall policy package
 type JSONFirewallSecurityPolicyPackage struct {
 	Name   string `json:"name"`
+	Vdom   string `json:"vdom"`
 	Target string `json:"name"`
 }
 
 // CreateUpdateFirewallSecurityPolicyPackage is for creating/updating the firewall security policy package
 // Input:
 //   @params: infor needed
+//   @adom: adom
 //   @method: operation method, "add" or "update"
 // Output:
 //   @err: error details if failure, and nil if success
-func (c *FmgSDKClient) CreateUpdateFirewallSecurityPolicyPackage(params *JSONFirewallSecurityPolicyPackage, method string) (err error) {
+func (c *FmgSDKClient) CreateUpdateFirewallSecurityPolicyPackage(params *JSONFirewallSecurityPolicyPackage, method, adom string) (err error) {
 	defer c.Trace("CreateUpdateFirewallSecurityPolicyPackage")()
 
 	d := map[string]interface{}{
 		"name": params.Name,
 		"scope member": map[string]string{
 			"name": params.Target,
-			"vdom": "root",
+			"vdom": params.Vdom,
 		},
 		"type": "pkg",
 	}
 
 	p := map[string]interface{}{
 		"data": d,
-		"url":  "/pm/pkg/adom/root",
+		"url":  "/pm/pkg/adom/" + adom,
 	}
 
 	_, err = c.Do(method, p)
@@ -44,14 +46,15 @@ func (c *FmgSDKClient) CreateUpdateFirewallSecurityPolicyPackage(params *JSONFir
 
 // DeleteFirewallSecurityPolicyPackage is for deleting the specific firewall security policy package
 // Input:
+//   @adom: adom
 //   @name: policy package name
 // Output:
 //   @err: error details if failure, and nil if success
-func (c *FmgSDKClient) DeleteFirewallSecurityPolicyPackage(name string) (err error) {
+func (c *FmgSDKClient) DeleteFirewallSecurityPolicyPackage(adom, name string) (err error) {
 	defer c.Trace("DeleteFirewallSecurityPolicyPackage")()
 
 	p := map[string]interface{}{
-		"url": "/pm/pkg/adom/root/" + name,
+		"url": "/pm/pkg/adom/" + adom + "/" + name,
 	}
 
 	_, err = c.Do("delete", p)
@@ -65,15 +68,16 @@ func (c *FmgSDKClient) DeleteFirewallSecurityPolicyPackage(name string) (err err
 
 // ReadFirewallSecurityPolicyPackage is for reading the specific firewall security policy package
 // Input:
+//   @adom: adom
 //   @name: policy package name
 // Output:
 //   @out: policy package infor
 //   @err: error details if failure, and nil if success
-func (c *FmgSDKClient) ReadFirewallSecurityPolicyPackage(name string) (out *JSONFirewallSecurityPolicyPackage, err error) {
+func (c *FmgSDKClient) ReadFirewallSecurityPolicyPackage(adom, name string) (out *JSONFirewallSecurityPolicyPackage, err error) {
 	defer c.Trace("ReadFirewallSecurityPolicyPackage")()
 
 	p := map[string]interface{}{
-		"url": "/pm/pkg/adom/root/" + name,
+		"url": "/pm/pkg/adom/" + adom + "/" + name,
 	}
 
 	result, err := c.Do("get", p)

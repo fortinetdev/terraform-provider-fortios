@@ -7,6 +7,7 @@ import (
 // JSONDVMInstallPolicyPackage contains params for installing policy package
 type JSONDVMInstallPolicyPackage struct {
 	Name    string `json:"name"`
+	Adom    string `json:"adom"`
 	Timeout int
 }
 
@@ -19,7 +20,7 @@ func (c *FmgSDKClient) CreateDVMInstallPolicyPackage(params *JSONDVMInstallPolic
 	defer c.Trace("CreateDVMInstallPolicyPackage")()
 
 	d := map[string]interface{}{
-		"adom": "root",
+		"adom": params.Adom,
 		"pkg":  params.Name,
 	}
 

@@ -7,6 +7,7 @@ import (
 // SystemLicenseFortiCare contains the params for uploading forticare license
 type SystemLicenseFortiCare struct {
 	Target           string
+	Adom             string
 	RegistrationCode string
 }
 
@@ -24,7 +25,7 @@ func (c *FmgSDKClient) AddSystemLicenseFortiCare(params *SystemLicenseFortiCare)
 			"registration_code": params.RegistrationCode,
 		},
 		"resource": "/api/v2/monitor/registration/forticare/add-license",
-		"target":   []string{"/adom/root/device/" + params.Target},
+		"target":   []string{"/adom/" + params.Adom + "/device/" + params.Target},
 	}
 
 	p := map[string]interface{}{

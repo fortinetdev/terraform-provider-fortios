@@ -7,6 +7,7 @@ import (
 // JSONSystemLicenseVM contains the params for uploading vm license
 type JSONSystemLicenseVM struct {
 	Target      string
+	Adom        string
 	FileContent string
 }
 
@@ -24,7 +25,7 @@ func (c *FmgSDKClient) AddSystemLicenseVM(params *JSONSystemLicenseVM) (err erro
 			"file_content": params.FileContent,
 		},
 		"resource": "/api/v2/monitor/system/vmlicense/upload",
-		"target":   []string{"/adom/root/device/" + params.Target},
+		"target":   []string{"/adom/" + params.Adom + "/device/" + params.Target},
 	}
 
 	p := map[string]interface{}{

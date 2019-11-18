@@ -35,6 +35,7 @@ The following arguments are supported:
 * `description` - Description.
 * `created_by` - Who created this adom revision.
 * `locked` - lock. 0 means unlock and 1 means locked.
+* `adom` - ADOM name. default is 'root'.
 
 ## Attributes Reference
 The following attributes are exported:
@@ -44,3 +45,4 @@ The following attributes are exported:
 * `description` - Description.
 * `created_by` - Who created this adom revision.
 * `locked` - lock. 0 means unlock and 1 means locked.
+* `adom` - ADOM name.

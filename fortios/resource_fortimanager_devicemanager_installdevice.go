@@ -26,6 +26,16 @@ func resourceFortimanagerDVMInstallDev() *schema.Resource {
 				Default:     3,
 				Description: "Timeout for installing the script to the target, default: 3 minutes",
 			},
+			"adom": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "root",
+			},
+			"vdom": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "root",
+			},
 		},
 	}
 }
@@ -40,11 +50,12 @@ func createFMGDVMInstallDev(d *schema.ResourceData, m interface{}) error {
 	//Build input data by sdk
 	i := &fmgclient.JSONDVMInstallDev{
 		Name:    d.Get("target_devname").(string),
+		Vdom:    d.Get("vdom").(string),
 		Timeout: d.Get("timeout").(int),
 	}
 
 	for j := 0; j < maxTry; j++ {
-		err = c.CreateDVMInstallDev(i)
+		err = c.CreateDVMInstallDev(d.Get("adom").(string), i)
 		if err != nil {
 			time.Sleep(2 * time.Second)
 		} else {

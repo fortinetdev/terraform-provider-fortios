@@ -25,6 +25,11 @@ func resourceFortimanagerDVMInstallPolicyPackage() *schema.Resource {
 				Default:     3,
 				Description: "Timeout for installing the package to the target, default: 3 minutes",
 			},
+			"adom": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "root",
+			},
 		},
 	}
 }
@@ -35,6 +40,7 @@ func createFMGDVMInstallPolicyPackage(d *schema.ResourceData, m interface{}) err
 
 	i := &fmgclient.JSONDVMInstallPolicyPackage{
 		Name:    d.Get("package_name").(string),
+		Adom:    d.Get("adom").(string),
 		Timeout: d.Get("timeout").(int),
 	}
 

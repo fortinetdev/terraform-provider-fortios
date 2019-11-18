@@ -31,6 +31,11 @@ func resourceFortimanagerDVMDevice() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"adom": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "root",
+			},
 		},
 	}
 }
@@ -48,7 +53,7 @@ func createFMGDVMDevice(d *schema.ResourceData, m interface{}) error {
 		MgmtMode: "fmg",
 	}
 
-	err := c.CreateDVMDevice(i)
+	err := c.CreateDVMDevice(d.Get("adom").(string), i)
 	if err != nil {
 		return fmt.Errorf("Error adding dvm device: %s", err)
 	}
@@ -65,7 +70,7 @@ func deleteFMGDVMDevice(d *schema.ResourceData, m interface{}) error {
 	name := d.Id()
 
 	i := &fmgclient.JSONDVMDeviceDel{
-		Adom: "root",
+		Adom: d.Get("adom").(string),
 		Name: name,
 	}
 
