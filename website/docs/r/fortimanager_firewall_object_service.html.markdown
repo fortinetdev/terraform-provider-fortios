@@ -66,6 +66,7 @@ The following arguments are supported:
 * `icmp_type` - ICMP Type.
 * `icmp_code` - ICMP Code.
 * `protocol_number` - IP protocol number.
+* `adom` - ADOM name. default is 'root'.
 
 ## Attributes Reference
 The following attributes are exported:
@@ -83,3 +84,4 @@ The following attributes are exported:
 * `icmp_type` - ICMP Type.
 * `icmp_code` - ICMP Code.
 * `protocol_number` - IP protocol number.
+* `adom` - ADOM name.

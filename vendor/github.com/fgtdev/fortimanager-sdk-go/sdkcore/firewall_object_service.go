@@ -27,14 +27,15 @@ type JSONFirewallObjectService struct {
 // Input:
 //   @params: infor needed
 //   @method: operation method, "add" or "update"
+//   @adom: adom
 // Output:
 //   @err: error details if failure, and nil if success
-func (c *FmgSDKClient) CreateUpdateFirewallObjectService(params *JSONFirewallObjectService, method string) (err error) {
+func (c *FmgSDKClient) CreateUpdateFirewallObjectService(params *JSONFirewallObjectService, method, adom string) (err error) {
 	defer c.Trace("CreateUpdateFirewallObjectService")()
 
 	p := map[string]interface{}{
 		"data": params,
-		"url":  "/pm/config/adom/root/obj/firewall/service/custom",
+		"url":  "/pm/config/adom/" + adom + "/obj/firewall/service/custom",
 	}
 
 	_, err = c.Do(method, p)
@@ -50,14 +51,15 @@ func (c *FmgSDKClient) CreateUpdateFirewallObjectService(params *JSONFirewallObj
 // ReadFirewallObjectService is for reading the specific firewall object service
 // Input:
 //   @name: firewall object service name
+//   @adom: adom
 // Output:
 //   @out: firewall object service infor
 //   @err: error details if failure, and nil if success
-func (c *FmgSDKClient) ReadFirewallObjectService(name string) (out *JSONFirewallObjectService, err error) {
+func (c *FmgSDKClient) ReadFirewallObjectService(adom, name string) (out *JSONFirewallObjectService, err error) {
 	defer c.Trace("ReadFirewallObjectService")()
 
 	p := map[string]interface{}{
-		"url": "/pm/config/adom/root/obj/firewall/service/custom/" + name,
+		"url": "/pm/config/adom/" + adom + "/obj/firewall/service/custom/" + name,
 	}
 
 	result, err := c.Do("get", p)
@@ -120,14 +122,15 @@ func (c *FmgSDKClient) ReadFirewallObjectService(name string) (out *JSONFirewall
 
 // DeleteFirewallObjectService is for deleting the specific firewall object service
 // Input:
+//   @adom: adom
 //   @name: firewall object service name
 // Output:
 //   @err: error details if failure, and nil if success
-func (c *FmgSDKClient) DeleteFirewallObjectService(name string) (err error) {
+func (c *FmgSDKClient) DeleteFirewallObjectService(adom, name string) (err error) {
 	defer c.Trace("DeleteFirewallObjectService")()
 
 	p := map[string]interface{}{
-		"url": "/pm/config/adom/root/obj/firewall/service/custom/" + name,
+		"url": "/pm/config/adom/" + adom + "/obj/firewall/service/custom/" + name,
 	}
 
 	_, err = c.Do("delete", p)

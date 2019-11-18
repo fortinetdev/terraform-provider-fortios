@@ -29,6 +29,16 @@ func resourceFortimanagerDVMScriptExecute() *schema.Resource {
 				Optional: true,
 				Default:  3,
 			},
+			"adom": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "root",
+			},
+			"vdom": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "root",
+			},
 		},
 	}
 }
@@ -43,11 +53,12 @@ func createUpdateFMGDVMScriptExecute(d *schema.ResourceData, m interface{}) erro
 	i := &fmgclient.JSONDVMScriptExecute{
 		ScriptName:    d.Get("script_name").(string),
 		TargetDevName: d.Get("target_devname").(string),
+		Vdom:          d.Get("vdom").(string),
 		Timeout:       d.Get("timeout").(int),
 	}
 
 	for j := 0; j < maxTry; j++ {
-		err = c.ExecuteDVMScript(i)
+		err = c.ExecuteDVMScript(d.Get("adom").(string), i)
 		if err != nil {
 			time.Sleep(2 * time.Second)
 		} else {

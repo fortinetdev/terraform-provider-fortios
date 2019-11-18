@@ -35,6 +35,7 @@ The following arguments are supported:
 * `description` - Description.
 * `content` - Script content, only cli script is supported now
 * `target` - Script target, Enum: ["device_database", "remote_device", "adom_database"]
+* `adom` - ADOM name. default is 'root'.
 
 ## Attributes Reference
 The following attributes are exported:
@@ -42,5 +43,6 @@ The following attributes are exported:
 * `id` - The resource id.
 * `name` - Script name.
 * `description` - Description.
-* `content` - Script content, only cli script is supported now
-* `target` - Script target, Enum: ["device_database", "remote_device", "adom_database"]
+* `content` - Script content.
+* `target` - Script target. 
+* `adom` - ADOM name.

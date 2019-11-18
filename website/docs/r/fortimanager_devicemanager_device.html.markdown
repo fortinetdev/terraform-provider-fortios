@@ -35,6 +35,7 @@ The following arguments are supported:
 * `password` - Password.
 * `ipaddr` - (Required) Fortigate's ipaddress.
 * `device_name` - (Required) Fortigate's device name.
+* `adom` - Name or ID of the ADOM where the command is to be executed on.
 
 ## Attributes Reference
 The following attributes are exported:
@@ -43,3 +44,4 @@ The following attributes are exported:
 * `password` - Password.
 * `ipaddr` -  Fortigate's ipaddress.
 * `device_name` - Fortigate's device name.
+* `adom` - Name or ID of the ADOM where the command is to be executed on.

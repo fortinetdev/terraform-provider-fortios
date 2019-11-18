@@ -21,6 +21,11 @@ func resourceFortimanagerFirewallSecurityPolicy() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"adom": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "root",
+			},
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -340,7 +345,7 @@ func createFMGFirewallSecurityPolicy(d *schema.ResourceData, m interface{}) erro
 		PackageName: d.Get("package_name").(string),
 	}
 
-	policyid, err := c.CreateUpdateFirewallSecurityPolicy(i, "add")
+	policyid, err := c.CreateUpdateFirewallSecurityPolicy(i, "add", d.Get("adom").(string))
 	if err != nil {
 		return fmt.Errorf("Error creating devicemanager security policy: %s", err)
 	}
@@ -357,7 +362,7 @@ func readFMGFirewallSecurityPolicy(d *schema.ResourceData, m interface{}) error 
 	policyid := d.Id()
 	pkg_name := d.Get("package_name").(string)
 
-	o, err := c.ReadFirewallSecurityPolicy(policyid, pkg_name)
+	o, err := c.ReadFirewallSecurityPolicy(d.Get("adom").(string), policyid, pkg_name)
 	if err != nil {
 		return fmt.Errorf("Error reading devicemanager security policy: %s", err)
 	}
@@ -500,7 +505,7 @@ func updateFMGFirewallSecurityPolicy(d *schema.ResourceData, m interface{}) erro
 		PackageName: d.Get("package_name").(string),
 	}
 
-	_, err := c.CreateUpdateFirewallSecurityPolicy(i, "update")
+	_, err := c.CreateUpdateFirewallSecurityPolicy(i, "update", d.Get("adom").(string))
 	if err != nil {
 		return fmt.Errorf("Error updating devicemanager security policy: %s", err)
 	}
@@ -515,7 +520,7 @@ func deleteFMGFirewallSecurityPolicy(d *schema.ResourceData, m interface{}) erro
 	policyid := d.Id()
 	pkg_name := d.Get("package_name").(string)
 
-	err := c.DeleteFirewallSecurityPolicy(policyid, pkg_name)
+	err := c.DeleteFirewallSecurityPolicy(d.Get("adom").(string), policyid, pkg_name)
 	if err != nil {
 		return fmt.Errorf("Error deleting devicemanager policy: %s", err)
 	}

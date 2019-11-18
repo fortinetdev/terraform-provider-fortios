@@ -7,6 +7,7 @@ import (
 // JSONDVMInstallDev contains the params for installing device
 type JSONDVMInstallDev struct {
 	Name    string `json:"name"`
+	Vdom    string `json:"vdom"`
 	Timeout int
 }
 
@@ -15,14 +16,14 @@ type JSONDVMInstallDev struct {
 //   @params: infor needed
 // Output:
 //   @err: error details if failure, and nil if success
-func (c *FmgSDKClient) CreateDVMInstallDev(params *JSONDVMInstallDev) (err error) {
+func (c *FmgSDKClient) CreateDVMInstallDev(adom string, params *JSONDVMInstallDev) (err error) {
 	defer c.Trace("CreateDVMInstallDev")()
 
 	d := map[string]interface{}{
-		"adom": "root",
+		"adom": adom,
 		"scope": map[string]string{
 			"name": params.Name,
-			"vdom": "root",
+			"vdom": params.Vdom,
 		},
 	}
 

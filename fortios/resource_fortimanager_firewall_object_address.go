@@ -65,6 +65,11 @@ func resourceFortimanagerFirewallObjectAddress() *schema.Resource {
 				Default:      "disable",
 				ValidateFunc: util.ValidateStringIn("enable", "disable"),
 			},
+			"adom": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "root",
+			},
 		},
 	}
 }
@@ -85,7 +90,7 @@ func createFMGFirewallObjectAddress(d *schema.ResourceData, m interface{}) error
 		AllowRouting:   d.Get("allow_routing").(string),
 	}
 
-	err := c.CreateUpdateFirewallObjectAddress(i, "add")
+	err := c.CreateUpdateFirewallObjectAddress(i, "add", d.Get("adom").(string))
 	if err != nil {
 		return fmt.Errorf("Error creating Firewall Object Address: %s", err)
 	}
@@ -100,7 +105,7 @@ func readFMGFirewallObjectAddress(d *schema.ResourceData, m interface{}) error {
 	defer c.Trace("readFMGFirewallObjectAddress")()
 
 	name := d.Id()
-	o, err := c.ReadFirewallObjectAddress(name)
+	o, err := c.ReadFirewallObjectAddress(d.Get("adom").(string), name)
 	if err != nil {
 		return fmt.Errorf("Error reading Firewall Object Address: %s", err)
 	}
@@ -148,7 +153,7 @@ func updateFMGFirewallObjectAddress(d *schema.ResourceData, m interface{}) error
 		AllowRouting:   d.Get("allow_routing").(string),
 	}
 
-	err := c.CreateUpdateFirewallObjectAddress(i, "update")
+	err := c.CreateUpdateFirewallObjectAddress(i, "update", d.Get("adom").(string))
 	if err != nil {
 		return fmt.Errorf("Error updating Firewall Object Address: %s", err)
 	}
@@ -162,7 +167,7 @@ func deleteFMGFirewallObjectAddress(d *schema.ResourceData, m interface{}) error
 
 	name := d.Id()
 
-	err := c.DeleteFirewallObjectAddress(name)
+	err := c.DeleteFirewallObjectAddress(d.Get("adom").(string), name)
 	if err != nil {
 		return fmt.Errorf("Error deleting Firewall Object Address: %s", err)
 	}

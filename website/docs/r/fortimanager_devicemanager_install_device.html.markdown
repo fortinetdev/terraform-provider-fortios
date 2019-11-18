@@ -31,10 +31,14 @@ The following arguments are supported:
 
 * `target_devname` - (Required) Target device name.
 * `timeout` - Timeout for installing the script to the target, default: 3 minutes.
+* `adom` - Source ADOM name. default is 'root'
+* `vdom` - Vdom of managed device. default is 'root'
 
 ## Attributes Reference
 The following attributes are exported:
 
 * `id` - The resource id.
 * `target_devname` - Target device name.
-* `timeout` - Timeout for installing the script to the target, default: 3 minutes.
+* `timeout` - Timeout for installing the script to the target.
+* `adom` - Source ADOM name.
+* `vdom` - Vdom of managed device.

@@ -31,6 +31,7 @@ The following arguments are supported:
 
 * `package_name` - (Required) The installation package name.
 * `timeout` - Timeout for installing the package to the target, default: 3 minutes.
+* `adom` - Source ADOM name. default is 'root'
 
 ## Attributes Reference
 The following attributes are exported:
@@ -38,3 +39,4 @@ The following attributes are exported:
 * `id` - The resource id.
 * `package_name` - The installation package name.
 * `timeout` - Timeout for installing the package to the target, default: 3 minutes.
+* `adom` - Source ADOM name.

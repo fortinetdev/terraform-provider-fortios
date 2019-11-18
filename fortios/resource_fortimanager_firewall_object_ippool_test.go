@@ -48,7 +48,7 @@ func testAccCheckFortiManagerFirewallObjectIppoolExists(n string) resource.TestC
 		c := testAccProvider.Meta().(*FortiClient).ClientFortimanager
 
 		i := rs.Primary.ID
-		o, err := c.ReadFirewallObjectIppool(i)
+		o, err := c.ReadFirewallObjectIppool("root", i)
 
 		if err != nil {
 			return fmt.Errorf("Error reading Firewall Object Ippool: %s", err)
@@ -71,7 +71,7 @@ func testAccCheckFMGFirewallObjectIppoolDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadFirewallObjectIppool(i)
+		o, err := c.ReadFirewallObjectIppool("root", i)
 
 		if err == nil {
 			if o != nil {

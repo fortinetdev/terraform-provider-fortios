@@ -39,6 +39,11 @@ func resourceFortimanagerDVMScript() *schema.Resource {
 				Default:      "device_database",
 				ValidateFunc: util.ValidateStringIn("device_database", "remote_device", "adom_database"),
 			},
+			"adom": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "root",
+			},
 		},
 	}
 }
@@ -56,7 +61,7 @@ func createFMGDVMScript(d *schema.ResourceData, m interface{}) error {
 		Type:        "cli",
 	}
 
-	err := c.CreateUpdateDVMScript(i, "add")
+	err := c.CreateUpdateDVMScript(i, "add", d.Get("adom").(string))
 	if err != nil {
 		return fmt.Errorf("Error creating devicemanager script: %s", err)
 	}
@@ -71,7 +76,7 @@ func readFMGDVMScript(d *schema.ResourceData, m interface{}) error {
 	defer c.Trace("readFMGDVMScript")()
 
 	name := d.Id()
-	o, err := c.ReadDVMScript(name)
+	o, err := c.ReadDVMScript(d.Get("adom").(string), name)
 	if err != nil {
 		return fmt.Errorf("Error reading devicemanager script: %s", err)
 	}
@@ -107,7 +112,7 @@ func updateFMGDVMScript(d *schema.ResourceData, m interface{}) error {
 		Type:        "cli",
 	}
 
-	err := c.CreateUpdateDVMScript(i, "update")
+	err := c.CreateUpdateDVMScript(i, "update", d.Get("adom").(string))
 	if err != nil {
 		return fmt.Errorf("Error updating devicemanager script: %s", err)
 	}
@@ -121,7 +126,7 @@ func deleteFMGDVMScript(d *schema.ResourceData, m interface{}) error {
 
 	name := d.Id()
 
-	err := c.DeleteDVMScript(name)
+	err := c.DeleteDVMScript(d.Get("adom").(string), name)
 	if err != nil {
 		return fmt.Errorf("Error deleting devicemanager script: %s", err)
 	}

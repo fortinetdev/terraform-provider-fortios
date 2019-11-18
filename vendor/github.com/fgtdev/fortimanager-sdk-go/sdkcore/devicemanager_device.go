@@ -24,11 +24,11 @@ type JSONDVMDeviceDel struct {
 //   @params: infor needed to add the device
 // Output:
 //   @err: error details if failure, and nil if success
-func (c *FmgSDKClient) CreateDVMDevice(params *JSONDVMDeviceCreate) (err error) {
+func (c *FmgSDKClient) CreateDVMDevice(adom string, params *JSONDVMDeviceCreate) (err error) {
 	defer c.Trace("CreateDVMDevice")()
 
 	data := map[string]interface{}{
-		"adom":   "root",
+		"adom":   adom,
 		"device": params,
 	}
 

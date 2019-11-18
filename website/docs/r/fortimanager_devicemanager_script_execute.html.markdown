@@ -33,6 +33,8 @@ The following arguments are supported:
 * `script_name` - (Required) Script name.
 * `target_devname` - (Required) Target device name, which the script will be installed.
 * `timeout` - Timeout(minute) for executing the script, default is 3 minutes.
+* `adom` - Source ADOM name. default is 'root'
+* `vdom` - Vdom of managed device. default is 'root'
 
 ## Attributes Reference
 The following attributes are exported:
@@ -41,3 +43,5 @@ The following attributes are exported:
 * `script_name` - Script name.
 * `target_devname` - Target device name, which the script should be installed.
 * `timeout` - Timeout(minute) for executing the script, default is 3 minutes.
+* `adom` - Source ADOM name.
+* `vdom` - Vdom of managed device.

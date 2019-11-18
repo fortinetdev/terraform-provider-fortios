@@ -43,6 +43,7 @@ The following arguments are supported:
 * `arp_intf` - Select an interface that will reply to ARP requests.
 * `arp_reply` - Enable/disable replying to ARP request, default is "enable".
 * `associated_intf` - Associated interface name.
+* `adom` - ADOM name. default is 'root'.
 
 ## Attributes Reference
 The following attributes are exported:
@@ -56,3 +57,4 @@ The following attributes are exported:
 * `arp_intf` - Select an interface that will reply to ARP requests.
 * `arp_reply` - Enable/disable replying to ARP request.
 * `associated_intf` - Associated interface name.
+* `adom` - ADOM name.

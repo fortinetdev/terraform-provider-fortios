@@ -60,6 +60,7 @@ The following arguments are supported:
 * `start_ip` - First IP address (inclusive) in the range for the address.
 * `end_ip` - Final IP address (inclusive) in the range for the address.
 * `allow_routing` - Enable/disable use of this address in the static route configuration. default is "disable".
+* `adom` - ADOM name. default is 'root'.
 
 ## Attributes Reference
 The following attributes are exported:
@@ -74,3 +75,4 @@ The following attributes are exported:
 * `start_ip` - First IP address (inclusive) in the range for the address.
 * `end_ip` - Final IP address (inclusive) in the range for the address.
 * `allow_routing` - Enable/disable use of this address in the static route configuration.
+* `adom` - ADOM name.

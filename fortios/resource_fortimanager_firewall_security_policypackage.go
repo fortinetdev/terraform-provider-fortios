@@ -28,6 +28,16 @@ func resourceFortimanagerFirewallSecurityPolicyPackage() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
+			"adom": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "root",
+			},
+			"vdom": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "root",
+			},
 		},
 	}
 }
@@ -38,10 +48,11 @@ func createFMGFirewallSecurityPolicyPackage(d *schema.ResourceData, m interface{
 
 	i := &fmgclient.JSONFirewallSecurityPolicyPackage{
 		Name:   d.Get("name").(string),
+		Vdom:   d.Get("vdom").(string),
 		Target: d.Get("target").(string),
 	}
 
-	err := c.CreateUpdateFirewallSecurityPolicyPackage(i, "add")
+	err := c.CreateUpdateFirewallSecurityPolicyPackage(i, "add", d.Get("adom").(string))
 	if err != nil {
 		return fmt.Errorf("Error creating security policy package: %s", err)
 	}
@@ -57,7 +68,7 @@ func readFMGFirewallSecurityPolicyPackage(d *schema.ResourceData, m interface{})
 
 	name := d.Id()
 
-	o, err := c.ReadFirewallSecurityPolicyPackage(name)
+	o, err := c.ReadFirewallSecurityPolicyPackage(d.Get("adom").(string), name)
 	if err != nil {
 		return fmt.Errorf("Error reading security policy package: %s", err)
 	}
@@ -84,10 +95,11 @@ func updateFMGFirewallSecurityPolicyPackage(d *schema.ResourceData, m interface{
 
 	i := &fmgclient.JSONFirewallSecurityPolicyPackage{
 		Name:   d.Get("name").(string),
+		Vdom:   d.Get("vdom").(string),
 		Target: d.Get("target").(string),
 	}
 
-	err := c.CreateUpdateFirewallSecurityPolicyPackage(i, "update")
+	err := c.CreateUpdateFirewallSecurityPolicyPackage(i, "update", d.Get("adom").(string))
 	if err != nil {
 		return fmt.Errorf("Error updating firewall security policy package: %s", err)
 	}
@@ -101,7 +113,7 @@ func deleteFMGFirewallSecurityPolicyPackage(d *schema.ResourceData, m interface{
 
 	name := d.Id()
 
-	err := c.DeleteFirewallSecurityPolicyPackage(name)
+	err := c.DeleteFirewallSecurityPolicyPackage(d.Get("adom").(string), name)
 	if err != nil {
 		return fmt.Errorf("Error deleting firewall security policy package: %s", err)
 	}

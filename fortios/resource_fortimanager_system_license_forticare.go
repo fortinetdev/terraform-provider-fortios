@@ -19,6 +19,11 @@ func resourceFortimanagerSystemLicenseFortiCare() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"adom": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "root",
+			},
 			"registration_code": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -33,6 +38,7 @@ func addFMGSystemLicenseFortiCare(d *schema.ResourceData, m interface{}) error {
 
 	i := &fmgclient.SystemLicenseFortiCare{
 		Target:           d.Get("target").(string),
+		Adom:             d.Get("adom").(string),
 		RegistrationCode: d.Get("registration_code").(string),
 	}
 

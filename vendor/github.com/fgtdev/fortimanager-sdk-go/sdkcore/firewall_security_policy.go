@@ -63,15 +63,16 @@ type FirewallSecurityPolicyInput struct {
 // Input:
 //   @params: infor needed
 //   @method: operation method, "add" or "update"
+//   @adom: adom
 // Output:
 //   @id: policy id
 //   @err: error details if failure, and nil if success
-func (c *FmgSDKClient) CreateUpdateFirewallSecurityPolicy(params *FirewallSecurityPolicyInput, method string) (id string, err error) {
+func (c *FmgSDKClient) CreateUpdateFirewallSecurityPolicy(params *FirewallSecurityPolicyInput, method, adom string) (id string, err error) {
 	defer c.Trace("CreateUpdateFirewallSecurityPolicy")()
 
 	p := map[string]interface{}{
 		"data": params.Policy,
-		"url":  "/pm/config/adom/root/pkg/" + params.PackageName + "/firewall/policy",
+		"url":  "/pm/config/adom/" + adom + "/pkg/" + params.PackageName + "/firewall/policy",
 	}
 
 	result, err := c.Do(method, p)
@@ -99,16 +100,17 @@ func (c *FmgSDKClient) CreateUpdateFirewallSecurityPolicy(params *FirewallSecuri
 
 // ReadFirewallSecurityPolicy is for reading the specific firewall security policy
 // Input:
+//   @adom: adom
 //   @id: policy id
 //   @pkg_name: policy package name
 // Output:
 //   @out: policy infor
 //   @err: error details if failure, and nil if success
-func (c *FmgSDKClient) ReadFirewallSecurityPolicy(id, pkg_name string) (out *JSONFirewallSecurityPolicy, err error) {
+func (c *FmgSDKClient) ReadFirewallSecurityPolicy(adom, id, pkg_name string) (out *JSONFirewallSecurityPolicy, err error) {
 	defer c.Trace("ReadFirewallSecurityPolicy")()
 
 	p := map[string]interface{}{
-		"url": "/pm/config/adom/root/pkg/" + pkg_name + "/firewall/policy/" + id,
+		"url": "/pm/config/adom/" + adom + "/pkg/" + pkg_name + "/firewall/policy/" + id,
 	}
 
 	result, err := c.Do("get", p)
@@ -317,15 +319,16 @@ func (c *FmgSDKClient) ReadFirewallSecurityPolicy(id, pkg_name string) (out *JSO
 
 // DeleteFirewallSecurityPolicy is for deleting the specific firewall security policy
 // Input:
+//   @adom: adom
 //   @id: policy id
 //   @pkg_name: policy package name
 // Output:
 //   @err: error details if failure, and nil if success
-func (c *FmgSDKClient) DeleteFirewallSecurityPolicy(id, pkg_name string) (err error) {
+func (c *FmgSDKClient) DeleteFirewallSecurityPolicy(adom, id, pkg_name string) (err error) {
 	defer c.Trace("DeleteFirewallSecurityPolicy")()
 
 	p := map[string]interface{}{
-		"url": "/pm/config/adom/root/pkg/" + pkg_name + "/firewall/policy/" + id,
+		"url": "/pm/config/adom/" + adom + "/pkg/" + pkg_name + "/firewall/policy/" + id,
 	}
 
 	_, err = c.Do("delete", p)
