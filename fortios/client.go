@@ -86,7 +86,7 @@ func (c *Config) CreateClient() (interface{}, error) {
 
 	client := &http.Client{
 		Transport: tr,
-		Timeout:   time.Second * 10,
+		Timeout:   time.Second * 360,
 	}
 
 	fc := forticlient.NewClient(auth, client)
