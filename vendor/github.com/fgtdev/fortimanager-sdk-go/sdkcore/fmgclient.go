@@ -175,7 +175,7 @@ func (c *FmgSDKClient) Do(method string, params map[string]interface{}) (output 
 	if err != nil {
 		return nil, fmt.Errorf("Executing failed", err)
 	}
-	defer c.Logout(session)
+	//defer c.Logout(session)
 
 	req := &Request{
 		Id:      1,
