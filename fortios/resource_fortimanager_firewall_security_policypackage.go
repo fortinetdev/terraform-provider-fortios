@@ -5,6 +5,7 @@ import (
 	"log"
 
 	fmgclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
+	"github.com/fgtdev/fortimanager-sdk-go/util"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -38,6 +39,12 @@ func resourceFortimanagerFirewallSecurityPolicyPackage() *schema.Resource {
 				Optional: true,
 				Default:  "root",
 			},
+			"inspection_mode": &schema.Schema{
+				Type:         schema.TypeString,
+				Optional:     true,
+				Default:      "flow",
+				ValidateFunc: util.ValidateStringIn("flow", "proxy"),
+			},
 		},
 	}
 }
@@ -47,9 +54,10 @@ func createFMGFirewallSecurityPolicyPackage(d *schema.ResourceData, m interface{
 	defer c.Trace("createFMGFirewallSecurityPolicyPackage")()
 
 	i := &fmgclient.JSONFirewallSecurityPolicyPackage{
-		Name:   d.Get("name").(string),
-		Vdom:   d.Get("vdom").(string),
-		Target: d.Get("target").(string),
+		Name:           d.Get("name").(string),
+		Vdom:           d.Get("vdom").(string),
+		Target:         d.Get("target").(string),
+		InspectionMode: d.Get("inspection_mode").(string),
 	}
 
 	err := c.CreateUpdateFirewallSecurityPolicyPackage(i, "add", d.Get("adom").(string))
@@ -81,6 +89,9 @@ func readFMGFirewallSecurityPolicyPackage(d *schema.ResourceData, m interface{})
 
 	d.Set("name", o.Name)
 	d.Set("target", o.Target)
+	if o.InspectionMode != "" {
+		d.Set("inspection_mode", o.InspectionMode)
+	}
 
 	return nil
 }
@@ -94,9 +105,10 @@ func updateFMGFirewallSecurityPolicyPackage(d *schema.ResourceData, m interface{
 	}
 
 	i := &fmgclient.JSONFirewallSecurityPolicyPackage{
-		Name:   d.Get("name").(string),
-		Vdom:   d.Get("vdom").(string),
-		Target: d.Get("target").(string),
+		Name:           d.Get("name").(string),
+		Vdom:           d.Get("vdom").(string),
+		Target:         d.Get("target").(string),
+		InspectionMode: d.Get("inspection_mode").(string),
 	}
 
 	err := c.CreateUpdateFirewallSecurityPolicyPackage(i, "update", d.Get("adom").(string))

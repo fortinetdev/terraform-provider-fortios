@@ -34,6 +34,7 @@ The following arguments are supported:
 * `target` - The installation target.
 * `adom` - Source ADOM name. default is 'root'
 * `vdom` - Vdom of managed device. default is 'root'
+* `inspection_mode` - Inspection Mode. Enum:[flow, proxy]. default is 'flow'
 
 ## Attributes Reference
 The following attributes are exported:
@@ -43,3 +44,4 @@ The following attributes are exported:
 * `target` - The installation target.
 * `adom` - Source ADOM name.
 * `vdom` - Vdom of managed device.
+* `inspection_mode` - Inspection Mode.
