@@ -332,6 +332,20 @@ func TimeZone2Str(c int) (s string) {
 	return
 }
 
+// InspectionMode2Str converts inspection mode to string
+func InspectionMode2Str(c int) (s string) {
+	switch c {
+	case 0:
+		s = "proxy"
+	case 1:
+		s = "flow"
+	default:
+		log.Printf("[InspectionMode2Str][Warning] not support number")
+	}
+
+	return
+}
+
 // ValidateStringIn checks the validation of input string
 func ValidateStringIn(vals ...string) schema.SchemaValidateFunc {
 	return func(v interface{}, k string) (ws []string, errors []error) {

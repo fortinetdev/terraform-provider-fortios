@@ -2,13 +2,16 @@ package fmgclient
 
 import (
 	"fmt"
+
+	"github.com/fgtdev/fortimanager-sdk-go/util"
 )
 
 // JSONFirewallSecurityPolicyPackage contains the params for creating firewall policy package
 type JSONFirewallSecurityPolicyPackage struct {
-	Name   string `json:"name"`
-	Vdom   string `json:"vdom"`
-	Target string `json:"name"`
+	Name           string `json:"name"`
+	Vdom           string `json:"vdom"`
+	Target         string `json:"name"`
+	InspectionMode string `json:"inspection-mode"`
 }
 
 // CreateUpdateFirewallSecurityPolicyPackage is for creating/updating the firewall security policy package
@@ -26,6 +29,9 @@ func (c *FmgSDKClient) CreateUpdateFirewallSecurityPolicyPackage(params *JSONFir
 		"scope member": map[string]string{
 			"name": params.Target,
 			"vdom": params.Vdom,
+		},
+		"package settings": map[string]string{
+			"inspection-mode": params.InspectionMode,
 		},
 		"type": "pkg",
 	}
@@ -101,6 +107,11 @@ func (c *FmgSDKClient) ReadFirewallSecurityPolicyPackage(adom, name string) (out
 	sm := (data["scope member"].([]interface{}))[0].(map[string]interface{})
 	if sm["name"] != nil {
 		out.Target = sm["name"].(string)
+	}
+
+	ps := data["package settings"].(map[string]interface{})
+	if ps["inspection-mode"] != nil {
+		out.InspectionMode = util.InspectionMode2Str(int(ps["inspection-mode"].(float64)))
 	}
 
 	return
