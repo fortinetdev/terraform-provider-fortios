@@ -89,7 +89,7 @@ func resourceSystemAdminAdministrator() *schema.Resource {
 			},
 			"vdom": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
+				Optional: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
@@ -129,6 +129,10 @@ func resourceSystemAdminAdministratorCreate(d *schema.ResourceData, m interface{
 			forticlient.MultValue{
 				Name: v.(string),
 			})
+	}
+
+	if vdoms == nil {
+		vdoms = make([]forticlient.MultValue, 0)
 	}
 
 	//Build input data by sdk
@@ -194,6 +198,10 @@ func resourceSystemAdminAdministratorUpdate(d *schema.ResourceData, m interface{
 			forticlient.MultValue{
 				Name: v.(string),
 			})
+	}
+
+	if vdoms == nil {
+		vdoms = make([]forticlient.MultValue, 0)
 	}
 
 	//Build input data by sdk
