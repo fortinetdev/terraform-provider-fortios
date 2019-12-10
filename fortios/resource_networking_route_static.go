@@ -28,7 +28,8 @@ func resourceNetworkingRouteStatic() *schema.Resource {
 			},
 			"gateway": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Default:  "0.0.0.0",
 			},
 			"blackhole": &schema.Schema{
 				Type:     schema.TypeString,

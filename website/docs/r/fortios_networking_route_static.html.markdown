@@ -45,7 +45,7 @@ resource "fortios_networking_route_static" "internet_service" {
 The following arguments are supported:
 
 * `dst` - (Required) Destination IP and mask for this route.
-* `gateway` - (Required) Gateway IP for this route.
+* `gateway` - Gateway IP for this route.
 * `blackhole` - Enable/disable black hole.
 * `distance` - Administrative distance.
 * `weight` - Administrative weight.
