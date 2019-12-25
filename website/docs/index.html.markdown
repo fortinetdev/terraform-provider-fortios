@@ -8,7 +8,7 @@ description: |-
 
 # FortiOS Provider
 
-The FortiOS provider is used to interact with the resources supported by FortiOS. We need to configure the provider with with the proper credentials before it can be used.
+The FortiOS provider is used to interact with the resources supported by FortiOS. We need to configure the provider with the proper credentials before it can be used.
 
 ## Example Usage
 
