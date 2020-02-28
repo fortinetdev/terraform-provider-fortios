@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/fgtdev/fortimanager-sdk-go/auth"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -25,6 +26,7 @@ type FmgSDKClient struct {
 	Passwd string
 	Debug  string
 	Client *http.Client
+	Auth   *auth.AuthBlob
 }
 
 // NewClient is for creating new client
@@ -38,13 +40,16 @@ type FmgSDKClient struct {
 func NewClient(ip, user, passwd string, client *http.Client) *FmgSDKClient {
 	d := os.Getenv("TRACEDEBUG")
 
-	return &FmgSDKClient{
+	fmgsdkclient := FmgSDKClient{
 		Ipaddr: ip,
 		User:   user,
 		Passwd: passwd,
 		Client: client,
 		Debug:  d,
 	}
+	auth := auth.FmgAuthInit(fmgsdkclient.Login, fmgsdkclient.Logout)
+	fmgsdkclient.Auth = auth
+	return &fmgsdkclient
 }
 
 // Execute is for sending the http request to FortiManager
@@ -171,12 +176,13 @@ func (c *FmgSDKClient) Logout(s string) (err error) {
 //   @output: result infor got back
 //   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) Do(method string, params map[string]interface{}) (output map[string]interface{}, err error) {
-	session, err := c.Login()
+	//session, err := c.Login()
+	session, err := c.Auth.GetToken(c.Ipaddr, false)
 	if err != nil {
 		return nil, fmt.Errorf("Executing failed", err)
 	}
 	//defer c.Logout(session)
-
+	defer c.Auth.PutToken(session)
 	req := &Request{
 		Id:      1,
 		Method:  method,
@@ -184,8 +190,31 @@ func (c *FmgSDKClient) Do(method string, params map[string]interface{}) (output 
 		Session: session,
 	}
 
-	output, err = c.Execute(req)
-	return
+	retry := false
+	reqOut, reqErr := c.Execute(req)
+	// RETRY IN CASE WE USE A EXPIRED SESSION TOKEN
+	if reqErr != nil && reqOut["result"] != nil {
+		status := (reqOut["result"].([]interface{}))[0].(map[string]interface{})["status"].(map[string]interface{})
+		status_code := int(status["code"].(float64))
+		if status_code == -11 {
+			retry = true
+		}
+	}
+	if retry == true {
+		session, tokenErr := c.Auth.GetToken(c.Ipaddr, true)
+		if tokenErr != nil {
+			return nil, fmt.Errorf("Executing failed", tokenErr)
+		}
+		defer c.Auth.PutToken(session)
+		req = &Request{
+			Id:      1,
+			Method:  method,
+			Params:  [1]interface{}{params},
+			Session: session,
+		}
+		reqOut, reqErr = c.Execute(req)
+	}
+	return reqOut, reqErr
 }
 
 // Trace is for debugging
