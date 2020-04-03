@@ -112,6 +112,11 @@ func resourceVPNIPsecPhase1Interface() *schema.Resource {
 				Optional: true,
 				Default:  "",
 			},
+			"dh_group": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "2",
+			},
 		},
 	}
 }
@@ -120,7 +125,7 @@ func resourceVPNIPsecPhase1InterfaceCreate(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	//Get Params from d
+	// Get Params from d
 	name := d.Get("name").(string)
 	typef := d.Get("type").(string)
 	interfacef := d.Get("interface").(string)
@@ -140,6 +145,7 @@ func resourceVPNIPsecPhase1InterfaceCreate(d *schema.ResourceData, m interface{}
 	modeCfg := d.Get("mode_cfg").(string)
 	authmethod := d.Get("authmethod").(string)
 	authmethodRemote := d.Get("authmethod_remote").(string)
+	dhGroup := d.Get("dh_group").(string)
 
 	var certificates []forticlient.MultValue
 
@@ -153,7 +159,7 @@ func resourceVPNIPsecPhase1InterfaceCreate(d *schema.ResourceData, m interface{}
 			})
 	}
 
-	//Build input data by sdk
+	// Build input data by sdk
 	i := &forticlient.JSONVPNIPsecPhase1Interface{
 		Name:                name,
 		Type:                typef,
@@ -174,9 +180,10 @@ func resourceVPNIPsecPhase1InterfaceCreate(d *schema.ResourceData, m interface{}
 		ModeCfg:             modeCfg,
 		Authmethod:          authmethod,
 		AuthmethodRemote:    authmethodRemote,
+		DHGroup:             dhGroup,
 	}
 
-	//Call process by sdk
+	// Call process by sdk
 	o, err := c.CreateVPNIPsecPhase1Interface(i)
 	if err != nil {
 		return fmt.Errorf("Error creating VPN IPsec Phase1Interface: %s", err)
@@ -194,7 +201,7 @@ func resourceVPNIPsecPhase1InterfaceUpdate(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	//Get Params from d
+	// Get Params from d
 	name := d.Get("name").(string)
 	typef := d.Get("type").(string)
 	interfacef := d.Get("interface").(string)
@@ -214,6 +221,7 @@ func resourceVPNIPsecPhase1InterfaceUpdate(d *schema.ResourceData, m interface{}
 	modeCfg := d.Get("mode_cfg").(string)
 	authmethod := d.Get("authmethod").(string)
 	authmethodRemote := d.Get("authmethod_remote").(string)
+	dhGroup := d.Get("dh_group").(string)
 
 	var certificates []forticlient.MultValue
 
@@ -248,9 +256,10 @@ func resourceVPNIPsecPhase1InterfaceUpdate(d *schema.ResourceData, m interface{}
 		ModeCfg:             modeCfg,
 		Authmethod:          authmethod,
 		AuthmethodRemote:    authmethodRemote,
+		DHGroup:             dhGroup,
 	}
 
-	//Call process by sdk
+	// Call process by sdk
 	_, err := c.UpdateVPNIPsecPhase1Interface(i, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating VPN IPsec Phase1Interface: %s", err)
@@ -265,13 +274,13 @@ func resourceVPNIPsecPhase1InterfaceDelete(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	//Call process by sdk
+	// Call process by sdk
 	err := c.DeleteVPNIPsecPhase1Interface(mkey)
 	if err != nil {
 		return fmt.Errorf("Error deleting VPN IPsec Phase1Interface: %s", err)
 	}
 
-	//Set index for d
+	// Set index for d
 	d.SetId("")
 
 	return nil
@@ -283,7 +292,7 @@ func resourceVPNIPsecPhase1InterfaceRead(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	//Call process by sdk
+	// Call process by sdk
 	o, err := c.ReadVPNIPsecPhase1Interface(mkey)
 	if err != nil {
 		return fmt.Errorf("Error reading VPN IPsec Phase1Interface: %s", err)
@@ -295,7 +304,7 @@ func resourceVPNIPsecPhase1InterfaceRead(d *schema.ResourceData, m interface{}) 
 		return nil
 	}
 
-	//Refresh property
+	// Refresh property
 	d.Set("name", o.Name)
 	d.Set("type", o.Type)
 	d.Set("interface", o.Interface)
@@ -318,6 +327,7 @@ func resourceVPNIPsecPhase1InterfaceRead(d *schema.ResourceData, m interface{}) 
 	d.Set("mode_cfg", o.ModeCfg)
 	d.Set("authmethod", o.Authmethod)
 	d.Set("authmethod_remote", o.AuthmethodRemote)
+	d.Set("dh_group", o.DHGroup)
 
 	return nil
 }
