@@ -3,3 +3,10 @@
 /test/aabbcc.sh
 /test/ccddee.sh
 /test/ddeeff.sh
+
+# Terraform development
+/.terraform/
+*.tfstate.backup
+*.tfstate
+*.exe
+*.tf
