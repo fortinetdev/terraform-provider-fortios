@@ -28,6 +28,15 @@
     $ make build
     ```
 
+### Modifying vendor source code
+
+Since this repository is using a vendor folder, in order to build changes in that folder we'll need add a flag upon building.
+
+```sh
+$ cd $GOPATH/src/github.com/terraform-providers/terraform-provider-fortios
+$ go build -mod=vendor
+```
+
 ## Using the Provider
 
 If you're building the provider, follow the instructions to [install it as a plugin](https://www.terraform.io/docs/plugins/basics.html#installing-a-plugin). After placing it into your plugins directory,  run `terraform init` to initialize it.
