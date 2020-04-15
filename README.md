@@ -9,7 +9,7 @@
 ## Requirements
 
 - [Terraform](https://www.terraform.io/downloads.html) 0.10+
-- [Go](https://golang.org/doc/install) 1.11 (to build the provider plugin)
+- [Go](https://golang.org/doc/install) 1.11.4+ (to build the provider plugin)
 - FortiOS 6.0 or 6.2. This provider uses the FortiOS API. All the resources are validated with FortiOS 6.0 and 6.2.
 
 ## Building the Provider
