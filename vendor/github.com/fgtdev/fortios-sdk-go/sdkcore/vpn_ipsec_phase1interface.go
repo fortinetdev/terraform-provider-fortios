@@ -31,6 +31,7 @@ type JSONVPNIPsecPhase1Interface struct {
 	ModeCfg             string     `json:"mode-cfg"`
 	Authmethod          string     `json:"authmethod"`
 	AuthmethodRemote    string     `json:"authmethod-remote"`
+	DHGroup             string     `json:"dhgrp"`
 }
 
 // JSONCreateVPNIPsecPhase1InterfaceOutput contains the output results for Create API function
@@ -390,6 +391,9 @@ func (c *FortiSDKClient) ReadVPNIPsecPhase1Interface(mkey string) (output *JSONV
 		}
 		if mapTmp["authmethod-remote"] != nil {
 			output.AuthmethodRemote = mapTmp["authmethod-remote"].(string)
+		}
+		if mapTmp["dhgrp"] != nil {
+			output.DHGroup = mapTmp["dhgrp"].(string)
 		}
 
 	} else {
