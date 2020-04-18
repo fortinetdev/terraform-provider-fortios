@@ -115,7 +115,22 @@ func resourceVPNIPsecPhase1Interface() *schema.Resource {
 			"dh_group": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "2",
+				Default:  "",
+			},
+			"ike_version": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "",
+			},
+			"nat_traversal": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "",
+			},
+			"dead_peer_detection": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "",
 			},
 		},
 	}
@@ -146,6 +161,9 @@ func resourceVPNIPsecPhase1InterfaceCreate(d *schema.ResourceData, m interface{}
 	authmethod := d.Get("authmethod").(string)
 	authmethodRemote := d.Get("authmethod_remote").(string)
 	dhGroup := d.Get("dh_group").(string)
+	ikeVersion := d.Get("ike_version").(string)
+	natTraversal := d.Get("nat_traversal").(string)
+	deadPeerDetection := d.Get("dead_peer_detection").(string)
 
 	var certificates []forticlient.MultValue
 
@@ -181,6 +199,9 @@ func resourceVPNIPsecPhase1InterfaceCreate(d *schema.ResourceData, m interface{}
 		Authmethod:          authmethod,
 		AuthmethodRemote:    authmethodRemote,
 		DHGroup:             dhGroup,
+		IKEVersion:          ikeVersion,
+		NATTraversal:        natTraversal,
+		DeadPeerDetection:   deadPeerDetection,
 	}
 
 	// Call process by sdk
@@ -222,6 +243,9 @@ func resourceVPNIPsecPhase1InterfaceUpdate(d *schema.ResourceData, m interface{}
 	authmethod := d.Get("authmethod").(string)
 	authmethodRemote := d.Get("authmethod_remote").(string)
 	dhGroup := d.Get("dh_group").(string)
+	ikeVersion := d.Get("ike_version").(string)
+	natTraversal := d.Get("nat_traversal").(string)
+	deadPeerDetection := d.Get("dead_peer_detection").(string)
 
 	var certificates []forticlient.MultValue
 
@@ -257,6 +281,9 @@ func resourceVPNIPsecPhase1InterfaceUpdate(d *schema.ResourceData, m interface{}
 		Authmethod:          authmethod,
 		AuthmethodRemote:    authmethodRemote,
 		DHGroup:             dhGroup,
+		IKEVersion:          ikeVersion,
+		NATTraversal:        natTraversal,
+		DeadPeerDetection:   deadPeerDetection,
 	}
 
 	// Call process by sdk
@@ -304,7 +331,7 @@ func resourceVPNIPsecPhase1InterfaceRead(d *schema.ResourceData, m interface{}) 
 		return nil
 	}
 
-	// Refresh property
+	// Set Terraform attributes (refresh)
 	d.Set("name", o.Name)
 	d.Set("type", o.Type)
 	d.Set("interface", o.Interface)
@@ -328,6 +355,9 @@ func resourceVPNIPsecPhase1InterfaceRead(d *schema.ResourceData, m interface{}) 
 	d.Set("authmethod", o.Authmethod)
 	d.Set("authmethod_remote", o.AuthmethodRemote)
 	d.Set("dh_group", o.DHGroup)
+	d.Set("ike_version", o.IKEVersion)
+	d.Set("nat_traversal", o.NATTraversal)
+	d.Set("dead_peer_detection", o.DeadPeerDetection)
 
 	return nil
 }
