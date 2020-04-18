@@ -9,7 +9,7 @@
 ## Requirements
 
 - [Terraform](https://www.terraform.io/downloads.html) 0.10+
-- [Go](https://golang.org/doc/install) 1.11 (to build the provider plugin)
+- [Go](https://golang.org/doc/install) 1.11.4+ (to build the provider plugin)
 - FortiOS 6.0 or 6.2. This provider uses the FortiOS API. All the resources are validated with FortiOS 6.0 and 6.2.
 
 ## Building the Provider
@@ -27,6 +27,15 @@
     $ cd $GOPATH/src/github.com/terraform-providers/terraform-provider-fortios
     $ make build
     ```
+
+### Modifying vendor source code
+
+Since this repository is using a vendor folder, in order to build changes in that folder we'll need add a flag upon building.
+
+```sh
+$ cd $GOPATH/src/github.com/terraform-providers/terraform-provider-fortios
+$ go build -mod=vendor
+```
 
 ## Using the Provider
 

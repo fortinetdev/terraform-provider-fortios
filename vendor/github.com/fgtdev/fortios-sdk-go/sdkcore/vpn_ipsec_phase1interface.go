@@ -31,6 +31,10 @@ type JSONVPNIPsecPhase1Interface struct {
 	ModeCfg             string     `json:"mode-cfg"`
 	Authmethod          string     `json:"authmethod"`
 	AuthmethodRemote    string     `json:"authmethod-remote"`
+	DHGroup             string     `json:"dhgrp"`
+	IKEVersion          string     `json:"ike-version"`	   
+	NATTraversal        string     `json:"nattraversal"`
+	DeadPeerDetection   string     `json:"dpd"` 
 }
 
 // JSONCreateVPNIPsecPhase1InterfaceOutput contains the output results for Create API function
@@ -391,7 +395,18 @@ func (c *FortiSDKClient) ReadVPNIPsecPhase1Interface(mkey string) (output *JSONV
 		if mapTmp["authmethod-remote"] != nil {
 			output.AuthmethodRemote = mapTmp["authmethod-remote"].(string)
 		}
-
+		if mapTmp["dhgrp"] != nil {
+			output.DHGroup = mapTmp["dhgrp"].(string)
+		}
+		if mapTmp["ike-version"] != nil {
+			output.IKEVersion = mapTmp["ike-version"].(string)
+		}
+		if mapTmp["nattraversal"] != nil {
+			output.NATTraversal = mapTmp["nattraversal"].(string)
+		}
+		if mapTmp["dpd"] != nil {
+			output.DeadPeerDetection = mapTmp["dpd"].(string)
+		}
 	} else {
 		err = fmt.Errorf("cannot get the right response")
 		return

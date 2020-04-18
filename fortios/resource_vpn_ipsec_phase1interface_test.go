@@ -9,6 +9,10 @@ import (
 	"github.com/hashicorp/terraform/terraform"
 )
 
+func TestAccFortiOSVPNIPsecPhase1Interface_custom(t *testing.T) {
+	// TODO
+}
+
 func TestAccFortiOSVPNIPsecPhase1Interface_basic(t *testing.T) {
 	rname := "i1" + acctest.RandString(12)
 	resource.Test(t, resource.TestCase{
