@@ -46,6 +46,44 @@ resource "fortios_vpn_ipsec_phase2interface" "test2" {
 }
 ```
 
+```hcl
+provider "fortios" {
+	hostname = "54.226.179.231"
+	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
+}
+
+resource "fortios_vpn_ipsec_phase1interface" "test1" {
+    name = "001Test"
+    type = "static"
+    dh_group = "5"
+    interface = "port2"
+    peertype = "any"
+    proposal = "aes128-sha256 aes256-sha256 aes128-sha1 aes256-sha1"
+    comments = "VPN 001Test P1"
+    wizard_type = "custom"
+    remote_gw = "1.2.2.2"
+    psksecret = "testscecret112233445566778899"
+    authmethod = "psk"
+    authmethod_remote = ""
+    mode_cfg = "disable"
+	dead_peer_detection = "on-idle"
+	dh_group            = "14 5"
+	ike_version         = "1"
+	nat_traversal       = "disable"
+}
+
+resource "fortios_vpn_ipsec_phase2interface" "test2" {
+	name = "001Test"
+	phase1name = "${fortios_vpn_ipsec_phase1interface.test1.name}"
+	proposal = "aes128-sha1 aes256-sha1 aes128-sha256 aes256-sha256 aes128gcm aes256gcm chacha20poly1305"
+	comments = "VPN 001Test P2"
+	src_addr_type = "name"
+	dst_addr_type = "name"
+	src_name = "HQ-toBranch_local"
+	dst_name = "HQ-toBranch_remote"
+}
+```
+
 ## Example Usage for Site to Site/Signature
 
 ```hcl

@@ -11,9 +11,11 @@ description: |-
 Provides a resource to use phase1-interface to define a phase 1 definition for a route-based (interface mode) IPsec VPN tunnel that generates authentication and encryption keys automatically.
 
 ## Example Usage
+
 fortios_vpn_ipsec_phase1interface needs to be set with fortios_vpn_ipsec_phase2interface. See section fortios_vpn_ipsec_phase2interface.
 
 ## Argument Reference
+
 The following arguments are supported:
 
 * `name` - (Required) IPsec remote gateway name.
@@ -35,8 +37,14 @@ The following arguments are supported:
 * `authmethod` - Authentication method.
 * `authmethod_remote` - Authentication method (remote side).
 * `mode_cfg` - Enable/disable configuration method.
+* `ike_version` - Specify the IKE version for the IPSec tunnel phase 1 negotiation
+* `dh_group` - Diffie Hellman group(s) to be used in the IPSec tunnel phase 1 negotiation
+* `dead_peer_detection` - Control dead peer detection setting
+* `nat_traversal` - Control NAT traversal setting
+
 
 ## Attributes Reference
+
 The following attributes are exported:
 
 * `id` - The ID of the phase1-interface item.
@@ -59,4 +67,8 @@ The following attributes are exported:
 * `authmethod` - Authentication method.
 * `authmethod_remote` - Authentication method (remote side).
 * `mode_cfg` - Enable/disable configuration method.
+* `ike_version` - Specify the IKE version for the IPSec tunnel phase 1 negotiation
+* `dh_group` - Diffie Hellman group(s) to be used in the IPSec tunnel phase 1 negotiation
+* `dead_peer_detection` - Control dead peer detection setting
+* `nat_traversal` - Control NAT traversal setting
 
