@@ -46,6 +46,8 @@ func Provider() terraform.ResourceProvider {
 
 		ResourcesMap: map[string]*schema.Resource{
 			"fortios_networking_route_static":         resourceNetworkingRouteStatic(),
+			"fortios_networking_interface_dhcp":       resourceNetworkingInterfaceDHCP(),
+			"fortios_networking_interface_dhcp_ipres": resourceNetworkingInterfaceDHCPIpRes(),
 			"fortios_networking_interface_port":       resourceNetworkingInterfacePort(),
 			"fortios_system_admin_profiles":           resourceSystemAdminProfiles(),
 			"fortios_system_admin_administrator":      resourceSystemAdminAdministrator(),
