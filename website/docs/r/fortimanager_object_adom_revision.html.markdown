@@ -1,12 +1,12 @@
 ---
 layout: "fortios"
-page_title: "FortiOS: fortios_fortimanager_object_adom_revision"
+page_title: "FortiOS: fortios_fmg_object_adom_revision"
 sidebar_current: "docs-fortios-fortimanager-resource-object-adom-revision"
 description: |-
   Provides a resource to configure object adom revision for FortiManager.
 ---
 
-# fortios_fortimanager_object_adom_revision
+# fortios_fmg_object_adom_revision
 This resource supports Create/Read/Update/Delete object adom revision for FortiManager.    
 
 ## Example Usage
@@ -20,7 +20,7 @@ provider "fortios" {
 	cabundlefile = "/path/yourCA.crt"
 }
 
-resource "fortios_fortimanager_object_adom_revision" "test1" {
+resource "fortios_fmg_object_adom_revision" "test1" {
 	name = "oar-test"
 	description = "adom revision"
 	created_by = "fortinet"

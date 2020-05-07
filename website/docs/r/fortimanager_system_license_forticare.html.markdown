@@ -1,12 +1,12 @@
 ---
 layout: "fortios"
-page_title: "FortiOS: fortios_fortimanager_system_license_forticare"
+page_title: "FortiOS: fortios_fmg_system_license_forticare"
 sidebar_current: "docs-fortios-fortimanager-resource-system-license-forticare"
 description: |-
   Provides a resource to upload FortiCare registration code to FortiGate through FortiManager.
 ---
 
-# fortios_fortimanager_system_license_forticare
+# fortios_fmg_system_license_forticare
 This resource supports uploading FortiCare registration code to FortiGate through FortiManager.
 
 ## Example Usage
@@ -20,7 +20,7 @@ provider "fortios" {
 	cabundlefile = "/path/yourCA.crt"
 }
 
-resource "fortios_fortimanager_system_license_forticare" "test1" {
+resource "fortios_fmg_system_license_forticare" "test1" {
 	target = "fortigate-test"
 	registration_code = "jn3t3Nw7qckQzt955Htkfj5hwQ6aaa"
 }

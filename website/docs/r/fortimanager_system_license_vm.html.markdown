@@ -1,12 +1,12 @@
 ---
 layout: "fortios"
-page_title: "FortiOS: fortios_fortimanager_system_license_vm"
+page_title: "FortiOS: fortios_fmg_system_license_vm"
 sidebar_current: "docs-fortios-fortimanager-resource-system-license-vm"
 description: |-
   Provides a resource to upload VM license to FortiGate through FortiManager.
 ---
 
-# fortios_fortimanager_system_license_vm
+# fortios_fmg_system_license_vm
 This resource supports uploading VM license to FortiGate through FortiManager.
 
 ## Example Usage
@@ -20,7 +20,7 @@ provider "fortios" {
 	cabundlefile = "/path/yourCA.crt"
 }
 
-resource "fortios_fortimanager_system_license_vm" "test1" {
+resource "fortios_fmg_system_license_vm" "test1" {
 	target = "fortigate-test"
 	file_content = "XXX" // your license file content
 }

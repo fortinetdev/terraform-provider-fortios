@@ -1,12 +1,12 @@
 ---
 layout: "fortios"
-page_title: "FortiOS: fortios_fortimanager_system_network_route"
+page_title: "FortiOS: fortios_fmg_system_network_route"
 sidebar_current: "docs-fortios-fortimanager-resource-system-network-route"
 description: |-
   Provides a resource to configure system network route for FortiManager.
 ---
 
-# fortios_fortimanager_system_network_route
+# fortios_fmg_system_network_route
 This resource supports updating system network route for FortiManager.
 
 ## Example Usage
@@ -20,7 +20,7 @@ provider "fortios" {
 	cabundlefile = "/path/yourCA.crt"
 }
 
-resource "fortios_fortimanager_system_network_route" "test1" {
+resource "fortios_fmg_system_network_route" "test1" {
 	route_id = 5
 	destination = "192.168.2.0 255.255.255.0"
 	gateway = "192.168.2.1"

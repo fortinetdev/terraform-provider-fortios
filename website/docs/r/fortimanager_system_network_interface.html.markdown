@@ -1,12 +1,12 @@
 ---
 layout: "fortios"
-page_title: "FortiOS: fortios_fortimanager_system_network_interface"
+page_title: "FortiOS: fortios_fmg_system_network_interface"
 sidebar_current: "docs-fortios-fortimanager-resource-system-network-interface"
 description: |-
   Provides a resource to configure system network interface for FortiManager.
 ---
 
-# fortios_fortimanager_system_network_interface
+# fortios_fmg_system_network_interface
 This resource supports updating system network interface for FortiManager.
 
 ## Example Usage
@@ -20,7 +20,7 @@ provider "fortios" {
 	cabundlefile = "/path/yourCA.crt"
 }
 
-resource "fortios_fortimanager_system_network_interface" "test1" {
+resource "fortios_fmg_system_network_interface" "test1" {
 	name = "port3"
 	ip = "1.1.1.3 255.255.255.0"
 	description = ""
