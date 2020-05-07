@@ -28,7 +28,6 @@ type MultValues []MultValue
 type FortiSDKClient struct {
 	Config  config.Config
 	Retries int
-	Init 	bool
 }
 
 // ExtractString extracts strings from result and put them into a string array,
@@ -55,7 +54,6 @@ func NewClient(auth *auth.Auth, client *http.Client) *FortiSDKClient {
 	c.Config.Auth = auth
 	c.Config.HTTPCon = client
 	c.Config.FwTarget = auth.Hostname
-	c.Init = false;
 
 	return c
 }
@@ -64,18 +62,13 @@ func NewClient(auth *auth.Auth, client *http.Client) *FortiSDKClient {
 // It returns the created client object
 func NewEmptyClient() *FortiSDKClient {
 	c := &FortiSDKClient{}
-	c.Init = false;
 	return c
 }
 
 // NewRequest creates the request to FortiOS for the client
 // and return it to the client
-func (c *FortiSDKClient) NewRequest(method string, path string, params interface{}, data *bytes.Buffer) (error, *request.Request) {
-	if c.Init == false {
-		err := fmt.Errorf("FortiOS connection did not initialize successfully!")
-		return err, nil
-	}
-	return nil, request.New(c.Config, method, path, params, data)
+func (c *FortiSDKClient) NewRequest(method string, path string, params interface{}, data *bytes.Buffer) *request.Request {
+	return request.New(c.Config, method, path, params, data)
 }
 
 // GetDeviceVersion gets the version of FortiOS
@@ -84,12 +77,7 @@ func (c *FortiSDKClient) GetDeviceVersion() (version string, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/system/global"
 
-	e, req := c.NewRequest(HTTPMethod, path, nil, nil)
-	if e != nil {
-		err = fmt.Errorf("new request error %s", e)
-		return
-	}
-	
+	req := c.NewRequest(HTTPMethod, path, nil, nil)
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)

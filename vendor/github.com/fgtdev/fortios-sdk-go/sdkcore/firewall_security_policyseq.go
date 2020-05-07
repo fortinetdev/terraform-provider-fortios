@@ -17,13 +17,8 @@ func (c *FortiSDKClient) CreateUpdateFirewallSecurityPolicySeq(srcId, dstId int,
 	path := "/api/v2/cmdb/firewall/policy"
 	path += "/" + strconv.Itoa(srcId)
 
-	e, req := c.NewRequest(HTTPMethod, path, nil, nil)
+	req := c.NewRequest(HTTPMethod, path, nil, nil)
 	req.FillUrlParams(dstId, alterPos)
-	if e != nil {
-		err = fmt.Errorf("new request error %s", e)
-		return
-	}
-	
 	err = req.Send()
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)

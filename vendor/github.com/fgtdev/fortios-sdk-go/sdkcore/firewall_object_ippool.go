@@ -52,12 +52,7 @@ func (c *FortiSDKClient) CreateFirewallObjectIPPool(params *JSONFirewallObjectIP
 	}
 
 	bytes := bytes.NewBuffer(locJSON)
-	e, req := c.NewRequest(HTTPMethod, path, nil, bytes)
-	if e != nil {
-		err = fmt.Errorf("new request error %s", e)
-		return
-	}
-	
+	req := c.NewRequest(HTTPMethod, path, nil, bytes)
 	err = req.Send()
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
@@ -130,12 +125,7 @@ func (c *FortiSDKClient) UpdateFirewallObjectIPPool(params *JSONFirewallObjectIP
 	}
 
 	bytes := bytes.NewBuffer(locJSON)
-	e, req := c.NewRequest(HTTPMethod, path, nil, bytes)
-	if e != nil {
-		err = fmt.Errorf("new request error %s", e)
-		return
-	}
-	
+	req := c.NewRequest(HTTPMethod, path, nil, bytes)
 	err = req.Send()
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
@@ -201,12 +191,7 @@ func (c *FortiSDKClient) DeleteFirewallObjectIPPool(mkey string) (err error) {
 	path := "/api/v2/cmdb/firewall/ippool"
 	path += "/" + EscapeURLString(mkey)
 
-	e, req := c.NewRequest(HTTPMethod, path, nil, nil)
-	if e != nil {
-		err = fmt.Errorf("new request error %s", e)
-		return
-	}
-	
+	req := c.NewRequest(HTTPMethod, path, nil, nil)
 	err = req.Send()
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
@@ -267,12 +252,7 @@ func (c *FortiSDKClient) ReadFirewallObjectIPPool(mkey string) (output *JSONFire
 
 	output = &JSONFirewallObjectIPPool{}
 
-	e, req := c.NewRequest(HTTPMethod, path, nil, nil)
-	if e != nil {
-		err = fmt.Errorf("new request error %s", e)
-		return
-	}
-	
+	req := c.NewRequest(HTTPMethod, path, nil, nil)
 	err = req.Send()
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)

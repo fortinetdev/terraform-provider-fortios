@@ -54,7 +54,7 @@ func (c *FortiSDKClient) CreateSystemSettingNTP(params *JSONSystemSettingNTP) (o
 	// }
 
 	// bytes := bytes.NewBuffer(locJSON)
-	// e, req := c.NewRequest(HTTPMethod, path, nil, bytes)
+	// req := c.NewRequest(HTTPMethod, path, nil, bytes)
 	// err = req.Send()
 
 	// body, err := ioutil.ReadAll(req.HTTPResponse.Body)
@@ -108,12 +108,7 @@ func (c *FortiSDKClient) UpdateSystemSettingNTP(params *JSONSystemSettingNTP, mk
 	}
 
 	bytes := bytes.NewBuffer(locJSON)
-	e, req := c.NewRequest(HTTPMethod, path, nil, bytes)
-	if e != nil {
-		err = fmt.Errorf("new request error %s", e)
-		return
-	}
-	
+	req := c.NewRequest(HTTPMethod, path, nil, bytes)
 	err = req.Send()
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
@@ -177,7 +172,7 @@ func (c *FortiSDKClient) DeleteSystemSettingNTP(mkey string) (err error) {
 	// path := "/api/v2/cmdb/system/ntp"
 	// // path += "/" + mkey
 
-	// e, req := c.NewRequest(HTTPMethod, path, nil, nil)
+	// req := c.NewRequest(HTTPMethod, path, nil, nil)
 	// err = req.Send()
 
 	// body, err := ioutil.ReadAll(req.HTTPResponse.Body)
@@ -218,12 +213,7 @@ func (c *FortiSDKClient) ReadSystemSettingNTP(mkey string) (output *JSONSystemSe
 
 	output = &JSONSystemSettingNTP{}
 
-	e, req := c.NewRequest(HTTPMethod, path, nil, nil)
-	if e != nil {
-		err = fmt.Errorf("new request error %s", e)
-		return
-	}
-	
+	req := c.NewRequest(HTTPMethod, path, nil, nil)
 	err = req.Send()
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)

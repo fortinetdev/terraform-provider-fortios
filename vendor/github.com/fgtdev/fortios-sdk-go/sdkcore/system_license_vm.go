@@ -47,12 +47,7 @@ func (c *FortiSDKClient) CreateSystemLicenseVM(params *JSONSystemLicenseVM) (out
 
 	log.Printf("FOS-fortios resquest1: %s", locJSON)
 	bytes := bytes.NewBuffer(locJSON)
-	e, req := c.NewRequest(HTTPMethod, path, nil, bytes)
-	if e != nil {
-		err = fmt.Errorf("new request error %s", e)
-		return
-	}
-	
+	req := c.NewRequest(HTTPMethod, path, nil, bytes)
 	err = req.Send()
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
@@ -123,7 +118,7 @@ func (c *FortiSDKClient) UpdateSystemLicenseVM(params *JSONSystemLicenseVM, mkey
 	// }
 
 	// bytes := bytes.NewBuffer(locJSON)
-	// e, req := c.NewRequest(HTTPMethod, path, nil, bytes)
+	// req := c.NewRequest(HTTPMethod, path, nil, bytes)
 	// err = req.Send()
 
 	// body, err := ioutil.ReadAll(req.HTTPResponse.Body)
@@ -168,7 +163,7 @@ func (c *FortiSDKClient) DeleteSystemLicenseVM(mkey string) (err error) {
 	// path := "/api/v2/monitor/system/vmlicense/upload"
 	// path += "/" + mkey
 
-	// e, req := c.NewRequest(HTTPMethod, path, nil, nil)
+	// req := c.NewRequest(HTTPMethod, path, nil, nil)
 	// err = req.Send()
 
 	// body, err := ioutil.ReadAll(req.HTTPResponse.Body)

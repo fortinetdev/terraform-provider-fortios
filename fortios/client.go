@@ -52,7 +52,7 @@ func (c *Config) CreateClient() (interface{}, error) {
 	if bFOSExist {
 		err := createFortiOSClient(&fClient, c)
 		if err != nil {
-			return nil, fmt.Errorf("Error create fortios client")
+			return nil, fmt.Errorf("Error create fortios client: %s", err)
 		}
 	} else {
 		forticlient.NewEmptyClient()
@@ -61,7 +61,7 @@ func (c *Config) CreateClient() (interface{}, error) {
 	if bFMGExist {
 		err := createFortiManagerClient(&fClient, c)
 		if err != nil {
-			return nil, fmt.Errorf("Error create fortimanager client")
+			return nil, fmt.Errorf("Error create fortimanager client: %s", err)
 		}
 	} else {
 		fClient.ClientFortimanager = fmgclient.NewEmptyClient()
@@ -158,7 +158,6 @@ func createFortiOSClient(fClient *FortiClient, c *Config) error {
 	}
 
 	fc := forticlient.NewClient(auth, client)
-	fc.Init = true
 
 	fClient.Client = fc
 
