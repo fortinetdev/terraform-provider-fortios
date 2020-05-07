@@ -5,6 +5,7 @@ import (
 	"crypto/x509"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
 	"time"
@@ -106,10 +107,22 @@ func (c *Config) CreateClient() (interface{}, error) {
 				TLSClientConfig: config,
 			}
 
+			log.Printf("shengh: ClientFortimanager Init")
+
 			client := &http.Client{
 				Transport: tr,
 			}
 			fClient.ClientFortimanager = fmgclient.NewClient(c.Hostname, c.Username, c.Passwd, client)
+
+			fClient.ClientFortimanager.DebugNum = 0
+			log.Printf("shengh: ClientFortimanager Init: %d", fClient.ClientFortimanager.DebugNum)
+
+			session, err := fClient.ClientFortimanager.Login()
+			if err != nil {
+				return nil, fmt.Errorf("FortiManager Login failed")
+			}
+			fClient.ClientFortimanager.SessionString = session
+
 			return &fClient, nil
 		}
 	// default is for fortios provider
@@ -120,11 +133,17 @@ func (c *Config) CreateClient() (interface{}, error) {
 			auth := auth.NewAuth(c.Hostname, c.Token, c.CABundle, c.Vdom)
 
 			if auth.Hostname == "" {
-				auth.GetEnvHostname()
+				_, err := auth.GetEnvHostname()
+				if err != nil {
+					return nil, fmt.Errorf("Error reading Hostname")
+				}
 			}
 
 			if auth.Token == "" {
-				auth.GetEnvToken()
+				_, err := auth.GetEnvToken()
+				if err != nil {
+					return nil, fmt.Errorf("Error reading Token")
+				}
 			}
 
 			if auth.CABundle == "" {

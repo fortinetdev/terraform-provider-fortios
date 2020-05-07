@@ -42,6 +42,8 @@ func setFMGSystemNTP(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
 	defer c.Trace("setFMGSystemNTP")()
 
+	log.Printf("shengh: setFMGSystemNTP Init")
+
 	i := &fmgclient.JSONSystemNTP{
 		Id:           1,
 		Server:       d.Get("server").(string),
@@ -53,6 +55,9 @@ func setFMGSystemNTP(d *schema.ResourceData, m interface{}) error {
 	if err != nil {
 		return fmt.Errorf("Error setting System NTP : %s", err)
 	}
+
+	c.DebugNum++
+	log.Printf("shengh: ClientFortimanager setFMGSystemNTP: %d", c.DebugNum)
 
 	d.SetId("fortimanager-ntp-setting")
 
