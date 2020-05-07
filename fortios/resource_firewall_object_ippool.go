@@ -39,7 +39,7 @@ func resourceFirewallObjectIPPool() *schema.Resource {
 			"arp_reply": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "enable",
+				Computed: true,
 			},
 			"comments": &schema.Schema{
 				Type:     schema.TypeString,

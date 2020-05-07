@@ -32,7 +32,7 @@ func resourceFirewallObjectVipGroup() *schema.Resource {
 			"interface": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "any",
+				Computed: true,
 			},
 			"member": &schema.Schema{
 				Type:     schema.TypeList,

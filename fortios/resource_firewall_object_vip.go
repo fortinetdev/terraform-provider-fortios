@@ -43,27 +43,27 @@ func resourceFirewallObjectVip() *schema.Resource {
 			"extintf": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "any",
+				Computed: true,
 			},
 			"portforward": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "disable",
+				Computed: true,
 			},
 			"protocol": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "tcp",
+				Computed: true,
 			},
 			"extport": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0",
+				Computed: true,
 			},
 			"mappedport": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0",
+				Computed: true,
 			},
 		},
 	}
