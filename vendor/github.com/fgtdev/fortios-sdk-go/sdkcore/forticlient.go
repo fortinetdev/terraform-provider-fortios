@@ -104,4 +104,51 @@ func (c *FortiSDKClient) GetDeviceVersion() (version string, err error) {
 	return "", err
 }
 
+func fortiAPIErrorFormat(result map[string]interface{}, body string) (err error) {
+	if result != nil {
+		if result["status"] != nil {
+			if result["status"] == "success" {
+				err = nil
+				return
+			}
+
+			if result["http_status"] != nil {
+				// 200	OK: Request returns successful
+				if result["http_status"] == 400.0 {
+					err = fmt.Errorf("Bad Request - Request cannot be processed by the API")
+				} else if result["http_status"] == 401.0 {
+					err = fmt.Errorf("Not Authorized - Request without successful login session")
+				} else if result["http_status"] == 403.0 {
+					err = fmt.Errorf("Forbidden - Request is missing CSRF token or administrator is missing access profile permissions")
+				} else if result["http_status"] == 404.0 {
+					err = fmt.Errorf("Resource Not Found - Unable to find the specified resource")
+				} else if result["http_status"] == 405.0 {
+					err = fmt.Errorf("Method Not Allowed - Specified HTTP method is not allowed for this resource")
+				} else if result["http_status"] == 413.0 {
+					err = fmt.Errorf("Request Entity Too Large - Request cannot be processed due to large entity")
+				} else if result["http_status"] == 424.0 {
+					err = fmt.Errorf("Failed Dependency - Fail dependency can be duplicate resource, missing required parameter, missing required attribute, invalid attribute value")
+				} else if result["http_status"] == 429.0 {
+					err = fmt.Errorf("Access temporarily blocked - Maximum failed authentications reached. The offended source is temporarily blocked for certain amount of time")
+				} else if result["http_status"] == 500.0 {
+					err = fmt.Errorf("Internal Server Error - Internal error when processing the request")
+				} else {
+					err = fmt.Errorf("Unknow Error")
+				}
+
+				return
+			}
+
+			err = fmt.Errorf("\n%v", body)
+			return
+
+		}
+		err = fmt.Errorf("\n%v", body)
+		return
+	}
+
+	// Authorization Required, etc. | Attention: scalable here
+	err = fmt.Errorf("\n%v", body)
+	return
+}
 //Build input data by sdk
