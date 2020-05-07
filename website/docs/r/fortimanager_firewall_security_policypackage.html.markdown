@@ -1,12 +1,12 @@
 ---
 layout: "fortios"
-page_title: "FortiOS: fortios_fortimanager_firewall_security_policypackage"
+page_title: "FortiOS: fortios_fmg_firewall_security_policypackage"
 sidebar_current: "docs-fortios-fortimanager-resource-firewall-security-policypackage"
 description: |-
   Provides a resource to configure firewall security policypackage on FortiManager which could be installed to the FortiGate later
 ---
 
-# fortios_fortimanager_firewall_security_policypackage
+# fortios_fmg_firewall_security_policypackage
 This resource supports Create/Read/Update/Delete firewall security policypackage on FortiManager which could be installed to the FortiGate later
 
 
@@ -21,7 +21,7 @@ provider "fortios" {
 	cabundlefile = "/path/yourCA.crt"
 }
 
-resource "fortios_fortimanager_firewall_security_policypackage" "test1" {
+resource "fortios_fmg_firewall_security_policypackage" "test1" {
 	name = "test-pkg"
 	target = "FGVM64-test"
 }
