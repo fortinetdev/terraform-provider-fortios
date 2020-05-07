@@ -51,6 +51,12 @@ func NewClient(ip, user, passwd string, client *http.Client) *FmgSDKClient {
 	}
 }
 
+func NewEmptyClient() *FmgSDKClient {
+	return &FmgSDKClient{
+		Init: false,
+	}
+}
+
 // Execute is for sending the http request to FortiManager
 // Input:
 //   @req: http request
