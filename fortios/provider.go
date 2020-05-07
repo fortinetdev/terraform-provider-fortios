@@ -140,19 +140,26 @@ func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 
 	// Init client config with the values from TF files
 	config := Config{
-		Hostname: d.Get("hostname").(string),
-		Token:    d.Get("token").(string),
-		CABundle: d.Get("cabundlefile").(string),
-		Vdom:     d.Get("vdom").(string),
-		Username: d.Get("username").(string),
-		Passwd:   d.Get("passwd").(string),
-		Product:  d.Get("product").(string),
+		Hostname:     d.Get("hostname").(string),
+		Token:        d.Get("token").(string),
+		CABundle:     d.Get("cabundlefile").(string),
+		Vdom:         d.Get("vdom").(string),
+		FMG_Hostname: d.Get("fmg_hostname").(string),
+		FMG_CABundle: d.Get("fmg_cabundlefile").(string),
+		FMG_Username: d.Get("fmg_username").(string),
+		FMG_Passwd:   d.Get("fmg_passwd").(string),
 	}
 
-	v, ok := d.GetOkExists("insecure")
-	if ok {
-		insecure := v.(bool)
+	v1, ok1 := d.GetOkExists("insecure")
+	if ok1 {
+		insecure := v1.(bool)
 		config.Insecure = &insecure
+	}
+
+	v2, ok2 := d.GetOkExists("fmg_insecure")
+	if ok2 {
+		insecure := v2.(bool)
+		config.FMG_Insecure = &insecure
 	}
 
 	// Create Client for later connections
