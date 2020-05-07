@@ -1,12 +1,12 @@
 ---
 layout: "fortios"
-page_title: "FortiOS: fortios_fortimanager_devicemanager_install_policypackage"
+page_title: "FortiOS: fortios_fmg_devicemanager_install_policypackage"
 sidebar_current: "docs-fortios-fortimanager-resource-devicemanager-install-policypackage"
 description: |-
   Provides a resource to install devicemanager policy package from FortiManager to the related FortiGate
 ---
 
-# fortios_fortimanager_devicemanager_install_policypackage
+# fortios_fmg_devicemanager_install_policypackage
 This resource supports installing devicemanager policy package from FortiManager to the related FortiGate
 
 ## Example Usage
@@ -20,7 +20,7 @@ provider "fortios" {
 	cabundlefile = "/path/yourCA.crt"
 }
 
-resource "fortios_fortimanager_devicemanager_install_policypackage" "test1" {
+resource "fortios_fmg_devicemanager_install_policypackage" "test1" {
 	package_name = "test-pkg1"
 	timeout = 5
 }

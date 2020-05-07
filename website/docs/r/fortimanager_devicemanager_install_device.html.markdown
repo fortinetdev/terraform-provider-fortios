@@ -1,12 +1,12 @@
 ---
 layout: "fortios"
-page_title: "FortiOS: fortios_fortimanager_devicemanager_install_device"
+page_title: "FortiOS: fortios_fmg_devicemanager_install_device"
 sidebar_current: "docs-fortios-fortimanager-resource-devicemanager-install-device"
 description: |-
   Provides a resource to install devicemanager script from FortiManager to the related device
 ---
 
-# fortios_fortimanager_devicemanager_install_device
+# fortios_fmg_devicemanager_install_device
 This resource supports installing devicemanager script from FortiManager to the related device
 
 ## Example Usage
@@ -20,7 +20,7 @@ provider "fortios" {
 	cabundlefile = "/path/yourCA.crt"
 }
 
-resource "fortios_fortimanager_devicemanager_install_device" "test1" {
+resource "fortios_fmg_devicemanager_install_device" "test1" {
 	target_devname = "FGVM64-test"
 	timeout = 5
 }

@@ -1,12 +1,12 @@
 ---
 layout: "fortios"
-page_title: "FortiOS: fortios_fortimanager_devicemanager_device"
+page_title: "FortiOS: fortios_fmg_devicemanager_device"
 sidebar_current: "docs-fortios-fortimanager-resource-devicemanager-device"
 description: |-
   Provides a resource to add/delete online FortiGate to/from FortiManager
 ---
 
-# fortios_fortimanager_devicemanager_device
+# fortios_fmg_devicemanager_device
 This resource supports adding/deleting online FortiGate to/from FortiManager
 
 ## Example Usage
@@ -20,7 +20,7 @@ provider "fortios" {
 	cabundlefile = "/path/yourCA.crt"
 }
 
-resource "fortios_fortimanager_devicemanager_device" "test1" {
+resource "fortios_fmg_devicemanager_device" "test1" {
 	userid = "admin"
 	password = ""
 	ipaddr = "192.168.88.101"

@@ -1,12 +1,12 @@
 ---
 layout: "fortios"
-page_title: "FortiOS: fortios_fortimanager_devicemanager_script_execute"
+page_title: "FortiOS: fortios_fmg_devicemanager_script_execute"
 sidebar_current: "docs-fortios-fortimanager-resource-devicemanager-script-execute"
 description: |-
   Provides a resource to execute devicemanager script on FortiManager.
 ---
 
-# fortios_fortimanager_devicemanager_script_execute
+# fortios_fmg_devicemanager_script_execute
 This resource supports executing devicemanager script on Fortimanager.
 
 ## Example Usage
@@ -20,7 +20,7 @@ provider "fortios" {
 	cabundlefile = "/path/yourCA.crt"
 }
 
-resource "fortios_fortimanager_devicemanager_script_execute" "test3" {
+resource "fortios_fmg_devicemanager_script_execute" "test3" {
 	script_name = "config-intf3"
 	target_devname = "devname"
 	timeout = 5
