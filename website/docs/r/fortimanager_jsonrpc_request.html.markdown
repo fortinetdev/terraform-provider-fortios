@@ -1,12 +1,12 @@
 ---
 layout: "fortios"
-page_title: "FortiOS: fortios_fortimanager_jsonrpc_request"
+page_title: "FortiOS: fortios_fmg_jsonrpc_request"
 sidebar_current: "docs-fortios-fortimanager-resource-jsonrpc-request"
 description: |-
   Provides a resource to handle JSON RPC request for FortiManager.
 ---
 
-# fortios_fortimanager_jsonrpc_request
+# fortios_fmg_jsonrpc_request
 This resource supports handling JSON RPC request for FortiManager.
 
 ## Example Usage
@@ -20,7 +20,7 @@ provider "fortios" {
 	cabundlefile = "/path/yourCA.crt"
 }
 
-resource "fortios_fortimanager_jsonrpc_request" "test1" {
+resource "fortios_fmg_jsonrpc_request" "test1" {
 	json_content = <<JSON
 {
   "method": "add",
@@ -51,7 +51,7 @@ resource "fortios_fortimanager_jsonrpc_request" "test1" {
 JSON
 }
 
-resource "fortios_fortimanager_jsonrpc_request" "test2" {
+resource "fortios_fmg_jsonrpc_request" "test2" {
 	json_content = <<JSON
 {
   "method": "add",
@@ -71,7 +71,7 @@ resource "fortios_fortimanager_jsonrpc_request" "test2" {
 JSON
 }
 
-resource "fortios_fortimanager_jsonrpc_request" "test3" {
+resource "fortios_fmg_jsonrpc_request" "test3" {
 	json_content = <<JSON
 {
   "method": "get",
@@ -90,7 +90,7 @@ JSON
 The following arguments are supported:
 
 * `json_content` - (required) JSON RPC request, which should contain 'method' and 'params' parameters.
-* `output_file` - Output file, which is used for recording data when executing 'read' operation. default: "./jsonrpc_output.txt".
+* `output_file` - Output file, which is used for recording data when executing 'read' operation. default: "jsonrpc_output.txt".
 
 ## Attributes Reference
 The following attributes are exported:
