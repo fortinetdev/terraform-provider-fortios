@@ -60,7 +60,7 @@ func (c *FmgSDKClient) Execute(req *Request) (result map[string]interface{}, err
 		log.Printf("[TRACEDEBUG] ==> request: %s", j)
 	}
 
-	httpResp, err := c.Client.Post("http://"+c.Ipaddr+"/jsonrpc", "application/json", bytes.NewBuffer(j))
+	httpResp, err := c.Client.Post("https://"+c.Ipaddr+"/jsonrpc", "application/json", bytes.NewBuffer(j))
 	if err != nil {
 		err = fmt.Errorf("Login failed: %s", err)
 		return

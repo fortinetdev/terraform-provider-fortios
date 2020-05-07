@@ -25,13 +25,25 @@ func (c *FmgSDKClient) HandleJSONRPCRequest(p map[string]interface{}) (data map[
 	} else {
 		result, err := c.Do(method, params)
 		if err != nil {
-			return nil, fmt.Errorf("HandleJSONRPCRequest(READ) failed :%s", err)
+			return nil, fmt.Errorf("HandleJSONRPCRequest(READ) failed: %s", err)
 		}
 
-		data = (result["result"].([]interface{}))[0].(map[string]interface{})["data"].(map[string]interface{})
-		if data == nil {
-			return nil, fmt.Errorf("cannot get the results from the response")
+		if result["result"] == nil {
+			return nil, fmt.Errorf("No result fields found:\n%v", result)
 		}
-		return data, nil
+
+		data := result["result"]
+
+		// data := (result["result"].([]interface{}))[0].(map[string]interface{})["data"]//.(map[string]interface{})
+		// if data == nil {
+		// 	return nil, fmt.Errorf("cannot get the results from the response")
+		// }
+
+		t, err := json.MarshalIndent(data, "", "    ")
+		if err != nil {
+			return nil, fmt.Errorf("Error handling JSON RPC Request: %s", err)
+		}
+
+		return t, nil
 	}
 }
