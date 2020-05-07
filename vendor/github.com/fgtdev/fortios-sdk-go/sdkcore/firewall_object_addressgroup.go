@@ -49,7 +49,12 @@ func (c *FortiSDKClient) CreateFirewallObjectAddressGroup(params *JSONFirewallOb
 	}
 
 	bytes := bytes.NewBuffer(locJSON)
-	req := c.NewRequest(HTTPMethod, path, nil, bytes)
+	e, req := c.NewRequest(HTTPMethod, path, nil, bytes)
+	if e != nil {
+		err = fmt.Errorf("new request error %s", e)
+		return
+	}
+	
 	err = req.Send()
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
@@ -122,7 +127,12 @@ func (c *FortiSDKClient) UpdateFirewallObjectAddressGroup(params *JSONFirewallOb
 	}
 
 	bytes := bytes.NewBuffer(locJSON)
-	req := c.NewRequest(HTTPMethod, path, nil, bytes)
+	e, req := c.NewRequest(HTTPMethod, path, nil, bytes)
+	if e != nil {
+		err = fmt.Errorf("new request error %s", e)
+		return
+	}
+	
 	err = req.Send()
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
@@ -188,7 +198,12 @@ func (c *FortiSDKClient) DeleteFirewallObjectAddressGroup(mkey string) (err erro
 	path := "/api/v2/cmdb/firewall/addrgrp"
 	path += "/" + EscapeURLString(mkey)
 
-	req := c.NewRequest(HTTPMethod, path, nil, nil)
+	e, req := c.NewRequest(HTTPMethod, path, nil, nil)
+	if e != nil {
+		err = fmt.Errorf("new request error %s", e)
+		return
+	}
+	
 	err = req.Send()
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
@@ -249,7 +264,12 @@ func (c *FortiSDKClient) ReadFirewallObjectAddressGroup(mkey string) (output *JS
 
 	output = &JSONFirewallObjectAddressGroup{}
 
-	req := c.NewRequest(HTTPMethod, path, nil, nil)
+	e, req := c.NewRequest(HTTPMethod, path, nil, nil)
+	if e != nil {
+		err = fmt.Errorf("new request error %s", e)
+		return
+	}
+	
 	err = req.Send()
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)

@@ -50,7 +50,12 @@ func (c *FortiSDKClient) CreateFirewallObjectVipGroup(params *JSONFirewallObject
 	}
 
 	bytes := bytes.NewBuffer(locJSON)
-	req := c.NewRequest(HTTPMethod, path, nil, bytes)
+	e, req := c.NewRequest(HTTPMethod, path, nil, bytes)
+	if e != nil {
+		err = fmt.Errorf("new request error %s", e)
+		return
+	}
+	
 	err = req.Send()
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
@@ -123,7 +128,12 @@ func (c *FortiSDKClient) UpdateFirewallObjectVipGroup(params *JSONFirewallObject
 	}
 
 	bytes := bytes.NewBuffer(locJSON)
-	req := c.NewRequest(HTTPMethod, path, nil, bytes)
+	e, req := c.NewRequest(HTTPMethod, path, nil, bytes)
+	if e != nil {
+		err = fmt.Errorf("new request error %s", e)
+		return
+	}
+	
 	err = req.Send()
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
@@ -189,7 +199,12 @@ func (c *FortiSDKClient) DeleteFirewallObjectVipGroup(mkey string) (err error) {
 	path := "/api/v2/cmdb/firewall/vipgrp"
 	path += "/" + EscapeURLString(mkey)
 
-	req := c.NewRequest(HTTPMethod, path, nil, nil)
+	e, req := c.NewRequest(HTTPMethod, path, nil, nil)
+	if e != nil {
+		err = fmt.Errorf("new request error %s", e)
+		return
+	}
+	
 	err = req.Send()
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
@@ -250,7 +265,12 @@ func (c *FortiSDKClient) ReadFirewallObjectVipGroup(mkey string) (output *JSONFi
 
 	output = &JSONFirewallObjectVipGroup{}
 
-	req := c.NewRequest(HTTPMethod, path, nil, nil)
+	e, req := c.NewRequest(HTTPMethod, path, nil, nil)
+	if e != nil {
+		err = fmt.Errorf("new request error %s", e)
+		return
+	}
+	
 	err = req.Send()
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
