@@ -17,32 +17,32 @@ type JSONFirewallSecurityPolicy struct {
 	Dstintf                MultValues                 `json:"dstintf"`
 	Srcaddr                MultValues                 `json:"srcaddr"`
 	Dstaddr                MultValues                 `json:"dstaddr"`
-	InternetService        string                     `json:"internet-service"`
-	InternetServiceID      PolicyInternetIDMultValues `json:"internet-service-id"`
-	InternetServiceSrc     string                     `json:"internet-service-src"`
-	InternetServiceSrcID   PolicyInternetIDMultValues `json:"internet-service-src-id"`
-	Users                  MultValues                 `json:"users"`
-	Status                 string                     `json:"status"`
+	InternetService        string                     `json:"internet-service,omitempty"`
+	InternetServiceID      PolicyInternetIDMultValues `json:"internet-service-id,omitempty"`
+	InternetServiceSrc     string                     `json:"internet-service-src,omitempty"`
+	InternetServiceSrcID   PolicyInternetIDMultValues `json:"internet-service-src-id,omitempty"`
+	Users                  MultValues                 `json:"users,omitempty"`
+	Status                 string                     `json:"status,omitempty"`
 	Action                 string                     `json:"action"`
 	Schedule               string                     `json:"schedule"`
 	Service                MultValues                 `json:"service"`
-	UtmStatus              string                     `json:"utm-status"`
-	Logtraffic             string                     `json:"logtraffic"`
-	LogtrafficStart        string                     `json:"logtraffic-start"`
-	CapturePacket          string                     `json:"capture-packet"`
-	Ippool                 string                     `json:"ippool"`
-	Poolname               MultValues                 `json:"poolname"`
-	Groups                 MultValues                 `json:"groups"`
-	Devices                MultValues                 `json:"devices"`
+	UtmStatus              string                     `json:"utm-status,omitempty"`
+	Logtraffic             string                     `json:"logtraffic,omitempty"`
+	LogtrafficStart        string                     `json:"logtraffic-start,omitempty"`
+	CapturePacket          string                     `json:"capture-packet,omitempty"`
+	Ippool                 string                     `json:"ippool,omitempty"`
+	Poolname               MultValues                 `json:"poolname,omitempty"`
+	Groups                 MultValues                 `json:"groups,omitempty"`
+	Devices                MultValues                 `json:"devices,omitempty"`
 	Comments               string                     `json:"comments"`
-	AvProfile              string                     `json:"av-profile"`
-	WebfilterProfile       string                     `json:"webfilter-profile"`
-	DnsfilterProfile       string                     `json:"dnsfilter-profile"`
-	IpsSensor              string                     `json:"ips-sensor"`
-	ApplicationList        string                     `json:"application-list"`
-	SslSSHProfile          string                     `json:"ssl-ssh-profile"`
-	Nat                    string                     `json:"nat"`
-	ProfileProtocolOptions string                     `json:"profile-protocol-options"`
+	AvProfile              string                     `json:"av-profile,omitempty"`
+	WebfilterProfile       string                     `json:"webfilter-profile,omitempty"`
+	DnsfilterProfile       string                     `json:"dnsfilter-profile,omitempty"`
+	IpsSensor              string                     `json:"ips-sensor,omitempty"`
+	ApplicationList        string                     `json:"application-list,omitempty"`
+	SslSSHProfile          string                     `json:"ssl-ssh-profile,omitempty"`
+	Nat                    string                     `json:"nat,omitempty"`
+	ProfileProtocolOptions string                     `json:"profile-protocol-options,omitempty"`
 }
 
 // JSONCreateFirewallSecurityPolicyOutput contains the output results for Create API function

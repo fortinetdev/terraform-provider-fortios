@@ -16,7 +16,7 @@ type JSONFirewallObjectIPPool struct {
 	Type     string `json:"type"`
 	Startip  string `json:"startip"`
 	Endip    string `json:"endip"`
-	ArpReply string `json:"arp-reply"`
+	ArpReply string `json:"arp-reply,omitempty"`
 	Comments string `json:"comments"`
 }
 

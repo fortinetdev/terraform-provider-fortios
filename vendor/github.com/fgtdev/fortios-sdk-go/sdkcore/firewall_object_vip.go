@@ -16,11 +16,11 @@ type JSONFirewallObjectVip struct {
 	Comment     string        `json:"comment"`
 	Extip       string        `json:"extip"`
 	Mappedip    VIPMultValues `json:"mappedip"`
-	Extintf     string        `json:"extintf"`
-	Portforward string        `json:"portforward"`
-	Protocol    string        `json:"protocol"`
-	Extport     string        `json:"extport"`
-	Mappedport  string        `json:"mappedport"`
+	Extintf     string        `json:"extintf,omitempty"`
+	Portforward string        `json:"portforward,omitempty"`
+	Protocol    string        `json:"protocol,omitempty"`
+	Extport     string        `json:"extport,omitempty"`
+	Mappedport  string        `json:"mappedport,omitempty"`
 }
 
 // JSONCreateFirewallObjectVipOutput contains the output results for Create API function

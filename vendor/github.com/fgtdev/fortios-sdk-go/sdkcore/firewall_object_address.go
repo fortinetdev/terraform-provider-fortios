@@ -15,30 +15,30 @@ type JSONFirewallObjectAddressCommon struct {
 	Name              string `json:"name"`
 	Type              string `json:"type"`
 	Comment           string `json:"comment"`
-	AssociatedIntf    string `json:"associated-interface"`
-	ShowInAddressList string `json:"visibility"`
-	AllowRouting      string `json:"allow-routing"`
+	AssociatedIntf    string `json:"associated-interface,omitempty"`
+	ShowInAddressList string `json:"visibility,omitempty"`
+	AllowRouting      string `json:"allow-routing,omitempty"`
 }
 
 // JSONFirewallObjectAddressIPRange contains the IP Range parameters for Create and Update API function
 type JSONFirewallObjectAddressIPRange struct {
-	StartIP string `json:"start-ip"`
-	EndIP   string `json:"end-ip"`
+	StartIP string `json:"start-ip,omitempty"`
+	EndIP   string `json:"end-ip,omitempty"`
 }
 
 // JSONFirewallObjectAddressCountry contains the Country parameters for Create and Update API function
 type JSONFirewallObjectAddressCountry struct {
-	Country string `json:"country"`
+	Country string `json:"country,omitempty"`
 }
 
 // JSONFirewallObjectAddressFqdn contains the FQDN parameters for Create and Update API function
 type JSONFirewallObjectAddressFqdn struct {
-	Fqdn string `json:"fqdn"`
+	Fqdn string `json:"fqdn,omitempty"`
 }
 
 // JSONFirewallObjectAddressIPMask contains the Subnet parameters for Create and Update API function
 type JSONFirewallObjectAddressIPMask struct {
-	Subnet string `json:"subnet"`
+	Subnet string `json:"subnet,omitempty"`
 }
 
 // JSONFirewallObjectAddress contains the parameters for Create and Update API function

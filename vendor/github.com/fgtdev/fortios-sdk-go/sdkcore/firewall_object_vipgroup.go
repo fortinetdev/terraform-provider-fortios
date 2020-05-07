@@ -14,7 +14,7 @@ import (
 type JSONFirewallObjectVipGroup struct {
 	Name      string     `json:"name"`
 	Comments  string     `json:"comments"`
-	Interface string     `json:"interface"`
+	Interface string     `json:"interface,omitempty"`
 	Member    MultValues `json:"member"`
 }
 

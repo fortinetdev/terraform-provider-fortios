@@ -17,23 +17,23 @@ type JSONFirewallObjectServiceCommon struct {
 	Category       string `json:"category"`
 	Protocol       string `json:"protocol"`
 	Comment        string `json:"comment"`
-	ProtocolNumber string `json:"protocol-number"`
-	Icmptype       string `json:"icmptype"`
-	Icmpcode       string `json:"icmpcode"`
-	TCPPortrange   string `json:"tcp-portrange"`
-	UDPPortrange   string `json:"udp-portrange"`
-	SctpPortrange  string `json:"sctp-portrange"`
-	SessionTTL     string `json:"session-ttl"`
+	ProtocolNumber string `json:"protocol-number,omitempty"`
+	Icmptype       string `json:"icmptype,omitempty"`
+	Icmpcode       string `json:"icmpcode,omitempty"`
+	TCPPortrange   string `json:"tcp-portrange,omitempty"`
+	UDPPortrange   string `json:"udp-portrange,omitempty"`
+	SctpPortrange  string `json:"sctp-portrange,omitempty"`
+	SessionTTL     string `json:"session-ttl,omitempty"`
 }
 
 // JSONFirewallObjectServiceFqdn contains the FQDN parameters for Create and Update API function
 type JSONFirewallObjectServiceFqdn struct {
-	Fqdn string `json:"fqdn"`
+	Fqdn string `json:"fqdn,omitempty"`
 }
 
 // JSONFirewallObjectServiceIprange contains the IP Range parameters for Create and Update API function
 type JSONFirewallObjectServiceIprange struct {
-	Iprange string `json:"iprange"`
+	Iprange string `json:"iprange,omitempty"`
 }
 
 // JSONFirewallObjectService contains the parameters for Create and Update API function
