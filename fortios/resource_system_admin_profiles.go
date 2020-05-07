@@ -27,7 +27,7 @@ func resourceSystemAdminProfiles() *schema.Resource {
 			"scope": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "vdom",
+				Computed: true,
 			},
 			"comments": &schema.Schema{
 				Type:     schema.TypeString,
@@ -37,62 +37,62 @@ func resourceSystemAdminProfiles() *schema.Resource {
 			"secfabgrp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "none",
+				Computed: true,
 			},
 			"ftviewgrp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "none",
+				Computed: true,
 			},
 			"authgrp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "none",
+				Computed: true,
 			},
 			"sysgrp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "none",
+				Computed: true,
 			},
 			"netgrp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "none",
+				Computed: true,
 			},
 			"loggrp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "none",
+				Computed: true,
 			},
 			"fwgrp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "none",
+				Computed: true,
 			},
 			"vpngrp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "none",
+				Computed: true,
 			},
 			"utmgrp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "none",
+				Computed: true,
 			},
 			"wanoptgrp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "none",
+				Computed: true,
 			},
 			"wifi": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "none",
+				Computed: true,
 			},
 			"admintimeout_override": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "disable",
+				Computed: true,
 			},
 		},
 	}

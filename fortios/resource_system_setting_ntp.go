@@ -27,6 +27,7 @@ func resourceSystemSettingNTP() *schema.Resource {
 			"ntpserver": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
+				Computed: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
@@ -34,7 +35,7 @@ func resourceSystemSettingNTP() *schema.Resource {
 			"ntpsync": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "enable",
+				Computed: true,
 			},
 		},
 	}
@@ -117,6 +118,19 @@ func resourceSystemSettingNTPRead(d *schema.ResourceData, m interface{}) error {
 	//Refresh property
 	d.Set("type", o.Type)
 	d.Set("ntpsync", o.Ntpsync)
+	nts := extractNtpServer(o.Ntpserver)
+	if err := d.Set("ntpserver", nts); err != nil {
+		log.Printf("[WARN] Error setting System Setting NTP for (%s): %s", d.Id(), err)
+	}
 
 	return nil
+}
+
+func extractNtpServer(members []forticlient.NTPMultValue) []string {
+	vs := make([]string, 0, len(members))
+	for _, v := range members {
+		c := v.Server
+		vs = append(vs, c)
+	}
+	return vs
 }

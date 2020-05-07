@@ -27,12 +27,12 @@ func resourceSystemVdomSetting() *schema.Resource {
 			"short_name": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "",
+				Computed: true,
 			},
 			"temporary": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0",
+				Computed: true,
 			},
 		},
 	}

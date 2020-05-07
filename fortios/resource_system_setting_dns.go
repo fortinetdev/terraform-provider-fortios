@@ -23,14 +23,17 @@ func resourceSystemSettingDNS() *schema.Resource {
 			"primary": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
 			},
 			"secondary": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
 			},
 			"dns_over_tls": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
 			},
 		},
 	}
@@ -98,16 +101,9 @@ func resourceSystemSettingDNSRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	//Refresh property
-	if d.Get("primary") != "" {
-		d.Set("primary", o.Primary)
-	}
-	if d.Get("secondary") != "" {
-		d.Set("secondary", o.Secondary)
-	}
-	if d.Get("dns_over_tls") != "" {
-		d.Set("dns_over_tls", o.DNSOverTLS)
-	}
+	d.Set("primary", o.Primary)
+	d.Set("secondary", o.Secondary)
+	d.Set("dns_over_tls", o.DNSOverTLS)
 
 	return nil
 }

@@ -31,52 +31,52 @@ func resourceSystemAdminAdministrator() *schema.Resource {
 			"trusthost1": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0.0.0.0 0.0.0.0",
+				Computed: true,
 			},
 			"trusthost2": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0.0.0.0 0.0.0.0",
+				Computed: true,
 			},
 			"trusthost3": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0.0.0.0 0.0.0.0",
+				Computed: true,
 			},
 			"trusthost4": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0.0.0.0 0.0.0.0",
+				Computed: true,
 			},
 			"trusthost5": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0.0.0.0 0.0.0.0",
+				Computed: true,
 			},
 			"trusthost6": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0.0.0.0 0.0.0.0",
+				Computed: true,
 			},
 			"trusthost7": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0.0.0.0 0.0.0.0",
+				Computed: true,
 			},
 			"trusthost8": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0.0.0.0 0.0.0.0",
+				Computed: true,
 			},
 			"trusthost9": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0.0.0.0 0.0.0.0",
+				Computed: true,
 			},
 			"trusthost10": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0.0.0.0 0.0.0.0",
+				Computed: true,
 			},
 			"accprofile": &schema.Schema{
 				Type:     schema.TypeString,
@@ -90,6 +90,7 @@ func resourceSystemAdminAdministrator() *schema.Resource {
 			"vdom": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
+				Computed: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},

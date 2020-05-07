@@ -27,27 +27,27 @@ func resourceSystemSettingGlobal() *schema.Resource {
 			"admintimeout": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "5",
+				Computed: true,
 			},
 			"timezone": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "04",
+				Computed: true,
 			},
 			"admin_sport": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "443",
+				Computed: true,
 			},
 			"admin_ssh_port": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "22",
+				Computed: true,
 			},
 			"admin_scp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "disable",
+				Computed: true,
 			},
 		},
 	}
