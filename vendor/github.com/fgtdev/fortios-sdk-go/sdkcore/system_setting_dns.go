@@ -265,9 +265,11 @@ func (c *FortiSDKClient) ReadSystemSettingDNS(mkey string) (output *JSONSystemSe
 
 		if mapTmp["primary"] != nil {
 			output.Primary = mapTmp["primary"].(string)
+			log.Printf("shengh: %s", mapTmp["primary"].(string))
 		}
 		if mapTmp["secondary"] != nil {
 			output.Secondary = mapTmp["secondary"].(string)
+			log.Printf("shengh: %s", mapTmp["secondary"].(string))
 		}
 		if mapTmp["dns-over-tls"] != nil {
 			output.DNSOverTLS = mapTmp["dns-over-tls"].(string)

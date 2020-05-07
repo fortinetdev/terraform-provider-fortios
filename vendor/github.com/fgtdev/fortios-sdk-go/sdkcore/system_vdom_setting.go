@@ -14,8 +14,8 @@ import (
 // JSONSystemVdomSetting contains the parameters for Create and Update API function
 type JSONSystemVdomSetting struct {
 	Name      string `json:"name"`
-	ShortName string `json:"short-name"`
-	Temporary string `json:"temporary"`
+	ShortName string `json:"short-name,omitempty"`
+	Temporary string `json:"temporary,omitempty"`
 }
 
 // JSONCreateSystemVdomSettingOutput contains the output results for Create API function

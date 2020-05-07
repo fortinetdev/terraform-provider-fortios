@@ -13,12 +13,12 @@ import (
 
 // JSONSystemSettingGlobal contains the parameters for Create and Update API function
 type JSONSystemSettingGlobal struct {
-	Admintimeout string `json:"admintimeout"`
-	Timezone     string `json:"timezone"`
+	Admintimeout string `json:"admintimeout,omitempty"`
+	Timezone     string `json:"timezone,omitempty"`
 	Hostname     string `json:"hostname"`
-	AdminSport   string `json:"admin-sport"`
-	AdminSSHPort string `json:"admin-ssh-port"`
-	AdminScp     string `json:"admin-scp"`
+	AdminSport   string `json:"admin-sport,omitempty"`
+	AdminSSHPort string `json:"admin-ssh-port,omitempty"`
+	AdminScp     string `json:"admin-scp,omitempty"`
 }
 
 // JSONCreateSystemSettingGlobalOutput contains the output results for Create API function

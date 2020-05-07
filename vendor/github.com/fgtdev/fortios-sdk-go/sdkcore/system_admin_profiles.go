@@ -13,20 +13,20 @@ import (
 // JSONSystemAdminProfiles contains the parameters for Create and Update API function
 type JSONSystemAdminProfiles struct {
 	Name                 string `json:"name"`
-	Scope                string `json:"scope"`
+	Scope                string `json:"scope,omitempty"`
 	Comments             string `json:"comments"`
-	Secfabgrp            string `json:"secfabgrp"`
-	Ftviewgrp            string `json:"ftviewgrp"`
-	Authgrp              string `json:"authgrp"`
-	Sysgrp               string `json:"sysgrp"`
-	Netgrp               string `json:"netgrp"`
-	Loggrp               string `json:"loggrp"`
-	Fwgrp                string `json:"fwgrp"`
-	Vpngrp               string `json:"vpngrp"`
-	Utmgrp               string `json:"utmgrp"`
-	Wanoptgrp            string `json:"wanoptgrp"`
-	Wifi                 string `json:"wifi"`
-	AdmintimeoutOverride string `json:"admintimeout-override"`
+	Secfabgrp            string `json:"secfabgrp,omitempty"`
+	Ftviewgrp            string `json:"ftviewgrp,omitempty"`
+	Authgrp              string `json:"authgrp,omitempty"`
+	Sysgrp               string `json:"sysgrp,omitempty"`
+	Netgrp               string `json:"netgrp,omitempty"`
+	Loggrp               string `json:"loggrp,omitempty"`
+	Fwgrp                string `json:"fwgrp,omitempty"`
+	Vpngrp               string `json:"vpngrp,omitempty"`
+	Utmgrp               string `json:"utmgrp,omitempty"`
+	Wanoptgrp            string `json:"wanoptgrp,omitempty"`
+	Wifi                 string `json:"wifi,omitempty"`
+	AdmintimeoutOverride string `json:"admintimeout-override,omitempty"`
 }
 
 // JSONCreateSystemAdminProfilesOutput contains the output results for Create API function

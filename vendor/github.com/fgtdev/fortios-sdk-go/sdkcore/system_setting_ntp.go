@@ -14,7 +14,7 @@ import (
 type JSONSystemSettingNTP struct {
 	Type      string        `json:"type"`
 	Ntpserver NTPMultValues `json:"ntpserver"`
-	Ntpsync   string        `json:"ntpsync"`
+	Ntpsync   string        `json:"ntpsync,omitempty"`
 }
 
 // JSONCreateSystemSettingNTPOutput contains the output results for Create API function
@@ -101,6 +101,11 @@ func (c *FortiSDKClient) UpdateSystemSettingNTP(params *JSONSystemSettingNTP, mk
 	path := "/api/v2/cmdb/system/ntp"
 	// path += "/" + mkey
 	output = &JSONUpdateSystemSettingNTPOutput{}
+
+	if len(params.Ntpserver) == 0 {
+		params.Ntpserver = make([]NTPMultValue, 0)
+	}
+
 	locJSON, err := json.Marshal(params)
 	if err != nil {
 		log.Fatal(err)

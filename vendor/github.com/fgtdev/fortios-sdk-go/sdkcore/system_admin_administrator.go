@@ -14,37 +14,37 @@ import (
 type JSONSystemAdminAdministrator struct {
 	Name        string     `json:"name"`
 	Password    string     `json:"password"`
-	Trusthost1  string     `json:"trusthost1"`
-	Trusthost2  string     `json:"trusthost2"`
-	Trusthost3  string     `json:"trusthost3"`
-	Trusthost4  string     `json:"trusthost4"`
-	Trusthost5  string     `json:"trusthost5"`
-	Trusthost6  string     `json:"trusthost6"`
-	Trusthost7  string     `json:"trusthost7"`
-	Trusthost8  string     `json:"trusthost8"`
-	Trusthost9  string     `json:"trusthost9"`
-	Trusthost10 string     `json:"trusthost10"`
+	Trusthost1  string     `json:"trusthost1,omitempty"`
+	Trusthost2  string     `json:"trusthost2,omitempty"`
+	Trusthost3  string     `json:"trusthost3,omitempty"`
+	Trusthost4  string     `json:"trusthost4,omitempty"`
+	Trusthost5  string     `json:"trusthost5,omitempty"`
+	Trusthost6  string     `json:"trusthost6,omitempty"`
+	Trusthost7  string     `json:"trusthost7,omitempty"`
+	Trusthost8  string     `json:"trusthost8,omitempty"`
+	Trusthost9  string     `json:"trusthost9,omitempty"`
+	Trusthost10 string     `json:"trusthost10,omitempty"`
 	Accprofile  string     `json:"accprofile"`
 	Comments    string     `json:"comments"`
-	Vdom        MultValues `json:"vdom"`
+	Vdom        MultValues `json:"vdom,omitempty"`
 }
 
 // JSONSystemAdminAdministrator2 contains the parameters for Create and Update API function
 type JSONSystemAdminAdministrator2 struct {
 	Name        string     `json:"name"`
-	Trusthost1  string     `json:"trusthost1"`
-	Trusthost2  string     `json:"trusthost2"`
-	Trusthost3  string     `json:"trusthost3"`
-	Trusthost4  string     `json:"trusthost4"`
-	Trusthost5  string     `json:"trusthost5"`
-	Trusthost6  string     `json:"trusthost6"`
-	Trusthost7  string     `json:"trusthost7"`
-	Trusthost8  string     `json:"trusthost8"`
-	Trusthost9  string     `json:"trusthost9"`
-	Trusthost10 string     `json:"trusthost10"`
+	Trusthost1  string     `json:"trusthost1,omitempty"`
+	Trusthost2  string     `json:"trusthost2,omitempty"`
+	Trusthost3  string     `json:"trusthost3,omitempty"`
+	Trusthost4  string     `json:"trusthost4,omitempty"`
+	Trusthost5  string     `json:"trusthost5,omitempty"`
+	Trusthost6  string     `json:"trusthost6,omitempty"`
+	Trusthost7  string     `json:"trusthost7,omitempty"`
+	Trusthost8  string     `json:"trusthost8,omitempty"`
+	Trusthost9  string     `json:"trusthost9,omitempty"`
+	Trusthost10 string     `json:"trusthost10,omitempty"`
 	Accprofile  string     `json:"accprofile"`
 	Comments    string     `json:"comments"`
-	Vdom        MultValues `json:"vdom"`
+	Vdom        MultValues `json:"vdom,omitempty"`
 }
 
 // JSONCreateSystemAdminAdministratorOutput contains the output results for Create API function
