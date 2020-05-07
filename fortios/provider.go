@@ -13,7 +13,7 @@ func Provider() terraform.ResourceProvider {
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "",
-				Description: "Hostname/IP address of the Fortinet Device to connect to",
+				Description: "Hostname/IP address of the FortiOS to connect to",
 			},
 
 			"token": &schema.Schema{
@@ -42,23 +42,39 @@ func Provider() terraform.ResourceProvider {
 				Default:     "",
 				Description: "",
 			},
-			"username": &schema.Schema{
+
+			"fmg_hostname": &schema.Schema{
+				Type:        schema.TypeString,
+				Optional:    true,
+				Default:     "",
+				Description: "Hostname/IP address of the FortiManager to connect to",
+			},
+
+			"fmg_username": &schema.Schema{
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "",
 				Description: "",
 			},
-			"passwd": &schema.Schema{
+
+			"fmg_passwd": &schema.Schema{
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "",
 				Description: "",
 			},
-			"product": &schema.Schema{
+
+			"fmg_insecure": {
+				Type:        schema.TypeBool,
+				Optional:    true,
+				Description: "",
+			},
+
+			"fmg_cabundlefile": {
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "",
-				Description: "Choose provider: fortios or fortimanager. default is fortios",
+				Description: "CA Bundle file",
 			},
 		},
 
