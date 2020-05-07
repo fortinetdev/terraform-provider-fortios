@@ -1,12 +1,12 @@
 ---
 layout: "fortios"
-page_title: "FortiOS: fortios_fortimanager_system_global"
+page_title: "FortiOS: fortios_fmg_system_global"
 sidebar_current: "docs-fortios-fortimanager-resource-system-global"
 description: |-
   Provides a resource to configure system global setting for FortiManager.
 ---
 
-# fortios_fortimanager_system_global
+# fortios_fmg_system_global
 This resource supports modifying system global setting for FortiManager.
 
 ## Example Usage
@@ -20,7 +20,7 @@ provider "fortios" {
 	cabundlefile = "/path/yourCA.crt"
 }
 
-resource "fortios_fortimanager_system_global" "test1" {
+resource "fortios_fmg_system_global" "test1" {
 	hostname = "FMG-VM64-test"
 	fortianalyzer_status = "disable"
 	adom_status = "disable"

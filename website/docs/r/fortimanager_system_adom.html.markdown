@@ -1,12 +1,12 @@
 ---
 layout: "fortios"
-page_title: "FortiOS: fortios_fortimanager_system_adom"
+page_title: "FortiOS: fortios_fmg_system_adom"
 sidebar_current: "docs-fortios-fortimanager-resource-system-adom"
 description: |-
   Provides a resource to configure system adom for FortiManager.
 ---
 
-# fortios_fortimanager_system_adom
+# fortios_fmg_system_adom
 This resource supports Create/Read/Update/Delete system adom for FortiManager.
 
 ## Example Usage
@@ -20,7 +20,7 @@ provider "fortios" {
 	cabundlefile = "/path/yourCA.crt"
 }
 
-resource "fortios_fortimanager_system_adom" "test1" {
+resource "fortios_fmg_system_adom" "test1" {
 	name = "sys_adom_test"
 	type = "FortiCarrier"
 	central_management_vpn = false

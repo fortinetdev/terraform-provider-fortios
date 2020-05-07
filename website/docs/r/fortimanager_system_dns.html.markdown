@@ -1,12 +1,12 @@
 ---
 layout: "fortios"
-page_title: "FortiOS: fortios_fortimanager_system_dns"
+page_title: "FortiOS: fortios_fmg_system_dns"
 sidebar_current: "docs-fortios-fortimanager-resource-system-dns"
 description: |-
   Provides a resource to configure system dns setting for FortiManager.
 ---
 
-# fortios_fortimanager_system_dns
+# fortios_fmg_system_dns
 This resource supports modifying system dns setting for FortiManager.
 
 ## Example Usage
@@ -20,7 +20,7 @@ provider "fortios" {
 	cabundlefile = "/path/yourCA.crt"
 }
 
-resource "fortios_fortimanager_system_dns" "test1" {
+resource "fortios_fmg_system_dns" "test1" {
 	primary = "208.91.112.52"
 	secondary = "208.91.112.54"
 }
