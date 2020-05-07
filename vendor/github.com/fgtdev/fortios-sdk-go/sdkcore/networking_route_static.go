@@ -13,16 +13,16 @@ import (
 
 // JSONNetworkingRouteStatic contains the parameters for Create and Update API function
 type JSONNetworkingRouteStatic struct {
-	Dst             string `json:"dst"`
+	Dst             string `json:"dst,omitempty"`
 	Gateway         string `json:"gateway"`
-	Blackhole       string `json:"blackhole"`
-	Distance        string `json:"distance"`
-	Weight          string `json:"weight"`
-	Priority        string `json:"priority"`
+	Blackhole       string `json:"blackhole,omitempty"`
+	Distance        string `json:"distance,omitempty"`
+	Weight          string `json:"weight,omitempty"`
+	Priority        string `json:"priority,omitempty"`
 	Device          string `json:"device"`
 	Comment         string `json:"comment"`
-	Status          string `json:"status"`
-	InternetService int    `json:"internet-service"`
+	Status          string `json:"status,omitempty"`
+	InternetService int    `json:"internet-service,omitempty"`
 }
 
 // JSONCreateNetworkingRouteStaticOutput contains the output results for Create API function

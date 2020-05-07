@@ -14,12 +14,12 @@ import (
 // JSONLogSyslogSetting contains the parameters for Create and Update API function
 type JSONLogSyslogSetting struct {
 	Status   string `json:"status"`
-	Server   string `json:"server"`
-	Mode     string `json:"mode"`
-	Port     string `json:"port"`
-	Facility string `json:"facility"`
-	SourceIP string `json:"source-ip"`
-	Format   string `json:"format"`
+	Server   string `json:"server,omitempty"`
+	Mode     string `json:"mode,omitempty"`
+	Port     string `json:"port,omitempty"`
+	Facility string `json:"facility,omitempty"`
+	SourceIP string `json:"source-ip,omitempty"`
+	Format   string `json:"format,omitempty"`
 }
 
 // JSONCreateLogSyslogSettingOutput contains the output results for Create API function

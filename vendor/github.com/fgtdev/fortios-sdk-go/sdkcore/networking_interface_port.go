@@ -14,26 +14,26 @@ import (
 // JSONNetworkingInterfacePort contains the parameters for Create and Update API function
 type JSONNetworkingInterfacePort struct {
 	// Portname          string `json:"portname"`
-	Ipf                  string `json:"ip"`
-	Alias                string `json:"alias"`
-	Status               string `json:"status"`
-	DeviceIdentification string `json:"device-identification"`
-	TCPMss               string `json:"tcp-mss"`
-	Speed                string `json:"speed"`
-	MtuOverride          string `json:"mtu-override"`
-	Mtu                  string `json:"mtu"`
-	Role                 string `json:"role"`
-	Allowaccess          string `json:"allowaccess"`
-	Mode                 string `json:"mode"`
-	DNSServerOverride    string `json:"dns-server-override"`
-	Defaultgw            string `json:"defaultgw"`
-	Distance             string `json:"distance"`
+	Ipf                  string `json:"ip,omitempty"`
+	Alias                string `json:"alias,omitempty"`
+	Status               string `json:"status,omitempty"`
+	DeviceIdentification string `json:"device-identification,omitempty"`
+	TCPMss               string `json:"tcp-mss,omitempty"`
+	Speed                string `json:"speed,omitempty"`
+	MtuOverride          string `json:"mtu-override,omitempty"`
+	Mtu                  string `json:"mtu,omitempty"`
+	Role                 string `json:"role,omitempty"`
+	Allowaccess          string `json:"allowaccess,omitempty"`
+	Mode                 string `json:"mode,omitempty"`
+	DNSServerOverride    string `json:"dns-server-override,omitempty"`
+	Defaultgw            string `json:"defaultgw,omitempty"`
+	Distance             string `json:"distance,omitempty"`
 	Description          string `json:"description"`
 	Type                 string `json:"type"`
-	Interface            string `json:"interface"`
+	Interface            string `json:"interface,omitempty"`
 	Name                 string `json:"name"`
-	Vdom                 string `json:"vdom"`
-	Vlanid               string `json:"vlanid"`
+	Vdom                 string `json:"vdom,omitempty"`
+	Vlanid               string `json:"vlanid,omitempty"`
 }
 
 // JSONCreateNetworkingInterfacePortOutput contains the output results for Create API function

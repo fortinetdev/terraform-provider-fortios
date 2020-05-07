@@ -14,15 +14,15 @@ import (
 type JSONVPNIPsecPhase2Interface struct {
 	Name        string `json:"name"`
 	Phase1name  string `json:"phase1name"`
-	Proposal    string `json:"proposal"`
+	Proposal    string `json:"proposal,omitempty"`
 	Comments    string `json:"comments"`
-	SrcAddrType string `json:"src-addr-type"`
+	SrcAddrType string `json:"src-addr-type,omitempty"`
 	SrcStartIP  string `json:"src-start-ip,omitempty"`
 	SrcEndIP    string `json:"src-end-ip,omitempty"`
 	SrcSubnet   string `json:"src-subnet,omitempty"`
-	DstAddrType string `json:"dst-addr-type"`
-	SrcName     string `json:"src-name"`
-	DstName     string `json:"dst-name"`
+	DstAddrType string `json:"dst-addr-type,omitempty"`
+	SrcName     string `json:"src-name,omitempty"`
+	DstName     string `json:"dst-name,omitempty"`
 	DstStartIP  string `json:"dst-start-ip,omitempty"`
 	DstEndIP    string `json:"dst-end-ip,omitempty"`
 	DstSubnet   string `json:"dst-subnet,omitempty"`

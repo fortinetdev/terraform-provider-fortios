@@ -15,22 +15,22 @@ type JSONVPNIPsecPhase1Interface struct {
 	Name                string     `json:"name"`
 	Type                string     `json:"type"`
 	Interface           string     `json:"interface"`
-	Peertype            string     `json:"peertype"`
-	Proposal            string     `json:"proposal"`
+	Peertype            string     `json:"peertype,omitempty"`
+	Proposal            string     `json:"proposal,omitempty"`
 	Comments            string     `json:"comments"`
-	WizardType          string     `json:"wizard-type"`
+	WizardType          string     `json:"wizard-type,omitempty"`
 	RemoteGw            string     `json:"remote-gw"`
 	Psksecret           string     `json:"psksecret"`
-	Certificate         MultValues `json:"certificate"`
-	Peerid              string     `json:"peerid"`
-	Peer                string     `json:"peer"`
-	Peergrp             string     `json:"peergrp"`
-	IPv4SplitInclude    string     `json:"ipv4-split-include"`
-	SplitIncludeService string     `json:"split-include-service"`
-	IPv4SplitExclude    string     `json:"ipv4-split-exclude"`
-	ModeCfg             string     `json:"mode-cfg"`
-	Authmethod          string     `json:"authmethod"`
-	AuthmethodRemote    string     `json:"authmethod-remote"`
+	Certificate         MultValues `json:"certificate,omitempty"`
+	Peerid              string     `json:"peerid,omitempty"`
+	Peer                string     `json:"peer,omitempty"`
+	Peergrp             string     `json:"peergrp,omitempty"`
+	IPv4SplitInclude    string     `json:"ipv4-split-include,omitempty"`
+	SplitIncludeService string     `json:"split-include-service,omitempty"`
+	IPv4SplitExclude    string     `json:"ipv4-split-exclude,omitempty"`
+	ModeCfg             string     `json:"mode-cfg,omitempty"`
+	Authmethod          string     `json:"authmethod,omitempty"`
+	AuthmethodRemote    string     `json:"authmethod-remote,omitempty"`
 }
 
 // JSONCreateVPNIPsecPhase1InterfaceOutput contains the output results for Create API function

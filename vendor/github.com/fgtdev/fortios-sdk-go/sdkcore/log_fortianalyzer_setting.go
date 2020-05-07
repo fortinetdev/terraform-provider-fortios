@@ -13,12 +13,12 @@ import (
 // JSONLogFortiAnalyzerSetting contains the parameters for Create and Update API function
 type JSONLogFortiAnalyzerSetting struct {
 	Status        string `json:"status"`
-	Server        string `json:"server"`
-	SourceIP      string `json:"source-ip"`
-	UploadOption  string `json:"upload-option"`
-	Reliable      string `json:"reliable"`
-	HmacAlgorithm string `json:"hmac-algorithm"`
-	EncAlgorithm  string `json:"enc-algorithm"`
+	Server        string `json:"server,omitempty"`
+	SourceIP      string `json:"source-ip,omitempty"`
+	UploadOption  string `json:"upload-option,omitempty"`
+	Reliable      string `json:"reliable,omitempty"`
+	HmacAlgorithm string `json:"hmac-algorithm,omitempty"`
+	EncAlgorithm  string `json:"enc-algorithm,omitempty"`
 }
 
 // JSONCreateLogFortiAnalyzerSettingOutput contains the output results for Create API function
