@@ -54,7 +54,12 @@ func (c *FortiSDKClient) CreateLogSyslogSetting(params *JSONLogSyslogSetting) (o
 	}
 
 	bytes := bytes.NewBuffer(locJSON)
-	req := c.NewRequest(HTTPMethod, path, nil, bytes)
+	e, req := c.NewRequest(HTTPMethod, path, nil, bytes)
+	if e != nil {
+		err = fmt.Errorf("new request error %s", e)
+		return
+	}
+	
 	err = req.Send()
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
@@ -128,7 +133,12 @@ func (c *FortiSDKClient) UpdateLogSyslogSetting(params *JSONLogSyslogSetting, mk
 
 	log.Printf("FOS-fortios params: %v", params)
 	bytes := bytes.NewBuffer(locJSON)
-	req := c.NewRequest(HTTPMethod, path, nil, bytes)
+	e, req := c.NewRequest(HTTPMethod, path, nil, bytes)
+	if e != nil {
+		err = fmt.Errorf("new request error %s", e)
+		return
+	}
+	
 	err = req.Send()
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
@@ -194,7 +204,12 @@ func (c *FortiSDKClient) DeleteLogSyslogSetting(mkey string) (err error) {
 	path := "/api/v2/cmdb/log.syslogd/setting"
 	// path += "/" + mkey
 
-	req := c.NewRequest(HTTPMethod, path, nil, nil)
+	e, req := c.NewRequest(HTTPMethod, path, nil, nil)
+	if e != nil {
+		err = fmt.Errorf("new request error %s", e)
+		return
+	}
+	
 	err = req.Send()
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
@@ -255,7 +270,12 @@ func (c *FortiSDKClient) ReadLogSyslogSetting(mkey string) (output *JSONLogSyslo
 
 	output = &JSONLogSyslogSetting{}
 
-	req := c.NewRequest(HTTPMethod, path, nil, nil)
+	e, req := c.NewRequest(HTTPMethod, path, nil, nil)
+	if e != nil {
+		err = fmt.Errorf("new request error %s", e)
+		return
+	}
+	
 	err = req.Send()
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
