@@ -152,7 +152,7 @@ provider "fortios" {
 	cabundlefile = "/path/yourCA.crt"
 }
 
-resource "fortios_fortimanager_system_dns" "test1" {
+resource "fortios_fmg_system_dns" "test1" {
 	primary = "208.91.112.52"
 	secondary = "208.91.112.54"
 }
@@ -217,7 +217,7 @@ provider "fortios" {
 	cabundlefile = "/path/yourCA.crt"
 }
 
-resource "fortios_fortimanager_system_dns" "test1" {
+resource "fortios_fmg_system_dns" "test1" {
 	primary = "208.91.112.33"
 	secondary = "208.91.112.44"
 }
@@ -236,7 +236,7 @@ provider "fortios" {
 	insecure = true
 }
 
-resource "fortios_fortimanager_devicemanager_script" "test1" {
+resource "fortios_fmg_devicemanager_script" "test1" {
 	name = "config-intf3"
 	description = "configure interface3"
 	content = "config system interface \n edit port3 \n\t set vdom \"root\"\n\t set ip 10.10.0.200 255.255.0.0 \n\t set allowaccess ping http https\n\t next \n end"
@@ -244,15 +244,15 @@ resource "fortios_fortimanager_devicemanager_script" "test1" {
 	adom = "test-adom"
 }
 
-resource "fortios_fortimanager_devicemanager_script_execute" "test1" {
-	script_name = fortios_fortimanager_devicemanager_script.test1.name
+resource "fortios_fmg_devicemanager_script_execute" "test1" {
+	script_name = fortios_fmg_devicemanager_script.test1.name
 	target_devname = "FGVM64-test"
 	adom = "test-adom"
 	vdom = "root"
 }
 
-resource "fortios_fortimanager_devicemanager_install_device" "test1" {
-	target_devname = fortios_fortimanager_devicemanager_script_execute.test1.target_devname
+resource "fortios_fmg_devicemanager_install_device" "test1" {
+	target_devname = fortios_fmg_devicemanager_script_execute.test1.target_devname
 	adom = "test-adom"
 	vdom = "root"
 }
