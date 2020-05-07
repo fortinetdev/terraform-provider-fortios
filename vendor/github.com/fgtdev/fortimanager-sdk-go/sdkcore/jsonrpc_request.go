@@ -2,6 +2,7 @@ package fmgclient
 
 import (
 	"fmt"
+	"encoding/json"
 )
 
 // HandleJSONRPCRequest is for handling json rpc request
@@ -10,7 +11,7 @@ import (
 // Output:
 //   @data: return data when executing "read" operation
 //   @err: error details if failure, and nil if success
-func (c *FmgSDKClient) HandleJSONRPCRequest(p map[string]interface{}) (data map[string]interface{}, err error) {
+func (c *FmgSDKClient) HandleJSONRPCRequest(p map[string]interface{}) (t []byte, err error) {
 	defer c.Trace("HandleJSONRPCRequest")()
 
 	method := p["method"].(string)

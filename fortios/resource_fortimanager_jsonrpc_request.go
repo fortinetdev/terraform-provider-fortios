@@ -27,7 +27,7 @@ func resourceFortimanagerJSONRPCRequest() *schema.Resource {
 			"output_file": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "./jsonrpc_output.txt",
+				Default:  "jsonrpc_output.txt",
 			},
 		},
 	}
@@ -56,12 +56,7 @@ func handleFMGJSONRPCRequest(d *schema.ResourceData, m interface{}) error {
 		}
 		defer file.Close()
 
-		j, err := json.MarshalIndent(data, "", "    ")
-		if err != nil {
-			return fmt.Errorf("Error handling JSON RPC Request : %s", err)
-		}
-
-		_, err = file.Write(j)
+		_, err = file.Write(data)
 		if err != nil {
 			return fmt.Errorf("Error handling JSON RPC Request : %s", err)
 		}

@@ -25,6 +25,8 @@ type FmgSDKClient struct {
 	Passwd string
 	Debug  string
 	Client *http.Client
+	SessionString	string
+	DebugNum	int
 }
 
 // NewClient is for creating new client
@@ -171,17 +173,11 @@ func (c *FmgSDKClient) Logout(s string) (err error) {
 //   @output: result infor got back
 //   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) Do(method string, params map[string]interface{}) (output map[string]interface{}, err error) {
-	session, err := c.Login()
-	if err != nil {
-		return nil, fmt.Errorf("Executing failed", err)
-	}
-	//defer c.Logout(session)
-
 	req := &Request{
 		Id:      1,
 		Method:  method,
 		Params:  [1]interface{}{params},
-		Session: session,
+		Session: c.SessionString,//session,
 	}
 
 	output, err = c.Execute(req)
