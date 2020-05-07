@@ -1,12 +1,12 @@
 ---
 layout: "fortios"
-page_title: "FortiOS: fortios_fortimanager_system_admin_user"
+page_title: "FortiOS: fortios_fmg_system_admin_user"
 sidebar_current: "docs-fortios-fortimanager-resource-system-admin-user"
 description: |-
   Provides a resource to configure system admin user for FortiManager.
 ---
 
-# fortios_fortimanager_system_admin_user
+# fortios_fmg_system_admin_user
 This resource supports Create/Read/Update/Delete admin user for FortiManager
 
 ## Example Usage
@@ -20,7 +20,7 @@ provider "fortios" {
 	cabundlefile = "/path/yourCA.crt"
 }
 
-resource "fortios_fortimanager_system_admin_user" "test1" {
+resource "fortios_fmg_system_admin_user" "test1" {
 	userid = "user1"
 	password = "123"
 	description = "local user"
@@ -30,7 +30,7 @@ resource "fortios_fortimanager_system_admin_user" "test1" {
 	trusthost1 = "1.1.1.1 255.255.255.255"
 }
 
-resource "fortios_fortimanager_system_admin_user" "test2" {
+resource "fortios_fmg_system_admin_user" "test2" {
 	userid = "user2"
 	password = "098"
 	description = "api user"

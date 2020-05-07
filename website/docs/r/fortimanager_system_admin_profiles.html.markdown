@@ -1,12 +1,12 @@
 ---
 layout: "fortios"
-page_title: "FortiOS: fortios_fortimanager_system_admin_profiles"
+page_title: "FortiOS: fortios_fmg_system_admin_profiles"
 sidebar_current: "docs-fortios-fortimanager-resource-system-admin-profiles"
 description: |-
   Provides a resource to configure system admin profiles for FortiManager.
 ---
 
-# fortios_fortimanager_system_admin_profiles
+# fortios_fmg_system_admin_profiles
 This resource supports Create/Read/Update/Delete admin profiles for FortiManager
 
 ## Example Usage
@@ -20,7 +20,7 @@ provider "fortios" {
 	cabundlefile = "/path/yourCA.crt"
 }
 
-resource "fortios_fortimanager_system_admin_profiles" "test1" {
+resource "fortios_fmg_system_admin_profiles" "test1" {
 	profileid = "terraform-test1"
 	description = "11"
 	system_setting = "read"

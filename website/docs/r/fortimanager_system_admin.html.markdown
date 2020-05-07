@@ -1,12 +1,12 @@
 ---
 layout: "fortios"
-page_title: "FortiOS: fortios_fortimanager_system_admin"
+page_title: "FortiOS: fortios_fmg_system_admin"
 sidebar_current: "docs-fortios-fortimanager-resource-system-admin"
 description: |-
   Provides a resource to configure system admin setting for FortiManager.
 ---
 
-# fortios_fortimanager_system_admin
+# fortios_fmg_system_admin
 This resource supports modifying system admin setting for FortiManager.
 
 ## Example Usage
@@ -20,7 +20,7 @@ provider "fortios" {
 	cabundlefile = "/path/yourCA.crt"
 }
 
-resource "fortios_fortimanager_system_admin" "test1" {
+resource "fortios_fmg_system_admin" "test1" {
 	http_port    = 80
 	https_port   = 443
 	idle_timeout = 20
