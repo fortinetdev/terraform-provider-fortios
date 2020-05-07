@@ -27,6 +27,7 @@ type FmgSDKClient struct {
 	Client *http.Client
 	SessionString	string
 	DebugNum	int
+	Init	bool
 }
 
 // NewClient is for creating new client
@@ -46,6 +47,7 @@ func NewClient(ip, user, passwd string, client *http.Client) *FmgSDKClient {
 		Passwd: passwd,
 		Client: client,
 		Debug:  d,
+		Init: false,
 	}
 }
 
@@ -173,6 +175,10 @@ func (c *FmgSDKClient) Logout(s string) (err error) {
 //   @output: result infor got back
 //   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) Do(method string, params map[string]interface{}) (output map[string]interface{}, err error) {
+	if c.Init == false {
+		err = fmt.Errorf("FortiManager connection did not initialize successfully!", err)
+		return nil, err
+	}
 	req := &Request{
 		Id:      1,
 		Method:  method,
