@@ -43,12 +43,12 @@ func resourceVPNIPsecPhase1Interface() *schema.Resource {
 			"peertype": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "any",
+				Computed: true,
 			},
 			"proposal": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "aes128-sha256 aes256-sha256 aes128-sha1 aes256-sha1",
+				Computed: true,
 			},
 			"comments": &schema.Schema{
 				Type:     schema.TypeString,
@@ -58,11 +58,12 @@ func resourceVPNIPsecPhase1Interface() *schema.Resource {
 			"wizard_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "custom",
+				Computed: true,
 			},
 			"certificate": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
+				Computed: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
@@ -70,47 +71,47 @@ func resourceVPNIPsecPhase1Interface() *schema.Resource {
 			"peerid": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "",
+				Computed: true,
 			},
 			"peer": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "",
+				Computed: true,
 			},
 			"peergrp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "",
+				Computed: true,
 			},
 			"ipv4_split_include": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "",
+				Computed: true,
 			},
 			"split_include_service": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "",
+				Computed: true,
 			},
 			"ipv4_split_exclude": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "",
+				Computed: true,
 			},
 			"mode_cfg": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "disable",
+				Computed: true,
 			},
 			"authmethod": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "psk",
+				Computed: true,
 			},
 			"authmethod_remote": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "",
+				Computed: true,
 			},
 		},
 	}

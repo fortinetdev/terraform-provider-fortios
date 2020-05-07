@@ -24,7 +24,7 @@ func resourceNetworkingRouteStatic() *schema.Resource {
 			"dst": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0.0.0.0 0.0.0.0",
+				Computed: true,
 			},
 			"gateway": &schema.Schema{
 				Type:     schema.TypeString,
@@ -33,22 +33,22 @@ func resourceNetworkingRouteStatic() *schema.Resource {
 			"blackhole": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "disable",
+				Computed: true,
 			},
 			"distance": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "10",
+				Computed: true,
 			},
 			"weight": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0",
+				Computed: true,
 			},
 			"priority": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0",
+				Computed: true,
 			},
 			"device": &schema.Schema{
 				Type:     schema.TypeString,
@@ -62,11 +62,12 @@ func resourceNetworkingRouteStatic() *schema.Resource {
 			"internet_service": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
+				Computed: true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "enable",
+				Computed: true,
 			},
 		},
 	}

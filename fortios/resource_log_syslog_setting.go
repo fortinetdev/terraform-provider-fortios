@@ -27,32 +27,32 @@ func resourceLogSyslogSetting() *schema.Resource {
 			"server": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0.0.0.0",
+				Computed: true,
 			},
 			"mode": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "udp",
+				Computed: true,
 			},
 			"port": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "514",
+				Computed: true,
 			},
 			"facility": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "local7",
+				Computed: true,
 			},
 			"source_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "",
+				Computed: true,
 			},
 			"format": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "default",
+				Computed: true,
 			},
 		},
 	}

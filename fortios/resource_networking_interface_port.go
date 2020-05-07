@@ -31,72 +31,72 @@ func resourceNetworkingInterfacePort() *schema.Resource {
 			"ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0.0.0.0 0.0.0.0",
+				Computed: true,
 			},
 			"alias": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "",
+				Computed: true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "up",
+				Computed: true,
 			},
 			"device_identification": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "disable",
+				Computed: true,
 			},
 			"tcp_mss": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0",
+				Computed: true,
 			},
 			"speed": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "auto",
+				Computed: true,
 			},
 			"mtu_override": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "enable",
+				Computed: true,
 			},
 			"mtu": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "1500",
+				Computed: true,
 			},
 			"role": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "undefined",
+				Computed: true,
 			},
 			"allowaccess": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "ping https ssh",
+				Computed: true,
 			},
 			"mode": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "dhcp",
+				Computed: true,
 			},
 			"dns_server_override": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "enable",
+				Computed: true,
 			},
 			"defaultgw": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "enable",
+				Computed: true,
 			},
 			"distance": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "5",
+				Computed: true,
 			},
 			"description": &schema.Schema{
 				Type:     schema.TypeString,
@@ -106,17 +106,17 @@ func resourceNetworkingInterfacePort() *schema.Resource {
 			"interface": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "",
+				Computed: true,
 			},
 			"vdom": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "root",
+				Computed: true,
 			},
 			"vlanid": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0",
+				Computed: true,
 			},
 		},
 	}

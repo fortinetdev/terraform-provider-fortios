@@ -31,7 +31,7 @@ func resourceVPNIPsecPhase2Interface() *schema.Resource {
 			"proposal": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "aes128-sha1 aes256-sha1 aes128-sha256 aes256-sha256 aes128gcm aes256gcm chacha20poly1305",
+				Computed: true,
 			},
 			"comments": &schema.Schema{
 				Type:     schema.TypeString,
@@ -41,37 +41,37 @@ func resourceVPNIPsecPhase2Interface() *schema.Resource {
 			"src_addr_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "subnet",
+				Computed: true,
 			},
 			"src_start_ip": &schema.Schema{
 				Type:     schema.TypeString,
-				Computed: true,
 				Optional: true,
+				Computed: true,
 			},
 			"src_end_ip": &schema.Schema{
 				Type:     schema.TypeString,
-				Computed: true,
 				Optional: true,
+				Computed: true,
 			},
 			"src_subnet": &schema.Schema{
 				Type:     schema.TypeString,
-				Computed: true,
 				Optional: true,
+				Computed: true,
 			},
 			"dst_addr_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "subnet",
+				Computed: true,
 			},
 			"src_name": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "",
+				Computed: true,
 			},
 			"dst_name": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "",
+				Computed: true,
 			},
 			"dst_start_ip": &schema.Schema{
 				Type:     schema.TypeString,
