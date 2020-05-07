@@ -52,6 +52,11 @@ func resourceFirewallObjectIPPool() *schema.Resource {
 
 func resourceFirewallObjectIPPoolCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Get Params from d
@@ -88,6 +93,11 @@ func resourceFirewallObjectIPPoolUpdate(d *schema.ResourceData, m interface{}) e
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Get Params from d
@@ -121,6 +131,11 @@ func resourceFirewallObjectIPPoolDelete(d *schema.ResourceData, m interface{}) e
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Call process by sdk
@@ -143,6 +158,11 @@ func resourceFirewallObjectIPPoolRead(d *schema.ResourceData, m interface{}) err
 	}
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Call process by sdk

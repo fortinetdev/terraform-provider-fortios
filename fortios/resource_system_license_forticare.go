@@ -26,6 +26,11 @@ func resourceSystemLicenseFortiCare() *schema.Resource {
 
 func resourceSystemLicenseFortiCareCreateUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Get Params from d
@@ -56,6 +61,11 @@ func resourceSystemLicenseFortiCareRead(d *schema.ResourceData, m interface{}) e
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Call process by sdk

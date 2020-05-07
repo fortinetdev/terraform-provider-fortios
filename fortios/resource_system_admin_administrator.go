@@ -100,6 +100,11 @@ func resourceSystemAdminAdministrator() *schema.Resource {
 
 func resourceSystemAdminAdministratorCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Get Params from d
@@ -170,6 +175,11 @@ func resourceSystemAdminAdministratorUpdate(d *schema.ResourceData, m interface{
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Get Params from d
@@ -236,6 +246,11 @@ func resourceSystemAdminAdministratorDelete(d *schema.ResourceData, m interface{
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Call process by sdk
@@ -254,6 +269,11 @@ func resourceSystemAdminAdministratorRead(d *schema.ResourceData, m interface{})
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Call process by sdk

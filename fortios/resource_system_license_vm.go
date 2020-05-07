@@ -25,6 +25,11 @@ func resourceSystemLicenseVM() *schema.Resource {
 
 func resourceSystemLicenseVMCreateUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Get Params from d

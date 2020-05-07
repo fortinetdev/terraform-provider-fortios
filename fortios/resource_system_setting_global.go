@@ -57,6 +57,11 @@ func resourceSystemSettingGlobalCreateUpdate(d *schema.ResourceData, m interface
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Get Params from d
@@ -97,6 +102,11 @@ func resourceSystemSettingGlobalRead(d *schema.ResourceData, m interface{}) erro
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Call process by sdk

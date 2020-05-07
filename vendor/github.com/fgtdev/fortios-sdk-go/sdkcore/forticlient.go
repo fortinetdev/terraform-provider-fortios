@@ -55,7 +55,10 @@ func NewClient(auth *auth.Auth, client *http.Client) *FortiSDKClient {
 	c.Config.Auth = auth
 	c.Config.HTTPCon = client
 	c.Config.FwTarget = auth.Hostname
+	c.Init = false;
 
+	return c
+}
 
 // NewEmptyClient initializes a new global empty plugin client
 // It returns the created client object

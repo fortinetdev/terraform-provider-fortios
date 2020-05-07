@@ -33,6 +33,11 @@ func resourceFirewallSecurityPolicySeq() *schema.Resource {
 
 func resourceFirewallSecurityPolicySeqCreateUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Get Params from d
@@ -58,12 +63,20 @@ func resourceFirewallSecurityPolicySeqCreateUpdate(d *schema.ResourceData, m int
 func resourceFirewallSecurityPolicySeqRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	return c.ReadFirewallSecurityPolicySeq()
 }
 
 // Not suitable operation
 func resourceFirewallSecurityPolicySeqDel(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
 
 	return c.DelFirewallSecurityPolicySeq()
 }

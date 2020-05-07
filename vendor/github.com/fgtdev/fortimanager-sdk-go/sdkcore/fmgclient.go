@@ -57,6 +57,7 @@ func NewEmptyClient() *FmgSDKClient {
 	}
 }
 
+
 // Execute is for sending the http request to FortiManager
 // Input:
 //   @req: http request
@@ -182,7 +183,7 @@ func (c *FmgSDKClient) Logout(s string) (err error) {
 //   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) Do(method string, params map[string]interface{}) (output map[string]interface{}, err error) {
 	if c.Init == false {
-		err = fmt.Errorf("FortiManager connection did not initialize successfully!", err)
+		err = fmt.Errorf("FortiManager connection did not initialize successfully!")
 		return nil, err
 	}
 	req := &Request{

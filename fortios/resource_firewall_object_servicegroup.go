@@ -42,6 +42,11 @@ func resourceFirewallObjectServiceGroup() *schema.Resource {
 
 func resourceFirewallObjectServiceGroupCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Get Params from d
@@ -84,6 +89,11 @@ func resourceFirewallObjectServiceGroupUpdate(d *schema.ResourceData, m interfac
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Get Params from d
@@ -123,6 +133,11 @@ func resourceFirewallObjectServiceGroupDelete(d *schema.ResourceData, m interfac
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Call process by sdk
@@ -145,6 +160,11 @@ func resourceFirewallObjectServiceGroupRead(d *schema.ResourceData, m interface{
 	}
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Call process by sdk
