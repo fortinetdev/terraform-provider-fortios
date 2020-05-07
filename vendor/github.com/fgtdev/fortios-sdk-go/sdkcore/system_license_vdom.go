@@ -56,7 +56,12 @@ func (c *FortiSDKClient) CreateSystemLicenseVDOM(params *JSONSystemLicenseVDOM) 
 	// }
 
 	bytes := bytes.NewBuffer(locJSON)
-	req := c.NewRequest(HTTPMethod, path, nil, bytes)
+	e, req := c.NewRequest(HTTPMethod, path, nil, bytes)
+	if e != nil {
+		err = fmt.Errorf("new request error %s", e)
+		return
+	}
+	
 	err = req.Send()
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
@@ -129,7 +134,7 @@ func (c *FortiSDKClient) UpdateSystemLicenseVDOM(params *JSONSystemLicenseVDOM, 
 	// }
 
 	// bytes := bytes.NewBuffer(locJSON)
-	// req := c.NewRequest(HTTPMethod, path, nil, bytes)
+	// e, req := c.NewRequest(HTTPMethod, path, nil, bytes)
 	// err = req.Send()
 
 	// body, err := ioutil.ReadAll(req.HTTPResponse.Body)
@@ -176,7 +181,7 @@ func (c *FortiSDKClient) DeleteSystemLicenseVDOM(mkey string) (err error) {
 	// path := "/api/v2/monitor/registration/vdom/add-license"
 	// path += "/" + mkey
 
-	// req := c.NewRequest(HTTPMethod, path, nil, nil)
+	// e, req := c.NewRequest(HTTPMethod, path, nil, nil)
 	// err = req.Send()
 
 	// body, err := ioutil.ReadAll(req.HTTPResponse.Body)
@@ -217,7 +222,12 @@ func (c *FortiSDKClient) ReadSystemLicenseVDOM(mkey string) (output *JSONSystemL
 
 	output = &JSONSystemLicenseVDOM{}
 
-	req := c.NewRequest(HTTPMethod, path, nil, nil)
+	e, req := c.NewRequest(HTTPMethod, path, nil, nil)
+	if e != nil {
+		err = fmt.Errorf("new request error %s", e)
+		return
+	}
+	
 	err = req.Send()
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)

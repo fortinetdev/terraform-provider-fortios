@@ -46,7 +46,7 @@ func (c *FortiSDKClient) CreateSystemSettingDNS(params *JSONSystemSettingDNS) (o
 	// }
 
 	// bytes := bytes.NewBuffer(locJSON)
-	// req := c.NewRequest(HTTPMethod, path, nil, bytes)
+	// e, req := c.NewRequest(HTTPMethod, path, nil, bytes)
 	// err = req.Send()
 
 	// body, err := ioutil.ReadAll(req.HTTPResponse.Body)
@@ -100,7 +100,12 @@ func (c *FortiSDKClient) UpdateSystemSettingDNS(params *JSONSystemSettingDNS, mk
 	}
 
 	bytes := bytes.NewBuffer(locJSON)
-	req := c.NewRequest(HTTPMethod, path, nil, bytes)
+	e, req := c.NewRequest(HTTPMethod, path, nil, bytes)
+	if e != nil {
+		err = fmt.Errorf("new request error %s", e)
+		return
+	}
+	
 	err = req.Send()
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
@@ -164,7 +169,7 @@ func (c *FortiSDKClient) DeleteSystemSettingDNS(mkey string) (err error) {
 	// path := "/api/v2/cmdb/system/dns"
 	// // path += "/" + mkey
 
-	// req := c.NewRequest(HTTPMethod, path, nil, nil)
+	// e, req := c.NewRequest(HTTPMethod, path, nil, nil)
 	// err = req.Send()
 
 	// body, err := ioutil.ReadAll(req.HTTPResponse.Body)
@@ -205,7 +210,12 @@ func (c *FortiSDKClient) ReadSystemSettingDNS(mkey string) (output *JSONSystemSe
 
 	output = &JSONSystemSettingDNS{}
 
-	req := c.NewRequest(HTTPMethod, path, nil, nil)
+	e, req := c.NewRequest(HTTPMethod, path, nil, nil)
+	if e != nil {
+		err = fmt.Errorf("new request error %s", e)
+		return
+	}
+	
 	err = req.Send()
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
