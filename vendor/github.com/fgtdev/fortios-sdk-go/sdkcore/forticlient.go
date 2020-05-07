@@ -104,6 +104,19 @@ func (c *FortiSDKClient) GetDeviceVersion() (version string, err error) {
 	return "", err
 }
 
+func fortiAPIHttpStatus404Checking(result map[string]interface{}) (b404 bool) {
+	b404 = false;
+
+	if result != nil {
+		if result["http_status"] != nil && result["http_status"] == 404.0 {
+				b404 = true
+				return
+		}
+	}
+
+	return
+}
+
 func fortiAPIErrorFormat(result map[string]interface{}, body string) (err error) {
 	if result != nil {
 		if result["status"] != nil {
@@ -115,25 +128,25 @@ func fortiAPIErrorFormat(result map[string]interface{}, body string) (err error)
 			if result["http_status"] != nil {
 				// 200	OK: Request returns successful
 				if result["http_status"] == 400.0 {
-					err = fmt.Errorf("Bad Request - Request cannot be processed by the API")
+					err = fmt.Errorf("Bad Request - Request cannot be processed by the API (%.0f)", result["http_status"])
 				} else if result["http_status"] == 401.0 {
-					err = fmt.Errorf("Not Authorized - Request without successful login session")
+					err = fmt.Errorf("Not Authorized - Request without successful login session (%.0f)", result["http_status"])
 				} else if result["http_status"] == 403.0 {
-					err = fmt.Errorf("Forbidden - Request is missing CSRF token or administrator is missing access profile permissions")
+					err = fmt.Errorf("Forbidden - Request is missing CSRF token or administrator is missing access profile permissions (%.0f)", result["http_status"])
 				} else if result["http_status"] == 404.0 {
-					err = fmt.Errorf("Resource Not Found - Unable to find the specified resource")
+					err = fmt.Errorf("Resource Not Found - Unable to find the specified resource (%.0f)", result["http_status"])
 				} else if result["http_status"] == 405.0 {
-					err = fmt.Errorf("Method Not Allowed - Specified HTTP method is not allowed for this resource")
+					err = fmt.Errorf("Method Not Allowed - Specified HTTP method is not allowed for this resource (%.0f)", result["http_status"])
 				} else if result["http_status"] == 413.0 {
-					err = fmt.Errorf("Request Entity Too Large - Request cannot be processed due to large entity")
+					err = fmt.Errorf("Request Entity Too Large - Request cannot be processed due to large entity (%.0f)", result["http_status"])
 				} else if result["http_status"] == 424.0 {
-					err = fmt.Errorf("Failed Dependency - Fail dependency can be duplicate resource, missing required parameter, missing required attribute, invalid attribute value")
+					err = fmt.Errorf("Failed Dependency - Fail dependency can be duplicate resource, missing required parameter, missing required attribute, invalid attribute value (%.0f)", result["http_status"])
 				} else if result["http_status"] == 429.0 {
-					err = fmt.Errorf("Access temporarily blocked - Maximum failed authentications reached. The offended source is temporarily blocked for certain amount of time")
+					err = fmt.Errorf("Access temporarily blocked - Maximum failed authentications reached. The offended source is temporarily blocked for certain amount of time (%.0f)", result["http_status"])
 				} else if result["http_status"] == 500.0 {
-					err = fmt.Errorf("Internal Server Error - Internal error when processing the request")
+					err = fmt.Errorf("Internal Server Error - Internal error when processing the request (%.0f)", result["http_status"])
 				} else {
-					err = fmt.Errorf("Unknow Error")
+					err = fmt.Errorf("Unknow Error (%.0f)", result["http_status"])
 				}
 
 				return
@@ -151,4 +164,5 @@ func fortiAPIErrorFormat(result map[string]interface{}, body string) (err error)
 	err = fmt.Errorf("\n%v", body)
 	return
 }
+
 //Build input data by sdk
