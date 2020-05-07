@@ -6,8 +6,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
-
-	"github.com/fgtdev/fortios-sdk-go/util"
 )
 
 // JSONSystemSettingDNS contains the parameters for Create and Update API function
@@ -119,40 +117,16 @@ func (c *FortiSDKClient) UpdateSystemSettingDNS(params *JSONSystemSettingDNS, mk
 
 	req.HTTPResponse.Body.Close()
 
-	if result != nil {
+	err = fortiAPIErrorFormat(result, string(body))
+
+	if err == nil {
 		if result["vdom"] != nil {
 			output.Vdom = result["vdom"].(string)
 		}
+
 		if result["mkey"] != nil {
 			output.Mkey = result["mkey"].(string)
 		}
-		if result["status"] != nil {
-			if result["status"] != "success" {
-				if result["error"] != nil {
-					err = fmt.Errorf("status is %s and error no is %.0f", result["status"], result["error"])
-				} else {
-					err = fmt.Errorf("status is %s and error no is not found", result["status"])
-				}
-
-				if result["http_status"] != nil {
-					err = fmt.Errorf("%s, details: %s", err, util.HttpStatus2Str(int(result["http_status"].(float64))))
-				} else {
-					err = fmt.Errorf("%s, and http_status no is not found", err)
-				}
-
-				return
-			}
-			output.Status = result["status"].(string)
-		} else {
-			err = fmt.Errorf("cannot get status from the response")
-			return
-		}
-		if result["http_status"] != nil {
-			output.HTTPStatus = result["http_status"].(float64)
-		}
-	} else {
-		err = fmt.Errorf("cannot get the right response")
-		return
 	}
 
 	return
@@ -224,38 +198,14 @@ func (c *FortiSDKClient) ReadSystemSettingDNS(mkey string) (output *JSONSystemSe
 
 	req.HTTPResponse.Body.Close()
 
-	if result != nil {
-		if result["http_status"] == nil {
-			err = fmt.Errorf("cannot get http_status from the response")
-			return
-		}
+	if fortiAPIHttpStatus404Checking(result) == true {
+		output = nil
+		return
+	}
+	
+	err = fortiAPIErrorFormat(result, string(body))
 
-		if result["http_status"] == 404.0 {
-			output = nil
-			return
-		}
-
-		if result["status"] == nil {
-			err = fmt.Errorf("cannot get status from the response")
-			return
-		}
-
-		if result["status"] != "success" {
-			if result["error"] != nil {
-				err = fmt.Errorf("status is %s and error no is %.0f", result["status"], result["error"])
-			} else {
-				err = fmt.Errorf("status is %s and error no is not found", result["status"])
-			}
-
-			if result["http_status"] != nil {
-				err = fmt.Errorf("%s, details: %s", err, util.HttpStatus2Str(int(result["http_status"].(float64))))
-			} else {
-				err = fmt.Errorf("%s, and http_status no is not found", err)
-			}
-
-			return
-		}
-
+	if err == nil {
 		mapTmp := (result["results"].(map[string]interface{}))
 
 		if mapTmp == nil {
