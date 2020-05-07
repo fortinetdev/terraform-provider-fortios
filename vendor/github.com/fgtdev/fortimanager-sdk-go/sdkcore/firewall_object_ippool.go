@@ -59,7 +59,7 @@ func (c *FmgSDKClient) ReadFirewallObjectIppool(adom, name string) (out *JSONFir
 
 	result, err := c.Do("get", p)
 	if err != nil {
-		err = fmt.Errorf("ReadFirewallObjectIppool failed :%s", err)
+		err = fmt.Errorf("ReadFirewallObjectIppool failed: %s", err)
 		return
 	}
 
@@ -118,7 +118,7 @@ func (c *FmgSDKClient) DeleteFirewallObjectIppool(adom, name string) (err error)
 
 	_, err = c.Do("delete", p)
 	if err != nil {
-		err = fmt.Errorf("DeleteFirewallObjectIppool failed :%s", err)
+		err = fmt.Errorf("DeleteFirewallObjectIppool failed: %s", err)
 		return
 	}
 

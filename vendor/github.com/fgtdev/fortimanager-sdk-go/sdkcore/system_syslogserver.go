@@ -50,7 +50,7 @@ func (c *FmgSDKClient) ReadSystemSyslogServer(name string) (out *JSONSystemSyslo
 
 	result, err := c.Do("get", p)
 	if err != nil {
-		err = fmt.Errorf("ReadSystemSyslogServer failed :%s", err)
+		err = fmt.Errorf("ReadSystemSyslogServer failed: %s", err)
 		return
 	}
 
@@ -88,7 +88,7 @@ func (c *FmgSDKClient) DeleteSystemSyslogServer(name string) (err error) {
 
 	_, err = c.Do("delete", p)
 	if err != nil {
-		err = fmt.Errorf("DeleteSystemSyslogServer failed :%s", err)
+		err = fmt.Errorf("DeleteSystemSyslogServer failed: %s", err)
 		return
 	}
 

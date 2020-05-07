@@ -115,7 +115,7 @@ func (c *FmgSDKClient) ReadFirewallSecurityPolicy(adom, id, pkg_name string) (ou
 
 	result, err := c.Do("get", p)
 	if err != nil {
-		err = fmt.Errorf("ReadFirewallSecurityPolicy failed :%s", err)
+		err = fmt.Errorf("ReadFirewallSecurityPolicy failed: %s", err)
 		return
 	}
 
@@ -333,7 +333,7 @@ func (c *FmgSDKClient) DeleteFirewallSecurityPolicy(adom, id, pkg_name string) (
 
 	_, err = c.Do("delete", p)
 	if err != nil {
-		err = fmt.Errorf("DeleteFirewallSecurityPolicy failed :%s", err)
+		err = fmt.Errorf("DeleteFirewallSecurityPolicy failed: %s", err)
 		return
 	}
 

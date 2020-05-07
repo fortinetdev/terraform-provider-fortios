@@ -56,7 +56,7 @@ func (c *FmgSDKClient) ReadDVMScript(adom, id string) (out *JSONDVMScript, err e
 
 	result, err := c.Do("get", p)
 	if err != nil {
-		err = fmt.Errorf("ReadDVMScript failed :%s", err)
+		err = fmt.Errorf("ReadDVMScript failed: %s", err)
 		return
 	}
 
@@ -98,7 +98,7 @@ func (c *FmgSDKClient) DeleteDVMScript(adom, id string) (err error) {
 
 	_, err = c.Do("delete", p)
 	if err != nil {
-		err = fmt.Errorf("DeleteDVMScript failed :%s", err)
+		err = fmt.Errorf("DeleteDVMScript failed: %s", err)
 		return
 	}
 

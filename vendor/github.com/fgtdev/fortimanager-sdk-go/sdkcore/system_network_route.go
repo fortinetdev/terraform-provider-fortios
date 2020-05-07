@@ -51,7 +51,7 @@ func (c *FmgSDKClient) ReadSystemNetworkRoute(id string) (out *JSONSysNetworkRou
 
 	result, err := c.Do("get", p)
 	if err != nil {
-		err = fmt.Errorf("ReadSystemNetworkRoute failed :%s", err)
+		err = fmt.Errorf("ReadSystemNetworkRoute failed: %s", err)
 		return
 	}
 
@@ -90,7 +90,7 @@ func (c *FmgSDKClient) DeleteSystemNetworkRoute(id string) (err error) {
 
 	_, err = c.Do("delete", p)
 	if err != nil {
-		err = fmt.Errorf("DeleteSystemNetworkRoute failed :%s", err)
+		err = fmt.Errorf("DeleteSystemNetworkRoute failed: %s", err)
 		return
 	}
 

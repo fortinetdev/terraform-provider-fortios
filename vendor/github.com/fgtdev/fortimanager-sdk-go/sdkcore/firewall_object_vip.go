@@ -60,7 +60,7 @@ func (c *FmgSDKClient) ReadFirewallObjectVip(adom, name string) (out *JSONFirewa
 
 	result, err := c.Do("get", p)
 	if err != nil {
-		err = fmt.Errorf("ReadFirewallObjectVip failed :%s", err)
+		err = fmt.Errorf("ReadFirewallObjectVip failed: %s", err)
 		return
 	}
 
@@ -127,7 +127,7 @@ func (c *FmgSDKClient) DeleteFirewallObjectVip(adom, name string) (err error) {
 
 	_, err = c.Do("delete", p)
 	if err != nil {
-		err = fmt.Errorf("DeleteFirewallObjectVip failed :%s", err)
+		err = fmt.Errorf("DeleteFirewallObjectVip failed: %s", err)
 		return
 	}
 

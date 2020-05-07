@@ -100,7 +100,7 @@ func (c *FmgSDKClient) ReadSystemAdminProfiles(id string) (out *JSONSysAdminProf
 
 	result, err := c.Do("get", p)
 	if err != nil {
-		err = fmt.Errorf("ReadSystemAdminProfile failed :%s", err)
+		err = fmt.Errorf("ReadSystemAdminProfile failed: %s", err)
 		return
 	}
 
@@ -233,7 +233,7 @@ func (c *FmgSDKClient) DeleteSystemAdminProfiles(id string) (err error) {
 
 	_, err = c.Do("delete", p)
 	if err != nil {
-		err = fmt.Errorf("DeleteSystemAdminProfiles failed :%s", err)
+		err = fmt.Errorf("DeleteSystemAdminProfiles failed: %s", err)
 		return
 	}
 

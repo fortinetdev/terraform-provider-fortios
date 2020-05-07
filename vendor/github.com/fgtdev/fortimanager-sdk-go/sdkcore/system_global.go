@@ -51,7 +51,7 @@ func (c *FmgSDKClient) ReadSystemGlobal() (out *JSONSystemGlobal, err error) {
 
 	result, err := c.Do("get", p)
 	if err != nil {
-		err = fmt.Errorf("ReadSystemGlobal failed :%s", err)
+		err = fmt.Errorf("ReadSystemGlobal failed: %s", err)
 		return
 	}
 

@@ -56,7 +56,7 @@ func (c *FmgSDKClient) queryTask(task int) (query_ret *QueryResult, err error) {
 
 	result, err := c.Do("get", p)
 	if err != nil {
-		return nil, fmt.Errorf("queryTask failed :%s", err)
+		return nil, fmt.Errorf("queryTask failed: %s", err)
 	}
 
 	// data maybe empty if query too quickly

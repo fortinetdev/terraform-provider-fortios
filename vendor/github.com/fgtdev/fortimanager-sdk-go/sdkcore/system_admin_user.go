@@ -58,7 +58,7 @@ func (c *FmgSDKClient) ReadSystemAdminUser(id string) (out *JSONSysAdminUser, er
 
 	result, err := c.Do("get", p)
 	if err != nil {
-		err = fmt.Errorf("ReadSystemAdminUser failed :%s", err)
+		err = fmt.Errorf("ReadSystemAdminUser failed: %s", err)
 		return
 	}
 
@@ -114,7 +114,7 @@ func (c *FmgSDKClient) DeleteSystemAdminUser(id string) (err error) {
 
 	_, err = c.Do("delete", p)
 	if err != nil {
-		err = fmt.Errorf("DeleteSystemAdminUser failed :%s", err)
+		err = fmt.Errorf("DeleteSystemAdminUser failed: %s", err)
 		return
 	}
 

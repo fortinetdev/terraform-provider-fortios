@@ -59,7 +59,7 @@ func (c *FmgSDKClient) ReadSystemNTP() (out *JSONSystemNTP, err error) {
 
 	result, err := c.Do("get", p)
 	if err != nil {
-		err = fmt.Errorf("ReadSystemNTP failed :%s", err)
+		err = fmt.Errorf("ReadSystemNTP failed: %s", err)
 		return
 	}
 

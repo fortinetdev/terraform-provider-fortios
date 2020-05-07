@@ -60,7 +60,7 @@ func (c *FmgSDKClient) ReadFirewallObjectAddress(adom, name string) (out *JSONFi
 
 	result, err := c.Do("get", p)
 	if err != nil {
-		err = fmt.Errorf("ReadFirewallObjectAddress failed :%s", err)
+		err = fmt.Errorf("ReadFirewallObjectAddress failed: %s", err)
 		return
 	}
 
@@ -121,7 +121,7 @@ func (c *FmgSDKClient) DeleteFirewallObjectAddress(adom, name string) (err error
 
 	_, err = c.Do("delete", p)
 	if err != nil {
-		err = fmt.Errorf("DeleteFirewallObjectAddress failed :%s", err)
+		err = fmt.Errorf("DeleteFirewallObjectAddress failed: %s", err)
 		return
 	}
 

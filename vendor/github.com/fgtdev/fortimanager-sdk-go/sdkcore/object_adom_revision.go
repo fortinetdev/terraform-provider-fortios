@@ -68,7 +68,7 @@ func (c *FmgSDKClient) ReadObjectAdomRevision(adom, version string) (out *JSONOb
 
 	result, err := c.Do("get", p)
 	if err != nil {
-		err = fmt.Errorf("ReadObjectAdomRevision failed :%s", err)
+		err = fmt.Errorf("ReadObjectAdomRevision failed: %s", err)
 		return
 	}
 
@@ -111,7 +111,7 @@ func (c *FmgSDKClient) DeleteObjectAdomRevision(adom, version string) (err error
 
 	_, err = c.Do("delete", p)
 	if err != nil {
-		err = fmt.Errorf("DeleteObjectAdomRevision failed :%s", err)
+		err = fmt.Errorf("DeleteObjectAdomRevision failed: %s", err)
 		return
 	}
 

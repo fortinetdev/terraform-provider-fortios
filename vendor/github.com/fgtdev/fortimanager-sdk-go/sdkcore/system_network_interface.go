@@ -54,7 +54,7 @@ func (c *FmgSDKClient) ReadSystemNetworkInterface(name string) (out *JSONSystemN
 
 	result, err := c.Do("get", p)
 	if err != nil {
-		err = fmt.Errorf("ReadSystemNetworkInterface failed :%s", err)
+		err = fmt.Errorf("ReadSystemNetworkInterface failed: %s", err)
 		return
 	}
 

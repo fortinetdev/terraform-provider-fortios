@@ -47,7 +47,7 @@ func (c *FmgSDKClient) ReadSystemAdmin() (out *JSONSystemAdmin, err error) {
 
 	result, err := c.Do("get", p)
 	if err != nil {
-		err = fmt.Errorf("ReadSystemAdmin failed :%s", err)
+		err = fmt.Errorf("ReadSystemAdmin failed: %s", err)
 		return
 	}
 

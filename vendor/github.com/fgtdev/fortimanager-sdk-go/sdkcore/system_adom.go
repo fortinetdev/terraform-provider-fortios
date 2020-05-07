@@ -54,7 +54,7 @@ func (c *FmgSDKClient) ReadSystemAdom(name string) (out *JSONSystemAdom, err err
 
 	result, err := c.Do("get", p)
 	if err != nil {
-		err = fmt.Errorf("ReadSystemAdom failed :%s", err)
+		err = fmt.Errorf("ReadSystemAdom failed: %s", err)
 		return
 	}
 
@@ -93,7 +93,7 @@ func (c *FmgSDKClient) DeleteSystemAdom(name string) (err error) {
 
 	_, err = c.Do("delete", p)
 	if err != nil {
-		err = fmt.Errorf("DeleteSystemAdom failed :%s", err)
+		err = fmt.Errorf("DeleteSystemAdom failed: %s", err)
 		return
 	}
 

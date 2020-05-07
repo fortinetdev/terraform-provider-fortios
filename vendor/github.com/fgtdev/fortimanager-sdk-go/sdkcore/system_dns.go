@@ -46,7 +46,7 @@ func (c *FmgSDKClient) ReadSystemDNS() (out *JSONSystemDNS, err error) {
 
 	result, err := c.Do("get", p)
 	if err != nil {
-		err = fmt.Errorf("ReadSystemDNS failed :%s", err)
+		err = fmt.Errorf("ReadSystemDNS failed: %s", err)
 		return
 	}
 
