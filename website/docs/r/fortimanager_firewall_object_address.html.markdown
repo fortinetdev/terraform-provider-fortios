@@ -1,12 +1,12 @@
 ---
 layout: "fortios"
-page_title: "FortiOS: fortios_fortimanager_firewall_object_address"
+page_title: "FortiOS: fortios_fmg_firewall_object_address"
 sidebar_current: "docs-fortios-fortimanager-resource-firewall-object-address"
 description: |-
   Provides a resource to configure firewall object address for FortiManager.
 ---
 
-# fortios_fortimanager_firewall_object_address
+# fortios_fmg_firewall_object_address
 This resource supports Create/Read/Update/Delete firewall object address for FortiManager.
 
 ## Example Usage
@@ -20,7 +20,7 @@ provider "fortios" {
 	cabundlefile = "/path/yourCA.crt"
 }
 
-resource "fortios_fortimanager_firewall_object_address" "test1" {
+resource "fortios_fmg_firewall_object_address" "test1" {
 	name = "foa_test"
 	type = "fqdn"
 	comment = "test obj address"
@@ -28,7 +28,7 @@ resource "fortios_fortimanager_firewall_object_address" "test1" {
 	associated_intf = "any"
 }
 
-resource "fortios_fortimanager_firewall_object_address" "test2" {
+resource "fortios_fmg_firewall_object_address" "test2" {
 	name = "foa_test2"
 	type = "ipmask"
 	comment = "test obj address"
@@ -37,7 +37,7 @@ resource "fortios_fortimanager_firewall_object_address" "test2" {
 	allow_routing = "disable"
 }
 
-resource "fortios_fortimanager_firewall_object_address" "test3" {
+resource "fortios_fmg_firewall_object_address" "test3" {
 	name = "foa_test3"
 	type = "iprange"
 	comment = "test obj address"

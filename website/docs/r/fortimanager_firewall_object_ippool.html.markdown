@@ -1,12 +1,12 @@
 ---
 layout: "fortios"
-page_title: "FortiOS: fortios_fortimanager_firewall_object_ippool"
+page_title: "FortiOS: fortios_fmg_firewall_object_ippool"
 sidebar_current: "docs-fortios-fortimanager-resource-firewall-object-ippool"
 description: |-
   Provides a resource to configure firewall object ippool for FortiManager.
 ---
 
-# fortios_fortimanager_firewall_object_ippool
+# fortios_fmg_firewall_object_ippool
 This resource supports Create/Read/Update/Delete firewall object ippool for FortiManager.
 
 ## Example Usage
@@ -20,7 +20,7 @@ provider "fortios" {
 	cabundlefile = "/path/yourCA.crt"
 }
 
-resource "fortios_fortimanager_firewall_object_ippool" "test1" {
+resource "fortios_fmg_firewall_object_ippool" "test1" {
 	name = "foi_test"
 	startip = "1.1.10.1"
 	endip = "1.1.10.100"

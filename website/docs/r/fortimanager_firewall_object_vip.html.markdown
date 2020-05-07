@@ -1,12 +1,12 @@
 ---
 layout: "fortios"
-page_title: "FortiOS: fortios_fortimanager_firewall_object_vip"
+page_title: "FortiOS: fortios_fmg_firewall_object_vip"
 sidebar_current: "docs-fortios-fortimanager-resource-firewall-object-vip"
 description: |-
   Provides a resource to configure firewall object virtual ip for FortiManager.
 ---
 
-# fortios_fortimanager_firewall_object_vip
+# fortios_fmg_firewall_object_vip
 This resource supports Create/Read/Update/Delete firewall object virtual ip for FortiManager.
 
 ## Example Usage
@@ -20,7 +20,7 @@ provider "fortios" {
 	cabundlefile = "/path/yourCA.crt"
 }
 
-resource "fortios_fortimanager_firewall_object_vip" "test1" {
+resource "fortios_fmg_firewall_object_vip" "test1" {
 	name = "fov-test1"
 	comment = "test obj vip"
 	type = "static-nat"
@@ -31,7 +31,7 @@ resource "fortios_fortimanager_firewall_object_vip" "test1" {
 	config_default = "enable"
 }
 
-resource "fortios_fortimanager_firewall_object_vip" "test2" {
+resource "fortios_fmg_firewall_object_vip" "test2" {
 	name = "fov-test2"
 	comment = "test obj vip"
 	type = "fqdn"

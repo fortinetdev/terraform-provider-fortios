@@ -1,12 +1,12 @@
 ---
 layout: "fortios"
-page_title: "FortiOS: fortios_fortimanager_firewall_object_service"
+page_title: "FortiOS: fortios_fmg_firewall_object_service"
 sidebar_current: "docs-fortios-fortimanager-resource-firewall-object-service"
 description: |-
   Provides a resource to configure firewall object service for FortiManager.
 ---
 
-# fortios_fortimanager_firewall_object_service
+# fortios_fmg_firewall_object_service
 This resource supports Create/Read/Update/Delete firewall object service for FortiManager.
 
 ## Example Usage
@@ -20,7 +20,7 @@ provider "fortios" {
 	cabundlefile = "/path/yourCA.crt"
 }
 
-resource "fortios_fortimanager_firewall_object_service" "test1" {
+resource "fortios_fmg_firewall_object_service" "test1" {
 	name = "fos_test"
 	comment = "test obj service"
 	protocol = "TCP/UDP/SCTP"
@@ -32,7 +32,7 @@ resource "fortios_fortimanager_firewall_object_service" "test1" {
 	sctp_portrange = ["100-200:150-250"]
 }
 
-resource "fortios_fortimanager_firewall_object_service" "test2" {
+resource "fortios_fmg_firewall_object_service" "test2" {
 	name = "fos_test2"
 	comment = "test obj service"
 	protocol = "ICMP"
@@ -41,7 +41,7 @@ resource "fortios_fortimanager_firewall_object_service" "test2" {
 	icmp_code = 3
 }
 
-resource "fortios_fortimanager_firewall_object_service" "test3" {
+resource "fortios_fmg_firewall_object_service" "test3" {
 	name = "fos_test3"
 	comment = "test obj service"
 	protocol = "IP"
