@@ -1,12 +1,12 @@
 ---
 layout: "fortios"
-page_title: "FortiOS: fortios_fortimanager_system_syslogserver"
+page_title: "FortiOS: fortios_fmg_system_syslogserver"
 sidebar_current: "docs-fortios-fortimanager-resource-system-syslogserver"
 description: |-
   Provides a resource to configure system syslog server for FortiManager.
 ---
 
-# fortios_fortimanager_system_syslogserver
+# fortios_fmg_system_syslogserver
 This resource supports Create/Delete system syslog server for FortiManager.
 
 ## Example Usage
@@ -20,7 +20,7 @@ provider "fortios" {
 	cabundlefile = "/path/yourCA.crt"
 }
 
-resource "fortios_fortimanager_system_syslogserver" "test1" {
+resource "fortios_fmg_system_syslogserver" "test1" {
 	name = "test-syslog"
 	ip = "1.1.1.1"
 	port = 99

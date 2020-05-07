@@ -1,12 +1,12 @@
 ---
 layout: "fortios"
-page_title: "FortiOS: fortios_fortimanager_system_ntp"
+page_title: "FortiOS: fortios_fmg_system_ntp"
 sidebar_current: "docs-fortios-fortimanager-resource-system-ntp"
 description: |-
   Provides a resource to configure system ntp setting for FortiManager.
 ---
 
-# fortios_fortimanager_system_ntp
+# fortios_fmg_system_ntp
 This resource supports modifying system ntp setting for FortiManager.
 
 ## Example Usage
@@ -20,7 +20,7 @@ provider "fortios" {
 	cabundlefile = "/path/yourCA.crt"
 }
 
-resource "fortios_fortimanager_system_ntp" "test1" {
+resource "fortios_fmg_system_ntp" "test1" {
 	server = "ntp1.fortinet.com"
 	status = "enable"
 	sync_interval = 30
