@@ -54,8 +54,6 @@ func (c *Config) CreateClient() (interface{}, error) {
 		if err != nil {
 			return nil, fmt.Errorf("Error create fortios client: %s", err)
 		}
-	} else {
-		forticlient.NewEmptyClient()
 	}
 
 	if bFMGExist {
@@ -68,7 +66,7 @@ func (c *Config) CreateClient() (interface{}, error) {
 	}
 
 	if !bFOSExist && !bFMGExist {
-		return nil, fmt.Errorf("FortiOS or FortiManager, at least one of their hostnames should be created")
+		return nil, fmt.Errorf("FortiOS or FortiManager, at least one of their hostnames should be set")
 	}
 
 	return &fClient, nil

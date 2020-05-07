@@ -51,6 +51,8 @@ func NewClient(ip, user, passwd string, client *http.Client) *FmgSDKClient {
 	}
 }
 
+// NewEmptyClient initializes a new global empty plugin FmgSDKClient
+// It returns the created client object
 func NewEmptyClient() *FmgSDKClient {
 	return &FmgSDKClient{
 		Init: false,

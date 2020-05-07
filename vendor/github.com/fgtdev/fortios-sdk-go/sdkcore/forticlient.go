@@ -58,13 +58,6 @@ func NewClient(auth *auth.Auth, client *http.Client) *FortiSDKClient {
 	return c
 }
 
-// NewEmptyClient initializes a new global empty plugin client
-// It returns the created client object
-func NewEmptyClient() *FortiSDKClient {
-	c := &FortiSDKClient{}
-	return c
-}
-
 // NewRequest creates the request to FortiOS for the client
 // and return it to the client
 func (c *FortiSDKClient) NewRequest(method string, path string, params interface{}, data *bytes.Buffer) *request.Request {
