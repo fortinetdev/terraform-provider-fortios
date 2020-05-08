@@ -135,3 +135,49 @@ func buildURL(r *Request) string {
 
 	return u
 }
+
+// Send request data to FortiOS with special URL paramaters.
+// If errors are encountered, it returns the error.
+func (r *Request) SendWithSpecialParams(s string) error {
+	r.HTTPRequest.Header.Set("Content-Type", "application/json")
+	u := buildURL(r)
+
+	if s != "" {
+		u += "&"
+		u += s
+	}
+
+	var err error
+	r.HTTPRequest.URL, err = url.Parse(u)
+	if err != nil {
+		log.Fatal(err)
+		return err
+	}
+
+	retry := 0
+	for {
+		//Send
+		rsp, errdo := r.Config.HTTPCon.Do(r.HTTPRequest)
+		r.HTTPResponse = rsp
+		if errdo != nil {
+			if strings.Contains(errdo.Error(), "x509: ") {
+				err = fmt.Errorf("Error found: %s", errdo)
+				break
+			}
+
+			if retry > 500 {
+				err = fmt.Errorf("Error found: %s", errdo)
+				break
+			}
+			time.Sleep(time.Duration(1) * time.Second)
+			log.Printf("Error found: %s, will resend again %s, %d", errdo, u, retry)
+
+			retry++
+
+		} else {
+			break
+		}
+	}
+
+	return err
+}
