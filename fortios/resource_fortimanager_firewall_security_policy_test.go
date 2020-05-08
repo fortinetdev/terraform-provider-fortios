@@ -19,22 +19,22 @@ func TestAccFortiManagerFirewallSecurityPolicy(t *testing.T) {
 			{
 				Config: testAccFortiManagerFirewallSecurityPolicyConfig(name),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckFortiManagerFirewallSecurityPolicyExists("fortios_fortimanager_firewall_security_policy.test1"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_security_policy.test1", "name", name),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_security_policy.test1", "action", "accept"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_security_policy.test1", "internet_service", "enable"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_security_policy.test1", "internet_service_src", "disable"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_security_policy.test1", "rsso", "disable"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_security_policy.test1", "fsso", "enable"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_security_policy.test1", "logtraffic", "all"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_security_policy.test1", "logtraffic_start", "enable"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_security_policy.test1", "capture_packet", "enable"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_security_policy.test1", "nat", "enable"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_security_policy.test1", "ippool", "disable"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_security_policy.test1", "fixedport", "enable"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_security_policy.test1", "utm_status", "enable"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_security_policy.test1", "profile_type", "single"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_security_policy.test1", "comments", "policy test"),
+					testAccCheckFortiManagerFirewallSecurityPolicyExists("fortios_fmg_firewall_security_policy.test1"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_security_policy.test1", "name", name),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_security_policy.test1", "action", "accept"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_security_policy.test1", "internet_service", "enable"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_security_policy.test1", "internet_service_src", "disable"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_security_policy.test1", "rsso", "disable"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_security_policy.test1", "fsso", "enable"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_security_policy.test1", "logtraffic", "all"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_security_policy.test1", "logtraffic_start", "enable"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_security_policy.test1", "capture_packet", "enable"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_security_policy.test1", "nat", "enable"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_security_policy.test1", "ippool", "disable"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_security_policy.test1", "fixedport", "enable"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_security_policy.test1", "utm_status", "enable"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_security_policy.test1", "profile_type", "single"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_security_policy.test1", "comments", "policy test"),
 				),
 			},
 		},
@@ -73,7 +73,7 @@ func testAccCheckFMGFirewallSecurityPolicyDestroy(s *terraform.State) error {
 	c := testAccProvider.Meta().(*FortiClient).ClientFortimanager
 
 	for _, rs := range s.RootModule().Resources {
-		if rs.Type != "fortios_fortimanager_firewall_security_policy" {
+		if rs.Type != "fortios_fmg_firewall_security_policy" {
 			continue
 		}
 
@@ -94,7 +94,7 @@ func testAccCheckFMGFirewallSecurityPolicyDestroy(s *terraform.State) error {
 
 func testAccFortiManagerFirewallSecurityPolicyConfig(name string) string {
 	return fmt.Sprintf(`
-resource "fortios_fortimanager_firewall_security_policy" "test1" {
+resource "fortios_fmg_firewall_security_policy" "test1" {
 	name = "%s"
 	srcaddr = ["all"]
     srcintf = ["any"]
@@ -122,7 +122,6 @@ resource "fortios_fortimanager_firewall_security_policy" "test1" {
     dnsfilter_profile = ["default"]
     traffic_shaper = ["high-priority"]
     comments = "policy test"
-
 }
 `, name)
 }

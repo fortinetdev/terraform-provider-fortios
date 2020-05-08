@@ -19,9 +19,9 @@ func TestAccFortiManagerFirewallSecurityPolicyPackage(t *testing.T) {
 			{
 				Config: testAccFortiManagerFirewallSecurityPolicyPackageConfig(name),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckFortiManagerFirewallSecurityPolicyPackageExists("fortios_fortimanager_firewall_security_policypackage.test1"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_security_policypackage.test1", "name", name),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_security_policypackage.test1", "target", "FGVM64-test"),
+					testAccCheckFortiManagerFirewallSecurityPolicyPackageExists("fortios_fmg_firewall_security_policypackage.test1"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_security_policypackage.test1", "name", name),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_security_policypackage.test1", "target", "myfirewall"),
 				),
 			},
 		},
@@ -60,7 +60,7 @@ func testAccCheckFMGFirewallSecurityPolicyPackageDestroy(s *terraform.State) err
 	c := testAccProvider.Meta().(*FortiClient).ClientFortimanager
 
 	for _, rs := range s.RootModule().Resources {
-		if rs.Type != "fortios_fortimanager_firewall_security_policypackage" {
+		if rs.Type != "fortios_fmg_firewall_security_policypackage" {
 			continue
 		}
 
@@ -81,9 +81,9 @@ func testAccCheckFMGFirewallSecurityPolicyPackageDestroy(s *terraform.State) err
 
 func testAccFortiManagerFirewallSecurityPolicyPackageConfig(name string) string {
 	return fmt.Sprintf(`
-resource "fortios_fortimanager_firewall_security_policypackage" "test1" {
+resource "fortios_fmg_firewall_security_policypackage" "test1" {
 	name = "%s"
-	target = "FGVM64-test"
+	target = "myfirewall"
 }
 `, name)
 }

@@ -17,10 +17,10 @@ func TestAccFortiManagerSystemNTP(t *testing.T) {
 			{
 				Config: testAccFortiManagerSystemNTPConfig(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckFortiManagerSystemNTPExists("fortios_fortimanager_system_ntp.test1"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_system_ntp.test1", "server", "ntp1.fortinet.com"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_system_ntp.test1", "status", "enable"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_system_ntp.test1", "sync_interval", "30"),
+					testAccCheckFortiManagerSystemNTPExists("fortios_fmg_system_ntp.test1"),
+					resource.TestCheckResourceAttr("fortios_fmg_system_ntp.test1", "server", "ntp1.fortinet.com"),
+					resource.TestCheckResourceAttr("fortios_fmg_system_ntp.test1", "status", "enable"),
+					resource.TestCheckResourceAttr("fortios_fmg_system_ntp.test1", "sync_interval", "30"),
 				),
 			},
 		},
@@ -60,7 +60,7 @@ func testAccCheckFMGSystemNTPDestroy(s *terraform.State) error {
 
 func testAccFortiManagerSystemNTPConfig() string {
 	return fmt.Sprintf(`
-resource "fortios_fortimanager_system_ntp" "test1" {
+resource "fortios_fmg_system_ntp" "test1" {
     server = "ntp1.fortinet.com"
     status = "enable"
     sync_interval = 30

@@ -18,12 +18,12 @@ func TestAccFortiManagerSystemGlobal(t *testing.T) {
 			{
 				Config: testAccFortiManagerSystemGlobalConfig(name),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckFortiManagerSystemGlobalExists("fortios_fortimanager_system_global.test1"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_system_global.test1", "hostname", name),
-					resource.TestCheckResourceAttr("fortios_fortimanager_system_global.test1", "fortianalyzer_status", "disable"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_system_global.test1", "adom_status", "disable"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_system_global.test1", "adom_mode", "advanced"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_system_global.test1", "timezone", "09"),
+					testAccCheckFortiManagerSystemGlobalExists("fortios_fmg_system_global.test1"),
+					resource.TestCheckResourceAttr("fortios_fmg_system_global.test1", "hostname", name),
+					resource.TestCheckResourceAttr("fortios_fmg_system_global.test1", "fortianalyzer_status", "disable"),
+					resource.TestCheckResourceAttr("fortios_fmg_system_global.test1", "adom_status", "disable"),
+					resource.TestCheckResourceAttr("fortios_fmg_system_global.test1", "adom_mode", "advanced"),
+					resource.TestCheckResourceAttr("fortios_fmg_system_global.test1", "timezone", "09"),
 				),
 			},
 		},
@@ -59,7 +59,7 @@ func testAccCheckFortiManagerSystemGlobalExists(n string) resource.TestCheckFunc
 
 func testAccFortiManagerSystemGlobalConfig(name string) string {
 	return fmt.Sprintf(`
-resource "fortios_fortimanager_system_global" "test1" {
+resource "fortios_fmg_system_global" "test1" {
 	hostname = "%s"
     fortianalyzer_status = "disable"
     adom_status = "disable"

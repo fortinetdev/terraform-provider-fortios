@@ -19,15 +19,15 @@ func TestAccFortiManagerSystemAdom(t *testing.T) {
 			{
 				Config: testAccFortiManagerSystemAdomConfig(name),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckFortiManagerSystemAdomExists("fortios_fortimanager_system_adom.test1"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_system_adom.test1", "name", name),
-					resource.TestCheckResourceAttr("fortios_fortimanager_system_adom.test1", "type", "FortiCarrier"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_system_adom.test1", "central_management_vpn", "false"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_system_adom.test1", "central_management_fortiap", "true"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_system_adom.test1", "central_management_sdwan", "false"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_system_adom.test1", "perform_policy_check_before_every_install", "true"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_system_adom.test1", "auto_push_policy_packages_when_device_back_online", "Enable"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_system_adom.test1", "status", "1"),
+					testAccCheckFortiManagerSystemAdomExists("fortios_fmg_system_adom.test1"),
+					resource.TestCheckResourceAttr("fortios_fmg_system_adom.test1", "name", name),
+					resource.TestCheckResourceAttr("fortios_fmg_system_adom.test1", "type", "FortiCarrier"),
+					resource.TestCheckResourceAttr("fortios_fmg_system_adom.test1", "central_management_vpn", "false"),
+					resource.TestCheckResourceAttr("fortios_fmg_system_adom.test1", "central_management_fortiap", "true"),
+					resource.TestCheckResourceAttr("fortios_fmg_system_adom.test1", "central_management_sdwan", "false"),
+					resource.TestCheckResourceAttr("fortios_fmg_system_adom.test1", "perform_policy_check_before_every_install", "true"),
+					resource.TestCheckResourceAttr("fortios_fmg_system_adom.test1", "auto_push_policy_packages_when_device_back_online", "Enable"),
+					resource.TestCheckResourceAttr("fortios_fmg_system_adom.test1", "status", "1"),
 				),
 			},
 		},
@@ -66,7 +66,7 @@ func testAccCheckFMGSystemAdomDestroy(s *terraform.State) error {
 	c := testAccProvider.Meta().(*FortiClient).ClientFortimanager
 
 	for _, rs := range s.RootModule().Resources {
-		if rs.Type != "fortios_fortimanager_system_adom" {
+		if rs.Type != "fortios_fmg_system_adom" {
 			continue
 		}
 
@@ -87,7 +87,7 @@ func testAccCheckFMGSystemAdomDestroy(s *terraform.State) error {
 
 func testAccFortiManagerSystemAdomConfig(name string) string {
 	return fmt.Sprintf(`
-resource "fortios_fortimanager_system_adom" "test1" {
+resource "fortios_fmg_system_adom" "test1" {
 	name = "%s"
     type = "FortiCarrier"
     central_management_vpn = false

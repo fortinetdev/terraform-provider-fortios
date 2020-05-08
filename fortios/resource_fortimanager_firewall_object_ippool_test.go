@@ -19,15 +19,15 @@ func TestAccFortiManagerFirewallObjectIppool(t *testing.T) {
 			{
 				Config: testAccFortiManagerFirewallObjectIppoolConfig(name),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckFortiManagerFirewallObjectIppoolExists("fortios_fortimanager_firewall_object_ippool.test1"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_object_ippool.test1", "name", name),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_object_ippool.test1", "type", "one-to-one"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_object_ippool.test1", "comment", "test obj ippool"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_object_ippool.test1", "startip", "1.1.10.1"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_object_ippool.test1", "endip", "1.1.10.100"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_object_ippool.test1", "arp_intf", "any"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_object_ippool.test1", "arp_reply", "enable"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_object_ippool.test1", "associated_intf", "any"),
+					testAccCheckFortiManagerFirewallObjectIppoolExists("fortios_fmg_firewall_object_ippool.test1"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_object_ippool.test1", "name", name),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_object_ippool.test1", "type", "one-to-one"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_object_ippool.test1", "comment", "test obj ippool"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_object_ippool.test1", "startip", "1.1.10.1"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_object_ippool.test1", "endip", "1.1.10.100"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_object_ippool.test1", "arp_intf", "any"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_object_ippool.test1", "arp_reply", "enable"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_object_ippool.test1", "associated_intf", "any"),
 				),
 			},
 		},
@@ -66,7 +66,7 @@ func testAccCheckFMGFirewallObjectIppoolDestroy(s *terraform.State) error {
 	c := testAccProvider.Meta().(*FortiClient).ClientFortimanager
 
 	for _, rs := range s.RootModule().Resources {
-		if rs.Type != "fortios_fortimanager_firewall_object_ippool" {
+		if rs.Type != "fortios_fmg_firewall_object_ippool" {
 			continue
 		}
 
@@ -87,7 +87,7 @@ func testAccCheckFMGFirewallObjectIppoolDestroy(s *terraform.State) error {
 
 func testAccFortiManagerFirewallObjectIppoolConfig(name string) string {
 	return fmt.Sprintf(`
-resource "fortios_fortimanager_firewall_object_ippool" "test1" {
+resource "fortios_fmg_firewall_object_ippool" "test1" {
     name = "%s" 
     comment = "test obj ippool"
     type = "one-to-one"

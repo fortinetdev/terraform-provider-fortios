@@ -19,10 +19,10 @@ func TestAccFortiManagerSystemSyslogServer(t *testing.T) {
 			{
 				Config: testAccFortiManagerSystemSyslogServerConfig(name),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckFortiManagerSystemSyslogServerExists("fortios_fortimanager_system_syslogserver.test1"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_system_syslogserver.test1", "name", name),
-					resource.TestCheckResourceAttr("fortios_fortimanager_system_syslogserver.test1", "ip", "1.1.1.2"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_system_syslogserver.test1", "port", "99"),
+					testAccCheckFortiManagerSystemSyslogServerExists("fortios_fmg_system_syslogserver.test1"),
+					resource.TestCheckResourceAttr("fortios_fmg_system_syslogserver.test1", "name", name),
+					resource.TestCheckResourceAttr("fortios_fmg_system_syslogserver.test1", "ip", "1.1.1.2"),
+					resource.TestCheckResourceAttr("fortios_fmg_system_syslogserver.test1", "port", "99"),
 				),
 			},
 		},
@@ -61,7 +61,7 @@ func testAccCheckFMGSystemSyslogServerDestroy(s *terraform.State) error {
 	c := testAccProvider.Meta().(*FortiClient).ClientFortimanager
 
 	for _, rs := range s.RootModule().Resources {
-		if rs.Type != "fortios_fortimanager_system_syslogserver" {
+		if rs.Type != "fortios_fmg_system_syslogserver" {
 			continue
 		}
 
@@ -82,7 +82,7 @@ func testAccCheckFMGSystemSyslogServerDestroy(s *terraform.State) error {
 
 func testAccFortiManagerSystemSyslogServerConfig(name string) string {
 	return fmt.Sprintf(`
-resource "fortios_fortimanager_system_syslogserver" "test1" {
+resource "fortios_fmg_system_syslogserver" "test1" {
 	name = "%s"
 	ip = "1.1.1.2"
 	port = 99

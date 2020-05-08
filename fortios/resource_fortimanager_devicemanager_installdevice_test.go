@@ -18,7 +18,7 @@ func TestAccFortiManagerDVMInstallDevice(t *testing.T) {
 			{
 				Config: testAccFortiManagerDVMInstallDeviceConfig(name),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckFortiManagerDVMInstallDeviceExists("fortios_fortimanager_devicemanager_install_device.test1"),
+					testAccCheckFortiManagerDVMInstallDeviceExists("fortios_fmg_devicemanager_install_device.test1"),
 				),
 			},
 		},
@@ -42,18 +42,18 @@ func testAccCheckFortiManagerDVMInstallDeviceExists(n string) resource.TestCheck
 
 func testAccFortiManagerDVMInstallDeviceConfig(name string) string {
 	return fmt.Sprintf(`
-resource "fortios_fortimanager_devicemanager_script" "test1" {
+resource "fortios_fmg_devicemanager_script" "test1" {
     name = "%s"
     description = "config vlan intf"
     content = "config system interface \n edit test-intf \n\t set vdom root\n\t set interface port1\n\t set type vlan \n\t set vlanid 1 \n\t next \n end"
     target  = "device_database"
 }
-resource "fortios_fortimanager_devicemanager_script_execute" "test1" {
-    script_name = fortios_fortimanager_devicemanager_script.test1.name
-    target_devname = "FGVM64-test"
+resource "fortios_fmg_devicemanager_script_execute" "test1" {
+    script_name = fortios_fmg_devicemanager_script.test1.name
+    target_devname = "myfirewall"
 }
-resource "fortios_fortimanager_devicemanager_install_device" "test1" {
-	target_devname = fortios_fortimanager_devicemanager_script_execute.test1.target_devname
+resource "fortios_fmg_devicemanager_install_device" "test1" {
+	target_devname = fortios_fmg_devicemanager_script_execute.test1.target_devname
 }
 `, name)
 }

@@ -19,11 +19,11 @@ func TestAccFortiManagerDVMScript(t *testing.T) {
 			{
 				Config: testAccFortiManagerDVMScriptConfig(name),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckFortiManagerDVMScriptExists("fortios_fortimanager_devicemanager_script.test1"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_devicemanager_script.test1", "name", name),
-					resource.TestCheckResourceAttr("fortios_fortimanager_devicemanager_script.test1", "description", "description"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_devicemanager_script.test1", "content", "config system interface \n edit port3 \n\t set vdom \"root\"\n\t set ip 10.7.0.200 255.255.0.0 \n\t set allowaccess ping http https\n\t next \n end"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_devicemanager_script.test1", "target", "remote_device"),
+					testAccCheckFortiManagerDVMScriptExists("fortios_fmg_devicemanager_script.test1"),
+					resource.TestCheckResourceAttr("fortios_fmg_devicemanager_script.test1", "name", name),
+					resource.TestCheckResourceAttr("fortios_fmg_devicemanager_script.test1", "description", "description"),
+					resource.TestCheckResourceAttr("fortios_fmg_devicemanager_script.test1", "content", "config system interface \n edit port3 \n\t set vdom \"root\"\n\t set ip 10.7.0.200 255.255.0.0 \n\t set allowaccess ping http https\n\t next \n end"),
+					resource.TestCheckResourceAttr("fortios_fmg_devicemanager_script.test1", "target", "remote_device"),
 				),
 			},
 		},
@@ -62,7 +62,7 @@ func testAccCheckFMGDVMScriptDestroy(s *terraform.State) error {
 	c := testAccProvider.Meta().(*FortiClient).ClientFortimanager
 
 	for _, rs := range s.RootModule().Resources {
-		if rs.Type != "fortios_fortimanager_devicemanager_script" {
+		if rs.Type != "fortios_fmg_devicemanager_script" {
 			continue
 		}
 
@@ -83,7 +83,7 @@ func testAccCheckFMGDVMScriptDestroy(s *terraform.State) error {
 
 func testAccFortiManagerDVMScriptConfig(id string) string {
 	return fmt.Sprintf(`
-resource "fortios_fortimanager_devicemanager_script" "test1" {
+resource "fortios_fmg_devicemanager_script" "test1" {
 	name = "%s"
     description = "description"
     content = "config system interface \n edit port3 \n\t set vdom \"root\"\n\t set ip 10.7.0.200 255.255.0.0 \n\t set allowaccess ping http https\n\t next \n end"

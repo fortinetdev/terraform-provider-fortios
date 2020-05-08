@@ -19,11 +19,11 @@ func TestAccFortiManagerObjectAdomRevision(t *testing.T) {
 			{
 				Config: testAccFortiManagerObjectAdomRevisionConfig(name),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckFortiManagerObjectAdomRevisionExists("fortios_fortimanager_object_adom_revision.test1"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_object_adom_revision.test1", "name", name),
-					resource.TestCheckResourceAttr("fortios_fortimanager_object_adom_revision.test1", "description", "adom revision"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_object_adom_revision.test1", "created_by", "fortinet"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_object_adom_revision.test1", "locked", "0"),
+					testAccCheckFortiManagerObjectAdomRevisionExists("fortios_fmg_object_adom_revision.test1"),
+					resource.TestCheckResourceAttr("fortios_fmg_object_adom_revision.test1", "name", name),
+					resource.TestCheckResourceAttr("fortios_fmg_object_adom_revision.test1", "description", "adom revision"),
+					resource.TestCheckResourceAttr("fortios_fmg_object_adom_revision.test1", "created_by", "fortinet"),
+					resource.TestCheckResourceAttr("fortios_fmg_object_adom_revision.test1", "locked", "0"),
 				),
 			},
 		},
@@ -62,7 +62,7 @@ func testAccCheckFMGObjectAdomRevisionDestroy(s *terraform.State) error {
 	c := testAccProvider.Meta().(*FortiClient).ClientFortimanager
 
 	for _, rs := range s.RootModule().Resources {
-		if rs.Type != "fortios_fortimanager_object_adom_revision" {
+		if rs.Type != "fortios_fmg_object_adom_revision" {
 			continue
 		}
 
@@ -83,7 +83,7 @@ func testAccCheckFMGObjectAdomRevisionDestroy(s *terraform.State) error {
 
 func testAccFortiManagerObjectAdomRevisionConfig(name string) string {
 	return fmt.Sprintf(`
-resource "fortios_fortimanager_object_adom_revision" "test1" {
+resource "fortios_fmg_object_adom_revision" "test1" {
 	name = "%s"
     description = "adom revision"
     created_by = "fortinet"

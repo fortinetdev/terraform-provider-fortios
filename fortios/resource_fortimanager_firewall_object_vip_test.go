@@ -19,15 +19,15 @@ func TestAccFortiManagerFirewallObjectVIp(t *testing.T) {
 			{
 				Config: testAccFortiManagerFirewallObjectVIpConfig(name),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckFortiManagerFirewallObjectVIpExists("fortios_fortimanager_firewall_object_vip.test1"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_object_vip.test1", "name", name),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_object_vip.test1", "type", "static-nat"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_object_vip.test1", "comment", "test obj vip"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_object_vip.test1", "arp_reply", "enable"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_object_vip.test1", "ext_ip", "2.2.2.2"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_object_vip.test1", "ext_intf", "any"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_object_vip.test1", "mapped_ip", "1.1.1.1"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_object_vip.test1", "config_default", "enable"),
+					testAccCheckFortiManagerFirewallObjectVIpExists("fortios_fmg_firewall_object_vip.test1"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_object_vip.test1", "name", name),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_object_vip.test1", "type", "static-nat"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_object_vip.test1", "comment", "test obj vip"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_object_vip.test1", "arp_reply", "enable"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_object_vip.test1", "ext_ip", "2.2.2.2"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_object_vip.test1", "ext_intf", "any"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_object_vip.test1", "mapped_ip", "1.1.1.1"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_object_vip.test1", "config_default", "enable"),
 				),
 			},
 		},
@@ -66,7 +66,7 @@ func testAccCheckFMGFirewallObjectVIpDestroy(s *terraform.State) error {
 	c := testAccProvider.Meta().(*FortiClient).ClientFortimanager
 
 	for _, rs := range s.RootModule().Resources {
-		if rs.Type != "fortios_fortimanager_firewall_object_vip" {
+		if rs.Type != "fortios_fmg_firewall_object_vip" {
 			continue
 		}
 
@@ -87,7 +87,7 @@ func testAccCheckFMGFirewallObjectVIpDestroy(s *terraform.State) error {
 
 func testAccFortiManagerFirewallObjectVIpConfig(name string) string {
 	return fmt.Sprintf(`
-resource "fortios_fortimanager_firewall_object_vip" "test1" {
+resource "fortios_fmg_firewall_object_vip" "test1" {
     name = "%s" 
 	comment = "test obj vip"
     type = "static-nat"

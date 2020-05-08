@@ -17,10 +17,10 @@ func TestAccFortiManagerSystemAdmin(t *testing.T) {
 			{
 				Config: testAccFortiManagerSystemAdminConfig(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckFortiManagerSystemAdminExists("fortios_fortimanager_system_admin.test1"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_system_admin.test1", "http_port", "80"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_system_admin.test1", "https_port", "443"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_system_admin.test1", "idle_timeout", "20"),
+					testAccCheckFortiManagerSystemAdminExists("fortios_fmg_system_admin.test1"),
+					resource.TestCheckResourceAttr("fortios_fmg_system_admin.test1", "http_port", "80"),
+					resource.TestCheckResourceAttr("fortios_fmg_system_admin.test1", "https_port", "443"),
+					resource.TestCheckResourceAttr("fortios_fmg_system_admin.test1", "idle_timeout", "20"),
 				),
 			},
 		},
@@ -60,7 +60,7 @@ func testAccCheckFMGSystemAdminDestroy(s *terraform.State) error {
 
 func testAccFortiManagerSystemAdminConfig() string {
 	return fmt.Sprintf(`
-resource "fortios_fortimanager_system_admin" "test1" {
+resource "fortios_fmg_system_admin" "test1" {
     http_port = 80
 	https_port = 443
     idle_timeout = 20

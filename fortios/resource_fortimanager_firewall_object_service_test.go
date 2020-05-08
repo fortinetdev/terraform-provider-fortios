@@ -19,13 +19,13 @@ func TestAccFortiManagerFirewallObjectService(t *testing.T) {
 			{
 				Config: testAccFortiManagerFirewallObjectServiceConfig(name),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckFortiManagerFirewallObjectServiceExists("fortios_fortimanager_firewall_object_service.test1"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_object_service.test1", "name", name),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_object_service.test1", "protocol", "TCP/UDP/SCTP"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_object_service.test1", "comment", "test obj service"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_object_service.test1", "category", "Email"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_object_service.test1", "proxy", "disable"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_object_service.test1", "fqdn", "fqdn.google.com"),
+					testAccCheckFortiManagerFirewallObjectServiceExists("fortios_fmg_firewall_object_service.test1"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_object_service.test1", "name", name),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_object_service.test1", "protocol", "TCP/UDP/SCTP"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_object_service.test1", "comment", "test obj service"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_object_service.test1", "category", "Email"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_object_service.test1", "proxy", "disable"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_object_service.test1", "fqdn", "fqdn.google.com"),
 				),
 			},
 		},
@@ -64,7 +64,7 @@ func testAccCheckFMGFirewallObjectServiceDestroy(s *terraform.State) error {
 	c := testAccProvider.Meta().(*FortiClient).ClientFortimanager
 
 	for _, rs := range s.RootModule().Resources {
-		if rs.Type != "fortios_fortimanager_firewall_object_service" {
+		if rs.Type != "fortios_fmg_firewall_object_service" {
 			continue
 		}
 
@@ -85,7 +85,7 @@ func testAccCheckFMGFirewallObjectServiceDestroy(s *terraform.State) error {
 
 func testAccFortiManagerFirewallObjectServiceConfig(name string) string {
 	return fmt.Sprintf(`
-resource "fortios_fortimanager_firewall_object_service" "test1" {
+resource "fortios_fmg_firewall_object_service" "test1" {
     name = "%s"
     comment = "test obj service"
     protocol = "TCP/UDP/SCTP"

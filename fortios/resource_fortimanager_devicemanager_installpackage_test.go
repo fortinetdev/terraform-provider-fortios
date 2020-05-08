@@ -18,8 +18,8 @@ func TestAccFortiManagerDVMInstallPolicyPackage(t *testing.T) {
 			{
 				Config: testAccFortiManagerDVMInstallPolicyPackageConfig(pkg_name),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckFortiManagerDVMInstallPolicyPackageExists("fortios_fortimanager_devicemanager_install_policypackage.test3"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_devicemanager_install_policypackage.test3", "package_name", pkg_name),
+					testAccCheckFortiManagerDVMInstallPolicyPackageExists("fortios_fmg_devicemanager_install_policypackage.test3"),
+					resource.TestCheckResourceAttr("fortios_fmg_devicemanager_install_policypackage.test3", "package_name", pkg_name),
 				),
 			},
 		},
@@ -43,11 +43,11 @@ func testAccCheckFortiManagerDVMInstallPolicyPackageExists(n string) resource.Te
 
 func testAccFortiManagerDVMInstallPolicyPackageConfig(name string) string {
 	return fmt.Sprintf(`
-resource "fortios_fortimanager_firewall_security_policypackage" "test1" {
+resource "fortios_fmg_firewall_security_policypackage" "test1" {
     name = "%s"
-    target = "FGVM64-test"
+    target = "myfirewall"
 }
-resource "fortios_fortimanager_firewall_security_policy" "test2" {
+resource "fortios_fmg_firewall_security_policy" "test2" {
     name = "policy-test"
     srcaddr = ["all"]
     srcintf = ["any"]
@@ -56,10 +56,10 @@ resource "fortios_fortimanager_firewall_security_policy" "test2" {
     service = ["ALL"]
     action = "accept"
     schedule= ["always"]
-    package_name = fortios_fortimanager_firewall_security_policypackage.test1.name
+    package_name = fortios_fmg_firewall_security_policypackage.test1.name
 }
-resource "fortios_fortimanager_devicemanager_install_policypackage" "test3" {
-   package_name = fortios_fortimanager_firewall_security_policy.test2.package_name
+resource "fortios_fmg_devicemanager_install_policypackage" "test3" {
+   package_name = fortios_fmg_firewall_security_policy.test2.package_name
 }
 `, name)
 }

@@ -17,9 +17,9 @@ func TestAccFortiManagerSystemDNS(t *testing.T) {
 			{
 				Config: testAccFortiManagerSystemDNSConfig(),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckFortiManagerSystemDNSExists("fortios_fortimanager_system_dns.test1"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_system_dns.test1", "primary", "208.91.112.52"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_system_dns.test1", "secondary", "208.91.112.54"),
+					testAccCheckFortiManagerSystemDNSExists("fortios_fmg_system_dns.test1"),
+					resource.TestCheckResourceAttr("fortios_fmg_system_dns.test1", "primary", "208.91.112.52"),
+					resource.TestCheckResourceAttr("fortios_fmg_system_dns.test1", "secondary", "208.91.112.54"),
 				),
 			},
 		},
@@ -59,7 +59,7 @@ func testAccCheckFMGSystemDNSDestroy(s *terraform.State) error {
 
 func testAccFortiManagerSystemDNSConfig() string {
 	return fmt.Sprintf(`
-resource "fortios_fortimanager_system_dns" "test1" {
+resource "fortios_fmg_system_dns" "test1" {
     primary = "208.91.112.52"
     secondary = "208.91.112.54"
 }

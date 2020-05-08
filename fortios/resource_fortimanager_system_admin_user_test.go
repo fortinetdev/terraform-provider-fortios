@@ -19,13 +19,13 @@ func TestAccFortiManagerSystemAdminUser(t *testing.T) {
 			{
 				Config: testAccFortiManagerSystemAdminUserConfig(userid),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckFortiManagerSystemAdminUserExists("fortios_fortimanager_system_admin_user.test1"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_system_admin_user.test1", "userid", userid),
-					resource.TestCheckResourceAttr("fortios_fortimanager_system_admin_user.test1", "description", "local user"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_system_admin_user.test1", "user_type", "local"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_system_admin_user.test1", "rpc_permit", "read"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_system_admin_user.test1", "profileid", "Standard_User"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_system_admin_user.test1", "trusthost1", "1.1.1.1 255.255.255.255"),
+					testAccCheckFortiManagerSystemAdminUserExists("fortios_fmg_system_admin_user.test1"),
+					resource.TestCheckResourceAttr("fortios_fmg_system_admin_user.test1", "userid", userid),
+					resource.TestCheckResourceAttr("fortios_fmg_system_admin_user.test1", "description", "local user"),
+					resource.TestCheckResourceAttr("fortios_fmg_system_admin_user.test1", "user_type", "local"),
+					resource.TestCheckResourceAttr("fortios_fmg_system_admin_user.test1", "rpc_permit", "read"),
+					resource.TestCheckResourceAttr("fortios_fmg_system_admin_user.test1", "profileid", "Standard_User"),
+					resource.TestCheckResourceAttr("fortios_fmg_system_admin_user.test1", "trusthost1", "1.1.1.1 255.255.255.255"),
 				),
 			},
 		},
@@ -64,7 +64,7 @@ func testAccCheckFMGSystemAdminUserDestroy(s *terraform.State) error {
 	c := testAccProvider.Meta().(*FortiClient).ClientFortimanager
 
 	for _, rs := range s.RootModule().Resources {
-		if rs.Type != "fortios_fortimanager_system_admin_user" {
+		if rs.Type != "fortios_fmg_system_admin_user" {
 			continue
 		}
 
@@ -85,7 +85,7 @@ func testAccCheckFMGSystemAdminUserDestroy(s *terraform.State) error {
 
 func testAccFortiManagerSystemAdminUserConfig(id string) string {
 	return fmt.Sprintf(`
-resource "fortios_fortimanager_system_admin_user" "test1" {
+resource "fortios_fmg_system_admin_user" "test1" {
 	userid = "%s"
 	password = "123"
     description = "local user"

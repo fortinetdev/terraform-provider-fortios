@@ -19,13 +19,13 @@ func TestAccFortiManagerFirewallObjectAddress(t *testing.T) {
 			{
 				Config: testAccFortiManagerFirewallObjectAddressConfig(name),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckFortiManagerFirewallObjectAddressExists("fortios_fortimanager_firewall_object_address.test1"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_object_address.test1", "name", name),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_object_address.test1", "type", "fqdn"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_object_address.test1", "comment", "test obj address"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_object_address.test1", "fqdn", "fqdn.google.com"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_object_address.test1", "associated_intf", "any"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_firewall_object_address.test1", "allow_routing", "disable"),
+					testAccCheckFortiManagerFirewallObjectAddressExists("fortios_fmg_firewall_object_address.test1"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_object_address.test1", "name", name),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_object_address.test1", "type", "fqdn"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_object_address.test1", "comment", "test obj address"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_object_address.test1", "fqdn", "fqdn.google.com"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_object_address.test1", "associated_intf", "any"),
+					resource.TestCheckResourceAttr("fortios_fmg_firewall_object_address.test1", "allow_routing", "disable"),
 				),
 			},
 		},
@@ -64,7 +64,7 @@ func testAccCheckFMGFirewallObjectAddressDestroy(s *terraform.State) error {
 	c := testAccProvider.Meta().(*FortiClient).ClientFortimanager
 
 	for _, rs := range s.RootModule().Resources {
-		if rs.Type != "fortios_fortimanager_firewall_object_address" {
+		if rs.Type != "fortios_fmg_firewall_object_address" {
 			continue
 		}
 
@@ -85,7 +85,7 @@ func testAccCheckFMGFirewallObjectAddressDestroy(s *terraform.State) error {
 
 func testAccFortiManagerFirewallObjectAddressConfig(name string) string {
 	return fmt.Sprintf(`
-resource "fortios_fortimanager_firewall_object_address" "test1" {
+resource "fortios_fmg_firewall_object_address" "test1" {
     name = "%s"
     type = "fqdn"
     comment = "test obj address"

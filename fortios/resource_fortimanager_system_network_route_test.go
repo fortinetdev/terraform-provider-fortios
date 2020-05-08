@@ -20,11 +20,11 @@ func TestAccFortiManagerSystemNetworkRoute(t *testing.T) {
 			{
 				Config: testAccFortiManagerSystemNetworkRouteConfig(route_id),
 				Check: resource.ComposeTestCheckFunc(
-					testAccCheckFortiManagerSystemNetworkRouteExists("fortios_fortimanager_system_network_route.test1"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_system_network_route.test1", "route_id", strconv.Itoa(route_id)),
-					resource.TestCheckResourceAttr("fortios_fortimanager_system_network_route.test1", "destination", "1.1.1.0 255.255.255.0"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_system_network_route.test1", "gateway", "192.168.1.2"),
-					resource.TestCheckResourceAttr("fortios_fortimanager_system_network_route.test1", "device", "port4"),
+					testAccCheckFortiManagerSystemNetworkRouteExists("fortios_fmg_system_network_route.test1"),
+					resource.TestCheckResourceAttr("fortios_fmg_system_network_route.test1", "route_id", strconv.Itoa(route_id)),
+					resource.TestCheckResourceAttr("fortios_fmg_system_network_route.test1", "destination", "1.1.1.0 255.255.255.0"),
+					resource.TestCheckResourceAttr("fortios_fmg_system_network_route.test1", "gateway", "192.168.1.2"),
+					resource.TestCheckResourceAttr("fortios_fmg_system_network_route.test1", "device", "port4"),
 				),
 			},
 		},
@@ -63,7 +63,7 @@ func testAccCheckFMGSystemNetworkRouteDestroy(s *terraform.State) error {
 	c := testAccProvider.Meta().(*FortiClient).ClientFortimanager
 
 	for _, rs := range s.RootModule().Resources {
-		if rs.Type != "fortios_fortimanager_system_network_route" {
+		if rs.Type != "fortios_fmg_system_network_route" {
 			continue
 		}
 
@@ -84,7 +84,7 @@ func testAccCheckFMGSystemNetworkRouteDestroy(s *terraform.State) error {
 
 func testAccFortiManagerSystemNetworkRouteConfig(route_id int) string {
 	return fmt.Sprintf(`
-resource "fortios_fortimanager_system_network_route" "test1" {
+resource "fortios_fmg_system_network_route" "test1" {
     route_id = %d
     destination = "1.1.1.0 255.255.255.0"
     gateway = "192.168.1.2"
