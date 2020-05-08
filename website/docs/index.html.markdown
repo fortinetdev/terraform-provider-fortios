@@ -8,13 +8,13 @@ description: |-
 
 # FortiOS Provider
 
-The FortiOS provider is used to interact with the resources supported by FortiOS. We need to configure the provider with the proper credentials before it can be used.
+The FortiOS provider is used to interact with the resources supported by FortiOS and FortiManager. We need to configure the provider with the proper credentials before it can be used.
 
 Two products are supported now: FortiGate and FortiManager, please use the navigation to the left to read more details about the available resources.
 
-# FortiOS Provider for FortiGate
+## Configuration for FortiGate
 
-## Example Usage
+### Example Usage
 
 ```hcl
 # Configure the FortiOS Provider for FortiGate
@@ -45,14 +45,14 @@ provider "fortios" {
 
 Please refer to the Argument Reference below for more help on `insecure` and `cabundlefile`.
 
-## Authentication
+### Authentication
 
 The FortiOS provider offers a means of providing credentials for authentication. The following methods are supported:
 
 - Static credentials
 - Environment variables
 
-### Static credentials
+#### Static credentials
 
 Static credentials can be provided by adding a `token` key in-line in the FortiOS provider block.
 
@@ -67,17 +67,21 @@ provider "fortios" {
 }
 ```
 
-For the configuration of token, please refer to the `system->system api-user` and `execute->api-user` chapters of the `FortiOS Handbook - CLI Reference`.
+#### Generate an API token for FortiOS
 
-### Environment variables
+See the left navigation: `Guides` -> `Generate an API token for FortiOS`.
 
-You can provide your credentials via the `FORTIOS_ACCESS_HOSTNAME` and `FORTIOS_ACCESS_TOKEN` environment variables. Note that setting your FortiOS credentials using static credentials variables will override the environment variables.
+#### Environment variables
+
+You can provide your credentials via the `FORTIOS_ACCESS_HOSTNAME`, `FORTIOS_ACCESS_TOKEN`, `FORTIOS_INSECURE` and `FORTIOS_CA_CABUNDLE` environment variables. Note that setting your FortiOS credentials using static credentials variables will override the environment variables.
 
 Usage:
 
-```hcl
-$ export FORTIOS_ACCESS_HOSTNAME=192.168.52.177
-$ export FORTIOS_ACCESS_TOKEN=q3Hs49jxts195gkd9Hjsxnjtmr6k39
+```shell
+$ export "FORTIOS_ACCESS_HOSTNAME"="192.168.52.177"
+$ export "FORTIOS_INSECURE"="false"
+$ export "FORTIOS_ACCESS_TOKEN"="09m441wrwc10yGyrtQ4nk6mjbqcfz9"
+$ export "FORTIOS_CA_CABUNDLE"="/path/yourCA.crt"
 ```
 
 Then configure the FortiOS Provider as following:
@@ -96,7 +100,7 @@ resource "fortios_networking_route_static" "test1" {
 }
 ```
 
-## VDOM
+### VDOM
 
 If the FortiGate unit is running in VDOM mode, the `vdom` configuration needs to be added.
 
@@ -123,7 +127,7 @@ resource "fortios_networking_route_static" "test1" {
 }
 ```
 
-## Argument Reference
+### Argument Reference
 
 The following arguments are supported:
 
@@ -138,16 +142,16 @@ The following arguments are supported:
 * `vdom` - (Optional) If the FortiGate unit is running in VDOM mode, you can use this argument to specify the name of the vdom to be set .
 
 
-# FortiOS Provider for FortiManager
 
-## Example Usage
+## Configuration for FortiManager
+
+### Example Usage
 
 ```hcl
 provider "fortios" {
 	hostname = "192.168.88.100"
 	username = "APIUser"
 	passwd = "admin"
-	product = "fortimanager"
 	insecure = false
 	cabundlefile = "/path/yourCA.crt"
 }
@@ -165,28 +169,27 @@ provider "fortios" {
 	hostname = "192.168.88.100"
 	username = "APIUser"
 	passwd = "admin"
-	product = "fortimanager"
 	insecure = true
 }
 ```
 
 Please refer to the Argument Reference below for more help on `insecure` and `cabundlefile`.
 
-## Authentication
+### Authentication
 
 As the same to provider for FortiGate, the following two methods are supported:
 
 - Static credentials
 - Environment variables
 
-### Static credentials
+#### Static credentials
 
 Static credentials can be provided by adding the `hostname`, `username` and `passwd`  key in-line in the FortiOS provider block.
 
 Usage:
 
 ```hcl
-provider "fortios" {
+provider SGG "fortios" {
 	hostname = "192.168.88.100"
 	username = "APIUser"
 	passwd = "admin"
@@ -196,13 +199,13 @@ provider "fortios" {
 }
 ```
 
-### Environment variables
+#### Environment variables
 
 You can provide your credentials via the `FORTIOS_FMG_HOSTNAME`, `FORTIOS_FMG_USERNAME` and `FORTIOS_FMG_PASSWORD` environment variables. Note that setting your FortiOS credentials using static credentials variables will override the environment variables.
 
 Usage:
 
-```hcl
+```shell
 $ export FORTIOS_FMG_HOSTNAME="192.168.88.100"
 $ export FORTIOS_FMG_USERNAME="APIUser"
 $ export FORTIOS_FMG_PASSWORD="admin"
@@ -223,7 +226,7 @@ resource "fortios_fmg_system_dns" "test1" {
 }
 ```
 
-## Multi-Adom
+### Multi-Adom
 
 Multi-Adom feature is supported in case of using FortiManager, just take the following example as a reference:
 
@@ -262,7 +265,7 @@ This will install the script from the FMG(test-adom) to the FGT(root).
 
 Note that one resource supports Multi-Adom feature if it has 'adom' argument.
 
-## Argument Reference
+### Argument Reference
 
 The following arguments are supported:
 
@@ -272,14 +275,11 @@ The following arguments are supported:
 
 * `passwd` - (Optional) The password of FortiManager, it can also be sourced from the `FORTIOS_FMG_PASSWORD` environment variable.
 
-* `product` - (Optional) Which product to use, should be set to "fortimanager" here. default is "fortigate", it can also be sourced from the `FORTIOS_PRODUCT` environment variable.
-
 * `insecure` - (Optional) Control whether the Provider to perform insecure SSL requests. If omitted, the `FORTIOS_FMG_INSECURE` environment variable is used. If neither is set, default value is `false`.
 
 * `cabundlefile` - (Optional) The path of a custom CA bundle file. You can specify a path to the file, or you can specify it by the `FORTIOS_FMG_CABUNDLE` environment variable.
 
-# Versioning
 
-The provider can cover both FortiOS 6.0 and 6.2 versions.
+## Versioning
 
-When using for FortiManager, make sure the version of FortiManager and FortiGate should be the same.
+The provider can cover both FortiOS 6.0 and 6.2 versions. The provider can cover both FortiManager 6.0 and 6.2 versions. When using FortiManager, make sure the versions of FortiManager and the FortiGates controlled by it are the same.

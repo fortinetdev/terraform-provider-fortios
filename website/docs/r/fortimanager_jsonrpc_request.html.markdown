@@ -3,11 +3,11 @@ layout: "fortios"
 page_title: "FortiOS: fortios_fmg_jsonrpc_request"
 sidebar_current: "docs-fortios-fortimanager-resource-jsonrpc-request"
 description: |-
-  Provides a resource to handle JSON RPC request for FortiManager.
+  Provides a resource to handle JSON RPC request for FortiManager. Only used for debugging and testing.
 ---
 
 # fortios_fmg_jsonrpc_request
-This resource supports handling JSON RPC request for FortiManager.
+This resource supports handling JSON RPC request for FortiManager. Only used for debugging and testing.
 
 ## Example Usage
 ```hcl
@@ -86,4 +86,4 @@ The following attributes are exported:
 
 * `id` - The resource id.
 * `json_content` - JSON RPC request, which should contain 'method' and 'params' parameters.
-* `response` - Response data.
+* `response` - JSON RPC request response data.
