@@ -3,10 +3,8 @@ package fortios
 import (
 	"encoding/json"
 	"fmt"
-	"math/rand"
-	"os"
-	"strconv"
 
+	"github.com/google/uuid"
 	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/hashicorp/terraform/helper/validation"
 )
@@ -24,10 +22,9 @@ func resourceFortimanagerJSONRPCRequest() *schema.Resource {
 				Required:     true,
 				ValidateFunc: validation.ValidateJsonString,
 			},
-			"output_file": &schema.Schema{
+			"response": &schema.Schema{
 				Type:     schema.TypeString,
-				Optional: true,
-				Default:  "jsonrpc_output.txt",
+				Computed: true,
 			},
 		},
 	}
@@ -47,22 +44,8 @@ func handleFMGJSONRPCRequest(d *schema.ResourceData, m interface{}) error {
 		return fmt.Errorf("Error handling JSON RPC Request : %s", err)
 	}
 
-	if input["method"].(string) == "get" {
-		outputFile := d.Get("output_file").(string)
-
-		file, err := os.Create(outputFile)
-		if err != nil {
-			return fmt.Errorf("Error handling JSON RPC Request : %s", err)
-		}
-		defer file.Close()
-
-		_, err = file.Write(data)
-		if err != nil {
-			return fmt.Errorf("Error handling JSON RPC Request : %s", err)
-		}
-	}
-
-	d.SetId("JSONRPC-Requst-" + strconv.Itoa(rand.Intn(100)))
+	d.SetId("JSONRPC-Requst-" + uuid.New().String())
+	d.Set("response", "FDS"+string(data))
 
 	return nil
 }
