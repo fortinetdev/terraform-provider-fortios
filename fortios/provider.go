@@ -105,6 +105,7 @@ func Provider() terraform.ResourceProvider {
 			"fortios_system_license_vm":                       resourceSystemLicenseVM(),
 			"fortios_vpn_ipsec_phase1interface":               resourceVPNIPsecPhase1Interface(),
 			"fortios_vpn_ipsec_phase2interface":               resourceVPNIPsecPhase2Interface(),
+			"fortios_json_generic_api":                        resourceJSONGenericAPI(),
 			"fortios_fmg_system_admin_profiles":               resourceFortimanagerSystemAdminProfiles(),
 			"fortios_fmg_system_admin_user":                   resourceFortimanagerSystemAdminUser(),
 			"fortios_fmg_devicemanager_device":                resourceFortimanagerDVMDevice(),
