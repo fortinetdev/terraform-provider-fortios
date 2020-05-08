@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	forticlient "github.com/fgtdev/fortios-sdk-go/sdkcore"
+	"github.com/google/uuid"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
@@ -58,7 +59,7 @@ func resourceJSONGenericAPICreateUpdate(d *schema.ResourceData, m interface{}) e
 	}
 
 	//Set index for d
-	d.SetId("JsonGenericApi")
+	d.SetId("JsonGenericApi" + uuid.New().String())
 	d.Set("response", res)
 
 	return nil
