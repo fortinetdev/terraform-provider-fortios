@@ -11,15 +11,6 @@ This resource supports modifying system dns setting for FortiManager.
 
 ## Example Usage
 ```hcl
-provider "fortios" {
-	hostname = "192.168.88.100"
-	username = "APIUser"
-	passwd = "admin"
-	product = "fortimanager"
-	insecure = false
-	cabundlefile = "/path/yourCA.crt"
-}
-
 resource "fortios_fmg_system_dns" "test1" {
 	primary = "208.91.112.52"
 	secondary = "208.91.112.54"

@@ -11,15 +11,6 @@ This resource supports Create/Delete system syslog server for FortiManager.
 
 ## Example Usage
 ```hc
-provider "fortios" {
-	hostname = "192.168.88.100"
-	username = "APIUser"
-	passwd = "admin"
-	product = "fortimanager"
-	insecure = false
-	cabundlefile = "/path/yourCA.crt"
-}
-
 resource "fortios_fmg_system_syslogserver" "test1" {
 	name = "test-syslog"
 	ip = "1.1.1.1"

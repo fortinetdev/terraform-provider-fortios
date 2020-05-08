@@ -11,15 +11,6 @@ This resource supports handling JSON RPC request for FortiManager.
 
 ## Example Usage
 ```hcl
-provider "fortios" {
-	hostname = "192.168.88.100"
-	username = "APIUser"
-	passwd = "admin"
-	product = "fortimanager"
-	insecure = false
-	cabundlefile = "/path/yourCA.crt"
-}
-
 resource "fortios_fmg_jsonrpc_request" "test1" {
 	json_content = <<JSON
 {
@@ -82,7 +73,6 @@ resource "fortios_fmg_jsonrpc_request" "test3" {
   ]
 }
 JSON
-	output_file = "./output.txt"
 }
 ```
 
@@ -90,11 +80,10 @@ JSON
 The following arguments are supported:
 
 * `json_content` - (required) JSON RPC request, which should contain 'method' and 'params' parameters.
-* `output_file` - Output file, which is used for recording data when executing 'read' operation. default: "jsonrpc_output.txt".
 
 ## Attributes Reference
 The following attributes are exported:
 
 * `id` - The resource id.
 * `json_content` - JSON RPC request, which should contain 'method' and 'params' parameters.
-* `output_file` - Output file, which is used for recording data when executing 'read' operation.
+* `response` - Response data.

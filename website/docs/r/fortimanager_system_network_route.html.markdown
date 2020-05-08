@@ -11,15 +11,6 @@ This resource supports updating system network route for FortiManager.
 
 ## Example Usage
 ```hcl
-provider "fortios" {
-	hostname = "192.168.88.100"
-	username = "APIUser"
-	passwd = "admin"
-	product = "fortimanager"
-	insecure = false
-	cabundlefile = "/path/yourCA.crt"
-}
-
 resource "fortios_fmg_system_network_route" "test1" {
 	route_id = 5
 	destination = "192.168.2.0 255.255.255.0"

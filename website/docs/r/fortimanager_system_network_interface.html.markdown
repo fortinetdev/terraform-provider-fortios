@@ -11,15 +11,6 @@ This resource supports updating system network interface for FortiManager.
 
 ## Example Usage
 ```hcl
-provider "fortios" {
-	hostname = "192.168.88.100"
-	username = "APIUser"
-	passwd = "admin"
-	product = "fortimanager"
-	insecure = false
-	cabundlefile = "/path/yourCA.crt"
-}
-
 resource "fortios_fmg_system_network_interface" "test1" {
 	name = "port3"
 	ip = "1.1.1.3 255.255.255.0"

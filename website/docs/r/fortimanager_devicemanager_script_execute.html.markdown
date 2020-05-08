@@ -11,15 +11,6 @@ This resource supports executing devicemanager script on Fortimanager.
 
 ## Example Usage
 ```hcl
-provider "fortios" {
-	hostname = "192.168.88.100"
-	username = "APIUser"
-	passwd = "admin"
-	product = "fortimanager"
-	insecure = false
-	cabundlefile = "/path/yourCA.crt"
-}
-
 resource "fortios_fmg_devicemanager_script_execute" "test3" {
 	script_name = "config-intf3"
 	target_devname = "devname"

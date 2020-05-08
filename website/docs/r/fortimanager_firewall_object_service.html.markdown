@@ -11,15 +11,6 @@ This resource supports Create/Read/Update/Delete firewall object service for For
 
 ## Example Usage
 ```hcl
-provider "fortios" {
-	hostname = "192.168.88.100"
-	username = "APIUser"
-	passwd = "admin"
-	product = "fortimanager"
-	insecure = false
-	cabundlefile = "/path/yourCA.crt"
-}
-
 resource "fortios_fmg_firewall_object_service" "test1" {
 	name = "fos_test"
 	comment = "test obj service"

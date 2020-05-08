@@ -11,15 +11,6 @@ This resource supports Create/Read/Update/Delete firewall object ippool for Fort
 
 ## Example Usage
 ```hcl
-provider "fortios" {
-	hostname = "192.168.88.100"
-	username = "APIUser"
-	passwd = "admin"
-	product = "fortimanager"
-	insecure = false
-	cabundlefile = "/path/yourCA.crt"
-}
-
 resource "fortios_fmg_firewall_object_ippool" "test1" {
 	name = "foi_test"
 	startip = "1.1.10.1"

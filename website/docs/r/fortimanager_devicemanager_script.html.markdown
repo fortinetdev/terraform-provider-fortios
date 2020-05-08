@@ -11,15 +11,6 @@ This resource supports Create/Read/Update/Delete devicemanager script for FortiM
 
 ## Example Usage
 ```hcl
-provider "fortios" {
-	hostname = "192.168.88.100"
-	username = "APIUser"
-	passwd = "admin"
-	product = "fortimanager"
-	insecure = false
-	cabundlefile = "/path/yourCA.crt"
-}
-
 resource "fortios_fmg_devicemanager_script" "test1" {
 	name = "config-intf3"
 	description = "description"         

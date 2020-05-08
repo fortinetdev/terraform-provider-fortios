@@ -11,15 +11,6 @@ This resource supports Create/Read/Update/Delete admin profiles for FortiManager
 
 ## Example Usage
 ```hcl
-provider "fortios" {
-	hostname = "192.168.88.100"
-	username = "APIUser"
-	passwd = "admin"
-	product = "fortimanager"
-	insecure = false
-	cabundlefile = "/path/yourCA.crt"
-}
-
 resource "fortios_fmg_system_admin_profiles" "test1" {
 	profileid = "terraform-test1"
 	description = "11"

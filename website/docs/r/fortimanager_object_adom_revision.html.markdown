@@ -11,15 +11,6 @@ This resource supports Create/Read/Update/Delete object adom revision for FortiM
 
 ## Example Usage
 ```hcl
-provider "fortios" {
-	hostname = "192.168.88.100"
-	username = "APIUser"
-	passwd = "admin"
-	product = "fortimanager"
-	insecure = false
-	cabundlefile = "/path/yourCA.crt"
-}
-
 resource "fortios_fmg_object_adom_revision" "test1" {
 	name = "oar-test"
 	description = "adom revision"

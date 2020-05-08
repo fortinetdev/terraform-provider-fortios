@@ -11,15 +11,6 @@ This resource supports installing devicemanager script from FortiManager to the 
 
 ## Example Usage
 ```hcl
-provider "fortios" {
-	hostname = "192.168.88.100"
-	username = "APIUser"
-	passwd = "admin"
-	product = "fortimanager"
-	insecure = false
-	cabundlefile = "/path/yourCA.crt"
-}
-
 resource "fortios_fmg_devicemanager_install_device" "test1" {
 	target_devname = "FGVM64-test"
 	timeout = 5

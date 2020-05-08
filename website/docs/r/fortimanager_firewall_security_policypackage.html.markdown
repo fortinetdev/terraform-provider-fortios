@@ -12,15 +12,6 @@ This resource supports Create/Read/Update/Delete firewall security policypackage
 
 ## Example Usage
 ```hcl
-provider "fortios" {
-	hostname = "192.168.88.100"
-	username = "APIUser"
-	passwd = "admin"
-	product = "fortimanager"
-	insecure = false
-	cabundlefile = "/path/yourCA.crt"
-}
-
 resource "fortios_fmg_firewall_security_policypackage" "test1" {
 	name = "test-pkg"
 	target = "FGVM64-test"
