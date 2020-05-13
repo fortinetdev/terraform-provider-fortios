@@ -13,8 +13,7 @@ git:
 install:
   # This script is used by the Travis build to install a cookie for
   # go.googlesource.com so rate limits are higher when using `go get` to fetch
-  # packages that live there.
-  # See: https://github.com/golang/go/issues/12933
+  # packages that live there. See: https://github.com/golang/go/issues/12933
   - bash scripts/gogetcookie.sh
 
 script:
