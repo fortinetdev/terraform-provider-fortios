@@ -118,10 +118,11 @@ func resourceSystemSettingNTPRead(d *schema.ResourceData, m interface{}) error {
 	//Refresh property
 	d.Set("type", o.Type)
 	d.Set("ntpsync", o.Ntpsync)
-	nts := extractNtpServer(o.Ntpserver)
-	if err := d.Set("ntpserver", nts); err != nil {
-		log.Printf("[WARN] Error setting System Setting NTP for (%s): %s", d.Id(), err)
-	}
+	// FortiAPI Bug
+	// nts := extractNtpServer(o.Ntpserver)
+	// if err := d.Set("ntpserver", nts); err != nil {
+	// 	log.Printf("[WARN] Error setting System Setting NTP for (%s): %s", d.Id(), err)
+	// }
 
 	return nil
 }

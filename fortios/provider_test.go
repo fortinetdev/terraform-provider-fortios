@@ -46,9 +46,6 @@ func testAccPreCheckFortiManager(t *testing.T) {
 	if v := os.Getenv("FORTIOS_FMG_PASSWORD"); v == "" {
 		t.Fatal("FortiManager Provider: FORTIOS_FMG_PASSWORD must be set for acceptance tests")
 	}
-	if v := os.Getenv("FORTIOS_PRODUCT"); v == "" {
-		t.Fatal("FortiManager Provider: FORTIOS_PRODUCT must be set for acceptance tests")
-	}
 	if v := os.Getenv("FORTIOS_FMG_INSECURE"); v == "" {
 		t.Fatal("FortiManager Provider: Set FORTIOS_FMG_INSECURE=true for acceptance tests")
 	}

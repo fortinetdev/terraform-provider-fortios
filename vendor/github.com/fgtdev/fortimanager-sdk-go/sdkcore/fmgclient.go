@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+    "time"
 )
 
 // Request represents a JSON-RPC request sent by a client.
@@ -123,11 +124,57 @@ func (c *FmgSDKClient) Execute(req *Request) (result map[string]interface{}, err
 	return
 }
 
+
+func getEnvSession() (session string) {
+	fmgTestacc := os.Getenv("FORTIOS_FMG_TESTACC")
+
+	if fmgTestacc == "" {
+		session = ""
+		return
+	}
+
+	sessionString := os.Getenv("FORTIOS_FMG_SESSION")
+	sessionTimeStamp := os.Getenv("FORTIOS_FMG_SESSIONTIMESTAMP")
+	if sessionString == "" || sessionTimeStamp == "" {
+		session = ""
+		return
+	}
+
+	lasttime, err := time.Parse(time.RFC3339, sessionTimeStamp)
+	if err != nil {
+		session = ""
+		return
+	}
+
+	now := time.Now()
+	subM := now.Sub(lasttime)
+
+	if subM.Minutes() > 15 {
+		session = ""
+		return
+	}
+
+	return sessionString
+}
+
+func setEnvSession(session string) {
+	now := time.Now()
+
+	os.Setenv("FORTIOS_FMG_SESSION", session)
+	os.Setenv("FORTIOS_FMG_SESSIONTIMESTAMP", now.Format(time.RFC3339))
+}
+
 // Login is for logging in
 // Output:
 //   @session: login session
 //   @err: error details if failure, and nil if success
 func (c *FmgSDKClient) Login() (session string, err error) {
+	sessionEnvString := getEnvSession()
+	if sessionEnvString != "" {
+		session = sessionEnvString
+		return
+	}
+
 	params := map[string]interface{}{
 		"data": map[string]string{
 			"user":   c.User,
@@ -148,8 +195,11 @@ func (c *FmgSDKClient) Login() (session string, err error) {
 	}
 
 	session = result["session"].(string)
+
+	setEnvSession(session)
 	return
 }
+
 
 // Logout is for logging out
 // Input:
