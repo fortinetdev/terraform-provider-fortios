@@ -5,7 +5,6 @@ import (
 	"crypto/x509"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"os"
 	"time"
