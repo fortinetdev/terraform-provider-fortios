@@ -88,7 +88,7 @@ func testAccCheckFMGFirewallObjectVIpDestroy(s *terraform.State) error {
 func testAccFortiManagerFirewallObjectVIpConfig(name string) string {
 	return fmt.Sprintf(`
 resource "fortios_fmg_firewall_object_vip" "test1" {
-    name = "%s" 
+    name = "%s"
 	comment = "test obj vip"
     type = "static-nat"
     arp_reply = "enable"

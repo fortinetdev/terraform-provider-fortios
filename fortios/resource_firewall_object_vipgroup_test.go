@@ -82,7 +82,7 @@ func testAccCheckFirewallObjectVipGroupDestroy(s *terraform.State) error {
 
 func testAccFortiOSFirewallObjectVipGroupConfig(name string) string {
 	return fmt.Sprintf(`
-resource "fortios_firewall_object_vip" "viptest1" { 
+resource "fortios_firewall_object_vip" "viptest1" {
 	name = "vip1fortest%s"
 	comment = "Terraform Test"
 	extip = "1.1.15.0-1.1.16.0"
@@ -94,7 +94,7 @@ resource "fortios_firewall_object_vip" "viptest1" {
 	mappedport = "4-5"
 }
 
-resource "fortios_firewall_object_vip" "viptest2" { 
+resource "fortios_firewall_object_vip" "viptest2" {
 	name = "vip2fortest%s"
 	comment = "Terraform Test"
 	extip = "1.1.17.0-1.1.18.0"

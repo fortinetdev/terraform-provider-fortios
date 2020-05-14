@@ -53,8 +53,6 @@ func setFMGSystemGlobal(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).ClientFortimanager
 	defer c.Trace("setFMGSystemGlobal")()
 
-	log.Printf("shengh: setFMGSystemGlobal Init")
-
 	i := &fmgclient.JSONSystemGlobal{
 		FazStatus:  d.Get("fortianalyzer_status").(string),
 		AdomStatus: d.Get("adom_status").(string),
@@ -69,7 +67,7 @@ func setFMGSystemGlobal(d *schema.ResourceData, m interface{}) error {
 	}
 
 	c.DebugNum++
-	log.Printf("shengh: ClientFortimanager setFMGSystemGlobal: %d", c.DebugNum)
+	log.Printf("ClientFortimanager setFMGSystemGlobal: %d", c.DebugNum)
 
 	d.SetId("fortimanager-global-setting")
 

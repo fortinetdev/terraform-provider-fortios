@@ -75,7 +75,7 @@ func (c *FortiSDKClient) CreateFirewallObjectServiceCategory(params *JSONFirewal
 	if result != nil && result["status"] != "success" {
 		if result["error"] == -5 {
 			err = fmt.Errorf("Category %s already exists.", result["mkey"])
-			return 
+			return
 		}
 	}
 
@@ -216,7 +216,7 @@ func (c *FortiSDKClient) ReadFirewallObjectServiceCategory(mkey string) (output 
 		output = nil
 		return
 	}
-	
+
 	err = fortiAPIErrorFormat(result, string(body))
 
 	if err == nil {

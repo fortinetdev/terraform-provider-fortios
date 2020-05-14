@@ -82,7 +82,7 @@ func testAccCheckSystemSettingGlobalDestroy(s *terraform.State) error {
 }
 
 const testAccFortiOSSystemSettingGlobalConfig = `
-resource "fortios_system_setting_global" "test1" { 
+resource "fortios_system_setting_global" "test1" {
 	admintimeout = 65
 	timezone = "04"
 	hostname = "mytestFortiGate"

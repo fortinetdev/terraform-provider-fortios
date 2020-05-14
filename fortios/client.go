@@ -220,15 +220,12 @@ func createFortiManagerClient(fClient *FortiClient, c *Config) error {
 		TLSClientConfig: config,
 	}
 
-	log.Printf("shengh: ClientFortimanager Init")
-
 	client := &http.Client{
 		Transport: tr,
 	}
 	fClient.ClientFortimanager = fmgclient.NewClient(c.FMG_Hostname, c.FMG_Username, c.FMG_Passwd, client)
 
 	fClient.ClientFortimanager.DebugNum = 0
-	log.Printf("shengh: ClientFortimanager Init: %d", fClient.ClientFortimanager.DebugNum)
 
 	session, err := fClient.ClientFortimanager.Login()
 	if err != nil {

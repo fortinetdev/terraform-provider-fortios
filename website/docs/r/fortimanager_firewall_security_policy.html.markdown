@@ -54,7 +54,7 @@ The following arguments are supported:
 * `dstaddr` - (Required) Destination address and adress group names.
 * `dstintf` - (Required) Outgoing interface.
 * `service` - (Required) Service and service group names.
-* `action` - (Required) Policy action, default is deny. Enum: [allow, deny, ipsec]. 
+* `action` - (Required) Policy action, default is deny. Enum: [allow, deny, ipsec].
 * `schedule` - (Required) Schedule name.
 * `internet_service` - Enable/disable use of Destination Internet Services for this policy.
 * `internet_service_id` - Destination Internet Service ID.
@@ -74,7 +74,7 @@ The following arguments are supported:
 * `fixedport` - Enable/disable to prevent source NAT from changing a session's source port.
 * `vpntunnel` - Policy-based IPsec VPN: name of the IPsec VPN Phase 1.
 * `inbound` - Policy-based IPsec VPN: only traffic from the remote network can initiate a VPN. Enum: [disable, enable]
-* `utm_status` - Enable/disable to add one or more security profiles (AV, IPS, etc.) to the firewall policy. 
+* `utm_status` - Enable/disable to add one or more security profiles (AV, IPS, etc.) to the firewall policy.
 * `profile_type` - Determine whether the firewall policy allows security profile groups or single profiles only. Enum: [single, group]
 * `av_profile` - Name of an existing Antivirus profile.
 * `webfilter_profile` - Name of an existing Web filter profile.
@@ -120,7 +120,7 @@ The following attributes are exported:
 * `fixedport` - Enable/disable to prevent source NAT from changing a session's source port.
 * `vpntunnel` - Policy-based IPsec VPN: name of the IPsec VPN Phase 1.
 * `inbound` - Policy-based IPsec VPN: only traffic from the remote network can initiate a VPN.
-* `utm_status` - Enable/disable to add one or more security profiles (AV, IPS, etc.) to the firewall policy. 
+* `utm_status` - Enable/disable to add one or more security profiles (AV, IPS, etc.) to the firewall policy.
 * `profile_type` - Determine whether the firewall policy allows security profile groups or single profiles only.
 * `av_profile` - Name of an existing Antivirus profile.
 * `webfilter_profile` - Name of an existing Web filter profile.

@@ -83,7 +83,7 @@ func testAccCheckLogSyslogSettingDestroy(s *terraform.State) error {
 }
 
 const testAccFortiOSLogSyslogSettingConfig = `
-resource "fortios_networking_interface_port" "test1" { 
+resource "fortios_networking_interface_port" "test1" {
 	name = "port4"
 	ip = "1.1.1.1 255.255.255.0"
 	status = "down"

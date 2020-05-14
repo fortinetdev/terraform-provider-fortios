@@ -88,7 +88,7 @@ func testAccCheckFMGFirewallObjectIppoolDestroy(s *terraform.State) error {
 func testAccFortiManagerFirewallObjectIppoolConfig(name string) string {
 	return fmt.Sprintf(`
 resource "fortios_fmg_firewall_object_ippool" "test1" {
-    name = "%s" 
+    name = "%s"
     comment = "test obj ippool"
     type = "one-to-one"
     startip = "1.1.10.1"

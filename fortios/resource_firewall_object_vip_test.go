@@ -87,7 +87,7 @@ func testAccCheckFirewallObjectVipDestroy(s *terraform.State) error {
 
 func testAccFortiOSFirewallObjectVipConfig(name string) string {
 	return fmt.Sprintf(`
-resource "fortios_firewall_object_vip" "test1" { 
+resource "fortios_firewall_object_vip" "test1" {
 	name = "%s"
 	comment = "Terraform Test"
 	extip = "1.1.5.0-1.1.6.0"

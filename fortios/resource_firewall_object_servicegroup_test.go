@@ -82,7 +82,7 @@ func testAccFortiOSFirewallObjectServiceGroupConfig(name string) string {
 resource "fortios_firewall_object_servicegroup" "test1" {
 	name = "%s"
 	comment = "Terraform Test"
-	member = ["DCE-RPC", "DNS", "HTTPS"] 
+	member = ["DCE-RPC", "DNS", "HTTPS"]
 }
 `, name)
 }

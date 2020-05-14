@@ -85,7 +85,7 @@ func testAccCheckSystemAdminAdministratorDestroy(s *terraform.State) error {
 
 func testAccFortiOSSystemAdminAdministratorConfig(name string) string {
 	return fmt.Sprintf(`
-resource "fortios_system_admin_profiles" "test1" { 
+resource "fortios_system_admin_profiles" "test1" {
 	name = "profile%s"
 	scope = "vdom"
 	comments = "Terraform Test"
@@ -103,7 +103,7 @@ resource "fortios_system_admin_profiles" "test1" {
 	admintimeout_override = "disable"
 }
 
-resource "fortios_system_admin_administrator" "test1" { 
+resource "fortios_system_admin_administrator" "test1" {
 	name = "%s"
 	password = "cc37$1AC1"
 	trusthost1 = "1.1.1.0 255.255.255.0"

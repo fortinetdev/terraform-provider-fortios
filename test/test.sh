@@ -4,7 +4,7 @@ read -p "Please input FORTIOS_ACCESS_TOKEN:" token
 read -p "Please input FORTIOS_INSECURE:" insecure
 read -p "Please input FORTIOS_CA_CABUNDLE:" cabundlefile
 
-p=$(dirname "$PWD");  
+p=$(dirname "$PWD");
 export GOPATH=${p%/*/*/*/*}"/"
 export "FORTIOS_ACCESS_HOSTNAME"=$host
 export "FORTIOS_ACCESS_TOKEN"=$token

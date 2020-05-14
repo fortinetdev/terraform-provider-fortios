@@ -78,7 +78,7 @@ func testAccCheckSystemSettingNTPDestroy(s *terraform.State) error {
 }
 
 const testAccFortiOSSystemSettingNTPConfig = `
-resource "fortios_system_setting_ntp" "test1" { 
+resource "fortios_system_setting_ntp" "test1" {
 	type = "fortiguard"
 	ntpserver = ["1.1.1.1", "2.2.2.2"]
 	ntpsync = "disable"

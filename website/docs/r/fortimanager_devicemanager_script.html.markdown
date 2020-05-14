@@ -13,7 +13,7 @@ This resource supports Create/Read/Update/Delete devicemanager script for FortiM
 ```hcl
 resource "fortios_fmg_devicemanager_script" "test1" {
 	name = "config-intf3"
-	description = "description"         
+	description = "description"
 	content = "config system interface \n edit port3 \n\t set vdom \"root\"\n\t set ip 10.7.0.200 255.255.0.0 \n\t set allowaccess ping http https\n\t next \n end"
 	target  = "remote_device"
 }
@@ -35,5 +35,5 @@ The following attributes are exported:
 * `name` - Script name.
 * `description` - Description.
 * `content` - Script content.
-* `target` - Script target. 
+* `target` - Script target.
 * `adom` - ADOM name.

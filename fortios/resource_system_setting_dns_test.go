@@ -78,7 +78,7 @@ func testAccCheckSystemSettingDNSDestroy(s *terraform.State) error {
 }
 
 const testAccFortiOSSystemSettingDNSConfig = `
-resource "fortios_system_setting_dns" "test1" { 
+resource "fortios_system_setting_dns" "test1" {
 	primary = "208.91.112.53"
 	secondary = "208.91.112.22"
 }

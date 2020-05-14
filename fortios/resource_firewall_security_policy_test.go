@@ -103,7 +103,7 @@ resource "fortios_firewall_security_policy" "test1" {
 	name = "%s"
 	srcintf = ["port2"]
 	dstintf = ["port3"]
-	srcaddr = ["all"]    
+	srcaddr = ["all"]
 	dstaddr = ["all"]
 	internet_service = "disable"
 	internet_service_id = []
@@ -113,7 +113,7 @@ resource "fortios_firewall_security_policy" "test1" {
 	status = "enable"
 	schedule = "always"
 	service = ["ALL"]
-	action = "accept"	
+	action = "accept"
 	utm_status = "enable"
 	logtraffic = "all"
 	logtraffic_start = "enable"
