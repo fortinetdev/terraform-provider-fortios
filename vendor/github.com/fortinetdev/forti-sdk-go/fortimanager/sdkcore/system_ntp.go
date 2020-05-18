@@ -3,7 +3,7 @@ package fmgclient
 import (
 	"fmt"
 
-	"github.com/fgtdev/fortimanager-sdk-go/util"
+	"github.com/fortinetdev/forti-sdk-go/fortimanager/util"
 )
 
 // JSONSystemNTP contains the params for updating NTP setting

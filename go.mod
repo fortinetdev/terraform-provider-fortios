@@ -2,7 +2,7 @@ module github.com/terraform-providers/terraform-provider-fortios
 
 require (
 	github.com/aws/aws-sdk-go v1.19.49 // indirect
-	github.com/fgtdev/fortios-sdk-go v1.1.2
+	github.com/fortinetdev/forti-sdk-go v1.2.0rc1
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/hashicorp/terraform v0.12.2
 	github.com/hashicorp/vault v1.0.1 // indirect

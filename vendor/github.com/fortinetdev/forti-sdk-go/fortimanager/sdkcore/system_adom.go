@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/fgtdev/fortimanager-sdk-go/util"
+	"github.com/fortinetdev/forti-sdk-go/fortimanager/util"
 )
 
 // JSONSystemAdom contains the params for creating system adom

@@ -10,9 +10,9 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/fgtdev/fortios-sdk-go/auth"
-	"github.com/fgtdev/fortios-sdk-go/config"
-	"github.com/fgtdev/fortios-sdk-go/request"
+	"github.com/fortinetdev/forti-sdk-go/fortios/auth"
+	"github.com/fortinetdev/forti-sdk-go/fortios/config"
+	"github.com/fortinetdev/forti-sdk-go/fortios/request"
 	// "strconv"
 )
 

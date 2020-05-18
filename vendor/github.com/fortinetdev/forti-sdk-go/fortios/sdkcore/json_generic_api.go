@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
-	"github.com/fgtdev/fortios-sdk-go/request"
+	"github.com/fortinetdev/forti-sdk-go/fortios/request"
 )
 
 // JSONJSONGenericAPI contains the parameters for Create API function
@@ -35,10 +35,10 @@ func (c *FortiSDKClient) CreateJSONGenericAPI(params *JSONJSONGenericAPI) (res s
 			err = fmt.Errorf("JSON format Error")
 			return
 		}
-	
+
 		log.Printf("FOS-fortios resquest1: %s", locJSON)
 		bytes := bytes.NewBuffer(locJSON)
-	
+
 		req = c.NewRequest(HTTPMethod, path, nil, bytes)
 	} else {
 		req = c.NewRequest(HTTPMethod, path, nil, nil)

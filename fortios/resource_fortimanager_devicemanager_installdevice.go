@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	fmgclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
+	fmgclient "github.com/fortinetdev/forti-sdk-go/fortimanager/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 

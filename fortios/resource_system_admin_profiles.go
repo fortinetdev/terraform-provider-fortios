@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/fgtdev/fortios-sdk-go/sdkcore"
+	"github.com/fortinetdev/forti-sdk-go/fortios/sdkcore"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 

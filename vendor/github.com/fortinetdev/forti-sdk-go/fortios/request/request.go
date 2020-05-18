@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/fgtdev/fortios-sdk-go/config"
+	"github.com/fortinetdev/forti-sdk-go/fortios/config"
 )
 
 // Request describes the request to FortiOS service

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/fgtdev/fortimanager-sdk-go/util"
+	"github.com/fortinetdev/forti-sdk-go/fortimanager/util"
 )
 
 // JSONFirewallSecurityPolicy contains the params for creating firewall security policy

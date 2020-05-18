@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	fmgclient "github.com/fgtdev/fortimanager-sdk-go/sdkcore"
-	"github.com/fgtdev/fortimanager-sdk-go/util"
+	fmgclient "github.com/fortinetdev/forti-sdk-go/fortimanager/sdkcore"
+	"github.com/fortinetdev/forti-sdk-go/fortimanager/util"
 	"github.com/hashicorp/terraform/helper/schema"
 )
 

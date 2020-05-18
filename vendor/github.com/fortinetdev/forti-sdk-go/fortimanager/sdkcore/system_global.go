@@ -3,7 +3,7 @@ package fmgclient
 import (
 	"fmt"
 
-	"github.com/fgtdev/fortimanager-sdk-go/util"
+	"github.com/fortinetdev/forti-sdk-go/fortimanager/util"
 )
 
 // JSONSystemGlobal contains the params for updating system global setting
