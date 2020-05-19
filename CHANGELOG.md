@@ -1,4 +1,41 @@
-## 1.2.0 (Unreleased)
+## 1.3.0 (Unreleased)
+
+## 1.2.0 (June 01, 2020)
+
+IMPROVEMENTS:
+
+* Support Terraform Plugin SDK ([#50](https://github.com/terraform-providers/terraform-provider-fortios/pull/50))
+
+FEATURES:
+
+* **New Resource:** ` fortios_fmg_devicemanager_device`
+* **New Resource:** ` fortios_fmg_devicemanager_installdevice`
+* **New Resource:** ` fortios_fmg_devicemanager_installpackage`
+* **New Resource:** ` fortios_fmg_devicemanager_script_execute`
+* **New Resource:** ` fortios_fmg_devicemanager_script`
+* **New Resource:** ` fortios_fmg_firewall_object_address`
+* **New Resource:** ` fortios_fmg_firewall_object_ippool`
+* **New Resource:** ` fortios_fmg_firewall_object_service`
+* **New Resource:** ` fortios_fmg_firewall_object_vip`
+* **New Resource:** ` fortios_fmg_firewall_security_policy`
+* **New Resource:** ` fortios_fmg_firewall_security_policypackage`
+* **New Resource:** ` fortios_fmg_object_adom_revision`
+* **New Resource:** ` fortios_fmg_system_admin`
+* **New Resource:** ` fortios_fmg_system_admin_profiles`
+* **New Resource:** ` fortios_fmg_system_admin_user`
+* **New Resource:** ` fortios_fmg_system_adom`
+* **New Resource:** ` fortios_fmg_system_dns`
+* **New Resource:** ` fortios_fmg_system_global`
+* **New Resource:** ` fortios_fmg_system_license_forticare`
+* **New Resource:** ` fortios_fmg_system_license_vm`
+* **New Resource:** ` fortios_fmg_system_network_interface`
+* **New Resource:** ` fortios_fmg_system_network_route`
+* **New Resource:** ` fortios_fmg_system_ntp`
+* **New Resource:** ` fortios_fmg_system_syslogserver`
+* **New Resource:** ` fortios_firewall_security_policyseq`
+* **New Resource:** ` fortios_firewall_object_servicecatry`
+
+
 ## 1.1.0 (June 25, 2019)
 
 IMPROVEMENTS:

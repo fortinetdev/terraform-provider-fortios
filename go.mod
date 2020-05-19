@@ -1,14 +1,9 @@
 module github.com/terraform-providers/terraform-provider-fortios
 
+go 1.13
+
 require (
-	github.com/aws/aws-sdk-go v1.19.49 // indirect
-	github.com/fortinetdev/forti-sdk-go v1.2.0rc1
-	github.com/hashicorp/hcl v1.0.0 // indirect
-	github.com/hashicorp/terraform v0.12.2
-	github.com/hashicorp/vault v1.0.1 // indirect
-	github.com/keybase/go-crypto v0.0.0-20181127160227-255a5089e85a // indirect
-	github.com/pierrec/lz4 v2.0.5+incompatible // indirect
-	github.com/stoewer/go-strcase v1.0.2 // indirect
-	github.com/terraform-providers/terraform-provider-random v2.0.0+incompatible // indirect
-	google.golang.org/api v0.6.0 // indirect
+	github.com/fortinetdev/forti-sdk-go v1.1.1
+	github.com/google/uuid v1.1.1
+	github.com/hashicorp/terraform-plugin-sdk v1.12.0
 )

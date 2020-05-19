@@ -8,9 +8,9 @@
 
 ## Requirements
 
-- [Terraform](https://www.terraform.io/downloads.html) 0.10+
-- [Go](https://golang.org/doc/install) 1.11 (to build the provider plugin)
-- FortiOS 6.0 or 6.2. This provider uses the FortiOS API. All the resources are validated with FortiOS 6.0 and 6.2.
+- [Terraform](https://www.terraform.io/downloads.html) 0.12.x +
+- [Go](https://golang.org/doc/install) 1.13.x (to build the provider plugin)
+- The provider can cover both FortiOS 6.0 and 6.2 versions. The provider can cover both FortiManager 6.0 and 6.2 versions. When using FortiManager, make sure the versions of FortiManager and the FortiGates controlled by it are the same.
 
 ## Building the Provider
 
@@ -38,7 +38,7 @@ $ terraform init
 
 ## Developing the Provider
 
-If you wish to work on the provider, you'll first need Go installed on your machine (version 1.11+ is required). You'll also need to correctly setup a GOPATH, as well as adding $GOPATH/bin to your $PATH.
+If you wish to work on the provider, you'll first need Go installed on your machine (version 1.13+ is required). You'll also need to correctly setup a GOPATH, as well as adding $GOPATH/bin to your $PATH.
 
 To compile the provider, run `make build`. This will build the provider and put the provider binary in the $GOPATH/bin directory.
 
@@ -46,18 +46,3 @@ To compile the provider, run `make build`. This will build the provider and put 
 $ make build
 ...
 ```
-
-## Testing
-
-Running the acceptance test suite requires a FortiGate VM/device to test against.
-
-To run the test:
-1. Set `FORTIOS_ACCESS_HOSTNAME` to point to a FortiGate VM/device.
-2. Set `FORTIOS_ACCESS_TOKEN` to the access token of a Rest API user on that device.
-3. Run `make testacc`.
-
-    ```sh
-    make testacc
-    ```
-
-For more information about acceptance testing in Terraform, see [Running an Acceptance Test](https://github.com/hashicorp/terraform/blob/master/.github/CONTRIBUTING.md#running-an-acceptance-test).
