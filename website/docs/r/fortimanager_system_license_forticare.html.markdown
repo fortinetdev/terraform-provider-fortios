@@ -12,8 +12,8 @@ This resource supports uploading FortiCare registration code to FortiGate throug
 ## Example Usage
 ```hcl
 resource "fortios_fmg_system_license_forticare" "test1" {
-	target = "fortigate-test"
-	registration_code = "jn3t3Nw7qckQzt955Htkfj5hwQ6aaa"
+  target            = "fortigate-test"
+  registration_code = "jn3t3Nw7qckQzt955Htkfj5hwQ6aaa"
 }
 ```
 

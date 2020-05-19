@@ -12,9 +12,9 @@ This resource supports executing devicemanager script on Fortimanager.
 ## Example Usage
 ```hcl
 resource "fortios_fmg_devicemanager_script_execute" "test3" {
-	script_name = "config-intf3"
-	target_devname = "devname"
-	timeout = 5
+  script_name    = "config-intf3"
+  target_devname = "devname"
+  timeout        = 5
 }
 ```
 

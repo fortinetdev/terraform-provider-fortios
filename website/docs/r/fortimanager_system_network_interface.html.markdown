@@ -12,12 +12,12 @@ This resource supports updating system network interface for FortiManager.
 ## Example Usage
 ```hcl
 resource "fortios_fmg_system_network_interface" "test1" {
-	name = "port3"
-	ip = "1.1.1.3 255.255.255.0"
-	description = ""
-	status = "up"
-	allow_access = ["ping","ssh","https", "http"]
-	service_access = ["webfilter","fgtupdates"]
+  name           = "port3"
+  ip             = "1.1.1.3 255.255.255.0"
+  description    = ""
+  status         = "up"
+  allow_access   = ["ping", "ssh", "https", "http"]
+  service_access = ["webfilter", "fgtupdates"]
 }
 ```
 

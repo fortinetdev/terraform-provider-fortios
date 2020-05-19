@@ -19,17 +19,17 @@ Two products are supported now: FortiGate and FortiManager, please use the navig
 ```hcl
 # Configure the FortiOS Provider for FortiGate
 provider "fortios" {
-	hostname = "192.168.52.177"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
-	insecure = "false"
-	cabundlefile = "/path/yourCA.crt"
+  hostname     = "192.168.52.177"
+  token        = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
+  insecure     = "false"
+  cabundlefile = "/path/yourCA.crt"
 }
 
 # Create a Static Route Item
 resource "fortios_networking_route_static" "test1" {
-	dst = "110.2.2.122/32"
-	gateway = "2.2.2.2"
-	# ...
+  dst     = "110.2.2.122/32"
+  gateway = "2.2.2.2"
+  # ...
 }
 ```
 
@@ -37,9 +37,9 @@ If it is used for testing, you can set `insecure` to "true" and unset `cabundlef
 
 ```hcl
 provider "fortios" {
-	hostname = "192.168.52.177"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
-	insecure = "true"
+  hostname = "192.168.52.177"
+  token    = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
+  insecure = "true"
 }
 ```
 
@@ -60,10 +60,10 @@ Usage:
 
 ```hcl
 provider "fortios" {
-	hostname = "192.168.52.177"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
-	insecure = "false"
-	cabundlefile = "/path/yourCA.crt"
+  hostname     = "192.168.52.177"
+  token        = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
+  insecure     = "false"
+  cabundlefile = "/path/yourCA.crt"
 }
 ```
 
@@ -87,16 +87,16 @@ $ export "FORTIOS_CA_CABUNDLE"="/path/yourCA.crt"
 Then configure the FortiOS Provider as following:
 
 ```hcl
-provider "fortios" { }
+provider "fortios" {}
 
 # Create a Static Route Item
 resource "fortios_networking_route_static" "test1" {
-	dst = "110.2.2.122/32"
-	gateway = "2.2.2.2"
-	blackhole = "disable"
-	distance = "22"
-	weight = "3"
-	# …
+  dst       = "110.2.2.122/32"
+  gateway   = "2.2.2.2"
+  blackhole = "disable"
+  distance  = "22"
+  weight    = "3"
+  # …
 }
 ```
 
@@ -108,22 +108,22 @@ Usage:
 
 ```hcl
 provider "fortios" {
-	hostname = "192.168.52.177"
-	token = "q3Hs49jxts195gkd9Hjsxnjtmr6k39"
-	insecure = "false"
-	cabundlefile = "/path/yourCA.crt"
-	vdom = "vdomtest"
+  hostname     = "192.168.52.177"
+  token        = "q3Hs49jxts195gkd9Hjsxnjtmr6k39"
+  insecure     = "false"
+  cabundlefile = "/path/yourCA.crt"
+  vdom         = "vdomtest"
 }
 
 resource "fortios_networking_route_static" "test1" {
-	dst = "120.2.2.122/32"
-	gateway = "2.2.2.2"
-	blackhole = "disable"
-	distance = "22"
-	weight = "3"
-	priority = "3"
-	device = "lbforvdomtest"
-	comment = "Terraform test"
+  dst       = "120.2.2.122/32"
+  gateway   = "2.2.2.2"
+  blackhole = "disable"
+  distance  = "22"
+  weight    = "3"
+  priority  = "3"
+  device    = "lbforvdomtest"
+  comment   = "Terraform test"
 }
 ```
 
@@ -149,16 +149,16 @@ The following arguments are supported:
 
 ```hcl
 provider "fortios" {
-	hostname = "192.168.88.100"
-	username = "APIUser"
-	passwd = "admin"
-	insecure = false
-	cabundlefile = "/path/yourCA.crt"
+  hostname     = "192.168.88.100"
+  username     = "APIUser"
+  passwd       = "admin"
+  insecure     = false
+  cabundlefile = "/path/yourCA.crt"
 }
 
 resource "fortios_fmg_system_dns" "test1" {
-	primary = "208.91.112.52"
-	secondary = "208.91.112.54"
+  primary   = "208.91.112.52"
+  secondary = "208.91.112.54"
 }
 ```
 
@@ -166,10 +166,10 @@ If it is used for testing, you can set `insecure` to true and unset `cabundlefil
 
 ```hcl
 provider "fortios" {
-	hostname = "192.168.88.100"
-	username = "APIUser"
-	passwd = "admin"
-	insecure = true
+  hostname = "192.168.88.100"
+  username = "APIUser"
+  passwd   = "admin"
+  insecure = true
 }
 ```
 
@@ -189,13 +189,13 @@ Static credentials can be provided by adding the `hostname`, `username` and `pas
 Usage:
 
 ```hcl
-provider SGG "fortios" {
-	hostname = "192.168.88.100"
-	username = "APIUser"
-	passwd = "admin"
-	product = "fortimanager"
-	insecure = false
-	cabundlefile = "/path/yourCA.crt"
+provider "fortios" {
+  hostname     = "192.168.88.100"
+  username     = "APIUser"
+  passwd       = "admin"
+  product      = "fortimanager"
+  insecure     = false
+  cabundlefile = "/path/yourCA.crt"
 }
 ```
 
@@ -215,14 +215,14 @@ Then configure the FortiOS Provider as following:
 
 ```hcl
 provider "fortios" {
-	product = "fortimanager"
-	insecure = false
-	cabundlefile = "/path/yourCA.crt"
+  product      = "fortimanager"
+  insecure     = false
+  cabundlefile = "/path/yourCA.crt"
 }
 
 resource "fortios_fmg_system_dns" "test1" {
-	primary = "208.91.112.33"
-	secondary = "208.91.112.44"
+  primary   = "208.91.112.33"
+  secondary = "208.91.112.44"
 }
 ```
 
@@ -232,32 +232,32 @@ Multi-Adom feature is supported in case of using FortiManager, just take the fol
 
 ```hcl
 provider "fortios" {
-	hostname = "192.168.88.200"
-	username = "APIUser"
-	passwd = "admin"
-	product = "fortimanager"
-	insecure = true
+  hostname = "192.168.88.200"
+  username = "APIUser"
+  passwd   = "admin"
+  product  = "fortimanager"
+  insecure = true
 }
 
 resource "fortios_fmg_devicemanager_script" "test1" {
-	name = "config-intf3"
-	description = "configure interface3"
-	content = "config system interface \n edit port3 \n\t set vdom \"root\"\n\t set ip 10.10.0.200 255.255.0.0 \n\t set allowaccess ping http https\n\t next \n end"
-	target  = "device_database"
-	adom = "test-adom"
+  name        = "config-intf3"
+  description = "configure interface3"
+  content     = "config system interface \n edit port3 \n\t set vdom \"root\"\n\t set ip 10.10.0.200 255.255.0.0 \n\t set allowaccess ping http https\n\t next \n end"
+  target      = "device_database"
+  adom        = "test-adom"
 }
 
 resource "fortios_fmg_devicemanager_script_execute" "test1" {
-	script_name = fortios_fmg_devicemanager_script.test1.name
-	target_devname = "FGVM64-test"
-	adom = "test-adom"
-	vdom = "root"
+  script_name    = fortios_fmg_devicemanager_script.test1.name
+  target_devname = "FGVM64-test"
+  adom           = "test-adom"
+  vdom           = "root"
 }
 
 resource "fortios_fmg_devicemanager_install_device" "test1" {
-	target_devname = fortios_fmg_devicemanager_script_execute.test1.target_devname
-	adom = "test-adom"
-	vdom = "root"
+  target_devname = fortios_fmg_devicemanager_script_execute.test1.target_devname
+  adom           = "test-adom"
+  vdom           = "root"
 }
 ```
 

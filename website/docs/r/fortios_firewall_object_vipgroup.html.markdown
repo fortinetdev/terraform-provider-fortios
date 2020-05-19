@@ -11,16 +11,11 @@ Provides a resource to configure virtual IP groups of FortiOS.
 
 ## Example Usage
 ```hcl
-provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
-}
-
 resource "fortios_firewall_object_vipgroup" "v11" {
-	name = "1fdsafd11a"
-	interface = "port3"
-	comments = "comments"
-	member = ["vip1", "vip3"]
+  name      = "1fdsafd11a"
+  interface = "port3"
+  comments  = "comments"
+  member    = ["vip1", "vip3"]
 }
 ```
 

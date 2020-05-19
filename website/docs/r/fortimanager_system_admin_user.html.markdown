@@ -12,22 +12,22 @@ This resource supports Create/Read/Update/Delete admin user for FortiManager
 ## Example Usage
 ```hcl
 resource "fortios_fmg_system_admin_user" "test1" {
-	userid = "user1"
-	password = "123"
-	description = "local user"
-	user_type = "local"
-	rpc_permit = "read"
-	profileid = "Standard_User"
-	trusthost1 = "1.1.1.1 255.255.255.255"
+  userid      = "user1"
+  password    = "123"
+  description = "local user"
+  user_type   = "local"
+  rpc_permit  = "read"
+  profileid   = "Standard_User"
+  trusthost1  = "1.1.1.1 255.255.255.255"
 }
 
 resource "fortios_fmg_system_admin_user" "test2" {
-	userid = "user2"
-	password = "098"
-	description = "api user"
-	rpc_permit = "read-write"
-	profileid = "Standard_User"
-	trusthost1 = "2.2.2.2 255.255.255.255"
+  userid      = "user2"
+  password    = "098"
+  description = "api user"
+  rpc_permit  = "read-write"
+  profileid   = "Standard_User"
+  trusthost1  = "2.2.2.2 255.255.255.255"
 }
 ```
 

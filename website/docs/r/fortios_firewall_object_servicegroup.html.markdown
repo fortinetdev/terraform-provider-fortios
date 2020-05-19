@@ -11,15 +11,10 @@ Provides a resource to configure firewall service group of FortiOS.
 
 ## Example Usage
 ```hcl
-provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
-}
-
 resource "fortios_firewall_object_servicegroup" "v11" {
-	name = "1fdsafd11a"
-	comment = "fdsafdsa"
-	member = ["DCE-RPC", "DNS", "HTTPS"]
+  name    = "1fdsafd11a"
+  comment = "fdsafdsa"
+  member  = ["DCE-RPC", "DNS", "HTTPS"]
 }
 ```
 

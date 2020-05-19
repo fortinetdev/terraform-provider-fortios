@@ -12,34 +12,33 @@ This resource supports Create/Read/Update/Delete firewall object service for For
 ## Example Usage
 ```hcl
 resource "fortios_fmg_firewall_object_service" "test1" {
-	name = "fos_test"
-	comment = "test obj service"
-	protocol = "TCP/UDP/SCTP"
-	category = "Email"
-	fqdn = "fqdn.google.com"
-	iprange = "1.1.1.1"
-	tcp_portrange = ["100-200:150-250"]
-	udp_portrange = ["100-200:150-250"]
-	sctp_portrange = ["100-200:150-250"]
+  name           = "fos_test"
+  comment        = "test obj service"
+  protocol       = "TCP/UDP/SCTP"
+  category       = "Email"
+  fqdn           = "fqdn.google.com"
+  iprange        = "1.1.1.1"
+  tcp_portrange  = ["100-200:150-250"]
+  udp_portrange  = ["100-200:150-250"]
+  sctp_portrange = ["100-200:150-250"]
 }
 
 resource "fortios_fmg_firewall_object_service" "test2" {
-	name = "fos_test2"
-	comment = "test obj service"
-	protocol = "ICMP"
-	category = "Web Access"
-	icmp_type = 2
-	icmp_code = 3
+  name      = "fos_test2"
+  comment   = "test obj service"
+  protocol  = "ICMP"
+  category  = "Web Access"
+  icmp_type = 2
+  icmp_code = 3
 }
 
 resource "fortios_fmg_firewall_object_service" "test3" {
-	name = "fos_test3"
-	comment = "test obj service"
-	protocol = "IP"
-	category = "File Access"
-	protocol_number = 4
+  name            = "fos_test3"
+  comment         = "test obj service"
+  protocol        = "IP"
+  category        = "File Access"
+  protocol_number = 4
 }
-
 ```
 
 ## Argument Reference

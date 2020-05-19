@@ -12,14 +12,14 @@ This resource supports Create/Read/Update/Delete firewall object ippool for Fort
 ## Example Usage
 ```hcl
 resource "fortios_fmg_firewall_object_ippool" "test1" {
-	name = "foi_test"
-	startip = "1.1.10.1"
-	endip = "1.1.10.100"
-	comment = "test obj ippool"
-	type = "one-to-one"
-	arp_intf = "any"
-	arp_reply = "enable"
-	associated_intf = "any"
+  name            = "foi_test"
+  startip         = "1.1.10.1"
+  endip           = "1.1.10.100"
+  comment         = "test obj ippool"
+  type            = "one-to-one"
+  arp_intf        = "any"
+  arp_reply       = "enable"
+  associated_intf = "any"
 }
 ```
 

@@ -11,14 +11,9 @@ Provides a resource to configure firewall service category of FortiOS.
 
 ## Example Usage
 ```hcl
-provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
-}
-
 resource "fortios_firewall_object_servicecategory" "test_category_name" {
-	name = "testcategory"
-	comment = "comment"
+  name    = "testcategory"
+  comment = "comment"
 }
 ```
 

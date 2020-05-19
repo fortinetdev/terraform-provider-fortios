@@ -12,9 +12,9 @@ This resource supports modifying system ntp setting for FortiManager.
 ## Example Usage
 ```hcl
 resource "fortios_fmg_system_ntp" "test1" {
-	server = "ntp1.fortinet.com"
-	status = "enable"
-	sync_interval = 30
+  server        = "ntp1.fortinet.com"
+  status        = "enable"
+  sync_interval = 30
 }
 ```
 

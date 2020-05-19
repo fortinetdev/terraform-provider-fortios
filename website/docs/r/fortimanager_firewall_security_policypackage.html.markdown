@@ -13,8 +13,8 @@ This resource supports Create/Read/Update/Delete firewall security policypackage
 ## Example Usage
 ```hcl
 resource "fortios_fmg_firewall_security_policypackage" "test1" {
-	name = "test-pkg"
-	target = "FGVM64-test"
+  name   = "test-pkg"
+  target = "FGVM64-test"
 }
 ```
 

@@ -12,24 +12,24 @@ This resource supports Create/Read/Update/Delete firewall object virtual ip for 
 ## Example Usage
 ```hcl
 resource "fortios_fmg_firewall_object_vip" "test1" {
-	name = "fov-test1"
-	comment = "test obj vip"
-	type = "static-nat"
-	arp_reply = "enable"
-	ext_ip = "2.2.2.2"
-	ext_intf = "any"
-	mapped_ip = "1.1.1.1"
-	config_default = "enable"
+  name           = "fov-test1"
+  comment        = "test obj vip"
+  type           = "static-nat"
+  arp_reply      = "enable"
+  ext_ip         = "2.2.2.2"
+  ext_intf       = "any"
+  mapped_ip      = "1.1.1.1"
+  config_default = "enable"
 }
 
 resource "fortios_fmg_firewall_object_vip" "test2" {
-	name = "fov-test2"
-	comment = "test obj vip"
-	type = "fqdn"
-	arp_reply = "disable"
-	ext_ip = "2.2.2.2-2.2.2.100"
-	mapped_addr = "update.microsoft.com"
-	config_default = "enable"
+  name           = "fov-test2"
+  comment        = "test obj vip"
+  type           = "fqdn"
+  arp_reply      = "disable"
+  ext_ip         = "2.2.2.2-2.2.2.100"
+  mapped_addr    = "update.microsoft.com"
+  config_default = "enable"
 }
 ```
 

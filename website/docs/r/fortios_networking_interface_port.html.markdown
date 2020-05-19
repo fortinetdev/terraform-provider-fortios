@@ -11,72 +11,57 @@ Provides a resource to configure interface settings of FortiOS.
 
 ## Example Usage for Loopback Interface
 ```hcl
-provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
-}
-
 resource "fortios_networking_interface_port" "loopback1" {
-	ip = "23.123.33.10 255.255.255.0"
-	allowaccess = "ping http"
-	alias = "cc1"
-	description = "description"
-	status = "up"
-	role = "lan"
-	name = "myinterface1"
-	vdom = "root"
-	type = "loopback"
-	mode = "static"
+  ip          = "23.123.33.10 255.255.255.0"
+  allowaccess = "ping http"
+  alias       = "cc1"
+  description = "description"
+  status      = "up"
+  role        = "lan"
+  name        = "myinterface1"
+  vdom        = "root"
+  type        = "loopback"
+  mode        = "static"
 }
 ```
 
 ## Example Usage for VLAN Interface
 ```hcl
-provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
-}
-
 resource "fortios_networking_interface_port" "vlan1" {
-	role = "lan"
-	mode = "static"
-	defaultgw = "enable"
-	distance = "33"
-	type = "vlan"
-	vlanid = "3"
-	name = "myinterface2"
-	vdom = "root"
-	ip = "3.123.33.10 255.255.255.0"
-	interface = "port2"
-	allowaccess = "ping"
+  role        = "lan"
+  mode        = "static"
+  defaultgw   = "enable"
+  distance    = "33"
+  type        = "vlan"
+  vlanid      = "3"
+  name        = "myinterface2"
+  vdom        = "root"
+  ip          = "3.123.33.10 255.255.255.0"
+  interface   = "port2"
+  allowaccess = "ping"
 }
 ```
 
 ## Example Usage for Physical Interface
 ```hcl
-provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
-}
-
 resource "fortios_networking_interface_port" "test1" {
-	name = "port2"
-	ip = "93.133.133.110 255.255.255.0"
-	alias = "dkeeew"
-	description = "description"
-	status = "up"
-	device_identification = "enable"
-	tcp_mss = "3232"
-	speed = "auto"
-	mtu_override = "enable"
-	mtu = "2933"
-	role = "lan"
-	allowaccess = "ping https"
-	mode = "static"
-	dns_server_override = "enable"
-	defaultgw = "enable"
-	distance = "33"
-	type = "physical"
+  name                  = "port2"
+  ip                    = "93.133.133.110 255.255.255.0"
+  alias                 = "dkeeew"
+  description           = "description"
+  status                = "up"
+  device_identification = "enable"
+  tcp_mss               = "3232"
+  speed                 = "auto"
+  mtu_override          = "enable"
+  mtu                   = "2933"
+  role                  = "lan"
+  allowaccess           = "ping https"
+  mode                  = "static"
+  dns_server_override   = "enable"
+  defaultgw             = "enable"
+  distance              = "33"
+  type                  = "physical"
 }
 ```
 

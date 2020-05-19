@@ -12,10 +12,10 @@ This resource supports updating system network route for FortiManager.
 ## Example Usage
 ```hcl
 resource "fortios_fmg_system_network_route" "test1" {
-	route_id = 5
-	destination = "192.168.2.0 255.255.255.0"
-	gateway = "192.168.2.1"
-	device = "port4"
+  route_id    = 5
+  destination = "192.168.2.0 255.255.255.0"
+  gateway     = "192.168.2.1"
+  device      = "port4"
 }
 ```
 

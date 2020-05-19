@@ -12,8 +12,8 @@ This resource supports uploading VM license to FortiGate through FortiManager.
 ## Example Usage
 ```hcl
 resource "fortios_fmg_system_license_vm" "test1" {
-	target = "fortigate-test"
-	file_content = "XXX" // your license file content
+  target       = "fortigate-test"
+  file_content = "XXX" // your license file content
 }
 ```
 

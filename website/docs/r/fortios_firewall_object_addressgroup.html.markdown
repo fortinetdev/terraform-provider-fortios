@@ -11,15 +11,10 @@ Provides a resource to configure firewall address group used in firewall policie
 
 ## Example Usage
 ```hcl
-provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
-}
-
 resource "fortios_firewall_object_addressgroup" "s1" {
-	name = "s1"
-	member = ["google-play","swscan.apple.com"]
-	comment = "dfdsad"
+  name    = "s1"
+  member  = ["google-play", "swscan.apple.com"]
+  comment = "dfdsad"
 }
 ```
 

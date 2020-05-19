@@ -12,9 +12,9 @@ This resource supports modifying system admin setting for FortiManager.
 ## Example Usage
 ```hcl
 resource "fortios_fmg_system_admin" "test1" {
-	http_port    = 80
-	https_port   = 443
-	idle_timeout = 20
+  http_port    = 80
+  https_port   = 443
+  idle_timeout = 20
 }
 ```
 

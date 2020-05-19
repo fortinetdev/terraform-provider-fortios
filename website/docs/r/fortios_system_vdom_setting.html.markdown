@@ -11,15 +11,10 @@ Provides a resource to configure VDOM of FortiOS. The API user of the token for 
 
 ## Example Usage
 ```hcl
-provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
-}
-
 resource "fortios_system_vdom_setting" "test2" {
-	name = "aa1122"
-	short_name = "aa1122"
-	temporary = 0
+  name       = "aa1122"
+  short_name = "aa1122"
+  temporary  = 0
 }
 ```
 

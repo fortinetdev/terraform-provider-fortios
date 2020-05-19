@@ -12,11 +12,11 @@ This resource supports modifying system global setting for FortiManager.
 ## Example Usage
 ```hcl
 resource "fortios_fmg_system_global" "test1" {
-	hostname = "FMG-VM64-test"
-	fortianalyzer_status = "disable"
-	adom_status = "disable"
-	adom_mode = "advanced"
-	timezone = "09"
+  hostname             = "FMG-VM64-test"
+  fortianalyzer_status = "disable"
+  adom_status          = "disable"
+  adom_mode            = "advanced"
+  timezone             = "09"
 }
 ```
 

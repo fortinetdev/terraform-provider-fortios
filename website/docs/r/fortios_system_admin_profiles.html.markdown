@@ -11,27 +11,22 @@ Provides a resource to configure access profiles of FortiOS.
 
 ## Example Usage
 ```hcl
-provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
-}
-
 resource "fortios_system_admin_profiles" "test1" {
-	name = "223d3"
-	scope = "vdom"
-	comments = "test"
-	secfabgrp = "read-write"
-	ftviewgrp = "read"
-	authgrp = "none"
-	sysgrp = "read"
-	netgrp = "none"
-	loggrp = "none"
-	fwgrp = "none"
-	vpngrp = "none"
-	utmgrp = "none"
-	wanoptgrp = "none"
-	wifi = "none"
-	admintimeout_override = "disable"
+  name                  = "223d3"
+  scope                 = "vdom"
+  comments              = "test"
+  secfabgrp             = "read-write"
+  ftviewgrp             = "read"
+  authgrp               = "none"
+  sysgrp                = "read"
+  netgrp                = "none"
+  loggrp                = "none"
+  fwgrp                 = "none"
+  vpngrp                = "none"
+  utmgrp                = "none"
+  wanoptgrp             = "none"
+  wifi                  = "none"
+  admintimeout_override = "disable"
 }
 ```
 

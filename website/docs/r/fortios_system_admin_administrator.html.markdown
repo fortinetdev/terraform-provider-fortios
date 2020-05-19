@@ -11,19 +11,14 @@ Provides a resource to configure administrator accounts of FortiOS.
 
 ## Example Usage
 ```hcl
-provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
-}
-
 resource "fortios_system_admin_administrator" "admintest" {
-	name = "testadminacc"
-	password = "cc37331AC1"
-	trusthost1 = "1.1.1.0 255.255.255.0"
-	trusthost2 = "2.2.2.0 255.255.255.0"
-	accprofile = "3d3"
-	vdom = ["root"]
-	comments = "comments"
+  name       = "testadminacc"
+  password   = "cc37331AC1"
+  trusthost1 = "1.1.1.0 255.255.255.0"
+  trusthost2 = "2.2.2.0 255.255.255.0"
+  accprofile = "3d3"
+  vdom       = ["root"]
+  comments   = "comments"
 }
 ```
 

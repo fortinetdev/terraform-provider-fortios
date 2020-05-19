@@ -11,65 +11,45 @@ Provides a resource to configure firewall addresses used in firewall policies of
 
 ## Example Usage for Iprange Address
 ```hcl
-provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
-}
-
 resource "fortios_firewall_object_address" "s1" {
-	name = "s1"
-	type = "iprange"
-	start_ip = "1.0.0.0"
-	end_ip = "2.0.0.0"
-	comment = "dd"
+  name     = "s1"
+  type     = "iprange"
+  start_ip = "1.0.0.0"
+  end_ip   = "2.0.0.0"
+  comment  = "dd"
 }
 ```
 
 ## Example Usage for Geography Address
 ```hcl
-provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
-}
-
 resource "fortios_firewall_object_address" "s2" {
-	name = "s2"
-	type = "geography"
-	country = "AO"
-	comment = "dd"
+  name    = "s2"
+  type    = "geography"
+  country = "AO"
+  comment = "dd"
 }
 ```
 
 ## Example Usage for Fqdn Address
 ```hcl
-provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
-}
-
 resource "fortios_firewall_object_address" "s3" {
-	name = "s3"
-	type = "fqdn"
-	fqdn = "baid.com"
-	comment = "dd"
-	associated_interface = "port4"
-	show_in_address_list   = "disable"
-	static_route_configure = "enable"
+  name                   = "s3"
+  type                   = "fqdn"
+  fqdn                   = "baid.com"
+  comment                = "dd"
+  associated_interface   = "port4"
+  show_in_address_list   = "disable"
+  static_route_configure = "enable"
 }
 ```
 
 ## Example Usage for Ipmask Address
 ```hcl
-provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
-}
-
 resource "fortios_firewall_object_address" "s4" {
-	name = "s4"
-	type = "ipmask"
-	subnet = "0.0.0.0 0.0.0.0"
-	comment = "dd"
+  name    = "s4"
+  type    = "ipmask"
+  subnet  = "0.0.0.0 0.0.0.0"
+  comment = "dd"
 }
 ```
 

@@ -12,9 +12,9 @@ This resource supports Create/Delete system syslog server for FortiManager.
 ## Example Usage
 ```hc
 resource "fortios_fmg_system_syslogserver" "test1" {
-	name = "test-syslog"
-	ip = "1.1.1.1"
-	port = 99
+  name = "test-syslog"
+  ip   = "1.1.1.1"
+  port = 99
 }
 ```
 

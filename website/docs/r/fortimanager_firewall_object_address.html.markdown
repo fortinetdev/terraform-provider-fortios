@@ -12,31 +12,30 @@ This resource supports Create/Read/Update/Delete firewall object address for For
 ## Example Usage
 ```hcl
 resource "fortios_fmg_firewall_object_address" "test1" {
-	name = "foa_test"
-	type = "fqdn"
-	comment = "test obj address"
-	fqdn = "fqdn.google.com"
-	associated_intf = "any"
+  name            = "foa_test"
+  type            = "fqdn"
+  comment         = "test obj address"
+  fqdn            = "fqdn.google.com"
+  associated_intf = "any"
 }
 
 resource "fortios_fmg_firewall_object_address" "test2" {
-	name = "foa_test2"
-	type = "ipmask"
-	comment = "test obj address"
-	subnet = "2.2.2.0 255.255.255.0"
-	associated_intf = "any"
-	allow_routing = "disable"
+  name            = "foa_test2"
+  type            = "ipmask"
+  comment         = "test obj address"
+  subnet          = "2.2.2.0 255.255.255.0"
+  associated_intf = "any"
+  allow_routing   = "disable"
 }
 
 resource "fortios_fmg_firewall_object_address" "test3" {
-	name = "foa_test3"
-	type = "iprange"
-	comment = "test obj address"
-	associated_intf = "any"
-	start_ip = "2.2.2.1"
-	end_ip = "2.2.2.100"
+  name            = "foa_test3"
+  type            = "iprange"
+  comment         = "test obj address"
+  associated_intf = "any"
+  start_ip        = "2.2.2.1"
+  end_ip          = "2.2.2.100"
 }
-
 ```
 
 ## Argument Reference

@@ -12,7 +12,7 @@ This resource supports handling JSON RPC request for FortiManager. Only used for
 ## Example Usage
 ```hcl
 resource "fortios_fmg_jsonrpc_request" "test1" {
-	json_content = <<JSON
+  json_content = <<JSON
 {
   "method": "add",
   "params": [
@@ -43,7 +43,7 @@ JSON
 }
 
 resource "fortios_fmg_jsonrpc_request" "test2" {
-	json_content = <<JSON
+  json_content = <<JSON
 {
   "method": "add",
   "params": [
@@ -63,7 +63,7 @@ JSON
 }
 
 resource "fortios_fmg_jsonrpc_request" "test3" {
-	json_content = <<JSON
+  json_content = <<JSON
 {
   "method": "get",
   "params": [

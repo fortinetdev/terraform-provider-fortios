@@ -12,8 +12,8 @@ This resource supports modifying system dns setting for FortiManager.
 ## Example Usage
 ```hcl
 resource "fortios_fmg_system_dns" "test1" {
-	primary = "208.91.112.52"
-	secondary = "208.91.112.54"
+  primary   = "208.91.112.52"
+  secondary = "208.91.112.54"
 }
 ```
 

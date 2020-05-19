@@ -12,8 +12,8 @@ This resource supports installing devicemanager script from FortiManager to the 
 ## Example Usage
 ```hcl
 resource "fortios_fmg_devicemanager_install_device" "test1" {
-	target_devname = "FGVM64-test"
-	timeout = 5
+  target_devname = "FGVM64-test"
+  timeout        = 5
 }
 ```
 

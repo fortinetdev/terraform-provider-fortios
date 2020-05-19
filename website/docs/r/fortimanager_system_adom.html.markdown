@@ -12,16 +12,16 @@ This resource supports Create/Read/Update/Delete system adom for FortiManager.
 ## Example Usage
 ```hcl
 resource "fortios_fmg_system_adom" "test1" {
-	name = "sys_adom_test"
-	type = "FortiCarrier"
-	central_management_vpn = false
-	central_management_fortiap = true
-	central_management_sdwan = false
-	mode = "Normal"
-	perform_policy_check_before_every_install = true
-	action_when_conflicts_occur_during_policy_check = "Continue"
-	auto_push_policy_packages_when_device_back_online = "Enable"
-	status = 1
+  name                                              = "sys_adom_test"
+  type                                              = "FortiCarrier"
+  central_management_vpn                            = false
+  central_management_fortiap                        = true
+  central_management_sdwan                          = false
+  mode                                              = "Normal"
+  perform_policy_check_before_every_install         = true
+  action_when_conflicts_occur_during_policy_check   = "Continue"
+  auto_push_policy_packages_when_device_back_online = "Enable"
+  status                                            = 1
 }
 ```
 

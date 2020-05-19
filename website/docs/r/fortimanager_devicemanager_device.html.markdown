@@ -12,10 +12,10 @@ This resource supports adding/deleting online FortiGate to/from FortiManager
 ## Example Usage
 ```hcl
 resource "fortios_fmg_devicemanager_device" "test1" {
-	userid = "admin"
-	password = ""
-	ipaddr = "192.168.88.101"
-	device_name  = "FGVM64-test"
+  userid      = "admin"
+  password    = ""
+  ipaddr      = "192.168.88.101"
+  device_name = "FGVM64-test"
 }
 ```
 

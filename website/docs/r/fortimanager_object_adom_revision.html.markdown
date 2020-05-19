@@ -12,10 +12,10 @@ This resource supports Create/Read/Update/Delete object adom revision for FortiM
 ## Example Usage
 ```hcl
 resource "fortios_fmg_object_adom_revision" "test1" {
-	name = "oar-test"
-	description = "adom revision"
-	created_by = "fortinet"
-	locked = 0
+  name        = "oar-test"
+  description = "adom revision"
+  created_by  = "fortinet"
+  locked      = 0
 }
 ```
 

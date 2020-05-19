@@ -13,35 +13,35 @@ This resource supports Create/Read/Update/Delete firewall security policy on For
 ## Example Usage
 ```hcl
 resource "fortios_fmg_firewall_security_policy" "test1" {
-	name = "policy-test"
-	srcaddr = ["all"]
-	srcintf = ["any"]
-	dstaddr = ["all"]
-	dstintf = ["any"]
-	service = ["ALL"]
-	action = "accept"
-	schedule = ["always"]
-	internet_service = "enable"
-	internet_service_id = ["Alibaba.Web", "AOL.Web"]
-	internet_service_src = "disable"
-	users = ["guest"]
-	groups = ["Guest-group"]
-	rsso = "disable"
-	fsso = "enable"
-	logtraffic = "all"
-	logtraffic_start = "enable"
-	capture_packet = "enable"
-	nat = "enable"
-	ippool = "enable"
-	fixedport = "enable"
-	poolname = ["test1"]
-	utm_status = "enable"
-	profile_type = "single"
-	av_profile = ["g-default"]
-	dnsfilter_profile = ["default"]
-	traffic_shaper = ["high-priority"]
-	comments = "policy test"
-	package_name = "dvm-test"
+  name                 = "policy-test"
+  srcaddr              = ["all"]
+  srcintf              = ["any"]
+  dstaddr              = ["all"]
+  dstintf              = ["any"]
+  service              = ["ALL"]
+  action               = "accept"
+  schedule             = ["always"]
+  internet_service     = "enable"
+  internet_service_id  = ["Alibaba.Web", "AOL.Web"]
+  internet_service_src = "disable"
+  users                = ["guest"]
+  groups               = ["Guest-group"]
+  rsso                 = "disable"
+  fsso                 = "enable"
+  logtraffic           = "all"
+  logtraffic_start     = "enable"
+  capture_packet       = "enable"
+  nat                  = "enable"
+  ippool               = "enable"
+  fixedport            = "enable"
+  poolname             = ["test1"]
+  utm_status           = "enable"
+  profile_type         = "single"
+  av_profile           = ["g-default"]
+  dnsfilter_profile    = ["default"]
+  traffic_shaper       = ["high-priority"]
+  comments             = "policy test"
+  package_name         = "dvm-test"
 }
 ```
 

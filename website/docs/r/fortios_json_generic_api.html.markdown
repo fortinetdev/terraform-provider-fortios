@@ -12,9 +12,9 @@ FortiAPI Generic Interface. Only used for debugging and testing.
 ## Example Usage
 ```hcl
 resource "fortios_json_generic_api" "test1" {
-      path = "/api/v2/cmdb/firewall/address"
-      method = "GET"
-      json = ""
+  path   = "/api/v2/cmdb/firewall/address"
+  method = "GET"
+  json   = ""
 }
 
 output "response1" {
@@ -22,20 +22,20 @@ output "response1" {
 }
 
 resource "fortios_json_generic_api" "test2" {
-      path = "/api/v2/cmdb/firewall/address"
-      method = "POST"
-      json = <<EOF
-              {
-              "name": "11221",
-              "type": "geography",
-              "fqdn": "",
-              "country": "AL",
-              "comment": "ccc",
-              "visibility": "enable",
-              "associated-interface": "port1",
-              "allow-routing": "disable"
-              }
-      EOF
+  path   = "/api/v2/cmdb/firewall/address"
+  method = "POST"
+  json   = <<EOF
+{
+  "name": "11221",
+  "type": "geography",
+  "fqdn": "",
+  "country": "AL",
+  "comment": "ccc",
+  "visibility": "enable",
+  "associated-interface": "port1",
+  "allow-routing": "disable"
+}
+EOF
 }
 
 output "response2" {
@@ -43,11 +43,12 @@ output "response2" {
 }
 
 resource "fortios_json_generic_api" "test3" {
-      path = "/api/v2/cmdb/firewall/policy/3"
-      method = "PUT"
-      specialparams = "action=move&after=1"
-      json = ""
+  path          = "/api/v2/cmdb/firewall/policy/3"
+  method        = "PUT"
+  specialparams = "action=move&after=1"
+  json          = ""
 }
+
 output "response3" {
   value = "${fortios_json_generic_api.test3.response}"
 }

@@ -11,49 +11,39 @@ Provides a resource to configure firewall service of FortiOS.
 
 ## Example Usage for Fqdn Service
 ```hcl
-provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
-}
-
 resource "fortios_firewall_object_service" "v11" {
-	name = "servicetest1"
-	category = "General"
-	protocol = "TCP/UDP/SCTP"
-	fqdn = "abc.com"
-	comment = "comment"
+  name     = "servicetest1"
+  category = "General"
+  protocol = "TCP/UDP/SCTP"
+  fqdn     = "abc.com"
+  comment  = "comment"
 }
 ```
 
 ## Example Usage for Iprange Service
 ```hcl
-provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
-}
-
 resource "fortios_firewall_object_service" "v13" {
-	name = "servicetest2"
-	category = "General"
-	protocol = "TCP/UDP/SCTP"
-	iprange = "1.1.1.1-2.2.2.2"
-	tcp_portrange = "22-33"
-	udp_portrange = "44-55"
-	sctp_portrange = "66-88"
-	comment = "comment"
+  name           = "servicetest2"
+  category       = "General"
+  protocol       = "TCP/UDP/SCTP"
+  iprange        = "1.1.1.1-2.2.2.2"
+  tcp_portrange  = "22-33"
+  udp_portrange  = "44-55"
+  sctp_portrange = "66-88"
+  comment        = "comment"
 }
 ```
 
 ## Example Usage for ICMP Service
 ```hcl
 resource "fortios_firewall_object_service" "ICMP" {
-	name = "ICMPService"
-	category = "General"
-	protocol = "ICMP"
-	icmptype = "2"
-	icmpcode = "3"
-	protocol_number = "1"
-	comment = "comment"
+  name            = "ICMPService"
+  category        = "General"
+  protocol        = "ICMP"
+  icmptype        = "2"
+  icmpcode        = "3"
+  protocol_number = "1"
+  comment         = "comment"
 }
 ```
 
