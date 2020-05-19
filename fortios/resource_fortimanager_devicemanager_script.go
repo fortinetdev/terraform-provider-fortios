@@ -5,8 +5,8 @@ import (
 	"log"
 
 	fmgclient "github.com/fortinetdev/forti-sdk-go/fortimanager/sdkcore"
-	"github.com/fortinetdev/forti-sdk-go/fortimanager/util"
-	"github.com/hashicorp/terraform/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
 )
 
 func resourceFortimanagerDVMScript() *schema.Resource {
@@ -34,10 +34,14 @@ func resourceFortimanagerDVMScript() *schema.Resource {
 				Optional: true,
 			},
 			"target": &schema.Schema{
-				Type:         schema.TypeString,
-				Optional:     true,
-				Default:      "device_database",
-				ValidateFunc: util.ValidateStringIn("device_database", "remote_device", "adom_database"),
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "device_database",
+				ValidateFunc: validation.StringInSlice([]string{
+					"device_database",
+					"remote_device",
+					"adom_database",
+				}, false),
 			},
 			"adom": &schema.Schema{
 				Type:     schema.TypeString,

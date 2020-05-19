@@ -5,7 +5,7 @@ import (
 	"log"
 
 	forticlient "github.com/fortinetdev/forti-sdk-go/fortios/sdkcore"
-	"github.com/hashicorp/terraform/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
 func resourceFirewallObjectServiceCategory() *schema.Resource {

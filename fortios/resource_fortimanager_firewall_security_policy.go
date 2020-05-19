@@ -6,7 +6,8 @@ import (
 
 	fmgclient "github.com/fortinetdev/forti-sdk-go/fortimanager/sdkcore"
 	"github.com/fortinetdev/forti-sdk-go/fortimanager/util"
-	"github.com/hashicorp/terraform/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
 )
 
 func resourceFortimanagerFirewallSecurityPolicy() *schema.Resource {
@@ -31,10 +32,12 @@ func resourceFortimanagerFirewallSecurityPolicy() *schema.Resource {
 				Required: true,
 			},
 			"action": &schema.Schema{
-				Type:         schema.TypeString,
-				Optional:     true,
-				Default:      "deny",
-				ValidateFunc: util.ValidateStringIn("deny", "accept", "ipsec"),
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "deny",
+				ValidateFunc: validation.StringInSlice([]string{
+					"deny", "accept", "ipsec",
+				}, false),
 			},
 			"srcaddr": &schema.Schema{
 				Type: schema.TypeList,
@@ -79,10 +82,12 @@ func resourceFortimanagerFirewallSecurityPolicy() *schema.Resource {
 				Required: true,
 			},
 			"internet_service": &schema.Schema{
-				Type:         schema.TypeString,
-				Optional:     true,
-				Default:      "disable",
-				ValidateFunc: util.ValidateStringIn("disable", "enable"),
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "disable",
+				ValidateFunc: validation.StringInSlice([]string{
+					"disable", "enable",
+				}, false),
 			},
 			"internet_service_id": &schema.Schema{
 				Type: schema.TypeList,
@@ -92,10 +97,12 @@ func resourceFortimanagerFirewallSecurityPolicy() *schema.Resource {
 				Optional: true,
 			},
 			"internet_service_src": &schema.Schema{
-				Type:         schema.TypeString,
-				Optional:     true,
-				Default:      "disable",
-				ValidateFunc: util.ValidateStringIn("disable", "enable"),
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "disable",
+				ValidateFunc: validation.StringInSlice([]string{
+					"disable", "enable",
+				}, false),
 			},
 			"internet_service_src_id": &schema.Schema{
 				Type: schema.TypeList,
@@ -119,51 +126,65 @@ func resourceFortimanagerFirewallSecurityPolicy() *schema.Resource {
 				Optional: true,
 			},
 			"fsso": &schema.Schema{
-				Type:         schema.TypeString,
-				Optional:     true,
-				Default:      "disable",
-				ValidateFunc: util.ValidateStringIn("disable", "enable"),
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "disable",
+				ValidateFunc: validation.StringInSlice([]string{
+					"disable", "enable",
+				}, false),
 			},
 			"rsso": &schema.Schema{
-				Type:         schema.TypeString,
-				Optional:     true,
-				Default:      "disable",
-				ValidateFunc: util.ValidateStringIn("disable", "enable"),
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "disable",
+				ValidateFunc: validation.StringInSlice([]string{
+					"disable", "enable",
+				}, false),
 			},
 			"logtraffic": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Default:  "disable",
 				// "all" and "utm" means enable
-				ValidateFunc: util.ValidateStringIn("disable", "all", "utm"),
+				ValidateFunc: validation.StringInSlice([]string{
+					"disable", "all", "utm",
+				}, false),
 			},
 			"logtraffic_start": &schema.Schema{
-				Type:         schema.TypeString,
-				Optional:     true,
-				Default:      "disable",
-				ValidateFunc: util.ValidateStringIn("disable", "enable"),
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "disable",
+				ValidateFunc: validation.StringInSlice([]string{
+					"disable", "enable",
+				}, false),
 			},
 			"capture_packet": &schema.Schema{
-				Type:         schema.TypeString,
-				Optional:     true,
-				Default:      "disable",
-				ValidateFunc: util.ValidateStringIn("disable", "enable"),
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "disable",
+				ValidateFunc: validation.StringInSlice([]string{
+					"disable", "enable",
+				}, false),
 			},
 			"comments": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 			},
 			"nat": &schema.Schema{
-				Type:         schema.TypeString,
-				Optional:     true,
-				Default:      "disable",
-				ValidateFunc: util.ValidateStringIn("disable", "enable"),
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "disable",
+				ValidateFunc: validation.StringInSlice([]string{
+					"disable", "enable",
+				}, false),
 			},
 			"ippool": &schema.Schema{
-				Type:         schema.TypeString,
-				Optional:     true,
-				Default:      "disable",
-				ValidateFunc: util.ValidateStringIn("disable", "enable"),
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "disable",
+				ValidateFunc: validation.StringInSlice([]string{
+					"disable", "enable",
+				}, false),
 			},
 			"poolname": &schema.Schema{
 				Type: schema.TypeList,
@@ -173,10 +194,12 @@ func resourceFortimanagerFirewallSecurityPolicy() *schema.Resource {
 				Optional: true,
 			},
 			"fixedport": &schema.Schema{
-				Type:         schema.TypeString,
-				Optional:     true,
-				Default:      "disable",
-				ValidateFunc: util.ValidateStringIn("disable", "enable"),
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "disable",
+				ValidateFunc: validation.StringInSlice([]string{
+					"disable", "enable",
+				}, false),
 			},
 			"vpn_tunnel": &schema.Schema{
 				Type: schema.TypeList,
@@ -186,22 +209,28 @@ func resourceFortimanagerFirewallSecurityPolicy() *schema.Resource {
 				Optional: true,
 			},
 			"inbound": &schema.Schema{
-				Type:         schema.TypeString,
-				Optional:     true,
-				Default:      "disable",
-				ValidateFunc: util.ValidateStringIn("disable", "enable"),
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "disable",
+				ValidateFunc: validation.StringInSlice([]string{
+					"disable", "enable",
+				}, false),
 			},
 			"utm_status": &schema.Schema{
-				Type:         schema.TypeString,
-				Optional:     true,
-				Default:      "disable",
-				ValidateFunc: util.ValidateStringIn("disable", "enable"),
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "disable",
+				ValidateFunc: validation.StringInSlice([]string{
+					"disable", "enable",
+				}, false),
 			},
 			"profile_type": &schema.Schema{
-				Type:         schema.TypeString,
-				Optional:     true,
-				Default:      "single",
-				ValidateFunc: util.ValidateStringIn("single", "group"),
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "single",
+				ValidateFunc: validation.StringInSlice([]string{
+					"single", "group",
+				}, false),
 			},
 			"av_profile": &schema.Schema{
 				Type: schema.TypeList,

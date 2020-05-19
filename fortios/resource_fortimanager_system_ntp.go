@@ -5,8 +5,8 @@ import (
 	"log"
 
 	fmgclient "github.com/fortinetdev/forti-sdk-go/fortimanager/sdkcore"
-	"github.com/fortinetdev/forti-sdk-go/fortimanager/util"
-	"github.com/hashicorp/terraform/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
 )
 
 func resourceFortimanagerSystemNTP() *schema.Resource {
@@ -26,9 +26,11 @@ func resourceFortimanagerSystemNTP() *schema.Resource {
 				Required: true,
 			},
 			"status": &schema.Schema{
-				Type:         schema.TypeString,
-				Optional:     true,
-				ValidateFunc: util.ValidateStringIn("disable", "enable"),
+				Type:     schema.TypeString,
+				Optional: true,
+				ValidateFunc: validation.StringInSlice([]string{
+					"disable", "enable",
+				}, false),
 			},
 			"sync_interval": &schema.Schema{
 				Type:     schema.TypeInt,

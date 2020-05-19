@@ -6,7 +6,8 @@ import (
 
 	fmgclient "github.com/fortinetdev/forti-sdk-go/fortimanager/sdkcore"
 	"github.com/fortinetdev/forti-sdk-go/fortimanager/util"
-	"github.com/hashicorp/terraform/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
 )
 
 func resourceFortimanagerSystemNetworkInterface() *schema.Resource {
@@ -34,9 +35,11 @@ func resourceFortimanagerSystemNetworkInterface() *schema.Resource {
 				Optional: true,
 			},
 			"status": &schema.Schema{
-				Type:         schema.TypeString,
-				Optional:     true,
-				ValidateFunc: util.ValidateStringIn("down", "up"),
+				Type:     schema.TypeString,
+				Optional: true,
+				ValidateFunc: validation.StringInSlice([]string{
+					"down", "up",
+				}, false),
 			},
 			"allow_access": &schema.Schema{
 				Type: schema.TypeList,

@@ -5,8 +5,8 @@ import (
 	"log"
 
 	fmgclient "github.com/fortinetdev/forti-sdk-go/fortimanager/sdkcore"
-	"github.com/fortinetdev/forti-sdk-go/fortimanager/util"
-	"github.com/hashicorp/terraform/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
 )
 
 func resourceFortimanagerFirewallObjectAddress() *schema.Resource {
@@ -26,10 +26,12 @@ func resourceFortimanagerFirewallObjectAddress() *schema.Resource {
 				Required: true,
 			},
 			"type": &schema.Schema{
-				Type:         schema.TypeString,
-				Optional:     true,
-				Default:      "ipmask",
-				ValidateFunc: util.ValidateStringIn("ipmask", "iprange", "fqdn"),
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "ipmask",
+				ValidateFunc: validation.StringInSlice([]string{
+					"ipmask", "iprange", "fqdn",
+				}, false),
 			},
 			"comment": &schema.Schema{
 				Type:     schema.TypeString,
@@ -60,10 +62,12 @@ func resourceFortimanagerFirewallObjectAddress() *schema.Resource {
 				Default:  "255.255.255.255",
 			},
 			"allow_routing": &schema.Schema{
-				Type:         schema.TypeString,
-				Optional:     true,
-				Default:      "disable",
-				ValidateFunc: util.ValidateStringIn("enable", "disable"),
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "disable",
+				ValidateFunc: validation.StringInSlice([]string{
+					"enable", "disable",
+				}, false),
 			},
 			"adom": &schema.Schema{
 				Type:     schema.TypeString,

@@ -5,8 +5,8 @@ import (
 	"log"
 
 	fmgclient "github.com/fortinetdev/forti-sdk-go/fortimanager/sdkcore"
-	"github.com/fortinetdev/forti-sdk-go/fortimanager/util"
-	"github.com/hashicorp/terraform/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
 )
 
 func resourceFortimanagerFirewallObjectVip() *schema.Resource {
@@ -26,10 +26,12 @@ func resourceFortimanagerFirewallObjectVip() *schema.Resource {
 				Required: true,
 			},
 			"type": &schema.Schema{
-				Type:         schema.TypeString,
-				Optional:     true,
-				Default:      "static-nat",
-				ValidateFunc: util.ValidateStringIn("static-nat", "dns-translation", "fqdn"),
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "static-nat",
+				ValidateFunc: validation.StringInSlice([]string{
+					"static-nat", "dns-translation", "fqdn",
+				}, false),
 			},
 			"ext_ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -53,10 +55,12 @@ func resourceFortimanagerFirewallObjectVip() *schema.Resource {
 				Optional: true,
 			},
 			"config_default": &schema.Schema{
-				Type:         schema.TypeString,
-				Optional:     true,
-				Default:      "enable",
-				ValidateFunc: util.ValidateStringIn("disable", "enable"),
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "enable",
+				ValidateFunc: validation.StringInSlice([]string{
+					"disable", "enable",
+				}, false),
 			},
 			"mapped_addr": &schema.Schema{
 				Type:     schema.TypeString,

@@ -5,8 +5,8 @@ import (
 	"log"
 
 	fmgclient "github.com/fortinetdev/forti-sdk-go/fortimanager/sdkcore"
-	"github.com/fortinetdev/forti-sdk-go/fortimanager/util"
-	"github.com/hashicorp/terraform/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
 )
 
 func resourceFortimanagerSystemAdminUser() *schema.Resource {
@@ -34,10 +34,12 @@ func resourceFortimanagerSystemAdminUser() *schema.Resource {
 				Optional: true,
 			},
 			"user_type": &schema.Schema{
-				Type:         schema.TypeString,
-				Optional:     true,
-				Default:      "local",
-				ValidateFunc: util.ValidateStringIn("local", "radius", "ldap", "tacacs-plus", "pki-auth", "group"),
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "local",
+				ValidateFunc: validation.StringInSlice([]string{
+					"local", "radius", "ldap", "tacacs-plus", "pki-auth", "group",
+				}, false),
 			},
 			"profileid": &schema.Schema{
 				Type:     schema.TypeString,
@@ -45,10 +47,12 @@ func resourceFortimanagerSystemAdminUser() *schema.Resource {
 				Default:  "Restricted_User",
 			},
 			"rpc_permit": &schema.Schema{
-				Type:         schema.TypeString,
-				Optional:     true,
-				Default:      "none",
-				ValidateFunc: util.ValidateStringIn("none", "read", "read-write"),
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "none",
+				ValidateFunc: validation.StringInSlice([]string{
+					"none", "read", "read-write",
+				}, false),
 			},
 			"trusthost1": &schema.Schema{
 				Type:     schema.TypeString,

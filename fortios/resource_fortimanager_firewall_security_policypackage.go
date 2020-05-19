@@ -5,8 +5,8 @@ import (
 	"log"
 
 	fmgclient "github.com/fortinetdev/forti-sdk-go/fortimanager/sdkcore"
-	"github.com/fortinetdev/forti-sdk-go/fortimanager/util"
-	"github.com/hashicorp/terraform/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
 )
 
 func resourceFortimanagerFirewallSecurityPolicyPackage() *schema.Resource {
@@ -40,10 +40,12 @@ func resourceFortimanagerFirewallSecurityPolicyPackage() *schema.Resource {
 				Default:  "root",
 			},
 			"inspection_mode": &schema.Schema{
-				Type:         schema.TypeString,
-				Optional:     true,
-				Default:      "flow",
-				ValidateFunc: util.ValidateStringIn("flow", "proxy"),
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "flow",
+				ValidateFunc: validation.StringInSlice([]string{
+					"flow", "proxy",
+				}, false),
 			},
 		},
 	}

@@ -6,8 +6,8 @@ import (
 	"strconv"
 
 	fmgclient "github.com/fortinetdev/forti-sdk-go/fortimanager/sdkcore"
-	"github.com/fortinetdev/forti-sdk-go/fortimanager/util"
-	"github.com/hashicorp/terraform/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
 )
 
 func resourceFortimanagerSystemAdom() *schema.Resource {
@@ -27,10 +27,12 @@ func resourceFortimanagerSystemAdom() *schema.Resource {
 				Required: true,
 			},
 			"type": &schema.Schema{
-				Type:         schema.TypeString,
-				Optional:     true,
-				Default:      "FortiGate",
-				ValidateFunc: util.ValidateStringIn("FortiGate", "FortiCarrier"),
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "FortiGate",
+				ValidateFunc: validation.StringInSlice([]string{
+					"FortiGate", "FortiCarrier",
+				}, false),
 			},
 			"central_management_vpn": &schema.Schema{
 				Type:     schema.TypeBool,
@@ -48,10 +50,12 @@ func resourceFortimanagerSystemAdom() *schema.Resource {
 				Default:  false,
 			},
 			"mode": &schema.Schema{
-				Type:         schema.TypeString,
-				Optional:     true,
-				Default:      "Normal",
-				ValidateFunc: util.ValidateStringIn("Normal", "Backup"),
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "Normal",
+				ValidateFunc: validation.StringInSlice([]string{
+					"Normal", "Backup",
+				}, false),
 			},
 			"perform_policy_check_before_every_install": &schema.Schema{
 				Type:     schema.TypeBool,
@@ -59,16 +63,20 @@ func resourceFortimanagerSystemAdom() *schema.Resource {
 				Default:  false,
 			},
 			"action_when_conflicts_occur_during_policy_check": &schema.Schema{
-				Type:         schema.TypeString,
-				Optional:     true,
-				Default:      "Continue",
-				ValidateFunc: util.ValidateStringIn("Continue", "Stop"),
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "Continue",
+				ValidateFunc: validation.StringInSlice([]string{
+					"Continue", "Stop",
+				}, false),
 			},
 			"auto_push_policy_packages_when_device_back_online": &schema.Schema{
-				Type:         schema.TypeString,
-				Optional:     true,
-				Default:      "Disable",
-				ValidateFunc: util.ValidateStringIn("Disable", "Enable"),
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "Disable",
+				ValidateFunc: validation.StringInSlice([]string{
+					"Disable", "Enable",
+				}, false),
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeInt,

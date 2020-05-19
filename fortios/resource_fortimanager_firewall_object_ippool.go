@@ -5,8 +5,8 @@ import (
 	"log"
 
 	fmgclient "github.com/fortinetdev/forti-sdk-go/fortimanager/sdkcore"
-	"github.com/fortinetdev/forti-sdk-go/fortimanager/util"
-	"github.com/hashicorp/terraform/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
 )
 
 func resourceFortimanagerFirewallObjectIppool() *schema.Resource {
@@ -34,20 +34,24 @@ func resourceFortimanagerFirewallObjectIppool() *schema.Resource {
 				Required: true,
 			},
 			"type": &schema.Schema{
-				Type:         schema.TypeString,
-				Optional:     true,
-				Default:      "overload",
-				ValidateFunc: util.ValidateStringIn("overload", "one-to-one"),
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "overload",
+				ValidateFunc: validation.StringInSlice([]string{
+					"overload", "one-to-one",
+				}, false),
 			},
 			"comment": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 			},
 			"arp_reply": &schema.Schema{
-				Type:         schema.TypeString,
-				Optional:     true,
-				Default:      "enable",
-				ValidateFunc: util.ValidateStringIn("disable", "enable"),
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "enable",
+				ValidateFunc: validation.StringInSlice([]string{
+					"disable", "enable",
+				}, false),
 			},
 			"arp_intf": &schema.Schema{
 				Type:     schema.TypeString,

@@ -6,7 +6,8 @@ import (
 
 	fmgclient "github.com/fortinetdev/forti-sdk-go/fortimanager/sdkcore"
 	"github.com/fortinetdev/forti-sdk-go/fortimanager/util"
-	"github.com/hashicorp/terraform/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
 )
 
 func resourceFortimanagerFirewallObjectService() *schema.Resource {
@@ -30,22 +31,28 @@ func resourceFortimanagerFirewallObjectService() *schema.Resource {
 				Optional: true,
 			},
 			"category": &schema.Schema{
-				Type:         schema.TypeString,
-				Optional:     true,
-				Default:      "",
-				ValidateFunc: util.ValidateStringIn("", "File Access", "Authentication", "Email", "General", "Network Services", "Remote Access", "Tunneling", "VoIP, Messaging & Other Applications", "Web Access", "Web Proxy"),
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "",
+				ValidateFunc: validation.StringInSlice([]string{
+					"", "File Access", "Authentication", "Email", "General", "Network Services", "Remote Access", "Tunneling", "VoIP, Messaging & Other Applications", "Web Access", "Web Proxy",
+				}, false),
 			},
 			"protocol": &schema.Schema{
-				Type:         schema.TypeString,
-				Optional:     true,
-				Default:      "TCP/UDP/SCTP",
-				ValidateFunc: util.ValidateStringIn("TCP/UDP/SCTP", "ICMP", "ICMP6", "IP"),
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "TCP/UDP/SCTP",
+				ValidateFunc: validation.StringInSlice([]string{
+					"TCP/UDP/SCTP", "ICMP", "ICMP6", "IP",
+				}, false),
 			},
 			"proxy": &schema.Schema{
-				Type:         schema.TypeString,
-				Optional:     true,
-				Default:      "disable",
-				ValidateFunc: util.ValidateStringIn("disable", "enable"),
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "disable",
+				ValidateFunc: validation.StringInSlice([]string{
+					"disable", "enable",
+				}, false),
 			},
 			"fqdn": &schema.Schema{
 				Type:     schema.TypeString,
