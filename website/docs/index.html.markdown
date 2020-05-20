@@ -149,11 +149,11 @@ The following arguments are supported:
 
 ```hcl
 provider "fortios" {
-  hostname     = "192.168.88.100"
-  username     = "APIUser"
-  passwd       = "admin"
-  insecure     = false
-  cabundlefile = "/path/yourCA.crt"
+  fmg_hostname     = "192.168.88.100"
+  fmg_username     = "APIUser"
+  fmg_passwd       = "admin"
+  fmg_insecure     = false
+  fmg_cabundlefile = "/path/yourCA.crt"
 }
 
 resource "fortios_fmg_system_dns" "test1" {
@@ -166,10 +166,10 @@ If it is used for testing, you can set `insecure` to true and unset `cabundlefil
 
 ```hcl
 provider "fortios" {
-  hostname = "192.168.88.100"
-  username = "APIUser"
-  passwd   = "admin"
-  insecure = true
+  fmg_hostname = "192.168.88.100"
+  fmg_username = "APIUser"
+  fmg_passwd   = "admin"
+  fmg_insecure = true
 }
 ```
 
@@ -184,41 +184,38 @@ As the same to provider for FortiGate, the following two methods are supported:
 
 #### Static credentials
 
-Static credentials can be provided by adding the `hostname`, `username` and `passwd`  key in-line in the FortiOS provider block.
+Static credentials can be provided by adding the `fmg_hostname`, `fmg_username` and `fmg_passwd` key in-line in the FortiOS provider block.
 
 Usage:
 
 ```hcl
 provider "fortios" {
-  hostname     = "192.168.88.100"
-  username     = "APIUser"
-  passwd       = "admin"
-  product      = "fortimanager"
-  insecure     = false
-  cabundlefile = "/path/yourCA.crt"
+  fmg_hostname     = "192.168.88.100"
+  fmg_username     = "APIUser"
+  fmg_passwd       = "admin"
+  fmg_insecure     = false
+  fmg_cabundlefile = "/path/yourCA.crt"
 }
 ```
 
 #### Environment variables
 
-You can provide your credentials via the `FORTIOS_FMG_HOSTNAME`, `FORTIOS_FMG_USERNAME` and `FORTIOS_FMG_PASSWORD` environment variables. Note that setting your FortiOS credentials using static credentials variables will override the environment variables.
+You can provide your credentials via the `FORTIOS_FMG_HOSTNAME`, `FORTIOS_FMG_USERNAME`, `FORTIOS_FMG_PASSWORD`, `FORTIOS_FMG_INSECURE` and `FORTIOS_FMG_CABUNDLE` environment variables. Note that setting your FortiOS credentials using static credentials variables will override the environment variables.
 
 Usage:
 
 ```shell
-$ export FORTIOS_FMG_HOSTNAME="192.168.88.100"
-$ export FORTIOS_FMG_USERNAME="APIUser"
-$ export FORTIOS_FMG_PASSWORD="admin"
+$ export "FORTIOS_FMG_HOSTNAME"="192.168.88.100"
+$ export "FORTIOS_FMG_USERNAME"="admin"
+$ export "FORTIOS_FMG_PASSWORD"="admin"
+$ export "FORTIOS_FMG_INSECURE"="false"
+$ export "FORTIOS_FMG_CABUNDLE"="/path/yourCA.crt"
 ```
 
 Then configure the FortiOS Provider as following:
 
 ```hcl
-provider "fortios" {
-  product      = "fortimanager"
-  insecure     = false
-  cabundlefile = "/path/yourCA.crt"
-}
+provider "fortios" {}
 
 resource "fortios_fmg_system_dns" "test1" {
   primary   = "208.91.112.33"
@@ -232,11 +229,11 @@ Multi-Adom feature is supported in case of using FortiManager, just take the fol
 
 ```hcl
 provider "fortios" {
-  hostname = "192.168.88.200"
-  username = "APIUser"
-  passwd   = "admin"
-  product  = "fortimanager"
-  insecure = true
+  fmg_hostname = "192.168.88.200"
+  fmg_username = "APIUser"
+  fmg_passwd   = "admin"
+  fmg_product  = "fortimanager"
+  fmg_insecure = true
 }
 
 resource "fortios_fmg_devicemanager_script" "test1" {
@@ -269,15 +266,15 @@ Note that one resource supports Multi-Adom feature if it has 'adom' argument.
 
 The following arguments are supported:
 
-* `hostname` - (Optional) The hostname or IP address of FortiManager. It must be provided, but it can also be sourced from the `FORTIOS_FMG_HOSTNAME` environment variable.
+* `fmg_hostname` - (Optional) The hostname or IP address of FortiManager. It must be provided, but it can also be sourced from the `FORTIOS_FMG_HOSTNAME` environment variable.
 
-* `username` - (Optional) The username of FortiManager. It must be provided, but it can also be sourced from the `FORTIOS_FMG_USERNAME` environment variable.
+* `fmg_username` - (Optional) The username of FortiManager. It must be provided, but it can also be sourced from the `FORTIOS_FMG_USERNAME` environment variable.
 
-* `passwd` - (Optional) The password of FortiManager, it can also be sourced from the `FORTIOS_FMG_PASSWORD` environment variable.
+* `fmg_passwd` - (Optional) The password of FortiManager, it can also be sourced from the `FORTIOS_FMG_PASSWORD` environment variable.
 
-* `insecure` - (Optional) Control whether the Provider to perform insecure SSL requests. If omitted, the `FORTIOS_FMG_INSECURE` environment variable is used. If neither is set, default value is `false`.
+* `fmg_insecure` - (Optional) Control whether the Provider to perform insecure SSL requests. If omitted, the `FORTIOS_FMG_INSECURE` environment variable is used. If neither is set, default value is `false`.
 
-* `cabundlefile` - (Optional) The path of a custom CA bundle file. You can specify a path to the file, or you can specify it by the `FORTIOS_FMG_CABUNDLE` environment variable.
+* `fmg_cabundlefile` - (Optional) The path of a custom CA bundle file. You can specify a path to the file, or you can specify it by the `FORTIOS_FMG_CABUNDLE` environment variable.
 
 
 ## Versioning
