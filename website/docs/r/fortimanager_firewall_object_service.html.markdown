@@ -16,7 +16,6 @@ resource "fortios_fmg_firewall_object_service" "test1" {
   comment        = "test obj service"
   protocol       = "TCP/UDP/SCTP"
   category       = "Email"
-  fqdn           = "fqdn.google.com"
   iprange        = "1.1.1.1"
   tcp_portrange  = ["100-200:150-250"]
   udp_portrange  = ["100-200:150-250"]
