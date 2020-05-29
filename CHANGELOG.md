@@ -33,7 +33,7 @@ FEATURES:
 * **New Resource:** ` fortios_fmg_system_ntp`
 * **New Resource:** ` fortios_fmg_system_syslogserver`
 * **New Resource:** ` fortios_firewall_security_policyseq`
-* **New Resource:** ` fortios_firewall_object_servicecatry`
+* **New Resource:** ` fortios_firewall_object_servicecategory`
 
 
 ## 1.1.0 (June 25, 2019)
