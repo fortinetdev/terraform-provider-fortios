@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	forticlient "github.com/fgtdev/fortios-sdk-go/sdkcore"
-	"github.com/hashicorp/terraform/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
 func resourceSystemLicenseVM() *schema.Resource {
