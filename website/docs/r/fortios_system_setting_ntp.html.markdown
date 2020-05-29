@@ -11,15 +11,10 @@ Provides a resource to configure Network Time Protocol (NTP) servers of FortiOS.
 
 ## Example Usage
 ```hcl
-provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
-}
-
 resource "fortios_system_setting_ntp" "test2" {
-	type = "custom"
-	ntpserver = ["1.1.1.1", "3.3.3.3"]
-	ntpsync = "disable"
+  type      = "custom"
+  ntpserver = ["1.1.1.1", "3.3.3.3"]
+  ntpsync   = "disable"
 }
 ```
 

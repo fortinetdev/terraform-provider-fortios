@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	forticlient "github.com/fgtdev/fortios-sdk-go/sdkcore"
+	forticlient "github.com/fortinetdev/forti-sdk-go/fortios/sdkcore"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -23,14 +23,17 @@ func resourceSystemSettingDNS() *schema.Resource {
 			"primary": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
 			},
 			"secondary": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
 			},
 			"dns_over_tls": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
+				Computed: true,
 			},
 		},
 	}
@@ -40,6 +43,11 @@ func resourceSystemSettingDNSCreateUpdate(d *schema.ResourceData, m interface{})
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Get Params from d
@@ -74,6 +82,11 @@ func resourceSystemSettingDNSRead(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Call process by sdk
@@ -88,16 +101,9 @@ func resourceSystemSettingDNSRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	//Refresh property
-	if d.Get("primary") != "" {
-		d.Set("primary", o.Primary)
-	}
-	if d.Get("secondary") != "" {
-		d.Set("secondary", o.Secondary)
-	}
-	if d.Get("dns_over_tls") != "" {
-		d.Set("dns_over_tls", o.DNSOverTLS)
-	}
+	d.Set("primary", o.Primary)
+	d.Set("secondary", o.Secondary)
+	d.Set("dns_over_tls", o.DNSOverTLS)
 
 	return nil
 }

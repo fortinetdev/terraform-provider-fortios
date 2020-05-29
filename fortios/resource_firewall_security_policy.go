@@ -5,7 +5,7 @@ import (
 	"log"
 	"strconv"
 
-	forticlient "github.com/fgtdev/fortios-sdk-go/sdkcore"
+	forticlient "github.com/fortinetdev/forti-sdk-go/fortios/sdkcore"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -56,7 +56,7 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 			"internet_service": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "disable",
+				Computed: true,
 			},
 			"internet_service_id": &schema.Schema{
 				Type:     schema.TypeList,
@@ -68,7 +68,7 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 			"internet_service_src": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "disable",
+				Computed: true,
 			},
 			"internet_service_src_id": &schema.Schema{
 				Type:     schema.TypeList,
@@ -87,7 +87,7 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "disable",
+				Computed: true,
 			},
 			"action": &schema.Schema{
 				Type:     schema.TypeString,
@@ -107,27 +107,27 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 			"utm_status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "disable",
+				Computed: true,
 			},
 			"logtraffic": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "utm",
+				Computed: true,
 			},
 			"logtraffic_start": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "disable",
+				Computed: true,
 			},
 			"capture_packet": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "disable",
+				Computed: true,
 			},
 			"ippool": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "disable",
+				Computed: true,
 			},
 			"poolname": &schema.Schema{
 				Type:     schema.TypeList,
@@ -158,42 +158,42 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 			"av_profile": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "",
+				Computed: true,
 			},
 			"webfilter_profile": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "",
+				Computed: true,
 			},
 			"dnsfilter_profile": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "",
+				Computed: true,
 			},
 			"ips_sensor": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "",
+				Computed: true,
 			},
 			"application_list": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "",
+				Computed: true,
 			},
 			"ssl_ssh_profile": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "",
+				Computed: true,
 			},
 			"nat": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "enable",
+				Computed: true,
 			},
 			"profile_protocol_options": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "default",
+				Computed: true,
 			},
 		},
 	}
@@ -201,6 +201,11 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 
 func resourceFirewallSecurityPolicyCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Get Params from d
@@ -419,6 +424,11 @@ func resourceFirewallSecurityPolicyUpdate(d *schema.ResourceData, m interface{})
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Get Params from d
@@ -633,6 +643,11 @@ func resourceFirewallSecurityPolicyDelete(d *schema.ResourceData, m interface{})
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Call process by sdk
@@ -651,6 +666,11 @@ func resourceFirewallSecurityPolicyRead(d *schema.ResourceData, m interface{}) e
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Call process by sdk

@@ -35,3 +35,18 @@ func testAccPreCheck(t *testing.T) {
 		t.Fatal("FORTIOS_INSECURE must be set for acceptance tests")
 	}
 }
+
+func testAccPreCheckFortiManager(t *testing.T) {
+	if v := os.Getenv("FORTIOS_FMG_HOSTNAME"); v == "" {
+		t.Fatal("FortiManager Provider: FORTIOS_FMG_HOSTNAME must be set for acceptance tests")
+	}
+	if v := os.Getenv("FORTIOS_FMG_USERNAME"); v == "" {
+		t.Fatal("FortiManager Provider: FORTIOS_FMG_USERNAME must be set for acceptance tests")
+	}
+	if v := os.Getenv("FORTIOS_FMG_PASSWORD"); v == "" {
+		t.Fatal("FortiManager Provider: FORTIOS_FMG_PASSWORD must be set for acceptance tests")
+	}
+	if v := os.Getenv("FORTIOS_FMG_INSECURE"); v == "" {
+		t.Fatal("FortiManager Provider: Set FORTIOS_FMG_INSECURE=true for acceptance tests")
+	}
+}

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/fgtdev/fortios-sdk-go/sdkcore"
+	"github.com/fortinetdev/forti-sdk-go/fortios/sdkcore"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -42,6 +42,11 @@ func resourceFirewallObjectAddressGroup() *schema.Resource {
 
 func resourceFirewallObjectAddressGroupCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Get Params from d
@@ -84,6 +89,11 @@ func resourceFirewallObjectAddressGroupUpdate(d *schema.ResourceData, m interfac
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Get Params from d
@@ -123,6 +133,11 @@ func resourceFirewallObjectAddressGroupDelete(d *schema.ResourceData, m interfac
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Call process by sdk
@@ -145,6 +160,11 @@ func resourceFirewallObjectAddressGroupRead(d *schema.ResourceData, m interface{
 	}
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Call process by sdk

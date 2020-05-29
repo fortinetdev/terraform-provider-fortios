@@ -84,7 +84,7 @@ func testAccCheckNetworkingRouteStaticDestroy(s *terraform.State) error {
 }
 
 const testAccFortiOSNetworkingRouteStaticConfig = `
-resource "fortios_networking_route_static" "test1" { 
+resource "fortios_networking_route_static" "test1" {
 	dst = "110.2.2.122 255.255.255.255"
 	gateway = "2.2.2.2"
 	blackhole = "disable"

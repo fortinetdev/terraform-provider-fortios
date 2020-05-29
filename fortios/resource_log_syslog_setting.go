@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/fgtdev/fortios-sdk-go/sdkcore"
+	"github.com/fortinetdev/forti-sdk-go/fortios/sdkcore"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -27,32 +27,32 @@ func resourceLogSyslogSetting() *schema.Resource {
 			"server": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0.0.0.0",
+				Computed: true,
 			},
 			"mode": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "udp",
+				Computed: true,
 			},
 			"port": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "514",
+				Computed: true,
 			},
 			"facility": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "local7",
+				Computed: true,
 			},
 			"source_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "",
+				Computed: true,
 			},
 			"format": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "default",
+				Computed: true,
 			},
 		},
 	}
@@ -61,6 +61,11 @@ func resourceLogSyslogSetting() *schema.Resource {
 func resourceLogSyslogSettingCreateUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Get Params from d
@@ -103,6 +108,11 @@ func resourceLogSyslogSettingRead(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Call process by sdk

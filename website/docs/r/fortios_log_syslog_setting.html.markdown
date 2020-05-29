@@ -11,19 +11,14 @@ Provides a resource to configure logging to remote Syslog logging servers.
 
 ## Example Usage
 ```hcl
-provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
-}
-
 resource "fortios_log_syslog_setting" "test2" {
-	status = "enable"
-	server = "2.2.2.2"
-	mode = "udp"
-	port = "514"
-	facility = "local7"
-	source_ip = "10.2.2.199"
-	format = "csv"
+  status    = "enable"
+  server    = "2.2.2.2"
+  mode      = "udp"
+  port      = "514"
+  facility  = "local7"
+  source_ip = "10.2.2.199"
+  format    = "csv"
 }
 ```
 

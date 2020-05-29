@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/fgtdev/fortios-sdk-go/sdkcore"
+	"github.com/fortinetdev/forti-sdk-go/fortios/sdkcore"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -31,7 +31,7 @@ func resourceVPNIPsecPhase2Interface() *schema.Resource {
 			"proposal": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "aes128-sha1 aes256-sha1 aes128-sha256 aes256-sha256 aes128gcm aes256gcm chacha20poly1305",
+				Computed: true,
 			},
 			"comments": &schema.Schema{
 				Type:     schema.TypeString,
@@ -41,37 +41,37 @@ func resourceVPNIPsecPhase2Interface() *schema.Resource {
 			"src_addr_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "subnet",
+				Computed: true,
 			},
 			"src_start_ip": &schema.Schema{
 				Type:     schema.TypeString,
-				Computed: true,
 				Optional: true,
+				Computed: true,
 			},
 			"src_end_ip": &schema.Schema{
 				Type:     schema.TypeString,
-				Computed: true,
 				Optional: true,
+				Computed: true,
 			},
 			"src_subnet": &schema.Schema{
 				Type:     schema.TypeString,
-				Computed: true,
 				Optional: true,
+				Computed: true,
 			},
 			"dst_addr_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "subnet",
+				Computed: true,
 			},
 			"src_name": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "",
+				Computed: true,
 			},
 			"dst_name": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "",
+				Computed: true,
 			},
 			"dst_start_ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -94,6 +94,11 @@ func resourceVPNIPsecPhase2Interface() *schema.Resource {
 
 func resourceVPNIPsecPhase2InterfaceCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Get Params from d
@@ -178,6 +183,11 @@ func resourceVPNIPsecPhase2InterfaceUpdate(d *schema.ResourceData, m interface{}
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Get Params from d
@@ -259,6 +269,11 @@ func resourceVPNIPsecPhase2InterfaceDelete(d *schema.ResourceData, m interface{}
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Call process by sdk
@@ -277,6 +292,11 @@ func resourceVPNIPsecPhase2InterfaceRead(d *schema.ResourceData, m interface{}) 
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Call process by sdk

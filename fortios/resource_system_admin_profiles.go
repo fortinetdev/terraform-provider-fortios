@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/fgtdev/fortios-sdk-go/sdkcore"
+	"github.com/fortinetdev/forti-sdk-go/fortios/sdkcore"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -27,7 +27,7 @@ func resourceSystemAdminProfiles() *schema.Resource {
 			"scope": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "vdom",
+				Computed: true,
 			},
 			"comments": &schema.Schema{
 				Type:     schema.TypeString,
@@ -37,62 +37,62 @@ func resourceSystemAdminProfiles() *schema.Resource {
 			"secfabgrp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "none",
+				Computed: true,
 			},
 			"ftviewgrp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "none",
+				Computed: true,
 			},
 			"authgrp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "none",
+				Computed: true,
 			},
 			"sysgrp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "none",
+				Computed: true,
 			},
 			"netgrp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "none",
+				Computed: true,
 			},
 			"loggrp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "none",
+				Computed: true,
 			},
 			"fwgrp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "none",
+				Computed: true,
 			},
 			"vpngrp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "none",
+				Computed: true,
 			},
 			"utmgrp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "none",
+				Computed: true,
 			},
 			"wanoptgrp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "none",
+				Computed: true,
 			},
 			"wifi": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "none",
+				Computed: true,
 			},
 			"admintimeout_override": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "disable",
+				Computed: true,
 			},
 		},
 	}
@@ -100,6 +100,11 @@ func resourceSystemAdminProfiles() *schema.Resource {
 
 func resourceSystemAdminProfilesCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Get Params from d
@@ -154,6 +159,11 @@ func resourceSystemAdminProfilesUpdate(d *schema.ResourceData, m interface{}) er
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Get Params from d
@@ -205,6 +215,11 @@ func resourceSystemAdminProfilesDelete(d *schema.ResourceData, m interface{}) er
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Call process by sdk
@@ -223,6 +238,11 @@ func resourceSystemAdminProfilesRead(d *schema.ResourceData, m interface{}) erro
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Call process by sdk

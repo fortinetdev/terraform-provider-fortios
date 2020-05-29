@@ -11,21 +11,16 @@ Provides a resource to configure firewall virtual IPs (VIPs) of FortiOS.
 
 ## Example Usage
 ```hcl
-provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
-}
-
 resource "fortios_firewall_object_vip" "v11" {
-	name = "dfa"
-	comment = "fdsafdsafds"
-	extip = "11.1.1.1-21.1.1.1"
-	mappedip = ["22.2.2.2-32.2.2.2"]
-	extintf = "port3"
-	portforward = "enable"
-	protocol = "tcp"
-	extport = "2-3"
-	mappedport = "4-5"
+  name        = "dfa"
+  comment     = "fdsafdsafds"
+  extip       = "11.1.1.1-21.1.1.1"
+  mappedip    = ["22.2.2.2-32.2.2.2"]
+  extintf     = "port3"
+  portforward = "enable"
+  protocol    = "tcp"
+  extport     = "2-3"
+  mappedport  = "4-5"
 }
 ```
 

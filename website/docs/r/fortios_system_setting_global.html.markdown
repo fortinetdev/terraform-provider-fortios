@@ -13,18 +13,13 @@ Provides a resource to configure options related to the overall operation of For
 ## Example Usage
 
 ```hcl
-provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
-}
-
 resource "fortios_system_setting_global" "test1" {
-	admintimeout = 65
-	timezone = "04"
-	hostname = "mytestFortiGate"
-	admin_sport = 443
-	admin_ssh_port = 22
-	admin_scp = "enable"
+  admintimeout   = 65
+  timezone       = "04"
+  hostname       = "mytestFortiGate"
+  admin_sport    = 443
+  admin_ssh_port = 22
+  admin_scp      = "enable"
 }
 ```
 

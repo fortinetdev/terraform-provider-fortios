@@ -14,35 +14,34 @@ Provides a resource to use phase2-interface to add or edit a phase 2 configurati
 
 ```hcl
 provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
+  hostname = "54.226.179.231"
+  token    = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
 }
 
 resource "fortios_vpn_ipsec_phase1interface" "test1" {
-	name = "001Test"
-	type = "static"
-	interface = "port2"
-	peertype = "any"
-	proposal = "aes128-sha256 aes256-sha256 aes128-sha1 aes256-sha1"
-	comments = "VPN 001Test P1"
-	wizard_type = "static-fortigate"
-	remote_gw = "1.2.2.2"
-	psksecret = "testscecret112233445566778899"
-	authmethod = "psk"
-	authmethod_remote = ""
-	mode_cfg = "disable"
-
+  name              = "001Test"
+  type              = "static"
+  interface         = "port2"
+  peertype          = "any"
+  proposal          = "aes128-sha256 aes256-sha256 aes128-sha1 aes256-sha1"
+  comments          = "VPN 001Test P1"
+  wizard_type       = "static-fortigate"
+  remote_gw         = "1.2.2.2"
+  psksecret         = "testscecret112233445566778899"
+  authmethod        = "psk"
+  authmethod_remote = ""
+  mode_cfg          = "disable"
 }
 
 resource "fortios_vpn_ipsec_phase2interface" "test2" {
-	name = "001Test"
-	phase1name = "${fortios_vpn_ipsec_phase1interface.test1.name}"
-	proposal = "aes128-sha1 aes256-sha1 aes128-sha256 aes256-sha256 aes128gcm aes256gcm chacha20poly1305"
-	comments = "VPN 001Test P2"
-	src_addr_type = "name"
-	dst_addr_type = "name"
-	src_name = "HQ-toBranch_local"
-	dst_name = "HQ-toBranch_remote"
+  name          = "001Test"
+  phase1name    = "${fortios_vpn_ipsec_phase1interface.test1.name}"
+  proposal      = "aes128-sha1 aes256-sha1 aes128-sha256 aes256-sha256 aes128gcm aes256gcm chacha20poly1305"
+  comments      = "VPN 001Test P2"
+  src_addr_type = "name"
+  dst_addr_type = "name"
+  src_name      = "HQ-toBranch_local"
+  dst_name      = "HQ-toBranch_remote"
 }
 ```
 
@@ -50,36 +49,36 @@ resource "fortios_vpn_ipsec_phase2interface" "test2" {
 
 ```hcl
 provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
+  hostname = "54.226.179.231"
+  token    = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
 }
 
 resource "fortios_vpn_ipsec_phase1interface" "test1" {
-	name = "001Test"
-	type = "static"
-	interface = "port2"
-	proposal = "aes128-sha256 aes256-sha256 aes128-sha1 aes256-sha1"
-	comments = "VPN 001Test P1"
-	wizard_type = "static-fortigate"
-	remote_gw = "1.2.2.2"
-	psksecret = "testscecret112233445566778899"
-	certificate = ["Fortinet_SSL_ECDSA384"]
-	peertype = "peer"
-	peerid = ""
-	peer = "2b_peer"
-	peergrp = ""
+  name        = "001Test"
+  type        = "static"
+  interface   = "port2"
+  proposal    = "aes128-sha256 aes256-sha256 aes128-sha1 aes256-sha1"
+  comments    = "VPN 001Test P1"
+  wizard_type = "static-fortigate"
+  remote_gw   = "1.2.2.2"
+  psksecret   = "testscecret112233445566778899"
+  certificate = ["Fortinet_SSL_ECDSA384"]
+  peertype    = "peer"
+  peerid      = ""
+  peer        = "2b_peer"
+  peergrp     = ""
 }
 
 resource "fortios_vpn_ipsec_phase2interface" "test2" {
-	name = "001Test"
-	phase1name = "${fortios_vpn_ipsec_phase1interface.test1.name}"
-	proposal = "aes128-sha1 aes256-sha1 aes128-sha256 aes256-sha256 aes128gcm aes256gcm chacha20poly1305"
-	comments = "VPN 001Test P2"
-	src_addr_type = "range"
-	dst_addr_type = "subnet"
-	src_start_ip = "1.1.1.0"
-	src_end_ip = "1.1.1.1"
-	dst_subnet = "2.2.2.2/24"
+  name          = "001Test"
+  phase1name    = "${fortios_vpn_ipsec_phase1interface.test1.name}"
+  proposal      = "aes128-sha1 aes256-sha1 aes128-sha256 aes256-sha256 aes128gcm aes256gcm chacha20poly1305"
+  comments      = "VPN 001Test P2"
+  src_addr_type = "range"
+  dst_addr_type = "subnet"
+  src_start_ip  = "1.1.1.0"
+  src_end_ip    = "1.1.1.1"
+  dst_subnet    = "2.2.2.2/24"
 }
 ```
 
@@ -87,38 +86,38 @@ resource "fortios_vpn_ipsec_phase2interface" "test2" {
 
 ```hcl
 provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
+  hostname = "54.226.179.231"
+  token    = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
 }
 
 resource "fortios_vpn_ipsec_phase1interface" "test1" {
-	name = "001Test"
-	type = "dynamic"
-	interface = "port2"
-	peertype = "any"
-	proposal = "aes128-sha256 aes256-sha256 aes128-sha1 aes256-sha1"
-	comments = "VPN 001Test P1"
-	wizard_type = "dialup-forticlient"
-	remote_gw = "0.0.0.0"
-	psksecret = "testscecret112233445566778899"
-	ipv4_split_include = "d_split"
-	split_include_service = ""
-	ipv4_split_exclude = ""
+  name                  = "001Test"
+  type                  = "dynamic"
+  interface             = "port2"
+  peertype              = "any"
+  proposal              = "aes128-sha256 aes256-sha256 aes128-sha1 aes256-sha1"
+  comments              = "VPN 001Test P1"
+  wizard_type           = "dialup-forticlient"
+  remote_gw             = "0.0.0.0"
+  psksecret             = "testscecret112233445566778899"
+  ipv4_split_include    = "d_split"
+  split_include_service = ""
+  ipv4_split_exclude    = ""
 }
 
 resource "fortios_vpn_ipsec_phase2interface" "test2" {
-	name = "001Test"
-	phase1name = "${fortios_vpn_ipsec_phase1interface.test1.name}"
-	proposal = "aes128-sha1 aes256-sha1 aes128-sha256 aes256-sha256 aes128gcm aes256gcm chacha20poly1305"
-	comments = "VPN 001Test P2"
-	src_addr_type = "subnet"
-	src_start_ip = "0.0.0.0"
-	src_end_ip = "0.0.0.0"
-	src_subnet = "0.0.0.0 0.0.0.0"
-	dst_addr_type = "subnet"
-	dst_start_ip = "0.0.0.0"
-	dst_end_ip = "0.0.0.0"
-	dst_subnet = "0.0.0.0 0.0.0.0"
+  name          = "001Test"
+  phase1name    = "${fortios_vpn_ipsec_phase1interface.test1.name}"
+  proposal      = "aes128-sha1 aes256-sha1 aes128-sha256 aes256-sha256 aes128gcm aes256gcm chacha20poly1305"
+  comments      = "VPN 001Test P2"
+  src_addr_type = "subnet"
+  src_start_ip  = "0.0.0.0"
+  src_end_ip    = "0.0.0.0"
+  src_subnet    = "0.0.0.0 0.0.0.0"
+  dst_addr_type = "subnet"
+  dst_start_ip  = "0.0.0.0"
+  dst_end_ip    = "0.0.0.0"
+  dst_subnet    = "0.0.0.0 0.0.0.0"
 }
 ```
 
@@ -126,43 +125,42 @@ resource "fortios_vpn_ipsec_phase2interface" "test2" {
 
 ```hcl
 provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
+  hostname = "54.226.179.231"
+  token    = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
 }
 
 resource "fortios_vpn_ipsec_phase1interface" "test1" {
-	name = "001Test"
-	type = "dynamic"
-	interface = "port2"
-	peertype = "any"
-	proposal = "aes128-sha256 aes256-sha256 aes128-sha1 aes256-sha1"
-	comments = "VPN 001Test P1"
-	wizard_type = "dialup-forticlient"
-	remote_gw = "1.2.2.2"
-	psksecret = "testscecret112233445566778899"
-	certificate = ["Fortinet_SSL_ECDSA384"]
-	peertype = "peer"
-	peerid = ""
-	peer = "2b_peer"
-	peergrp = "",
-	ipv4_split_include = "d_split"
-	split_include_service = ""
-	ipv4_split_exclude = ""
+  name                  = "001Test"
+  type                  = "dynamic"
+  interface             = "port2"
+  peertype              = "any"
+  proposal              = "aes128-sha256 aes256-sha256 aes128-sha1 aes256-sha1"
+  comments              = "VPN 001Test P1"
+  wizard_type           = "dialup-forticlient"
+  remote_gw             = "1.2.2.2"
+  psksecret             = "testscecret112233445566778899"
+  certificate           = ["Fortinet_SSL_ECDSA384"]
+  peerid                = ""
+  peer                  = "2b_peer"
+  peergrp               = ""
+  ipv4_split_include    = "d_split"
+  split_include_service = ""
+  ipv4_split_exclude    = ""
 }
 
 resource "fortios_vpn_ipsec_phase2interface" "test2" {
-	name = "001Test"
-	phase1name = "${fortios_vpn_ipsec_phase1interface.test1.name}"
-	proposal = "aes128-sha1 aes256-sha1 aes128-sha256 aes256-sha256 aes128gcm aes256gcm chacha20poly1305"
-	comments = "VPN 001Test P2"
-	src_addr_type = "subnet"
-	src_start_ip = "0.0.0.0"
-	src_end_ip = "0.0.0.0"
-	src_subnet = "0.0.0.0 0.0.0.0"
-	dst_addr_type = "subnet"
-	dst_start_ip = "0.0.0.0"
-	dst_end_ip = "0.0.0.0"
-	dst_subnet = "0.0.0.0 0.0.0.0"
+  name          = "001Test"
+  phase1name    = "${fortios_vpn_ipsec_phase1interface.test1.name}"
+  proposal      = "aes128-sha1 aes256-sha1 aes128-sha256 aes256-sha256 aes128gcm aes256gcm chacha20poly1305"
+  comments      = "VPN 001Test P2"
+  src_addr_type = "subnet"
+  src_start_ip  = "0.0.0.0"
+  src_end_ip    = "0.0.0.0"
+  src_subnet    = "0.0.0.0 0.0.0.0"
+  dst_addr_type = "subnet"
+  dst_start_ip  = "0.0.0.0"
+  dst_end_ip    = "0.0.0.0"
+  dst_subnet    = "0.0.0.0 0.0.0.0"
 }
 ```
 

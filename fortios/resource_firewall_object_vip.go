@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/fgtdev/fortios-sdk-go/sdkcore"
+	"github.com/fortinetdev/forti-sdk-go/fortios/sdkcore"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -43,27 +43,27 @@ func resourceFirewallObjectVip() *schema.Resource {
 			"extintf": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "any",
+				Computed: true,
 			},
 			"portforward": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "disable",
+				Computed: true,
 			},
 			"protocol": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "tcp",
+				Computed: true,
 			},
 			"extport": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0",
+				Computed: true,
 			},
 			"mappedport": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0",
+				Computed: true,
 			},
 		},
 	}
@@ -71,6 +71,11 @@ func resourceFirewallObjectVip() *schema.Resource {
 
 func resourceFirewallObjectVipCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Get Params from d
@@ -125,6 +130,11 @@ func resourceFirewallObjectVipUpdate(d *schema.ResourceData, m interface{}) erro
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Get Params from d
@@ -176,6 +186,11 @@ func resourceFirewallObjectVipDelete(d *schema.ResourceData, m interface{}) erro
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Call process by sdk
@@ -198,6 +213,11 @@ func resourceFirewallObjectVipRead(d *schema.ResourceData, m interface{}) error 
 	}
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Call process by sdk

@@ -11,33 +11,28 @@ Provides a resource to configure static route of FortiOS.
 
 ## Example Usage
 ```hcl
-provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
-}
-
 resource "fortios_networking_route_static" "subnet" {
-	dst = "110.2.2.122/32"
-	gateway = "2.2.2.2"
-	blackhole = "disable"
-	distance = "22"
-	weight = "3"
-	priority = "3"
-	device = "port2"
-	comment = "Terraform test"
-	status = "enable"
+  dst       = "110.2.2.122/32"
+  gateway   = "2.2.2.2"
+  blackhole = "disable"
+  distance  = "22"
+  weight    = "3"
+  priority  = "3"
+  device    = "port2"
+  comment   = "Terraform test"
+  status    = "enable"
 }
 
 resource "fortios_networking_route_static" "internet_service" {
-	internet_service = 5242881
-	gateway = "2.2.2.2"
-	blackhole = "disable"
-	distance = "22"
-	weight = "3"
-	priority = "3"
-	device = "port2"
-	comment = "Terraform Test"
-	status = "enable"
+  internet_service = 5242881
+  gateway          = "2.2.2.2"
+  blackhole        = "disable"
+  distance         = "22"
+  weight           = "3"
+  priority         = "3"
+  device           = "port2"
+  comment          = "Terraform Test"
+  status           = "enable"
 }
 ```
 
@@ -45,7 +40,7 @@ resource "fortios_networking_route_static" "internet_service" {
 The following arguments are supported:
 
 * `dst` - (Required) Destination IP and mask for this route.
-* `gateway` - Gateway IP for this route.
+* `gateway` - (Required) Gateway IP for this route.
 * `blackhole` - Enable/disable black hole.
 * `distance` - Administrative distance.
 * `weight` - Administrative weight.

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/fgtdev/fortios-sdk-go/sdkcore"
+	"github.com/fortinetdev/forti-sdk-go/fortios/sdkcore"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -31,52 +31,52 @@ func resourceSystemAdminAdministrator() *schema.Resource {
 			"trusthost1": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0.0.0.0 0.0.0.0",
+				Computed: true,
 			},
 			"trusthost2": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0.0.0.0 0.0.0.0",
+				Computed: true,
 			},
 			"trusthost3": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0.0.0.0 0.0.0.0",
+				Computed: true,
 			},
 			"trusthost4": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0.0.0.0 0.0.0.0",
+				Computed: true,
 			},
 			"trusthost5": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0.0.0.0 0.0.0.0",
+				Computed: true,
 			},
 			"trusthost6": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0.0.0.0 0.0.0.0",
+				Computed: true,
 			},
 			"trusthost7": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0.0.0.0 0.0.0.0",
+				Computed: true,
 			},
 			"trusthost8": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0.0.0.0 0.0.0.0",
+				Computed: true,
 			},
 			"trusthost9": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0.0.0.0 0.0.0.0",
+				Computed: true,
 			},
 			"trusthost10": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0.0.0.0 0.0.0.0",
+				Computed: true,
 			},
 			"accprofile": &schema.Schema{
 				Type:     schema.TypeString,
@@ -89,7 +89,8 @@ func resourceSystemAdminAdministrator() *schema.Resource {
 			},
 			"vdom": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
+				Optional: true,
+				Computed: true,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
 				},
@@ -100,6 +101,11 @@ func resourceSystemAdminAdministrator() *schema.Resource {
 
 func resourceSystemAdminAdministratorCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Get Params from d
@@ -129,6 +135,10 @@ func resourceSystemAdminAdministratorCreate(d *schema.ResourceData, m interface{
 			forticlient.MultValue{
 				Name: v.(string),
 			})
+	}
+
+	if vdoms == nil {
+		vdoms = make([]forticlient.MultValue, 0)
 	}
 
 	//Build input data by sdk
@@ -166,6 +176,11 @@ func resourceSystemAdminAdministratorUpdate(d *schema.ResourceData, m interface{
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Get Params from d
@@ -194,6 +209,10 @@ func resourceSystemAdminAdministratorUpdate(d *schema.ResourceData, m interface{
 			forticlient.MultValue{
 				Name: v.(string),
 			})
+	}
+
+	if vdoms == nil {
+		vdoms = make([]forticlient.MultValue, 0)
 	}
 
 	//Build input data by sdk
@@ -228,6 +247,11 @@ func resourceSystemAdminAdministratorDelete(d *schema.ResourceData, m interface{
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Call process by sdk
@@ -246,6 +270,11 @@ func resourceSystemAdminAdministratorRead(d *schema.ResourceData, m interface{})
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Call process by sdk

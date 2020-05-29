@@ -43,23 +43,23 @@ func testAccFortiOSFirewallSecurityPolicySeqConfig(name string) string {
 	return fmt.Sprintf(`
 resource "fortios_firewall_security_policy" "test1" {
 	name = "name-%s"
-	srcintf = ["port2", "port1"]
+	srcintf = ["port2"]
 	dstintf = ["port3"]
 	srcaddr = ["all"]
 	dstaddr = ["all"]
 	schedule = "always"
-	service = ["ALL_ICMP"]
+	service = ["ALL"]
 	action = "accept"
 }
 
 resource "fortios_firewall_security_policy" "test2" {
 	name = "%s-2"
-	srcintf = ["port1", "port3"]
+	srcintf = ["port3"]
 	dstintf = ["port2"]
 	srcaddr = ["all"]
 	dstaddr = ["all"]
 	schedule = "always"
-	service = ["ALL_ICMP"]
+	service = ["ALL"]
 	action = "accept"
 }
 

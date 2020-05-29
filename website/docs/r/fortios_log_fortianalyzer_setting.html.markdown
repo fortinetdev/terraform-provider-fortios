@@ -11,19 +11,14 @@ Provides a resource to configure configure logging to FortiAnalyzer log manageme
 
 ## Example Usage
 ```hcl
-provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
-}
-
 resource "fortios_log_fortianalyzer_setting" "test1" {
-	status = "enable"
-	server = "10.2.2.99"
-	source_ip = "10.2.2.99"
-	upload_option = "realtime"
-	reliable = "enable"
-	hmac_algorithm = "sha256"
-	enc_algorithm = "high-medium"
+  status         = "enable"
+  server         = "10.2.2.99"
+  source_ip      = "10.2.2.99"
+  upload_option  = "realtime"
+  reliable       = "enable"
+  hmac_algorithm = "sha256"
+  enc_algorithm  = "high-medium"
 }
 ```
 

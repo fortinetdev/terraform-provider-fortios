@@ -5,7 +5,7 @@ import (
 	"log"
 	"strconv"
 
-	forticlient "github.com/fgtdev/fortios-sdk-go/sdkcore"
+	forticlient "github.com/fortinetdev/forti-sdk-go/fortios/sdkcore"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -24,32 +24,31 @@ func resourceNetworkingRouteStatic() *schema.Resource {
 			"dst": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0.0.0.0 0.0.0.0",
+				Computed: true,
 			},
 			"gateway": &schema.Schema{
 				Type:     schema.TypeString,
-				Optional: true,
-				Default:  "0.0.0.0",
+				Required: true,
 			},
 			"blackhole": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "disable",
+				Computed: true,
 			},
 			"distance": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "10",
+				Computed: true,
 			},
 			"weight": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0",
+				Computed: true,
 			},
 			"priority": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0",
+				Computed: true,
 			},
 			"device": &schema.Schema{
 				Type:     schema.TypeString,
@@ -63,11 +62,12 @@ func resourceNetworkingRouteStatic() *schema.Resource {
 			"internet_service": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
+				Computed: true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "enable",
+				Computed: true,
 			},
 		},
 	}
@@ -75,6 +75,11 @@ func resourceNetworkingRouteStatic() *schema.Resource {
 
 func resourceNetworkingRouteStaticCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Get Params from d
@@ -119,6 +124,11 @@ func resourceNetworkingRouteStaticUpdate(d *schema.ResourceData, m interface{}) 
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Get Params from d
@@ -160,6 +170,11 @@ func resourceNetworkingRouteStaticDelete(d *schema.ResourceData, m interface{}) 
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Call process by sdk
@@ -178,6 +193,11 @@ func resourceNetworkingRouteStaticRead(d *schema.ResourceData, m interface{}) er
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Call process by sdk

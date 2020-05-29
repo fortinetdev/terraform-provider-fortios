@@ -11,35 +11,25 @@ Provides a resource to configure IPv4 IP address pools of FortiOS.
 
 ## Example Usage for Overload Ippool
 ```hcl
-provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
-}
-
 resource "fortios_firewall_object_ippool" "s1" {
-	name = "ddd"
-	type = "overload"
-	startip = "11.0.0.0"
-	endip = "22.0.0.0"
-	arp_reply = "enable"
-	comments = "fdsaf"
+  name      = "ddd"
+  type      = "overload"
+  startip   = "11.0.0.0"
+  endip     = "22.0.0.0"
+  arp_reply = "enable"
+  comments  = "fdsaf"
 }
 ```
 
 ## Example Usage for One-to-one Ippool
 ```hcl
-provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
-}
-
 resource "fortios_firewall_object_ippool" "s2" {
-	name = "dd22d"
-	type = "one-to-one"
-	startip = "121.0.0.0"
-	endip = "222.0.0.0"
-	arp_reply = "enable"
-	comments = "fdsaf"
+  name      = "dd22d"
+  type      = "one-to-one"
+  startip   = "121.0.0.0"
+  endip     = "222.0.0.0"
+  arp_reply = "enable"
+  comments  = "fdsaf"
 }
 ```
 

@@ -3,7 +3,7 @@ package fortios
 import (
 	"fmt"
 
-	forticlient "github.com/fgtdev/fortios-sdk-go/sdkcore"
+	forticlient "github.com/fortinetdev/forti-sdk-go/fortios/sdkcore"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -25,6 +25,11 @@ func resourceSystemLicenseVM() *schema.Resource {
 
 func resourceSystemLicenseVMCreateUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Get Params from d

@@ -11,19 +11,14 @@ Provides a resource to configure administrator accounts of FortiOS.
 
 ## Example Usage
 ```hcl
-provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
-}
-
 resource "fortios_system_admin_administrator" "admintest" {
-	name = "testadminacc"
-	password = "cc37331AC1"
-	trusthost1 = "1.1.1.0 255.255.255.0"
-	trusthost2 = "2.2.2.0 255.255.255.0"
-	accprofile = "3d3"
-	vdom = ["root"]
-	comments = "comments"
+  name       = "testadminacc"
+  password   = "cc37331AC1"
+  trusthost1 = "1.1.1.0 255.255.255.0"
+  trusthost2 = "2.2.2.0 255.255.255.0"
+  accprofile = "3d3"
+  vdom       = ["root"]
+  comments   = "comments"
 }
 ```
 
@@ -33,7 +28,7 @@ The following arguments are supported:
 * `name` - (Required) User name.
 * `password` - (Required) Admin user password.
 * `trusthostN` - Any IPv4 address or subnet address and netmask from which the administrator can connect to the FortiGate unit.
-* `vdom` - (Required) Virtual domain(s) that the administrator can access.
+* `vdom` - Virtual domain(s) that the administrator can access.
 * `accprofile` - (Required) Access profile for this administrator. Access profiles control administrator access to FortiGate features.
 * `comments` - Comment.
 

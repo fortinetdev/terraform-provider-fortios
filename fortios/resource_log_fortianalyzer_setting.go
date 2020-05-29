@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/fgtdev/fortios-sdk-go/sdkcore"
+	"github.com/fortinetdev/forti-sdk-go/fortios/sdkcore"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -27,32 +27,32 @@ func resourceLogFortiAnalyzerSetting() *schema.Resource {
 			"server": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "0.0.0.0",
+				Computed: true,
 			},
 			"source_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "",
+				Computed: true,
 			},
 			"upload_option": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "5-minute",
+				Computed: true,
 			},
 			"reliable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "disable",
+				Computed: true,
 			},
 			"hmac_algorithm": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "sha256",
+				Computed: true,
 			},
 			"enc_algorithm": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "high",
+				Computed: true,
 			},
 		},
 	}
@@ -61,6 +61,11 @@ func resourceLogFortiAnalyzerSetting() *schema.Resource {
 func resourceLogFortiAnalyzerSettingCreateUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Get Params from d
@@ -103,6 +108,11 @@ func resourceLogFortiAnalyzerSettingRead(d *schema.ResourceData, m interface{}) 
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Call process by sdk

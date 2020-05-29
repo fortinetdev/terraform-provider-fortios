@@ -11,112 +11,102 @@ Provides a resource to configure firewall policies of FortiOS.
 
 ## Example Usage 1
 ```hcl
-provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
-}
-
 resource "fortios_firewall_security_policy" "test1" {
-	name = "ap11"
-	srcintf = ["port2"]
-	dstintf = ["port1"]
-	srcaddr = ["swscan.apple.com", "google-play"]
-	dstaddr = ["swscan.apple.com", "update.microsoft.com"]
-	internet_service = "disable"
-	internet_service_id = []
-	schedule = "always"
-	service = ["ALL_ICMP", "FTP"]
-	action = "accept"
-	utm_status = "enable"
-	logtraffic = "all"
-	logtraffic_start = "enable"
-	capture_packet = "enable"
-	ippool = "enable"
-	poolname = ["rewq", "rbb"]
-	groups = ["Guest-group", "SSO_Guest_Users"]
-	devices = ["android-phone", "android-tablet"]
-	comments = "security policy"
-	av_profile = "wifi-default"
-	webfilter_profile = "monitor-all"
-	dnsfilter_profile = "default"
-	ips_sensor = "protect_client"
-	application_list = "block-high-risk"
-	ssl_ssh_profile = "certificate-inspection"
-	nat = "enable"
+  name                = "ap11"
+  srcintf             = ["port2"]
+  dstintf             = ["port1"]
+  srcaddr             = ["swscan.apple.com", "google-play"]
+  dstaddr             = ["swscan.apple.com", "update.microsoft.com"]
+  internet_service    = "disable"
+  internet_service_id = []
+  schedule            = "always"
+  service             = ["ALL_ICMP", "FTP"]
+  action              = "accept"
+  utm_status          = "enable"
+  logtraffic          = "all"
+  logtraffic_start    = "enable"
+  capture_packet      = "enable"
+  ippool              = "enable"
+  poolname            = ["rewq", "rbb"]
+  groups              = ["Guest-group", "SSO_Guest_Users"]
+  devices             = ["android-phone", "android-tablet"]
+  comments            = "security policy"
+  av_profile          = "wifi-default"
+  webfilter_profile   = "monitor-all"
+  dnsfilter_profile   = "default"
+  ips_sensor          = "protect_client"
+  application_list    = "block-high-risk"
+  ssl_ssh_profile     = "certificate-inspection"
+  nat                 = "enable"
 }
 ```
 
 ## Example Usage 2
 ```hcl
-provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
-}
-
 resource "fortios_firewall_security_policy" "test2" {
-	name = "ap21"
-	srcintf = ["port2"]
-	dstintf = ["port1"]
-	srcaddr = ["swscan.apple.com", "google-play"]
-	dstaddr = ["swscan.apple.com", "update.microsoft.com"]
-	internet_service = "enable"
-	internet_service_id = [917520, 6881402, 393219]
-	schedule = "always"
-	service = []
-	action = "accept"
-	utm_status = "enable"
-	logtraffic = "all"
-	logtraffic_start = "enable"
-	capture_packet = "enable"
-	ippool = "enable"
-	poolname = ["rewq", "rbb"]
-	groups = ["Guest-group", "SSO_Guest_Users"]
-	devices = ["android-phone", "android-tablet"]
-	comments = "security policy"
-	av_profile = "wifi-default"
-	webfilter_profile = "monitor-all"
-	dnsfilter_profile = "default"
-	ips_sensor = "protect_client"
-	application_list = "block-high-risk"
-	ssl_ssh_profile = "certificate-inspection"
-	nat = "enable"
+  name                = "ap21"
+  srcintf             = ["port2"]
+  dstintf             = ["port1"]
+  srcaddr             = ["swscan.apple.com", "google-play"]
+  dstaddr             = ["swscan.apple.com", "update.microsoft.com"]
+  internet_service    = "enable"
+  internet_service_id = [917520, 6881402, 393219]
+  schedule            = "always"
+  service             = []
+  action              = "accept"
+  utm_status          = "enable"
+  logtraffic          = "all"
+  logtraffic_start    = "enable"
+  capture_packet      = "enable"
+  ippool              = "enable"
+  poolname            = ["rewq", "rbb"]
+  groups              = ["Guest-group", "SSO_Guest_Users"]
+  devices             = ["android-phone", "android-tablet"]
+  comments            = "security policy"
+  av_profile          = "wifi-default"
+  webfilter_profile   = "monitor-all"
+  dnsfilter_profile   = "default"
+  ips_sensor          = "protect_client"
+  application_list    = "block-high-risk"
+  ssl_ssh_profile     = "certificate-inspection"
+  nat                 = "enable"
 }
 ```
 
 ## Example Usage 3
 ```hcl
 resource "fortios_firewall_security_policy" "test1" {
-	name = "ap12221"
-	srcintf = ["port3"]
-	dstintf = ["port4"]
-	srcaddr = []
-	dstaddr = []
-	internet_service = "enable"
-	internet_service_id = [5242880]
-	internet_service_src = "enable"
-	internet_service_src_id = [65643]
-	users = ["guest"]
-	status = "enable"
-	schedule = "always"
-	service = []
-	action = "accept"
-	utm_status = "enable"
-	logtraffic = "all"
-	logtraffic_start = "enable"
-	capture_packet = "enable"
-	ippool = "disable"
-	poolname = []
-	groups = ["Guest-group", "SSO_Guest_Users"]
-	devices = []
-	comments = "security policy"
-	av_profile = "wifi-default"
-	webfilter_profile = "monitor-all"
-	dnsfilter_profile = "default"
-	ips_sensor = "protect_client"
-	application_list = "block-high-risk"
-	ssl_ssh_profile = "certificate-inspection"
-	nat = "enable"
-	profile_protocol_options = "default"
+  name                     = "ap12221"
+  srcintf                  = ["port3"]
+  dstintf                  = ["port4"]
+  srcaddr                  = []
+  dstaddr                  = []
+  internet_service         = "enable"
+  internet_service_id      = [5242880]
+  internet_service_src     = "enable"
+  internet_service_src_id  = [65643]
+  users                    = ["guest"]
+  status                   = "enable"
+  schedule                 = "always"
+  service                  = []
+  action                   = "accept"
+  utm_status               = "enable"
+  logtraffic               = "all"
+  logtraffic_start         = "enable"
+  capture_packet           = "enable"
+  ippool                   = "disable"
+  poolname                 = []
+  groups                   = ["Guest-group", "SSO_Guest_Users"]
+  devices                  = []
+  comments                 = "security policy"
+  av_profile               = "wifi-default"
+  webfilter_profile        = "monitor-all"
+  dnsfilter_profile        = "default"
+  ips_sensor               = "protect_client"
+  application_list         = "block-high-risk"
+  ssl_ssh_profile          = "certificate-inspection"
+  nat                      = "enable"
+  profile_protocol_options = "default"
 }
 ```
 

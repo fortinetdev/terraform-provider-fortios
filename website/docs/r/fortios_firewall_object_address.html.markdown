@@ -11,11 +11,6 @@ Provides a resource to configure firewall addresses used in firewall policies of
 
 ## Example Usage for Iprange Address
 ```hcl
-provider "fortios" {
-	hostname = "54.226.179.231"
-	token    = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
-}
-
 resource "fortios_firewall_object_address" "s1" {
   name     = "s1"
   type     = "iprange"
@@ -27,11 +22,6 @@ resource "fortios_firewall_object_address" "s1" {
 
 ## Example Usage for Geography Address
 ```hcl
-provider "fortios" {
-  hostname = "54.226.179.231"
-  token    = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
-}
-
 resource "fortios_firewall_object_address" "s2" {
   name    = "s2"
   type    = "geography"
@@ -42,11 +32,6 @@ resource "fortios_firewall_object_address" "s2" {
 
 ## Example Usage for Fqdn Address
 ```hcl
-provider "fortios" {
-  hostname = "54.226.179.231"
-  token    = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
-}
-
 resource "fortios_firewall_object_address" "s3" {
   name                   = "s3"
   type                   = "fqdn"
@@ -60,11 +45,6 @@ resource "fortios_firewall_object_address" "s3" {
 
 ## Example Usage for Ipmask Address
 ```hcl
-provider "fortios" {
-  hostname = "54.226.179.231"
-  token    = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"
-}
-
 resource "fortios_firewall_object_address" "s4" {
   name    = "s4"
   type    = "ipmask"

@@ -2,129 +2,216 @@
     <% content_for :sidebar do %>
         <div class="docs-sidebar hidden-print affix-top" role="complementary">
             <ul class="nav docs-sidenav">
-                <li<%= sidebar_current("docs-home") %>>
+                <li>
                     <a href="/docs/providers/index.html">All Providers</a>
                 </li>
 
-                <li<%= sidebar_current("docs-fortios-index") %>>
+                <li>
                     <a href="/docs/providers/fortios/index.html">FortiOS Provider</a>
                 </li>
-
-                <li<%= sidebar_current("docs-fortios-resource") %>>
-                <a href="#">Resources</a>
+                <li>
+                    <a href="#">Guides</a>
                     <ul class="nav nav-visible">
+                        <li>
+                            <a href="/docs/providers/fortios/guides/fgt_token.html">Generate an API token for FortiOS</a>
+                        </li>
+                        <li>
+                            <a href="/docs/providers/fortios/guides/fgt_debug.html">Debugging for FortiGate</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">FortiGate Resources</a>
+                    <ul class="nav">
 
-                        <li<%= sidebar_current("docs-fortios-resource-system-setting-global") %>>
+                        <li>
                             <a href="/docs/providers/fortios/r/fortios_system_setting_global.html">fortios_system_setting_global</a>
                         </li>
 
-                        <li<%= sidebar_current("docs-fortios-resource-system-setting-dns") %>>
+                        <li>
                             <a href="/docs/providers/fortios/r/fortios_system_setting_dns.html">fortios_system_setting_dns</a>
                         </li>
 
-                        <li<%= sidebar_current("docs-fortios-resource-system-setting-ntp") %>>
+                        <li>
                             <a href="/docs/providers/fortios/r/fortios_system_setting_ntp.html">fortios_system_setting_ntp</a>
                         </li>
 
-                        <li<%= sidebar_current("docs-fortios-resource-networking-interface-port") %>>
+                        <li>
                             <a href="/docs/providers/fortios/r/fortios_networking_interface_port.html">fortios_networking_interface_port</a>
                         </li>
 
-                        <li<%= sidebar_current("docs-fortios-resource-networking-route-static") %>>
+                        <li>
                             <a href="/docs/providers/fortios/r/fortios_networking_route_static.html">fortios_networking_route_static</a>
                         </li>
 
-                        <li<%= sidebar_current("docs-fortios-resource-firewall-object-address") %>>
+                        <li>
                             <a href="/docs/providers/fortios/r/fortios_firewall_object_address.html">fortios_firewall_object_address</a>
                         </li>
 
-                        <li<%= sidebar_current("docs-fortios-resource-firewall-object-addressgroup") %>>
+                        <li>
                             <a href="/docs/providers/fortios/r/fortios_firewall_object_addressgroup.html">fortios_firewall_object_addressgroup</a>
                         </li>
 
-                        <li<%= sidebar_current("docs-fortios-resource-firewall-object-ippool") %>>
+                        <li>
                             <a href="/docs/providers/fortios/r/fortios_firewall_object_ippool.html">fortios_firewall_object_ippool</a>
                         </li>
 
-                        <li<%= sidebar_current("docs-fortios-resource-firewall-object-service") %>>
+                        <li>
                             <a href="/docs/providers/fortios/r/fortios_firewall_object_service.html">fortios_firewall_object_service</a>
                         </li>
 
-                        <li<%= sidebar_current("docs-fortios-resource-firewall-object-servicecategory") %>>
+                        <li>
                             <a href="/docs/providers/fortios/r/fortios_firewall_object_servicecategory.html">fortios_firewall_object_servicecategory</a>
                         </li>
 
-                        <li<%= sidebar_current("docs-fortios-resource-firewall-object-servicegroup") %>>
+                        <li>
                             <a href="/docs/providers/fortios/r/fortios_firewall_object_servicegroup.html">fortios_firewall_object_servicegroup</a>
                         </li>
 
-                        <li<%= sidebar_current("docs-fortios-resource-firewall-object-vip") %>>
+                        <li>
                             <a href="/docs/providers/fortios/r/fortios_firewall_object_vip.html">fortios_firewall_object_vip</a>
                         </li>
 
-                        <li<%= sidebar_current("docs-fortios-resource-firewall-object-vipgroup") %>>
+                        <li>
                             <a href="/docs/providers/fortios/r/fortios_firewall_object_vipgroup.html">fortios_firewall_object_vipgroup</a>
                         </li>
 
-                        <li<%= sidebar_current("docs-fortios-resource-firewall-security-policy") %>>
+                        <li>
                             <a href="/docs/providers/fortios/r/fortios_firewall_security_policy.html">fortios_firewall_security_policy</a>
                         </li>
 
-                        <li<%= sidebar_current("docs-fortios-resource-firewall-security-policyseq") %>>
+                        <li>
                             <a href="/docs/providers/fortios/r/fortios_firewall_security_policyseq.html">fortios_firewall_security_policyseq</a>
                         </li>
 
-                        <li<%= sidebar_current("docs-fortios-resource-system-admin-administrator") %>>
+                        <li>
                             <a href="/docs/providers/fortios/r/fortios_system_admin_administrator.html">fortios_system_admin_administrator</a>
                         </li>
 
-                        <li<%= sidebar_current("docs-fortios-resource-system-admin-profiles") %>>
+                        <li>
                             <a href="/docs/providers/fortios/r/fortios_system_admin_profiles.html">fortios_system_admin_profiles</a>
                         </li>
 
-                        <li<%= sidebar_current("docs-fortios-resource-system-apiuser-setting") %>>
+                        <li>
                             <a href="/docs/providers/fortios/r/fortios_system_apiuser_setting.html">fortios_system_apiuser_setting</a>
                         </li>
 
-                        <li<%= sidebar_current("docs-fortios-resource-system-vdom-setting") %>>
+                        <li>
                             <a href="/docs/providers/fortios/r/fortios_system_vdom_setting.html">fortios_system_vdom_setting</a>
                         </li>
 
-                        <li<%= sidebar_current("docs-fortios-resource-system-license-forticare") %>>
+                        <li>
                             <a href="/docs/providers/fortios/r/fortios_system_license_forticare.html">fortios_system_license_forticare</a>
                         </li>
 
-                        <li<%= sidebar_current("docs-fortios-resource-system-license-vm") %>>
+                        <li>
                             <a href="/docs/providers/fortios/r/fortios_system_license_vm.html">fortios_system_license_vm</a>
                         </li>
 
-                        <li<%= sidebar_current("docs-fortios-resource-system-license-vdom") %>>
+                        <li>
                             <a href="/docs/providers/fortios/r/fortios_system_license_vdom.html">fortios_system_license_vdom</a>
                         </li>
 
-                        <li<%= sidebar_current("docs-fortios-resource-log-fortianalyzer-setting") %>>
+                        <li>
                             <a href="/docs/providers/fortios/r/fortios_log_fortianalyzer_setting.html">fortios_log_fortianalyzer_setting</a>
                         </li>
 
-                        <li<%= sidebar_current("docs-fortios-resource-log-syslog-setting") %>>
+                        <li>
                             <a href="/docs/providers/fortios/r/fortios_log_syslog_setting.html">fortios_log_syslog_setting</a>
                         </li>
 
-                        <li<%= sidebar_current("docs-fortios-resource-vpn-ipsec-phase1interface") %>>
+                        <li>
                             <a href="/docs/providers/fortios/r/fortios_vpn_ipsec_phase1interface.html">fortios_vpn_ipsec_phase1interface</a>
                         </li>
 
-                        <li<%= sidebar_current("docs-fortios-resource-vpn-ipsec-phase2interface") %>>
+                        <li>
                             <a href="/docs/providers/fortios/r/fortios_vpn_ipsec_phase2interface.html">fortios_vpn_ipsec_phase2interface</a>
                         </li>
                     </ul>
                 </li>
 
+                <li>
+                    <a href="#">FortiManager Resources</a>
+                    <ul class="nav">
+                        <li>
+                            <a href="/docs/providers/fortios/r/fortimanager_system_admin_profiles.html">fortios_fmg_system_admin_profiles</a>
+                        </li>
+                        <li>
+                            <a href="/docs/providers/fortios/r/fortimanager_system_admin_user.html">fortios_fmg_system_admin_user</a>
+                        </li>
+                        <li>
+                            <a href="/docs/providers/fortios/r/fortimanager_devicemanager_device.html">fortios_fmg_devicemanager_device</a>
+                        </li>
+                        <li>
+                            <a href="/docs/providers/fortios/r/fortimanager_devicemanager_script.html">fortios_fmg_devicemanager_script</a>
+                        </li>
+                        <li>
+                            <a href="/docs/providers/fortios/r/fortimanager_devicemanager_script_execute.html">fortios_fmg_devicemanager_script_execute</a>
+                        </li>
+                        <li>
+                            <a href="/docs/providers/fortios/r/fortimanager_devicemanager_install_device.html">fortios_fmg_devicemanager_install_device</a>
+                        </li>
+                        <li>
+                            <a href="/docs/providers/fortios/r/fortimanager_firewall_security_policy.html">fortios_fmg_firewall_security_policy</a>
+                        </li>
+                        <li>
+                            <a href="/docs/providers/fortios/r/fortimanager_firewall_security_policypackage.html">fortios_fmg_firewall_security_policypackage</a>
+                        </li>
+                        <li>
+                            <a href="/docs/providers/fortios/r/fortimanager_devicemanager_install_policypackage.html">fortios_fmg_devicemanager_install_policypackage</a>
+                        </li>
+                        <li>
+                            <a href="/docs/providers/fortios/r/fortimanager_system_syslogserver.html">fortios_fmg_system_syslogserver</a>
+                        </li>
+                        <li>
+                            <a href="/docs/providers/fortios/r/fortimanager_system_network_interface.html">fortios_fmg_system_network_interface</a>
+                        </li>
+                        <li>
+                            <a href="/docs/providers/fortios/r/fortimanager_system_network_route.html">fortios_fmg_system_network_route</a>
+                        </li>
+                        <li>
+                            <a href="/docs/providers/fortios/r/fortimanager_firewall_object_address.html">fortios_fmg_firewall_object_address</a>
+                        </li>
+                        <li>
+                            <a href="/docs/providers/fortios/r/fortimanager_firewall_object_service.html">fortios_fmg_firewall_object_service</a>
+                        </li>
+                        <li>
+                            <a href="/docs/providers/fortios/r/fortimanager_firewall_object_ippool.html">fortios_fmg_firewall_object_ippool</a>
+                        </li>
+                        <li>
+                            <a href="/docs/providers/fortios/r/fortimanager_firewall_object_vip.html">fortios_fmg_firewall_object_vip</a>
+                        </li>
+                        <li>
+                            <a href="/docs/providers/fortios/r/fortimanager_object_adom_revision.html">fortios_fmg_object_adom_revision</a>
+                        </li>
+                        <li>
+                            <a href="/docs/providers/fortios/r/fortimanager_system_adom.html">fortios_fmg_system_adom</a>
+                        </li>
+                        <li>
+                            <a href="/docs/providers/fortios/r/fortimanager_system_global.html">fortios_fmg_system_global</a>
+                        </li>
+                        <li>
+                            <a href="/docs/providers/fortios/r/fortimanager_system_admin.html">fortios_fmg_system_admin</a>
+                        </li>
+                        <li>
+                            <a href="/docs/providers/fortios/r/fortimanager_system_dns.html">fortios_fmg_system_dns</a>
+                        </li>
+                        <li>
+                            <a href="/docs/providers/fortios/r/fortimanager_system_ntp.html">fortios_fmg_system_ntp</a>
+                        </li>
+                        <li>
+                            <a href="/docs/providers/fortios/r/fortimanager_system_license_vm.html">fortios_fmg_system_license_vm</a>
+                        </li>
+                        <li>
+                            <a href="/docs/providers/fortios/r/fortimanager_system_license_forticare.html">fortios_fmg_system_license_forticare</a>
+                        </li>
+                        <li>
+                            <a href="/docs/providers/fortios/r/fortimanager_jsonrpc_request.html">fortios_fmg_jsonrpc_request</a>
+                        </li>
                     </ul>
                 </li>
-
+            </ul>
         </div>
     <% end %>
-
     <%= yield %>
 <% end %>

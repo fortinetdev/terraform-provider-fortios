@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/fgtdev/fortios-sdk-go/sdkcore"
+	"github.com/fortinetdev/forti-sdk-go/fortios/sdkcore"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -27,27 +27,27 @@ func resourceSystemSettingGlobal() *schema.Resource {
 			"admintimeout": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "5",
+				Computed: true,
 			},
 			"timezone": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "04",
+				Computed: true,
 			},
 			"admin_sport": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "443",
+				Computed: true,
 			},
 			"admin_ssh_port": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "22",
+				Computed: true,
 			},
 			"admin_scp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "disable",
+				Computed: true,
 			},
 		},
 	}
@@ -57,6 +57,11 @@ func resourceSystemSettingGlobalCreateUpdate(d *schema.ResourceData, m interface
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Get Params from d
@@ -97,6 +102,11 @@ func resourceSystemSettingGlobalRead(d *schema.ResourceData, m interface{}) erro
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Call process by sdk

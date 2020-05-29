@@ -11,15 +11,10 @@ Provides a resource to configure DNS of FortiOS.
 
 ## Example Usage
 ```hcl
-provider "fortios" {
-	hostname = "54.226.179.231"
-	token = "jn3t3Nw7qckQzt955Htkfj5hwQ6jdb"	
-}
-
 resource "fortios_system_setting_dns" "test1" {
-	primary = "208.91.112.53"
-	secondary = "208.91.112.22"
-	dns_over_tls = "disable"
+  primary      = "208.91.112.53"
+  secondary    = "208.91.112.22"
+  dns_over_tls = "disable"
 }
 ```
 

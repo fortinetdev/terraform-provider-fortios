@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	forticlient "github.com/fgtdev/fortios-sdk-go/sdkcore"
+	forticlient "github.com/fortinetdev/forti-sdk-go/fortios/sdkcore"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -35,6 +35,11 @@ func resourceFirewallObjectServiceCategory() *schema.Resource {
 
 func resourceFirewallObjectServiceCategoryCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	name := d.Get("name").(string)
@@ -66,6 +71,11 @@ func resourceFirewallObjectServiceCategoryUpdate(d *schema.ResourceData, m inter
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	name := d.Get("name").(string)
@@ -98,6 +108,11 @@ func resourceFirewallObjectServiceCategoryDelete(d *schema.ResourceData, m inter
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Call process by sdk
@@ -116,6 +131,11 @@ func resourceFirewallObjectServiceCategoryRead(d *schema.ResourceData, m interfa
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
+
+	if c == nil {
+		return fmt.Errorf("FortiOS connection did not initialize successfully!")
+	}
+
 	c.Retries = 1
 
 	//Call process by sdk
