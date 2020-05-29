@@ -24,7 +24,7 @@ func TestAccFortiManagerSystemNetworkRoute(t *testing.T) {
 					resource.TestCheckResourceAttr("fortios_fmg_system_network_route.test1", "route_id", strconv.Itoa(route_id)),
 					resource.TestCheckResourceAttr("fortios_fmg_system_network_route.test1", "destination", "1.1.1.0 255.255.255.0"),
 					resource.TestCheckResourceAttr("fortios_fmg_system_network_route.test1", "gateway", "192.168.1.2"),
-					resource.TestCheckResourceAttr("fortios_fmg_system_network_route.test1", "device", "port4"),
+					resource.TestCheckResourceAttr("fortios_fmg_system_network_route.test1", "device", "port3"),
 				),
 			},
 		},
@@ -88,7 +88,7 @@ resource "fortios_fmg_system_network_route" "test1" {
     route_id = %d
     destination = "1.1.1.0 255.255.255.0"
     gateway = "192.168.1.2"
-    device = "port4"
+    device = "port3"
 }
 `, route_id)
 }

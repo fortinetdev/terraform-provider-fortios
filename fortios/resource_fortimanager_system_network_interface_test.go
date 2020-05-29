@@ -19,7 +19,6 @@ func TestAccFortiManagerSystemNetworkInterface(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFortiManagerSystemNetworkInterfaceExists("fortios_fmg_system_network_interface.test1"),
 					resource.TestCheckResourceAttr("fortios_fmg_system_network_interface.test1", "name", name),
-					resource.TestCheckResourceAttr("fortios_fmg_system_network_interface.test1", "ip", "1.1.1.3 255.255.255.0"),
 					resource.TestCheckResourceAttr("fortios_fmg_system_network_interface.test1", "status", "up"),
 				),
 			},
@@ -59,7 +58,6 @@ func testAccFortiManagerSystemNetworkInterfaceConfig(name string) string {
 	return fmt.Sprintf(`
 resource "fortios_fmg_system_network_interface" "test1" {
     name = "%s"
-    ip = "1.1.1.3 255.255.255.0"
     status = "up"
     allow_access = ["ping"]
     service_access = ["webfilter"]
