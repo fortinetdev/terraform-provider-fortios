@@ -232,7 +232,7 @@ func (c *FortiSDKClient) ReadFirewallObjectService(mkey string) (output *JSONFir
 		output = nil
 		return
 	}
-	
+
 	err = fortiAPIErrorFormat(result, string(body))
 
 	if err == nil {
@@ -298,7 +298,15 @@ func (c *FortiSDKClient) ReadFirewallObjectService(mkey string) (output *JSONFir
 			output.SctpPortrange = mapTmp["sctp-portrange"].(string)
 		}
 		if mapTmp["session-ttl"] != nil {
-			output.SessionTTL = strconv.Itoa(int(mapTmp["session-ttl"].(float64)))
+			switch v := mapTmp["session-ttl"].(type) {
+			case float64:
+				output.SessionTTL = strconv.Itoa(int(v))
+			case string:
+				output.SessionTTL =  v
+			default:
+				err = fmt.Errorf("session-ttl type error: %T, %[1]v\n", v)
+				return
+			}
 		}
 	} else {
 		err = fmt.Errorf("cannot get the right response")
