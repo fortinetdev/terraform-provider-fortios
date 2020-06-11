@@ -52,12 +52,8 @@ func TestAccFortiOSVPNIPsecPhase2Interface_basic2(t *testing.T) {
 					resource.TestCheckResourceAttr("fortios_vpn_ipsec_phase2interface.test2", "proposal", "aes128-sha1 aes256-sha1 aes128-sha256 aes256-sha256 aes128gcm aes256gcm chacha20poly1305"),
 					resource.TestCheckResourceAttr("fortios_vpn_ipsec_phase2interface.test2", "comments", "VPN 001Test P2"),
 					resource.TestCheckResourceAttr("fortios_vpn_ipsec_phase2interface.test2", "src_addr_type", "subnet"),
-					resource.TestCheckResourceAttr("fortios_vpn_ipsec_phase2interface.test2", "src_start_ip", "0.0.0.0"),
-					resource.TestCheckResourceAttr("fortios_vpn_ipsec_phase2interface.test2", "src_end_ip", "0.0.0.0"),
 					resource.TestCheckResourceAttr("fortios_vpn_ipsec_phase2interface.test2", "src_subnet", "0.0.0.0 0.0.0.0"),
 					resource.TestCheckResourceAttr("fortios_vpn_ipsec_phase2interface.test2", "dst_addr_type", "subnet"),
-					resource.TestCheckResourceAttr("fortios_vpn_ipsec_phase2interface.test2", "dst_start_ip", "0.0.0.0"),
-					resource.TestCheckResourceAttr("fortios_vpn_ipsec_phase2interface.test2", "dst_end_ip", "0.0.0.0"),
 					resource.TestCheckResourceAttr("fortios_vpn_ipsec_phase2interface.test2", "dst_subnet", "0.0.0.0 0.0.0.0"),
 				),
 			},
@@ -168,12 +164,8 @@ resource "fortios_vpn_ipsec_phase2interface" "test2" {
 	proposal = "aes128-sha1 aes256-sha1 aes128-sha256 aes256-sha256 aes128gcm aes256gcm chacha20poly1305"
 	comments = "VPN 001Test P2"
 	src_addr_type = "subnet"
-	src_start_ip = "0.0.0.0"
-	src_end_ip = "0.0.0.0"
 	src_subnet = "0.0.0.0 0.0.0.0"
 	dst_addr_type = "subnet"
-	dst_start_ip = "0.0.0.0"
-	dst_end_ip = "0.0.0.0"
 	dst_subnet = "0.0.0.0 0.0.0.0"
 }
 `, name, name)
