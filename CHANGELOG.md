@@ -1,4 +1,10 @@
 ## 1.3.0 (Unreleased)
+
+BUG FIXES:
+
+* resource/object_service: Creating fortios_firewall_object_service causes Terraform panic crash - Support firewall.service/custom's session-ttl type change from v6.2.3 ([#67](https://github.com/terraform-providers/terraform-provider-fortios/issues/67))
+
+
 ## 1.2.0 (May 29, 2020)
 
 IMPROVEMENTS:

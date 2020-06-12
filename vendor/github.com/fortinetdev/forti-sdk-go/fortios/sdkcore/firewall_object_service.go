@@ -7,7 +7,6 @@ import (
 	"io/ioutil"
 	"log"
 	"strconv"
-
 )
 
 // JSONFirewallObjectServiceCommon contains the General parameters for Create and Update API function
@@ -302,9 +301,9 @@ func (c *FortiSDKClient) ReadFirewallObjectService(mkey string) (output *JSONFir
 			case float64:
 				output.SessionTTL = strconv.Itoa(int(v))
 			case string:
-				output.SessionTTL =  v
+				output.SessionTTL = v
 			default:
-				err = fmt.Errorf("session-ttl type error: %T, %[1]v\n", v)
+				err = fmt.Errorf("session-ttl type error: %T, %[1]v", v)
 				return
 			}
 		}
