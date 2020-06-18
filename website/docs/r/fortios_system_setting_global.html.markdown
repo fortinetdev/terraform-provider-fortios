@@ -35,9 +35,9 @@ Option I:
 
 ```hcl
 provider "fortios" {
-        hostname= "YourIP:8443"
-        token = "nx6nbGn8tnFddaa3Qy79jpjfsyw1"
-        insecure = "true"
+  hostname = "YourIP:8443"
+  token    = "nx6nbGn8tnFddaa3Qy79jpjfsyw1"
+  insecure = "true"
 }
 ```
 
@@ -49,17 +49,17 @@ Option II:
 
 ```hcl
 provider "fortios" {
-        hostname= "YourIP"
-        token = "nx6nbGn8tnFddaa3Qy79jpjfsyw1"
-        insecure = "true"
+  hostname = "YourIP"
+  token    = "nx6nbGn8tnFddaa3Qy79jpjfsyw1"
+  insecure = "true"
 }
 
 resource "fortios_system_setting_global" "fglobal" {
-        admintimeout = 240
-        hostname = "hh"
-        timezone = "33"
-        admin_sport = 8443
-        admin_ssh_port = 22
+  admintimeout   = 240
+  hostname       = "hh"
+  timezone       = "33"
+  admin_sport    = 8443
+  admin_ssh_port = 22
 }
 ```
 
@@ -69,11 +69,10 @@ Then execute "terraform init; terraform plan; terraform apply". After a few seco
 
 ```hcl
 provider "fortios" {
-        hostname= "YourIP:8443"
-        token = "nx6nbGn8tnFddaa3Qy79jpjfsyw1"
-        insecure = "true"
+  hostname = "YourIP:8443"
+  token    = "nx6nbGn8tnFddaa3Qy79jpjfsyw1"
+  insecure = "true"
 }
-
 # ...
 ```
 
