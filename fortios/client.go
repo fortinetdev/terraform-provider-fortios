@@ -151,7 +151,7 @@ func createFortiOSClient(fClient *FortiClient, c *Config) error {
 
 	client := &http.Client{
 		Transport: tr,
-		Timeout:   time.Second * 360,
+		Timeout:   time.Second * 250,
 	}
 
 	fc := forticlient.NewClient(auth, client)

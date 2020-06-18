@@ -93,11 +93,11 @@ func (r *Request) Send() error {
 				break
 			}
 
-			if retry > 500 {
-				err = fmt.Errorf("Error found: %s", errdo)
+			if retry > 15 {
+				err = fmt.Errorf("lost connection to firewall with error: %s", errdo)
 				break
 			}
-			time.Sleep(time.Duration(1) * time.Second)
+			time.Sleep(time.Second)
 			log.Printf("Error found: %s, will resend again %s, %d", errdo, u, retry)
 
 			retry++
