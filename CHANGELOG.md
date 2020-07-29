@@ -1,4 +1,10 @@
-## 1.4.0 (Unreleased)
+## 1.5.0 (Unreleased)
+## 1.4.0 (July 30, 2020)
+
+IMPROVEMENTS:
+
+* Update for Terraform 0.13 and Terraform Registry
+
 ## 1.3.0 (June 15, 2020)
 
 BUG FIXES:
