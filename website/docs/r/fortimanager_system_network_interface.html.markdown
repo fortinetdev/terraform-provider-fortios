@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_fmg_system_network_interface"
 sidebar_current: "docs-fortios-fortimanager-resource-system-network-interface"
+subcategory: "FortiManager"
 description: |-
   Provides a resource to configure system network interface for FortiManager.
 ---

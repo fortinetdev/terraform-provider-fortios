@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_json_generic_api"
 sidebar_current: "docs-fortios-resource-json-generic-api"
+subcategory: "FortiGate"
 description: |-
   FortiAPI Generic Interface. Only used for debugging and testing.
 ---

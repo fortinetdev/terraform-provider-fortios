@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_system_admin_administrator"
 sidebar_current: "docs-fortios-resource-system-admin-administrator"
+subcategory: "FortiGate"
 description: |-
   Provides a resource to configure administrator accounts of FortiOS.
 ---

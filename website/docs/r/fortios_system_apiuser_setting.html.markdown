@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_system_apiuser_setting"
 sidebar_current: "docs-fortios-resource-system-apiuser-setting"
+subcategory: "FortiGate"
 description: |-
   Provides a resource to configure API users of FortiOS. The API user of the token for this feature should have a super admin profile, It can be set in CLI while GUI does not allow.
 ---

@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_fmg_devicemanager_device"
 sidebar_current: "docs-fortios-fortimanager-resource-devicemanager-device"
+subcategory: "FortiManager"
 description: |-
   Provides a resource to add/delete online FortiGate to/from FortiManager
 ---

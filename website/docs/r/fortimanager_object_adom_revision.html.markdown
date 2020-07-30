@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_fmg_object_adom_revision"
 sidebar_current: "docs-fortios-fortimanager-resource-object-adom-revision"
+subcategory: "FortiManager"
 description: |-
   Provides a resource to configure object adom revision for FortiManager.
 ---

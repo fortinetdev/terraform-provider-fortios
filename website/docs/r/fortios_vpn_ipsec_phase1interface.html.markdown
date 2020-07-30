@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_vpn_ipsec_phase1interface"
 sidebar_current: "docs-fortios-resource-vpn-ipsec-phase1interface"
+subcategory: "FortiGate"
 description: |-
   Provides a resource to use phase1-interface to define a phase 1 definition for a route-based (interface mode) IPsec VPN tunnel that generates authentication and encryption keys automatically.
 ---

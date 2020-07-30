@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_fmg_firewall_object_address"
 sidebar_current: "docs-fortios-fortimanager-resource-firewall-object-address"
+subcategory: "FortiManager"
 description: |-
   Provides a resource to configure firewall object address for FortiManager.
 ---

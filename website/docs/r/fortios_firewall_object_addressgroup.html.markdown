@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_firewall_object_addressgroup"
 sidebar_current: "docs-fortios-resource-firewall-object-addressgroup"
+subcategory: "FortiGate"
 description: |-
   Provides a resource to configure firewall address group used in firewall policies of FortiOS.
 ---

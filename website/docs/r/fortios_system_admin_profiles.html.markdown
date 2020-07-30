@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_system_admin_profiles"
 sidebar_current: "docs-fortios-resource-system-admin-profiles"
+subcategory: "FortiGate"
 description: |-
   Provides a resource to configure access profiles of FortiOS.
 ---

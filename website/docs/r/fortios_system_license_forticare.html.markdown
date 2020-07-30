@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_system_license_forticare"
 sidebar_current: "docs-fortios-resource-system-license-forticare"
+subcategory: "FortiGate"
 description: |-
   Provides a resource to add a FortiCare license for FortiOS.
 ---

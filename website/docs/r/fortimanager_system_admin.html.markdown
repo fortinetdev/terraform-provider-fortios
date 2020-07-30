@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_fmg_system_admin"
 sidebar_current: "docs-fortios-fortimanager-resource-system-admin"
+subcategory: "FortiManager"
 description: |-
   Provides a resource to configure system admin setting for FortiManager.
 ---

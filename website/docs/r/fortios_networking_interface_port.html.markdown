@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_networking_interface_port"
 sidebar_current: "docs-fortios-resource-networking-interface-port"
+subcategory: "FortiGate"
 description: |-
   Provides a resource to configure interface settings of FortiOS.
 ---

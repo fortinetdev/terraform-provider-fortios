@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_fmg_system_admin_user"
 sidebar_current: "docs-fortios-fortimanager-resource-system-admin-user"
+subcategory: "FortiManager"
 description: |-
   Provides a resource to configure system admin user for FortiManager.
 ---

@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_firewall_object_address"
 sidebar_current: "docs-fortios-resource-firewall-object-address"
+subcategory: "FortiGate"
 description: |-
   Provides a resource to configure firewall addresses used in firewall policies of FortiOS.
 ---

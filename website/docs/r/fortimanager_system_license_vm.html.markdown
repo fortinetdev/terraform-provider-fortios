@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_fmg_system_license_vm"
 sidebar_current: "docs-fortios-fortimanager-resource-system-license-vm"
+subcategory: "FortiManager"
 description: |-
   Provides a resource to upload VM license to FortiGate through FortiManager.
 ---

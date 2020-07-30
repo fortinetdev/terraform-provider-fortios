@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_system_setting_ntp"
 sidebar_current: "docs-fortios-resource-system-setting-ntp"
+subcategory: "FortiGate"
 description: |-
   Provides a resource to configure Network Time Protocol (NTP) servers of FortiOS.
 ---

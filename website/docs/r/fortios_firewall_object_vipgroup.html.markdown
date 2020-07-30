@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_firewall_object_vipgroup"
 sidebar_current: "docs-fortios-resource-firewall-object-vipgroup"
+subcategory: "FortiGate"
 description: |-
   Provides a resource to configure virtual IP groups of FortiOS.
 ---

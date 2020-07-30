@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_fmg_devicemanager_install_policypackage"
 sidebar_current: "docs-fortios-fortimanager-resource-devicemanager-install-policypackage"
+subcategory: "FortiManager"
 description: |-
   Provides a resource to install devicemanager policy package from FortiManager to the related FortiGate
 ---

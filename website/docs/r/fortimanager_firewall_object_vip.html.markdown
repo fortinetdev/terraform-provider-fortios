@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_fmg_firewall_object_vip"
 sidebar_current: "docs-fortios-fortimanager-resource-firewall-object-vip"
+subcategory: "FortiManager"
 description: |-
   Provides a resource to configure firewall object virtual ip for FortiManager.
 ---

@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_log_fortianalyzer_setting"
 sidebar_current: "docs-fortios-resource-log-fortianalyzer-setting"
+subcategory: "FortiGate"
 description: |-
   Provides a resource to configure configure logging to FortiAnalyzer log management devices.
 ---

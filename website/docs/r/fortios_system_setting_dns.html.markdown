@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_system_setting_dns"
 sidebar_current: "docs-fortios-resource-system-setting-dns"
+subcategory: "FortiGate"
 description: |-
   Provides a resource to configure DNS of FortiOS.
 ---

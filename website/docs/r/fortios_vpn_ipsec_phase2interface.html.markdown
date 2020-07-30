@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_vpn_ipsec_phase2interface"
 sidebar_current: "docs-fortios-resource-vpn-ipsec-phase2interface"
+subcategory: "FortiGate"
 description: |-
   Provides a resource to use phase2-interface to add or edit a phase 2 configuration on a route-based (interface mode) IPsec tunnel.
 ---

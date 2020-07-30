@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_networking_route_static"
 sidebar_current: "docs-fortios-resource-networking-route-static"
+subcategory: "FortiGate"
 description: |-
   Provides a resource to configure static route of FortiOS.
 ---

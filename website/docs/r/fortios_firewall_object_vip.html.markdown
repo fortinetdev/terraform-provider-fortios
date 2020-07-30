@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_firewall_object_vip"
 sidebar_current: "docs-fortios-resource-firewall-object-vip"
+subcategory: "FortiGate"
 description: |-
   Provides a resource to configure firewall virtual IPs (VIPs) of FortiOS.
 ---

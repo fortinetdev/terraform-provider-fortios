@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_log_syslog_setting"
 sidebar_current: "docs-fortios-resource-log-syslog-setting"
+subcategory: "FortiGate"
 description: |-
   Provides a resource to configure logging to remote Syslog logging servers.
 ---

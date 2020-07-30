@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_fmg_system_adom"
 sidebar_current: "docs-fortios-fortimanager-resource-system-adom"
+subcategory: "FortiManager"
 description: |-
   Provides a resource to configure system adom for FortiManager.
 ---

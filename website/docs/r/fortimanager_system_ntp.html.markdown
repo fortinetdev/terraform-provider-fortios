@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_fmg_system_ntp"
 sidebar_current: "docs-fortios-fortimanager-resource-system-ntp"
+subcategory: "FortiManager"
 description: |-
   Provides a resource to configure system ntp setting for FortiManager.
 ---

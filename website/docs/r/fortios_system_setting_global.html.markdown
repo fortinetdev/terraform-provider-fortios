@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_system_setting_global"
 sidebar_current: "docs-fortios-resource-system-setting-global"
+subcategory: "FortiGate"
 description: |-
   Provides a resource to configure options related to the overall operation of FortiOS.
 ---

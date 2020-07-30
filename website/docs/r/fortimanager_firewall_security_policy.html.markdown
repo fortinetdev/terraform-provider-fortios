@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_fmg_firewall_security_policy"
 sidebar_current: "docs-fortios-fortimanager-resource-firewall-security-policy"
+subcategory: "FortiManager"
 description: |-
   Provides a resource to configure firewall security policy on FortiManager which could be installed to the FortiGate later
 ---

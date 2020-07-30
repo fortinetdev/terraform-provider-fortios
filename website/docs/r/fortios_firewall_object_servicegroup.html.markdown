@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_firewall_object_servicegroup"
 sidebar_current: "docs-fortios-resource-firewall-object-servicegroup"
+subcategory: "FortiGate"
 description: |-
   Provides a resource to configure firewall service group of FortiOS.
 ---

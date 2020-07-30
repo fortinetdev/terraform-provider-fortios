@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_fmg_jsonrpc_request"
 sidebar_current: "docs-fortios-fortimanager-resource-jsonrpc-request"
+subcategory: "FortiManager"
 description: |-
   Provides a resource to handle JSON RPC request for FortiManager. Only used for debugging and testing.
 ---

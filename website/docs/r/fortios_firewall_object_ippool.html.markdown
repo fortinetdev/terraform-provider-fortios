@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_firewall_object_ippool"
 sidebar_current: "docs-fortios-resource-firewall-object-ippool"
+subcategory: "FortiGate"
 description: |-
   Provides a resource to configure IPv4 IP address pools of FortiOS.
 ---

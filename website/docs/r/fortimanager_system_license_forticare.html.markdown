@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_fmg_system_license_forticare"
 sidebar_current: "docs-fortios-fortimanager-resource-system-license-forticare"
+subcategory: "FortiManager"
 description: |-
   Provides a resource to upload FortiCare registration code to FortiGate through FortiManager.
 ---

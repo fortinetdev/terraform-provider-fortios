@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_fmg_devicemanager_script_execute"
 sidebar_current: "docs-fortios-fortimanager-resource-devicemanager-script-execute"
+subcategory: "FortiManager"
 description: |-
   Provides a resource to execute devicemanager script on FortiManager.
 ---

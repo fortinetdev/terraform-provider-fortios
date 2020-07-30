@@ -2,6 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_fmg_devicemanager_install_device"
 sidebar_current: "docs-fortios-fortimanager-resource-devicemanager-install-device"
+subcategory: "FortiManager"
 description: |-
   Provides a resource to install devicemanager script from FortiManager to the related device
 ---
