@@ -1,4 +1,15 @@
 ## 1.5.0 (Unreleased)
+## 1.4.1 (July 31, 2020)
+
+IMPROVEMENTS:
+
+* Support doc subcategories in Registry
+* Support new doc naming rules in Registry
+
+BUG FIXES:
+
+* Fix SendWithSpecialParams comment error
+
 ## 1.4.0 (July 30, 2020)
 
 IMPROVEMENTS:
