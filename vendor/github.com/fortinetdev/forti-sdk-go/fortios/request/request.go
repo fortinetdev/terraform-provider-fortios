@@ -136,7 +136,7 @@ func buildURL(r *Request) string {
 	return u
 }
 
-// Send request data to FortiOS with special URL paramaters.
+// SendWithSpecialParams sends request data to FortiOS with special URL paramaters.
 // If errors are encountered, it returns the error.
 func (r *Request) SendWithSpecialParams(s string) error {
 	r.HTTPRequest.Header.Set("Content-Type", "application/json")
