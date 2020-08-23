@@ -21,6 +21,8 @@
 /test/ccddee.sh
 /test/aabbcc-fosfmg.sh
 /test/ddeeff.sh
+/test
+/dist
 
 *.backup
 ./*.tfstate
