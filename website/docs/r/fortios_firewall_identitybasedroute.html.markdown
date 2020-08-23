@@ -1,0 +1,53 @@
+---
+subcategory: "FortiGate Firewall"
+layout: "fortios"
+page_title: "FortiOS: fortios_firewall_identitybasedroute"
+description: |-
+  Configure identity based routing.
+---
+
+# fortios_firewall_identitybasedroute
+Configure identity based routing.
+
+## Example Usage
+
+```hcl
+resource "fortios_firewall_identitybasedroute" "trname" {
+  comments = "test"
+  name     = "route1"
+}
+```
+
+## Argument Reference
+
+The following arguments are supported:
+
+* `name` - (Required) Name.
+* `comments` - Comments.
+* `rule` - Rule.
+
+The `rule` block supports:
+
+* `id` - Rule ID.
+* `gateway` - IPv4 address of the gateway (Format: xxx.xxx.xxx.xxx , Default: 0.0.0.0).
+* `device` - Outgoing interface for the rule.
+* `groups` - Select one or more group(s) from available groups that are allowed to use this route. Separate group names with a space.
+
+The `groups` block supports:
+
+* `name` - Group name.
+
+
+## Attribute Reference
+
+In addition to all the above arguments, the following attributes are exported:
+* `id` - an identifier for the resource with format {{name}}.
+
+## Import
+
+Firewall IdentityBasedRoute can be imported using any of these accepted formats:
+```
+$ export "FORTIOS_IMPORT_TABLE"="true"
+$ terraform import fortios_firewall_identitybasedroute.labelname {{name}}
+$ unset "FORTIOS_IMPORT_TABLE"
+```
