@@ -21,7 +21,7 @@
 /test/ccddee.sh
 /test/aabbcc-fosfmg.sh
 /test/ddeeff.sh
-/test
+/test/example_testacc.sh
 /dist
 
 *.backup
