@@ -1,0 +1,59 @@
+---
+subcategory: "FortiGate Vpn"
+layout: "fortios"
+page_title: "FortiOS: fortios_vpnsslweb_hostchecksoftware"
+description: |-
+  SSL-VPN host check software.
+---
+
+# fortios_vpnsslweb_hostchecksoftware
+SSL-VPN host check software.
+
+## Example Usage
+
+```hcl
+resource "fortios_vpnsslweb_hostchecksoftware" "trname" {
+  name    = "hostchecksoftwares1"
+  os_type = "windows"
+  type    = "fw"
+}
+```
+
+## Argument Reference
+
+The following arguments are supported:
+
+* `name` - Name.
+* `os_type` - OS type.
+* `type` - Type.
+* `version` - Version.
+* `guid` - Globally unique ID.
+* `check_item_list` - Check item list.
+
+The `check_item_list` block supports:
+
+* `id` - ID (0 - 4294967295).
+* `action` - Action.
+* `type` - Type.
+* `target` - Target.
+* `version` - Version.
+* `md5s` - MD5 checksum.
+
+The `md5s` block supports:
+
+* `id` - Hex string of MD5 checksum.
+
+
+## Attribute Reference
+
+In addition to all the above arguments, the following attributes are exported:
+* `id` - an identifier for the resource with format {{name}}.
+
+## Import
+
+VpnSslWeb HostCheckSoftware can be imported using any of these accepted formats:
+```
+$ export "FORTIOS_IMPORT_TABLE"="true"
+$ terraform import fortios_vpnsslweb_hostchecksoftware.labelname {{name}}
+$ unset "FORTIOS_IMPORT_TABLE"
+```
