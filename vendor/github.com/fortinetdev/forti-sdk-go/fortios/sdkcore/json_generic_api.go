@@ -6,16 +6,17 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+
 	"github.com/fortinetdev/forti-sdk-go/fortios/request"
 )
 
 // JSONJSONGenericAPI contains the parameters for Create API function
 type JSONJSONGenericAPI struct {
-	Path string `json:"path"`
-	Method string `json:"method"`
+	Path          string `json:"path"`
+	Method        string `json:"method"`
 	Specialparams string `json:"specialparams"`
-	Json string `json:"json"`
-	Response string `json:"response"`
+	Json          string `json:"json"`
+	Response      string `json:"response"`
 }
 
 // CreateJSONGenericAPI API operation for FortiOS sends request to FortiGate/FortiOS APIs.
@@ -46,13 +47,13 @@ func (c *FortiSDKClient) CreateJSONGenericAPI(params *JSONJSONGenericAPI) (res s
 
 	err = req.SendWithSpecialParams(specialparams)
 	if err != nil || req.HTTPResponse == nil {
-		err = fmt.Errorf("cannot send request %s", err)
+		err = fmt.Errorf("cannot send request %v", err)
 		return
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
 	if err != nil || body == nil {
-		err = fmt.Errorf("cannot get response body %s", err)
+		err = fmt.Errorf("cannot get response body %v", err)
 		return
 	}
 	log.Printf("FOS-fortios response1: %s", string(body))

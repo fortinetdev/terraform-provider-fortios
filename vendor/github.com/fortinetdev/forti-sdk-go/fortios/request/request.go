@@ -6,7 +6,6 @@ import (
 	"log"
 	"net/http"
 	"net/url"
-	"strconv"
 	"strings"
 	"time"
 
@@ -46,20 +45,6 @@ func New(c config.Config, method string, path string, params interface{}, data *
 	return r
 }
 
-// Store URL request params
-// Currently only used for altering firewall security policy position
-// @dstId: policy dst id
-// @alterPos: before or after
-func (r *Request) FillUrlParams(dstId int, alterPos string) {
-
-	if r.HTTPRequest.Form == nil {
-		r.HTTPRequest.Form = make(map[string][]string)
-	}
-
-	r.HTTPRequest.Form.Set("policy_dst_id", strconv.Itoa(dstId))
-	r.HTTPRequest.Form.Set("alter_position", alterPos)
-}
-
 // Build Request header
 
 // Build Request Sign/Login Info
@@ -89,16 +74,16 @@ func (r *Request) Send() error {
 		r.HTTPResponse = rsp
 		if errdo != nil {
 			if strings.Contains(errdo.Error(), "x509: ") {
-				err = fmt.Errorf("Error found: %s", errdo)
+				err = fmt.Errorf("Error found: %v", errdo)
 				break
 			}
 
 			if retry > 15 {
-				err = fmt.Errorf("lost connection to firewall with error: %s", errdo)
+				err = fmt.Errorf("lost connection to firewall with error: %v", errdo)
 				break
 			}
 			time.Sleep(time.Second)
-			log.Printf("Error found: %s, will resend again %s, %d", errdo, u, retry)
+			log.Printf("Error found: %v, will resend again %s, %d", errdo, u, retry)
 
 			retry++
 
@@ -119,14 +104,6 @@ func buildURL(r *Request) string {
 	if r.Config.Auth.Vdom != "" {
 		u += "vdom="
 		u += r.Config.Auth.Vdom
-		u += "&"
-	}
-
-	if r.HTTPRequest.Form.Get("alter_position") != "" && r.HTTPRequest.Form.Get("policy_dst_id") != "" {
-		u += "action=move&"
-		u += r.HTTPRequest.Form.Get("alter_position")
-		u += "="
-		u += r.HTTPRequest.Form.Get("policy_dst_id")
 		u += "&"
 	}
 
@@ -161,16 +138,16 @@ func (r *Request) SendWithSpecialParams(s string) error {
 		r.HTTPResponse = rsp
 		if errdo != nil {
 			if strings.Contains(errdo.Error(), "x509: ") {
-				err = fmt.Errorf("Error found: %s", errdo)
+				err = fmt.Errorf("Error found: %v", errdo)
 				break
 			}
 
-			if retry > 500 {
-				err = fmt.Errorf("Error found: %s", errdo)
+			if retry > 15 {
+				err = fmt.Errorf("Error found: %v", errdo)
 				break
 			}
 			time.Sleep(time.Duration(1) * time.Second)
-			log.Printf("Error found: %s, will resend again %s, %d", errdo, u, retry)
+			log.Printf("Error found: %v, will resend again %s, %d", errdo, u, retry)
 
 			retry++
 

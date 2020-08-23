@@ -5,20 +5,22 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
-	"strconv"
-
 )
 
 // CreateUpdateFirewallSecurityPolicySeq API operation for FortiOS alters the specified firewall policy sequence.
 // Returns error for service API and SDK errors.
-func (c *FortiSDKClient) CreateUpdateFirewallSecurityPolicySeq(srcId, dstId int, alterPos string) (err error) {
+func (c *FortiSDKClient) CreateUpdateFirewallSecurityPolicySeq(srcId, dstId, alterPos string) (err error) {
 	HTTPMethod := "PUT"
 	path := "/api/v2/cmdb/firewall/policy"
-	path += "/" + strconv.Itoa(srcId)
+	path += "/" + srcId
+
+	specialparams := "action=move&"
+	specialparams += alterPos
+	specialparams += "="
+	specialparams += dstId
 
 	req := c.NewRequest(HTTPMethod, path, nil, nil)
-	req.FillUrlParams(dstId, alterPos)
-	err = req.Send()
+	err = req.SendWithSpecialParams(specialparams)
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
 		return
