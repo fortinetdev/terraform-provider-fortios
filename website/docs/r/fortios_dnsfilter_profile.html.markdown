@@ -1,0 +1,110 @@
+---
+subcategory: "FortiGate Dnsfilter"
+layout: "fortios"
+page_title: "FortiOS: fortios_dnsfilter_profile"
+description: |-
+  Configure DNS domain filter profiles.
+---
+
+# fortios_dnsfilter_profile
+Configure DNS domain filter profiles.
+
+## Example Usage
+
+```hcl
+resource "fortios_dnsfilter_profile" "trname" {
+  block_action      = "redirect"
+  block_botnet      = "disable"
+  log_all_domain    = "disable"
+  name              = "s1"
+  redirect_portal   = "0.0.0.0"
+  safe_search       = "disable"
+  sdns_domain_log   = "enable"
+  sdns_ftgd_err_log = "enable"
+  youtube_restrict  = "strict"
+
+  domain_filter {
+    domain_filter_table = 0
+  }
+
+  ftgd_dns {
+    filters {
+      action   = "block"
+      category = 26
+      id       = 1
+      log      = "enable"
+    }
+    filters {
+      action   = "block"
+      category = 61
+      id       = 2
+      log      = "enable"
+    }
+    filters {
+      action   = "block"
+      category = 86
+      id       = 3
+      log      = "enable"
+    }
+    filters {
+      action   = "block"
+      category = 88
+      id       = 4
+      log      = "enable"
+    }
+  }
+}
+```
+
+## Argument Reference
+
+The following arguments are supported:
+
+* `name` - (Required) Profile name.
+* `comment` - Comment.
+* `domain_filter` - Domain filter settings.
+* `ftgd_dns` - FortiGuard DNS Filter settings.
+* `log_all_domain` - Enable/disable logging of all domains visited (detailed DNS logging).
+* `sdns_ftgd_err_log` - Enable/disable FortiGuard SDNS rating error logging.
+* `sdns_domain_log` - Enable/disable domain filtering and botnet domain logging.
+* `block_action` - Action to take for blocked domains.
+* `redirect_portal` - IP address of the SDNS redirect portal.
+* `block_botnet` - Enable/disable blocking botnet C&C DNS lookups.
+* `safe_search` - Enable/disable Google, Bing, and YouTube safe search.
+* `youtube_restrict` - Set safe search for YouTube restriction level.
+* `external_ip_blocklist` - One or more external IP block lists.
+
+The `domain_filter` block supports:
+
+* `domain_filter_table` - DNS domain filter table ID.
+
+The `ftgd_dns` block supports:
+
+* `options` - FortiGuard DNS filter options.
+* `filters` - FortiGuard DNS domain filters.
+
+The `filters` block supports:
+
+* `id` - ID number.
+* `category` - Category number.
+* `action` - Action to take for DNS requests matching the category.
+* `log` - Enable/disable DNS filter logging for this DNS profile.
+
+The `external_ip_blocklist` block supports:
+
+* `name` - External domain block list name.
+
+
+## Attribute Reference
+
+In addition to all the above arguments, the following attributes are exported:
+* `id` - an identifier for the resource with format {{name}}.
+
+## Import
+
+Dnsfilter Profile can be imported using any of these accepted formats:
+```
+$ export "FORTIOS_IMPORT_TABLE"="true"
+$ terraform import fortios_dnsfilter_profile.labelname {{name}}
+$ unset "FORTIOS_IMPORT_TABLE"
+```
