@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,43 +5,44 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSLogDiskFilter_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSLogDiskFilter_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSLogDiskFilter_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSLogDiskFilterConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSLogDiskFilterExists("fortios_logdisk_filter.trname"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_filter.trname", "anomaly", "enable"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_filter.trname", "dlp_archive", "enable"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_filter.trname", "dns", "enable"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_filter.trname", "filter_type", "include"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_filter.trname", "forward_traffic", "enable"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_filter.trname", "gtp", "enable"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_filter.trname", "local_traffic", "enable"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_filter.trname", "multicast_traffic", "enable"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_filter.trname", "severity", "information"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_filter.trname", "sniffer_traffic", "enable"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_filter.trname", "ssh", "enable"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_filter.trname", "voip", "enable"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSLogDiskFilterConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSLogDiskFilterExists("fortios_logdisk_filter.trname"),
+					resource.TestCheckResourceAttr("fortios_logdisk_filter.trname", "anomaly", "enable"),
+					resource.TestCheckResourceAttr("fortios_logdisk_filter.trname", "dlp_archive", "enable"),
+					resource.TestCheckResourceAttr("fortios_logdisk_filter.trname", "dns", "enable"),
+					resource.TestCheckResourceAttr("fortios_logdisk_filter.trname", "filter_type", "include"),
+					resource.TestCheckResourceAttr("fortios_logdisk_filter.trname", "forward_traffic", "enable"),
+					resource.TestCheckResourceAttr("fortios_logdisk_filter.trname", "gtp", "enable"),
+					resource.TestCheckResourceAttr("fortios_logdisk_filter.trname", "local_traffic", "enable"),
+					resource.TestCheckResourceAttr("fortios_logdisk_filter.trname", "multicast_traffic", "enable"),
+					resource.TestCheckResourceAttr("fortios_logdisk_filter.trname", "severity", "information"),
+					resource.TestCheckResourceAttr("fortios_logdisk_filter.trname", "sniffer_traffic", "enable"),
+					resource.TestCheckResourceAttr("fortios_logdisk_filter.trname", "ssh", "enable"),
+					resource.TestCheckResourceAttr("fortios_logdisk_filter.trname", "voip", "enable"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSLogDiskFilterExists(n string) resource.TestCheckFunc {

@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,36 +5,37 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSWirelessControllerInterController_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSWirelessControllerInterController_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSWirelessControllerInterController_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSWirelessControllerInterControllerConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSWirelessControllerInterControllerExists("fortios_wirelesscontroller_intercontroller.trname"),
-                    resource.TestCheckResourceAttr("fortios_wirelesscontroller_intercontroller.trname", "fast_failover_max", "10"),
-                    resource.TestCheckResourceAttr("fortios_wirelesscontroller_intercontroller.trname", "fast_failover_wait", "10"),
-                    resource.TestCheckResourceAttr("fortios_wirelesscontroller_intercontroller.trname", "inter_controller_key", "ENC XXXX"),
-                    resource.TestCheckResourceAttr("fortios_wirelesscontroller_intercontroller.trname", "inter_controller_mode", "disable"),
-                    resource.TestCheckResourceAttr("fortios_wirelesscontroller_intercontroller.trname", "inter_controller_pri", "primary"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSWirelessControllerInterControllerConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSWirelessControllerInterControllerExists("fortios_wirelesscontroller_intercontroller.trname"),
+					resource.TestCheckResourceAttr("fortios_wirelesscontroller_intercontroller.trname", "fast_failover_max", "10"),
+					resource.TestCheckResourceAttr("fortios_wirelesscontroller_intercontroller.trname", "fast_failover_wait", "10"),
+					resource.TestCheckResourceAttr("fortios_wirelesscontroller_intercontroller.trname", "inter_controller_key", "ENC XXXX"),
+					resource.TestCheckResourceAttr("fortios_wirelesscontroller_intercontroller.trname", "inter_controller_mode", "disable"),
+					resource.TestCheckResourceAttr("fortios_wirelesscontroller_intercontroller.trname", "inter_controller_pri", "primary"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSWirelessControllerInterControllerExists(n string) resource.TestCheckFunc {

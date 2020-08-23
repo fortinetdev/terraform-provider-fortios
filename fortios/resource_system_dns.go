@@ -30,76 +30,75 @@ func resourceSystemDns() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"primary": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"secondary": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"domain": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"domain": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"ip6_primary": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ip6_secondary": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"timeout": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 10),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"retry": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 5),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"dns_cache_limit": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"dns_cache_ttl": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(60, 86400),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"cache_notfound_responses": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"source_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceSystemDnsUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -165,7 +164,6 @@ func resourceSystemDnsRead(d *schema.ResourceData, m interface{}) error {
 	}
 	return nil
 }
-
 
 func flattenSystemDnsPrimary(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -243,10 +241,8 @@ func flattenSystemDnsSourceIp(v interface{}, d *schema.ResourceData, pre string)
 	return v
 }
 
-
 func refreshObjectSystemDns(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("primary", flattenSystemDnsPrimary(o["primary"], d, "primary")); err != nil {
 		if !fortiAPIPatch(o["primary"]) {
@@ -260,21 +256,21 @@ func refreshObjectSystemDns(d *schema.ResourceData, o map[string]interface{}) er
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("domain", flattenSystemDnsDomain(o["domain"], d, "domain")); err != nil {
-            if !fortiAPIPatch(o["domain"]) {
-                return fmt.Errorf("Error reading domain: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("domain"); ok {
-            if err = d.Set("domain", flattenSystemDnsDomain(o["domain"], d, "domain")); err != nil {
-                if !fortiAPIPatch(o["domain"]) {
-                    return fmt.Errorf("Error reading domain: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("domain", flattenSystemDnsDomain(o["domain"], d, "domain")); err != nil {
+			if !fortiAPIPatch(o["domain"]) {
+				return fmt.Errorf("Error reading domain: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("domain"); ok {
+			if err = d.Set("domain", flattenSystemDnsDomain(o["domain"], d, "domain")); err != nil {
+				if !fortiAPIPatch(o["domain"]) {
+					return fmt.Errorf("Error reading domain: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("ip6_primary", flattenSystemDnsIp6Primary(o["ip6-primary"], d, "ip6_primary")); err != nil {
 		if !fortiAPIPatch(o["ip6-primary"]) {
@@ -324,7 +320,6 @@ func refreshObjectSystemDns(d *schema.ResourceData, o map[string]interface{}) er
 		}
 	}
 
-
 	return nil
 }
 
@@ -333,7 +328,6 @@ func flattenSystemDnsFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosd
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemDnsPrimary(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -355,7 +349,7 @@ func expandSystemDnsDomain(d *schema.ResourceData, v interface{}, pre string) (i
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -406,10 +400,8 @@ func expandSystemDnsSourceIp(d *schema.ResourceData, v interface{}, pre string) 
 	return v, nil
 }
 
-
 func getObjectSystemDns(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("primary"); ok {
 		t, err := expandSystemDnsPrimary(d, v, "primary")
@@ -510,7 +502,5 @@ func getObjectSystemDns(d *schema.ResourceData) (*map[string]interface{}, error)
 		}
 	}
 
-
 	return &obj, nil
 }
-

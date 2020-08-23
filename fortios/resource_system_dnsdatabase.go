@@ -30,123 +30,123 @@ func resourceSystemDnsDatabase() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"domain": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Required: true,
+				Required:     true,
 			},
 			"allow_transfer": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"view": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"ip_master": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"primary_name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"contact": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ttl": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 2147483647),
-				Required: true,
+				Required:     true,
 			},
 			"authoritative": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"forwarder": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"source_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"dns_entry": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"status": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"ttl": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 2147483647),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"preference": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"ip": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"ipv6": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"hostname": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"canonical_name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -243,7 +243,6 @@ func resourceSystemDnsDatabaseRead(d *schema.ResourceData, m interface{}) error 
 	}
 	return nil
 }
-
 
 func flattenSystemDnsDatabaseName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -405,10 +404,8 @@ func flattenSystemDnsDatabaseDnsEntryCanonicalName(v interface{}, d *schema.Reso
 	return v
 }
 
-
 func refreshObjectSystemDnsDatabase(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenSystemDnsDatabaseName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -488,22 +485,21 @@ func refreshObjectSystemDnsDatabase(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("dns_entry", flattenSystemDnsDatabaseDnsEntry(o["dns-entry"], d, "dns_entry")); err != nil {
-            if !fortiAPIPatch(o["dns-entry"]) {
-                return fmt.Errorf("Error reading dns_entry: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("dns_entry"); ok {
-            if err = d.Set("dns_entry", flattenSystemDnsDatabaseDnsEntry(o["dns-entry"], d, "dns_entry")); err != nil {
-                if !fortiAPIPatch(o["dns-entry"]) {
-                    return fmt.Errorf("Error reading dns_entry: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("dns_entry", flattenSystemDnsDatabaseDnsEntry(o["dns-entry"], d, "dns_entry")); err != nil {
+			if !fortiAPIPatch(o["dns-entry"]) {
+				return fmt.Errorf("Error reading dns_entry: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("dns_entry"); ok {
+			if err = d.Set("dns_entry", flattenSystemDnsDatabaseDnsEntry(o["dns-entry"], d, "dns_entry")); err != nil {
+				if !fortiAPIPatch(o["dns-entry"]) {
+					return fmt.Errorf("Error reading dns_entry: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -513,7 +509,6 @@ func flattenSystemDnsDatabaseFortiTestDebug(d *schema.ResourceData, fosdebugsn i
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemDnsDatabaseName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -579,7 +574,7 @@ func expandSystemDnsDatabaseDnsEntry(d *schema.ResourceData, v interface{}, pre 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -670,10 +665,8 @@ func expandSystemDnsDatabaseDnsEntryCanonicalName(d *schema.ResourceData, v inte
 	return v, nil
 }
 
-
 func getObjectSystemDnsDatabase(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandSystemDnsDatabaseName(d, v, "name")
@@ -801,7 +794,5 @@ func getObjectSystemDnsDatabase(d *schema.ResourceData) (*map[string]interface{}
 		}
 	}
 
-
 	return &obj, nil
 }
-

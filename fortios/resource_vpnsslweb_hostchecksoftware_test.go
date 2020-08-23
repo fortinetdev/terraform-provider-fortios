@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,34 +5,35 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSVpnSslWebHostCheckSoftware_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSVpnSslWebHostCheckSoftware_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSVpnSslWebHostCheckSoftware_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSVpnSslWebHostCheckSoftwareConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSVpnSslWebHostCheckSoftwareExists("fortios_vpnsslweb_hostchecksoftware.trname"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_hostchecksoftware.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_hostchecksoftware.trname", "os_type", "windows"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_hostchecksoftware.trname", "type", "fw"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSVpnSslWebHostCheckSoftwareConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSVpnSslWebHostCheckSoftwareExists("fortios_vpnsslweb_hostchecksoftware.trname"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_hostchecksoftware.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_hostchecksoftware.trname", "os_type", "windows"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_hostchecksoftware.trname", "type", "fw"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSVpnSslWebHostCheckSoftwareExists(n string) resource.TestCheckFunc {

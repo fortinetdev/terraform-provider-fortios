@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,48 +5,49 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSWanoptWebcache_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSWanoptWebcache_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSWanoptWebcache_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSWanoptWebcacheConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSWanoptWebcacheExists("fortios_wanopt_webcache.trname"),
-                    resource.TestCheckResourceAttr("fortios_wanopt_webcache.trname", "always_revalidate", "disable"),
-                    resource.TestCheckResourceAttr("fortios_wanopt_webcache.trname", "cache_by_default", "disable"),
-                    resource.TestCheckResourceAttr("fortios_wanopt_webcache.trname", "cache_cookie", "disable"),
-                    resource.TestCheckResourceAttr("fortios_wanopt_webcache.trname", "cache_expired", "disable"),
-                    resource.TestCheckResourceAttr("fortios_wanopt_webcache.trname", "default_ttl", "1440"),
-                    resource.TestCheckResourceAttr("fortios_wanopt_webcache.trname", "external", "disable"),
-                    resource.TestCheckResourceAttr("fortios_wanopt_webcache.trname", "fresh_factor", "100"),
-                    resource.TestCheckResourceAttr("fortios_wanopt_webcache.trname", "host_validate", "disable"),
-                    resource.TestCheckResourceAttr("fortios_wanopt_webcache.trname", "ignore_conditional", "disable"),
-                    resource.TestCheckResourceAttr("fortios_wanopt_webcache.trname", "ignore_ie_reload", "enable"),
-                    resource.TestCheckResourceAttr("fortios_wanopt_webcache.trname", "ignore_ims", "disable"),
-                    resource.TestCheckResourceAttr("fortios_wanopt_webcache.trname", "ignore_pnc", "disable"),
-                    resource.TestCheckResourceAttr("fortios_wanopt_webcache.trname", "max_object_size", "512000"),
-                    resource.TestCheckResourceAttr("fortios_wanopt_webcache.trname", "max_ttl", "7200"),
-                    resource.TestCheckResourceAttr("fortios_wanopt_webcache.trname", "min_ttl", "5"),
-                    resource.TestCheckResourceAttr("fortios_wanopt_webcache.trname", "neg_resp_time", "0"),
-                    resource.TestCheckResourceAttr("fortios_wanopt_webcache.trname", "reval_pnc", "disable"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSWanoptWebcacheConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSWanoptWebcacheExists("fortios_wanopt_webcache.trname"),
+					resource.TestCheckResourceAttr("fortios_wanopt_webcache.trname", "always_revalidate", "disable"),
+					resource.TestCheckResourceAttr("fortios_wanopt_webcache.trname", "cache_by_default", "disable"),
+					resource.TestCheckResourceAttr("fortios_wanopt_webcache.trname", "cache_cookie", "disable"),
+					resource.TestCheckResourceAttr("fortios_wanopt_webcache.trname", "cache_expired", "disable"),
+					resource.TestCheckResourceAttr("fortios_wanopt_webcache.trname", "default_ttl", "1440"),
+					resource.TestCheckResourceAttr("fortios_wanopt_webcache.trname", "external", "disable"),
+					resource.TestCheckResourceAttr("fortios_wanopt_webcache.trname", "fresh_factor", "100"),
+					resource.TestCheckResourceAttr("fortios_wanopt_webcache.trname", "host_validate", "disable"),
+					resource.TestCheckResourceAttr("fortios_wanopt_webcache.trname", "ignore_conditional", "disable"),
+					resource.TestCheckResourceAttr("fortios_wanopt_webcache.trname", "ignore_ie_reload", "enable"),
+					resource.TestCheckResourceAttr("fortios_wanopt_webcache.trname", "ignore_ims", "disable"),
+					resource.TestCheckResourceAttr("fortios_wanopt_webcache.trname", "ignore_pnc", "disable"),
+					resource.TestCheckResourceAttr("fortios_wanopt_webcache.trname", "max_object_size", "512000"),
+					resource.TestCheckResourceAttr("fortios_wanopt_webcache.trname", "max_ttl", "7200"),
+					resource.TestCheckResourceAttr("fortios_wanopt_webcache.trname", "min_ttl", "5"),
+					resource.TestCheckResourceAttr("fortios_wanopt_webcache.trname", "neg_resp_time", "0"),
+					resource.TestCheckResourceAttr("fortios_wanopt_webcache.trname", "reval_pnc", "disable"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSWanoptWebcacheExists(n string) resource.TestCheckFunc {

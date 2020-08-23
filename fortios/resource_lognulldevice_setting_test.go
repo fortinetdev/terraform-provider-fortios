@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,32 +5,33 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSLogNullDeviceSetting_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSLogNullDeviceSetting_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSLogNullDeviceSetting_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSLogNullDeviceSettingConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSLogNullDeviceSettingExists("fortios_lognulldevice_setting.trname"),
-                    resource.TestCheckResourceAttr("fortios_lognulldevice_setting.trname", "status", "disable"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSLogNullDeviceSettingConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSLogNullDeviceSettingExists("fortios_lognulldevice_setting.trname"),
+					resource.TestCheckResourceAttr("fortios_lognulldevice_setting.trname", "status", "disable"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSLogNullDeviceSettingExists(n string) resource.TestCheckFunc {

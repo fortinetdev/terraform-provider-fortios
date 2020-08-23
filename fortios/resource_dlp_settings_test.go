@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,35 +5,36 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSDlpSettings_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSDlpSettings_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSDlpSettings_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSDlpSettingsConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSDlpSettingsExists("fortios_dlp_settings.trname"),
-                    resource.TestCheckResourceAttr("fortios_dlp_settings.trname", "cache_mem_percent", "2"),
-                    resource.TestCheckResourceAttr("fortios_dlp_settings.trname", "chunk_size", "2800"),
-                    resource.TestCheckResourceAttr("fortios_dlp_settings.trname", "db_mode", "stop-adding"),
-                    resource.TestCheckResourceAttr("fortios_dlp_settings.trname", "size", "16"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSDlpSettingsConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSDlpSettingsExists("fortios_dlp_settings.trname"),
+					resource.TestCheckResourceAttr("fortios_dlp_settings.trname", "cache_mem_percent", "2"),
+					resource.TestCheckResourceAttr("fortios_dlp_settings.trname", "chunk_size", "2800"),
+					resource.TestCheckResourceAttr("fortios_dlp_settings.trname", "db_mode", "stop-adding"),
+					resource.TestCheckResourceAttr("fortios_dlp_settings.trname", "size", "16"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSDlpSettingsExists(n string) resource.TestCheckFunc {

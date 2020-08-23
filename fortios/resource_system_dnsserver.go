@@ -30,21 +30,21 @@ func resourceSystemDnsServer() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"mode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"dnsfilter_profile": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
@@ -139,7 +139,6 @@ func resourceSystemDnsServerRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenSystemDnsServerName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -152,10 +151,8 @@ func flattenSystemDnsServerDnsfilterProfile(v interface{}, d *schema.ResourceDat
 	return v
 }
 
-
 func refreshObjectSystemDnsServer(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenSystemDnsServerName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -175,7 +172,6 @@ func refreshObjectSystemDnsServer(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-
 	return nil
 }
 
@@ -184,7 +180,6 @@ func flattenSystemDnsServerFortiTestDebug(d *schema.ResourceData, fosdebugsn int
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemDnsServerName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -198,10 +193,8 @@ func expandSystemDnsServerDnsfilterProfile(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
-
 func getObjectSystemDnsServer(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandSystemDnsServerName(d, v, "name")
@@ -230,7 +223,5 @@ func getObjectSystemDnsServer(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-
 	return &obj, nil
 }
-

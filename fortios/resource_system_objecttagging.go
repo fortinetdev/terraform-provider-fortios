@@ -30,47 +30,47 @@ func resourceSystemObjectTagging() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"category": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"address": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"device": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"interface": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"multiple": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"color": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 32),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"tags": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -168,7 +168,6 @@ func resourceSystemObjectTaggingRead(d *schema.ResourceData, m interface{}) erro
 	return nil
 }
 
-
 func flattenSystemObjectTaggingCategory(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -229,10 +228,8 @@ func flattenSystemObjectTaggingTagsName(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
-
 func refreshObjectSystemObjectTagging(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("category", flattenSystemObjectTaggingCategory(o["category"], d, "category")); err != nil {
 		if !fortiAPIPatch(o["category"]) {
@@ -270,22 +267,21 @@ func refreshObjectSystemObjectTagging(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("tags", flattenSystemObjectTaggingTags(o["tags"], d, "tags")); err != nil {
-            if !fortiAPIPatch(o["tags"]) {
-                return fmt.Errorf("Error reading tags: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("tags"); ok {
-            if err = d.Set("tags", flattenSystemObjectTaggingTags(o["tags"], d, "tags")); err != nil {
-                if !fortiAPIPatch(o["tags"]) {
-                    return fmt.Errorf("Error reading tags: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("tags", flattenSystemObjectTaggingTags(o["tags"], d, "tags")); err != nil {
+			if !fortiAPIPatch(o["tags"]) {
+				return fmt.Errorf("Error reading tags: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("tags"); ok {
+			if err = d.Set("tags", flattenSystemObjectTaggingTags(o["tags"], d, "tags")); err != nil {
+				if !fortiAPIPatch(o["tags"]) {
+					return fmt.Errorf("Error reading tags: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -295,7 +291,6 @@ func flattenSystemObjectTaggingFortiTestDebug(d *schema.ResourceData, fosdebugsn
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemObjectTaggingCategory(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -333,7 +328,7 @@ func expandSystemObjectTaggingTags(d *schema.ResourceData, v interface{}, pre st
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -352,10 +347,8 @@ func expandSystemObjectTaggingTagsName(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
-
 func getObjectSystemObjectTagging(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("category"); ok {
 		t, err := expandSystemObjectTaggingCategory(d, v, "category")
@@ -420,7 +413,5 @@ func getObjectSystemObjectTagging(d *schema.ResourceData) (*map[string]interface
 		}
 	}
 
-
 	return &obj, nil
 }
-

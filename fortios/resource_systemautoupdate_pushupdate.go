@@ -30,26 +30,25 @@ func resourceSystemAutoupdatePushUpdate() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"override": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"address": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Required: true,
+				Required:     true,
 			},
 		},
 	}
 }
-
 
 func resourceSystemAutoupdatePushUpdateUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -116,7 +115,6 @@ func resourceSystemAutoupdatePushUpdateRead(d *schema.ResourceData, m interface{
 	return nil
 }
 
-
 func flattenSystemAutoupdatePushUpdateStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -133,10 +131,8 @@ func flattenSystemAutoupdatePushUpdatePort(v interface{}, d *schema.ResourceData
 	return v
 }
 
-
 func refreshObjectSystemAutoupdatePushUpdate(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("status", flattenSystemAutoupdatePushUpdateStatus(o["status"], d, "status")); err != nil {
 		if !fortiAPIPatch(o["status"]) {
@@ -162,7 +158,6 @@ func refreshObjectSystemAutoupdatePushUpdate(d *schema.ResourceData, o map[strin
 		}
 	}
 
-
 	return nil
 }
 
@@ -171,7 +166,6 @@ func flattenSystemAutoupdatePushUpdateFortiTestDebug(d *schema.ResourceData, fos
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemAutoupdatePushUpdateStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -189,10 +183,8 @@ func expandSystemAutoupdatePushUpdatePort(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-
 func getObjectSystemAutoupdatePushUpdate(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("status"); ok {
 		t, err := expandSystemAutoupdatePushUpdateStatus(d, v, "status")
@@ -230,7 +222,5 @@ func getObjectSystemAutoupdatePushUpdate(d *schema.ResourceData) (*map[string]in
 		}
 	}
 
-
 	return &obj, nil
 }
-

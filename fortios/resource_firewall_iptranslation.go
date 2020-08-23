@@ -30,26 +30,26 @@ func resourceFirewallIpTranslation() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"transid": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"startip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"endip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"map_startip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 		},
@@ -145,7 +145,6 @@ func resourceFirewallIpTranslationRead(d *schema.ResourceData, m interface{}) er
 	return nil
 }
 
-
 func flattenFirewallIpTranslationTransid(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -166,10 +165,8 @@ func flattenFirewallIpTranslationMapStartip(v interface{}, d *schema.ResourceDat
 	return v
 }
 
-
 func refreshObjectFirewallIpTranslation(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("transid", flattenFirewallIpTranslationTransid(o["transid"], d, "transid")); err != nil {
 		if !fortiAPIPatch(o["transid"]) {
@@ -201,7 +198,6 @@ func refreshObjectFirewallIpTranslation(d *schema.ResourceData, o map[string]int
 		}
 	}
 
-
 	return nil
 }
 
@@ -210,7 +206,6 @@ func flattenFirewallIpTranslationFortiTestDebug(d *schema.ResourceData, fosdebug
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandFirewallIpTranslationTransid(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -232,10 +227,8 @@ func expandFirewallIpTranslationMapStartip(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
-
 func getObjectFirewallIpTranslation(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("transid"); ok {
 		t, err := expandFirewallIpTranslationTransid(d, v, "transid")
@@ -282,7 +275,5 @@ func getObjectFirewallIpTranslation(d *schema.ResourceData) (*map[string]interfa
 		}
 	}
 
-
 	return &obj, nil
 }
-

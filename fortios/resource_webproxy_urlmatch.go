@@ -30,36 +30,36 @@ func resourceWebProxyUrlMatch() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"url_pattern": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 511),
-				Required: true,
+				Required:     true,
 			},
 			"forward_server": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"cache_exemption": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"comment": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
+				Optional:     true,
 			},
 		},
 	}
@@ -154,7 +154,6 @@ func resourceWebProxyUrlMatchRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenWebProxyUrlMatchName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -179,10 +178,8 @@ func flattenWebProxyUrlMatchComment(v interface{}, d *schema.ResourceData, pre s
 	return v
 }
 
-
 func refreshObjectWebProxyUrlMatch(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenWebProxyUrlMatchName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -220,7 +217,6 @@ func refreshObjectWebProxyUrlMatch(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-
 	return nil
 }
 
@@ -229,7 +225,6 @@ func flattenWebProxyUrlMatchFortiTestDebug(d *schema.ResourceData, fosdebugsn in
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandWebProxyUrlMatchName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -255,10 +250,8 @@ func expandWebProxyUrlMatchComment(d *schema.ResourceData, v interface{}, pre st
 	return v, nil
 }
 
-
 func getObjectWebProxyUrlMatch(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandWebProxyUrlMatchName(d, v, "name")
@@ -314,7 +307,5 @@ func getObjectWebProxyUrlMatch(d *schema.ResourceData) (*map[string]interface{},
 		}
 	}
 
-
 	return &obj, nil
 }
-

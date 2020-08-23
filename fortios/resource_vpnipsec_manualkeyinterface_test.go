@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,45 +5,46 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSVpnIpsecManualkeyInterface_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSVpnIpsecManualkeyInterface_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSVpnIpsecManualkeyInterface_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSVpnIpsecManualkeyInterfaceConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSVpnIpsecManualkeyInterfaceExists("fortios_vpnipsec_manualkeyinterface.trname"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_manualkeyinterface.trname", "addr_type", "4"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_manualkeyinterface.trname", "auth_alg", "null"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_manualkeyinterface.trname", "auth_key", "-"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_manualkeyinterface.trname", "enc_alg", "des"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_manualkeyinterface.trname", "enc_key", "CECA2184ACADAEEF"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_manualkeyinterface.trname", "interface", "port3"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_manualkeyinterface.trname", "ip_version", "4"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_manualkeyinterface.trname", "local_gw", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_manualkeyinterface.trname", "local_gw6", "::"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_manualkeyinterface.trname", "local_spi", "0x100"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_manualkeyinterface.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_manualkeyinterface.trname", "remote_gw", "2.2.2.2"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_manualkeyinterface.trname", "remote_gw6", "::"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_manualkeyinterface.trname", "remote_spi", "0x100"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSVpnIpsecManualkeyInterfaceConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSVpnIpsecManualkeyInterfaceExists("fortios_vpnipsec_manualkeyinterface.trname"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_manualkeyinterface.trname", "addr_type", "4"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_manualkeyinterface.trname", "auth_alg", "null"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_manualkeyinterface.trname", "auth_key", "-"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_manualkeyinterface.trname", "enc_alg", "des"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_manualkeyinterface.trname", "enc_key", "CECA2184ACADAEEF"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_manualkeyinterface.trname", "interface", "port3"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_manualkeyinterface.trname", "ip_version", "4"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_manualkeyinterface.trname", "local_gw", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_manualkeyinterface.trname", "local_gw6", "::"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_manualkeyinterface.trname", "local_spi", "0x100"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_manualkeyinterface.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_manualkeyinterface.trname", "remote_gw", "2.2.2.2"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_manualkeyinterface.trname", "remote_gw6", "::"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_manualkeyinterface.trname", "remote_spi", "0x100"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSVpnIpsecManualkeyInterfaceExists(n string) resource.TestCheckFunc {

@@ -30,24 +30,23 @@ func resourceSpamfilterFortishield() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"spam_submit_srv": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Required: true,
+				Required:     true,
 			},
 			"spam_submit_force": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"spam_submit_txt2htm": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceSpamfilterFortishieldUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -114,7 +113,6 @@ func resourceSpamfilterFortishieldRead(d *schema.ResourceData, m interface{}) er
 	return nil
 }
 
-
 func flattenSpamfilterFortishieldSpamSubmitSrv(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -127,10 +125,8 @@ func flattenSpamfilterFortishieldSpamSubmitTxt2Htm(v interface{}, d *schema.Reso
 	return v
 }
 
-
 func refreshObjectSpamfilterFortishield(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("spam_submit_srv", flattenSpamfilterFortishieldSpamSubmitSrv(o["spam-submit-srv"], d, "spam_submit_srv")); err != nil {
 		if !fortiAPIPatch(o["spam-submit-srv"]) {
@@ -150,7 +146,6 @@ func refreshObjectSpamfilterFortishield(d *schema.ResourceData, o map[string]int
 		}
 	}
 
-
 	return nil
 }
 
@@ -159,7 +154,6 @@ func flattenSpamfilterFortishieldFortiTestDebug(d *schema.ResourceData, fosdebug
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSpamfilterFortishieldSpamSubmitSrv(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -173,10 +167,8 @@ func expandSpamfilterFortishieldSpamSubmitTxt2Htm(d *schema.ResourceData, v inte
 	return v, nil
 }
 
-
 func getObjectSpamfilterFortishield(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("spam_submit_srv"); ok {
 		t, err := expandSpamfilterFortishieldSpamSubmitSrv(d, v, "spam_submit_srv")
@@ -205,7 +197,5 @@ func getObjectSpamfilterFortishield(d *schema.ResourceData) (*map[string]interfa
 		}
 	}
 
-
 	return &obj, nil
 }
-

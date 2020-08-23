@@ -30,13 +30,13 @@ func resourceEndpointControlForticlientRegistrationSync() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"peer_name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"peer_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 		},
@@ -132,7 +132,6 @@ func resourceEndpointControlForticlientRegistrationSyncRead(d *schema.ResourceDa
 	return nil
 }
 
-
 func flattenEndpointControlForticlientRegistrationSyncPeerName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -141,10 +140,8 @@ func flattenEndpointControlForticlientRegistrationSyncPeerIp(v interface{}, d *s
 	return v
 }
 
-
 func refreshObjectEndpointControlForticlientRegistrationSync(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("peer_name", flattenEndpointControlForticlientRegistrationSyncPeerName(o["peer-name"], d, "peer_name")); err != nil {
 		if !fortiAPIPatch(o["peer-name"]) {
@@ -158,7 +155,6 @@ func refreshObjectEndpointControlForticlientRegistrationSync(d *schema.ResourceD
 		}
 	}
 
-
 	return nil
 }
 
@@ -168,7 +164,6 @@ func flattenEndpointControlForticlientRegistrationSyncFortiTestDebug(d *schema.R
 	log.Printf("ER List: %v", e)
 }
 
-
 func expandEndpointControlForticlientRegistrationSyncPeerName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
 }
@@ -177,10 +172,8 @@ func expandEndpointControlForticlientRegistrationSyncPeerIp(d *schema.ResourceDa
 	return v, nil
 }
 
-
 func getObjectEndpointControlForticlientRegistrationSync(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("peer_name"); ok {
 		t, err := expandEndpointControlForticlientRegistrationSyncPeerName(d, v, "peer_name")
@@ -200,7 +193,5 @@ func getObjectEndpointControlForticlientRegistrationSync(d *schema.ResourceData)
 		}
 	}
 
-
 	return &obj, nil
 }
-

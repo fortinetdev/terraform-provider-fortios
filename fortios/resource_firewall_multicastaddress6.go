@@ -30,58 +30,58 @@ func resourceFirewallMulticastAddress6() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ip6": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"comment": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
+				Optional:     true,
 			},
 			"visibility": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"color": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 32),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"tagging": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"category": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"tags": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"name": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 64),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
@@ -181,7 +181,6 @@ func resourceFirewallMulticastAddress6Read(d *schema.ResourceData, m interface{}
 	}
 	return nil
 }
-
 
 func flattenFirewallMulticastAddress6Name(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -289,10 +288,8 @@ func flattenFirewallMulticastAddress6TaggingTagsName(v interface{}, d *schema.Re
 	return v
 }
 
-
 func refreshObjectFirewallMulticastAddress6(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenFirewallMulticastAddress6Name(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -324,22 +321,21 @@ func refreshObjectFirewallMulticastAddress6(d *schema.ResourceData, o map[string
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("tagging", flattenFirewallMulticastAddress6Tagging(o["tagging"], d, "tagging")); err != nil {
-            if !fortiAPIPatch(o["tagging"]) {
-                return fmt.Errorf("Error reading tagging: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("tagging"); ok {
-            if err = d.Set("tagging", flattenFirewallMulticastAddress6Tagging(o["tagging"], d, "tagging")); err != nil {
-                if !fortiAPIPatch(o["tagging"]) {
-                    return fmt.Errorf("Error reading tagging: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("tagging", flattenFirewallMulticastAddress6Tagging(o["tagging"], d, "tagging")); err != nil {
+			if !fortiAPIPatch(o["tagging"]) {
+				return fmt.Errorf("Error reading tagging: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("tagging"); ok {
+			if err = d.Set("tagging", flattenFirewallMulticastAddress6Tagging(o["tagging"], d, "tagging")); err != nil {
+				if !fortiAPIPatch(o["tagging"]) {
+					return fmt.Errorf("Error reading tagging: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -349,7 +345,6 @@ func flattenFirewallMulticastAddress6FortiTestDebug(d *schema.ResourceData, fosd
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandFirewallMulticastAddress6Name(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -383,7 +378,7 @@ func expandFirewallMulticastAddress6Tagging(d *schema.ResourceData, v interface{
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -430,7 +425,7 @@ func expandFirewallMulticastAddress6TaggingTags(d *schema.ResourceData, v interf
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -449,10 +444,8 @@ func expandFirewallMulticastAddress6TaggingTagsName(d *schema.ResourceData, v in
 	return v, nil
 }
 
-
 func getObjectFirewallMulticastAddress6(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandFirewallMulticastAddress6Name(d, v, "name")
@@ -508,7 +501,5 @@ func getObjectFirewallMulticastAddress6(d *schema.ResourceData) (*map[string]int
 		}
 	}
 
-
 	return &obj, nil
 }
-

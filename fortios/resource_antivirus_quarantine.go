@@ -30,67 +30,66 @@ func resourceAntivirusQuarantine() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"agelimit": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 479),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"maxfilesize": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 500),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"quarantine_quota": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"drop_infected": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"store_infected": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"drop_blocked": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"store_blocked": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"drop_heuristic": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"store_heuristic": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"lowspace": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"destination": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceAntivirusQuarantineUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -157,7 +156,6 @@ func resourceAntivirusQuarantineRead(d *schema.ResourceData, m interface{}) erro
 	return nil
 }
 
-
 func flattenAntivirusQuarantineAgelimit(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -202,10 +200,8 @@ func flattenAntivirusQuarantineDestination(v interface{}, d *schema.ResourceData
 	return v
 }
 
-
 func refreshObjectAntivirusQuarantine(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("agelimit", flattenAntivirusQuarantineAgelimit(o["agelimit"], d, "agelimit")); err != nil {
 		if !fortiAPIPatch(o["agelimit"]) {
@@ -273,7 +269,6 @@ func refreshObjectAntivirusQuarantine(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
-
 	return nil
 }
 
@@ -282,7 +277,6 @@ func flattenAntivirusQuarantineFortiTestDebug(d *schema.ResourceData, fosdebugsn
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandAntivirusQuarantineAgelimit(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -328,10 +322,8 @@ func expandAntivirusQuarantineDestination(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-
 func getObjectAntivirusQuarantine(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("agelimit"); ok {
 		t, err := expandAntivirusQuarantineAgelimit(d, v, "agelimit")
@@ -432,7 +424,5 @@ func getObjectAntivirusQuarantine(d *schema.ResourceData) (*map[string]interface
 		}
 	}
 
-
 	return &obj, nil
 }
-

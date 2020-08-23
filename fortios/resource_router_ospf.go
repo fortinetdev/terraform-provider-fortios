@@ -30,222 +30,222 @@ func resourceRouterOspf() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"abr_type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"auto_cost_ref_bandwidth": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 1000000),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"distance_external": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"distance_inter_area": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"distance_intra_area": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"database_overflow": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"database_overflow_max_lsas": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"database_overflow_time_to_recover": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"default_information_originate": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"default_information_metric": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 16777214),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"default_information_metric_type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"default_information_route_map": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"default_metric": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 16777214),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"distance": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"rfc1583_compatible": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"router_id": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"spf_timers": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"bfd": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"log_neighbour_changes": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"distribute_list_in": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"distribute_route_map_in": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"restart_mode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"restart_period": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 3600),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"area": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"shortcut": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"authentication": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"default_cost": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"nssa_translator_role": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"stub_type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"nssa_default_information_originate": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"nssa_default_information_originate_metric": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 16777214),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"nssa_default_information_originate_metric_type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"nssa_redistribution": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"range": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"prefix": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"advertise": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"substitute": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"substitute_status": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
@@ -253,63 +253,63 @@ func resourceRouterOspf() *schema.Resource {
 							},
 						},
 						"virtual_link": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"name": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"authentication": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"authentication_key": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 8),
-										Optional: true,
+										Optional:     true,
 									},
 									"md5_key": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"md5_keychain": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"dead_interval": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(1, 65535),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"hello_interval": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(1, 65535),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"retransmit_interval": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(1, 65535),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"transmit_delay": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(1, 65535),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"peer": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
@@ -317,24 +317,24 @@ func resourceRouterOspf() *schema.Resource {
 							},
 						},
 						"filter_list": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"list": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"direction": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
@@ -345,154 +345,154 @@ func resourceRouterOspf() *schema.Resource {
 				},
 			},
 			"ospf_interface": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"interface": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"ip": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"authentication": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"authentication_key": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 8),
-							Optional: true,
+							Optional:     true,
 						},
 						"md5_key": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"md5_keychain": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"prefix_length": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 32),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"retransmit_interval": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 65535),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"transmit_delay": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 65535),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"cost": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"priority": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"dead_interval": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"hello_interval": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"hello_multiplier": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(3, 10),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"database_filter_out": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"mtu": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(576, 65535),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"mtu_ignore": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"network_type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"bfd": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"status": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"resync_timeout": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 3600),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"network": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"prefix": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"area": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -500,80 +500,80 @@ func resourceRouterOspf() *schema.Resource {
 				},
 			},
 			"neighbor": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"ip": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"poll_interval": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 65535),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"cost": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"priority": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"passive_interface": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"summary_address": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"prefix": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"tag": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"advertise": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -581,24 +581,24 @@ func resourceRouterOspf() *schema.Resource {
 				},
 			},
 			"distribute_list": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"access_list": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"protocol": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -606,43 +606,43 @@ func resourceRouterOspf() *schema.Resource {
 				},
 			},
 			"redistribute": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"status": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"metric": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 16777214),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"routemap": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"metric_type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"tag": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -650,7 +650,6 @@ func resourceRouterOspf() *schema.Resource {
 		},
 	}
 }
-
 
 func resourceRouterOspfUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -716,7 +715,6 @@ func resourceRouterOspfRead(d *schema.ResourceData, m interface{}) error {
 	}
 	return nil
 }
-
 
 func flattenRouterOspfAbrType(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -1807,10 +1805,8 @@ func flattenRouterOspfRedistributeTag(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
-
 func refreshObjectRouterOspf(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("abr_type", flattenRouterOspfAbrType(o["abr-type"], d, "abr_type")); err != nil {
 		if !fortiAPIPatch(o["abr-type"]) {
@@ -1950,134 +1946,133 @@ func refreshObjectRouterOspf(d *schema.ResourceData, o map[string]interface{}) e
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("area", flattenRouterOspfArea(o["area"], d, "area")); err != nil {
-            if !fortiAPIPatch(o["area"]) {
-                return fmt.Errorf("Error reading area: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("area"); ok {
-            if err = d.Set("area", flattenRouterOspfArea(o["area"], d, "area")); err != nil {
-                if !fortiAPIPatch(o["area"]) {
-                    return fmt.Errorf("Error reading area: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("area", flattenRouterOspfArea(o["area"], d, "area")); err != nil {
+			if !fortiAPIPatch(o["area"]) {
+				return fmt.Errorf("Error reading area: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("area"); ok {
+			if err = d.Set("area", flattenRouterOspfArea(o["area"], d, "area")); err != nil {
+				if !fortiAPIPatch(o["area"]) {
+					return fmt.Errorf("Error reading area: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("ospf_interface", flattenRouterOspfOspfInterface(o["ospf-interface"], d, "ospf_interface")); err != nil {
-            if !fortiAPIPatch(o["ospf-interface"]) {
-                return fmt.Errorf("Error reading ospf_interface: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("ospf_interface"); ok {
-            if err = d.Set("ospf_interface", flattenRouterOspfOspfInterface(o["ospf-interface"], d, "ospf_interface")); err != nil {
-                if !fortiAPIPatch(o["ospf-interface"]) {
-                    return fmt.Errorf("Error reading ospf_interface: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("ospf_interface", flattenRouterOspfOspfInterface(o["ospf-interface"], d, "ospf_interface")); err != nil {
+			if !fortiAPIPatch(o["ospf-interface"]) {
+				return fmt.Errorf("Error reading ospf_interface: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("ospf_interface"); ok {
+			if err = d.Set("ospf_interface", flattenRouterOspfOspfInterface(o["ospf-interface"], d, "ospf_interface")); err != nil {
+				if !fortiAPIPatch(o["ospf-interface"]) {
+					return fmt.Errorf("Error reading ospf_interface: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("network", flattenRouterOspfNetwork(o["network"], d, "network")); err != nil {
-            if !fortiAPIPatch(o["network"]) {
-                return fmt.Errorf("Error reading network: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("network"); ok {
-            if err = d.Set("network", flattenRouterOspfNetwork(o["network"], d, "network")); err != nil {
-                if !fortiAPIPatch(o["network"]) {
-                    return fmt.Errorf("Error reading network: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("network", flattenRouterOspfNetwork(o["network"], d, "network")); err != nil {
+			if !fortiAPIPatch(o["network"]) {
+				return fmt.Errorf("Error reading network: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("network"); ok {
+			if err = d.Set("network", flattenRouterOspfNetwork(o["network"], d, "network")); err != nil {
+				if !fortiAPIPatch(o["network"]) {
+					return fmt.Errorf("Error reading network: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("neighbor", flattenRouterOspfNeighbor(o["neighbor"], d, "neighbor")); err != nil {
-            if !fortiAPIPatch(o["neighbor"]) {
-                return fmt.Errorf("Error reading neighbor: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("neighbor"); ok {
-            if err = d.Set("neighbor", flattenRouterOspfNeighbor(o["neighbor"], d, "neighbor")); err != nil {
-                if !fortiAPIPatch(o["neighbor"]) {
-                    return fmt.Errorf("Error reading neighbor: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("neighbor", flattenRouterOspfNeighbor(o["neighbor"], d, "neighbor")); err != nil {
+			if !fortiAPIPatch(o["neighbor"]) {
+				return fmt.Errorf("Error reading neighbor: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("neighbor"); ok {
+			if err = d.Set("neighbor", flattenRouterOspfNeighbor(o["neighbor"], d, "neighbor")); err != nil {
+				if !fortiAPIPatch(o["neighbor"]) {
+					return fmt.Errorf("Error reading neighbor: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("passive_interface", flattenRouterOspfPassiveInterface(o["passive-interface"], d, "passive_interface")); err != nil {
-            if !fortiAPIPatch(o["passive-interface"]) {
-                return fmt.Errorf("Error reading passive_interface: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("passive_interface"); ok {
-            if err = d.Set("passive_interface", flattenRouterOspfPassiveInterface(o["passive-interface"], d, "passive_interface")); err != nil {
-                if !fortiAPIPatch(o["passive-interface"]) {
-                    return fmt.Errorf("Error reading passive_interface: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("passive_interface", flattenRouterOspfPassiveInterface(o["passive-interface"], d, "passive_interface")); err != nil {
+			if !fortiAPIPatch(o["passive-interface"]) {
+				return fmt.Errorf("Error reading passive_interface: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("passive_interface"); ok {
+			if err = d.Set("passive_interface", flattenRouterOspfPassiveInterface(o["passive-interface"], d, "passive_interface")); err != nil {
+				if !fortiAPIPatch(o["passive-interface"]) {
+					return fmt.Errorf("Error reading passive_interface: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("summary_address", flattenRouterOspfSummaryAddress(o["summary-address"], d, "summary_address")); err != nil {
-            if !fortiAPIPatch(o["summary-address"]) {
-                return fmt.Errorf("Error reading summary_address: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("summary_address"); ok {
-            if err = d.Set("summary_address", flattenRouterOspfSummaryAddress(o["summary-address"], d, "summary_address")); err != nil {
-                if !fortiAPIPatch(o["summary-address"]) {
-                    return fmt.Errorf("Error reading summary_address: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("summary_address", flattenRouterOspfSummaryAddress(o["summary-address"], d, "summary_address")); err != nil {
+			if !fortiAPIPatch(o["summary-address"]) {
+				return fmt.Errorf("Error reading summary_address: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("summary_address"); ok {
+			if err = d.Set("summary_address", flattenRouterOspfSummaryAddress(o["summary-address"], d, "summary_address")); err != nil {
+				if !fortiAPIPatch(o["summary-address"]) {
+					return fmt.Errorf("Error reading summary_address: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("distribute_list", flattenRouterOspfDistributeList(o["distribute-list"], d, "distribute_list")); err != nil {
-            if !fortiAPIPatch(o["distribute-list"]) {
-                return fmt.Errorf("Error reading distribute_list: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("distribute_list"); ok {
-            if err = d.Set("distribute_list", flattenRouterOspfDistributeList(o["distribute-list"], d, "distribute_list")); err != nil {
-                if !fortiAPIPatch(o["distribute-list"]) {
-                    return fmt.Errorf("Error reading distribute_list: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("distribute_list", flattenRouterOspfDistributeList(o["distribute-list"], d, "distribute_list")); err != nil {
+			if !fortiAPIPatch(o["distribute-list"]) {
+				return fmt.Errorf("Error reading distribute_list: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("distribute_list"); ok {
+			if err = d.Set("distribute_list", flattenRouterOspfDistributeList(o["distribute-list"], d, "distribute_list")); err != nil {
+				if !fortiAPIPatch(o["distribute-list"]) {
+					return fmt.Errorf("Error reading distribute_list: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("redistribute", flattenRouterOspfRedistribute(o["redistribute"], d, "redistribute")); err != nil {
-            if !fortiAPIPatch(o["redistribute"]) {
-                return fmt.Errorf("Error reading redistribute: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("redistribute"); ok {
-            if err = d.Set("redistribute", flattenRouterOspfRedistribute(o["redistribute"], d, "redistribute")); err != nil {
-                if !fortiAPIPatch(o["redistribute"]) {
-                    return fmt.Errorf("Error reading redistribute: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("redistribute", flattenRouterOspfRedistribute(o["redistribute"], d, "redistribute")); err != nil {
+			if !fortiAPIPatch(o["redistribute"]) {
+				return fmt.Errorf("Error reading redistribute: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("redistribute"); ok {
+			if err = d.Set("redistribute", flattenRouterOspfRedistribute(o["redistribute"], d, "redistribute")); err != nil {
+				if !fortiAPIPatch(o["redistribute"]) {
+					return fmt.Errorf("Error reading redistribute: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -2087,7 +2082,6 @@ func flattenRouterOspfFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fos
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandRouterOspfAbrType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -2193,7 +2187,7 @@ func expandRouterOspfArea(d *schema.ResourceData, v interface{}, pre string) (in
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2335,7 +2329,7 @@ func expandRouterOspfAreaRange(d *schema.ResourceData, v interface{}, pre string
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2402,7 +2396,7 @@ func expandRouterOspfAreaVirtualLink(d *schema.ResourceData, v interface{}, pre 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2514,7 +2508,7 @@ func expandRouterOspfAreaFilterList(d *schema.ResourceData, v interface{}, pre s
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2563,7 +2557,7 @@ func expandRouterOspfOspfInterface(d *schema.ResourceData, v interface{}, pre st
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2783,7 +2777,7 @@ func expandRouterOspfNetwork(d *schema.ResourceData, v interface{}, pre string) 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2832,7 +2826,7 @@ func expandRouterOspfNeighbor(d *schema.ResourceData, v interface{}, pre string)
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2899,7 +2893,7 @@ func expandRouterOspfPassiveInterface(d *schema.ResourceData, v interface{}, pre
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2930,7 +2924,7 @@ func expandRouterOspfSummaryAddress(d *schema.ResourceData, v interface{}, pre s
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2988,7 +2982,7 @@ func expandRouterOspfDistributeList(d *schema.ResourceData, v interface{}, pre s
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -3037,7 +3031,7 @@ func expandRouterOspfRedistribute(d *schema.ResourceData, v interface{}, pre str
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -3101,10 +3095,8 @@ func expandRouterOspfRedistributeTag(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
-
 func getObjectRouterOspf(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("abr_type"); ok {
 		t, err := expandRouterOspfAbrType(d, v, "abr_type")
@@ -3385,7 +3377,5 @@ func getObjectRouterOspf(d *schema.ResourceData) (*map[string]interface{}, error
 		}
 	}
 
-
 	return &obj, nil
 }
-

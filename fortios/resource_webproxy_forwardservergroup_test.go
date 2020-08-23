@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,39 +5,40 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSWebProxyForwardServerGroup_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    var0 := "var0" + rname
-    log.Printf(var0)
-    log.Printf("TestAccFortiOSWebProxyForwardServerGroup_basic %s", rname)
+	rname := acctest.RandString(8)
+	var0 := "var0" + rname
+	log.Printf(var0)
+	log.Printf("TestAccFortiOSWebProxyForwardServerGroup_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSWebProxyForwardServerGroupConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSWebProxyForwardServerGroupExists("fortios_webproxy_forwardservergroup.trname1"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_forwardservergroup.trname1", "affinity", "disable"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_forwardservergroup.trname1", "group_down_option", "block"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_forwardservergroup.trname1", "ldb_method", "weighted"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_forwardservergroup.trname1", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_webproxy_forwardservergroup.trname1", "server_list.0.name", var0),
-                    resource.TestCheckResourceAttr("fortios_webproxy_forwardservergroup.trname1", "server_list.0.weight", "12"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSWebProxyForwardServerGroupConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSWebProxyForwardServerGroupExists("fortios_webproxy_forwardservergroup.trname1"),
+					resource.TestCheckResourceAttr("fortios_webproxy_forwardservergroup.trname1", "affinity", "disable"),
+					resource.TestCheckResourceAttr("fortios_webproxy_forwardservergroup.trname1", "group_down_option", "block"),
+					resource.TestCheckResourceAttr("fortios_webproxy_forwardservergroup.trname1", "ldb_method", "weighted"),
+					resource.TestCheckResourceAttr("fortios_webproxy_forwardservergroup.trname1", "name", rname),
+					resource.TestCheckResourceAttr("fortios_webproxy_forwardservergroup.trname1", "server_list.0.name", var0),
+					resource.TestCheckResourceAttr("fortios_webproxy_forwardservergroup.trname1", "server_list.0.weight", "12"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSWebProxyForwardServerGroupExists(n string) resource.TestCheckFunc {

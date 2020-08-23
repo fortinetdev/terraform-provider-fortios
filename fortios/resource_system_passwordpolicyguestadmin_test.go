@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,42 +5,43 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSystemPasswordPolicyGuestAdmin_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSystemPasswordPolicyGuestAdmin_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSystemPasswordPolicyGuestAdmin_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSystemPasswordPolicyGuestAdminConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSystemPasswordPolicyGuestAdminExists("fortios_system_passwordpolicyguestadmin.trname"),
-                    resource.TestCheckResourceAttr("fortios_system_passwordpolicyguestadmin.trname", "apply_to", "guest-admin-password"),
-                    resource.TestCheckResourceAttr("fortios_system_passwordpolicyguestadmin.trname", "change_4_characters", "disable"),
-                    resource.TestCheckResourceAttr("fortios_system_passwordpolicyguestadmin.trname", "expire_day", "90"),
-                    resource.TestCheckResourceAttr("fortios_system_passwordpolicyguestadmin.trname", "expire_status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_system_passwordpolicyguestadmin.trname", "min_lower_case_letter", "0"),
-                    resource.TestCheckResourceAttr("fortios_system_passwordpolicyguestadmin.trname", "min_non_alphanumeric", "0"),
-                    resource.TestCheckResourceAttr("fortios_system_passwordpolicyguestadmin.trname", "min_number", "0"),
-                    resource.TestCheckResourceAttr("fortios_system_passwordpolicyguestadmin.trname", "min_upper_case_letter", "0"),
-                    resource.TestCheckResourceAttr("fortios_system_passwordpolicyguestadmin.trname", "minimum_length", "8"),
-                    resource.TestCheckResourceAttr("fortios_system_passwordpolicyguestadmin.trname", "reuse_password", "enable"),
-                    resource.TestCheckResourceAttr("fortios_system_passwordpolicyguestadmin.trname", "status", "disable"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSystemPasswordPolicyGuestAdminConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSystemPasswordPolicyGuestAdminExists("fortios_system_passwordpolicyguestadmin.trname"),
+					resource.TestCheckResourceAttr("fortios_system_passwordpolicyguestadmin.trname", "apply_to", "guest-admin-password"),
+					resource.TestCheckResourceAttr("fortios_system_passwordpolicyguestadmin.trname", "change_4_characters", "disable"),
+					resource.TestCheckResourceAttr("fortios_system_passwordpolicyguestadmin.trname", "expire_day", "90"),
+					resource.TestCheckResourceAttr("fortios_system_passwordpolicyguestadmin.trname", "expire_status", "disable"),
+					resource.TestCheckResourceAttr("fortios_system_passwordpolicyguestadmin.trname", "min_lower_case_letter", "0"),
+					resource.TestCheckResourceAttr("fortios_system_passwordpolicyguestadmin.trname", "min_non_alphanumeric", "0"),
+					resource.TestCheckResourceAttr("fortios_system_passwordpolicyguestadmin.trname", "min_number", "0"),
+					resource.TestCheckResourceAttr("fortios_system_passwordpolicyguestadmin.trname", "min_upper_case_letter", "0"),
+					resource.TestCheckResourceAttr("fortios_system_passwordpolicyguestadmin.trname", "minimum_length", "8"),
+					resource.TestCheckResourceAttr("fortios_system_passwordpolicyguestadmin.trname", "reuse_password", "enable"),
+					resource.TestCheckResourceAttr("fortios_system_passwordpolicyguestadmin.trname", "status", "disable"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSystemPasswordPolicyGuestAdminExists(n string) resource.TestCheckFunc {

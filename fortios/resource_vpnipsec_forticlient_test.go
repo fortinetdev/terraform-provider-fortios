@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,39 +5,40 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSVpnIpsecForticlient_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    var0 := "var0" + rname
-    log.Printf(var0)
-    var1 := "var1" + rname
-    log.Printf(var1)
-    log.Printf("TestAccFortiOSVpnIpsecForticlient_basic %s", rname)
+	rname := acctest.RandString(8)
+	var0 := "var0" + rname
+	log.Printf(var0)
+	var1 := "var1" + rname
+	log.Printf(var1)
+	log.Printf("TestAccFortiOSVpnIpsecForticlient_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSVpnIpsecForticlientConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSVpnIpsecForticlientExists("fortios_vpnipsec_forticlient.trname"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_forticlient.trname", "phase2name", var1),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_forticlient.trname", "realm", "1"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_forticlient.trname", "status", "enable"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_forticlient.trname", "usergroupname", "Guest-group"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSVpnIpsecForticlientConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSVpnIpsecForticlientExists("fortios_vpnipsec_forticlient.trname"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_forticlient.trname", "phase2name", var1),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_forticlient.trname", "realm", "1"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_forticlient.trname", "status", "enable"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_forticlient.trname", "usergroupname", "Guest-group"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSVpnIpsecForticlientExists(n string) resource.TestCheckFunc {

@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,43 +5,44 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSFirewallVip46_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSFirewallVip46_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSFirewallVip46_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSFirewallVip46Config(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSFirewallVip46Exists("fortios_firewall_vip46.trname"),
-                    resource.TestCheckResourceAttr("fortios_firewall_vip46.trname", "arp_reply", "enable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_vip46.trname", "color", "0"),
-                    resource.TestCheckResourceAttr("fortios_firewall_vip46.trname", "extip", "10.202.1.200"),
-                    resource.TestCheckResourceAttr("fortios_firewall_vip46.trname", "extport", "0-65535"),
-                    resource.TestCheckResourceAttr("fortios_firewall_vip46.trname", "fosid", "0"),
-                    resource.TestCheckResourceAttr("fortios_firewall_vip46.trname", "ldb_method", "static"),
-                    resource.TestCheckResourceAttr("fortios_firewall_vip46.trname", "mappedip", "2001:1:1:2::200"),
-                    resource.TestCheckResourceAttr("fortios_firewall_vip46.trname", "mappedport", "0-65535"),
-                    resource.TestCheckResourceAttr("fortios_firewall_vip46.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_firewall_vip46.trname", "portforward", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_vip46.trname", "protocol", "tcp"),
-                    resource.TestCheckResourceAttr("fortios_firewall_vip46.trname", "type", "static-nat"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSFirewallVip46Config(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSFirewallVip46Exists("fortios_firewall_vip46.trname"),
+					resource.TestCheckResourceAttr("fortios_firewall_vip46.trname", "arp_reply", "enable"),
+					resource.TestCheckResourceAttr("fortios_firewall_vip46.trname", "color", "0"),
+					resource.TestCheckResourceAttr("fortios_firewall_vip46.trname", "extip", "10.202.1.200"),
+					resource.TestCheckResourceAttr("fortios_firewall_vip46.trname", "extport", "0-65535"),
+					resource.TestCheckResourceAttr("fortios_firewall_vip46.trname", "fosid", "0"),
+					resource.TestCheckResourceAttr("fortios_firewall_vip46.trname", "ldb_method", "static"),
+					resource.TestCheckResourceAttr("fortios_firewall_vip46.trname", "mappedip", "2001:1:1:2::200"),
+					resource.TestCheckResourceAttr("fortios_firewall_vip46.trname", "mappedport", "0-65535"),
+					resource.TestCheckResourceAttr("fortios_firewall_vip46.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_firewall_vip46.trname", "portforward", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_vip46.trname", "protocol", "tcp"),
+					resource.TestCheckResourceAttr("fortios_firewall_vip46.trname", "type", "static-nat"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSFirewallVip46Exists(n string) resource.TestCheckFunc {

@@ -30,15 +30,15 @@ func resourceFirewallServiceCategory() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"comment": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
+				Optional:     true,
 			},
 		},
 	}
@@ -133,7 +133,6 @@ func resourceFirewallServiceCategoryRead(d *schema.ResourceData, m interface{}) 
 	return nil
 }
 
-
 func flattenFirewallServiceCategoryName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -142,10 +141,8 @@ func flattenFirewallServiceCategoryComment(v interface{}, d *schema.ResourceData
 	return v
 }
 
-
 func refreshObjectFirewallServiceCategory(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenFirewallServiceCategoryName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -159,7 +156,6 @@ func refreshObjectFirewallServiceCategory(d *schema.ResourceData, o map[string]i
 		}
 	}
 
-
 	return nil
 }
 
@@ -169,7 +165,6 @@ func flattenFirewallServiceCategoryFortiTestDebug(d *schema.ResourceData, fosdeb
 	log.Printf("ER List: %v", e)
 }
 
-
 func expandFirewallServiceCategoryName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
 }
@@ -178,10 +173,8 @@ func expandFirewallServiceCategoryComment(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-
 func getObjectFirewallServiceCategory(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandFirewallServiceCategoryName(d, v, "name")
@@ -201,7 +194,5 @@ func getObjectFirewallServiceCategory(d *schema.ResourceData) (*map[string]inter
 		}
 	}
 
-
 	return &obj, nil
 }
-

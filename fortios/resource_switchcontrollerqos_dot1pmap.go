@@ -30,53 +30,53 @@ func resourceSwitchControllerQosDot1PMap() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Required: true,
+				Required:     true,
 			},
 			"description": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"priority_0": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"priority_1": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"priority_2": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"priority_3": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"priority_4": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"priority_5": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"priority_6": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"priority_7": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
@@ -173,7 +173,6 @@ func resourceSwitchControllerQosDot1PMapRead(d *schema.ResourceData, m interface
 	return nil
 }
 
-
 func flattenSwitchControllerQosDot1PMapName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -214,10 +213,8 @@ func flattenSwitchControllerQosDot1PMapPriority7(v interface{}, d *schema.Resour
 	return v
 }
 
-
 func refreshObjectSwitchControllerQosDot1PMap(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenSwitchControllerQosDot1PMapName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -279,7 +276,6 @@ func refreshObjectSwitchControllerQosDot1PMap(d *schema.ResourceData, o map[stri
 		}
 	}
 
-
 	return nil
 }
 
@@ -288,7 +284,6 @@ func flattenSwitchControllerQosDot1PMapFortiTestDebug(d *schema.ResourceData, fo
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSwitchControllerQosDot1PMapName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -330,10 +325,8 @@ func expandSwitchControllerQosDot1PMapPriority7(d *schema.ResourceData, v interf
 	return v, nil
 }
 
-
 func getObjectSwitchControllerQosDot1PMap(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandSwitchControllerQosDot1PMapName(d, v, "name")
@@ -425,7 +418,5 @@ func getObjectSwitchControllerQosDot1PMap(d *schema.ResourceData) (*map[string]i
 		}
 	}
 
-
 	return &obj, nil
 }
-

@@ -30,127 +30,127 @@ func resourceRouterRipng() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"default_information_originate": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"default_metric": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 16),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"max_out_metric": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 15),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"distance": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"distance": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 255),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"prefix6": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"access_list6": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"distribute_list": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"status": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"direction": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"listname": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"interface": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"neighbor": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"ip6": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"interface": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"network": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"prefix": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -158,18 +158,18 @@ func resourceRouterRipng() *schema.Resource {
 				},
 			},
 			"aggregate_address": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"prefix6": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -177,136 +177,136 @@ func resourceRouterRipng() *schema.Resource {
 				},
 			},
 			"offset_list": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"status": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"direction": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"access_list6": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"offset": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 16),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"interface": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"passive_interface": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"redistribute": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"status": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"metric": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 16),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"routemap": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"update_timer": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(5, 2147483647),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"timeout_timer": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(5, 2147483647),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"garbage_timer": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(5, 2147483647),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"interface": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"split_horizon_status": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"split_horizon": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"flags": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -314,7 +314,6 @@ func resourceRouterRipng() *schema.Resource {
 		},
 	}
 }
-
 
 func resourceRouterRipngUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -380,7 +379,6 @@ func resourceRouterRipngRead(d *schema.ResourceData, m interface{}) error {
 	}
 	return nil
 }
-
 
 func flattenRouterRipngDefaultInformationOriginate(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -928,10 +926,8 @@ func flattenRouterRipngInterfaceFlags(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
-
 func refreshObjectRouterRipng(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("default_information_originate", flattenRouterRipngDefaultInformationOriginate(o["default-information-originate"], d, "default_information_originate")); err != nil {
 		if !fortiAPIPatch(o["default-information-originate"]) {
@@ -951,133 +947,133 @@ func refreshObjectRouterRipng(d *schema.ResourceData, o map[string]interface{}) 
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("distance", flattenRouterRipngDistance(o["distance"], d, "distance")); err != nil {
-            if !fortiAPIPatch(o["distance"]) {
-                return fmt.Errorf("Error reading distance: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("distance"); ok {
-            if err = d.Set("distance", flattenRouterRipngDistance(o["distance"], d, "distance")); err != nil {
-                if !fortiAPIPatch(o["distance"]) {
-                    return fmt.Errorf("Error reading distance: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("distance", flattenRouterRipngDistance(o["distance"], d, "distance")); err != nil {
+			if !fortiAPIPatch(o["distance"]) {
+				return fmt.Errorf("Error reading distance: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("distance"); ok {
+			if err = d.Set("distance", flattenRouterRipngDistance(o["distance"], d, "distance")); err != nil {
+				if !fortiAPIPatch(o["distance"]) {
+					return fmt.Errorf("Error reading distance: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("distribute_list", flattenRouterRipngDistributeList(o["distribute-list"], d, "distribute_list")); err != nil {
-            if !fortiAPIPatch(o["distribute-list"]) {
-                return fmt.Errorf("Error reading distribute_list: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("distribute_list"); ok {
-            if err = d.Set("distribute_list", flattenRouterRipngDistributeList(o["distribute-list"], d, "distribute_list")); err != nil {
-                if !fortiAPIPatch(o["distribute-list"]) {
-                    return fmt.Errorf("Error reading distribute_list: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("distribute_list", flattenRouterRipngDistributeList(o["distribute-list"], d, "distribute_list")); err != nil {
+			if !fortiAPIPatch(o["distribute-list"]) {
+				return fmt.Errorf("Error reading distribute_list: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("distribute_list"); ok {
+			if err = d.Set("distribute_list", flattenRouterRipngDistributeList(o["distribute-list"], d, "distribute_list")); err != nil {
+				if !fortiAPIPatch(o["distribute-list"]) {
+					return fmt.Errorf("Error reading distribute_list: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("neighbor", flattenRouterRipngNeighbor(o["neighbor"], d, "neighbor")); err != nil {
-            if !fortiAPIPatch(o["neighbor"]) {
-                return fmt.Errorf("Error reading neighbor: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("neighbor"); ok {
-            if err = d.Set("neighbor", flattenRouterRipngNeighbor(o["neighbor"], d, "neighbor")); err != nil {
-                if !fortiAPIPatch(o["neighbor"]) {
-                    return fmt.Errorf("Error reading neighbor: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("neighbor", flattenRouterRipngNeighbor(o["neighbor"], d, "neighbor")); err != nil {
+			if !fortiAPIPatch(o["neighbor"]) {
+				return fmt.Errorf("Error reading neighbor: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("neighbor"); ok {
+			if err = d.Set("neighbor", flattenRouterRipngNeighbor(o["neighbor"], d, "neighbor")); err != nil {
+				if !fortiAPIPatch(o["neighbor"]) {
+					return fmt.Errorf("Error reading neighbor: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("network", flattenRouterRipngNetwork(o["network"], d, "network")); err != nil {
-            if !fortiAPIPatch(o["network"]) {
-                return fmt.Errorf("Error reading network: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("network"); ok {
-            if err = d.Set("network", flattenRouterRipngNetwork(o["network"], d, "network")); err != nil {
-                if !fortiAPIPatch(o["network"]) {
-                    return fmt.Errorf("Error reading network: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("network", flattenRouterRipngNetwork(o["network"], d, "network")); err != nil {
+			if !fortiAPIPatch(o["network"]) {
+				return fmt.Errorf("Error reading network: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("network"); ok {
+			if err = d.Set("network", flattenRouterRipngNetwork(o["network"], d, "network")); err != nil {
+				if !fortiAPIPatch(o["network"]) {
+					return fmt.Errorf("Error reading network: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("aggregate_address", flattenRouterRipngAggregateAddress(o["aggregate-address"], d, "aggregate_address")); err != nil {
-            if !fortiAPIPatch(o["aggregate-address"]) {
-                return fmt.Errorf("Error reading aggregate_address: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("aggregate_address"); ok {
-            if err = d.Set("aggregate_address", flattenRouterRipngAggregateAddress(o["aggregate-address"], d, "aggregate_address")); err != nil {
-                if !fortiAPIPatch(o["aggregate-address"]) {
-                    return fmt.Errorf("Error reading aggregate_address: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("aggregate_address", flattenRouterRipngAggregateAddress(o["aggregate-address"], d, "aggregate_address")); err != nil {
+			if !fortiAPIPatch(o["aggregate-address"]) {
+				return fmt.Errorf("Error reading aggregate_address: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("aggregate_address"); ok {
+			if err = d.Set("aggregate_address", flattenRouterRipngAggregateAddress(o["aggregate-address"], d, "aggregate_address")); err != nil {
+				if !fortiAPIPatch(o["aggregate-address"]) {
+					return fmt.Errorf("Error reading aggregate_address: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("offset_list", flattenRouterRipngOffsetList(o["offset-list"], d, "offset_list")); err != nil {
-            if !fortiAPIPatch(o["offset-list"]) {
-                return fmt.Errorf("Error reading offset_list: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("offset_list"); ok {
-            if err = d.Set("offset_list", flattenRouterRipngOffsetList(o["offset-list"], d, "offset_list")); err != nil {
-                if !fortiAPIPatch(o["offset-list"]) {
-                    return fmt.Errorf("Error reading offset_list: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("offset_list", flattenRouterRipngOffsetList(o["offset-list"], d, "offset_list")); err != nil {
+			if !fortiAPIPatch(o["offset-list"]) {
+				return fmt.Errorf("Error reading offset_list: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("offset_list"); ok {
+			if err = d.Set("offset_list", flattenRouterRipngOffsetList(o["offset-list"], d, "offset_list")); err != nil {
+				if !fortiAPIPatch(o["offset-list"]) {
+					return fmt.Errorf("Error reading offset_list: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("passive_interface", flattenRouterRipngPassiveInterface(o["passive-interface"], d, "passive_interface")); err != nil {
-            if !fortiAPIPatch(o["passive-interface"]) {
-                return fmt.Errorf("Error reading passive_interface: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("passive_interface"); ok {
-            if err = d.Set("passive_interface", flattenRouterRipngPassiveInterface(o["passive-interface"], d, "passive_interface")); err != nil {
-                if !fortiAPIPatch(o["passive-interface"]) {
-                    return fmt.Errorf("Error reading passive_interface: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("passive_interface", flattenRouterRipngPassiveInterface(o["passive-interface"], d, "passive_interface")); err != nil {
+			if !fortiAPIPatch(o["passive-interface"]) {
+				return fmt.Errorf("Error reading passive_interface: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("passive_interface"); ok {
+			if err = d.Set("passive_interface", flattenRouterRipngPassiveInterface(o["passive-interface"], d, "passive_interface")); err != nil {
+				if !fortiAPIPatch(o["passive-interface"]) {
+					return fmt.Errorf("Error reading passive_interface: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("redistribute", flattenRouterRipngRedistribute(o["redistribute"], d, "redistribute")); err != nil {
-            if !fortiAPIPatch(o["redistribute"]) {
-                return fmt.Errorf("Error reading redistribute: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("redistribute"); ok {
-            if err = d.Set("redistribute", flattenRouterRipngRedistribute(o["redistribute"], d, "redistribute")); err != nil {
-                if !fortiAPIPatch(o["redistribute"]) {
-                    return fmt.Errorf("Error reading redistribute: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("redistribute", flattenRouterRipngRedistribute(o["redistribute"], d, "redistribute")); err != nil {
+			if !fortiAPIPatch(o["redistribute"]) {
+				return fmt.Errorf("Error reading redistribute: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("redistribute"); ok {
+			if err = d.Set("redistribute", flattenRouterRipngRedistribute(o["redistribute"], d, "redistribute")); err != nil {
+				if !fortiAPIPatch(o["redistribute"]) {
+					return fmt.Errorf("Error reading redistribute: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("update_timer", flattenRouterRipngUpdateTimer(o["update-timer"], d, "update_timer")); err != nil {
 		if !fortiAPIPatch(o["update-timer"]) {
@@ -1097,22 +1093,21 @@ func refreshObjectRouterRipng(d *schema.ResourceData, o map[string]interface{}) 
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("interface", flattenRouterRipngInterface(o["interface"], d, "interface")); err != nil {
-            if !fortiAPIPatch(o["interface"]) {
-                return fmt.Errorf("Error reading interface: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("interface"); ok {
-            if err = d.Set("interface", flattenRouterRipngInterface(o["interface"], d, "interface")); err != nil {
-                if !fortiAPIPatch(o["interface"]) {
-                    return fmt.Errorf("Error reading interface: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("interface", flattenRouterRipngInterface(o["interface"], d, "interface")); err != nil {
+			if !fortiAPIPatch(o["interface"]) {
+				return fmt.Errorf("Error reading interface: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("interface"); ok {
+			if err = d.Set("interface", flattenRouterRipngInterface(o["interface"], d, "interface")); err != nil {
+				if !fortiAPIPatch(o["interface"]) {
+					return fmt.Errorf("Error reading interface: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -1122,7 +1117,6 @@ func flattenRouterRipngFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fo
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandRouterRipngDefaultInformationOriginate(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -1148,7 +1142,7 @@ func expandRouterRipngDistance(d *schema.ResourceData, v interface{}, pre string
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1206,7 +1200,7 @@ func expandRouterRipngDistributeList(d *schema.ResourceData, v interface{}, pre 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1273,7 +1267,7 @@ func expandRouterRipngNeighbor(d *schema.ResourceData, v interface{}, pre string
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1322,7 +1316,7 @@ func expandRouterRipngNetwork(d *schema.ResourceData, v interface{}, pre string)
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1362,7 +1356,7 @@ func expandRouterRipngAggregateAddress(d *schema.ResourceData, v interface{}, pr
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1402,7 +1396,7 @@ func expandRouterRipngOffsetList(d *schema.ResourceData, v interface{}, pre stri
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1478,7 +1472,7 @@ func expandRouterRipngPassiveInterface(d *schema.ResourceData, v interface{}, pr
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1509,7 +1503,7 @@ func expandRouterRipngRedistribute(d *schema.ResourceData, v interface{}, pre st
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1579,7 +1573,7 @@ func expandRouterRipngInterface(d *schema.ResourceData, v interface{}, pre strin
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1625,10 +1619,8 @@ func expandRouterRipngInterfaceFlags(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
-
 func getObjectRouterRipng(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("default_information_originate"); ok {
 		t, err := expandRouterRipngDefaultInformationOriginate(d, v, "default_information_originate")
@@ -1765,7 +1757,5 @@ func getObjectRouterRipng(d *schema.ResourceData) (*map[string]interface{}, erro
 		}
 	}
 
-
 	return &obj, nil
 }
-

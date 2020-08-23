@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,35 +5,36 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSystemFipsCc_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSystemFipsCc_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSystemFipsCc_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSystemFipsCcConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSystemFipsCcExists("fortios_system_fipscc.trname"),
-                    resource.TestCheckResourceAttr("fortios_system_fipscc.trname", "entropy_token", "enable"),
-                    resource.TestCheckResourceAttr("fortios_system_fipscc.trname", "key_generation_self_test", "disable"),
-                    resource.TestCheckResourceAttr("fortios_system_fipscc.trname", "self_test_period", "1440"),
-                    resource.TestCheckResourceAttr("fortios_system_fipscc.trname", "status", "disable"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSystemFipsCcConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSystemFipsCcExists("fortios_system_fipscc.trname"),
+					resource.TestCheckResourceAttr("fortios_system_fipscc.trname", "entropy_token", "enable"),
+					resource.TestCheckResourceAttr("fortios_system_fipscc.trname", "key_generation_self_test", "disable"),
+					resource.TestCheckResourceAttr("fortios_system_fipscc.trname", "self_test_period", "1440"),
+					resource.TestCheckResourceAttr("fortios_system_fipscc.trname", "status", "disable"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSystemFipsCcExists(n string) resource.TestCheckFunc {

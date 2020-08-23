@@ -30,55 +30,55 @@ func resourceWirelessControllerHotspot20H2QpWanMetric() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"link_status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"symmetric_wan_link": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"link_at_capacity": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"uplink_speed": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"downlink_speed": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"uplink_load": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"downlink_load": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"load_measurement_duration": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
@@ -173,7 +173,6 @@ func resourceWirelessControllerHotspot20H2QpWanMetricRead(d *schema.ResourceData
 	return nil
 }
 
-
 func flattenWirelessControllerHotspot20H2QpWanMetricName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -210,10 +209,8 @@ func flattenWirelessControllerHotspot20H2QpWanMetricLoadMeasurementDuration(v in
 	return v
 }
 
-
 func refreshObjectWirelessControllerHotspot20H2QpWanMetric(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenWirelessControllerHotspot20H2QpWanMetricName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -269,7 +266,6 @@ func refreshObjectWirelessControllerHotspot20H2QpWanMetric(d *schema.ResourceDat
 		}
 	}
 
-
 	return nil
 }
 
@@ -278,7 +274,6 @@ func flattenWirelessControllerHotspot20H2QpWanMetricFortiTestDebug(d *schema.Res
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandWirelessControllerHotspot20H2QpWanMetricName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -316,10 +311,8 @@ func expandWirelessControllerHotspot20H2QpWanMetricLoadMeasurementDuration(d *sc
 	return v, nil
 }
 
-
 func getObjectWirelessControllerHotspot20H2QpWanMetric(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandWirelessControllerHotspot20H2QpWanMetricName(d, v, "name")
@@ -402,7 +395,5 @@ func getObjectWirelessControllerHotspot20H2QpWanMetric(d *schema.ResourceData) (
 		}
 	}
 
-
 	return &obj, nil
 }
-

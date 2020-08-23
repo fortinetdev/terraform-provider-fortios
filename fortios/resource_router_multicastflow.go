@@ -30,34 +30,34 @@ func resourceRouterMulticastFlow() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"comments": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"flows": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"group_addr": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"source_addr": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -157,7 +157,6 @@ func resourceRouterMulticastFlowRead(d *schema.ResourceData, m interface{}) erro
 	return nil
 }
 
-
 func flattenRouterMulticastFlowName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -220,10 +219,8 @@ func flattenRouterMulticastFlowFlowsSourceAddr(v interface{}, d *schema.Resource
 	return v
 }
 
-
 func refreshObjectRouterMulticastFlow(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenRouterMulticastFlowName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -237,22 +234,21 @@ func refreshObjectRouterMulticastFlow(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("flows", flattenRouterMulticastFlowFlows(o["flows"], d, "flows")); err != nil {
-            if !fortiAPIPatch(o["flows"]) {
-                return fmt.Errorf("Error reading flows: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("flows"); ok {
-            if err = d.Set("flows", flattenRouterMulticastFlowFlows(o["flows"], d, "flows")); err != nil {
-                if !fortiAPIPatch(o["flows"]) {
-                    return fmt.Errorf("Error reading flows: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("flows", flattenRouterMulticastFlowFlows(o["flows"], d, "flows")); err != nil {
+			if !fortiAPIPatch(o["flows"]) {
+				return fmt.Errorf("Error reading flows: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("flows"); ok {
+			if err = d.Set("flows", flattenRouterMulticastFlowFlows(o["flows"], d, "flows")); err != nil {
+				if !fortiAPIPatch(o["flows"]) {
+					return fmt.Errorf("Error reading flows: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -262,7 +258,6 @@ func flattenRouterMulticastFlowFortiTestDebug(d *schema.ResourceData, fosdebugsn
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandRouterMulticastFlowName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -284,7 +279,7 @@ func expandRouterMulticastFlowFlows(d *schema.ResourceData, v interface{}, pre s
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -321,10 +316,8 @@ func expandRouterMulticastFlowFlowsSourceAddr(d *schema.ResourceData, v interfac
 	return v, nil
 }
 
-
 func getObjectRouterMulticastFlow(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandRouterMulticastFlowName(d, v, "name")
@@ -353,7 +346,5 @@ func getObjectRouterMulticastFlow(d *schema.ResourceData) (*map[string]interface
 		}
 	}
 
-
 	return &obj, nil
 }
-

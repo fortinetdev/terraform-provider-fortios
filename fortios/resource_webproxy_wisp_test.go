@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,37 +5,38 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSWebProxyWisp_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSWebProxyWisp_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSWebProxyWisp_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSWebProxyWispConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSWebProxyWispExists("fortios_webproxy_wisp.trname"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_wisp.trname", "max_connections", "64"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_wisp.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_webproxy_wisp.trname", "outgoing_ip", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_wisp.trname", "server_ip", "1.1.1.1"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_wisp.trname", "server_port", "15868"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_wisp.trname", "timeout", "5"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSWebProxyWispConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSWebProxyWispExists("fortios_webproxy_wisp.trname"),
+					resource.TestCheckResourceAttr("fortios_webproxy_wisp.trname", "max_connections", "64"),
+					resource.TestCheckResourceAttr("fortios_webproxy_wisp.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_webproxy_wisp.trname", "outgoing_ip", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_webproxy_wisp.trname", "server_ip", "1.1.1.1"),
+					resource.TestCheckResourceAttr("fortios_webproxy_wisp.trname", "server_port", "15868"),
+					resource.TestCheckResourceAttr("fortios_webproxy_wisp.trname", "timeout", "5"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSWebProxyWispExists(n string) resource.TestCheckFunc {

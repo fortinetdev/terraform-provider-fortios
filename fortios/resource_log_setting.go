@@ -30,110 +30,110 @@ func resourceLogSetting() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"resolve_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"resolve_port": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"log_user_in_upper": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"fwpolicy_implicit_log": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"fwpolicy6_implicit_log": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"log_invalid_packet": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"local_in_allow": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"local_in_deny_unicast": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"local_in_deny_broadcast": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"local_out": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"daemon_log": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"neighbor_event": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"brief_traffic_format": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"user_anonymize": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"expolicy_implicit_log": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"log_policy_comment": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"log_policy_name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"faz_override": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"syslog_override": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"custom_log_fields": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"field_id": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -141,7 +141,6 @@ func resourceLogSetting() *schema.Resource {
 		},
 	}
 }
-
 
 func resourceLogSettingUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -207,7 +206,6 @@ func resourceLogSettingRead(d *schema.ResourceData, m interface{}) error {
 	}
 	return nil
 }
-
 
 func flattenLogSettingResolveIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -321,10 +319,8 @@ func flattenLogSettingCustomLogFieldsFieldId(v interface{}, d *schema.ResourceDa
 	return v
 }
 
-
 func refreshObjectLogSetting(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("resolve_ip", flattenLogSettingResolveIp(o["resolve-ip"], d, "resolve_ip")); err != nil {
 		if !fortiAPIPatch(o["resolve-ip"]) {
@@ -440,22 +436,21 @@ func refreshObjectLogSetting(d *schema.ResourceData, o map[string]interface{}) e
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("custom_log_fields", flattenLogSettingCustomLogFields(o["custom-log-fields"], d, "custom_log_fields")); err != nil {
-            if !fortiAPIPatch(o["custom-log-fields"]) {
-                return fmt.Errorf("Error reading custom_log_fields: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("custom_log_fields"); ok {
-            if err = d.Set("custom_log_fields", flattenLogSettingCustomLogFields(o["custom-log-fields"], d, "custom_log_fields")); err != nil {
-                if !fortiAPIPatch(o["custom-log-fields"]) {
-                    return fmt.Errorf("Error reading custom_log_fields: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("custom_log_fields", flattenLogSettingCustomLogFields(o["custom-log-fields"], d, "custom_log_fields")); err != nil {
+			if !fortiAPIPatch(o["custom-log-fields"]) {
+				return fmt.Errorf("Error reading custom_log_fields: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("custom_log_fields"); ok {
+			if err = d.Set("custom_log_fields", flattenLogSettingCustomLogFields(o["custom-log-fields"], d, "custom_log_fields")); err != nil {
+				if !fortiAPIPatch(o["custom-log-fields"]) {
+					return fmt.Errorf("Error reading custom_log_fields: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -465,7 +460,6 @@ func flattenLogSettingFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fos
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandLogSettingResolveIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -555,7 +549,7 @@ func expandLogSettingCustomLogFields(d *schema.ResourceData, v interface{}, pre 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "field_id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -574,10 +568,8 @@ func expandLogSettingCustomLogFieldsFieldId(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
-
 func getObjectLogSetting(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("resolve_ip"); ok {
 		t, err := expandLogSettingResolveIp(d, v, "resolve_ip")
@@ -759,7 +751,5 @@ func getObjectLogSetting(d *schema.ResourceData) (*map[string]interface{}, error
 		}
 	}
 
-
 	return &obj, nil
 }
-

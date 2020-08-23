@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,45 +5,46 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSystemSnmpUser_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSystemSnmpUser_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSystemSnmpUser_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSystemSnmpUserConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSystemSnmpUserExists("fortios_systemsnmp_user.trname"),
-                    resource.TestCheckResourceAttr("fortios_systemsnmp_user.trname", "auth_proto", "sha"),
-                    resource.TestCheckResourceAttr("fortios_systemsnmp_user.trname", "events", "cpu-high mem-low log-full intf-ip vpn-tun-up vpn-tun-down ha-switch ha-hb-failure ips-signature ips-anomaly av-virus av-oversize av-pattern av-fragmented fm-if-change bgp-established bgp-backward-transition ha-member-up ha-member-down ent-conf-change av-conserve av-bypass av-oversize-passed av-oversize-blocked ips-pkg-update ips-fail-open faz-disconnect wc-ap-up wc-ap-down fswctl-session-up fswctl-session-down load-balance-real-server-down per-cpu-high"),
-                    resource.TestCheckResourceAttr("fortios_systemsnmp_user.trname", "ha_direct", "disable"),
-                    resource.TestCheckResourceAttr("fortios_systemsnmp_user.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_systemsnmp_user.trname", "priv_proto", "aes"),
-                    resource.TestCheckResourceAttr("fortios_systemsnmp_user.trname", "queries", "disable"),
-                    resource.TestCheckResourceAttr("fortios_systemsnmp_user.trname", "query_port", "161"),
-                    resource.TestCheckResourceAttr("fortios_systemsnmp_user.trname", "security_level", "no-auth-no-priv"),
-                    resource.TestCheckResourceAttr("fortios_systemsnmp_user.trname", "source_ip", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_systemsnmp_user.trname", "source_ipv6", "::"),
-                    resource.TestCheckResourceAttr("fortios_systemsnmp_user.trname", "status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_systemsnmp_user.trname", "trap_lport", "162"),
-                    resource.TestCheckResourceAttr("fortios_systemsnmp_user.trname", "trap_rport", "162"),
-                    resource.TestCheckResourceAttr("fortios_systemsnmp_user.trname", "trap_status", "enable"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSystemSnmpUserConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSystemSnmpUserExists("fortios_systemsnmp_user.trname"),
+					resource.TestCheckResourceAttr("fortios_systemsnmp_user.trname", "auth_proto", "sha"),
+					resource.TestCheckResourceAttr("fortios_systemsnmp_user.trname", "events", "cpu-high mem-low log-full intf-ip vpn-tun-up vpn-tun-down ha-switch ha-hb-failure ips-signature ips-anomaly av-virus av-oversize av-pattern av-fragmented fm-if-change bgp-established bgp-backward-transition ha-member-up ha-member-down ent-conf-change av-conserve av-bypass av-oversize-passed av-oversize-blocked ips-pkg-update ips-fail-open faz-disconnect wc-ap-up wc-ap-down fswctl-session-up fswctl-session-down load-balance-real-server-down per-cpu-high"),
+					resource.TestCheckResourceAttr("fortios_systemsnmp_user.trname", "ha_direct", "disable"),
+					resource.TestCheckResourceAttr("fortios_systemsnmp_user.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_systemsnmp_user.trname", "priv_proto", "aes"),
+					resource.TestCheckResourceAttr("fortios_systemsnmp_user.trname", "queries", "disable"),
+					resource.TestCheckResourceAttr("fortios_systemsnmp_user.trname", "query_port", "161"),
+					resource.TestCheckResourceAttr("fortios_systemsnmp_user.trname", "security_level", "no-auth-no-priv"),
+					resource.TestCheckResourceAttr("fortios_systemsnmp_user.trname", "source_ip", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_systemsnmp_user.trname", "source_ipv6", "::"),
+					resource.TestCheckResourceAttr("fortios_systemsnmp_user.trname", "status", "disable"),
+					resource.TestCheckResourceAttr("fortios_systemsnmp_user.trname", "trap_lport", "162"),
+					resource.TestCheckResourceAttr("fortios_systemsnmp_user.trname", "trap_rport", "162"),
+					resource.TestCheckResourceAttr("fortios_systemsnmp_user.trname", "trap_status", "enable"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSystemSnmpUserExists(n string) resource.TestCheckFunc {

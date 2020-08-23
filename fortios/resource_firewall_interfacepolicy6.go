@@ -30,159 +30,159 @@ func resourceFirewallInterfacePolicy6() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"policyid": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"comments": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 1023),
-				Optional: true,
+				Optional:     true,
 			},
 			"logtraffic": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"address_type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"interface": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"srcaddr6": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"dstaddr6": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"service6": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"application_list_status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"application_list": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ips_sensor_status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ips_sensor": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"dsri": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"av_profile_status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"av_profile": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"webfilter_profile_status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"webfilter_profile": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"spamfilter_profile_status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"spamfilter_profile": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"dlp_sensor_status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"dlp_sensor": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"scan_botnet_connections": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"label": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
@@ -276,7 +276,6 @@ func resourceFirewallInterfacePolicy6Read(d *schema.ResourceData, m interface{})
 	}
 	return nil
 }
-
 
 func flattenFirewallInterfacePolicy6Policyid(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -470,10 +469,8 @@ func flattenFirewallInterfacePolicy6Label(v interface{}, d *schema.ResourceData,
 	return v
 }
 
-
 func refreshObjectFirewallInterfacePolicy6(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("policyid", flattenFirewallInterfacePolicy6Policyid(o["policyid"], d, "policyid")); err != nil {
 		if !fortiAPIPatch(o["policyid"]) {
@@ -511,53 +508,53 @@ func refreshObjectFirewallInterfacePolicy6(d *schema.ResourceData, o map[string]
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("srcaddr6", flattenFirewallInterfacePolicy6Srcaddr6(o["srcaddr6"], d, "srcaddr6")); err != nil {
-            if !fortiAPIPatch(o["srcaddr6"]) {
-                return fmt.Errorf("Error reading srcaddr6: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("srcaddr6"); ok {
-            if err = d.Set("srcaddr6", flattenFirewallInterfacePolicy6Srcaddr6(o["srcaddr6"], d, "srcaddr6")); err != nil {
-                if !fortiAPIPatch(o["srcaddr6"]) {
-                    return fmt.Errorf("Error reading srcaddr6: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("srcaddr6", flattenFirewallInterfacePolicy6Srcaddr6(o["srcaddr6"], d, "srcaddr6")); err != nil {
+			if !fortiAPIPatch(o["srcaddr6"]) {
+				return fmt.Errorf("Error reading srcaddr6: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("srcaddr6"); ok {
+			if err = d.Set("srcaddr6", flattenFirewallInterfacePolicy6Srcaddr6(o["srcaddr6"], d, "srcaddr6")); err != nil {
+				if !fortiAPIPatch(o["srcaddr6"]) {
+					return fmt.Errorf("Error reading srcaddr6: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("dstaddr6", flattenFirewallInterfacePolicy6Dstaddr6(o["dstaddr6"], d, "dstaddr6")); err != nil {
-            if !fortiAPIPatch(o["dstaddr6"]) {
-                return fmt.Errorf("Error reading dstaddr6: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("dstaddr6"); ok {
-            if err = d.Set("dstaddr6", flattenFirewallInterfacePolicy6Dstaddr6(o["dstaddr6"], d, "dstaddr6")); err != nil {
-                if !fortiAPIPatch(o["dstaddr6"]) {
-                    return fmt.Errorf("Error reading dstaddr6: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("dstaddr6", flattenFirewallInterfacePolicy6Dstaddr6(o["dstaddr6"], d, "dstaddr6")); err != nil {
+			if !fortiAPIPatch(o["dstaddr6"]) {
+				return fmt.Errorf("Error reading dstaddr6: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("dstaddr6"); ok {
+			if err = d.Set("dstaddr6", flattenFirewallInterfacePolicy6Dstaddr6(o["dstaddr6"], d, "dstaddr6")); err != nil {
+				if !fortiAPIPatch(o["dstaddr6"]) {
+					return fmt.Errorf("Error reading dstaddr6: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("service6", flattenFirewallInterfacePolicy6Service6(o["service6"], d, "service6")); err != nil {
-            if !fortiAPIPatch(o["service6"]) {
-                return fmt.Errorf("Error reading service6: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("service6"); ok {
-            if err = d.Set("service6", flattenFirewallInterfacePolicy6Service6(o["service6"], d, "service6")); err != nil {
-                if !fortiAPIPatch(o["service6"]) {
-                    return fmt.Errorf("Error reading service6: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("service6", flattenFirewallInterfacePolicy6Service6(o["service6"], d, "service6")); err != nil {
+			if !fortiAPIPatch(o["service6"]) {
+				return fmt.Errorf("Error reading service6: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("service6"); ok {
+			if err = d.Set("service6", flattenFirewallInterfacePolicy6Service6(o["service6"], d, "service6")); err != nil {
+				if !fortiAPIPatch(o["service6"]) {
+					return fmt.Errorf("Error reading service6: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("application_list_status", flattenFirewallInterfacePolicy6ApplicationListStatus(o["application-list-status"], d, "application_list_status")); err != nil {
 		if !fortiAPIPatch(o["application-list-status"]) {
@@ -649,7 +646,6 @@ func refreshObjectFirewallInterfacePolicy6(d *schema.ResourceData, o map[string]
 		}
 	}
 
-
 	return nil
 }
 
@@ -658,7 +654,6 @@ func flattenFirewallInterfacePolicy6FortiTestDebug(d *schema.ResourceData, fosde
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandFirewallInterfacePolicy6Policyid(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -696,7 +691,7 @@ func expandFirewallInterfacePolicy6Srcaddr6(d *schema.ResourceData, v interface{
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -727,7 +722,7 @@ func expandFirewallInterfacePolicy6Dstaddr6(d *schema.ResourceData, v interface{
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -758,7 +753,7 @@ func expandFirewallInterfacePolicy6Service6(d *schema.ResourceData, v interface{
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -837,10 +832,8 @@ func expandFirewallInterfacePolicy6Label(d *schema.ResourceData, v interface{}, 
 	return v, nil
 }
 
-
 func getObjectFirewallInterfacePolicy6(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("policyid"); ok {
 		t, err := expandFirewallInterfacePolicy6Policyid(d, v, "policyid")
@@ -1058,7 +1051,5 @@ func getObjectFirewallInterfacePolicy6(d *schema.ResourceData) (*map[string]inte
 		}
 	}
 
-
 	return &obj, nil
 }
-

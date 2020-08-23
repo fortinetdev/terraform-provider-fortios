@@ -30,14 +30,14 @@ func resourceUserAdgrp() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 511),
-				Required: true,
+				Required:     true,
 			},
 			"server_name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 		},
 	}
@@ -132,7 +132,6 @@ func resourceUserAdgrpRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenUserAdgrpName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -141,10 +140,8 @@ func flattenUserAdgrpServerName(v interface{}, d *schema.ResourceData, pre strin
 	return v
 }
 
-
 func refreshObjectUserAdgrp(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenUserAdgrpName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -158,7 +155,6 @@ func refreshObjectUserAdgrp(d *schema.ResourceData, o map[string]interface{}) er
 		}
 	}
 
-
 	return nil
 }
 
@@ -168,7 +164,6 @@ func flattenUserAdgrpFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosd
 	log.Printf("ER List: %v", e)
 }
 
-
 func expandUserAdgrpName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
 }
@@ -177,10 +172,8 @@ func expandUserAdgrpServerName(d *schema.ResourceData, v interface{}, pre string
 	return v, nil
 }
 
-
 func getObjectUserAdgrp(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandUserAdgrpName(d, v, "name")
@@ -200,7 +193,5 @@ func getObjectUserAdgrp(d *schema.ResourceData) (*map[string]interface{}, error)
 		}
 	}
 
-
 	return &obj, nil
 }
-

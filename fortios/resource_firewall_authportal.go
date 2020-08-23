@@ -30,41 +30,40 @@ func resourceFirewallAuthPortal() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"groups": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"portal_addr": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"portal_addr6": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"identity_based_route": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
 }
-
 
 func resourceFirewallAuthPortalUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -131,7 +130,6 @@ func resourceFirewallAuthPortalRead(d *schema.ResourceData, m interface{}) error
 	return nil
 }
 
-
 func flattenFirewallAuthPortalGroups(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
 	if v == nil {
 		return nil
@@ -180,26 +178,24 @@ func flattenFirewallAuthPortalIdentityBasedRoute(v interface{}, d *schema.Resour
 	return v
 }
 
-
 func refreshObjectFirewallAuthPortal(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
-
-    if isImportTable() {
-        if err = d.Set("groups", flattenFirewallAuthPortalGroups(o["groups"], d, "groups")); err != nil {
-            if !fortiAPIPatch(o["groups"]) {
-                return fmt.Errorf("Error reading groups: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("groups"); ok {
-            if err = d.Set("groups", flattenFirewallAuthPortalGroups(o["groups"], d, "groups")); err != nil {
-                if !fortiAPIPatch(o["groups"]) {
-                    return fmt.Errorf("Error reading groups: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("groups", flattenFirewallAuthPortalGroups(o["groups"], d, "groups")); err != nil {
+			if !fortiAPIPatch(o["groups"]) {
+				return fmt.Errorf("Error reading groups: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("groups"); ok {
+			if err = d.Set("groups", flattenFirewallAuthPortalGroups(o["groups"], d, "groups")); err != nil {
+				if !fortiAPIPatch(o["groups"]) {
+					return fmt.Errorf("Error reading groups: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("portal_addr", flattenFirewallAuthPortalPortalAddr(o["portal-addr"], d, "portal_addr")); err != nil {
 		if !fortiAPIPatch(o["portal-addr"]) {
@@ -219,7 +215,6 @@ func refreshObjectFirewallAuthPortal(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
-
 	return nil
 }
 
@@ -228,7 +223,6 @@ func flattenFirewallAuthPortalFortiTestDebug(d *schema.ResourceData, fosdebugsn 
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandFirewallAuthPortalGroups(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	l := v.([]interface{})
@@ -242,7 +236,7 @@ func expandFirewallAuthPortalGroups(d *schema.ResourceData, v interface{}, pre s
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -273,10 +267,8 @@ func expandFirewallAuthPortalIdentityBasedRoute(d *schema.ResourceData, v interf
 	return v, nil
 }
 
-
 func getObjectFirewallAuthPortal(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("groups"); ok {
 		t, err := expandFirewallAuthPortalGroups(d, v, "groups")
@@ -314,7 +306,5 @@ func getObjectFirewallAuthPortal(d *schema.ResourceData) (*map[string]interface{
 		}
 	}
 
-
 	return &obj, nil
 }
-

@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,35 +5,36 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSystemSnmpSysinfo_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSystemSnmpSysinfo_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSystemSnmpSysinfo_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSystemSnmpSysinfoConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSystemSnmpSysinfoExists("fortios_systemsnmp_sysinfo.trname"),
-                    resource.TestCheckResourceAttr("fortios_systemsnmp_sysinfo.trname", "status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_systemsnmp_sysinfo.trname", "trap_high_cpu_threshold", "80"),
-                    resource.TestCheckResourceAttr("fortios_systemsnmp_sysinfo.trname", "trap_log_full_threshold", "90"),
-                    resource.TestCheckResourceAttr("fortios_systemsnmp_sysinfo.trname", "trap_low_memory_threshold", "80"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSystemSnmpSysinfoConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSystemSnmpSysinfoExists("fortios_systemsnmp_sysinfo.trname"),
+					resource.TestCheckResourceAttr("fortios_systemsnmp_sysinfo.trname", "status", "disable"),
+					resource.TestCheckResourceAttr("fortios_systemsnmp_sysinfo.trname", "trap_high_cpu_threshold", "80"),
+					resource.TestCheckResourceAttr("fortios_systemsnmp_sysinfo.trname", "trap_log_full_threshold", "90"),
+					resource.TestCheckResourceAttr("fortios_systemsnmp_sysinfo.trname", "trap_low_memory_threshold", "80"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSystemSnmpSysinfoExists(n string) resource.TestCheckFunc {

@@ -30,38 +30,37 @@ func resourceDlpSettings() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"storage_device": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"size": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(16, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"db_mode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"cache_mem_percent": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 15),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"chunk_size": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(100, 100000),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
 }
-
 
 func resourceDlpSettingsUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -128,7 +127,6 @@ func resourceDlpSettingsRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenDlpSettingsStorageDevice(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -149,10 +147,8 @@ func flattenDlpSettingsChunkSize(v interface{}, d *schema.ResourceData, pre stri
 	return v
 }
 
-
 func refreshObjectDlpSettings(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("storage_device", flattenDlpSettingsStorageDevice(o["storage-device"], d, "storage_device")); err != nil {
 		if !fortiAPIPatch(o["storage-device"]) {
@@ -184,7 +180,6 @@ func refreshObjectDlpSettings(d *schema.ResourceData, o map[string]interface{}) 
 		}
 	}
 
-
 	return nil
 }
 
@@ -193,7 +188,6 @@ func flattenDlpSettingsFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fo
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandDlpSettingsStorageDevice(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -215,10 +209,8 @@ func expandDlpSettingsChunkSize(d *schema.ResourceData, v interface{}, pre strin
 	return v, nil
 }
 
-
 func getObjectDlpSettings(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("storage_device"); ok {
 		t, err := expandDlpSettingsStorageDevice(d, v, "storage_device")
@@ -265,7 +257,5 @@ func getObjectDlpSettings(d *schema.ResourceData) (*map[string]interface{}, erro
 		}
 	}
 
-
 	return &obj, nil
 }
-

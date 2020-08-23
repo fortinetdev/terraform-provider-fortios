@@ -30,24 +30,24 @@ func resourceSystemIpv6Tunnel() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"source": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"destination": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"interface": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
@@ -142,7 +142,6 @@ func resourceSystemIpv6TunnelRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenSystemIpv6TunnelName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -159,10 +158,8 @@ func flattenSystemIpv6TunnelInterface(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
-
 func refreshObjectSystemIpv6Tunnel(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenSystemIpv6TunnelName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -188,7 +185,6 @@ func refreshObjectSystemIpv6Tunnel(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-
 	return nil
 }
 
@@ -197,7 +193,6 @@ func flattenSystemIpv6TunnelFortiTestDebug(d *schema.ResourceData, fosdebugsn in
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemIpv6TunnelName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -215,10 +210,8 @@ func expandSystemIpv6TunnelInterface(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
-
 func getObjectSystemIpv6Tunnel(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandSystemIpv6TunnelName(d, v, "name")
@@ -256,7 +249,5 @@ func getObjectSystemIpv6Tunnel(d *schema.ResourceData) (*map[string]interface{},
 		}
 	}
 
-
 	return &obj, nil
 }
-

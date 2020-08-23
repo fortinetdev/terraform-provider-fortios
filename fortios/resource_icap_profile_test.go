@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,42 +5,43 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSIcapProfile_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSIcapProfile_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSIcapProfile_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSIcapProfileConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSIcapProfileExists("fortios_icap_profile.trname"),
-                    resource.TestCheckResourceAttr("fortios_icap_profile.trname", "methods", "delete get head options post put trace other"),
-                    resource.TestCheckResourceAttr("fortios_icap_profile.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_icap_profile.trname", "request", "disable"),
-                    resource.TestCheckResourceAttr("fortios_icap_profile.trname", "request_failure", "error"),
-                    resource.TestCheckResourceAttr("fortios_icap_profile.trname", "response", "disable"),
-                    resource.TestCheckResourceAttr("fortios_icap_profile.trname", "response_failure", "error"),
-                    resource.TestCheckResourceAttr("fortios_icap_profile.trname", "response_req_hdr", "disable"),
-                    resource.TestCheckResourceAttr("fortios_icap_profile.trname", "streaming_content_bypass", "disable"),
-                    resource.TestCheckResourceAttr("fortios_icap_profile.trname", "icap_headers.0.base64_encoding", "disable"),
-                    resource.TestCheckResourceAttr("fortios_icap_profile.trname", "icap_headers.0.content", "$user"),
-                    resource.TestCheckResourceAttr("fortios_icap_profile.trname", "icap_headers.0.name", "X-Authenticated-User"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSIcapProfileConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSIcapProfileExists("fortios_icap_profile.trname"),
+					resource.TestCheckResourceAttr("fortios_icap_profile.trname", "methods", "delete get head options post put trace other"),
+					resource.TestCheckResourceAttr("fortios_icap_profile.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_icap_profile.trname", "request", "disable"),
+					resource.TestCheckResourceAttr("fortios_icap_profile.trname", "request_failure", "error"),
+					resource.TestCheckResourceAttr("fortios_icap_profile.trname", "response", "disable"),
+					resource.TestCheckResourceAttr("fortios_icap_profile.trname", "response_failure", "error"),
+					resource.TestCheckResourceAttr("fortios_icap_profile.trname", "response_req_hdr", "disable"),
+					resource.TestCheckResourceAttr("fortios_icap_profile.trname", "streaming_content_bypass", "disable"),
+					resource.TestCheckResourceAttr("fortios_icap_profile.trname", "icap_headers.0.base64_encoding", "disable"),
+					resource.TestCheckResourceAttr("fortios_icap_profile.trname", "icap_headers.0.content", "$user"),
+					resource.TestCheckResourceAttr("fortios_icap_profile.trname", "icap_headers.0.name", "X-Authenticated-User"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSIcapProfileExists(n string) resource.TestCheckFunc {

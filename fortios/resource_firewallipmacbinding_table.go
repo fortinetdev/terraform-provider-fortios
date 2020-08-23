@@ -30,28 +30,28 @@ func resourceFirewallIpmacbindingTable() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"seq_num": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"mac": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
@@ -148,7 +148,6 @@ func resourceFirewallIpmacbindingTableRead(d *schema.ResourceData, m interface{}
 	return nil
 }
 
-
 func flattenFirewallIpmacbindingTableSeqNum(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -169,10 +168,8 @@ func flattenFirewallIpmacbindingTableStatus(v interface{}, d *schema.ResourceDat
 	return v
 }
 
-
 func refreshObjectFirewallIpmacbindingTable(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("seq_num", flattenFirewallIpmacbindingTableSeqNum(o["seq-num"], d, "seq_num")); err != nil {
 		if !fortiAPIPatch(o["seq-num"]) {
@@ -204,7 +201,6 @@ func refreshObjectFirewallIpmacbindingTable(d *schema.ResourceData, o map[string
 		}
 	}
 
-
 	return nil
 }
 
@@ -213,7 +209,6 @@ func flattenFirewallIpmacbindingTableFortiTestDebug(d *schema.ResourceData, fosd
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandFirewallIpmacbindingTableSeqNum(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -235,10 +230,8 @@ func expandFirewallIpmacbindingTableStatus(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
-
 func getObjectFirewallIpmacbindingTable(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("seq_num"); ok {
 		t, err := expandFirewallIpmacbindingTableSeqNum(d, v, "seq_num")
@@ -285,7 +278,5 @@ func getObjectFirewallIpmacbindingTable(d *schema.ResourceData) (*map[string]int
 		}
 	}
 
-
 	return &obj, nil
 }
-

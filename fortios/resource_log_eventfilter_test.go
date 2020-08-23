@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,42 +5,43 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSLogEventfilter_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSLogEventfilter_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSLogEventfilter_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSLogEventfilterConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSLogEventfilterExists("fortios_log_eventfilter.trname"),
-                    resource.TestCheckResourceAttr("fortios_log_eventfilter.trname", "compliance_check", "enable"),
-                    resource.TestCheckResourceAttr("fortios_log_eventfilter.trname", "endpoint", "enable"),
-                    resource.TestCheckResourceAttr("fortios_log_eventfilter.trname", "event", "enable"),
-                    resource.TestCheckResourceAttr("fortios_log_eventfilter.trname", "ha", "enable"),
-                    resource.TestCheckResourceAttr("fortios_log_eventfilter.trname", "router", "enable"),
-                    resource.TestCheckResourceAttr("fortios_log_eventfilter.trname", "security_rating", "enable"),
-                    resource.TestCheckResourceAttr("fortios_log_eventfilter.trname", "system", "enable"),
-                    resource.TestCheckResourceAttr("fortios_log_eventfilter.trname", "user", "enable"),
-                    resource.TestCheckResourceAttr("fortios_log_eventfilter.trname", "vpn", "enable"),
-                    resource.TestCheckResourceAttr("fortios_log_eventfilter.trname", "wan_opt", "enable"),
-                    resource.TestCheckResourceAttr("fortios_log_eventfilter.trname", "wireless_activity", "enable"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSLogEventfilterConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSLogEventfilterExists("fortios_log_eventfilter.trname"),
+					resource.TestCheckResourceAttr("fortios_log_eventfilter.trname", "compliance_check", "enable"),
+					resource.TestCheckResourceAttr("fortios_log_eventfilter.trname", "endpoint", "enable"),
+					resource.TestCheckResourceAttr("fortios_log_eventfilter.trname", "event", "enable"),
+					resource.TestCheckResourceAttr("fortios_log_eventfilter.trname", "ha", "enable"),
+					resource.TestCheckResourceAttr("fortios_log_eventfilter.trname", "router", "enable"),
+					resource.TestCheckResourceAttr("fortios_log_eventfilter.trname", "security_rating", "enable"),
+					resource.TestCheckResourceAttr("fortios_log_eventfilter.trname", "system", "enable"),
+					resource.TestCheckResourceAttr("fortios_log_eventfilter.trname", "user", "enable"),
+					resource.TestCheckResourceAttr("fortios_log_eventfilter.trname", "vpn", "enable"),
+					resource.TestCheckResourceAttr("fortios_log_eventfilter.trname", "wan_opt", "enable"),
+					resource.TestCheckResourceAttr("fortios_log_eventfilter.trname", "wireless_activity", "enable"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSLogEventfilterExists(n string) resource.TestCheckFunc {

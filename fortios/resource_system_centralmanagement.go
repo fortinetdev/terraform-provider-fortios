@@ -30,125 +30,124 @@ func resourceSystemCentralManagement() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"mode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"schedule_config_restore": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"schedule_script_restore": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"allow_push_configuration": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"allow_push_firmware": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"allow_remote_firmware_upgrade": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"allow_monitor": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"serial_number": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"fmg": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"fmg_source_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"fmg_source_ip6": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"vdom": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"server_list": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"server_type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"addr_type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"server_address": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"server_address6": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"fqdn": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"include_default_servers": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"enc_algorithm": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceSystemCentralManagementUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -214,7 +213,6 @@ func resourceSystemCentralManagementRead(d *schema.ResourceData, m interface{}) 
 	}
 	return nil
 }
-
 
 func flattenSystemCentralManagementMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -357,10 +355,8 @@ func flattenSystemCentralManagementEncAlgorithm(v interface{}, d *schema.Resourc
 	return v
 }
 
-
 func refreshObjectSystemCentralManagement(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("mode", flattenSystemCentralManagementMode(o["mode"], d, "mode")); err != nil {
 		if !fortiAPIPatch(o["mode"]) {
@@ -440,21 +436,21 @@ func refreshObjectSystemCentralManagement(d *schema.ResourceData, o map[string]i
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("server_list", flattenSystemCentralManagementServerList(o["server-list"], d, "server_list")); err != nil {
-            if !fortiAPIPatch(o["server-list"]) {
-                return fmt.Errorf("Error reading server_list: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("server_list"); ok {
-            if err = d.Set("server_list", flattenSystemCentralManagementServerList(o["server-list"], d, "server_list")); err != nil {
-                if !fortiAPIPatch(o["server-list"]) {
-                    return fmt.Errorf("Error reading server_list: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("server_list", flattenSystemCentralManagementServerList(o["server-list"], d, "server_list")); err != nil {
+			if !fortiAPIPatch(o["server-list"]) {
+				return fmt.Errorf("Error reading server_list: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("server_list"); ok {
+			if err = d.Set("server_list", flattenSystemCentralManagementServerList(o["server-list"], d, "server_list")); err != nil {
+				if !fortiAPIPatch(o["server-list"]) {
+					return fmt.Errorf("Error reading server_list: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("include_default_servers", flattenSystemCentralManagementIncludeDefaultServers(o["include-default-servers"], d, "include_default_servers")); err != nil {
 		if !fortiAPIPatch(o["include-default-servers"]) {
@@ -468,7 +464,6 @@ func refreshObjectSystemCentralManagement(d *schema.ResourceData, o map[string]i
 		}
 	}
 
-
 	return nil
 }
 
@@ -477,7 +472,6 @@ func flattenSystemCentralManagementFortiTestDebug(d *schema.ResourceData, fosdeb
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemCentralManagementMode(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -543,7 +537,7 @@ func expandSystemCentralManagementServerList(d *schema.ResourceData, v interface
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -615,10 +609,8 @@ func expandSystemCentralManagementEncAlgorithm(d *schema.ResourceData, v interfa
 	return v, nil
 }
 
-
 func getObjectSystemCentralManagement(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("mode"); ok {
 		t, err := expandSystemCentralManagementMode(d, v, "mode")
@@ -764,7 +756,5 @@ func getObjectSystemCentralManagement(d *schema.ResourceData) (*map[string]inter
 		}
 	}
 
-
 	return &obj, nil
 }
-

@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,37 +5,38 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSystemAutoScript_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSystemAutoScript_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSystemAutoScript_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSystemAutoScriptConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSystemAutoScriptExists("fortios_system_autoscript.trname"),
-                    resource.TestCheckResourceAttr("fortios_system_autoscript.trname", "interval", "3"),
-                    resource.TestCheckResourceAttr("fortios_system_autoscript.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_system_autoscript.trname", "output_size", "10"),
-                    resource.TestCheckResourceAttr("fortios_system_autoscript.trname", "repeat", "2"),
-                    resource.TestCheckResourceAttr("fortios_system_autoscript.trname", "script", "action"),
-                    resource.TestCheckResourceAttr("fortios_system_autoscript.trname", "start", "manual"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSystemAutoScriptConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSystemAutoScriptExists("fortios_system_autoscript.trname"),
+					resource.TestCheckResourceAttr("fortios_system_autoscript.trname", "interval", "3"),
+					resource.TestCheckResourceAttr("fortios_system_autoscript.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_system_autoscript.trname", "output_size", "10"),
+					resource.TestCheckResourceAttr("fortios_system_autoscript.trname", "repeat", "2"),
+					resource.TestCheckResourceAttr("fortios_system_autoscript.trname", "script", "action"),
+					resource.TestCheckResourceAttr("fortios_system_autoscript.trname", "start", "manual"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSystemAutoScriptExists(n string) resource.TestCheckFunc {

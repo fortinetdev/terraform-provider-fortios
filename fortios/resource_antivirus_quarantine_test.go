@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,39 +5,40 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSAntivirusQuarantine_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSAntivirusQuarantine_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSAntivirusQuarantine_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSAntivirusQuarantineConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSAntivirusQuarantineExists("fortios_antivirus_quarantine.trname"),
-                    resource.TestCheckResourceAttr("fortios_antivirus_quarantine.trname", "agelimit", "0"),
-                    resource.TestCheckResourceAttr("fortios_antivirus_quarantine.trname", "destination", "disk"),
-                    resource.TestCheckResourceAttr("fortios_antivirus_quarantine.trname", "lowspace", "ovrw-old"),
-                    resource.TestCheckResourceAttr("fortios_antivirus_quarantine.trname", "maxfilesize", "0"),
-                    resource.TestCheckResourceAttr("fortios_antivirus_quarantine.trname", "quarantine_quota", "0"),
-                    resource.TestCheckResourceAttr("fortios_antivirus_quarantine.trname", "store_blocked", "imap smtp pop3 http ftp nntp imaps smtps pop3s ftps mapi cifs"),
-                    resource.TestCheckResourceAttr("fortios_antivirus_quarantine.trname", "store_heuristic", "imap smtp pop3 http ftp nntp imaps smtps pop3s https ftps mapi cifs"),
-                    resource.TestCheckResourceAttr("fortios_antivirus_quarantine.trname", "store_infected", "imap smtp pop3 http ftp nntp imaps smtps pop3s https ftps mapi cifs"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSAntivirusQuarantineConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSAntivirusQuarantineExists("fortios_antivirus_quarantine.trname"),
+					resource.TestCheckResourceAttr("fortios_antivirus_quarantine.trname", "agelimit", "0"),
+					resource.TestCheckResourceAttr("fortios_antivirus_quarantine.trname", "destination", "disk"),
+					resource.TestCheckResourceAttr("fortios_antivirus_quarantine.trname", "lowspace", "ovrw-old"),
+					resource.TestCheckResourceAttr("fortios_antivirus_quarantine.trname", "maxfilesize", "0"),
+					resource.TestCheckResourceAttr("fortios_antivirus_quarantine.trname", "quarantine_quota", "0"),
+					resource.TestCheckResourceAttr("fortios_antivirus_quarantine.trname", "store_blocked", "imap smtp pop3 http ftp nntp imaps smtps pop3s ftps mapi cifs"),
+					resource.TestCheckResourceAttr("fortios_antivirus_quarantine.trname", "store_heuristic", "imap smtp pop3 http ftp nntp imaps smtps pop3s https ftps mapi cifs"),
+					resource.TestCheckResourceAttr("fortios_antivirus_quarantine.trname", "store_infected", "imap smtp pop3 http ftp nntp imaps smtps pop3s https ftps mapi cifs"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSAntivirusQuarantineExists(n string) resource.TestCheckFunc {

@@ -30,113 +30,112 @@ func resourceLogFortianalyzer3Setting() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ips_archive": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"server": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"hmac_algorithm": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"enc_algorithm": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssl_min_proto_version": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"conn_timeout": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 3600),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"monitor_keepalive_period": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 120),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"monitor_failure_retry_period": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 86400),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"mgmt_name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"faz_type": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"certificate": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"source_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"__change_ip": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"upload_option": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"upload_interval": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"upload_day": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"upload_time": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"reliable": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceLogFortianalyzer3SettingUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -202,7 +201,6 @@ func resourceLogFortianalyzer3SettingRead(d *schema.ResourceData, m interface{})
 	}
 	return nil
 }
-
 
 func flattenLogFortianalyzer3SettingStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -280,10 +278,8 @@ func flattenLogFortianalyzer3SettingReliable(v interface{}, d *schema.ResourceDa
 	return v
 }
 
-
 func refreshObjectLogFortianalyzer3Setting(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("status", flattenLogFortianalyzer3SettingStatus(o["status"], d, "status")); err != nil {
 		if !fortiAPIPatch(o["status"]) {
@@ -399,7 +395,6 @@ func refreshObjectLogFortianalyzer3Setting(d *schema.ResourceData, o map[string]
 		}
 	}
 
-
 	return nil
 }
 
@@ -408,7 +403,6 @@ func flattenLogFortianalyzer3SettingFortiTestDebug(d *schema.ResourceData, fosde
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandLogFortianalyzer3SettingStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -486,10 +480,8 @@ func expandLogFortianalyzer3SettingReliable(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
-
 func getObjectLogFortianalyzer3Setting(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("status"); ok {
 		t, err := expandLogFortianalyzer3SettingStatus(d, v, "status")
@@ -662,7 +654,5 @@ func getObjectLogFortianalyzer3Setting(d *schema.ResourceData) (*map[string]inte
 		}
 	}
 
-
 	return &obj, nil
 }
-

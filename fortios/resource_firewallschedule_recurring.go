@@ -30,28 +30,28 @@ func resourceFirewallScheduleRecurring() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
-				Required: true,
+				Required:     true,
 			},
 			"start": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"end": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"day": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"color": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 32),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
@@ -146,7 +146,6 @@ func resourceFirewallScheduleRecurringRead(d *schema.ResourceData, m interface{}
 	return nil
 }
 
-
 func flattenFirewallScheduleRecurringName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -167,10 +166,8 @@ func flattenFirewallScheduleRecurringColor(v interface{}, d *schema.ResourceData
 	return v
 }
 
-
 func refreshObjectFirewallScheduleRecurring(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenFirewallScheduleRecurringName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -202,7 +199,6 @@ func refreshObjectFirewallScheduleRecurring(d *schema.ResourceData, o map[string
 		}
 	}
 
-
 	return nil
 }
 
@@ -211,7 +207,6 @@ func flattenFirewallScheduleRecurringFortiTestDebug(d *schema.ResourceData, fosd
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandFirewallScheduleRecurringName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -233,10 +228,8 @@ func expandFirewallScheduleRecurringColor(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-
 func getObjectFirewallScheduleRecurring(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandFirewallScheduleRecurringName(d, v, "name")
@@ -283,7 +276,5 @@ func getObjectFirewallScheduleRecurring(d *schema.ResourceData) (*map[string]int
 		}
 	}
 
-
 	return &obj, nil
 }
-

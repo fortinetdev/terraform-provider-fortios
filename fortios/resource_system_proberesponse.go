@@ -30,47 +30,46 @@ func resourceSystemProbeResponse() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"http_probe_value": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 1024),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ttl_mode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"mode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"security_mode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"password": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
-				Optional: true,
+				Optional:     true,
 			},
 			"timeout": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(10, 3600),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
 }
-
 
 func resourceSystemProbeResponseUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -137,7 +136,6 @@ func resourceSystemProbeResponseRead(d *schema.ResourceData, m interface{}) erro
 	return nil
 }
 
-
 func flattenSystemProbeResponsePort(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -166,10 +164,8 @@ func flattenSystemProbeResponseTimeout(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
-
 func refreshObjectSystemProbeResponse(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("port", flattenSystemProbeResponsePort(o["port"], d, "port")); err != nil {
 		if !fortiAPIPatch(o["port"]) {
@@ -213,7 +209,6 @@ func refreshObjectSystemProbeResponse(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
-
 	return nil
 }
 
@@ -222,7 +217,6 @@ func flattenSystemProbeResponseFortiTestDebug(d *schema.ResourceData, fosdebugsn
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemProbeResponsePort(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -252,10 +246,8 @@ func expandSystemProbeResponseTimeout(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
-
 func getObjectSystemProbeResponse(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("port"); ok {
 		t, err := expandSystemProbeResponsePort(d, v, "port")
@@ -320,7 +312,5 @@ func getObjectSystemProbeResponse(d *schema.ResourceData) (*map[string]interface
 		}
 	}
 
-
 	return &obj, nil
 }
-

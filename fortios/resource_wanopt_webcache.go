@@ -30,100 +30,99 @@ func resourceWanoptWebcache() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"max_object_size": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 2147483),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"neg_resp_time": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"fresh_factor": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 100),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"max_ttl": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 5256000),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"min_ttl": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 5256000),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"default_ttl": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 5256000),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ignore_ims": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ignore_conditional": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ignore_pnc": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ignore_ie_reload": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"cache_expired": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"cache_cookie": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"reval_pnc": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"always_revalidate": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"cache_by_default": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"host_validate": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"external": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceWanoptWebcacheUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -189,7 +188,6 @@ func resourceWanoptWebcacheRead(d *schema.ResourceData, m interface{}) error {
 	}
 	return nil
 }
-
 
 func flattenWanoptWebcacheMaxObjectSize(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -259,10 +257,8 @@ func flattenWanoptWebcacheExternal(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
-
 func refreshObjectWanoptWebcache(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("max_object_size", flattenWanoptWebcacheMaxObjectSize(o["max-object-size"], d, "max_object_size")); err != nil {
 		if !fortiAPIPatch(o["max-object-size"]) {
@@ -366,7 +362,6 @@ func refreshObjectWanoptWebcache(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-
 	return nil
 }
 
@@ -375,7 +370,6 @@ func flattenWanoptWebcacheFortiTestDebug(d *schema.ResourceData, fosdebugsn int,
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandWanoptWebcacheMaxObjectSize(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -445,10 +439,8 @@ func expandWanoptWebcacheExternal(d *schema.ResourceData, v interface{}, pre str
 	return v, nil
 }
 
-
 func getObjectWanoptWebcache(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("max_object_size"); ok {
 		t, err := expandWanoptWebcacheMaxObjectSize(d, v, "max_object_size")
@@ -603,7 +595,5 @@ func getObjectWanoptWebcache(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-
 	return &obj, nil
 }
-

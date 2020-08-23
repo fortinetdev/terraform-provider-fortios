@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,40 +5,41 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSUserFsso_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSUserFsso_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSUserFsso_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSUserFssoConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSUserFssoExists("fortios_user_fsso.trname"),
-                    resource.TestCheckResourceAttr("fortios_user_fsso.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_user_fsso.trname", "port", "32381"),
-                    resource.TestCheckResourceAttr("fortios_user_fsso.trname", "port2", "8000"),
-                    resource.TestCheckResourceAttr("fortios_user_fsso.trname", "port3", "8000"),
-                    resource.TestCheckResourceAttr("fortios_user_fsso.trname", "port4", "8000"),
-                    resource.TestCheckResourceAttr("fortios_user_fsso.trname", "port5", "8000"),
-                    resource.TestCheckResourceAttr("fortios_user_fsso.trname", "server", "1.1.1.1"),
-                    resource.TestCheckResourceAttr("fortios_user_fsso.trname", "source_ip", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_user_fsso.trname", "source_ip6", "::"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSUserFssoConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSUserFssoExists("fortios_user_fsso.trname"),
+					resource.TestCheckResourceAttr("fortios_user_fsso.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_user_fsso.trname", "port", "32381"),
+					resource.TestCheckResourceAttr("fortios_user_fsso.trname", "port2", "8000"),
+					resource.TestCheckResourceAttr("fortios_user_fsso.trname", "port3", "8000"),
+					resource.TestCheckResourceAttr("fortios_user_fsso.trname", "port4", "8000"),
+					resource.TestCheckResourceAttr("fortios_user_fsso.trname", "port5", "8000"),
+					resource.TestCheckResourceAttr("fortios_user_fsso.trname", "server", "1.1.1.1"),
+					resource.TestCheckResourceAttr("fortios_user_fsso.trname", "source_ip", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_user_fsso.trname", "source_ip6", "::"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSUserFssoExists(n string) resource.TestCheckFunc {

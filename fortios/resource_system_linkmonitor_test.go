@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,52 +5,53 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSystemLinkMonitor_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSystemLinkMonitor_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSystemLinkMonitor_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSystemLinkMonitorConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSystemLinkMonitorExists("fortios_system_linkmonitor.trname"),
-                    resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "addr_mode", "ipv4"),
-                    resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "failtime", "5"),
-                    resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "gateway_ip", "2.2.2.2"),
-                    resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "gateway_ip6", "::"),
-                    resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "ha_priority", "1"),
-                    resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "http_agent", "Chrome/ Safari/"),
-                    resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "http_get", "/"),
-                    resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "interval", "1"),
-                    resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "packet_size", "64"),
-                    resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "port", "80"),
-                    resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "protocol", "ping"),
-                    resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "recoverytime", "5"),
-                    resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "security_mode", "none"),
-                    resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "source_ip", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "source_ip6", "::"),
-                    resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "srcintf", "port4"),
-                    resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "status", "enable"),
-                    resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "update_cascade_interface", "enable"),
-                    resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "update_static_route", "enable"),
-                    resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "server.0.address", "3.3.3.3"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSystemLinkMonitorConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSystemLinkMonitorExists("fortios_system_linkmonitor.trname"),
+					resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "addr_mode", "ipv4"),
+					resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "failtime", "5"),
+					resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "gateway_ip", "2.2.2.2"),
+					resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "gateway_ip6", "::"),
+					resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "ha_priority", "1"),
+					resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "http_agent", "Chrome/ Safari/"),
+					resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "http_get", "/"),
+					resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "interval", "1"),
+					resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "packet_size", "64"),
+					resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "port", "80"),
+					resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "protocol", "ping"),
+					resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "recoverytime", "5"),
+					resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "security_mode", "none"),
+					resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "source_ip", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "source_ip6", "::"),
+					resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "srcintf", "port4"),
+					resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "status", "enable"),
+					resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "update_cascade_interface", "enable"),
+					resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "update_static_route", "enable"),
+					resource.TestCheckResourceAttr("fortios_system_linkmonitor.trname", "server.0.address", "3.3.3.3"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSystemLinkMonitorExists(n string) resource.TestCheckFunc {

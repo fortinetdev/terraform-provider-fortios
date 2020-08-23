@@ -30,37 +30,36 @@ func resourceSystemAutoupdateTunneling() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"address": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"username": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 49),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"password": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
-				Optional: true,
+				Optional:     true,
 			},
 		},
 	}
 }
-
 
 func resourceSystemAutoupdateTunnelingUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -127,7 +126,6 @@ func resourceSystemAutoupdateTunnelingRead(d *schema.ResourceData, m interface{}
 	return nil
 }
 
-
 func flattenSystemAutoupdateTunnelingStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -148,10 +146,8 @@ func flattenSystemAutoupdateTunnelingPassword(v interface{}, d *schema.ResourceD
 	return v
 }
 
-
 func refreshObjectSystemAutoupdateTunneling(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("status", flattenSystemAutoupdateTunnelingStatus(o["status"], d, "status")); err != nil {
 		if !fortiAPIPatch(o["status"]) {
@@ -183,7 +179,6 @@ func refreshObjectSystemAutoupdateTunneling(d *schema.ResourceData, o map[string
 		}
 	}
 
-
 	return nil
 }
 
@@ -192,7 +187,6 @@ func flattenSystemAutoupdateTunnelingFortiTestDebug(d *schema.ResourceData, fosd
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemAutoupdateTunnelingStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -214,10 +208,8 @@ func expandSystemAutoupdateTunnelingPassword(d *schema.ResourceData, v interface
 	return v, nil
 }
 
-
 func getObjectSystemAutoupdateTunneling(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("status"); ok {
 		t, err := expandSystemAutoupdateTunnelingStatus(d, v, "status")
@@ -264,7 +256,5 @@ func getObjectSystemAutoupdateTunneling(d *schema.ResourceData) (*map[string]int
 		}
 	}
 
-
 	return &obj, nil
 }
-

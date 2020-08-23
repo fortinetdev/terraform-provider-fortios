@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,36 +5,37 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSUserTacacs_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSUserTacacs_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSUserTacacs_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSUserTacacsConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSUserTacacsExists("fortios_user_tacacs.trname"),
-                    resource.TestCheckResourceAttr("fortios_user_tacacs.trname", "authen_type", "auto"),
-                    resource.TestCheckResourceAttr("fortios_user_tacacs.trname", "authorization", "disable"),
-                    resource.TestCheckResourceAttr("fortios_user_tacacs.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_user_tacacs.trname", "port", "2342"),
-                    resource.TestCheckResourceAttr("fortios_user_tacacs.trname", "server", "1.1.1.1"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSUserTacacsConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSUserTacacsExists("fortios_user_tacacs.trname"),
+					resource.TestCheckResourceAttr("fortios_user_tacacs.trname", "authen_type", "auto"),
+					resource.TestCheckResourceAttr("fortios_user_tacacs.trname", "authorization", "disable"),
+					resource.TestCheckResourceAttr("fortios_user_tacacs.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_user_tacacs.trname", "port", "2342"),
+					resource.TestCheckResourceAttr("fortios_user_tacacs.trname", "server", "1.1.1.1"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSUserTacacsExists(n string) resource.TestCheckFunc {

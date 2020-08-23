@@ -30,16 +30,16 @@ func resourceSwitchControllerVirtualPortPool() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"description": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
@@ -134,7 +134,6 @@ func resourceSwitchControllerVirtualPortPoolRead(d *schema.ResourceData, m inter
 	return nil
 }
 
-
 func flattenSwitchControllerVirtualPortPoolName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -143,10 +142,8 @@ func flattenSwitchControllerVirtualPortPoolDescription(v interface{}, d *schema.
 	return v
 }
 
-
 func refreshObjectSwitchControllerVirtualPortPool(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenSwitchControllerVirtualPortPoolName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -160,7 +157,6 @@ func refreshObjectSwitchControllerVirtualPortPool(d *schema.ResourceData, o map[
 		}
 	}
 
-
 	return nil
 }
 
@@ -170,7 +166,6 @@ func flattenSwitchControllerVirtualPortPoolFortiTestDebug(d *schema.ResourceData
 	log.Printf("ER List: %v", e)
 }
 
-
 func expandSwitchControllerVirtualPortPoolName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
 }
@@ -179,10 +174,8 @@ func expandSwitchControllerVirtualPortPoolDescription(d *schema.ResourceData, v 
 	return v, nil
 }
 
-
 func getObjectSwitchControllerVirtualPortPool(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandSwitchControllerVirtualPortPoolName(d, v, "name")
@@ -202,7 +195,5 @@ func getObjectSwitchControllerVirtualPortPool(d *schema.ResourceData) (*map[stri
 		}
 	}
 
-
 	return &obj, nil
 }
-

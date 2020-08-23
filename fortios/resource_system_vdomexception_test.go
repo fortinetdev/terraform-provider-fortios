@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,35 +5,36 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSystemVdomException_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSystemVdomException_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSystemVdomException_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSystemVdomExceptionConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSystemVdomExceptionExists("fortios_system_vdomexception.trname"),
-                    resource.TestCheckResourceAttr("fortios_system_vdomexception.trname", "fosid", "1"),
-                    resource.TestCheckResourceAttr("fortios_system_vdomexception.trname", "object", "log.fortianalyzer.setting"),
-                    resource.TestCheckResourceAttr("fortios_system_vdomexception.trname", "oid", "7150"),
-                    resource.TestCheckResourceAttr("fortios_system_vdomexception.trname", "scope", "all"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSystemVdomExceptionConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSystemVdomExceptionExists("fortios_system_vdomexception.trname"),
+					resource.TestCheckResourceAttr("fortios_system_vdomexception.trname", "fosid", "1"),
+					resource.TestCheckResourceAttr("fortios_system_vdomexception.trname", "object", "log.fortianalyzer.setting"),
+					resource.TestCheckResourceAttr("fortios_system_vdomexception.trname", "oid", "7150"),
+					resource.TestCheckResourceAttr("fortios_system_vdomexception.trname", "scope", "all"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSystemVdomExceptionExists(n string) resource.TestCheckFunc {

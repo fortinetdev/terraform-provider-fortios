@@ -30,215 +30,215 @@ func resourceSystemHa() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"group_id": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"group_name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 32),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"mode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"sync_packet_balance": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"password": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
-				Optional: true,
+				Optional:     true,
 			},
 			"key": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 16),
-				Optional: true,
+				Optional:     true,
 			},
 			"hbdev": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"unicast_hb": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"unicast_hb_peerip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"unicast_hb_netmask": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"session_sync_dev": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"route_ttl": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(5, 3600),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"route_wait": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 3600),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"route_hold": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 3600),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"multicast_ttl": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(5, 3600),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"load_balance_all": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"sync_config": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"encryption": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"authentication": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"hb_interval": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 20),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"hb_lost_threshold": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 60),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"hello_holddown": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(5, 300),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"gratuitous_arps": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"arps": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 60),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"arps_interval": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 20),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"session_pickup": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"session_pickup_connectionless": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"session_pickup_expectation": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"session_pickup_nat": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"session_pickup_delay": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"link_failed_signal": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"uninterruptible_upgrade": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"standalone_mgmt_vdom": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ha_mgmt_status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ha_mgmt_interfaces": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"interface": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"dst": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"gateway": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"gateway6": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -246,220 +246,219 @@ func resourceSystemHa() *schema.Resource {
 				},
 			},
 			"ha_eth_type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 4),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"hc_eth_type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 4),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"l2ep_eth_type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 4),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ha_uptime_diff_margin": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"standalone_config_sync": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"vcluster2": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"vcluster_id": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"override": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"priority": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"override_wait_time": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 3600),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"schedule": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"weight": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"cpu_threshold": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"memory_threshold": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"http_proxy_threshold": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ftp_proxy_threshold": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"imap_proxy_threshold": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"nntp_proxy_threshold": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"pop3_proxy_threshold": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"smtp_proxy_threshold": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"monitor": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"pingserver_monitor_interface": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"pingserver_failover_threshold": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 50),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"pingserver_slave_force_reset": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"pingserver_flip_timeout": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(6, 2147483647),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"vdom": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"secondary_vcluster": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"vcluster_id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"override": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"priority": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"override_wait_time": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 3600),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"monitor": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"pingserver_monitor_interface": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"pingserver_failover_threshold": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 50),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"pingserver_slave_force_reset": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"vdom": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 					},
 				},
-			},			"ha_direct": &schema.Schema{
-				Type: schema.TypeString,
+			}, "ha_direct": &schema.Schema{
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"memory_compatible_mode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"inter_cluster_session_sync": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceSystemHaUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -525,7 +524,6 @@ func resourceSystemHaRead(d *schema.ResourceData, m interface{}) error {
 	}
 	return nil
 }
-
 
 func flattenSystemHaGroupId(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -855,51 +853,50 @@ func flattenSystemHaSecondaryVcluster(v interface{}, d *schema.ResourceData, pre
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "vcluster_id"
+	pre_append = pre + ".0." + "vcluster_id"
 	if _, ok := i["vcluster-id"]; ok {
 		result["vcluster_id"] = flattenSystemHaSecondaryVclusterVclusterId(i["vcluster-id"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "override"
+	pre_append = pre + ".0." + "override"
 	if _, ok := i["override"]; ok {
 		result["override"] = flattenSystemHaSecondaryVclusterOverride(i["override"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "priority"
+	pre_append = pre + ".0." + "priority"
 	if _, ok := i["priority"]; ok {
 		result["priority"] = flattenSystemHaSecondaryVclusterPriority(i["priority"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "override_wait_time"
+	pre_append = pre + ".0." + "override_wait_time"
 	if _, ok := i["override-wait-time"]; ok {
 		result["override_wait_time"] = flattenSystemHaSecondaryVclusterOverrideWaitTime(i["override-wait-time"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "monitor"
+	pre_append = pre + ".0." + "monitor"
 	if _, ok := i["monitor"]; ok {
 		result["monitor"] = flattenSystemHaSecondaryVclusterMonitor(i["monitor"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "pingserver_monitor_interface"
+	pre_append = pre + ".0." + "pingserver_monitor_interface"
 	if _, ok := i["pingserver-monitor-interface"]; ok {
 		result["pingserver_monitor_interface"] = flattenSystemHaSecondaryVclusterPingserverMonitorInterface(i["pingserver-monitor-interface"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "pingserver_failover_threshold"
+	pre_append = pre + ".0." + "pingserver_failover_threshold"
 	if _, ok := i["pingserver-failover-threshold"]; ok {
 		result["pingserver_failover_threshold"] = flattenSystemHaSecondaryVclusterPingserverFailoverThreshold(i["pingserver-failover-threshold"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "pingserver_slave_force_reset"
+	pre_append = pre + ".0." + "pingserver_slave_force_reset"
 	if _, ok := i["pingserver-slave-force-reset"]; ok {
 		result["pingserver_slave_force_reset"] = flattenSystemHaSecondaryVclusterPingserverSlaveForceReset(i["pingserver-slave-force-reset"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "vdom"
+	pre_append = pre + ".0." + "vdom"
 	if _, ok := i["vdom"]; ok {
 		result["vdom"] = flattenSystemHaSecondaryVclusterVdom(i["vdom"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -953,10 +950,8 @@ func flattenSystemHaInterClusterSessionSync(v interface{}, d *schema.ResourceDat
 	return v
 }
 
-
 func refreshObjectSystemHa(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("group_id", flattenSystemHaGroupId(o["group-id"], d, "group_id")); err != nil {
 		if !fortiAPIPatch(o["group-id"]) {
@@ -1162,21 +1157,21 @@ func refreshObjectSystemHa(d *schema.ResourceData, o map[string]interface{}) err
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("ha_mgmt_interfaces", flattenSystemHaHaMgmtInterfaces(o["ha-mgmt-interfaces"], d, "ha_mgmt_interfaces")); err != nil {
-            if !fortiAPIPatch(o["ha-mgmt-interfaces"]) {
-                return fmt.Errorf("Error reading ha_mgmt_interfaces: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("ha_mgmt_interfaces"); ok {
-            if err = d.Set("ha_mgmt_interfaces", flattenSystemHaHaMgmtInterfaces(o["ha-mgmt-interfaces"], d, "ha_mgmt_interfaces")); err != nil {
-                if !fortiAPIPatch(o["ha-mgmt-interfaces"]) {
-                    return fmt.Errorf("Error reading ha_mgmt_interfaces: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("ha_mgmt_interfaces", flattenSystemHaHaMgmtInterfaces(o["ha-mgmt-interfaces"], d, "ha_mgmt_interfaces")); err != nil {
+			if !fortiAPIPatch(o["ha-mgmt-interfaces"]) {
+				return fmt.Errorf("Error reading ha_mgmt_interfaces: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("ha_mgmt_interfaces"); ok {
+			if err = d.Set("ha_mgmt_interfaces", flattenSystemHaHaMgmtInterfaces(o["ha-mgmt-interfaces"], d, "ha_mgmt_interfaces")); err != nil {
+				if !fortiAPIPatch(o["ha-mgmt-interfaces"]) {
+					return fmt.Errorf("Error reading ha_mgmt_interfaces: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("ha_eth_type", flattenSystemHaHaEthType(o["ha-eth-type"], d, "ha_eth_type")); err != nil {
 		if !fortiAPIPatch(o["ha-eth-type"]) {
@@ -1334,21 +1329,21 @@ func refreshObjectSystemHa(d *schema.ResourceData, o map[string]interface{}) err
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("secondary_vcluster", flattenSystemHaSecondaryVcluster(o["secondary-vcluster"], d, "secondary_vcluster")); err != nil {
-            if !fortiAPIPatch(o["secondary-vcluster"]) {
-                return fmt.Errorf("Error reading secondary_vcluster: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("secondary_vcluster"); ok {
-            if err = d.Set("secondary_vcluster", flattenSystemHaSecondaryVcluster(o["secondary-vcluster"], d, "secondary_vcluster")); err != nil {
-                if !fortiAPIPatch(o["secondary-vcluster"]) {
-                    return fmt.Errorf("Error reading secondary_vcluster: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("secondary_vcluster", flattenSystemHaSecondaryVcluster(o["secondary-vcluster"], d, "secondary_vcluster")); err != nil {
+			if !fortiAPIPatch(o["secondary-vcluster"]) {
+				return fmt.Errorf("Error reading secondary_vcluster: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("secondary_vcluster"); ok {
+			if err = d.Set("secondary_vcluster", flattenSystemHaSecondaryVcluster(o["secondary-vcluster"], d, "secondary_vcluster")); err != nil {
+				if !fortiAPIPatch(o["secondary-vcluster"]) {
+					return fmt.Errorf("Error reading secondary_vcluster: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("ha_direct", flattenSystemHaHaDirect(o["ha-direct"], d, "ha_direct")); err != nil {
 		if !fortiAPIPatch(o["ha-direct"]) {
@@ -1368,7 +1363,6 @@ func refreshObjectSystemHa(d *schema.ResourceData, o map[string]interface{}) err
 		}
 	}
 
-
 	return nil
 }
 
@@ -1377,7 +1371,6 @@ func flattenSystemHaFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosde
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemHaGroupId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -1527,7 +1520,7 @@ func expandSystemHaHaMgmtInterfaces(d *schema.ResourceData, v interface{}, pre s
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1695,40 +1688,40 @@ func expandSystemHaSecondaryVcluster(d *schema.ResourceData, v interface{}, pre 
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "vcluster_id"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "vcluster_id"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["vcluster-id"], _ = expandSystemHaSecondaryVclusterVclusterId(d, i["vcluster_id"], pre_append)
 	}
-	pre_append =  pre + ".0." + "override"
+	pre_append = pre + ".0." + "override"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["override"], _ = expandSystemHaSecondaryVclusterOverride(d, i["override"], pre_append)
 	}
-	pre_append =  pre + ".0." + "priority"
+	pre_append = pre + ".0." + "priority"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["priority"], _ = expandSystemHaSecondaryVclusterPriority(d, i["priority"], pre_append)
 	}
-	pre_append =  pre + ".0." + "override_wait_time"
+	pre_append = pre + ".0." + "override_wait_time"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["override-wait-time"], _ = expandSystemHaSecondaryVclusterOverrideWaitTime(d, i["override_wait_time"], pre_append)
 	}
-	pre_append =  pre + ".0." + "monitor"
+	pre_append = pre + ".0." + "monitor"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["monitor"], _ = expandSystemHaSecondaryVclusterMonitor(d, i["monitor"], pre_append)
 	}
-	pre_append =  pre + ".0." + "pingserver_monitor_interface"
+	pre_append = pre + ".0." + "pingserver_monitor_interface"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["pingserver-monitor-interface"], _ = expandSystemHaSecondaryVclusterPingserverMonitorInterface(d, i["pingserver_monitor_interface"], pre_append)
 	}
-	pre_append =  pre + ".0." + "pingserver_failover_threshold"
+	pre_append = pre + ".0." + "pingserver_failover_threshold"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["pingserver-failover-threshold"], _ = expandSystemHaSecondaryVclusterPingserverFailoverThreshold(d, i["pingserver_failover_threshold"], pre_append)
 	}
-	pre_append =  pre + ".0." + "pingserver_slave_force_reset"
+	pre_append = pre + ".0." + "pingserver_slave_force_reset"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["pingserver-slave-force-reset"], _ = expandSystemHaSecondaryVclusterPingserverSlaveForceReset(d, i["pingserver_slave_force_reset"], pre_append)
 	}
-	pre_append =  pre + ".0." + "vdom"
+	pre_append = pre + ".0." + "vdom"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["vdom"], _ = expandSystemHaSecondaryVclusterVdom(d, i["vdom"], pre_append)
 	}
@@ -1784,10 +1777,8 @@ func expandSystemHaInterClusterSessionSync(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
-
 func getObjectSystemHa(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("group_id"); ok {
 		t, err := expandSystemHaGroupId(d, v, "group_id")
@@ -2374,7 +2365,5 @@ func getObjectSystemHa(d *schema.ResourceData) (*map[string]interface{}, error) 
 		}
 	}
 
-
 	return &obj, nil
 }
-

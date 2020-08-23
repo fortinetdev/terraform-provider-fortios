@@ -30,85 +30,84 @@ func resourceLogFortianalyzer2Filter() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"severity": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"forward_traffic": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"local_traffic": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"multicast_traffic": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"sniffer_traffic": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"anomaly": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"netscan_discovery": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"netscan_vulnerability": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"voip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"dlp_archive": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"gtp": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"dns": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssh": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"filter": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 511),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"filter_type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceLogFortianalyzer2FilterUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -175,7 +174,6 @@ func resourceLogFortianalyzer2FilterRead(d *schema.ResourceData, m interface{}) 
 	return nil
 }
 
-
 func flattenLogFortianalyzer2FilterSeverity(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -236,10 +234,8 @@ func flattenLogFortianalyzer2FilterFilterType(v interface{}, d *schema.ResourceD
 	return v
 }
 
-
 func refreshObjectLogFortianalyzer2Filter(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("severity", flattenLogFortianalyzer2FilterSeverity(o["severity"], d, "severity")); err != nil {
 		if !fortiAPIPatch(o["severity"]) {
@@ -331,7 +327,6 @@ func refreshObjectLogFortianalyzer2Filter(d *schema.ResourceData, o map[string]i
 		}
 	}
 
-
 	return nil
 }
 
@@ -340,7 +335,6 @@ func flattenLogFortianalyzer2FilterFortiTestDebug(d *schema.ResourceData, fosdeb
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandLogFortianalyzer2FilterSeverity(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -402,10 +396,8 @@ func expandLogFortianalyzer2FilterFilterType(d *schema.ResourceData, v interface
 	return v, nil
 }
 
-
 func getObjectLogFortianalyzer2Filter(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("severity"); ok {
 		t, err := expandLogFortianalyzer2FilterSeverity(d, v, "severity")
@@ -542,7 +534,5 @@ func getObjectLogFortianalyzer2Filter(d *schema.ResourceData) (*map[string]inter
 		}
 	}
 
-
 	return &obj, nil
 }
-

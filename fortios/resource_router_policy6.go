@@ -30,74 +30,74 @@ func resourceRouterPolicy6() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"seq_num": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"input_device": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"src": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"dst": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"protocol": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"start_port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"end_port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"gateway": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"output_device": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"tos": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"tos_mask": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"comments": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
+				Optional:     true,
 			},
 		},
 	}
@@ -192,7 +192,6 @@ func resourceRouterPolicy6Read(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenRouterPolicy6SeqNum(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -245,10 +244,8 @@ func flattenRouterPolicy6Comments(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
-
 func refreshObjectRouterPolicy6(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("seq_num", flattenRouterPolicy6SeqNum(o["seq-num"], d, "seq_num")); err != nil {
 		if !fortiAPIPatch(o["seq-num"]) {
@@ -328,7 +325,6 @@ func refreshObjectRouterPolicy6(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-
 	return nil
 }
 
@@ -337,7 +333,6 @@ func flattenRouterPolicy6FortiTestDebug(d *schema.ResourceData, fosdebugsn int, 
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandRouterPolicy6SeqNum(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -391,10 +386,8 @@ func expandRouterPolicy6Comments(d *schema.ResourceData, v interface{}, pre stri
 	return v, nil
 }
 
-
 func getObjectRouterPolicy6(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("seq_num"); ok {
 		t, err := expandRouterPolicy6SeqNum(d, v, "seq_num")
@@ -513,7 +506,5 @@ func getObjectRouterPolicy6(d *schema.ResourceData) (*map[string]interface{}, er
 		}
 	}
 
-
 	return &obj, nil
 }
-

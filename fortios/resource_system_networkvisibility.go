@@ -30,41 +30,40 @@ func resourceSystemNetworkVisibility() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"destination_visibility": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"source_location": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"destination_hostname_visibility": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"hostname_ttl": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(60, 86400),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"hostname_limit": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 50000),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"destination_location": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceSystemNetworkVisibilityUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -131,7 +130,6 @@ func resourceSystemNetworkVisibilityRead(d *schema.ResourceData, m interface{}) 
 	return nil
 }
 
-
 func flattenSystemNetworkVisibilityDestinationVisibility(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -156,10 +154,8 @@ func flattenSystemNetworkVisibilityDestinationLocation(v interface{}, d *schema.
 	return v
 }
 
-
 func refreshObjectSystemNetworkVisibility(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("destination_visibility", flattenSystemNetworkVisibilityDestinationVisibility(o["destination-visibility"], d, "destination_visibility")); err != nil {
 		if !fortiAPIPatch(o["destination-visibility"]) {
@@ -197,7 +193,6 @@ func refreshObjectSystemNetworkVisibility(d *schema.ResourceData, o map[string]i
 		}
 	}
 
-
 	return nil
 }
 
@@ -206,7 +201,6 @@ func flattenSystemNetworkVisibilityFortiTestDebug(d *schema.ResourceData, fosdeb
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemNetworkVisibilityDestinationVisibility(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -232,10 +226,8 @@ func expandSystemNetworkVisibilityDestinationLocation(d *schema.ResourceData, v 
 	return v, nil
 }
 
-
 func getObjectSystemNetworkVisibility(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("destination_visibility"); ok {
 		t, err := expandSystemNetworkVisibilityDestinationVisibility(d, v, "destination_visibility")
@@ -291,7 +283,5 @@ func getObjectSystemNetworkVisibility(d *schema.ResourceData) (*map[string]inter
 		}
 	}
 
-
 	return &obj, nil
 }
-

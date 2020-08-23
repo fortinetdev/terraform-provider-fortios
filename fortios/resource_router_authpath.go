@@ -30,17 +30,17 @@ func resourceRouterAuthPath() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
-				Required: true,
+				Required:     true,
 			},
 			"device": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"gateway": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
@@ -137,7 +137,6 @@ func resourceRouterAuthPathRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenRouterAuthPathName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -150,10 +149,8 @@ func flattenRouterAuthPathGateway(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
-
 func refreshObjectRouterAuthPath(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenRouterAuthPathName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -173,7 +170,6 @@ func refreshObjectRouterAuthPath(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-
 	return nil
 }
 
@@ -182,7 +178,6 @@ func flattenRouterAuthPathFortiTestDebug(d *schema.ResourceData, fosdebugsn int,
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandRouterAuthPathName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -196,10 +191,8 @@ func expandRouterAuthPathGateway(d *schema.ResourceData, v interface{}, pre stri
 	return v, nil
 }
 
-
 func getObjectRouterAuthPath(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandRouterAuthPathName(d, v, "name")
@@ -228,7 +221,5 @@ func getObjectRouterAuthPath(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-
 	return &obj, nil
 }
-

@@ -30,15 +30,15 @@ func resourceSystemAlias() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"command": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
+				Optional:     true,
 			},
 		},
 	}
@@ -133,7 +133,6 @@ func resourceSystemAliasRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenSystemAliasName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -142,10 +141,8 @@ func flattenSystemAliasCommand(v interface{}, d *schema.ResourceData, pre string
 	return v
 }
 
-
 func refreshObjectSystemAlias(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenSystemAliasName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -159,7 +156,6 @@ func refreshObjectSystemAlias(d *schema.ResourceData, o map[string]interface{}) 
 		}
 	}
 
-
 	return nil
 }
 
@@ -169,7 +165,6 @@ func flattenSystemAliasFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fo
 	log.Printf("ER List: %v", e)
 }
 
-
 func expandSystemAliasName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
 }
@@ -178,10 +173,8 @@ func expandSystemAliasCommand(d *schema.ResourceData, v interface{}, pre string)
 	return v, nil
 }
 
-
 func getObjectSystemAlias(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandSystemAliasName(d, v, "name")
@@ -201,7 +194,5 @@ func getObjectSystemAlias(d *schema.ResourceData) (*map[string]interface{}, erro
 		}
 	}
 
-
 	return &obj, nil
 }
-

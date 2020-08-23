@@ -30,54 +30,54 @@ func resourceWebProxyForwardServer() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"addr_type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"fqdn": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"healthcheck": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"monitor": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"server_down_option": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"comment": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
@@ -172,7 +172,6 @@ func resourceWebProxyForwardServerRead(d *schema.ResourceData, m interface{}) er
 	return nil
 }
 
-
 func flattenWebProxyForwardServerName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -209,10 +208,8 @@ func flattenWebProxyForwardServerComment(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
-
 func refreshObjectWebProxyForwardServer(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenWebProxyForwardServerName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -268,7 +265,6 @@ func refreshObjectWebProxyForwardServer(d *schema.ResourceData, o map[string]int
 		}
 	}
 
-
 	return nil
 }
 
@@ -277,7 +273,6 @@ func flattenWebProxyForwardServerFortiTestDebug(d *schema.ResourceData, fosdebug
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandWebProxyForwardServerName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -315,10 +310,8 @@ func expandWebProxyForwardServerComment(d *schema.ResourceData, v interface{}, p
 	return v, nil
 }
 
-
 func getObjectWebProxyForwardServer(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandWebProxyForwardServerName(d, v, "name")
@@ -401,7 +394,5 @@ func getObjectWebProxyForwardServer(d *schema.ResourceData) (*map[string]interfa
 		}
 	}
 
-
 	return &obj, nil
 }
-

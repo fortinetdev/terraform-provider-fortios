@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,47 +5,48 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSDlpFpDocSource_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSDlpFpDocSource_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSDlpFpDocSource_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSDlpFpDocSourceConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSDlpFpDocSourceExists("fortios_dlp_fpdocsource.trname"),
-                    resource.TestCheckResourceAttr("fortios_dlp_fpdocsource.trname", "date", "1"),
-                    resource.TestCheckResourceAttr("fortios_dlp_fpdocsource.trname", "file_path", "/"),
-                    resource.TestCheckResourceAttr("fortios_dlp_fpdocsource.trname", "file_pattern", "*"),
-                    resource.TestCheckResourceAttr("fortios_dlp_fpdocsource.trname", "keep_modified", "enable"),
-                    resource.TestCheckResourceAttr("fortios_dlp_fpdocsource.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_dlp_fpdocsource.trname", "period", "none"),
-                    resource.TestCheckResourceAttr("fortios_dlp_fpdocsource.trname", "remove_deleted", "enable"),
-                    resource.TestCheckResourceAttr("fortios_dlp_fpdocsource.trname", "scan_on_creation", "enable"),
-                    resource.TestCheckResourceAttr("fortios_dlp_fpdocsource.trname", "scan_subdirectories", "enable"),
-                    resource.TestCheckResourceAttr("fortios_dlp_fpdocsource.trname", "server", "1.1.1.1"),
-                    resource.TestCheckResourceAttr("fortios_dlp_fpdocsource.trname", "server_type", "samba"),
-                    resource.TestCheckResourceAttr("fortios_dlp_fpdocsource.trname", "tod_hour", "1"),
-                    resource.TestCheckResourceAttr("fortios_dlp_fpdocsource.trname", "tod_min", "0"),
-                    resource.TestCheckResourceAttr("fortios_dlp_fpdocsource.trname", "username", "sgh"),
-                    resource.TestCheckResourceAttr("fortios_dlp_fpdocsource.trname", "vdom", "mgmt"),
-                    resource.TestCheckResourceAttr("fortios_dlp_fpdocsource.trname", "weekday", "sunday"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSDlpFpDocSourceConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSDlpFpDocSourceExists("fortios_dlp_fpdocsource.trname"),
+					resource.TestCheckResourceAttr("fortios_dlp_fpdocsource.trname", "date", "1"),
+					resource.TestCheckResourceAttr("fortios_dlp_fpdocsource.trname", "file_path", "/"),
+					resource.TestCheckResourceAttr("fortios_dlp_fpdocsource.trname", "file_pattern", "*"),
+					resource.TestCheckResourceAttr("fortios_dlp_fpdocsource.trname", "keep_modified", "enable"),
+					resource.TestCheckResourceAttr("fortios_dlp_fpdocsource.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_dlp_fpdocsource.trname", "period", "none"),
+					resource.TestCheckResourceAttr("fortios_dlp_fpdocsource.trname", "remove_deleted", "enable"),
+					resource.TestCheckResourceAttr("fortios_dlp_fpdocsource.trname", "scan_on_creation", "enable"),
+					resource.TestCheckResourceAttr("fortios_dlp_fpdocsource.trname", "scan_subdirectories", "enable"),
+					resource.TestCheckResourceAttr("fortios_dlp_fpdocsource.trname", "server", "1.1.1.1"),
+					resource.TestCheckResourceAttr("fortios_dlp_fpdocsource.trname", "server_type", "samba"),
+					resource.TestCheckResourceAttr("fortios_dlp_fpdocsource.trname", "tod_hour", "1"),
+					resource.TestCheckResourceAttr("fortios_dlp_fpdocsource.trname", "tod_min", "0"),
+					resource.TestCheckResourceAttr("fortios_dlp_fpdocsource.trname", "username", "sgh"),
+					resource.TestCheckResourceAttr("fortios_dlp_fpdocsource.trname", "vdom", "mgmt"),
+					resource.TestCheckResourceAttr("fortios_dlp_fpdocsource.trname", "weekday", "sunday"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSDlpFpDocSourceExists(n string) resource.TestCheckFunc {

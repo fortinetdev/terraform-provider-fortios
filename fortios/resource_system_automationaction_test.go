@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,40 +5,41 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSystemAutomationAction_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSystemAutomationAction_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSystemAutomationAction_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSystemAutomationActionConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSystemAutomationActionExists("fortios_system_automationaction.trname"),
-                    resource.TestCheckResourceAttr("fortios_system_automationaction.trname", "action_type", "email"),
-                    resource.TestCheckResourceAttr("fortios_system_automationaction.trname", "aws_domain", "amazonaws.com"),
-                    resource.TestCheckResourceAttr("fortios_system_automationaction.trname", "delay", "0"),
-                    resource.TestCheckResourceAttr("fortios_system_automationaction.trname", "email_subject", "SUBJECT1"),
-                    resource.TestCheckResourceAttr("fortios_system_automationaction.trname", "method", "post"),
-                    resource.TestCheckResourceAttr("fortios_system_automationaction.trname", "minimum_interval", "1"),
-                    resource.TestCheckResourceAttr("fortios_system_automationaction.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_system_automationaction.trname", "protocol", "http"),
-                    resource.TestCheckResourceAttr("fortios_system_automationaction.trname", "required", "disable"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSystemAutomationActionConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSystemAutomationActionExists("fortios_system_automationaction.trname"),
+					resource.TestCheckResourceAttr("fortios_system_automationaction.trname", "action_type", "email"),
+					resource.TestCheckResourceAttr("fortios_system_automationaction.trname", "aws_domain", "amazonaws.com"),
+					resource.TestCheckResourceAttr("fortios_system_automationaction.trname", "delay", "0"),
+					resource.TestCheckResourceAttr("fortios_system_automationaction.trname", "email_subject", "SUBJECT1"),
+					resource.TestCheckResourceAttr("fortios_system_automationaction.trname", "method", "post"),
+					resource.TestCheckResourceAttr("fortios_system_automationaction.trname", "minimum_interval", "1"),
+					resource.TestCheckResourceAttr("fortios_system_automationaction.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_system_automationaction.trname", "protocol", "http"),
+					resource.TestCheckResourceAttr("fortios_system_automationaction.trname", "required", "disable"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSystemAutomationActionExists(n string) resource.TestCheckFunc {

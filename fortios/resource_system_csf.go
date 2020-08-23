@@ -30,75 +30,75 @@ func resourceSystemCsf() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"upstream_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"upstream_port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"group_name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"group_password": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
-				Required: true,
+				Required:     true,
 			},
 			"configuration_sync": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"management_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"management_port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"fixed_key": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
-				Optional: true,
+				Optional:     true,
 			},
 			"trusted_list": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"serial": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 19),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"action": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"ha_members": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 19),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"downstream_authorization": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -106,36 +106,36 @@ func resourceSystemCsf() *schema.Resource {
 				},
 			},
 			"fabric_device": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"device_ip": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"device_type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"login": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"password": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 128),
-							Optional: true,
+							Optional:     true,
 						},
 					},
 				},
@@ -143,7 +143,6 @@ func resourceSystemCsf() *schema.Resource {
 		},
 	}
 }
-
 
 func resourceSystemCsfUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -209,7 +208,6 @@ func resourceSystemCsfRead(d *schema.ResourceData, m interface{}) error {
 	}
 	return nil
 }
-
 
 func flattenSystemCsfStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -382,10 +380,8 @@ func flattenSystemCsfFabricDevicePassword(v interface{}, d *schema.ResourceData,
 	return v
 }
 
-
 func refreshObjectSystemCsf(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("status", flattenSystemCsfStatus(o["status"], d, "status")); err != nil {
 		if !fortiAPIPatch(o["status"]) {
@@ -429,38 +425,37 @@ func refreshObjectSystemCsf(d *schema.ResourceData, o map[string]interface{}) er
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("trusted_list", flattenSystemCsfTrustedList(o["trusted-list"], d, "trusted_list")); err != nil {
-            if !fortiAPIPatch(o["trusted-list"]) {
-                return fmt.Errorf("Error reading trusted_list: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("trusted_list"); ok {
-            if err = d.Set("trusted_list", flattenSystemCsfTrustedList(o["trusted-list"], d, "trusted_list")); err != nil {
-                if !fortiAPIPatch(o["trusted-list"]) {
-                    return fmt.Errorf("Error reading trusted_list: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("trusted_list", flattenSystemCsfTrustedList(o["trusted-list"], d, "trusted_list")); err != nil {
+			if !fortiAPIPatch(o["trusted-list"]) {
+				return fmt.Errorf("Error reading trusted_list: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("trusted_list"); ok {
+			if err = d.Set("trusted_list", flattenSystemCsfTrustedList(o["trusted-list"], d, "trusted_list")); err != nil {
+				if !fortiAPIPatch(o["trusted-list"]) {
+					return fmt.Errorf("Error reading trusted_list: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("fabric_device", flattenSystemCsfFabricDevice(o["fabric-device"], d, "fabric_device")); err != nil {
-            if !fortiAPIPatch(o["fabric-device"]) {
-                return fmt.Errorf("Error reading fabric_device: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("fabric_device"); ok {
-            if err = d.Set("fabric_device", flattenSystemCsfFabricDevice(o["fabric-device"], d, "fabric_device")); err != nil {
-                if !fortiAPIPatch(o["fabric-device"]) {
-                    return fmt.Errorf("Error reading fabric_device: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("fabric_device", flattenSystemCsfFabricDevice(o["fabric-device"], d, "fabric_device")); err != nil {
+			if !fortiAPIPatch(o["fabric-device"]) {
+				return fmt.Errorf("Error reading fabric_device: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("fabric_device"); ok {
+			if err = d.Set("fabric_device", flattenSystemCsfFabricDevice(o["fabric-device"], d, "fabric_device")); err != nil {
+				if !fortiAPIPatch(o["fabric-device"]) {
+					return fmt.Errorf("Error reading fabric_device: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -470,7 +465,6 @@ func flattenSystemCsfFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosd
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemCsfStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -520,7 +514,7 @@ func expandSystemCsfTrustedList(d *schema.ResourceData, v interface{}, pre strin
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "serial"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -578,7 +572,7 @@ func expandSystemCsfFabricDevice(d *schema.ResourceData, v interface{}, pre stri
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -633,10 +627,8 @@ func expandSystemCsfFabricDevicePassword(d *schema.ResourceData, v interface{}, 
 	return v, nil
 }
 
-
 func getObjectSystemCsf(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("status"); ok {
 		t, err := expandSystemCsfStatus(d, v, "status")
@@ -737,7 +729,5 @@ func getObjectSystemCsf(d *schema.ResourceData) (*map[string]interface{}, error)
 		}
 	}
 
-
 	return &obj, nil
 }
-

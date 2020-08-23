@@ -30,45 +30,44 @@ func resourceSystemFortimanager() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"vdom": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ipsec": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"central_management": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"central_mgmt_auto_backup": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"central_mgmt_schedule_config_restore": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"central_mgmt_schedule_script_restore": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceSystemFortimanagerUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -135,7 +134,6 @@ func resourceSystemFortimanagerRead(d *schema.ResourceData, m interface{}) error
 	return nil
 }
 
-
 func flattenSystemFortimanagerIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -164,10 +162,8 @@ func flattenSystemFortimanagerCentralMgmtScheduleScriptRestore(v interface{}, d 
 	return v
 }
 
-
 func refreshObjectSystemFortimanager(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("ip", flattenSystemFortimanagerIp(o["ip"], d, "ip")); err != nil {
 		if !fortiAPIPatch(o["ip"]) {
@@ -211,7 +207,6 @@ func refreshObjectSystemFortimanager(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
-
 	return nil
 }
 
@@ -220,7 +215,6 @@ func flattenSystemFortimanagerFortiTestDebug(d *schema.ResourceData, fosdebugsn 
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemFortimanagerIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -250,10 +244,8 @@ func expandSystemFortimanagerCentralMgmtScheduleScriptRestore(d *schema.Resource
 	return v, nil
 }
 
-
 func getObjectSystemFortimanager(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("ip"); ok {
 		t, err := expandSystemFortimanagerIp(d, v, "ip")
@@ -318,7 +310,5 @@ func getObjectSystemFortimanager(d *schema.ResourceData) (*map[string]interface{
 		}
 	}
 
-
 	return &obj, nil
 }
-

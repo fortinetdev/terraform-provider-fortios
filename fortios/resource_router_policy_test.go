@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,46 +5,47 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSRouterPolicy_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSRouterPolicy_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSRouterPolicy_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSRouterPolicyConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSRouterPolicyExists("fortios_router_policy.trname"),
-                    resource.TestCheckResourceAttr("fortios_router_policy.trname", "action", "permit"),
-                    resource.TestCheckResourceAttr("fortios_router_policy.trname", "dst_negate", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_policy.trname", "end_port", "25"),
-                    resource.TestCheckResourceAttr("fortios_router_policy.trname", "end_source_port", "65535"),
-                    resource.TestCheckResourceAttr("fortios_router_policy.trname", "gateway", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_router_policy.trname", "output_device", "port2"),
-                    resource.TestCheckResourceAttr("fortios_router_policy.trname", "protocol", "6"),
-                    resource.TestCheckResourceAttr("fortios_router_policy.trname", "seq_num", "1"),
-                    resource.TestCheckResourceAttr("fortios_router_policy.trname", "src_negate", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_policy.trname", "start_port", "25"),
-                    resource.TestCheckResourceAttr("fortios_router_policy.trname", "start_source_port", "0"),
-                    resource.TestCheckResourceAttr("fortios_router_policy.trname", "status", "enable"),
-                    resource.TestCheckResourceAttr("fortios_router_policy.trname", "tos", "0x00"),
-                    resource.TestCheckResourceAttr("fortios_router_policy.trname", "tos_mask", "0x00"),
-                    resource.TestCheckResourceAttr("fortios_router_policy.trname", "input_device.0.name", "port1"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSRouterPolicyConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSRouterPolicyExists("fortios_router_policy.trname"),
+					resource.TestCheckResourceAttr("fortios_router_policy.trname", "action", "permit"),
+					resource.TestCheckResourceAttr("fortios_router_policy.trname", "dst_negate", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_policy.trname", "end_port", "25"),
+					resource.TestCheckResourceAttr("fortios_router_policy.trname", "end_source_port", "65535"),
+					resource.TestCheckResourceAttr("fortios_router_policy.trname", "gateway", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_router_policy.trname", "output_device", "port2"),
+					resource.TestCheckResourceAttr("fortios_router_policy.trname", "protocol", "6"),
+					resource.TestCheckResourceAttr("fortios_router_policy.trname", "seq_num", "1"),
+					resource.TestCheckResourceAttr("fortios_router_policy.trname", "src_negate", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_policy.trname", "start_port", "25"),
+					resource.TestCheckResourceAttr("fortios_router_policy.trname", "start_source_port", "0"),
+					resource.TestCheckResourceAttr("fortios_router_policy.trname", "status", "enable"),
+					resource.TestCheckResourceAttr("fortios_router_policy.trname", "tos", "0x00"),
+					resource.TestCheckResourceAttr("fortios_router_policy.trname", "tos_mask", "0x00"),
+					resource.TestCheckResourceAttr("fortios_router_policy.trname", "input_device.0.name", "port1"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSRouterPolicyExists(n string) resource.TestCheckFunc {

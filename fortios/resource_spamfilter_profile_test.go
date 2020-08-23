@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,63 +5,64 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSpamfilterProfile_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSpamfilterProfile_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSpamfilterProfile_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSpamfilterProfileConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSpamfilterProfileExists("fortios_spamfilter_profile.trname"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "comment", "terraform test"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "external", "disable"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "flow_based", "disable"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "spam_bwl_table", "0"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "spam_bword_table", "0"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "spam_bword_threshold", "10"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "spam_filtering", "disable"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "spam_iptrust_table", "0"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "spam_log", "enable"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "spam_log_fortiguard_response", "disable"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "spam_mheader_table", "0"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "spam_rbl_table", "0"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "gmail.0.log", "disable"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "imap.0.action", "tag"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "imap.0.log", "disable"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "imap.0.tag_msg", "Spam"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "imap.0.tag_type", "subject spaminfo"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "mapi.0.action", "discard"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "mapi.0.log", "disable"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "msn_hotmail.0.log", "disable"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "pop3.0.action", "tag"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "pop3.0.log", "disable"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "pop3.0.tag_msg", "Spam"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "pop3.0.tag_type", "subject spaminfo"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "smtp.0.action", "discard"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "smtp.0.hdrip", "disable"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "smtp.0.local_override", "disable"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "smtp.0.log", "disable"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "smtp.0.tag_msg", "Spam"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "smtp.0.tag_type", "subject spaminfo"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "yahoo_mail.0.log", "disable"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSpamfilterProfileConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSpamfilterProfileExists("fortios_spamfilter_profile.trname"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "comment", "terraform test"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "external", "disable"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "flow_based", "disable"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "spam_bwl_table", "0"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "spam_bword_table", "0"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "spam_bword_threshold", "10"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "spam_filtering", "disable"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "spam_iptrust_table", "0"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "spam_log", "enable"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "spam_log_fortiguard_response", "disable"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "spam_mheader_table", "0"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "spam_rbl_table", "0"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "gmail.0.log", "disable"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "imap.0.action", "tag"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "imap.0.log", "disable"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "imap.0.tag_msg", "Spam"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "imap.0.tag_type", "subject spaminfo"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "mapi.0.action", "discard"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "mapi.0.log", "disable"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "msn_hotmail.0.log", "disable"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "pop3.0.action", "tag"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "pop3.0.log", "disable"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "pop3.0.tag_msg", "Spam"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "pop3.0.tag_type", "subject spaminfo"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "smtp.0.action", "discard"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "smtp.0.hdrip", "disable"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "smtp.0.local_override", "disable"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "smtp.0.log", "disable"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "smtp.0.tag_msg", "Spam"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "smtp.0.tag_type", "subject spaminfo"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_profile.trname", "yahoo_mail.0.log", "disable"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSpamfilterProfileExists(n string) resource.TestCheckFunc {

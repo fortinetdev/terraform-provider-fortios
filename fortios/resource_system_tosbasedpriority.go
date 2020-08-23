@@ -30,19 +30,19 @@ func resourceSystemTosBasedPriority() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"fosid": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"tos": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 15),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"priority": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
@@ -139,7 +139,6 @@ func resourceSystemTosBasedPriorityRead(d *schema.ResourceData, m interface{}) e
 	return nil
 }
 
-
 func flattenSystemTosBasedPriorityId(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -152,10 +151,8 @@ func flattenSystemTosBasedPriorityPriority(v interface{}, d *schema.ResourceData
 	return v
 }
 
-
 func refreshObjectSystemTosBasedPriority(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("fosid", flattenSystemTosBasedPriorityId(o["id"], d, "fosid")); err != nil {
 		if !fortiAPIPatch(o["id"]) {
@@ -175,7 +172,6 @@ func refreshObjectSystemTosBasedPriority(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-
 	return nil
 }
 
@@ -184,7 +180,6 @@ func flattenSystemTosBasedPriorityFortiTestDebug(d *schema.ResourceData, fosdebu
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemTosBasedPriorityId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -198,10 +193,8 @@ func expandSystemTosBasedPriorityPriority(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-
 func getObjectSystemTosBasedPriority(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("fosid"); ok {
 		t, err := expandSystemTosBasedPriorityId(d, v, "fosid")
@@ -230,7 +223,5 @@ func getObjectSystemTosBasedPriority(d *schema.ResourceData) (*map[string]interf
 		}
 	}
 
-
 	return &obj, nil
 }
-

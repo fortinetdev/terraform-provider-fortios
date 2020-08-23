@@ -30,19 +30,18 @@ func resourceLogMemorySetting() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"diskfull": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceLogMemorySettingUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -109,7 +108,6 @@ func resourceLogMemorySettingRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenLogMemorySettingStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -118,10 +116,8 @@ func flattenLogMemorySettingDiskfull(v interface{}, d *schema.ResourceData, pre 
 	return v
 }
 
-
 func refreshObjectLogMemorySetting(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("status", flattenLogMemorySettingStatus(o["status"], d, "status")); err != nil {
 		if !fortiAPIPatch(o["status"]) {
@@ -135,7 +131,6 @@ func refreshObjectLogMemorySetting(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-
 	return nil
 }
 
@@ -145,7 +140,6 @@ func flattenLogMemorySettingFortiTestDebug(d *schema.ResourceData, fosdebugsn in
 	log.Printf("ER List: %v", e)
 }
 
-
 func expandLogMemorySettingStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
 }
@@ -154,10 +148,8 @@ func expandLogMemorySettingDiskfull(d *schema.ResourceData, v interface{}, pre s
 	return v, nil
 }
 
-
 func getObjectLogMemorySetting(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("status"); ok {
 		t, err := expandLogMemorySettingStatus(d, v, "status")
@@ -177,7 +169,5 @@ func getObjectLogMemorySetting(d *schema.ResourceData) (*map[string]interface{},
 		}
 	}
 
-
 	return &obj, nil
 }
-

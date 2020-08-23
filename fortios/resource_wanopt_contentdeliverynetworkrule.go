@@ -30,112 +30,112 @@ func resourceWanoptContentDeliveryNetworkRule() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"comment": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
+				Optional:     true,
 			},
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"host_domain_name_suffix": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"category": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"request_cache_control": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"response_cache_control": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"response_expires": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"text_response_vcache": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"updateserver": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"rules": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"match_mode": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"skip_rule_mode": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"match_entries": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"target": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"pattern": &schema.Schema{
-										Type: schema.TypeList,
+										Type:     schema.TypeList,
 										Optional: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 												"string": &schema.Schema{
-													Type: schema.TypeString,
+													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 64),
-													Optional: true,
-													Computed: true,
+													Optional:     true,
+													Computed:     true,
 												},
 											},
 										},
@@ -144,31 +144,31 @@ func resourceWanoptContentDeliveryNetworkRule() *schema.Resource {
 							},
 						},
 						"skip_entries": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"target": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"pattern": &schema.Schema{
-										Type: schema.TypeList,
+										Type:     schema.TypeList,
 										Optional: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 												"string": &schema.Schema{
-													Type: schema.TypeString,
+													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 64),
-													Optional: true,
-													Computed: true,
+													Optional:     true,
+													Computed:     true,
 												},
 											},
 										},
@@ -177,59 +177,59 @@ func resourceWanoptContentDeliveryNetworkRule() *schema.Resource {
 							},
 						},
 						"content_id": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"target": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"start_str": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"start_skip": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"start_direction": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"end_str": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"end_skip": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"end_direction": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"range_str": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
-						},					},
+						}},
 				},
 			},
 		},
@@ -324,7 +324,6 @@ func resourceWanoptContentDeliveryNetworkRuleRead(d *schema.ResourceData, m inte
 	}
 	return nil
 }
-
 
 func flattenWanoptContentDeliveryNetworkRuleName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -648,46 +647,45 @@ func flattenWanoptContentDeliveryNetworkRuleRulesContentId(v interface{}, d *sch
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "target"
+	pre_append = pre + ".0." + "target"
 	if _, ok := i["target"]; ok {
 		result["target"] = flattenWanoptContentDeliveryNetworkRuleRulesContentIdTarget(i["target"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "start_str"
+	pre_append = pre + ".0." + "start_str"
 	if _, ok := i["start-str"]; ok {
 		result["start_str"] = flattenWanoptContentDeliveryNetworkRuleRulesContentIdStartStr(i["start-str"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "start_skip"
+	pre_append = pre + ".0." + "start_skip"
 	if _, ok := i["start-skip"]; ok {
 		result["start_skip"] = flattenWanoptContentDeliveryNetworkRuleRulesContentIdStartSkip(i["start-skip"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "start_direction"
+	pre_append = pre + ".0." + "start_direction"
 	if _, ok := i["start-direction"]; ok {
 		result["start_direction"] = flattenWanoptContentDeliveryNetworkRuleRulesContentIdStartDirection(i["start-direction"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "end_str"
+	pre_append = pre + ".0." + "end_str"
 	if _, ok := i["end-str"]; ok {
 		result["end_str"] = flattenWanoptContentDeliveryNetworkRuleRulesContentIdEndStr(i["end-str"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "end_skip"
+	pre_append = pre + ".0." + "end_skip"
 	if _, ok := i["end-skip"]; ok {
 		result["end_skip"] = flattenWanoptContentDeliveryNetworkRuleRulesContentIdEndSkip(i["end-skip"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "end_direction"
+	pre_append = pre + ".0." + "end_direction"
 	if _, ok := i["end-direction"]; ok {
 		result["end_direction"] = flattenWanoptContentDeliveryNetworkRuleRulesContentIdEndDirection(i["end-direction"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "range_str"
+	pre_append = pre + ".0." + "range_str"
 	if _, ok := i["range-str"]; ok {
 		result["range_str"] = flattenWanoptContentDeliveryNetworkRuleRulesContentIdRangeStr(i["range-str"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -725,10 +723,8 @@ func flattenWanoptContentDeliveryNetworkRuleRulesContentIdRangeStr(v interface{}
 	return v
 }
 
-
 func refreshObjectWanoptContentDeliveryNetworkRule(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenWanoptContentDeliveryNetworkRuleName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -748,21 +744,21 @@ func refreshObjectWanoptContentDeliveryNetworkRule(d *schema.ResourceData, o map
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("host_domain_name_suffix", flattenWanoptContentDeliveryNetworkRuleHostDomainNameSuffix(o["host-domain-name-suffix"], d, "host_domain_name_suffix")); err != nil {
-            if !fortiAPIPatch(o["host-domain-name-suffix"]) {
-                return fmt.Errorf("Error reading host_domain_name_suffix: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("host_domain_name_suffix"); ok {
-            if err = d.Set("host_domain_name_suffix", flattenWanoptContentDeliveryNetworkRuleHostDomainNameSuffix(o["host-domain-name-suffix"], d, "host_domain_name_suffix")); err != nil {
-                if !fortiAPIPatch(o["host-domain-name-suffix"]) {
-                    return fmt.Errorf("Error reading host_domain_name_suffix: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("host_domain_name_suffix", flattenWanoptContentDeliveryNetworkRuleHostDomainNameSuffix(o["host-domain-name-suffix"], d, "host_domain_name_suffix")); err != nil {
+			if !fortiAPIPatch(o["host-domain-name-suffix"]) {
+				return fmt.Errorf("Error reading host_domain_name_suffix: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("host_domain_name_suffix"); ok {
+			if err = d.Set("host_domain_name_suffix", flattenWanoptContentDeliveryNetworkRuleHostDomainNameSuffix(o["host-domain-name-suffix"], d, "host_domain_name_suffix")); err != nil {
+				if !fortiAPIPatch(o["host-domain-name-suffix"]) {
+					return fmt.Errorf("Error reading host_domain_name_suffix: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("category", flattenWanoptContentDeliveryNetworkRuleCategory(o["category"], d, "category")); err != nil {
 		if !fortiAPIPatch(o["category"]) {
@@ -800,22 +796,21 @@ func refreshObjectWanoptContentDeliveryNetworkRule(d *schema.ResourceData, o map
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("rules", flattenWanoptContentDeliveryNetworkRuleRules(o["rules"], d, "rules")); err != nil {
-            if !fortiAPIPatch(o["rules"]) {
-                return fmt.Errorf("Error reading rules: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("rules"); ok {
-            if err = d.Set("rules", flattenWanoptContentDeliveryNetworkRuleRules(o["rules"], d, "rules")); err != nil {
-                if !fortiAPIPatch(o["rules"]) {
-                    return fmt.Errorf("Error reading rules: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("rules", flattenWanoptContentDeliveryNetworkRuleRules(o["rules"], d, "rules")); err != nil {
+			if !fortiAPIPatch(o["rules"]) {
+				return fmt.Errorf("Error reading rules: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("rules"); ok {
+			if err = d.Set("rules", flattenWanoptContentDeliveryNetworkRuleRules(o["rules"], d, "rules")); err != nil {
+				if !fortiAPIPatch(o["rules"]) {
+					return fmt.Errorf("Error reading rules: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -825,7 +820,6 @@ func flattenWanoptContentDeliveryNetworkRuleFortiTestDebug(d *schema.ResourceDat
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandWanoptContentDeliveryNetworkRuleName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -851,7 +845,7 @@ func expandWanoptContentDeliveryNetworkRuleHostDomainNameSuffix(d *schema.Resour
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -906,7 +900,7 @@ func expandWanoptContentDeliveryNetworkRuleRules(d *schema.ResourceData, v inter
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -976,7 +970,7 @@ func expandWanoptContentDeliveryNetworkRuleRulesMatchEntries(d *schema.ResourceD
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1023,7 +1017,7 @@ func expandWanoptContentDeliveryNetworkRuleRulesMatchEntriesPattern(d *schema.Re
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "string"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1054,7 +1048,7 @@ func expandWanoptContentDeliveryNetworkRuleRulesSkipEntries(d *schema.ResourceDa
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1101,7 +1095,7 @@ func expandWanoptContentDeliveryNetworkRuleRulesSkipEntriesPattern(d *schema.Res
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "string"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1129,36 +1123,36 @@ func expandWanoptContentDeliveryNetworkRuleRulesContentId(d *schema.ResourceData
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "target"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "target"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["target"], _ = expandWanoptContentDeliveryNetworkRuleRulesContentIdTarget(d, i["target"], pre_append)
 	}
-	pre_append =  pre + ".0." + "start_str"
+	pre_append = pre + ".0." + "start_str"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["start-str"], _ = expandWanoptContentDeliveryNetworkRuleRulesContentIdStartStr(d, i["start_str"], pre_append)
 	}
-	pre_append =  pre + ".0." + "start_skip"
+	pre_append = pre + ".0." + "start_skip"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["start-skip"], _ = expandWanoptContentDeliveryNetworkRuleRulesContentIdStartSkip(d, i["start_skip"], pre_append)
 	}
-	pre_append =  pre + ".0." + "start_direction"
+	pre_append = pre + ".0." + "start_direction"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["start-direction"], _ = expandWanoptContentDeliveryNetworkRuleRulesContentIdStartDirection(d, i["start_direction"], pre_append)
 	}
-	pre_append =  pre + ".0." + "end_str"
+	pre_append = pre + ".0." + "end_str"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["end-str"], _ = expandWanoptContentDeliveryNetworkRuleRulesContentIdEndStr(d, i["end_str"], pre_append)
 	}
-	pre_append =  pre + ".0." + "end_skip"
+	pre_append = pre + ".0." + "end_skip"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["end-skip"], _ = expandWanoptContentDeliveryNetworkRuleRulesContentIdEndSkip(d, i["end_skip"], pre_append)
 	}
-	pre_append =  pre + ".0." + "end_direction"
+	pre_append = pre + ".0." + "end_direction"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["end-direction"], _ = expandWanoptContentDeliveryNetworkRuleRulesContentIdEndDirection(d, i["end_direction"], pre_append)
 	}
-	pre_append =  pre + ".0." + "range_str"
+	pre_append = pre + ".0." + "range_str"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["range-str"], _ = expandWanoptContentDeliveryNetworkRuleRulesContentIdRangeStr(d, i["range_str"], pre_append)
 	}
@@ -1198,10 +1192,8 @@ func expandWanoptContentDeliveryNetworkRuleRulesContentIdRangeStr(d *schema.Reso
 	return v, nil
 }
 
-
 func getObjectWanoptContentDeliveryNetworkRule(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandWanoptContentDeliveryNetworkRuleName(d, v, "name")
@@ -1302,7 +1294,5 @@ func getObjectWanoptContentDeliveryNetworkRule(d *schema.ResourceData) (*map[str
 		}
 	}
 
-
 	return &obj, nil
 }
-

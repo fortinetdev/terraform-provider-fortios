@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,37 +5,38 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSAuthenticationSetting_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSAuthenticationSetting_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSAuthenticationSetting_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSAuthenticationSettingConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSAuthenticationSettingExists("fortios_authentication_setting.trname"),
-                    resource.TestCheckResourceAttr("fortios_authentication_setting.trname", "auth_https", "enable"),
-                    resource.TestCheckResourceAttr("fortios_authentication_setting.trname", "captive_portal_ip", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_authentication_setting.trname", "captive_portal_ip6", "::"),
-                    resource.TestCheckResourceAttr("fortios_authentication_setting.trname", "captive_portal_port", "7830"),
-                    resource.TestCheckResourceAttr("fortios_authentication_setting.trname", "captive_portal_ssl_port", "7831"),
-                    resource.TestCheckResourceAttr("fortios_authentication_setting.trname", "captive_portal_type", "fqdn"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSAuthenticationSettingConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSAuthenticationSettingExists("fortios_authentication_setting.trname"),
+					resource.TestCheckResourceAttr("fortios_authentication_setting.trname", "auth_https", "enable"),
+					resource.TestCheckResourceAttr("fortios_authentication_setting.trname", "captive_portal_ip", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_authentication_setting.trname", "captive_portal_ip6", "::"),
+					resource.TestCheckResourceAttr("fortios_authentication_setting.trname", "captive_portal_port", "7830"),
+					resource.TestCheckResourceAttr("fortios_authentication_setting.trname", "captive_portal_ssl_port", "7831"),
+					resource.TestCheckResourceAttr("fortios_authentication_setting.trname", "captive_portal_type", "fqdn"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSAuthenticationSettingExists(n string) resource.TestCheckFunc {

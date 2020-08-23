@@ -30,34 +30,34 @@ func resourceUserDeviceAccessList() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"default_action": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"device_list": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"device": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"action": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -157,7 +157,6 @@ func resourceUserDeviceAccessListRead(d *schema.ResourceData, m interface{}) err
 	return nil
 }
 
-
 func flattenUserDeviceAccessListName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -220,10 +219,8 @@ func flattenUserDeviceAccessListDeviceListAction(v interface{}, d *schema.Resour
 	return v
 }
 
-
 func refreshObjectUserDeviceAccessList(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenUserDeviceAccessListName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -237,22 +234,21 @@ func refreshObjectUserDeviceAccessList(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("device_list", flattenUserDeviceAccessListDeviceList(o["device-list"], d, "device_list")); err != nil {
-            if !fortiAPIPatch(o["device-list"]) {
-                return fmt.Errorf("Error reading device_list: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("device_list"); ok {
-            if err = d.Set("device_list", flattenUserDeviceAccessListDeviceList(o["device-list"], d, "device_list")); err != nil {
-                if !fortiAPIPatch(o["device-list"]) {
-                    return fmt.Errorf("Error reading device_list: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("device_list", flattenUserDeviceAccessListDeviceList(o["device-list"], d, "device_list")); err != nil {
+			if !fortiAPIPatch(o["device-list"]) {
+				return fmt.Errorf("Error reading device_list: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("device_list"); ok {
+			if err = d.Set("device_list", flattenUserDeviceAccessListDeviceList(o["device-list"], d, "device_list")); err != nil {
+				if !fortiAPIPatch(o["device-list"]) {
+					return fmt.Errorf("Error reading device_list: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -262,7 +258,6 @@ func flattenUserDeviceAccessListFortiTestDebug(d *schema.ResourceData, fosdebugs
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandUserDeviceAccessListName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -284,7 +279,7 @@ func expandUserDeviceAccessListDeviceList(d *schema.ResourceData, v interface{},
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -321,10 +316,8 @@ func expandUserDeviceAccessListDeviceListAction(d *schema.ResourceData, v interf
 	return v, nil
 }
 
-
 func getObjectUserDeviceAccessList(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandUserDeviceAccessListName(d, v, "name")
@@ -353,7 +346,5 @@ func getObjectUserDeviceAccessList(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
-
 	return &obj, nil
 }
-

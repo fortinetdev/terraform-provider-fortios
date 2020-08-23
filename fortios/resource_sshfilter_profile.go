@@ -30,65 +30,65 @@ func resourceSshFilterProfile() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"block": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"log": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"default_command_log": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"shell_commands": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"pattern": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 128),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"action": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"log": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"alert": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"severity": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -187,7 +187,6 @@ func resourceSshFilterProfileRead(d *schema.ResourceData, m interface{}) error {
 	}
 	return nil
 }
-
 
 func flattenSshFilterProfileName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -295,10 +294,8 @@ func flattenSshFilterProfileShellCommandsSeverity(v interface{}, d *schema.Resou
 	return v
 }
 
-
 func refreshObjectSshFilterProfile(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenSshFilterProfileName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -324,22 +321,21 @@ func refreshObjectSshFilterProfile(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("shell_commands", flattenSshFilterProfileShellCommands(o["shell-commands"], d, "shell_commands")); err != nil {
-            if !fortiAPIPatch(o["shell-commands"]) {
-                return fmt.Errorf("Error reading shell_commands: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("shell_commands"); ok {
-            if err = d.Set("shell_commands", flattenSshFilterProfileShellCommands(o["shell-commands"], d, "shell_commands")); err != nil {
-                if !fortiAPIPatch(o["shell-commands"]) {
-                    return fmt.Errorf("Error reading shell_commands: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("shell_commands", flattenSshFilterProfileShellCommands(o["shell-commands"], d, "shell_commands")); err != nil {
+			if !fortiAPIPatch(o["shell-commands"]) {
+				return fmt.Errorf("Error reading shell_commands: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("shell_commands"); ok {
+			if err = d.Set("shell_commands", flattenSshFilterProfileShellCommands(o["shell-commands"], d, "shell_commands")); err != nil {
+				if !fortiAPIPatch(o["shell-commands"]) {
+					return fmt.Errorf("Error reading shell_commands: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -349,7 +345,6 @@ func flattenSshFilterProfileFortiTestDebug(d *schema.ResourceData, fosdebugsn in
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSshFilterProfileName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -379,7 +374,7 @@ func expandSshFilterProfileShellCommands(d *schema.ResourceData, v interface{}, 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -452,10 +447,8 @@ func expandSshFilterProfileShellCommandsSeverity(d *schema.ResourceData, v inter
 	return v, nil
 }
 
-
 func getObjectSshFilterProfile(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandSshFilterProfileName(d, v, "name")
@@ -502,7 +495,5 @@ func getObjectSshFilterProfile(d *schema.ResourceData) (*map[string]interface{},
 		}
 	}
 
-
 	return &obj, nil
 }
-

@@ -30,82 +30,82 @@ func resourceFirewallLocalInPolicy() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"policyid": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ha_mgmt_intf_only": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"intf": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"srcaddr": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"dstaddr": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"action": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"service": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"schedule": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"comments": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 1023),
-				Optional: true,
+				Optional:     true,
 			},
 		},
 	}
@@ -199,7 +199,6 @@ func resourceFirewallLocalInPolicyRead(d *schema.ResourceData, m interface{}) er
 	}
 	return nil
 }
-
 
 func flattenFirewallLocalInPolicyPolicyid(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -337,10 +336,8 @@ func flattenFirewallLocalInPolicyComments(v interface{}, d *schema.ResourceData,
 	return v
 }
 
-
 func refreshObjectFirewallLocalInPolicy(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("policyid", flattenFirewallLocalInPolicyPolicyid(o["policyid"], d, "policyid")); err != nil {
 		if !fortiAPIPatch(o["policyid"]) {
@@ -360,37 +357,37 @@ func refreshObjectFirewallLocalInPolicy(d *schema.ResourceData, o map[string]int
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("srcaddr", flattenFirewallLocalInPolicySrcaddr(o["srcaddr"], d, "srcaddr")); err != nil {
-            if !fortiAPIPatch(o["srcaddr"]) {
-                return fmt.Errorf("Error reading srcaddr: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("srcaddr"); ok {
-            if err = d.Set("srcaddr", flattenFirewallLocalInPolicySrcaddr(o["srcaddr"], d, "srcaddr")); err != nil {
-                if !fortiAPIPatch(o["srcaddr"]) {
-                    return fmt.Errorf("Error reading srcaddr: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("srcaddr", flattenFirewallLocalInPolicySrcaddr(o["srcaddr"], d, "srcaddr")); err != nil {
+			if !fortiAPIPatch(o["srcaddr"]) {
+				return fmt.Errorf("Error reading srcaddr: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("srcaddr"); ok {
+			if err = d.Set("srcaddr", flattenFirewallLocalInPolicySrcaddr(o["srcaddr"], d, "srcaddr")); err != nil {
+				if !fortiAPIPatch(o["srcaddr"]) {
+					return fmt.Errorf("Error reading srcaddr: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("dstaddr", flattenFirewallLocalInPolicyDstaddr(o["dstaddr"], d, "dstaddr")); err != nil {
-            if !fortiAPIPatch(o["dstaddr"]) {
-                return fmt.Errorf("Error reading dstaddr: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("dstaddr"); ok {
-            if err = d.Set("dstaddr", flattenFirewallLocalInPolicyDstaddr(o["dstaddr"], d, "dstaddr")); err != nil {
-                if !fortiAPIPatch(o["dstaddr"]) {
-                    return fmt.Errorf("Error reading dstaddr: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("dstaddr", flattenFirewallLocalInPolicyDstaddr(o["dstaddr"], d, "dstaddr")); err != nil {
+			if !fortiAPIPatch(o["dstaddr"]) {
+				return fmt.Errorf("Error reading dstaddr: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("dstaddr"); ok {
+			if err = d.Set("dstaddr", flattenFirewallLocalInPolicyDstaddr(o["dstaddr"], d, "dstaddr")); err != nil {
+				if !fortiAPIPatch(o["dstaddr"]) {
+					return fmt.Errorf("Error reading dstaddr: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("action", flattenFirewallLocalInPolicyAction(o["action"], d, "action")); err != nil {
 		if !fortiAPIPatch(o["action"]) {
@@ -398,21 +395,21 @@ func refreshObjectFirewallLocalInPolicy(d *schema.ResourceData, o map[string]int
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("service", flattenFirewallLocalInPolicyService(o["service"], d, "service")); err != nil {
-            if !fortiAPIPatch(o["service"]) {
-                return fmt.Errorf("Error reading service: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("service"); ok {
-            if err = d.Set("service", flattenFirewallLocalInPolicyService(o["service"], d, "service")); err != nil {
-                if !fortiAPIPatch(o["service"]) {
-                    return fmt.Errorf("Error reading service: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("service", flattenFirewallLocalInPolicyService(o["service"], d, "service")); err != nil {
+			if !fortiAPIPatch(o["service"]) {
+				return fmt.Errorf("Error reading service: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("service"); ok {
+			if err = d.Set("service", flattenFirewallLocalInPolicyService(o["service"], d, "service")); err != nil {
+				if !fortiAPIPatch(o["service"]) {
+					return fmt.Errorf("Error reading service: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("schedule", flattenFirewallLocalInPolicySchedule(o["schedule"], d, "schedule")); err != nil {
 		if !fortiAPIPatch(o["schedule"]) {
@@ -432,7 +429,6 @@ func refreshObjectFirewallLocalInPolicy(d *schema.ResourceData, o map[string]int
 		}
 	}
 
-
 	return nil
 }
 
@@ -441,7 +437,6 @@ func flattenFirewallLocalInPolicyFortiTestDebug(d *schema.ResourceData, fosdebug
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandFirewallLocalInPolicyPolicyid(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -467,7 +462,7 @@ func expandFirewallLocalInPolicySrcaddr(d *schema.ResourceData, v interface{}, p
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -498,7 +493,7 @@ func expandFirewallLocalInPolicyDstaddr(d *schema.ResourceData, v interface{}, p
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -533,7 +528,7 @@ func expandFirewallLocalInPolicyService(d *schema.ResourceData, v interface{}, p
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -564,10 +559,8 @@ func expandFirewallLocalInPolicyComments(d *schema.ResourceData, v interface{}, 
 	return v, nil
 }
 
-
 func getObjectFirewallLocalInPolicy(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("policyid"); ok {
 		t, err := expandFirewallLocalInPolicyPolicyid(d, v, "policyid")
@@ -659,7 +652,5 @@ func getObjectFirewallLocalInPolicy(d *schema.ResourceData) (*map[string]interfa
 		}
 	}
 
-
 	return &obj, nil
 }
-

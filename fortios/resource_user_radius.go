@@ -30,249 +30,249 @@ func resourceUserRadius() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"server": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"secret": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
-				Optional: true,
+				Optional:     true,
 			},
 			"secondary_server": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"secondary_secret": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
-				Optional: true,
+				Optional:     true,
 			},
 			"tertiary_server": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"tertiary_secret": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
-				Optional: true,
+				Optional:     true,
 			},
 			"timeout": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 300),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"all_usergroup": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"use_management_vdom": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"nas_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"acct_interim_interval": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(600, 86400),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"radius_coa": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"radius_port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"h3c_compatibility": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"auth_type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"source_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"username_case_sensitive": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"class": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"password_renewal": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"password_encoding": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"acct_all_servers": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"rsso": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"rsso_radius_server_port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"rsso_radius_response": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"rsso_validate_request_secret": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"rsso_secret": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
-				Optional: true,
+				Optional:     true,
 			},
 			"rsso_endpoint_attribute": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"rsso_endpoint_block_attribute": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"sso_attribute": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"sso_attribute_key": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"sso_attribute_value_override": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"rsso_context_timeout": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"rsso_log_period": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"rsso_log_flags": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"rsso_flush_ip_session": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"rsso_ep_one_ip_only": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"accounting_server": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"status": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"server": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"secret": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 128),
-							Optional: true,
+							Optional:     true,
 						},
 						"port": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"source_ip": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -369,7 +369,6 @@ func resourceUserRadiusRead(d *schema.ResourceData, m interface{}) error {
 	}
 	return nil
 }
-
 
 func flattenUserRadiusName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -632,10 +631,8 @@ func flattenUserRadiusAccountingServerSourceIp(v interface{}, d *schema.Resource
 	return v
 }
 
-
 func refreshObjectUserRadius(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenUserRadiusName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -739,21 +736,21 @@ func refreshObjectUserRadius(d *schema.ResourceData, o map[string]interface{}) e
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("class", flattenUserRadiusClass(o["class"], d, "class")); err != nil {
-            if !fortiAPIPatch(o["class"]) {
-                return fmt.Errorf("Error reading class: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("class"); ok {
-            if err = d.Set("class", flattenUserRadiusClass(o["class"], d, "class")); err != nil {
-                if !fortiAPIPatch(o["class"]) {
-                    return fmt.Errorf("Error reading class: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("class", flattenUserRadiusClass(o["class"], d, "class")); err != nil {
+			if !fortiAPIPatch(o["class"]) {
+				return fmt.Errorf("Error reading class: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("class"); ok {
+			if err = d.Set("class", flattenUserRadiusClass(o["class"], d, "class")); err != nil {
+				if !fortiAPIPatch(o["class"]) {
+					return fmt.Errorf("Error reading class: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("password_renewal", flattenUserRadiusPasswordRenewal(o["password-renewal"], d, "password_renewal")); err != nil {
 		if !fortiAPIPatch(o["password-renewal"]) {
@@ -863,22 +860,21 @@ func refreshObjectUserRadius(d *schema.ResourceData, o map[string]interface{}) e
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("accounting_server", flattenUserRadiusAccountingServer(o["accounting-server"], d, "accounting_server")); err != nil {
-            if !fortiAPIPatch(o["accounting-server"]) {
-                return fmt.Errorf("Error reading accounting_server: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("accounting_server"); ok {
-            if err = d.Set("accounting_server", flattenUserRadiusAccountingServer(o["accounting-server"], d, "accounting_server")); err != nil {
-                if !fortiAPIPatch(o["accounting-server"]) {
-                    return fmt.Errorf("Error reading accounting_server: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("accounting_server", flattenUserRadiusAccountingServer(o["accounting-server"], d, "accounting_server")); err != nil {
+			if !fortiAPIPatch(o["accounting-server"]) {
+				return fmt.Errorf("Error reading accounting_server: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("accounting_server"); ok {
+			if err = d.Set("accounting_server", flattenUserRadiusAccountingServer(o["accounting-server"], d, "accounting_server")); err != nil {
+				if !fortiAPIPatch(o["accounting-server"]) {
+					return fmt.Errorf("Error reading accounting_server: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -888,7 +884,6 @@ func flattenUserRadiusFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fos
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandUserRadiusName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -974,7 +969,7 @@ func expandUserRadiusClass(d *schema.ResourceData, v interface{}, pre string) (i
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1077,7 +1072,7 @@ func expandUserRadiusAccountingServer(d *schema.ResourceData, v interface{}, pre
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1141,10 +1136,8 @@ func expandUserRadiusAccountingServerSourceIp(d *schema.ResourceData, v interfac
 	return v, nil
 }
 
-
 func getObjectUserRadius(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandUserRadiusName(d, v, "name")
@@ -1488,7 +1481,5 @@ func getObjectUserRadius(d *schema.ResourceData) (*map[string]interface{}, error
 		}
 	}
 
-
 	return &obj, nil
 }
-

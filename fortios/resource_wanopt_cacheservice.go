@@ -30,57 +30,57 @@ func resourceWanoptCacheService() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"prefer_scenario": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"collaboration": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"device_id": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"acceptable_connections": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"dst_peer": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"device_id": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"auth_type": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"encode_type": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"priority": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"ip": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -88,36 +88,36 @@ func resourceWanoptCacheService() *schema.Resource {
 				},
 			},
 			"src_peer": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"device_id": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"auth_type": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"encode_type": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"priority": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"ip": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -127,7 +127,6 @@ func resourceWanoptCacheService() *schema.Resource {
 		},
 	}
 }
-
 
 func resourceWanoptCacheServiceUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -193,7 +192,6 @@ func resourceWanoptCacheServiceRead(d *schema.ResourceData, m interface{}) error
 	}
 	return nil
 }
-
 
 func flattenWanoptCacheServicePreferScenario(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -355,10 +353,8 @@ func flattenWanoptCacheServiceSrcPeerIp(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
-
 func refreshObjectWanoptCacheService(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("prefer_scenario", flattenWanoptCacheServicePreferScenario(o["prefer-scenario"], d, "prefer_scenario")); err != nil {
 		if !fortiAPIPatch(o["prefer-scenario"]) {
@@ -384,38 +380,37 @@ func refreshObjectWanoptCacheService(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("dst_peer", flattenWanoptCacheServiceDstPeer(o["dst-peer"], d, "dst_peer")); err != nil {
-            if !fortiAPIPatch(o["dst-peer"]) {
-                return fmt.Errorf("Error reading dst_peer: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("dst_peer"); ok {
-            if err = d.Set("dst_peer", flattenWanoptCacheServiceDstPeer(o["dst-peer"], d, "dst_peer")); err != nil {
-                if !fortiAPIPatch(o["dst-peer"]) {
-                    return fmt.Errorf("Error reading dst_peer: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("dst_peer", flattenWanoptCacheServiceDstPeer(o["dst-peer"], d, "dst_peer")); err != nil {
+			if !fortiAPIPatch(o["dst-peer"]) {
+				return fmt.Errorf("Error reading dst_peer: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("dst_peer"); ok {
+			if err = d.Set("dst_peer", flattenWanoptCacheServiceDstPeer(o["dst-peer"], d, "dst_peer")); err != nil {
+				if !fortiAPIPatch(o["dst-peer"]) {
+					return fmt.Errorf("Error reading dst_peer: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("src_peer", flattenWanoptCacheServiceSrcPeer(o["src-peer"], d, "src_peer")); err != nil {
-            if !fortiAPIPatch(o["src-peer"]) {
-                return fmt.Errorf("Error reading src_peer: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("src_peer"); ok {
-            if err = d.Set("src_peer", flattenWanoptCacheServiceSrcPeer(o["src-peer"], d, "src_peer")); err != nil {
-                if !fortiAPIPatch(o["src-peer"]) {
-                    return fmt.Errorf("Error reading src_peer: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("src_peer", flattenWanoptCacheServiceSrcPeer(o["src-peer"], d, "src_peer")); err != nil {
+			if !fortiAPIPatch(o["src-peer"]) {
+				return fmt.Errorf("Error reading src_peer: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("src_peer"); ok {
+			if err = d.Set("src_peer", flattenWanoptCacheServiceSrcPeer(o["src-peer"], d, "src_peer")); err != nil {
+				if !fortiAPIPatch(o["src-peer"]) {
+					return fmt.Errorf("Error reading src_peer: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -425,7 +420,6 @@ func flattenWanoptCacheServiceFortiTestDebug(d *schema.ResourceData, fosdebugsn 
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandWanoptCacheServicePreferScenario(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -455,7 +449,7 @@ func expandWanoptCacheServiceDstPeer(d *schema.ResourceData, v interface{}, pre 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device_id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -522,7 +516,7 @@ func expandWanoptCacheServiceSrcPeer(d *schema.ResourceData, v interface{}, pre 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device_id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -577,10 +571,8 @@ func expandWanoptCacheServiceSrcPeerIp(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
-
 func getObjectWanoptCacheService(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("prefer_scenario"); ok {
 		t, err := expandWanoptCacheServicePreferScenario(d, v, "prefer_scenario")
@@ -636,7 +628,5 @@ func getObjectWanoptCacheService(d *schema.ResourceData) (*map[string]interface{
 		}
 	}
 
-
 	return &obj, nil
 }
-

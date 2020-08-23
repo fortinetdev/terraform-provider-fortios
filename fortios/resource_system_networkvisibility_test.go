@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,37 +5,38 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSystemNetworkVisibility_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSystemNetworkVisibility_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSystemNetworkVisibility_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSystemNetworkVisibilityConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSystemNetworkVisibilityExists("fortios_system_networkvisibility.trname"),
-                    resource.TestCheckResourceAttr("fortios_system_networkvisibility.trname", "destination_hostname_visibility", "enable"),
-                    resource.TestCheckResourceAttr("fortios_system_networkvisibility.trname", "destination_location", "enable"),
-                    resource.TestCheckResourceAttr("fortios_system_networkvisibility.trname", "destination_visibility", "enable"),
-                    resource.TestCheckResourceAttr("fortios_system_networkvisibility.trname", "hostname_limit", "5000"),
-                    resource.TestCheckResourceAttr("fortios_system_networkvisibility.trname", "hostname_ttl", "86400"),
-                    resource.TestCheckResourceAttr("fortios_system_networkvisibility.trname", "source_location", "enable"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSystemNetworkVisibilityConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSystemNetworkVisibilityExists("fortios_system_networkvisibility.trname"),
+					resource.TestCheckResourceAttr("fortios_system_networkvisibility.trname", "destination_hostname_visibility", "enable"),
+					resource.TestCheckResourceAttr("fortios_system_networkvisibility.trname", "destination_location", "enable"),
+					resource.TestCheckResourceAttr("fortios_system_networkvisibility.trname", "destination_visibility", "enable"),
+					resource.TestCheckResourceAttr("fortios_system_networkvisibility.trname", "hostname_limit", "5000"),
+					resource.TestCheckResourceAttr("fortios_system_networkvisibility.trname", "hostname_ttl", "86400"),
+					resource.TestCheckResourceAttr("fortios_system_networkvisibility.trname", "source_location", "enable"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSystemNetworkVisibilityExists(n string) resource.TestCheckFunc {

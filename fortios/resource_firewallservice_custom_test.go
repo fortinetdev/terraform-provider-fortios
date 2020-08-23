@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,47 +5,48 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSFirewallServiceCustom_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSFirewallServiceCustom_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSFirewallServiceCustom_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSFirewallServiceCustomConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSFirewallServiceCustomExists("fortios_firewallservice_custom.trname"),
-                    resource.TestCheckResourceAttr("fortios_firewallservice_custom.trname", "app_service_type", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewallservice_custom.trname", "category", "General"),
-                    resource.TestCheckResourceAttr("fortios_firewallservice_custom.trname", "check_reset_range", "default"),
-                    resource.TestCheckResourceAttr("fortios_firewallservice_custom.trname", "color", "0"),
-                    resource.TestCheckResourceAttr("fortios_firewallservice_custom.trname", "helper", "auto"),
-                    resource.TestCheckResourceAttr("fortios_firewallservice_custom.trname", "iprange", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_firewallservice_custom.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_firewallservice_custom.trname", "protocol", "TCP/UDP/SCTP"),
-                    resource.TestCheckResourceAttr("fortios_firewallservice_custom.trname", "protocol_number", "6"),
-                    resource.TestCheckResourceAttr("fortios_firewallservice_custom.trname", "proxy", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewallservice_custom.trname", "tcp_halfclose_timer", "0"),
-                    resource.TestCheckResourceAttr("fortios_firewallservice_custom.trname", "tcp_halfopen_timer", "0"),
-                    resource.TestCheckResourceAttr("fortios_firewallservice_custom.trname", "tcp_portrange", "223-332"),
-                    resource.TestCheckResourceAttr("fortios_firewallservice_custom.trname", "tcp_timewait_timer", "0"),
-                    resource.TestCheckResourceAttr("fortios_firewallservice_custom.trname", "udp_idle_timer", "0"),
-                    resource.TestCheckResourceAttr("fortios_firewallservice_custom.trname", "visibility", "enable"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSFirewallServiceCustomConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSFirewallServiceCustomExists("fortios_firewallservice_custom.trname"),
+					resource.TestCheckResourceAttr("fortios_firewallservice_custom.trname", "app_service_type", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewallservice_custom.trname", "category", "General"),
+					resource.TestCheckResourceAttr("fortios_firewallservice_custom.trname", "check_reset_range", "default"),
+					resource.TestCheckResourceAttr("fortios_firewallservice_custom.trname", "color", "0"),
+					resource.TestCheckResourceAttr("fortios_firewallservice_custom.trname", "helper", "auto"),
+					resource.TestCheckResourceAttr("fortios_firewallservice_custom.trname", "iprange", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_firewallservice_custom.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_firewallservice_custom.trname", "protocol", "TCP/UDP/SCTP"),
+					resource.TestCheckResourceAttr("fortios_firewallservice_custom.trname", "protocol_number", "6"),
+					resource.TestCheckResourceAttr("fortios_firewallservice_custom.trname", "proxy", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewallservice_custom.trname", "tcp_halfclose_timer", "0"),
+					resource.TestCheckResourceAttr("fortios_firewallservice_custom.trname", "tcp_halfopen_timer", "0"),
+					resource.TestCheckResourceAttr("fortios_firewallservice_custom.trname", "tcp_portrange", "223-332"),
+					resource.TestCheckResourceAttr("fortios_firewallservice_custom.trname", "tcp_timewait_timer", "0"),
+					resource.TestCheckResourceAttr("fortios_firewallservice_custom.trname", "udp_idle_timer", "0"),
+					resource.TestCheckResourceAttr("fortios_firewallservice_custom.trname", "visibility", "enable"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSFirewallServiceCustomExists(n string) resource.TestCheckFunc {

@@ -30,96 +30,96 @@ func resourceWebProxyProfile() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"header_client_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"header_via_request": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"header_via_response": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"header_x_forwarded_for": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"header_front_end_https": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"header_x_authenticated_user": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"header_x_authenticated_groups": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"strip_encoding": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"log_header_change": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"headers": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"action": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"content": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"base64_encoding": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"add_option": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"protocol": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -218,7 +218,6 @@ func resourceWebProxyProfileRead(d *schema.ResourceData, m interface{}) error {
 	}
 	return nil
 }
-
 
 func flattenWebProxyProfileName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -350,10 +349,8 @@ func flattenWebProxyProfileHeadersProtocol(v interface{}, d *schema.ResourceData
 	return v
 }
 
-
 func refreshObjectWebProxyProfile(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenWebProxyProfileName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -415,22 +412,21 @@ func refreshObjectWebProxyProfile(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("headers", flattenWebProxyProfileHeaders(o["headers"], d, "headers")); err != nil {
-            if !fortiAPIPatch(o["headers"]) {
-                return fmt.Errorf("Error reading headers: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("headers"); ok {
-            if err = d.Set("headers", flattenWebProxyProfileHeaders(o["headers"], d, "headers")); err != nil {
-                if !fortiAPIPatch(o["headers"]) {
-                    return fmt.Errorf("Error reading headers: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("headers", flattenWebProxyProfileHeaders(o["headers"], d, "headers")); err != nil {
+			if !fortiAPIPatch(o["headers"]) {
+				return fmt.Errorf("Error reading headers: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("headers"); ok {
+			if err = d.Set("headers", flattenWebProxyProfileHeaders(o["headers"], d, "headers")); err != nil {
+				if !fortiAPIPatch(o["headers"]) {
+					return fmt.Errorf("Error reading headers: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -440,7 +436,6 @@ func flattenWebProxyProfileFortiTestDebug(d *schema.ResourceData, fosdebugsn int
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandWebProxyProfileName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -494,7 +489,7 @@ func expandWebProxyProfileHeaders(d *schema.ResourceData, v interface{}, pre str
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -567,10 +562,8 @@ func expandWebProxyProfileHeadersProtocol(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-
 func getObjectWebProxyProfile(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandWebProxyProfileName(d, v, "name")
@@ -671,7 +664,5 @@ func getObjectWebProxyProfile(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-
 	return &obj, nil
 }
-

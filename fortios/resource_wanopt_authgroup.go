@@ -30,36 +30,36 @@ func resourceWanoptAuthGroup() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"auth_method": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"psk": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
-				Optional: true,
+				Optional:     true,
 			},
 			"cert": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"peer_accept": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"peer": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
@@ -154,7 +154,6 @@ func resourceWanoptAuthGroupRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenWanoptAuthGroupName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -179,10 +178,8 @@ func flattenWanoptAuthGroupPeer(v interface{}, d *schema.ResourceData, pre strin
 	return v
 }
 
-
 func refreshObjectWanoptAuthGroup(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenWanoptAuthGroupName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -220,7 +217,6 @@ func refreshObjectWanoptAuthGroup(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-
 	return nil
 }
 
@@ -229,7 +225,6 @@ func flattenWanoptAuthGroupFortiTestDebug(d *schema.ResourceData, fosdebugsn int
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandWanoptAuthGroupName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -255,10 +250,8 @@ func expandWanoptAuthGroupPeer(d *schema.ResourceData, v interface{}, pre string
 	return v, nil
 }
 
-
 func getObjectWanoptAuthGroup(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandWanoptAuthGroupName(d, v, "name")
@@ -314,7 +307,5 @@ func getObjectWanoptAuthGroup(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-
 	return &obj, nil
 }
-

@@ -30,24 +30,23 @@ func resourceWanoptSettings() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"host_id": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"tunnel_ssl_algorithm": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"auto_detect_algorithm": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceWanoptSettingsUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -114,7 +113,6 @@ func resourceWanoptSettingsRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenWanoptSettingsHostId(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -127,10 +125,8 @@ func flattenWanoptSettingsAutoDetectAlgorithm(v interface{}, d *schema.ResourceD
 	return v
 }
 
-
 func refreshObjectWanoptSettings(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("host_id", flattenWanoptSettingsHostId(o["host-id"], d, "host_id")); err != nil {
 		if !fortiAPIPatch(o["host-id"]) {
@@ -150,7 +146,6 @@ func refreshObjectWanoptSettings(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-
 	return nil
 }
 
@@ -159,7 +154,6 @@ func flattenWanoptSettingsFortiTestDebug(d *schema.ResourceData, fosdebugsn int,
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandWanoptSettingsHostId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -173,10 +167,8 @@ func expandWanoptSettingsAutoDetectAlgorithm(d *schema.ResourceData, v interface
 	return v, nil
 }
 
-
 func getObjectWanoptSettings(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("host_id"); ok {
 		t, err := expandWanoptSettingsHostId(d, v, "host_id")
@@ -205,7 +197,5 @@ func getObjectWanoptSettings(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-
 	return &obj, nil
 }
-

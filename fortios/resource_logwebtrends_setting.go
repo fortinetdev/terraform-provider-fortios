@@ -30,20 +30,19 @@ func resourceLogWebtrendsSetting() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"server": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
 }
-
 
 func resourceLogWebtrendsSettingUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -110,7 +109,6 @@ func resourceLogWebtrendsSettingRead(d *schema.ResourceData, m interface{}) erro
 	return nil
 }
 
-
 func flattenLogWebtrendsSettingStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -119,10 +117,8 @@ func flattenLogWebtrendsSettingServer(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
-
 func refreshObjectLogWebtrendsSetting(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("status", flattenLogWebtrendsSettingStatus(o["status"], d, "status")); err != nil {
 		if !fortiAPIPatch(o["status"]) {
@@ -136,7 +132,6 @@ func refreshObjectLogWebtrendsSetting(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
-
 	return nil
 }
 
@@ -146,7 +141,6 @@ func flattenLogWebtrendsSettingFortiTestDebug(d *schema.ResourceData, fosdebugsn
 	log.Printf("ER List: %v", e)
 }
 
-
 func expandLogWebtrendsSettingStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
 }
@@ -155,10 +149,8 @@ func expandLogWebtrendsSettingServer(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
-
 func getObjectLogWebtrendsSetting(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("status"); ok {
 		t, err := expandLogWebtrendsSettingStatus(d, v, "status")
@@ -178,7 +170,5 @@ func getObjectLogWebtrendsSetting(d *schema.ResourceData) (*map[string]interface
 		}
 	}
 
-
 	return &obj, nil
 }
-

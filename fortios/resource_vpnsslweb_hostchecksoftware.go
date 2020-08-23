@@ -30,75 +30,75 @@ func resourceVpnSslWebHostCheckSoftware() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"os_type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"version": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"guid": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"check_item_list": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"action": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"target": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"version": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"md5s": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 32),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
@@ -198,7 +198,6 @@ func resourceVpnSslWebHostCheckSoftwareRead(d *schema.ResourceData, m interface{
 	}
 	return nil
 }
-
 
 func flattenVpnSslWebHostCheckSoftwareName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -333,10 +332,8 @@ func flattenVpnSslWebHostCheckSoftwareCheckItemListMd5SId(v interface{}, d *sche
 	return v
 }
 
-
 func refreshObjectVpnSslWebHostCheckSoftware(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenVpnSslWebHostCheckSoftwareName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -368,22 +365,21 @@ func refreshObjectVpnSslWebHostCheckSoftware(d *schema.ResourceData, o map[strin
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("check_item_list", flattenVpnSslWebHostCheckSoftwareCheckItemList(o["check-item-list"], d, "check_item_list")); err != nil {
-            if !fortiAPIPatch(o["check-item-list"]) {
-                return fmt.Errorf("Error reading check_item_list: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("check_item_list"); ok {
-            if err = d.Set("check_item_list", flattenVpnSslWebHostCheckSoftwareCheckItemList(o["check-item-list"], d, "check_item_list")); err != nil {
-                if !fortiAPIPatch(o["check-item-list"]) {
-                    return fmt.Errorf("Error reading check_item_list: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("check_item_list", flattenVpnSslWebHostCheckSoftwareCheckItemList(o["check-item-list"], d, "check_item_list")); err != nil {
+			if !fortiAPIPatch(o["check-item-list"]) {
+				return fmt.Errorf("Error reading check_item_list: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("check_item_list"); ok {
+			if err = d.Set("check_item_list", flattenVpnSslWebHostCheckSoftwareCheckItemList(o["check-item-list"], d, "check_item_list")); err != nil {
+				if !fortiAPIPatch(o["check-item-list"]) {
+					return fmt.Errorf("Error reading check_item_list: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -393,7 +389,6 @@ func flattenVpnSslWebHostCheckSoftwareFortiTestDebug(d *schema.ResourceData, fos
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandVpnSslWebHostCheckSoftwareName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -427,7 +422,7 @@ func expandVpnSslWebHostCheckSoftwareCheckItemList(d *schema.ResourceData, v int
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -501,7 +496,7 @@ func expandVpnSslWebHostCheckSoftwareCheckItemListMd5S(d *schema.ResourceData, v
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -520,10 +515,8 @@ func expandVpnSslWebHostCheckSoftwareCheckItemListMd5SId(d *schema.ResourceData,
 	return v, nil
 }
 
-
 func getObjectVpnSslWebHostCheckSoftware(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandVpnSslWebHostCheckSoftwareName(d, v, "name")
@@ -579,7 +572,5 @@ func getObjectVpnSslWebHostCheckSoftware(d *schema.ResourceData) (*map[string]in
 		}
 	}
 
-
 	return &obj, nil
 }
-

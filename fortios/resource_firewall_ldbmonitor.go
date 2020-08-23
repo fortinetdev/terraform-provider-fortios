@@ -30,56 +30,56 @@ func resourceFirewallLdbMonitor() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"interval": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(5, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"timeout": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"retry": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"http_get": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"http_match": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"http_max_redirects": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 5),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
@@ -174,7 +174,6 @@ func resourceFirewallLdbMonitorRead(d *schema.ResourceData, m interface{}) error
 	return nil
 }
 
-
 func flattenFirewallLdbMonitorName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -211,10 +210,8 @@ func flattenFirewallLdbMonitorHttpMaxRedirects(v interface{}, d *schema.Resource
 	return v
 }
 
-
 func refreshObjectFirewallLdbMonitor(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenFirewallLdbMonitorName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -270,7 +267,6 @@ func refreshObjectFirewallLdbMonitor(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
-
 	return nil
 }
 
@@ -279,7 +275,6 @@ func flattenFirewallLdbMonitorFortiTestDebug(d *schema.ResourceData, fosdebugsn 
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandFirewallLdbMonitorName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -317,10 +312,8 @@ func expandFirewallLdbMonitorHttpMaxRedirects(d *schema.ResourceData, v interfac
 	return v, nil
 }
 
-
 func getObjectFirewallLdbMonitor(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandFirewallLdbMonitorName(d, v, "name")
@@ -403,7 +396,5 @@ func getObjectFirewallLdbMonitor(d *schema.ResourceData) (*map[string]interface{
 		}
 	}
 
-
 	return &obj, nil
 }
-

@@ -30,48 +30,48 @@ func resourceFirewallIdentityBasedRoute() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"comments": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"rule": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"gateway": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"device": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"groups": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"name": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 64),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
@@ -171,7 +171,6 @@ func resourceFirewallIdentityBasedRouteRead(d *schema.ResourceData, m interface{
 	}
 	return nil
 }
-
 
 func flattenFirewallIdentityBasedRouteName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -276,10 +275,8 @@ func flattenFirewallIdentityBasedRouteRuleGroupsName(v interface{}, d *schema.Re
 	return v
 }
 
-
 func refreshObjectFirewallIdentityBasedRoute(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenFirewallIdentityBasedRouteName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -293,22 +290,21 @@ func refreshObjectFirewallIdentityBasedRoute(d *schema.ResourceData, o map[strin
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("rule", flattenFirewallIdentityBasedRouteRule(o["rule"], d, "rule")); err != nil {
-            if !fortiAPIPatch(o["rule"]) {
-                return fmt.Errorf("Error reading rule: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("rule"); ok {
-            if err = d.Set("rule", flattenFirewallIdentityBasedRouteRule(o["rule"], d, "rule")); err != nil {
-                if !fortiAPIPatch(o["rule"]) {
-                    return fmt.Errorf("Error reading rule: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("rule", flattenFirewallIdentityBasedRouteRule(o["rule"], d, "rule")); err != nil {
+			if !fortiAPIPatch(o["rule"]) {
+				return fmt.Errorf("Error reading rule: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("rule"); ok {
+			if err = d.Set("rule", flattenFirewallIdentityBasedRouteRule(o["rule"], d, "rule")); err != nil {
+				if !fortiAPIPatch(o["rule"]) {
+					return fmt.Errorf("Error reading rule: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -318,7 +314,6 @@ func flattenFirewallIdentityBasedRouteFortiTestDebug(d *schema.ResourceData, fos
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandFirewallIdentityBasedRouteName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -340,7 +335,7 @@ func expandFirewallIdentityBasedRouteRule(d *schema.ResourceData, v interface{},
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -396,7 +391,7 @@ func expandFirewallIdentityBasedRouteRuleGroups(d *schema.ResourceData, v interf
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -415,10 +410,8 @@ func expandFirewallIdentityBasedRouteRuleGroupsName(d *schema.ResourceData, v in
 	return v, nil
 }
 
-
 func getObjectFirewallIdentityBasedRoute(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandFirewallIdentityBasedRouteName(d, v, "name")
@@ -447,7 +440,5 @@ func getObjectFirewallIdentityBasedRoute(d *schema.ResourceData) (*map[string]in
 		}
 	}
 
-
 	return &obj, nil
 }
-

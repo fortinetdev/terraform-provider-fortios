@@ -30,97 +30,97 @@ func resourceSwitchControllerSecurityPolicy8021X() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"security_mode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"user_group": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"mac_auth_bypass": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"open_auth": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"eap_passthru": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"guest_vlan": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"guest_vlanid": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"guest_vlan_id": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"guest_auth_delay": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 900),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"auth_fail_vlan": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"auth_fail_vlanid": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"auth_fail_vlan_id": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"framevid_apply": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"radius_timeout_overwrite": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"policy_type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
@@ -216,7 +216,6 @@ func resourceSwitchControllerSecurityPolicy8021XRead(d *schema.ResourceData, m i
 	}
 	return nil
 }
-
 
 func flattenSwitchControllerSecurityPolicy8021XName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -314,10 +313,8 @@ func flattenSwitchControllerSecurityPolicy8021XPolicyType(v interface{}, d *sche
 	return v
 }
 
-
 func refreshObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenSwitchControllerSecurityPolicy8021XName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -331,21 +328,21 @@ func refreshObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, o 
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("user_group", flattenSwitchControllerSecurityPolicy8021XUserGroup(o["user-group"], d, "user_group")); err != nil {
-            if !fortiAPIPatch(o["user-group"]) {
-                return fmt.Errorf("Error reading user_group: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("user_group"); ok {
-            if err = d.Set("user_group", flattenSwitchControllerSecurityPolicy8021XUserGroup(o["user-group"], d, "user_group")); err != nil {
-                if !fortiAPIPatch(o["user-group"]) {
-                    return fmt.Errorf("Error reading user_group: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("user_group", flattenSwitchControllerSecurityPolicy8021XUserGroup(o["user-group"], d, "user_group")); err != nil {
+			if !fortiAPIPatch(o["user-group"]) {
+				return fmt.Errorf("Error reading user_group: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("user_group"); ok {
+			if err = d.Set("user_group", flattenSwitchControllerSecurityPolicy8021XUserGroup(o["user-group"], d, "user_group")); err != nil {
+				if !fortiAPIPatch(o["user-group"]) {
+					return fmt.Errorf("Error reading user_group: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("mac_auth_bypass", flattenSwitchControllerSecurityPolicy8021XMacAuthBypass(o["mac-auth-bypass"], d, "mac_auth_bypass")); err != nil {
 		if !fortiAPIPatch(o["mac-auth-bypass"]) {
@@ -425,7 +422,6 @@ func refreshObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData, o 
 		}
 	}
 
-
 	return nil
 }
 
@@ -434,7 +430,6 @@ func flattenSwitchControllerSecurityPolicy8021XFortiTestDebug(d *schema.Resource
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSwitchControllerSecurityPolicy8021XName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -456,7 +451,7 @@ func expandSwitchControllerSecurityPolicy8021XUserGroup(d *schema.ResourceData, 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -527,10 +522,8 @@ func expandSwitchControllerSecurityPolicy8021XPolicyType(d *schema.ResourceData,
 	return v, nil
 }
 
-
 func getObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandSwitchControllerSecurityPolicy8021XName(d, v, "name")
@@ -676,7 +669,5 @@ func getObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData) (*map[
 		}
 	}
 
-
 	return &obj, nil
 }
-

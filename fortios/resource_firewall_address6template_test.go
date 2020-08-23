@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,42 +5,43 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSFirewallAddress6Template_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSFirewallAddress6Template_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSFirewallAddress6Template_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSFirewallAddress6TemplateConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSFirewallAddress6TemplateExists("fortios_firewall_address6template.trname"),
-                    resource.TestCheckResourceAttr("fortios_firewall_address6template.trname", "ip6", "2001:db8:0:b::/64"),
-                    resource.TestCheckResourceAttr("fortios_firewall_address6template.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_firewall_address6template.trname", "subnet_segment_count", "2"),
-                    resource.TestCheckResourceAttr("fortios_firewall_address6template.trname", "subnet_segment.0.bits", "4"),
-                    resource.TestCheckResourceAttr("fortios_firewall_address6template.trname", "subnet_segment.0.exclusive", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_address6template.trname", "subnet_segment.0.id", "1"),
-                    resource.TestCheckResourceAttr("fortios_firewall_address6template.trname", "subnet_segment.0.name", "country"),
-                    resource.TestCheckResourceAttr("fortios_firewall_address6template.trname", "subnet_segment.1.bits", "4"),
-                    resource.TestCheckResourceAttr("fortios_firewall_address6template.trname", "subnet_segment.1.exclusive", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_address6template.trname", "subnet_segment.1.id", "2"),
-                    resource.TestCheckResourceAttr("fortios_firewall_address6template.trname", "subnet_segment.1.name", "state"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSFirewallAddress6TemplateConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSFirewallAddress6TemplateExists("fortios_firewall_address6template.trname"),
+					resource.TestCheckResourceAttr("fortios_firewall_address6template.trname", "ip6", "2001:db8:0:b::/64"),
+					resource.TestCheckResourceAttr("fortios_firewall_address6template.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_firewall_address6template.trname", "subnet_segment_count", "2"),
+					resource.TestCheckResourceAttr("fortios_firewall_address6template.trname", "subnet_segment.0.bits", "4"),
+					resource.TestCheckResourceAttr("fortios_firewall_address6template.trname", "subnet_segment.0.exclusive", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_address6template.trname", "subnet_segment.0.id", "1"),
+					resource.TestCheckResourceAttr("fortios_firewall_address6template.trname", "subnet_segment.0.name", "country"),
+					resource.TestCheckResourceAttr("fortios_firewall_address6template.trname", "subnet_segment.1.bits", "4"),
+					resource.TestCheckResourceAttr("fortios_firewall_address6template.trname", "subnet_segment.1.exclusive", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_address6template.trname", "subnet_segment.1.id", "2"),
+					resource.TestCheckResourceAttr("fortios_firewall_address6template.trname", "subnet_segment.1.name", "state"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSFirewallAddress6TemplateExists(n string) resource.TestCheckFunc {

@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,69 +5,70 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSVpnIpsecPhase2_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    var0 := "var0" + rname
-    log.Printf(var0)
-    log.Printf("TestAccFortiOSVpnIpsecPhase2_basic %s", rname)
+	rname := acctest.RandString(8)
+	var0 := "var0" + rname
+	log.Printf(var0)
+	log.Printf("TestAccFortiOSVpnIpsecPhase2_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSVpnIpsecPhase2Config(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSVpnIpsecPhase2Exists("fortios_vpnipsec_phase2.trname"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "add_route", "phase1"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "auto_negotiate", "disable"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "dhcp_ipsec", "disable"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "dhgrp", "14 5"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "dst_addr_type", "subnet"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "dst_end_ip", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "dst_end_ip6", "::"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "dst_port", "0"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "dst_start_ip", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "dst_start_ip6", "::"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "dst_subnet", "0.0.0.0 0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "dst_subnet6", "::/0"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "encapsulation", "tunnel-mode"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "keepalive", "disable"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "keylife_type", "seconds"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "keylifekbs", "5120"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "keylifeseconds", "43200"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "l2tp", "disable"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "pfs", "enable"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "phase1name", var0),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "proposal", "null-md5 null-sha1 null-sha256"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "protocol", "0"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "replay", "enable"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "route_overlap", "use-new"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "selector_match", "auto"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "single_source", "disable"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "src_addr_type", "subnet"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "src_end_ip", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "src_end_ip6", "::"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "src_port", "0"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "src_start_ip", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "src_start_ip6", "::"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "src_subnet", "0.0.0.0 0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "src_subnet6", "::/0"),
-                    resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "use_natip", "disable"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSVpnIpsecPhase2Config(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSVpnIpsecPhase2Exists("fortios_vpnipsec_phase2.trname"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "add_route", "phase1"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "auto_negotiate", "disable"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "dhcp_ipsec", "disable"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "dhgrp", "14 5"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "dst_addr_type", "subnet"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "dst_end_ip", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "dst_end_ip6", "::"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "dst_port", "0"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "dst_start_ip", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "dst_start_ip6", "::"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "dst_subnet", "0.0.0.0 0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "dst_subnet6", "::/0"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "encapsulation", "tunnel-mode"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "keepalive", "disable"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "keylife_type", "seconds"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "keylifekbs", "5120"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "keylifeseconds", "43200"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "l2tp", "disable"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "pfs", "enable"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "phase1name", var0),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "proposal", "null-md5 null-sha1 null-sha256"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "protocol", "0"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "replay", "enable"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "route_overlap", "use-new"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "selector_match", "auto"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "single_source", "disable"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "src_addr_type", "subnet"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "src_end_ip", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "src_end_ip6", "::"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "src_port", "0"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "src_start_ip", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "src_start_ip6", "::"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "src_subnet", "0.0.0.0 0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "src_subnet6", "::/0"),
+					resource.TestCheckResourceAttr("fortios_vpnipsec_phase2.trname", "use_natip", "disable"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSVpnIpsecPhase2Exists(n string) resource.TestCheckFunc {

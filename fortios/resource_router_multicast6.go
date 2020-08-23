@@ -30,66 +30,66 @@ func resourceRouterMulticast6() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"multicast_routing": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"multicast_pmtu": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"interface": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"hello_interval": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 65535),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"hello_holdtime": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 65535),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"pim_sm_global": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"register_rate_limit": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"rp_address": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"ip6_address": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
@@ -98,10 +98,9 @@ func resourceRouterMulticast6() *schema.Resource {
 						},
 					},
 				},
-			},		},
+			}},
 	}
 }
-
 
 func resourceRouterMulticast6Update(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -167,7 +166,6 @@ func resourceRouterMulticast6Read(d *schema.ResourceData, m interface{}) error {
 	}
 	return nil
 }
-
 
 func flattenRouterMulticast6MulticastRouting(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -240,16 +238,15 @@ func flattenRouterMulticast6PimSmGlobal(v interface{}, d *schema.ResourceData, p
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "register_rate_limit"
+	pre_append = pre + ".0." + "register_rate_limit"
 	if _, ok := i["register-rate-limit"]; ok {
 		result["register_rate_limit"] = flattenRouterMulticast6PimSmGlobalRegisterRateLimit(i["register-rate-limit"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "rp_address"
+	pre_append = pre + ".0." + "rp_address"
 	if _, ok := i["rp-address"]; ok {
 		result["rp_address"] = flattenRouterMulticast6PimSmGlobalRpAddress(i["rp-address"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -304,10 +301,8 @@ func flattenRouterMulticast6PimSmGlobalRpAddressIp6Address(v interface{}, d *sch
 	return v
 }
 
-
 func refreshObjectRouterMulticast6(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("multicast_routing", flattenRouterMulticast6MulticastRouting(o["multicast-routing"], d, "multicast_routing")); err != nil {
 		if !fortiAPIPatch(o["multicast-routing"]) {
@@ -321,38 +316,37 @@ func refreshObjectRouterMulticast6(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("interface", flattenRouterMulticast6Interface(o["interface"], d, "interface")); err != nil {
-            if !fortiAPIPatch(o["interface"]) {
-                return fmt.Errorf("Error reading interface: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("interface"); ok {
-            if err = d.Set("interface", flattenRouterMulticast6Interface(o["interface"], d, "interface")); err != nil {
-                if !fortiAPIPatch(o["interface"]) {
-                    return fmt.Errorf("Error reading interface: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("interface", flattenRouterMulticast6Interface(o["interface"], d, "interface")); err != nil {
+			if !fortiAPIPatch(o["interface"]) {
+				return fmt.Errorf("Error reading interface: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("interface"); ok {
+			if err = d.Set("interface", flattenRouterMulticast6Interface(o["interface"], d, "interface")); err != nil {
+				if !fortiAPIPatch(o["interface"]) {
+					return fmt.Errorf("Error reading interface: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("pim_sm_global", flattenRouterMulticast6PimSmGlobal(o["pim-sm-global"], d, "pim_sm_global")); err != nil {
-            if !fortiAPIPatch(o["pim-sm-global"]) {
-                return fmt.Errorf("Error reading pim_sm_global: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("pim_sm_global"); ok {
-            if err = d.Set("pim_sm_global", flattenRouterMulticast6PimSmGlobal(o["pim-sm-global"], d, "pim_sm_global")); err != nil {
-                if !fortiAPIPatch(o["pim-sm-global"]) {
-                    return fmt.Errorf("Error reading pim_sm_global: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("pim_sm_global", flattenRouterMulticast6PimSmGlobal(o["pim-sm-global"], d, "pim_sm_global")); err != nil {
+			if !fortiAPIPatch(o["pim-sm-global"]) {
+				return fmt.Errorf("Error reading pim_sm_global: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("pim_sm_global"); ok {
+			if err = d.Set("pim_sm_global", flattenRouterMulticast6PimSmGlobal(o["pim-sm-global"], d, "pim_sm_global")); err != nil {
+				if !fortiAPIPatch(o["pim-sm-global"]) {
+					return fmt.Errorf("Error reading pim_sm_global: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -362,7 +356,6 @@ func flattenRouterMulticast6FortiTestDebug(d *schema.ResourceData, fosdebugsn in
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandRouterMulticast6MulticastRouting(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -384,7 +377,7 @@ func expandRouterMulticast6Interface(d *schema.ResourceData, v interface{}, pre 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -430,12 +423,12 @@ func expandRouterMulticast6PimSmGlobal(d *schema.ResourceData, v interface{}, pr
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "register_rate_limit"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "register_rate_limit"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["register-rate-limit"], _ = expandRouterMulticast6PimSmGlobalRegisterRateLimit(d, i["register_rate_limit"], pre_append)
 	}
-	pre_append =  pre + ".0." + "rp_address"
+	pre_append = pre + ".0." + "rp_address"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["rp-address"], _ = expandRouterMulticast6PimSmGlobalRpAddress(d, i["rp_address"], pre_append)
 	} else {
@@ -461,7 +454,7 @@ func expandRouterMulticast6PimSmGlobalRpAddress(d *schema.ResourceData, v interf
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -489,10 +482,8 @@ func expandRouterMulticast6PimSmGlobalRpAddressIp6Address(d *schema.ResourceData
 	return v, nil
 }
 
-
 func getObjectRouterMulticast6(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("multicast_routing"); ok {
 		t, err := expandRouterMulticast6MulticastRouting(d, v, "multicast_routing")
@@ -530,7 +521,5 @@ func getObjectRouterMulticast6(d *schema.ResourceData) (*map[string]interface{},
 		}
 	}
 
-
 	return &obj, nil
 }
-

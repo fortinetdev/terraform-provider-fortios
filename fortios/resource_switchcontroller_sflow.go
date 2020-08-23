@@ -30,19 +30,18 @@ func resourceSwitchControllerSflow() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"collector_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"collector_port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
 }
-
 
 func resourceSwitchControllerSflowUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -109,7 +108,6 @@ func resourceSwitchControllerSflowRead(d *schema.ResourceData, m interface{}) er
 	return nil
 }
 
-
 func flattenSwitchControllerSflowCollectorIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -118,10 +116,8 @@ func flattenSwitchControllerSflowCollectorPort(v interface{}, d *schema.Resource
 	return v
 }
 
-
 func refreshObjectSwitchControllerSflow(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("collector_ip", flattenSwitchControllerSflowCollectorIp(o["collector-ip"], d, "collector_ip")); err != nil {
 		if !fortiAPIPatch(o["collector-ip"]) {
@@ -135,7 +131,6 @@ func refreshObjectSwitchControllerSflow(d *schema.ResourceData, o map[string]int
 		}
 	}
 
-
 	return nil
 }
 
@@ -145,7 +140,6 @@ func flattenSwitchControllerSflowFortiTestDebug(d *schema.ResourceData, fosdebug
 	log.Printf("ER List: %v", e)
 }
 
-
 func expandSwitchControllerSflowCollectorIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
 }
@@ -154,10 +148,8 @@ func expandSwitchControllerSflowCollectorPort(d *schema.ResourceData, v interfac
 	return v, nil
 }
 
-
 func getObjectSwitchControllerSflow(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("collector_ip"); ok {
 		t, err := expandSwitchControllerSflowCollectorIp(d, v, "collector_ip")
@@ -177,7 +169,5 @@ func getObjectSwitchControllerSflow(d *schema.ResourceData) (*map[string]interfa
 		}
 	}
 
-
 	return &obj, nil
 }
-

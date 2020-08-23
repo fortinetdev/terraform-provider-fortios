@@ -30,20 +30,20 @@ func resourceLogCustomField() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"fosid": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
-				Required: true,
+				Required:     true,
 			},
 			"value": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
-				Required: true,
+				Required:     true,
 			},
 		},
 	}
@@ -138,7 +138,6 @@ func resourceLogCustomFieldRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenLogCustomFieldId(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -151,10 +150,8 @@ func flattenLogCustomFieldValue(v interface{}, d *schema.ResourceData, pre strin
 	return v
 }
 
-
 func refreshObjectLogCustomField(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("fosid", flattenLogCustomFieldId(o["id"], d, "fosid")); err != nil {
 		if !fortiAPIPatch(o["id"]) {
@@ -174,7 +171,6 @@ func refreshObjectLogCustomField(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-
 	return nil
 }
 
@@ -183,7 +179,6 @@ func flattenLogCustomFieldFortiTestDebug(d *schema.ResourceData, fosdebugsn int,
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandLogCustomFieldId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -197,10 +192,8 @@ func expandLogCustomFieldValue(d *schema.ResourceData, v interface{}, pre string
 	return v, nil
 }
 
-
 func getObjectLogCustomField(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("fosid"); ok {
 		t, err := expandLogCustomFieldId(d, v, "fosid")
@@ -229,7 +222,5 @@ func getObjectLogCustomField(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-
 	return &obj, nil
 }
-

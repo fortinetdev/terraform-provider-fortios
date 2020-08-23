@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,47 +5,48 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSFirewallSniffer_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSFirewallSniffer_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSFirewallSniffer_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSFirewallSnifferConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSFirewallSnifferExists("fortios_firewall_sniffer.trname"),
-                    resource.TestCheckResourceAttr("fortios_firewall_sniffer.trname", "application_list_status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_sniffer.trname", "av_profile_status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_sniffer.trname", "dlp_sensor_status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_sniffer.trname", "dsri", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_sniffer.trname", "fosid", "1"),
-                    resource.TestCheckResourceAttr("fortios_firewall_sniffer.trname", "interface", "port4"),
-                    resource.TestCheckResourceAttr("fortios_firewall_sniffer.trname", "ips_dos_status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_sniffer.trname", "ips_sensor_status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_sniffer.trname", "ipv6", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_sniffer.trname", "logtraffic", "utm"),
-                    resource.TestCheckResourceAttr("fortios_firewall_sniffer.trname", "max_packet_count", "4000"),
-                    resource.TestCheckResourceAttr("fortios_firewall_sniffer.trname", "non_ip", "enable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_sniffer.trname", "scan_botnet_connections", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_sniffer.trname", "spamfilter_profile_status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_sniffer.trname", "status", "enable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_sniffer.trname", "webfilter_profile_status", "disable"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSFirewallSnifferConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSFirewallSnifferExists("fortios_firewall_sniffer.trname"),
+					resource.TestCheckResourceAttr("fortios_firewall_sniffer.trname", "application_list_status", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_sniffer.trname", "av_profile_status", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_sniffer.trname", "dlp_sensor_status", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_sniffer.trname", "dsri", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_sniffer.trname", "fosid", "1"),
+					resource.TestCheckResourceAttr("fortios_firewall_sniffer.trname", "interface", "port4"),
+					resource.TestCheckResourceAttr("fortios_firewall_sniffer.trname", "ips_dos_status", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_sniffer.trname", "ips_sensor_status", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_sniffer.trname", "ipv6", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_sniffer.trname", "logtraffic", "utm"),
+					resource.TestCheckResourceAttr("fortios_firewall_sniffer.trname", "max_packet_count", "4000"),
+					resource.TestCheckResourceAttr("fortios_firewall_sniffer.trname", "non_ip", "enable"),
+					resource.TestCheckResourceAttr("fortios_firewall_sniffer.trname", "scan_botnet_connections", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_sniffer.trname", "spamfilter_profile_status", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_sniffer.trname", "status", "enable"),
+					resource.TestCheckResourceAttr("fortios_firewall_sniffer.trname", "webfilter_profile_status", "disable"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSFirewallSnifferExists(n string) resource.TestCheckFunc {

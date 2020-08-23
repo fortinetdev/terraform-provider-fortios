@@ -30,42 +30,42 @@ func resourceWebProxyForwardServerGroup() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"affinity": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ldb_method": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"group_down_option": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"server_list": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"weight": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 100),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -163,7 +163,6 @@ func resourceWebProxyForwardServerGroupRead(d *schema.ResourceData, m interface{
 	return nil
 }
 
-
 func flattenWebProxyForwardServerGroupName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -225,10 +224,8 @@ func flattenWebProxyForwardServerGroupServerListWeight(v interface{}, d *schema.
 	return v
 }
 
-
 func refreshObjectWebProxyForwardServerGroup(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenWebProxyForwardServerGroupName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -254,22 +251,21 @@ func refreshObjectWebProxyForwardServerGroup(d *schema.ResourceData, o map[strin
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("server_list", flattenWebProxyForwardServerGroupServerList(o["server-list"], d, "server_list")); err != nil {
-            if !fortiAPIPatch(o["server-list"]) {
-                return fmt.Errorf("Error reading server_list: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("server_list"); ok {
-            if err = d.Set("server_list", flattenWebProxyForwardServerGroupServerList(o["server-list"], d, "server_list")); err != nil {
-                if !fortiAPIPatch(o["server-list"]) {
-                    return fmt.Errorf("Error reading server_list: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("server_list", flattenWebProxyForwardServerGroupServerList(o["server-list"], d, "server_list")); err != nil {
+			if !fortiAPIPatch(o["server-list"]) {
+				return fmt.Errorf("Error reading server_list: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("server_list"); ok {
+			if err = d.Set("server_list", flattenWebProxyForwardServerGroupServerList(o["server-list"], d, "server_list")); err != nil {
+				if !fortiAPIPatch(o["server-list"]) {
+					return fmt.Errorf("Error reading server_list: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -279,7 +275,6 @@ func flattenWebProxyForwardServerGroupFortiTestDebug(d *schema.ResourceData, fos
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandWebProxyForwardServerGroupName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -309,7 +304,7 @@ func expandWebProxyForwardServerGroupServerList(d *schema.ResourceData, v interf
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -337,10 +332,8 @@ func expandWebProxyForwardServerGroupServerListWeight(d *schema.ResourceData, v 
 	return v, nil
 }
 
-
 func getObjectWebProxyForwardServerGroup(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandWebProxyForwardServerGroupName(d, v, "name")
@@ -387,7 +380,5 @@ func getObjectWebProxyForwardServerGroup(d *schema.ResourceData) (*map[string]in
 		}
 	}
 
-
 	return &obj, nil
 }
-

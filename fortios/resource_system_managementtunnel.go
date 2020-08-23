@@ -30,44 +30,43 @@ func resourceSystemManagementTunnel() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"allow_config_restore": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"allow_push_configuration": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"allow_push_firmware": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"allow_collect_statistics": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"authorized_manager_only": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"serial_number": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceSystemManagementTunnelUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -134,7 +133,6 @@ func resourceSystemManagementTunnelRead(d *schema.ResourceData, m interface{}) e
 	return nil
 }
 
-
 func flattenSystemManagementTunnelStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -163,10 +161,8 @@ func flattenSystemManagementTunnelSerialNumber(v interface{}, d *schema.Resource
 	return v
 }
 
-
 func refreshObjectSystemManagementTunnel(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("status", flattenSystemManagementTunnelStatus(o["status"], d, "status")); err != nil {
 		if !fortiAPIPatch(o["status"]) {
@@ -210,7 +206,6 @@ func refreshObjectSystemManagementTunnel(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-
 	return nil
 }
 
@@ -219,7 +214,6 @@ func flattenSystemManagementTunnelFortiTestDebug(d *schema.ResourceData, fosdebu
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemManagementTunnelStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -249,10 +243,8 @@ func expandSystemManagementTunnelSerialNumber(d *schema.ResourceData, v interfac
 	return v, nil
 }
 
-
 func getObjectSystemManagementTunnel(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("status"); ok {
 		t, err := expandSystemManagementTunnelStatus(d, v, "status")
@@ -317,7 +309,5 @@ func getObjectSystemManagementTunnel(d *schema.ResourceData) (*map[string]interf
 		}
 	}
 
-
 	return &obj, nil
 }
-

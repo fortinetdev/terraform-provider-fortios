@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,42 +5,43 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSystemSdnConnector_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSystemSdnConnector_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSystemSdnConnector_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSystemSdnConnectorConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSystemSdnConnectorExists("fortios_system_sdnconnector.trname"),
-                    resource.TestCheckResourceAttr("fortios_system_sdnconnector.trname", "azure_region", "global"),
-                    resource.TestCheckResourceAttr("fortios_system_sdnconnector.trname", "ha_status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_system_sdnconnector.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_system_sdnconnector.trname", "password", "ENC -1N2ZPOCHEkvUA4pNeO78iotUQKN8="),
-                    resource.TestCheckResourceAttr("fortios_system_sdnconnector.trname", "server", "1.1.1.1"),
-                    resource.TestCheckResourceAttr("fortios_system_sdnconnector.trname", "server_port", "3"),
-                    resource.TestCheckResourceAttr("fortios_system_sdnconnector.trname", "status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_system_sdnconnector.trname", "type", "aci"),
-                    resource.TestCheckResourceAttr("fortios_system_sdnconnector.trname", "update_interval", "60"),
-                    resource.TestCheckResourceAttr("fortios_system_sdnconnector.trname", "use_metadata_iam", "disable"),
-                    resource.TestCheckResourceAttr("fortios_system_sdnconnector.trname", "username", "sg"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSystemSdnConnectorConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSystemSdnConnectorExists("fortios_system_sdnconnector.trname"),
+					resource.TestCheckResourceAttr("fortios_system_sdnconnector.trname", "azure_region", "global"),
+					resource.TestCheckResourceAttr("fortios_system_sdnconnector.trname", "ha_status", "disable"),
+					resource.TestCheckResourceAttr("fortios_system_sdnconnector.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_system_sdnconnector.trname", "password", "ENC -1N2ZPOCHEkvUA4pNeO78iotUQKN8="),
+					resource.TestCheckResourceAttr("fortios_system_sdnconnector.trname", "server", "1.1.1.1"),
+					resource.TestCheckResourceAttr("fortios_system_sdnconnector.trname", "server_port", "3"),
+					resource.TestCheckResourceAttr("fortios_system_sdnconnector.trname", "status", "disable"),
+					resource.TestCheckResourceAttr("fortios_system_sdnconnector.trname", "type", "aci"),
+					resource.TestCheckResourceAttr("fortios_system_sdnconnector.trname", "update_interval", "60"),
+					resource.TestCheckResourceAttr("fortios_system_sdnconnector.trname", "use_metadata_iam", "disable"),
+					resource.TestCheckResourceAttr("fortios_system_sdnconnector.trname", "username", "sg"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSystemSdnConnectorExists(n string) resource.TestCheckFunc {

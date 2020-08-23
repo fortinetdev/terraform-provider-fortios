@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,37 +5,38 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSWebfilterSearchEngine_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSWebfilterSearchEngine_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSWebfilterSearchEngine_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSWebfilterSearchEngineConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSWebfilterSearchEngineExists("fortios_webfilter_searchengine.trname"),
-                    resource.TestCheckResourceAttr("fortios_webfilter_searchengine.trname", "charset", "utf-8"),
-                    resource.TestCheckResourceAttr("fortios_webfilter_searchengine.trname", "hostname", "sg.eiwuc.com"),
-                    resource.TestCheckResourceAttr("fortios_webfilter_searchengine.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_webfilter_searchengine.trname", "query", "sc="),
-                    resource.TestCheckResourceAttr("fortios_webfilter_searchengine.trname", "safesearch", "disable"),
-                    resource.TestCheckResourceAttr("fortios_webfilter_searchengine.trname", "url", "^\\/f"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSWebfilterSearchEngineConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSWebfilterSearchEngineExists("fortios_webfilter_searchengine.trname"),
+					resource.TestCheckResourceAttr("fortios_webfilter_searchengine.trname", "charset", "utf-8"),
+					resource.TestCheckResourceAttr("fortios_webfilter_searchengine.trname", "hostname", "sg.eiwuc.com"),
+					resource.TestCheckResourceAttr("fortios_webfilter_searchengine.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_webfilter_searchengine.trname", "query", "sc="),
+					resource.TestCheckResourceAttr("fortios_webfilter_searchengine.trname", "safesearch", "disable"),
+					resource.TestCheckResourceAttr("fortios_webfilter_searchengine.trname", "url", "^\\/f"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSWebfilterSearchEngineExists(n string) resource.TestCheckFunc {

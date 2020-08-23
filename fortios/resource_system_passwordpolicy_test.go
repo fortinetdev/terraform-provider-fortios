@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,42 +5,43 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSystemPasswordPolicy_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSystemPasswordPolicy_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSystemPasswordPolicy_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSystemPasswordPolicyConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSystemPasswordPolicyExists("fortios_system_passwordpolicy.trname"),
-                    resource.TestCheckResourceAttr("fortios_system_passwordpolicy.trname", "apply_to", "admin-password"),
-                    resource.TestCheckResourceAttr("fortios_system_passwordpolicy.trname", "change_4_characters", "disable"),
-                    resource.TestCheckResourceAttr("fortios_system_passwordpolicy.trname", "expire_day", "90"),
-                    resource.TestCheckResourceAttr("fortios_system_passwordpolicy.trname", "expire_status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_system_passwordpolicy.trname", "min_lower_case_letter", "0"),
-                    resource.TestCheckResourceAttr("fortios_system_passwordpolicy.trname", "min_non_alphanumeric", "0"),
-                    resource.TestCheckResourceAttr("fortios_system_passwordpolicy.trname", "min_number", "0"),
-                    resource.TestCheckResourceAttr("fortios_system_passwordpolicy.trname", "min_upper_case_letter", "0"),
-                    resource.TestCheckResourceAttr("fortios_system_passwordpolicy.trname", "minimum_length", "8"),
-                    resource.TestCheckResourceAttr("fortios_system_passwordpolicy.trname", "reuse_password", "enable"),
-                    resource.TestCheckResourceAttr("fortios_system_passwordpolicy.trname", "status", "disable"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSystemPasswordPolicyConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSystemPasswordPolicyExists("fortios_system_passwordpolicy.trname"),
+					resource.TestCheckResourceAttr("fortios_system_passwordpolicy.trname", "apply_to", "admin-password"),
+					resource.TestCheckResourceAttr("fortios_system_passwordpolicy.trname", "change_4_characters", "disable"),
+					resource.TestCheckResourceAttr("fortios_system_passwordpolicy.trname", "expire_day", "90"),
+					resource.TestCheckResourceAttr("fortios_system_passwordpolicy.trname", "expire_status", "disable"),
+					resource.TestCheckResourceAttr("fortios_system_passwordpolicy.trname", "min_lower_case_letter", "0"),
+					resource.TestCheckResourceAttr("fortios_system_passwordpolicy.trname", "min_non_alphanumeric", "0"),
+					resource.TestCheckResourceAttr("fortios_system_passwordpolicy.trname", "min_number", "0"),
+					resource.TestCheckResourceAttr("fortios_system_passwordpolicy.trname", "min_upper_case_letter", "0"),
+					resource.TestCheckResourceAttr("fortios_system_passwordpolicy.trname", "minimum_length", "8"),
+					resource.TestCheckResourceAttr("fortios_system_passwordpolicy.trname", "reuse_password", "enable"),
+					resource.TestCheckResourceAttr("fortios_system_passwordpolicy.trname", "status", "disable"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSystemPasswordPolicyExists(n string) resource.TestCheckFunc {

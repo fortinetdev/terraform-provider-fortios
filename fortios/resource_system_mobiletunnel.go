@@ -30,91 +30,91 @@ func resourceSystemMobileTunnel() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"roaming_interface": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
-				Required: true,
+				Required:     true,
 			},
 			"home_agent": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"home_address": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"renew_interval": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(5, 60),
-				Required: true,
+				Required:     true,
 			},
 			"lifetime": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(180, 65535),
-				Required: true,
+				Required:     true,
 			},
 			"reg_interval": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(5, 300),
-				Required: true,
+				Required:     true,
 			},
 			"reg_retry": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 30),
-				Required: true,
+				Required:     true,
 			},
 			"n_mhae_spi": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Required: true,
+				Required:     true,
 			},
 			"n_mhae_key_type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"n_mhae_key": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"hash_algorithm": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"tunnel_mode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"network": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"interface": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"prefix": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -213,7 +213,6 @@ func resourceSystemMobileTunnelRead(d *schema.ResourceData, m interface{}) error
 	}
 	return nil
 }
-
 
 func flattenSystemMobileTunnelName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -332,10 +331,8 @@ func flattenSystemMobileTunnelNetworkPrefix(v interface{}, d *schema.ResourceDat
 	return v
 }
 
-
 func refreshObjectSystemMobileTunnel(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenSystemMobileTunnelName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -415,22 +412,21 @@ func refreshObjectSystemMobileTunnel(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("network", flattenSystemMobileTunnelNetwork(o["network"], d, "network")); err != nil {
-            if !fortiAPIPatch(o["network"]) {
-                return fmt.Errorf("Error reading network: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("network"); ok {
-            if err = d.Set("network", flattenSystemMobileTunnelNetwork(o["network"], d, "network")); err != nil {
-                if !fortiAPIPatch(o["network"]) {
-                    return fmt.Errorf("Error reading network: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("network", flattenSystemMobileTunnelNetwork(o["network"], d, "network")); err != nil {
+			if !fortiAPIPatch(o["network"]) {
+				return fmt.Errorf("Error reading network: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("network"); ok {
+			if err = d.Set("network", flattenSystemMobileTunnelNetwork(o["network"], d, "network")); err != nil {
+				if !fortiAPIPatch(o["network"]) {
+					return fmt.Errorf("Error reading network: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -440,7 +436,6 @@ func flattenSystemMobileTunnelFortiTestDebug(d *schema.ResourceData, fosdebugsn 
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemMobileTunnelName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -510,7 +505,7 @@ func expandSystemMobileTunnelNetwork(d *schema.ResourceData, v interface{}, pre 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -547,10 +542,8 @@ func expandSystemMobileTunnelNetworkPrefix(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
-
 func getObjectSystemMobileTunnel(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandSystemMobileTunnelName(d, v, "name")
@@ -687,7 +680,5 @@ func getObjectSystemMobileTunnel(d *schema.ResourceData) (*map[string]interface{
 		}
 	}
 
-
 	return &obj, nil
 }
-

@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,42 +5,43 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSystemApiUser_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    var0 := "var0" + rname
-    log.Printf(var0)
-    log.Printf("TestAccFortiOSSystemApiUser_basic %s", rname)
+	rname := acctest.RandString(8)
+	var0 := "var0" + rname
+	log.Printf(var0)
+	log.Printf("TestAccFortiOSSystemApiUser_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSystemApiUserConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSystemApiUserExists("fortios_system_apiuser.test2"),
-                    resource.TestCheckResourceAttr("fortios_system_apiuser.test2", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_system_apiuser.test2", "accprofile", var0),
-                    resource.TestCheckResourceAttr("fortios_system_apiuser.test2", "vdom.0.name", "root"),
-                    resource.TestCheckResourceAttr("fortios_system_apiuser.test2", "trusthost.0.type", "ipv4-trusthost"),
-                    resource.TestCheckResourceAttr("fortios_system_apiuser.test2", "trusthost.0.ipv4_trusthost", "2.0.0.0/23"),
-                    resource.TestCheckResourceAttr("fortios_system_apiuser.test2", "trusthost.1.type", "ipv4-trusthost"),
-                    resource.TestCheckResourceAttr("fortios_system_apiuser.test2", "trusthost.1.ipv4_trusthost", "2.0.0.0 255.255.255.0"),
-                    resource.TestCheckResourceAttr("fortios_system_apiuser.test2", "trusthost.2.type", "ipv6-trusthost"),
-                    resource.TestCheckResourceAttr("fortios_system_apiuser.test2", "trusthost.2.ipv6_trusthost", "101:101:ffff:ffff::/0"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSystemApiUserConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSystemApiUserExists("fortios_system_apiuser.test2"),
+					resource.TestCheckResourceAttr("fortios_system_apiuser.test2", "name", rname),
+					resource.TestCheckResourceAttr("fortios_system_apiuser.test2", "accprofile", var0),
+					resource.TestCheckResourceAttr("fortios_system_apiuser.test2", "vdom.0.name", "root"),
+					resource.TestCheckResourceAttr("fortios_system_apiuser.test2", "trusthost.0.type", "ipv4-trusthost"),
+					resource.TestCheckResourceAttr("fortios_system_apiuser.test2", "trusthost.0.ipv4_trusthost", "2.0.0.0/23"),
+					resource.TestCheckResourceAttr("fortios_system_apiuser.test2", "trusthost.1.type", "ipv4-trusthost"),
+					resource.TestCheckResourceAttr("fortios_system_apiuser.test2", "trusthost.1.ipv4_trusthost", "2.0.0.0 255.255.255.0"),
+					resource.TestCheckResourceAttr("fortios_system_apiuser.test2", "trusthost.2.type", "ipv6-trusthost"),
+					resource.TestCheckResourceAttr("fortios_system_apiuser.test2", "trusthost.2.ipv6_trusthost", "101:101:ffff:ffff::/0"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSystemApiUserExists(n string) resource.TestCheckFunc {

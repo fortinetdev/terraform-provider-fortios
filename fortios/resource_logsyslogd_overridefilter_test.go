@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,42 +5,43 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSLogSyslogdOverrideFilter_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSLogSyslogdOverrideFilter_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSLogSyslogdOverrideFilter_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSLogSyslogdOverrideFilterConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSLogSyslogdOverrideFilterExists("fortios_logsyslogd_overridefilter.trname"),
-                    resource.TestCheckResourceAttr("fortios_logsyslogd_overridefilter.trname", "anomaly", "enable"),
-                    resource.TestCheckResourceAttr("fortios_logsyslogd_overridefilter.trname", "dns", "enable"),
-                    resource.TestCheckResourceAttr("fortios_logsyslogd_overridefilter.trname", "filter_type", "include"),
-                    resource.TestCheckResourceAttr("fortios_logsyslogd_overridefilter.trname", "forward_traffic", "enable"),
-                    resource.TestCheckResourceAttr("fortios_logsyslogd_overridefilter.trname", "gtp", "enable"),
-                    resource.TestCheckResourceAttr("fortios_logsyslogd_overridefilter.trname", "local_traffic", "enable"),
-                    resource.TestCheckResourceAttr("fortios_logsyslogd_overridefilter.trname", "multicast_traffic", "enable"),
-                    resource.TestCheckResourceAttr("fortios_logsyslogd_overridefilter.trname", "severity", "information"),
-                    resource.TestCheckResourceAttr("fortios_logsyslogd_overridefilter.trname", "sniffer_traffic", "enable"),
-                    resource.TestCheckResourceAttr("fortios_logsyslogd_overridefilter.trname", "ssh", "enable"),
-                    resource.TestCheckResourceAttr("fortios_logsyslogd_overridefilter.trname", "voip", "enable"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSLogSyslogdOverrideFilterConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSLogSyslogdOverrideFilterExists("fortios_logsyslogd_overridefilter.trname"),
+					resource.TestCheckResourceAttr("fortios_logsyslogd_overridefilter.trname", "anomaly", "enable"),
+					resource.TestCheckResourceAttr("fortios_logsyslogd_overridefilter.trname", "dns", "enable"),
+					resource.TestCheckResourceAttr("fortios_logsyslogd_overridefilter.trname", "filter_type", "include"),
+					resource.TestCheckResourceAttr("fortios_logsyslogd_overridefilter.trname", "forward_traffic", "enable"),
+					resource.TestCheckResourceAttr("fortios_logsyslogd_overridefilter.trname", "gtp", "enable"),
+					resource.TestCheckResourceAttr("fortios_logsyslogd_overridefilter.trname", "local_traffic", "enable"),
+					resource.TestCheckResourceAttr("fortios_logsyslogd_overridefilter.trname", "multicast_traffic", "enable"),
+					resource.TestCheckResourceAttr("fortios_logsyslogd_overridefilter.trname", "severity", "information"),
+					resource.TestCheckResourceAttr("fortios_logsyslogd_overridefilter.trname", "sniffer_traffic", "enable"),
+					resource.TestCheckResourceAttr("fortios_logsyslogd_overridefilter.trname", "ssh", "enable"),
+					resource.TestCheckResourceAttr("fortios_logsyslogd_overridefilter.trname", "voip", "enable"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSLogSyslogdOverrideFilterExists(n string) resource.TestCheckFunc {

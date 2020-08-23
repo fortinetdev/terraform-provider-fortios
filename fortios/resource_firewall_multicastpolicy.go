@@ -30,96 +30,96 @@ func resourceFirewallMulticastPolicy() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"fosid": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967294),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"logtraffic": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"srcintf": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"dstintf": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"srcaddr": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"dstaddr": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"snat": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"snat_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"dnat": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"action": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"protocol": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"start_port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"end_port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
@@ -213,7 +213,6 @@ func resourceFirewallMulticastPolicyRead(d *schema.ResourceData, m interface{}) 
 	}
 	return nil
 }
-
 
 func flattenFirewallMulticastPolicyId(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -335,10 +334,8 @@ func flattenFirewallMulticastPolicyEndPort(v interface{}, d *schema.ResourceData
 	return v
 }
 
-
 func refreshObjectFirewallMulticastPolicy(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("fosid", flattenFirewallMulticastPolicyId(o["id"], d, "fosid")); err != nil {
 		if !fortiAPIPatch(o["id"]) {
@@ -370,37 +367,37 @@ func refreshObjectFirewallMulticastPolicy(d *schema.ResourceData, o map[string]i
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("srcaddr", flattenFirewallMulticastPolicySrcaddr(o["srcaddr"], d, "srcaddr")); err != nil {
-            if !fortiAPIPatch(o["srcaddr"]) {
-                return fmt.Errorf("Error reading srcaddr: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("srcaddr"); ok {
-            if err = d.Set("srcaddr", flattenFirewallMulticastPolicySrcaddr(o["srcaddr"], d, "srcaddr")); err != nil {
-                if !fortiAPIPatch(o["srcaddr"]) {
-                    return fmt.Errorf("Error reading srcaddr: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("srcaddr", flattenFirewallMulticastPolicySrcaddr(o["srcaddr"], d, "srcaddr")); err != nil {
+			if !fortiAPIPatch(o["srcaddr"]) {
+				return fmt.Errorf("Error reading srcaddr: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("srcaddr"); ok {
+			if err = d.Set("srcaddr", flattenFirewallMulticastPolicySrcaddr(o["srcaddr"], d, "srcaddr")); err != nil {
+				if !fortiAPIPatch(o["srcaddr"]) {
+					return fmt.Errorf("Error reading srcaddr: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("dstaddr", flattenFirewallMulticastPolicyDstaddr(o["dstaddr"], d, "dstaddr")); err != nil {
-            if !fortiAPIPatch(o["dstaddr"]) {
-                return fmt.Errorf("Error reading dstaddr: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("dstaddr"); ok {
-            if err = d.Set("dstaddr", flattenFirewallMulticastPolicyDstaddr(o["dstaddr"], d, "dstaddr")); err != nil {
-                if !fortiAPIPatch(o["dstaddr"]) {
-                    return fmt.Errorf("Error reading dstaddr: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("dstaddr", flattenFirewallMulticastPolicyDstaddr(o["dstaddr"], d, "dstaddr")); err != nil {
+			if !fortiAPIPatch(o["dstaddr"]) {
+				return fmt.Errorf("Error reading dstaddr: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("dstaddr"); ok {
+			if err = d.Set("dstaddr", flattenFirewallMulticastPolicyDstaddr(o["dstaddr"], d, "dstaddr")); err != nil {
+				if !fortiAPIPatch(o["dstaddr"]) {
+					return fmt.Errorf("Error reading dstaddr: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("snat", flattenFirewallMulticastPolicySnat(o["snat"], d, "snat")); err != nil {
 		if !fortiAPIPatch(o["snat"]) {
@@ -444,7 +441,6 @@ func refreshObjectFirewallMulticastPolicy(d *schema.ResourceData, o map[string]i
 		}
 	}
 
-
 	return nil
 }
 
@@ -453,7 +449,6 @@ func flattenFirewallMulticastPolicyFortiTestDebug(d *schema.ResourceData, fosdeb
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandFirewallMulticastPolicyId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -487,7 +482,7 @@ func expandFirewallMulticastPolicySrcaddr(d *schema.ResourceData, v interface{},
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -518,7 +513,7 @@ func expandFirewallMulticastPolicyDstaddr(d *schema.ResourceData, v interface{},
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -565,10 +560,8 @@ func expandFirewallMulticastPolicyEndPort(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-
 func getObjectFirewallMulticastPolicy(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("fosid"); ok {
 		t, err := expandFirewallMulticastPolicyId(d, v, "fosid")
@@ -696,7 +689,5 @@ func getObjectFirewallMulticastPolicy(d *schema.ResourceData) (*map[string]inter
 		}
 	}
 
-
 	return &obj, nil
 }
-

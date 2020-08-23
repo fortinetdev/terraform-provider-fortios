@@ -30,20 +30,20 @@ func resourceSwitchControllerSwitchProfile() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"login_passwd_override": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"login_passwd": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
-				Optional: true,
+				Optional:     true,
 			},
 		},
 	}
@@ -138,7 +138,6 @@ func resourceSwitchControllerSwitchProfileRead(d *schema.ResourceData, m interfa
 	return nil
 }
 
-
 func flattenSwitchControllerSwitchProfileName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -151,10 +150,8 @@ func flattenSwitchControllerSwitchProfileLoginPasswd(v interface{}, d *schema.Re
 	return v
 }
 
-
 func refreshObjectSwitchControllerSwitchProfile(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenSwitchControllerSwitchProfileName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -168,7 +165,6 @@ func refreshObjectSwitchControllerSwitchProfile(d *schema.ResourceData, o map[st
 		}
 	}
 
-
 	return nil
 }
 
@@ -177,7 +173,6 @@ func flattenSwitchControllerSwitchProfileFortiTestDebug(d *schema.ResourceData, 
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSwitchControllerSwitchProfileName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -191,10 +186,8 @@ func expandSwitchControllerSwitchProfileLoginPasswd(d *schema.ResourceData, v in
 	return v, nil
 }
 
-
 func getObjectSwitchControllerSwitchProfile(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandSwitchControllerSwitchProfileName(d, v, "name")
@@ -223,7 +216,5 @@ func getObjectSwitchControllerSwitchProfile(d *schema.ResourceData) (*map[string
 		}
 	}
 
-
 	return &obj, nil
 }
-

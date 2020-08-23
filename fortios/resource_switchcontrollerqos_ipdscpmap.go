@@ -30,45 +30,45 @@ func resourceSwitchControllerQosIpDscpMap() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Required: true,
+				Required:     true,
 			},
 			"description": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"map": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"cos_queue": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 7),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"diffserv": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"ip_precedence": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"value": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -168,7 +168,6 @@ func resourceSwitchControllerQosIpDscpMapRead(d *schema.ResourceData, m interfac
 	return nil
 }
 
-
 func flattenSwitchControllerQosIpDscpMapName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -249,10 +248,8 @@ func flattenSwitchControllerQosIpDscpMapMapValue(v interface{}, d *schema.Resour
 	return v
 }
 
-
 func refreshObjectSwitchControllerQosIpDscpMap(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenSwitchControllerQosIpDscpMapName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -266,22 +263,21 @@ func refreshObjectSwitchControllerQosIpDscpMap(d *schema.ResourceData, o map[str
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("map", flattenSwitchControllerQosIpDscpMapMap(o["map"], d, "map")); err != nil {
-            if !fortiAPIPatch(o["map"]) {
-                return fmt.Errorf("Error reading map: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("map"); ok {
-            if err = d.Set("map", flattenSwitchControllerQosIpDscpMapMap(o["map"], d, "map")); err != nil {
-                if !fortiAPIPatch(o["map"]) {
-                    return fmt.Errorf("Error reading map: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("map", flattenSwitchControllerQosIpDscpMapMap(o["map"], d, "map")); err != nil {
+			if !fortiAPIPatch(o["map"]) {
+				return fmt.Errorf("Error reading map: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("map"); ok {
+			if err = d.Set("map", flattenSwitchControllerQosIpDscpMapMap(o["map"], d, "map")); err != nil {
+				if !fortiAPIPatch(o["map"]) {
+					return fmt.Errorf("Error reading map: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -291,7 +287,6 @@ func flattenSwitchControllerQosIpDscpMapFortiTestDebug(d *schema.ResourceData, f
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSwitchControllerQosIpDscpMapName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -313,7 +308,7 @@ func expandSwitchControllerQosIpDscpMapMap(d *schema.ResourceData, v interface{}
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -368,10 +363,8 @@ func expandSwitchControllerQosIpDscpMapMapValue(d *schema.ResourceData, v interf
 	return v, nil
 }
 
-
 func getObjectSwitchControllerQosIpDscpMap(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandSwitchControllerQosIpDscpMapName(d, v, "name")
@@ -400,7 +393,5 @@ func getObjectSwitchControllerQosIpDscpMap(d *schema.ResourceData) (*map[string]
 		}
 	}
 
-
 	return &obj, nil
 }
-

@@ -30,61 +30,60 @@ func resourceFirewallSslSetting() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"proxy_connect_timeout": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 60),
-				Required: true,
+				Required:     true,
 			},
 			"ssl_dh_bits": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"ssl_send_empty_frags": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"no_matching_cipher_action": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"cert_cache_capacity": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 500),
-				Required: true,
+				Required:     true,
 			},
 			"cert_cache_timeout": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 120),
-				Required: true,
+				Required:     true,
 			},
 			"session_cache_capacity": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 1000),
-				Required: true,
+				Required:     true,
 			},
 			"session_cache_timeout": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 60),
-				Required: true,
+				Required:     true,
 			},
 			"kxp_queue_threshold": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 512),
-				Required: true,
+				Required:     true,
 			},
 			"ssl_queue_threshold": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 512),
-				Required: true,
+				Required:     true,
 			},
 			"abbreviate_handshake": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceFirewallSslSettingUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -151,7 +150,6 @@ func resourceFirewallSslSettingRead(d *schema.ResourceData, m interface{}) error
 	return nil
 }
 
-
 func flattenFirewallSslSettingProxyConnectTimeout(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -196,10 +194,8 @@ func flattenFirewallSslSettingAbbreviateHandshake(v interface{}, d *schema.Resou
 	return v
 }
 
-
 func refreshObjectFirewallSslSetting(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("proxy_connect_timeout", flattenFirewallSslSettingProxyConnectTimeout(o["proxy-connect-timeout"], d, "proxy_connect_timeout")); err != nil {
 		if !fortiAPIPatch(o["proxy-connect-timeout"]) {
@@ -267,7 +263,6 @@ func refreshObjectFirewallSslSetting(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
-
 	return nil
 }
 
@@ -276,7 +271,6 @@ func flattenFirewallSslSettingFortiTestDebug(d *schema.ResourceData, fosdebugsn 
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandFirewallSslSettingProxyConnectTimeout(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -322,10 +316,8 @@ func expandFirewallSslSettingAbbreviateHandshake(d *schema.ResourceData, v inter
 	return v, nil
 }
 
-
 func getObjectFirewallSslSetting(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("proxy_connect_timeout"); ok {
 		t, err := expandFirewallSslSettingProxyConnectTimeout(d, v, "proxy_connect_timeout")
@@ -426,7 +418,5 @@ func getObjectFirewallSslSetting(d *schema.ResourceData) (*map[string]interface{
 		}
 	}
 
-
 	return &obj, nil
 }
-

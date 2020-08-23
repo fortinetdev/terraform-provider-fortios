@@ -30,85 +30,84 @@ func resourceLogFortiguardOverrideFilter() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"severity": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"forward_traffic": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"local_traffic": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"multicast_traffic": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"sniffer_traffic": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"anomaly": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"netscan_discovery": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"netscan_vulnerability": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"voip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"dlp_archive": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"gtp": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"dns": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssh": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"filter": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 511),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"filter_type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceLogFortiguardOverrideFilterUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -175,7 +174,6 @@ func resourceLogFortiguardOverrideFilterRead(d *schema.ResourceData, m interface
 	return nil
 }
 
-
 func flattenLogFortiguardOverrideFilterSeverity(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -236,10 +234,8 @@ func flattenLogFortiguardOverrideFilterFilterType(v interface{}, d *schema.Resou
 	return v
 }
 
-
 func refreshObjectLogFortiguardOverrideFilter(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("severity", flattenLogFortiguardOverrideFilterSeverity(o["severity"], d, "severity")); err != nil {
 		if !fortiAPIPatch(o["severity"]) {
@@ -331,7 +327,6 @@ func refreshObjectLogFortiguardOverrideFilter(d *schema.ResourceData, o map[stri
 		}
 	}
 
-
 	return nil
 }
 
@@ -340,7 +335,6 @@ func flattenLogFortiguardOverrideFilterFortiTestDebug(d *schema.ResourceData, fo
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandLogFortiguardOverrideFilterSeverity(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -402,10 +396,8 @@ func expandLogFortiguardOverrideFilterFilterType(d *schema.ResourceData, v inter
 	return v, nil
 }
 
-
 func getObjectLogFortiguardOverrideFilter(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("severity"); ok {
 		t, err := expandLogFortiguardOverrideFilterSeverity(d, v, "severity")
@@ -542,7 +534,5 @@ func getObjectLogFortiguardOverrideFilter(d *schema.ResourceData) (*map[string]i
 		}
 	}
 
-
 	return &obj, nil
 }
-

@@ -30,37 +30,36 @@ func resourceSwitchControllerLldpSettings() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"tx_hold": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 16),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"tx_interval": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(5, 4095),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"fast_start_interval": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"management_interface": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceSwitchControllerLldpSettingsUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -127,7 +126,6 @@ func resourceSwitchControllerLldpSettingsRead(d *schema.ResourceData, m interfac
 	return nil
 }
 
-
 func flattenSwitchControllerLldpSettingsStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -148,10 +146,8 @@ func flattenSwitchControllerLldpSettingsManagementInterface(v interface{}, d *sc
 	return v
 }
 
-
 func refreshObjectSwitchControllerLldpSettings(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("status", flattenSwitchControllerLldpSettingsStatus(o["status"], d, "status")); err != nil {
 		if !fortiAPIPatch(o["status"]) {
@@ -183,7 +179,6 @@ func refreshObjectSwitchControllerLldpSettings(d *schema.ResourceData, o map[str
 		}
 	}
 
-
 	return nil
 }
 
@@ -192,7 +187,6 @@ func flattenSwitchControllerLldpSettingsFortiTestDebug(d *schema.ResourceData, f
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSwitchControllerLldpSettingsStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -214,10 +208,8 @@ func expandSwitchControllerLldpSettingsManagementInterface(d *schema.ResourceDat
 	return v, nil
 }
 
-
 func getObjectSwitchControllerLldpSettings(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("status"); ok {
 		t, err := expandSwitchControllerLldpSettingsStatus(d, v, "status")
@@ -264,7 +256,5 @@ func getObjectSwitchControllerLldpSettings(d *schema.ResourceData) (*map[string]
 		}
 	}
 
-
 	return &obj, nil
 }
-

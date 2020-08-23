@@ -30,26 +30,25 @@ func resourceSwitchController8021XSettings() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"link_down_auth": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"reauth_period": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 1440),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"max_reauth_attempt": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 15),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
 }
-
 
 func resourceSwitchController8021XSettingsUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -116,7 +115,6 @@ func resourceSwitchController8021XSettingsRead(d *schema.ResourceData, m interfa
 	return nil
 }
 
-
 func flattenSwitchController8021XSettingsLinkDownAuth(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -129,10 +127,8 @@ func flattenSwitchController8021XSettingsMaxReauthAttempt(v interface{}, d *sche
 	return v
 }
 
-
 func refreshObjectSwitchController8021XSettings(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("link_down_auth", flattenSwitchController8021XSettingsLinkDownAuth(o["link-down-auth"], d, "link_down_auth")); err != nil {
 		if !fortiAPIPatch(o["link-down-auth"]) {
@@ -152,7 +148,6 @@ func refreshObjectSwitchController8021XSettings(d *schema.ResourceData, o map[st
 		}
 	}
 
-
 	return nil
 }
 
@@ -161,7 +156,6 @@ func flattenSwitchController8021XSettingsFortiTestDebug(d *schema.ResourceData, 
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSwitchController8021XSettingsLinkDownAuth(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -175,10 +169,8 @@ func expandSwitchController8021XSettingsMaxReauthAttempt(d *schema.ResourceData,
 	return v, nil
 }
 
-
 func getObjectSwitchController8021XSettings(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("link_down_auth"); ok {
 		t, err := expandSwitchController8021XSettingsLinkDownAuth(d, v, "link_down_auth")
@@ -207,7 +199,5 @@ func getObjectSwitchController8021XSettings(d *schema.ResourceData) (*map[string
 		}
 	}
 
-
 	return &obj, nil
 }
-

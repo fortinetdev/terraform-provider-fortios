@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,79 +5,80 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSRouterBgp_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSRouterBgp_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSRouterBgp_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSRouterBgpConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSRouterBgpExists("fortios_router_bgp.trname"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "additional_path_select", "2"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "additional_path_select6", "2"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "always_compare_med", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "as", "0"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "client_to_client_reflection", "enable"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "cluster_id", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "dampening", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "dampening_max_suppress_time", "60"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "dampening_reachability_half_life", "15"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "dampening_reuse", "750"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "dampening_suppress", "2000"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "dampening_unreachability_half_life", "15"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "default_local_preference", "100"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "deterministic_med", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "distance_external", "20"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "distance_internal", "200"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "distance_local", "200"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "graceful_restart_time", "120"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "graceful_stalepath_time", "360"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "graceful_update_delay", "120"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "holdtime_timer", "180"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "ibgp_multipath", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "ignore_optional_capability", "enable"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "keepalive_timer", "60"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "log_neighbour_changes", "enable"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "network_import_check", "enable"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "scan_time", "60"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "synchronization", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute.0.name", "connected"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute.0.status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute.1.name", "rip"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute.1.status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute.2.name", "ospf"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute.2.status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute.3.name", "static"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute.3.status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute.4.name", "isis"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute.4.status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute6.0.name", "connected"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute6.0.status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute6.1.name", "rip"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute6.1.status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute6.2.name", "ospf"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute6.2.status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute6.3.name", "static"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute6.3.status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute6.4.name", "isis"),
-                    resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute6.4.status", "disable"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSRouterBgpConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSRouterBgpExists("fortios_router_bgp.trname"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "additional_path_select", "2"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "additional_path_select6", "2"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "always_compare_med", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "as", "0"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "client_to_client_reflection", "enable"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "cluster_id", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "dampening", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "dampening_max_suppress_time", "60"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "dampening_reachability_half_life", "15"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "dampening_reuse", "750"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "dampening_suppress", "2000"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "dampening_unreachability_half_life", "15"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "default_local_preference", "100"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "deterministic_med", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "distance_external", "20"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "distance_internal", "200"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "distance_local", "200"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "graceful_restart_time", "120"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "graceful_stalepath_time", "360"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "graceful_update_delay", "120"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "holdtime_timer", "180"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "ibgp_multipath", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "ignore_optional_capability", "enable"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "keepalive_timer", "60"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "log_neighbour_changes", "enable"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "network_import_check", "enable"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "scan_time", "60"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "synchronization", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute.0.name", "connected"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute.0.status", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute.1.name", "rip"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute.1.status", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute.2.name", "ospf"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute.2.status", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute.3.name", "static"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute.3.status", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute.4.name", "isis"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute.4.status", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute6.0.name", "connected"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute6.0.status", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute6.1.name", "rip"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute6.1.status", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute6.2.name", "ospf"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute6.2.status", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute6.3.name", "static"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute6.3.status", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute6.4.name", "isis"),
+					resource.TestCheckResourceAttr("fortios_router_bgp.trname", "redistribute6.4.status", "disable"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSRouterBgpExists(n string) resource.TestCheckFunc {

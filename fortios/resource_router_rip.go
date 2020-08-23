@@ -30,108 +30,108 @@ func resourceRouterRip() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"default_information_originate": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"default_metric": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 16),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"max_out_metric": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 15),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"recv_buffer_size": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(8129, 2147483647),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"distance": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"prefix": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"distance": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 255),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"access_list": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"distribute_list": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"status": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"direction": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"listname": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"interface": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"neighbor": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"ip": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -139,18 +139,18 @@ func resourceRouterRip() *schema.Resource {
 				},
 			},
 			"network": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"prefix": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -158,172 +158,172 @@ func resourceRouterRip() *schema.Resource {
 				},
 			},
 			"offset_list": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"status": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"direction": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"access_list": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"offset": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 16),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"interface": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"passive_interface": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"redistribute": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"status": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"metric": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 16),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"routemap": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"update_timer": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(5, 2147483647),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"timeout_timer": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(5, 2147483647),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"garbage_timer": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(5, 2147483647),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"version": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"interface": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"auth_keychain": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"auth_mode": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"auth_string": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 16),
-							Optional: true,
+							Optional:     true,
 						},
 						"receive_version": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"send_version": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"send_version2_broadcast": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"split_horizon_status": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"split_horizon": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"flags": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -331,7 +331,6 @@ func resourceRouterRip() *schema.Resource {
 		},
 	}
 }
-
 
 func resourceRouterRipUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -397,7 +396,6 @@ func resourceRouterRipRead(d *schema.ResourceData, m interface{}) error {
 	}
 	return nil
 }
-
 
 func flattenRouterRipDefaultInformationOriginate(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -967,10 +965,8 @@ func flattenRouterRipInterfaceFlags(v interface{}, d *schema.ResourceData, pre s
 	return v
 }
 
-
 func refreshObjectRouterRip(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("default_information_originate", flattenRouterRipDefaultInformationOriginate(o["default-information-originate"], d, "default_information_originate")); err != nil {
 		if !fortiAPIPatch(o["default-information-originate"]) {
@@ -996,117 +992,117 @@ func refreshObjectRouterRip(d *schema.ResourceData, o map[string]interface{}) er
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("distance", flattenRouterRipDistance(o["distance"], d, "distance")); err != nil {
-            if !fortiAPIPatch(o["distance"]) {
-                return fmt.Errorf("Error reading distance: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("distance"); ok {
-            if err = d.Set("distance", flattenRouterRipDistance(o["distance"], d, "distance")); err != nil {
-                if !fortiAPIPatch(o["distance"]) {
-                    return fmt.Errorf("Error reading distance: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("distance", flattenRouterRipDistance(o["distance"], d, "distance")); err != nil {
+			if !fortiAPIPatch(o["distance"]) {
+				return fmt.Errorf("Error reading distance: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("distance"); ok {
+			if err = d.Set("distance", flattenRouterRipDistance(o["distance"], d, "distance")); err != nil {
+				if !fortiAPIPatch(o["distance"]) {
+					return fmt.Errorf("Error reading distance: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("distribute_list", flattenRouterRipDistributeList(o["distribute-list"], d, "distribute_list")); err != nil {
-            if !fortiAPIPatch(o["distribute-list"]) {
-                return fmt.Errorf("Error reading distribute_list: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("distribute_list"); ok {
-            if err = d.Set("distribute_list", flattenRouterRipDistributeList(o["distribute-list"], d, "distribute_list")); err != nil {
-                if !fortiAPIPatch(o["distribute-list"]) {
-                    return fmt.Errorf("Error reading distribute_list: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("distribute_list", flattenRouterRipDistributeList(o["distribute-list"], d, "distribute_list")); err != nil {
+			if !fortiAPIPatch(o["distribute-list"]) {
+				return fmt.Errorf("Error reading distribute_list: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("distribute_list"); ok {
+			if err = d.Set("distribute_list", flattenRouterRipDistributeList(o["distribute-list"], d, "distribute_list")); err != nil {
+				if !fortiAPIPatch(o["distribute-list"]) {
+					return fmt.Errorf("Error reading distribute_list: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("neighbor", flattenRouterRipNeighbor(o["neighbor"], d, "neighbor")); err != nil {
-            if !fortiAPIPatch(o["neighbor"]) {
-                return fmt.Errorf("Error reading neighbor: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("neighbor"); ok {
-            if err = d.Set("neighbor", flattenRouterRipNeighbor(o["neighbor"], d, "neighbor")); err != nil {
-                if !fortiAPIPatch(o["neighbor"]) {
-                    return fmt.Errorf("Error reading neighbor: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("neighbor", flattenRouterRipNeighbor(o["neighbor"], d, "neighbor")); err != nil {
+			if !fortiAPIPatch(o["neighbor"]) {
+				return fmt.Errorf("Error reading neighbor: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("neighbor"); ok {
+			if err = d.Set("neighbor", flattenRouterRipNeighbor(o["neighbor"], d, "neighbor")); err != nil {
+				if !fortiAPIPatch(o["neighbor"]) {
+					return fmt.Errorf("Error reading neighbor: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("network", flattenRouterRipNetwork(o["network"], d, "network")); err != nil {
-            if !fortiAPIPatch(o["network"]) {
-                return fmt.Errorf("Error reading network: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("network"); ok {
-            if err = d.Set("network", flattenRouterRipNetwork(o["network"], d, "network")); err != nil {
-                if !fortiAPIPatch(o["network"]) {
-                    return fmt.Errorf("Error reading network: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("network", flattenRouterRipNetwork(o["network"], d, "network")); err != nil {
+			if !fortiAPIPatch(o["network"]) {
+				return fmt.Errorf("Error reading network: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("network"); ok {
+			if err = d.Set("network", flattenRouterRipNetwork(o["network"], d, "network")); err != nil {
+				if !fortiAPIPatch(o["network"]) {
+					return fmt.Errorf("Error reading network: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("offset_list", flattenRouterRipOffsetList(o["offset-list"], d, "offset_list")); err != nil {
-            if !fortiAPIPatch(o["offset-list"]) {
-                return fmt.Errorf("Error reading offset_list: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("offset_list"); ok {
-            if err = d.Set("offset_list", flattenRouterRipOffsetList(o["offset-list"], d, "offset_list")); err != nil {
-                if !fortiAPIPatch(o["offset-list"]) {
-                    return fmt.Errorf("Error reading offset_list: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("offset_list", flattenRouterRipOffsetList(o["offset-list"], d, "offset_list")); err != nil {
+			if !fortiAPIPatch(o["offset-list"]) {
+				return fmt.Errorf("Error reading offset_list: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("offset_list"); ok {
+			if err = d.Set("offset_list", flattenRouterRipOffsetList(o["offset-list"], d, "offset_list")); err != nil {
+				if !fortiAPIPatch(o["offset-list"]) {
+					return fmt.Errorf("Error reading offset_list: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("passive_interface", flattenRouterRipPassiveInterface(o["passive-interface"], d, "passive_interface")); err != nil {
-            if !fortiAPIPatch(o["passive-interface"]) {
-                return fmt.Errorf("Error reading passive_interface: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("passive_interface"); ok {
-            if err = d.Set("passive_interface", flattenRouterRipPassiveInterface(o["passive-interface"], d, "passive_interface")); err != nil {
-                if !fortiAPIPatch(o["passive-interface"]) {
-                    return fmt.Errorf("Error reading passive_interface: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("passive_interface", flattenRouterRipPassiveInterface(o["passive-interface"], d, "passive_interface")); err != nil {
+			if !fortiAPIPatch(o["passive-interface"]) {
+				return fmt.Errorf("Error reading passive_interface: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("passive_interface"); ok {
+			if err = d.Set("passive_interface", flattenRouterRipPassiveInterface(o["passive-interface"], d, "passive_interface")); err != nil {
+				if !fortiAPIPatch(o["passive-interface"]) {
+					return fmt.Errorf("Error reading passive_interface: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("redistribute", flattenRouterRipRedistribute(o["redistribute"], d, "redistribute")); err != nil {
-            if !fortiAPIPatch(o["redistribute"]) {
-                return fmt.Errorf("Error reading redistribute: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("redistribute"); ok {
-            if err = d.Set("redistribute", flattenRouterRipRedistribute(o["redistribute"], d, "redistribute")); err != nil {
-                if !fortiAPIPatch(o["redistribute"]) {
-                    return fmt.Errorf("Error reading redistribute: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("redistribute", flattenRouterRipRedistribute(o["redistribute"], d, "redistribute")); err != nil {
+			if !fortiAPIPatch(o["redistribute"]) {
+				return fmt.Errorf("Error reading redistribute: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("redistribute"); ok {
+			if err = d.Set("redistribute", flattenRouterRipRedistribute(o["redistribute"], d, "redistribute")); err != nil {
+				if !fortiAPIPatch(o["redistribute"]) {
+					return fmt.Errorf("Error reading redistribute: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("update_timer", flattenRouterRipUpdateTimer(o["update-timer"], d, "update_timer")); err != nil {
 		if !fortiAPIPatch(o["update-timer"]) {
@@ -1132,22 +1128,21 @@ func refreshObjectRouterRip(d *schema.ResourceData, o map[string]interface{}) er
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("interface", flattenRouterRipInterface(o["interface"], d, "interface")); err != nil {
-            if !fortiAPIPatch(o["interface"]) {
-                return fmt.Errorf("Error reading interface: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("interface"); ok {
-            if err = d.Set("interface", flattenRouterRipInterface(o["interface"], d, "interface")); err != nil {
-                if !fortiAPIPatch(o["interface"]) {
-                    return fmt.Errorf("Error reading interface: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("interface", flattenRouterRipInterface(o["interface"], d, "interface")); err != nil {
+			if !fortiAPIPatch(o["interface"]) {
+				return fmt.Errorf("Error reading interface: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("interface"); ok {
+			if err = d.Set("interface", flattenRouterRipInterface(o["interface"], d, "interface")); err != nil {
+				if !fortiAPIPatch(o["interface"]) {
+					return fmt.Errorf("Error reading interface: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -1157,7 +1152,6 @@ func flattenRouterRipFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosd
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandRouterRipDefaultInformationOriginate(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -1187,7 +1181,7 @@ func expandRouterRipDistance(d *schema.ResourceData, v interface{}, pre string) 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1245,7 +1239,7 @@ func expandRouterRipDistributeList(d *schema.ResourceData, v interface{}, pre st
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1312,7 +1306,7 @@ func expandRouterRipNeighbor(d *schema.ResourceData, v interface{}, pre string) 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1352,7 +1346,7 @@ func expandRouterRipNetwork(d *schema.ResourceData, v interface{}, pre string) (
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1392,7 +1386,7 @@ func expandRouterRipOffsetList(d *schema.ResourceData, v interface{}, pre string
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1468,7 +1462,7 @@ func expandRouterRipPassiveInterface(d *schema.ResourceData, v interface{}, pre 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1499,7 +1493,7 @@ func expandRouterRipRedistribute(d *schema.ResourceData, v interface{}, pre stri
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1573,7 +1567,7 @@ func expandRouterRipInterface(d *schema.ResourceData, v interface{}, pre string)
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1673,10 +1667,8 @@ func expandRouterRipInterfaceFlags(d *schema.ResourceData, v interface{}, pre st
 	return v, nil
 }
 
-
 func getObjectRouterRip(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("default_information_originate"); ok {
 		t, err := expandRouterRipDefaultInformationOriginate(d, v, "default_information_originate")
@@ -1822,7 +1814,5 @@ func getObjectRouterRip(d *schema.ResourceData) (*map[string]interface{}, error)
 		}
 	}
 
-
 	return &obj, nil
 }
-

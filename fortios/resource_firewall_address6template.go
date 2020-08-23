@@ -30,63 +30,63 @@ func resourceFirewallAddress6Template() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Required: true,
+				Required:     true,
 			},
 			"ip6": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"subnet_segment_count": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 6),
-				Required: true,
+				Required:     true,
 			},
 			"subnet_segment": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"bits": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 16),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"exclusive": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"values": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"name": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 63),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"value": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
@@ -186,7 +186,6 @@ func resourceFirewallAddress6TemplateRead(d *schema.ResourceData, m interface{})
 	}
 	return nil
 }
-
 
 func flattenFirewallAddress6TemplateName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -313,10 +312,8 @@ func flattenFirewallAddress6TemplateSubnetSegmentValuesValue(v interface{}, d *s
 	return v
 }
 
-
 func refreshObjectFirewallAddress6Template(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenFirewallAddress6TemplateName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -336,22 +333,21 @@ func refreshObjectFirewallAddress6Template(d *schema.ResourceData, o map[string]
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("subnet_segment", flattenFirewallAddress6TemplateSubnetSegment(o["subnet-segment"], d, "subnet_segment")); err != nil {
-            if !fortiAPIPatch(o["subnet-segment"]) {
-                return fmt.Errorf("Error reading subnet_segment: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("subnet_segment"); ok {
-            if err = d.Set("subnet_segment", flattenFirewallAddress6TemplateSubnetSegment(o["subnet-segment"], d, "subnet_segment")); err != nil {
-                if !fortiAPIPatch(o["subnet-segment"]) {
-                    return fmt.Errorf("Error reading subnet_segment: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("subnet_segment", flattenFirewallAddress6TemplateSubnetSegment(o["subnet-segment"], d, "subnet_segment")); err != nil {
+			if !fortiAPIPatch(o["subnet-segment"]) {
+				return fmt.Errorf("Error reading subnet_segment: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("subnet_segment"); ok {
+			if err = d.Set("subnet_segment", flattenFirewallAddress6TemplateSubnetSegment(o["subnet-segment"], d, "subnet_segment")); err != nil {
+				if !fortiAPIPatch(o["subnet-segment"]) {
+					return fmt.Errorf("Error reading subnet_segment: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -361,7 +357,6 @@ func flattenFirewallAddress6TemplateFortiTestDebug(d *schema.ResourceData, fosde
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandFirewallAddress6TemplateName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -387,7 +382,7 @@ func expandFirewallAddress6TemplateSubnetSegment(d *schema.ResourceData, v inter
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -452,7 +447,7 @@ func expandFirewallAddress6TemplateSubnetSegmentValues(d *schema.ResourceData, v
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -480,10 +475,8 @@ func expandFirewallAddress6TemplateSubnetSegmentValuesValue(d *schema.ResourceDa
 	return v, nil
 }
 
-
 func getObjectFirewallAddress6Template(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandFirewallAddress6TemplateName(d, v, "name")
@@ -521,7 +514,5 @@ func getObjectFirewallAddress6Template(d *schema.ResourceData) (*map[string]inte
 		}
 	}
 
-
 	return &obj, nil
 }
-

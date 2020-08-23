@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,35 +5,36 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSystemVdomSflow_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSystemVdomSflow_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSystemVdomSflow_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSystemVdomSflowConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSystemVdomSflowExists("fortios_system_vdomsflow.trname"),
-                    resource.TestCheckResourceAttr("fortios_system_vdomsflow.trname", "collector_ip", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_system_vdomsflow.trname", "collector_port", "6343"),
-                    resource.TestCheckResourceAttr("fortios_system_vdomsflow.trname", "source_ip", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_system_vdomsflow.trname", "vdom_sflow", "disable"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSystemVdomSflowConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSystemVdomSflowExists("fortios_system_vdomsflow.trname"),
+					resource.TestCheckResourceAttr("fortios_system_vdomsflow.trname", "collector_ip", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_system_vdomsflow.trname", "collector_port", "6343"),
+					resource.TestCheckResourceAttr("fortios_system_vdomsflow.trname", "source_ip", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_system_vdomsflow.trname", "vdom_sflow", "disable"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSystemVdomSflowExists(n string) resource.TestCheckFunc {

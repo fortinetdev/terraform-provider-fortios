@@ -30,87 +30,86 @@ func resourceEndpointControlSettings() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"forticlient_reg_key_enforce": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"forticlient_reg_key": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
-				Optional: true,
+				Optional:     true,
 			},
 			"forticlient_reg_timeout": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 180),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"download_custom_link": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"download_location": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"forticlient_offline_grace": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"forticlient_offline_grace_interval": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(60, 600),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"forticlient_keepalive_interval": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(20, 300),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"forticlient_sys_update_interval": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(30, 1440),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"forticlient_avdb_update_interval": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 24),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"forticlient_warning_interval": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 24),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"forticlient_user_avatar": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"forticlient_dereg_unsupported_client": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"forticlient_ems_rest_api_call_timeout": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(500, 30000),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
 }
-
 
 func resourceEndpointControlSettingsUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -177,7 +176,6 @@ func resourceEndpointControlSettingsRead(d *schema.ResourceData, m interface{}) 
 	return nil
 }
 
-
 func flattenEndpointControlSettingsForticlientRegKeyEnforce(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -234,10 +232,8 @@ func flattenEndpointControlSettingsForticlientEmsRestApiCallTimeout(v interface{
 	return v
 }
 
-
 func refreshObjectEndpointControlSettings(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("forticlient_reg_key_enforce", flattenEndpointControlSettingsForticlientRegKeyEnforce(o["forticlient-reg-key-enforce"], d, "forticlient_reg_key_enforce")); err != nil {
 		if !fortiAPIPatch(o["forticlient-reg-key-enforce"]) {
@@ -323,7 +319,6 @@ func refreshObjectEndpointControlSettings(d *schema.ResourceData, o map[string]i
 		}
 	}
 
-
 	return nil
 }
 
@@ -332,7 +327,6 @@ func flattenEndpointControlSettingsFortiTestDebug(d *schema.ResourceData, fosdeb
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandEndpointControlSettingsForticlientRegKeyEnforce(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -390,10 +384,8 @@ func expandEndpointControlSettingsForticlientEmsRestApiCallTimeout(d *schema.Res
 	return v, nil
 }
 
-
 func getObjectEndpointControlSettings(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("forticlient_reg_key_enforce"); ok {
 		t, err := expandEndpointControlSettingsForticlientRegKeyEnforce(d, v, "forticlient_reg_key_enforce")
@@ -521,7 +513,5 @@ func getObjectEndpointControlSettings(d *schema.ResourceData) (*map[string]inter
 		}
 	}
 
-
 	return &obj, nil
 }
-

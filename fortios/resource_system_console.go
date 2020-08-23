@@ -30,29 +30,28 @@ func resourceSystemConsole() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"mode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"baudrate": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"output": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"login": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceSystemConsoleUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -119,7 +118,6 @@ func resourceSystemConsoleRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenSystemConsoleMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -136,10 +134,8 @@ func flattenSystemConsoleLogin(v interface{}, d *schema.ResourceData, pre string
 	return v
 }
 
-
 func refreshObjectSystemConsole(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("mode", flattenSystemConsoleMode(o["mode"], d, "mode")); err != nil {
 		if !fortiAPIPatch(o["mode"]) {
@@ -165,7 +161,6 @@ func refreshObjectSystemConsole(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-
 	return nil
 }
 
@@ -174,7 +169,6 @@ func flattenSystemConsoleFortiTestDebug(d *schema.ResourceData, fosdebugsn int, 
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemConsoleMode(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -192,10 +186,8 @@ func expandSystemConsoleLogin(d *schema.ResourceData, v interface{}, pre string)
 	return v, nil
 }
 
-
 func getObjectSystemConsole(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("mode"); ok {
 		t, err := expandSystemConsoleMode(d, v, "mode")
@@ -233,7 +225,5 @@ func getObjectSystemConsole(d *schema.ResourceData) (*map[string]interface{}, er
 		}
 	}
 
-
 	return &obj, nil
 }
-

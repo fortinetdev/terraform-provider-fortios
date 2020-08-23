@@ -30,509 +30,509 @@ func resourceAntivirusProfile() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"comment": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
+				Optional:     true,
 			},
 			"replacemsg_group": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"inspection_mode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ftgd_analytics": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"analytics_max_upload": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 26214),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"analytics_wl_filetype": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"analytics_bl_filetype": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"analytics_db": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"mobile_malware_db": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"http": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"options": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"archive_block": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"archive_log": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"emulator": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"outbreak_prevention": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"content_disarm": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 					},
 				},
-			},			"ftp": &schema.Schema{
-				Type: schema.TypeList,
+			}, "ftp": &schema.Schema{
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"options": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"archive_block": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"archive_log": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"emulator": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"outbreak_prevention": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 					},
 				},
-			},			"imap": &schema.Schema{
-				Type: schema.TypeList,
+			}, "imap": &schema.Schema{
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"options": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"archive_block": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"archive_log": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"emulator": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"executables": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"outbreak_prevention": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"content_disarm": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 					},
 				},
-			},			"pop3": &schema.Schema{
-				Type: schema.TypeList,
+			}, "pop3": &schema.Schema{
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"options": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"archive_block": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"archive_log": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"emulator": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"executables": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"outbreak_prevention": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"content_disarm": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 					},
 				},
-			},			"smtp": &schema.Schema{
-				Type: schema.TypeList,
+			}, "smtp": &schema.Schema{
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"options": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"archive_block": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"archive_log": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"emulator": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"executables": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"outbreak_prevention": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"content_disarm": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 					},
 				},
-			},			"mapi": &schema.Schema{
-				Type: schema.TypeList,
+			}, "mapi": &schema.Schema{
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"options": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"archive_block": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"archive_log": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"emulator": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"executables": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"outbreak_prevention": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 					},
 				},
-			},			"nntp": &schema.Schema{
-				Type: schema.TypeList,
+			}, "nntp": &schema.Schema{
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"options": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"archive_block": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"archive_log": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"emulator": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"outbreak_prevention": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 					},
 				},
-			},			"smb": &schema.Schema{
-				Type: schema.TypeList,
+			}, "smb": &schema.Schema{
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"options": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"archive_block": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"archive_log": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"emulator": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"outbreak_prevention": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 					},
 				},
-			},			"nac_quar": &schema.Schema{
-				Type: schema.TypeList,
+			}, "nac_quar": &schema.Schema{
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"infected": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"expiry": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"log": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 					},
 				},
-			},			"outbreak_prevention": &schema.Schema{
-				Type: schema.TypeList,
+			}, "outbreak_prevention": &schema.Schema{
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"ftgd_service": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"external_blocklist": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 					},
 				},
-			},			"content_disarm": &schema.Schema{
-				Type: schema.TypeList,
+			}, "content_disarm": &schema.Schema{
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"original_file_destination": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"office_macro": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"office_hylink": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"office_linked": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"office_embed": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"pdf_javacode": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"pdf_embedfile": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"pdf_hyperlink": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"pdf_act_gotor": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"pdf_act_launch": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"pdf_act_sound": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"pdf_act_movie": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"pdf_act_java": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"pdf_act_form": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"cover_page": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"detect_only": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 					},
 				},
-			},			"av_virus_log": &schema.Schema{
-				Type: schema.TypeString,
+			}, "av_virus_log": &schema.Schema{
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"av_block_log": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"extended_log": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"scan_mode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
@@ -629,7 +629,6 @@ func resourceAntivirusProfileRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenAntivirusProfileName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -679,36 +678,35 @@ func flattenAntivirusProfileHttp(v interface{}, d *schema.ResourceData, pre stri
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "options"
+	pre_append = pre + ".0." + "options"
 	if _, ok := i["options"]; ok {
 		result["options"] = flattenAntivirusProfileHttpOptions(i["options"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "archive_block"
+	pre_append = pre + ".0." + "archive_block"
 	if _, ok := i["archive-block"]; ok {
 		result["archive_block"] = flattenAntivirusProfileHttpArchiveBlock(i["archive-block"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "archive_log"
+	pre_append = pre + ".0." + "archive_log"
 	if _, ok := i["archive-log"]; ok {
 		result["archive_log"] = flattenAntivirusProfileHttpArchiveLog(i["archive-log"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "emulator"
+	pre_append = pre + ".0." + "emulator"
 	if _, ok := i["emulator"]; ok {
 		result["emulator"] = flattenAntivirusProfileHttpEmulator(i["emulator"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "outbreak_prevention"
+	pre_append = pre + ".0." + "outbreak_prevention"
 	if _, ok := i["outbreak-prevention"]; ok {
 		result["outbreak_prevention"] = flattenAntivirusProfileHttpOutbreakPrevention(i["outbreak-prevention"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "content_disarm"
+	pre_append = pre + ".0." + "content_disarm"
 	if _, ok := i["content-disarm"]; ok {
 		result["content_disarm"] = flattenAntivirusProfileHttpContentDisarm(i["content-disarm"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -747,31 +745,30 @@ func flattenAntivirusProfileFtp(v interface{}, d *schema.ResourceData, pre strin
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "options"
+	pre_append = pre + ".0." + "options"
 	if _, ok := i["options"]; ok {
 		result["options"] = flattenAntivirusProfileFtpOptions(i["options"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "archive_block"
+	pre_append = pre + ".0." + "archive_block"
 	if _, ok := i["archive-block"]; ok {
 		result["archive_block"] = flattenAntivirusProfileFtpArchiveBlock(i["archive-block"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "archive_log"
+	pre_append = pre + ".0." + "archive_log"
 	if _, ok := i["archive-log"]; ok {
 		result["archive_log"] = flattenAntivirusProfileFtpArchiveLog(i["archive-log"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "emulator"
+	pre_append = pre + ".0." + "emulator"
 	if _, ok := i["emulator"]; ok {
 		result["emulator"] = flattenAntivirusProfileFtpEmulator(i["emulator"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "outbreak_prevention"
+	pre_append = pre + ".0." + "outbreak_prevention"
 	if _, ok := i["outbreak-prevention"]; ok {
 		result["outbreak_prevention"] = flattenAntivirusProfileFtpOutbreakPrevention(i["outbreak-prevention"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -806,41 +803,40 @@ func flattenAntivirusProfileImap(v interface{}, d *schema.ResourceData, pre stri
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "options"
+	pre_append = pre + ".0." + "options"
 	if _, ok := i["options"]; ok {
 		result["options"] = flattenAntivirusProfileImapOptions(i["options"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "archive_block"
+	pre_append = pre + ".0." + "archive_block"
 	if _, ok := i["archive-block"]; ok {
 		result["archive_block"] = flattenAntivirusProfileImapArchiveBlock(i["archive-block"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "archive_log"
+	pre_append = pre + ".0." + "archive_log"
 	if _, ok := i["archive-log"]; ok {
 		result["archive_log"] = flattenAntivirusProfileImapArchiveLog(i["archive-log"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "emulator"
+	pre_append = pre + ".0." + "emulator"
 	if _, ok := i["emulator"]; ok {
 		result["emulator"] = flattenAntivirusProfileImapEmulator(i["emulator"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "executables"
+	pre_append = pre + ".0." + "executables"
 	if _, ok := i["executables"]; ok {
 		result["executables"] = flattenAntivirusProfileImapExecutables(i["executables"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "outbreak_prevention"
+	pre_append = pre + ".0." + "outbreak_prevention"
 	if _, ok := i["outbreak-prevention"]; ok {
 		result["outbreak_prevention"] = flattenAntivirusProfileImapOutbreakPrevention(i["outbreak-prevention"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "content_disarm"
+	pre_append = pre + ".0." + "content_disarm"
 	if _, ok := i["content-disarm"]; ok {
 		result["content_disarm"] = flattenAntivirusProfileImapContentDisarm(i["content-disarm"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -883,41 +879,40 @@ func flattenAntivirusProfilePop3(v interface{}, d *schema.ResourceData, pre stri
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "options"
+	pre_append = pre + ".0." + "options"
 	if _, ok := i["options"]; ok {
 		result["options"] = flattenAntivirusProfilePop3Options(i["options"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "archive_block"
+	pre_append = pre + ".0." + "archive_block"
 	if _, ok := i["archive-block"]; ok {
 		result["archive_block"] = flattenAntivirusProfilePop3ArchiveBlock(i["archive-block"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "archive_log"
+	pre_append = pre + ".0." + "archive_log"
 	if _, ok := i["archive-log"]; ok {
 		result["archive_log"] = flattenAntivirusProfilePop3ArchiveLog(i["archive-log"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "emulator"
+	pre_append = pre + ".0." + "emulator"
 	if _, ok := i["emulator"]; ok {
 		result["emulator"] = flattenAntivirusProfilePop3Emulator(i["emulator"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "executables"
+	pre_append = pre + ".0." + "executables"
 	if _, ok := i["executables"]; ok {
 		result["executables"] = flattenAntivirusProfilePop3Executables(i["executables"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "outbreak_prevention"
+	pre_append = pre + ".0." + "outbreak_prevention"
 	if _, ok := i["outbreak-prevention"]; ok {
 		result["outbreak_prevention"] = flattenAntivirusProfilePop3OutbreakPrevention(i["outbreak-prevention"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "content_disarm"
+	pre_append = pre + ".0." + "content_disarm"
 	if _, ok := i["content-disarm"]; ok {
 		result["content_disarm"] = flattenAntivirusProfilePop3ContentDisarm(i["content-disarm"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -960,41 +955,40 @@ func flattenAntivirusProfileSmtp(v interface{}, d *schema.ResourceData, pre stri
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "options"
+	pre_append = pre + ".0." + "options"
 	if _, ok := i["options"]; ok {
 		result["options"] = flattenAntivirusProfileSmtpOptions(i["options"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "archive_block"
+	pre_append = pre + ".0." + "archive_block"
 	if _, ok := i["archive-block"]; ok {
 		result["archive_block"] = flattenAntivirusProfileSmtpArchiveBlock(i["archive-block"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "archive_log"
+	pre_append = pre + ".0." + "archive_log"
 	if _, ok := i["archive-log"]; ok {
 		result["archive_log"] = flattenAntivirusProfileSmtpArchiveLog(i["archive-log"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "emulator"
+	pre_append = pre + ".0." + "emulator"
 	if _, ok := i["emulator"]; ok {
 		result["emulator"] = flattenAntivirusProfileSmtpEmulator(i["emulator"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "executables"
+	pre_append = pre + ".0." + "executables"
 	if _, ok := i["executables"]; ok {
 		result["executables"] = flattenAntivirusProfileSmtpExecutables(i["executables"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "outbreak_prevention"
+	pre_append = pre + ".0." + "outbreak_prevention"
 	if _, ok := i["outbreak-prevention"]; ok {
 		result["outbreak_prevention"] = flattenAntivirusProfileSmtpOutbreakPrevention(i["outbreak-prevention"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "content_disarm"
+	pre_append = pre + ".0." + "content_disarm"
 	if _, ok := i["content-disarm"]; ok {
 		result["content_disarm"] = flattenAntivirusProfileSmtpContentDisarm(i["content-disarm"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -1037,36 +1031,35 @@ func flattenAntivirusProfileMapi(v interface{}, d *schema.ResourceData, pre stri
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "options"
+	pre_append = pre + ".0." + "options"
 	if _, ok := i["options"]; ok {
 		result["options"] = flattenAntivirusProfileMapiOptions(i["options"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "archive_block"
+	pre_append = pre + ".0." + "archive_block"
 	if _, ok := i["archive-block"]; ok {
 		result["archive_block"] = flattenAntivirusProfileMapiArchiveBlock(i["archive-block"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "archive_log"
+	pre_append = pre + ".0." + "archive_log"
 	if _, ok := i["archive-log"]; ok {
 		result["archive_log"] = flattenAntivirusProfileMapiArchiveLog(i["archive-log"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "emulator"
+	pre_append = pre + ".0." + "emulator"
 	if _, ok := i["emulator"]; ok {
 		result["emulator"] = flattenAntivirusProfileMapiEmulator(i["emulator"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "executables"
+	pre_append = pre + ".0." + "executables"
 	if _, ok := i["executables"]; ok {
 		result["executables"] = flattenAntivirusProfileMapiExecutables(i["executables"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "outbreak_prevention"
+	pre_append = pre + ".0." + "outbreak_prevention"
 	if _, ok := i["outbreak-prevention"]; ok {
 		result["outbreak_prevention"] = flattenAntivirusProfileMapiOutbreakPrevention(i["outbreak-prevention"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -1105,31 +1098,30 @@ func flattenAntivirusProfileNntp(v interface{}, d *schema.ResourceData, pre stri
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "options"
+	pre_append = pre + ".0." + "options"
 	if _, ok := i["options"]; ok {
 		result["options"] = flattenAntivirusProfileNntpOptions(i["options"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "archive_block"
+	pre_append = pre + ".0." + "archive_block"
 	if _, ok := i["archive-block"]; ok {
 		result["archive_block"] = flattenAntivirusProfileNntpArchiveBlock(i["archive-block"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "archive_log"
+	pre_append = pre + ".0." + "archive_log"
 	if _, ok := i["archive-log"]; ok {
 		result["archive_log"] = flattenAntivirusProfileNntpArchiveLog(i["archive-log"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "emulator"
+	pre_append = pre + ".0." + "emulator"
 	if _, ok := i["emulator"]; ok {
 		result["emulator"] = flattenAntivirusProfileNntpEmulator(i["emulator"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "outbreak_prevention"
+	pre_append = pre + ".0." + "outbreak_prevention"
 	if _, ok := i["outbreak-prevention"]; ok {
 		result["outbreak_prevention"] = flattenAntivirusProfileNntpOutbreakPrevention(i["outbreak-prevention"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -1164,31 +1156,30 @@ func flattenAntivirusProfileSmb(v interface{}, d *schema.ResourceData, pre strin
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "options"
+	pre_append = pre + ".0." + "options"
 	if _, ok := i["options"]; ok {
 		result["options"] = flattenAntivirusProfileSmbOptions(i["options"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "archive_block"
+	pre_append = pre + ".0." + "archive_block"
 	if _, ok := i["archive-block"]; ok {
 		result["archive_block"] = flattenAntivirusProfileSmbArchiveBlock(i["archive-block"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "archive_log"
+	pre_append = pre + ".0." + "archive_log"
 	if _, ok := i["archive-log"]; ok {
 		result["archive_log"] = flattenAntivirusProfileSmbArchiveLog(i["archive-log"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "emulator"
+	pre_append = pre + ".0." + "emulator"
 	if _, ok := i["emulator"]; ok {
 		result["emulator"] = flattenAntivirusProfileSmbEmulator(i["emulator"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "outbreak_prevention"
+	pre_append = pre + ".0." + "outbreak_prevention"
 	if _, ok := i["outbreak-prevention"]; ok {
 		result["outbreak_prevention"] = flattenAntivirusProfileSmbOutbreakPrevention(i["outbreak-prevention"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -1223,21 +1214,20 @@ func flattenAntivirusProfileNacQuar(v interface{}, d *schema.ResourceData, pre s
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "infected"
+	pre_append = pre + ".0." + "infected"
 	if _, ok := i["infected"]; ok {
 		result["infected"] = flattenAntivirusProfileNacQuarInfected(i["infected"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "expiry"
+	pre_append = pre + ".0." + "expiry"
 	if _, ok := i["expiry"]; ok {
 		result["expiry"] = flattenAntivirusProfileNacQuarExpiry(i["expiry"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := i["log"]; ok {
 		result["log"] = flattenAntivirusProfileNacQuarLog(i["log"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -1264,16 +1254,15 @@ func flattenAntivirusProfileOutbreakPrevention(v interface{}, d *schema.Resource
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "ftgd_service"
+	pre_append = pre + ".0." + "ftgd_service"
 	if _, ok := i["ftgd-service"]; ok {
 		result["ftgd_service"] = flattenAntivirusProfileOutbreakPreventionFtgdService(i["ftgd-service"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "external_blocklist"
+	pre_append = pre + ".0." + "external_blocklist"
 	if _, ok := i["external-blocklist"]; ok {
 		result["external_blocklist"] = flattenAntivirusProfileOutbreakPreventionExternalBlocklist(i["external-blocklist"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -1296,86 +1285,85 @@ func flattenAntivirusProfileContentDisarm(v interface{}, d *schema.ResourceData,
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "original_file_destination"
+	pre_append = pre + ".0." + "original_file_destination"
 	if _, ok := i["original-file-destination"]; ok {
 		result["original_file_destination"] = flattenAntivirusProfileContentDisarmOriginalFileDestination(i["original-file-destination"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "office_macro"
+	pre_append = pre + ".0." + "office_macro"
 	if _, ok := i["office-macro"]; ok {
 		result["office_macro"] = flattenAntivirusProfileContentDisarmOfficeMacro(i["office-macro"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "office_hylink"
+	pre_append = pre + ".0." + "office_hylink"
 	if _, ok := i["office-hylink"]; ok {
 		result["office_hylink"] = flattenAntivirusProfileContentDisarmOfficeHylink(i["office-hylink"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "office_linked"
+	pre_append = pre + ".0." + "office_linked"
 	if _, ok := i["office-linked"]; ok {
 		result["office_linked"] = flattenAntivirusProfileContentDisarmOfficeLinked(i["office-linked"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "office_embed"
+	pre_append = pre + ".0." + "office_embed"
 	if _, ok := i["office-embed"]; ok {
 		result["office_embed"] = flattenAntivirusProfileContentDisarmOfficeEmbed(i["office-embed"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "pdf_javacode"
+	pre_append = pre + ".0." + "pdf_javacode"
 	if _, ok := i["pdf-javacode"]; ok {
 		result["pdf_javacode"] = flattenAntivirusProfileContentDisarmPdfJavacode(i["pdf-javacode"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "pdf_embedfile"
+	pre_append = pre + ".0." + "pdf_embedfile"
 	if _, ok := i["pdf-embedfile"]; ok {
 		result["pdf_embedfile"] = flattenAntivirusProfileContentDisarmPdfEmbedfile(i["pdf-embedfile"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "pdf_hyperlink"
+	pre_append = pre + ".0." + "pdf_hyperlink"
 	if _, ok := i["pdf-hyperlink"]; ok {
 		result["pdf_hyperlink"] = flattenAntivirusProfileContentDisarmPdfHyperlink(i["pdf-hyperlink"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "pdf_act_gotor"
+	pre_append = pre + ".0." + "pdf_act_gotor"
 	if _, ok := i["pdf-act-gotor"]; ok {
 		result["pdf_act_gotor"] = flattenAntivirusProfileContentDisarmPdfActGotor(i["pdf-act-gotor"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "pdf_act_launch"
+	pre_append = pre + ".0." + "pdf_act_launch"
 	if _, ok := i["pdf-act-launch"]; ok {
 		result["pdf_act_launch"] = flattenAntivirusProfileContentDisarmPdfActLaunch(i["pdf-act-launch"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "pdf_act_sound"
+	pre_append = pre + ".0." + "pdf_act_sound"
 	if _, ok := i["pdf-act-sound"]; ok {
 		result["pdf_act_sound"] = flattenAntivirusProfileContentDisarmPdfActSound(i["pdf-act-sound"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "pdf_act_movie"
+	pre_append = pre + ".0." + "pdf_act_movie"
 	if _, ok := i["pdf-act-movie"]; ok {
 		result["pdf_act_movie"] = flattenAntivirusProfileContentDisarmPdfActMovie(i["pdf-act-movie"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "pdf_act_java"
+	pre_append = pre + ".0." + "pdf_act_java"
 	if _, ok := i["pdf-act-java"]; ok {
 		result["pdf_act_java"] = flattenAntivirusProfileContentDisarmPdfActJava(i["pdf-act-java"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "pdf_act_form"
+	pre_append = pre + ".0." + "pdf_act_form"
 	if _, ok := i["pdf-act-form"]; ok {
 		result["pdf_act_form"] = flattenAntivirusProfileContentDisarmPdfActForm(i["pdf-act-form"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "cover_page"
+	pre_append = pre + ".0." + "cover_page"
 	if _, ok := i["cover-page"]; ok {
 		result["cover_page"] = flattenAntivirusProfileContentDisarmCoverPage(i["cover-page"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "detect_only"
+	pre_append = pre + ".0." + "detect_only"
 	if _, ok := i["detect-only"]; ok {
 		result["detect_only"] = flattenAntivirusProfileContentDisarmDetectOnly(i["detect-only"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -1461,10 +1449,8 @@ func flattenAntivirusProfileScanMode(v interface{}, d *schema.ResourceData, pre 
 	return v
 }
 
-
 func refreshObjectAntivirusProfile(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenAntivirusProfileName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -1526,181 +1512,181 @@ func refreshObjectAntivirusProfile(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("http", flattenAntivirusProfileHttp(o["http"], d, "http")); err != nil {
-            if !fortiAPIPatch(o["http"]) {
-                return fmt.Errorf("Error reading http: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("http"); ok {
-            if err = d.Set("http", flattenAntivirusProfileHttp(o["http"], d, "http")); err != nil {
-                if !fortiAPIPatch(o["http"]) {
-                    return fmt.Errorf("Error reading http: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("http", flattenAntivirusProfileHttp(o["http"], d, "http")); err != nil {
+			if !fortiAPIPatch(o["http"]) {
+				return fmt.Errorf("Error reading http: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("http"); ok {
+			if err = d.Set("http", flattenAntivirusProfileHttp(o["http"], d, "http")); err != nil {
+				if !fortiAPIPatch(o["http"]) {
+					return fmt.Errorf("Error reading http: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("ftp", flattenAntivirusProfileFtp(o["ftp"], d, "ftp")); err != nil {
-            if !fortiAPIPatch(o["ftp"]) {
-                return fmt.Errorf("Error reading ftp: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("ftp"); ok {
-            if err = d.Set("ftp", flattenAntivirusProfileFtp(o["ftp"], d, "ftp")); err != nil {
-                if !fortiAPIPatch(o["ftp"]) {
-                    return fmt.Errorf("Error reading ftp: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("ftp", flattenAntivirusProfileFtp(o["ftp"], d, "ftp")); err != nil {
+			if !fortiAPIPatch(o["ftp"]) {
+				return fmt.Errorf("Error reading ftp: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("ftp"); ok {
+			if err = d.Set("ftp", flattenAntivirusProfileFtp(o["ftp"], d, "ftp")); err != nil {
+				if !fortiAPIPatch(o["ftp"]) {
+					return fmt.Errorf("Error reading ftp: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("imap", flattenAntivirusProfileImap(o["imap"], d, "imap")); err != nil {
-            if !fortiAPIPatch(o["imap"]) {
-                return fmt.Errorf("Error reading imap: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("imap"); ok {
-            if err = d.Set("imap", flattenAntivirusProfileImap(o["imap"], d, "imap")); err != nil {
-                if !fortiAPIPatch(o["imap"]) {
-                    return fmt.Errorf("Error reading imap: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("imap", flattenAntivirusProfileImap(o["imap"], d, "imap")); err != nil {
+			if !fortiAPIPatch(o["imap"]) {
+				return fmt.Errorf("Error reading imap: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("imap"); ok {
+			if err = d.Set("imap", flattenAntivirusProfileImap(o["imap"], d, "imap")); err != nil {
+				if !fortiAPIPatch(o["imap"]) {
+					return fmt.Errorf("Error reading imap: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("pop3", flattenAntivirusProfilePop3(o["pop3"], d, "pop3")); err != nil {
-            if !fortiAPIPatch(o["pop3"]) {
-                return fmt.Errorf("Error reading pop3: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("pop3"); ok {
-            if err = d.Set("pop3", flattenAntivirusProfilePop3(o["pop3"], d, "pop3")); err != nil {
-                if !fortiAPIPatch(o["pop3"]) {
-                    return fmt.Errorf("Error reading pop3: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("pop3", flattenAntivirusProfilePop3(o["pop3"], d, "pop3")); err != nil {
+			if !fortiAPIPatch(o["pop3"]) {
+				return fmt.Errorf("Error reading pop3: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("pop3"); ok {
+			if err = d.Set("pop3", flattenAntivirusProfilePop3(o["pop3"], d, "pop3")); err != nil {
+				if !fortiAPIPatch(o["pop3"]) {
+					return fmt.Errorf("Error reading pop3: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("smtp", flattenAntivirusProfileSmtp(o["smtp"], d, "smtp")); err != nil {
-            if !fortiAPIPatch(o["smtp"]) {
-                return fmt.Errorf("Error reading smtp: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("smtp"); ok {
-            if err = d.Set("smtp", flattenAntivirusProfileSmtp(o["smtp"], d, "smtp")); err != nil {
-                if !fortiAPIPatch(o["smtp"]) {
-                    return fmt.Errorf("Error reading smtp: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("smtp", flattenAntivirusProfileSmtp(o["smtp"], d, "smtp")); err != nil {
+			if !fortiAPIPatch(o["smtp"]) {
+				return fmt.Errorf("Error reading smtp: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("smtp"); ok {
+			if err = d.Set("smtp", flattenAntivirusProfileSmtp(o["smtp"], d, "smtp")); err != nil {
+				if !fortiAPIPatch(o["smtp"]) {
+					return fmt.Errorf("Error reading smtp: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("mapi", flattenAntivirusProfileMapi(o["mapi"], d, "mapi")); err != nil {
-            if !fortiAPIPatch(o["mapi"]) {
-                return fmt.Errorf("Error reading mapi: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("mapi"); ok {
-            if err = d.Set("mapi", flattenAntivirusProfileMapi(o["mapi"], d, "mapi")); err != nil {
-                if !fortiAPIPatch(o["mapi"]) {
-                    return fmt.Errorf("Error reading mapi: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("mapi", flattenAntivirusProfileMapi(o["mapi"], d, "mapi")); err != nil {
+			if !fortiAPIPatch(o["mapi"]) {
+				return fmt.Errorf("Error reading mapi: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("mapi"); ok {
+			if err = d.Set("mapi", flattenAntivirusProfileMapi(o["mapi"], d, "mapi")); err != nil {
+				if !fortiAPIPatch(o["mapi"]) {
+					return fmt.Errorf("Error reading mapi: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("nntp", flattenAntivirusProfileNntp(o["nntp"], d, "nntp")); err != nil {
-            if !fortiAPIPatch(o["nntp"]) {
-                return fmt.Errorf("Error reading nntp: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("nntp"); ok {
-            if err = d.Set("nntp", flattenAntivirusProfileNntp(o["nntp"], d, "nntp")); err != nil {
-                if !fortiAPIPatch(o["nntp"]) {
-                    return fmt.Errorf("Error reading nntp: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("nntp", flattenAntivirusProfileNntp(o["nntp"], d, "nntp")); err != nil {
+			if !fortiAPIPatch(o["nntp"]) {
+				return fmt.Errorf("Error reading nntp: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("nntp"); ok {
+			if err = d.Set("nntp", flattenAntivirusProfileNntp(o["nntp"], d, "nntp")); err != nil {
+				if !fortiAPIPatch(o["nntp"]) {
+					return fmt.Errorf("Error reading nntp: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("smb", flattenAntivirusProfileSmb(o["smb"], d, "smb")); err != nil {
-            if !fortiAPIPatch(o["smb"]) {
-                return fmt.Errorf("Error reading smb: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("smb"); ok {
-            if err = d.Set("smb", flattenAntivirusProfileSmb(o["smb"], d, "smb")); err != nil {
-                if !fortiAPIPatch(o["smb"]) {
-                    return fmt.Errorf("Error reading smb: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("smb", flattenAntivirusProfileSmb(o["smb"], d, "smb")); err != nil {
+			if !fortiAPIPatch(o["smb"]) {
+				return fmt.Errorf("Error reading smb: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("smb"); ok {
+			if err = d.Set("smb", flattenAntivirusProfileSmb(o["smb"], d, "smb")); err != nil {
+				if !fortiAPIPatch(o["smb"]) {
+					return fmt.Errorf("Error reading smb: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("nac_quar", flattenAntivirusProfileNacQuar(o["nac-quar"], d, "nac_quar")); err != nil {
-            if !fortiAPIPatch(o["nac-quar"]) {
-                return fmt.Errorf("Error reading nac_quar: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("nac_quar"); ok {
-            if err = d.Set("nac_quar", flattenAntivirusProfileNacQuar(o["nac-quar"], d, "nac_quar")); err != nil {
-                if !fortiAPIPatch(o["nac-quar"]) {
-                    return fmt.Errorf("Error reading nac_quar: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("nac_quar", flattenAntivirusProfileNacQuar(o["nac-quar"], d, "nac_quar")); err != nil {
+			if !fortiAPIPatch(o["nac-quar"]) {
+				return fmt.Errorf("Error reading nac_quar: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("nac_quar"); ok {
+			if err = d.Set("nac_quar", flattenAntivirusProfileNacQuar(o["nac-quar"], d, "nac_quar")); err != nil {
+				if !fortiAPIPatch(o["nac-quar"]) {
+					return fmt.Errorf("Error reading nac_quar: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("outbreak_prevention", flattenAntivirusProfileOutbreakPrevention(o["outbreak-prevention"], d, "outbreak_prevention")); err != nil {
-            if !fortiAPIPatch(o["outbreak-prevention"]) {
-                return fmt.Errorf("Error reading outbreak_prevention: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("outbreak_prevention"); ok {
-            if err = d.Set("outbreak_prevention", flattenAntivirusProfileOutbreakPrevention(o["outbreak-prevention"], d, "outbreak_prevention")); err != nil {
-                if !fortiAPIPatch(o["outbreak-prevention"]) {
-                    return fmt.Errorf("Error reading outbreak_prevention: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("outbreak_prevention", flattenAntivirusProfileOutbreakPrevention(o["outbreak-prevention"], d, "outbreak_prevention")); err != nil {
+			if !fortiAPIPatch(o["outbreak-prevention"]) {
+				return fmt.Errorf("Error reading outbreak_prevention: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("outbreak_prevention"); ok {
+			if err = d.Set("outbreak_prevention", flattenAntivirusProfileOutbreakPrevention(o["outbreak-prevention"], d, "outbreak_prevention")); err != nil {
+				if !fortiAPIPatch(o["outbreak-prevention"]) {
+					return fmt.Errorf("Error reading outbreak_prevention: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("content_disarm", flattenAntivirusProfileContentDisarm(o["content-disarm"], d, "content_disarm")); err != nil {
-            if !fortiAPIPatch(o["content-disarm"]) {
-                return fmt.Errorf("Error reading content_disarm: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("content_disarm"); ok {
-            if err = d.Set("content_disarm", flattenAntivirusProfileContentDisarm(o["content-disarm"], d, "content_disarm")); err != nil {
-                if !fortiAPIPatch(o["content-disarm"]) {
-                    return fmt.Errorf("Error reading content_disarm: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("content_disarm", flattenAntivirusProfileContentDisarm(o["content-disarm"], d, "content_disarm")); err != nil {
+			if !fortiAPIPatch(o["content-disarm"]) {
+				return fmt.Errorf("Error reading content_disarm: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("content_disarm"); ok {
+			if err = d.Set("content_disarm", flattenAntivirusProfileContentDisarm(o["content-disarm"], d, "content_disarm")); err != nil {
+				if !fortiAPIPatch(o["content-disarm"]) {
+					return fmt.Errorf("Error reading content_disarm: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("av_virus_log", flattenAntivirusProfileAvVirusLog(o["av-virus-log"], d, "av_virus_log")); err != nil {
 		if !fortiAPIPatch(o["av-virus-log"]) {
@@ -1726,7 +1712,6 @@ func refreshObjectAntivirusProfile(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-
 	return nil
 }
 
@@ -1735,7 +1720,6 @@ func flattenAntivirusProfileFortiTestDebug(d *schema.ResourceData, fosdebugsn in
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandAntivirusProfileName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -1786,28 +1770,28 @@ func expandAntivirusProfileHttp(d *schema.ResourceData, v interface{}, pre strin
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "options"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["options"], _ = expandAntivirusProfileHttpOptions(d, i["options"], pre_append)
 	}
-	pre_append =  pre + ".0." + "archive_block"
+	pre_append = pre + ".0." + "archive_block"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["archive-block"], _ = expandAntivirusProfileHttpArchiveBlock(d, i["archive_block"], pre_append)
 	}
-	pre_append =  pre + ".0." + "archive_log"
+	pre_append = pre + ".0." + "archive_log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["archive-log"], _ = expandAntivirusProfileHttpArchiveLog(d, i["archive_log"], pre_append)
 	}
-	pre_append =  pre + ".0." + "emulator"
+	pre_append = pre + ".0." + "emulator"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["emulator"], _ = expandAntivirusProfileHttpEmulator(d, i["emulator"], pre_append)
 	}
-	pre_append =  pre + ".0." + "outbreak_prevention"
+	pre_append = pre + ".0." + "outbreak_prevention"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["outbreak-prevention"], _ = expandAntivirusProfileHttpOutbreakPrevention(d, i["outbreak_prevention"], pre_append)
 	}
-	pre_append =  pre + ".0." + "content_disarm"
+	pre_append = pre + ".0." + "content_disarm"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["content-disarm"], _ = expandAntivirusProfileHttpContentDisarm(d, i["content_disarm"], pre_append)
 	}
@@ -1848,24 +1832,24 @@ func expandAntivirusProfileFtp(d *schema.ResourceData, v interface{}, pre string
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "options"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["options"], _ = expandAntivirusProfileFtpOptions(d, i["options"], pre_append)
 	}
-	pre_append =  pre + ".0." + "archive_block"
+	pre_append = pre + ".0." + "archive_block"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["archive-block"], _ = expandAntivirusProfileFtpArchiveBlock(d, i["archive_block"], pre_append)
 	}
-	pre_append =  pre + ".0." + "archive_log"
+	pre_append = pre + ".0." + "archive_log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["archive-log"], _ = expandAntivirusProfileFtpArchiveLog(d, i["archive_log"], pre_append)
 	}
-	pre_append =  pre + ".0." + "emulator"
+	pre_append = pre + ".0." + "emulator"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["emulator"], _ = expandAntivirusProfileFtpEmulator(d, i["emulator"], pre_append)
 	}
-	pre_append =  pre + ".0." + "outbreak_prevention"
+	pre_append = pre + ".0." + "outbreak_prevention"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["outbreak-prevention"], _ = expandAntivirusProfileFtpOutbreakPrevention(d, i["outbreak_prevention"], pre_append)
 	}
@@ -1902,32 +1886,32 @@ func expandAntivirusProfileImap(d *schema.ResourceData, v interface{}, pre strin
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "options"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["options"], _ = expandAntivirusProfileImapOptions(d, i["options"], pre_append)
 	}
-	pre_append =  pre + ".0." + "archive_block"
+	pre_append = pre + ".0." + "archive_block"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["archive-block"], _ = expandAntivirusProfileImapArchiveBlock(d, i["archive_block"], pre_append)
 	}
-	pre_append =  pre + ".0." + "archive_log"
+	pre_append = pre + ".0." + "archive_log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["archive-log"], _ = expandAntivirusProfileImapArchiveLog(d, i["archive_log"], pre_append)
 	}
-	pre_append =  pre + ".0." + "emulator"
+	pre_append = pre + ".0." + "emulator"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["emulator"], _ = expandAntivirusProfileImapEmulator(d, i["emulator"], pre_append)
 	}
-	pre_append =  pre + ".0." + "executables"
+	pre_append = pre + ".0." + "executables"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["executables"], _ = expandAntivirusProfileImapExecutables(d, i["executables"], pre_append)
 	}
-	pre_append =  pre + ".0." + "outbreak_prevention"
+	pre_append = pre + ".0." + "outbreak_prevention"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["outbreak-prevention"], _ = expandAntivirusProfileImapOutbreakPrevention(d, i["outbreak_prevention"], pre_append)
 	}
-	pre_append =  pre + ".0." + "content_disarm"
+	pre_append = pre + ".0." + "content_disarm"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["content-disarm"], _ = expandAntivirusProfileImapContentDisarm(d, i["content_disarm"], pre_append)
 	}
@@ -1972,32 +1956,32 @@ func expandAntivirusProfilePop3(d *schema.ResourceData, v interface{}, pre strin
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "options"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["options"], _ = expandAntivirusProfilePop3Options(d, i["options"], pre_append)
 	}
-	pre_append =  pre + ".0." + "archive_block"
+	pre_append = pre + ".0." + "archive_block"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["archive-block"], _ = expandAntivirusProfilePop3ArchiveBlock(d, i["archive_block"], pre_append)
 	}
-	pre_append =  pre + ".0." + "archive_log"
+	pre_append = pre + ".0." + "archive_log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["archive-log"], _ = expandAntivirusProfilePop3ArchiveLog(d, i["archive_log"], pre_append)
 	}
-	pre_append =  pre + ".0." + "emulator"
+	pre_append = pre + ".0." + "emulator"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["emulator"], _ = expandAntivirusProfilePop3Emulator(d, i["emulator"], pre_append)
 	}
-	pre_append =  pre + ".0." + "executables"
+	pre_append = pre + ".0." + "executables"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["executables"], _ = expandAntivirusProfilePop3Executables(d, i["executables"], pre_append)
 	}
-	pre_append =  pre + ".0." + "outbreak_prevention"
+	pre_append = pre + ".0." + "outbreak_prevention"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["outbreak-prevention"], _ = expandAntivirusProfilePop3OutbreakPrevention(d, i["outbreak_prevention"], pre_append)
 	}
-	pre_append =  pre + ".0." + "content_disarm"
+	pre_append = pre + ".0." + "content_disarm"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["content-disarm"], _ = expandAntivirusProfilePop3ContentDisarm(d, i["content_disarm"], pre_append)
 	}
@@ -2042,32 +2026,32 @@ func expandAntivirusProfileSmtp(d *schema.ResourceData, v interface{}, pre strin
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "options"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["options"], _ = expandAntivirusProfileSmtpOptions(d, i["options"], pre_append)
 	}
-	pre_append =  pre + ".0." + "archive_block"
+	pre_append = pre + ".0." + "archive_block"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["archive-block"], _ = expandAntivirusProfileSmtpArchiveBlock(d, i["archive_block"], pre_append)
 	}
-	pre_append =  pre + ".0." + "archive_log"
+	pre_append = pre + ".0." + "archive_log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["archive-log"], _ = expandAntivirusProfileSmtpArchiveLog(d, i["archive_log"], pre_append)
 	}
-	pre_append =  pre + ".0." + "emulator"
+	pre_append = pre + ".0." + "emulator"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["emulator"], _ = expandAntivirusProfileSmtpEmulator(d, i["emulator"], pre_append)
 	}
-	pre_append =  pre + ".0." + "executables"
+	pre_append = pre + ".0." + "executables"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["executables"], _ = expandAntivirusProfileSmtpExecutables(d, i["executables"], pre_append)
 	}
-	pre_append =  pre + ".0." + "outbreak_prevention"
+	pre_append = pre + ".0." + "outbreak_prevention"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["outbreak-prevention"], _ = expandAntivirusProfileSmtpOutbreakPrevention(d, i["outbreak_prevention"], pre_append)
 	}
-	pre_append =  pre + ".0." + "content_disarm"
+	pre_append = pre + ".0." + "content_disarm"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["content-disarm"], _ = expandAntivirusProfileSmtpContentDisarm(d, i["content_disarm"], pre_append)
 	}
@@ -2112,28 +2096,28 @@ func expandAntivirusProfileMapi(d *schema.ResourceData, v interface{}, pre strin
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "options"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["options"], _ = expandAntivirusProfileMapiOptions(d, i["options"], pre_append)
 	}
-	pre_append =  pre + ".0." + "archive_block"
+	pre_append = pre + ".0." + "archive_block"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["archive-block"], _ = expandAntivirusProfileMapiArchiveBlock(d, i["archive_block"], pre_append)
 	}
-	pre_append =  pre + ".0." + "archive_log"
+	pre_append = pre + ".0." + "archive_log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["archive-log"], _ = expandAntivirusProfileMapiArchiveLog(d, i["archive_log"], pre_append)
 	}
-	pre_append =  pre + ".0." + "emulator"
+	pre_append = pre + ".0." + "emulator"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["emulator"], _ = expandAntivirusProfileMapiEmulator(d, i["emulator"], pre_append)
 	}
-	pre_append =  pre + ".0." + "executables"
+	pre_append = pre + ".0." + "executables"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["executables"], _ = expandAntivirusProfileMapiExecutables(d, i["executables"], pre_append)
 	}
-	pre_append =  pre + ".0." + "outbreak_prevention"
+	pre_append = pre + ".0." + "outbreak_prevention"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["outbreak-prevention"], _ = expandAntivirusProfileMapiOutbreakPrevention(d, i["outbreak_prevention"], pre_append)
 	}
@@ -2174,24 +2158,24 @@ func expandAntivirusProfileNntp(d *schema.ResourceData, v interface{}, pre strin
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "options"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["options"], _ = expandAntivirusProfileNntpOptions(d, i["options"], pre_append)
 	}
-	pre_append =  pre + ".0." + "archive_block"
+	pre_append = pre + ".0." + "archive_block"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["archive-block"], _ = expandAntivirusProfileNntpArchiveBlock(d, i["archive_block"], pre_append)
 	}
-	pre_append =  pre + ".0." + "archive_log"
+	pre_append = pre + ".0." + "archive_log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["archive-log"], _ = expandAntivirusProfileNntpArchiveLog(d, i["archive_log"], pre_append)
 	}
-	pre_append =  pre + ".0." + "emulator"
+	pre_append = pre + ".0." + "emulator"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["emulator"], _ = expandAntivirusProfileNntpEmulator(d, i["emulator"], pre_append)
 	}
-	pre_append =  pre + ".0." + "outbreak_prevention"
+	pre_append = pre + ".0." + "outbreak_prevention"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["outbreak-prevention"], _ = expandAntivirusProfileNntpOutbreakPrevention(d, i["outbreak_prevention"], pre_append)
 	}
@@ -2228,24 +2212,24 @@ func expandAntivirusProfileSmb(d *schema.ResourceData, v interface{}, pre string
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "options"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["options"], _ = expandAntivirusProfileSmbOptions(d, i["options"], pre_append)
 	}
-	pre_append =  pre + ".0." + "archive_block"
+	pre_append = pre + ".0." + "archive_block"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["archive-block"], _ = expandAntivirusProfileSmbArchiveBlock(d, i["archive_block"], pre_append)
 	}
-	pre_append =  pre + ".0." + "archive_log"
+	pre_append = pre + ".0." + "archive_log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["archive-log"], _ = expandAntivirusProfileSmbArchiveLog(d, i["archive_log"], pre_append)
 	}
-	pre_append =  pre + ".0." + "emulator"
+	pre_append = pre + ".0." + "emulator"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["emulator"], _ = expandAntivirusProfileSmbEmulator(d, i["emulator"], pre_append)
 	}
-	pre_append =  pre + ".0." + "outbreak_prevention"
+	pre_append = pre + ".0." + "outbreak_prevention"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["outbreak-prevention"], _ = expandAntivirusProfileSmbOutbreakPrevention(d, i["outbreak_prevention"], pre_append)
 	}
@@ -2282,16 +2266,16 @@ func expandAntivirusProfileNacQuar(d *schema.ResourceData, v interface{}, pre st
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "infected"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "infected"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["infected"], _ = expandAntivirusProfileNacQuarInfected(d, i["infected"], pre_append)
 	}
-	pre_append =  pre + ".0." + "expiry"
+	pre_append = pre + ".0." + "expiry"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["expiry"], _ = expandAntivirusProfileNacQuarExpiry(d, i["expiry"], pre_append)
 	}
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["log"], _ = expandAntivirusProfileNacQuarLog(d, i["log"], pre_append)
 	}
@@ -2320,12 +2304,12 @@ func expandAntivirusProfileOutbreakPrevention(d *schema.ResourceData, v interfac
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "ftgd_service"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "ftgd_service"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ftgd-service"], _ = expandAntivirusProfileOutbreakPreventionFtgdService(d, i["ftgd_service"], pre_append)
 	}
-	pre_append =  pre + ".0." + "external_blocklist"
+	pre_append = pre + ".0." + "external_blocklist"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["external-blocklist"], _ = expandAntivirusProfileOutbreakPreventionExternalBlocklist(d, i["external_blocklist"], pre_append)
 	}
@@ -2350,68 +2334,68 @@ func expandAntivirusProfileContentDisarm(d *schema.ResourceData, v interface{}, 
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "original_file_destination"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "original_file_destination"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["original-file-destination"], _ = expandAntivirusProfileContentDisarmOriginalFileDestination(d, i["original_file_destination"], pre_append)
 	}
-	pre_append =  pre + ".0." + "office_macro"
+	pre_append = pre + ".0." + "office_macro"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["office-macro"], _ = expandAntivirusProfileContentDisarmOfficeMacro(d, i["office_macro"], pre_append)
 	}
-	pre_append =  pre + ".0." + "office_hylink"
+	pre_append = pre + ".0." + "office_hylink"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["office-hylink"], _ = expandAntivirusProfileContentDisarmOfficeHylink(d, i["office_hylink"], pre_append)
 	}
-	pre_append =  pre + ".0." + "office_linked"
+	pre_append = pre + ".0." + "office_linked"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["office-linked"], _ = expandAntivirusProfileContentDisarmOfficeLinked(d, i["office_linked"], pre_append)
 	}
-	pre_append =  pre + ".0." + "office_embed"
+	pre_append = pre + ".0." + "office_embed"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["office-embed"], _ = expandAntivirusProfileContentDisarmOfficeEmbed(d, i["office_embed"], pre_append)
 	}
-	pre_append =  pre + ".0." + "pdf_javacode"
+	pre_append = pre + ".0." + "pdf_javacode"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["pdf-javacode"], _ = expandAntivirusProfileContentDisarmPdfJavacode(d, i["pdf_javacode"], pre_append)
 	}
-	pre_append =  pre + ".0." + "pdf_embedfile"
+	pre_append = pre + ".0." + "pdf_embedfile"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["pdf-embedfile"], _ = expandAntivirusProfileContentDisarmPdfEmbedfile(d, i["pdf_embedfile"], pre_append)
 	}
-	pre_append =  pre + ".0." + "pdf_hyperlink"
+	pre_append = pre + ".0." + "pdf_hyperlink"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["pdf-hyperlink"], _ = expandAntivirusProfileContentDisarmPdfHyperlink(d, i["pdf_hyperlink"], pre_append)
 	}
-	pre_append =  pre + ".0." + "pdf_act_gotor"
+	pre_append = pre + ".0." + "pdf_act_gotor"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["pdf-act-gotor"], _ = expandAntivirusProfileContentDisarmPdfActGotor(d, i["pdf_act_gotor"], pre_append)
 	}
-	pre_append =  pre + ".0." + "pdf_act_launch"
+	pre_append = pre + ".0." + "pdf_act_launch"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["pdf-act-launch"], _ = expandAntivirusProfileContentDisarmPdfActLaunch(d, i["pdf_act_launch"], pre_append)
 	}
-	pre_append =  pre + ".0." + "pdf_act_sound"
+	pre_append = pre + ".0." + "pdf_act_sound"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["pdf-act-sound"], _ = expandAntivirusProfileContentDisarmPdfActSound(d, i["pdf_act_sound"], pre_append)
 	}
-	pre_append =  pre + ".0." + "pdf_act_movie"
+	pre_append = pre + ".0." + "pdf_act_movie"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["pdf-act-movie"], _ = expandAntivirusProfileContentDisarmPdfActMovie(d, i["pdf_act_movie"], pre_append)
 	}
-	pre_append =  pre + ".0." + "pdf_act_java"
+	pre_append = pre + ".0." + "pdf_act_java"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["pdf-act-java"], _ = expandAntivirusProfileContentDisarmPdfActJava(d, i["pdf_act_java"], pre_append)
 	}
-	pre_append =  pre + ".0." + "pdf_act_form"
+	pre_append = pre + ".0." + "pdf_act_form"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["pdf-act-form"], _ = expandAntivirusProfileContentDisarmPdfActForm(d, i["pdf_act_form"], pre_append)
 	}
-	pre_append =  pre + ".0." + "cover_page"
+	pre_append = pre + ".0." + "cover_page"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["cover-page"], _ = expandAntivirusProfileContentDisarmCoverPage(d, i["cover_page"], pre_append)
 	}
-	pre_append =  pre + ".0." + "detect_only"
+	pre_append = pre + ".0." + "detect_only"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["detect-only"], _ = expandAntivirusProfileContentDisarmDetectOnly(d, i["detect_only"], pre_append)
 	}
@@ -2499,10 +2483,8 @@ func expandAntivirusProfileScanMode(d *schema.ResourceData, v interface{}, pre s
 	return v, nil
 }
 
-
 func getObjectAntivirusProfile(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandAntivirusProfileName(d, v, "name")
@@ -2729,7 +2711,5 @@ func getObjectAntivirusProfile(d *schema.ResourceData) (*map[string]interface{},
 		}
 	}
 
-
 	return &obj, nil
 }
-

@@ -30,73 +30,72 @@ func resourceSystemEmailServer() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"reply_to": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"server": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"source_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"source_ip6": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"authenticate": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"validate_server": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"username": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"password": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
-				Optional: true,
+				Optional:     true,
 			},
 			"security": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssl_min_proto_version": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceSystemEmailServerUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -163,7 +162,6 @@ func resourceSystemEmailServerRead(d *schema.ResourceData, m interface{}) error 
 	return nil
 }
 
-
 func flattenSystemEmailServerType(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -212,10 +210,8 @@ func flattenSystemEmailServerSslMinProtoVersion(v interface{}, d *schema.Resourc
 	return v
 }
 
-
 func refreshObjectSystemEmailServer(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("type", flattenSystemEmailServerType(o["type"], d, "type")); err != nil {
 		if !fortiAPIPatch(o["type"]) {
@@ -289,7 +285,6 @@ func refreshObjectSystemEmailServer(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-
 	return nil
 }
 
@@ -298,7 +293,6 @@ func flattenSystemEmailServerFortiTestDebug(d *schema.ResourceData, fosdebugsn i
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemEmailServerType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -348,10 +342,8 @@ func expandSystemEmailServerSslMinProtoVersion(d *schema.ResourceData, v interfa
 	return v, nil
 }
 
-
 func getObjectSystemEmailServer(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("type"); ok {
 		t, err := expandSystemEmailServerType(d, v, "type")
@@ -461,7 +453,5 @@ func getObjectSystemEmailServer(d *schema.ResourceData) (*map[string]interface{}
 		}
 	}
 
-
 	return &obj, nil
 }
-

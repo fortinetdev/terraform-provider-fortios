@@ -30,30 +30,29 @@ func resourceSystemVdomSflow() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"vdom_sflow": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"collector_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"collector_port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"source_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceSystemVdomSflowUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -120,7 +119,6 @@ func resourceSystemVdomSflowRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenSystemVdomSflowVdomSflow(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -137,10 +135,8 @@ func flattenSystemVdomSflowSourceIp(v interface{}, d *schema.ResourceData, pre s
 	return v
 }
 
-
 func refreshObjectSystemVdomSflow(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("vdom_sflow", flattenSystemVdomSflowVdomSflow(o["vdom-sflow"], d, "vdom_sflow")); err != nil {
 		if !fortiAPIPatch(o["vdom-sflow"]) {
@@ -166,7 +162,6 @@ func refreshObjectSystemVdomSflow(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-
 	return nil
 }
 
@@ -175,7 +170,6 @@ func flattenSystemVdomSflowFortiTestDebug(d *schema.ResourceData, fosdebugsn int
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemVdomSflowVdomSflow(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -193,10 +187,8 @@ func expandSystemVdomSflowSourceIp(d *schema.ResourceData, v interface{}, pre st
 	return v, nil
 }
 
-
 func getObjectSystemVdomSflow(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("vdom_sflow"); ok {
 		t, err := expandSystemVdomSflowVdomSflow(d, v, "vdom_sflow")
@@ -234,7 +226,5 @@ func getObjectSystemVdomSflow(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-
 	return &obj, nil
 }
-

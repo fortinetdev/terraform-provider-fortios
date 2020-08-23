@@ -30,895 +30,895 @@ func resourceFirewallPolicy() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"policyid": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967294),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"uuid": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"srcintf": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"dstintf": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"srcaddr": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"dstaddr": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"internet_service": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"internet_service_id": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"internet_service_group": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"internet_service_custom": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"internet_service_custom_group": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"internet_service_src": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"internet_service_src_id": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"internet_service_src_group": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"internet_service_src_custom": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"internet_service_src_custom_group": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"reputation_minimum": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"reputation_direction": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"rtp_nat": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"rtp_addr": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"learning_mode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"action": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"send_deny_packet": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"firewall_session_dirty": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"schedule": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"schedule_timeout": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"service": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"tos": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"tos_mask": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"tos_negate": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"tcp_session_without_syn": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"utm_status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"profile_type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"profile_group": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"av_profile": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"webfilter_profile": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"dnsfilter_profile": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"spamfilter_profile": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"dlp_sensor": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ips_sensor": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"application_list": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"voip_profile": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"icap_profile": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"waf_profile": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ssh_filter_profile": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"profile_protocol_options": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ssl_ssh_profile": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"logtraffic": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"logtraffic_start": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"capture_packet": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"wanopt": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"wanopt_detection": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"wanopt_passive_opt": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"wanopt_profile": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"wanopt_peer": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"webcache": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"webcache_https": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"webproxy_forward_server": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"traffic_shaper": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"traffic_shaper_reverse": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"per_ip_shaper": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"application": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"app_category": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"url_category": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"app_group": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"nat": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"permit_any_host": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"permit_stun_host": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"fixedport": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ippool": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"poolname": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"session_ttl": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(300, 604800),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"vlan_cos_fwd": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 7),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"vlan_cos_rev": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 7),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"inbound": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"outbound": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"natinbound": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"natoutbound": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"wccp": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ntlm": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ntlm_guest": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ntlm_enabled_browsers": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"user_agent_string": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"fsso": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"wsso": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"rsso": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"fsso_agent_for_ntlm": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"groups": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"users": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"devices": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"auth_path": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"disclaimer": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"vpntunnel": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"natip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"match_vip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"diffserv_forward": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"diffserv_reverse": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"diffservcode_forward": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"diffservcode_rev": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"tcp_mss_sender": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"tcp_mss_receiver": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"comments": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 1023),
-				Optional: true,
+				Optional:     true,
 			},
 			"label": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"global_label": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"auth_cert": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"auth_redirect_addr": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"redirect_url": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"identity_based_route": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"block_notification": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"custom_log_fields": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"field_id": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"replacemsg_override_group": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"srcaddr_negate": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"dstaddr_negate": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"service_negate": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"internet_service_negate": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"internet_service_src_negate": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"timeout_send_rst": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"captive_portal_exempt": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssl_mirror": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssl_mirror_intf": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"scan_botnet_connections": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"dsri": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"radius_mac_auth_bypass": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"delay_tcp_npu_session": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"vlan_filter": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
@@ -1014,7 +1014,6 @@ func resourceFirewallPolicyRead(d *schema.ResourceData, m interface{}) error {
 	}
 	return nil
 }
-
 
 func flattenFirewallPolicyPolicyid(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -2327,10 +2326,8 @@ func flattenFirewallPolicyVlanFilter(v interface{}, d *schema.ResourceData, pre 
 	return v
 }
 
-
 func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("policyid", flattenFirewallPolicyPolicyid(o["policyid"], d, "policyid")); err != nil {
 		if !fortiAPIPatch(o["policyid"]) {
@@ -2350,69 +2347,69 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("srcintf", flattenFirewallPolicySrcintf(o["srcintf"], d, "srcintf")); err != nil {
-            if !fortiAPIPatch(o["srcintf"]) {
-                return fmt.Errorf("Error reading srcintf: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("srcintf"); ok {
-            if err = d.Set("srcintf", flattenFirewallPolicySrcintf(o["srcintf"], d, "srcintf")); err != nil {
-                if !fortiAPIPatch(o["srcintf"]) {
-                    return fmt.Errorf("Error reading srcintf: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("srcintf", flattenFirewallPolicySrcintf(o["srcintf"], d, "srcintf")); err != nil {
+			if !fortiAPIPatch(o["srcintf"]) {
+				return fmt.Errorf("Error reading srcintf: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("srcintf"); ok {
+			if err = d.Set("srcintf", flattenFirewallPolicySrcintf(o["srcintf"], d, "srcintf")); err != nil {
+				if !fortiAPIPatch(o["srcintf"]) {
+					return fmt.Errorf("Error reading srcintf: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("dstintf", flattenFirewallPolicyDstintf(o["dstintf"], d, "dstintf")); err != nil {
-            if !fortiAPIPatch(o["dstintf"]) {
-                return fmt.Errorf("Error reading dstintf: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("dstintf"); ok {
-            if err = d.Set("dstintf", flattenFirewallPolicyDstintf(o["dstintf"], d, "dstintf")); err != nil {
-                if !fortiAPIPatch(o["dstintf"]) {
-                    return fmt.Errorf("Error reading dstintf: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("dstintf", flattenFirewallPolicyDstintf(o["dstintf"], d, "dstintf")); err != nil {
+			if !fortiAPIPatch(o["dstintf"]) {
+				return fmt.Errorf("Error reading dstintf: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("dstintf"); ok {
+			if err = d.Set("dstintf", flattenFirewallPolicyDstintf(o["dstintf"], d, "dstintf")); err != nil {
+				if !fortiAPIPatch(o["dstintf"]) {
+					return fmt.Errorf("Error reading dstintf: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("srcaddr", flattenFirewallPolicySrcaddr(o["srcaddr"], d, "srcaddr")); err != nil {
-            if !fortiAPIPatch(o["srcaddr"]) {
-                return fmt.Errorf("Error reading srcaddr: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("srcaddr"); ok {
-            if err = d.Set("srcaddr", flattenFirewallPolicySrcaddr(o["srcaddr"], d, "srcaddr")); err != nil {
-                if !fortiAPIPatch(o["srcaddr"]) {
-                    return fmt.Errorf("Error reading srcaddr: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("srcaddr", flattenFirewallPolicySrcaddr(o["srcaddr"], d, "srcaddr")); err != nil {
+			if !fortiAPIPatch(o["srcaddr"]) {
+				return fmt.Errorf("Error reading srcaddr: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("srcaddr"); ok {
+			if err = d.Set("srcaddr", flattenFirewallPolicySrcaddr(o["srcaddr"], d, "srcaddr")); err != nil {
+				if !fortiAPIPatch(o["srcaddr"]) {
+					return fmt.Errorf("Error reading srcaddr: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("dstaddr", flattenFirewallPolicyDstaddr(o["dstaddr"], d, "dstaddr")); err != nil {
-            if !fortiAPIPatch(o["dstaddr"]) {
-                return fmt.Errorf("Error reading dstaddr: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("dstaddr"); ok {
-            if err = d.Set("dstaddr", flattenFirewallPolicyDstaddr(o["dstaddr"], d, "dstaddr")); err != nil {
-                if !fortiAPIPatch(o["dstaddr"]) {
-                    return fmt.Errorf("Error reading dstaddr: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("dstaddr", flattenFirewallPolicyDstaddr(o["dstaddr"], d, "dstaddr")); err != nil {
+			if !fortiAPIPatch(o["dstaddr"]) {
+				return fmt.Errorf("Error reading dstaddr: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("dstaddr"); ok {
+			if err = d.Set("dstaddr", flattenFirewallPolicyDstaddr(o["dstaddr"], d, "dstaddr")); err != nil {
+				if !fortiAPIPatch(o["dstaddr"]) {
+					return fmt.Errorf("Error reading dstaddr: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("internet_service", flattenFirewallPolicyInternetService(o["internet-service"], d, "internet_service")); err != nil {
 		if !fortiAPIPatch(o["internet-service"]) {
@@ -2420,69 +2417,69 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("internet_service_id", flattenFirewallPolicyInternetServiceId(o["internet-service-id"], d, "internet_service_id")); err != nil {
-            if !fortiAPIPatch(o["internet-service-id"]) {
-                return fmt.Errorf("Error reading internet_service_id: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("internet_service_id"); ok {
-            if err = d.Set("internet_service_id", flattenFirewallPolicyInternetServiceId(o["internet-service-id"], d, "internet_service_id")); err != nil {
-                if !fortiAPIPatch(o["internet-service-id"]) {
-                    return fmt.Errorf("Error reading internet_service_id: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("internet_service_id", flattenFirewallPolicyInternetServiceId(o["internet-service-id"], d, "internet_service_id")); err != nil {
+			if !fortiAPIPatch(o["internet-service-id"]) {
+				return fmt.Errorf("Error reading internet_service_id: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("internet_service_id"); ok {
+			if err = d.Set("internet_service_id", flattenFirewallPolicyInternetServiceId(o["internet-service-id"], d, "internet_service_id")); err != nil {
+				if !fortiAPIPatch(o["internet-service-id"]) {
+					return fmt.Errorf("Error reading internet_service_id: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("internet_service_group", flattenFirewallPolicyInternetServiceGroup(o["internet-service-group"], d, "internet_service_group")); err != nil {
-            if !fortiAPIPatch(o["internet-service-group"]) {
-                return fmt.Errorf("Error reading internet_service_group: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("internet_service_group"); ok {
-            if err = d.Set("internet_service_group", flattenFirewallPolicyInternetServiceGroup(o["internet-service-group"], d, "internet_service_group")); err != nil {
-                if !fortiAPIPatch(o["internet-service-group"]) {
-                    return fmt.Errorf("Error reading internet_service_group: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("internet_service_group", flattenFirewallPolicyInternetServiceGroup(o["internet-service-group"], d, "internet_service_group")); err != nil {
+			if !fortiAPIPatch(o["internet-service-group"]) {
+				return fmt.Errorf("Error reading internet_service_group: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("internet_service_group"); ok {
+			if err = d.Set("internet_service_group", flattenFirewallPolicyInternetServiceGroup(o["internet-service-group"], d, "internet_service_group")); err != nil {
+				if !fortiAPIPatch(o["internet-service-group"]) {
+					return fmt.Errorf("Error reading internet_service_group: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("internet_service_custom", flattenFirewallPolicyInternetServiceCustom(o["internet-service-custom"], d, "internet_service_custom")); err != nil {
-            if !fortiAPIPatch(o["internet-service-custom"]) {
-                return fmt.Errorf("Error reading internet_service_custom: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("internet_service_custom"); ok {
-            if err = d.Set("internet_service_custom", flattenFirewallPolicyInternetServiceCustom(o["internet-service-custom"], d, "internet_service_custom")); err != nil {
-                if !fortiAPIPatch(o["internet-service-custom"]) {
-                    return fmt.Errorf("Error reading internet_service_custom: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("internet_service_custom", flattenFirewallPolicyInternetServiceCustom(o["internet-service-custom"], d, "internet_service_custom")); err != nil {
+			if !fortiAPIPatch(o["internet-service-custom"]) {
+				return fmt.Errorf("Error reading internet_service_custom: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("internet_service_custom"); ok {
+			if err = d.Set("internet_service_custom", flattenFirewallPolicyInternetServiceCustom(o["internet-service-custom"], d, "internet_service_custom")); err != nil {
+				if !fortiAPIPatch(o["internet-service-custom"]) {
+					return fmt.Errorf("Error reading internet_service_custom: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("internet_service_custom_group", flattenFirewallPolicyInternetServiceCustomGroup(o["internet-service-custom-group"], d, "internet_service_custom_group")); err != nil {
-            if !fortiAPIPatch(o["internet-service-custom-group"]) {
-                return fmt.Errorf("Error reading internet_service_custom_group: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("internet_service_custom_group"); ok {
-            if err = d.Set("internet_service_custom_group", flattenFirewallPolicyInternetServiceCustomGroup(o["internet-service-custom-group"], d, "internet_service_custom_group")); err != nil {
-                if !fortiAPIPatch(o["internet-service-custom-group"]) {
-                    return fmt.Errorf("Error reading internet_service_custom_group: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("internet_service_custom_group", flattenFirewallPolicyInternetServiceCustomGroup(o["internet-service-custom-group"], d, "internet_service_custom_group")); err != nil {
+			if !fortiAPIPatch(o["internet-service-custom-group"]) {
+				return fmt.Errorf("Error reading internet_service_custom_group: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("internet_service_custom_group"); ok {
+			if err = d.Set("internet_service_custom_group", flattenFirewallPolicyInternetServiceCustomGroup(o["internet-service-custom-group"], d, "internet_service_custom_group")); err != nil {
+				if !fortiAPIPatch(o["internet-service-custom-group"]) {
+					return fmt.Errorf("Error reading internet_service_custom_group: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("internet_service_src", flattenFirewallPolicyInternetServiceSrc(o["internet-service-src"], d, "internet_service_src")); err != nil {
 		if !fortiAPIPatch(o["internet-service-src"]) {
@@ -2490,69 +2487,69 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("internet_service_src_id", flattenFirewallPolicyInternetServiceSrcId(o["internet-service-src-id"], d, "internet_service_src_id")); err != nil {
-            if !fortiAPIPatch(o["internet-service-src-id"]) {
-                return fmt.Errorf("Error reading internet_service_src_id: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("internet_service_src_id"); ok {
-            if err = d.Set("internet_service_src_id", flattenFirewallPolicyInternetServiceSrcId(o["internet-service-src-id"], d, "internet_service_src_id")); err != nil {
-                if !fortiAPIPatch(o["internet-service-src-id"]) {
-                    return fmt.Errorf("Error reading internet_service_src_id: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("internet_service_src_id", flattenFirewallPolicyInternetServiceSrcId(o["internet-service-src-id"], d, "internet_service_src_id")); err != nil {
+			if !fortiAPIPatch(o["internet-service-src-id"]) {
+				return fmt.Errorf("Error reading internet_service_src_id: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("internet_service_src_id"); ok {
+			if err = d.Set("internet_service_src_id", flattenFirewallPolicyInternetServiceSrcId(o["internet-service-src-id"], d, "internet_service_src_id")); err != nil {
+				if !fortiAPIPatch(o["internet-service-src-id"]) {
+					return fmt.Errorf("Error reading internet_service_src_id: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("internet_service_src_group", flattenFirewallPolicyInternetServiceSrcGroup(o["internet-service-src-group"], d, "internet_service_src_group")); err != nil {
-            if !fortiAPIPatch(o["internet-service-src-group"]) {
-                return fmt.Errorf("Error reading internet_service_src_group: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("internet_service_src_group"); ok {
-            if err = d.Set("internet_service_src_group", flattenFirewallPolicyInternetServiceSrcGroup(o["internet-service-src-group"], d, "internet_service_src_group")); err != nil {
-                if !fortiAPIPatch(o["internet-service-src-group"]) {
-                    return fmt.Errorf("Error reading internet_service_src_group: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("internet_service_src_group", flattenFirewallPolicyInternetServiceSrcGroup(o["internet-service-src-group"], d, "internet_service_src_group")); err != nil {
+			if !fortiAPIPatch(o["internet-service-src-group"]) {
+				return fmt.Errorf("Error reading internet_service_src_group: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("internet_service_src_group"); ok {
+			if err = d.Set("internet_service_src_group", flattenFirewallPolicyInternetServiceSrcGroup(o["internet-service-src-group"], d, "internet_service_src_group")); err != nil {
+				if !fortiAPIPatch(o["internet-service-src-group"]) {
+					return fmt.Errorf("Error reading internet_service_src_group: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("internet_service_src_custom", flattenFirewallPolicyInternetServiceSrcCustom(o["internet-service-src-custom"], d, "internet_service_src_custom")); err != nil {
-            if !fortiAPIPatch(o["internet-service-src-custom"]) {
-                return fmt.Errorf("Error reading internet_service_src_custom: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("internet_service_src_custom"); ok {
-            if err = d.Set("internet_service_src_custom", flattenFirewallPolicyInternetServiceSrcCustom(o["internet-service-src-custom"], d, "internet_service_src_custom")); err != nil {
-                if !fortiAPIPatch(o["internet-service-src-custom"]) {
-                    return fmt.Errorf("Error reading internet_service_src_custom: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("internet_service_src_custom", flattenFirewallPolicyInternetServiceSrcCustom(o["internet-service-src-custom"], d, "internet_service_src_custom")); err != nil {
+			if !fortiAPIPatch(o["internet-service-src-custom"]) {
+				return fmt.Errorf("Error reading internet_service_src_custom: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("internet_service_src_custom"); ok {
+			if err = d.Set("internet_service_src_custom", flattenFirewallPolicyInternetServiceSrcCustom(o["internet-service-src-custom"], d, "internet_service_src_custom")); err != nil {
+				if !fortiAPIPatch(o["internet-service-src-custom"]) {
+					return fmt.Errorf("Error reading internet_service_src_custom: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("internet_service_src_custom_group", flattenFirewallPolicyInternetServiceSrcCustomGroup(o["internet-service-src-custom-group"], d, "internet_service_src_custom_group")); err != nil {
-            if !fortiAPIPatch(o["internet-service-src-custom-group"]) {
-                return fmt.Errorf("Error reading internet_service_src_custom_group: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("internet_service_src_custom_group"); ok {
-            if err = d.Set("internet_service_src_custom_group", flattenFirewallPolicyInternetServiceSrcCustomGroup(o["internet-service-src-custom-group"], d, "internet_service_src_custom_group")); err != nil {
-                if !fortiAPIPatch(o["internet-service-src-custom-group"]) {
-                    return fmt.Errorf("Error reading internet_service_src_custom_group: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("internet_service_src_custom_group", flattenFirewallPolicyInternetServiceSrcCustomGroup(o["internet-service-src-custom-group"], d, "internet_service_src_custom_group")); err != nil {
+			if !fortiAPIPatch(o["internet-service-src-custom-group"]) {
+				return fmt.Errorf("Error reading internet_service_src_custom_group: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("internet_service_src_custom_group"); ok {
+			if err = d.Set("internet_service_src_custom_group", flattenFirewallPolicyInternetServiceSrcCustomGroup(o["internet-service-src-custom-group"], d, "internet_service_src_custom_group")); err != nil {
+				if !fortiAPIPatch(o["internet-service-src-custom-group"]) {
+					return fmt.Errorf("Error reading internet_service_src_custom_group: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("reputation_minimum", flattenFirewallPolicyReputationMinimum(o["reputation-minimum"], d, "reputation_minimum")); err != nil {
 		if !fortiAPIPatch(o["reputation-minimum"]) {
@@ -2572,21 +2569,21 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("rtp_addr", flattenFirewallPolicyRtpAddr(o["rtp-addr"], d, "rtp_addr")); err != nil {
-            if !fortiAPIPatch(o["rtp-addr"]) {
-                return fmt.Errorf("Error reading rtp_addr: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("rtp_addr"); ok {
-            if err = d.Set("rtp_addr", flattenFirewallPolicyRtpAddr(o["rtp-addr"], d, "rtp_addr")); err != nil {
-                if !fortiAPIPatch(o["rtp-addr"]) {
-                    return fmt.Errorf("Error reading rtp_addr: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("rtp_addr", flattenFirewallPolicyRtpAddr(o["rtp-addr"], d, "rtp_addr")); err != nil {
+			if !fortiAPIPatch(o["rtp-addr"]) {
+				return fmt.Errorf("Error reading rtp_addr: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("rtp_addr"); ok {
+			if err = d.Set("rtp_addr", flattenFirewallPolicyRtpAddr(o["rtp-addr"], d, "rtp_addr")); err != nil {
+				if !fortiAPIPatch(o["rtp-addr"]) {
+					return fmt.Errorf("Error reading rtp_addr: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("learning_mode", flattenFirewallPolicyLearningMode(o["learning-mode"], d, "learning_mode")); err != nil {
 		if !fortiAPIPatch(o["learning-mode"]) {
@@ -2630,21 +2627,21 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("service", flattenFirewallPolicyService(o["service"], d, "service")); err != nil {
-            if !fortiAPIPatch(o["service"]) {
-                return fmt.Errorf("Error reading service: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("service"); ok {
-            if err = d.Set("service", flattenFirewallPolicyService(o["service"], d, "service")); err != nil {
-                if !fortiAPIPatch(o["service"]) {
-                    return fmt.Errorf("Error reading service: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("service", flattenFirewallPolicyService(o["service"], d, "service")); err != nil {
+			if !fortiAPIPatch(o["service"]) {
+				return fmt.Errorf("Error reading service: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("service"); ok {
+			if err = d.Set("service", flattenFirewallPolicyService(o["service"], d, "service")); err != nil {
+				if !fortiAPIPatch(o["service"]) {
+					return fmt.Errorf("Error reading service: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("tos", flattenFirewallPolicyTos(o["tos"], d, "tos")); err != nil {
 		if !fortiAPIPatch(o["tos"]) {
@@ -2850,69 +2847,69 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("application", flattenFirewallPolicyApplication(o["application"], d, "application")); err != nil {
-            if !fortiAPIPatch(o["application"]) {
-                return fmt.Errorf("Error reading application: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("application"); ok {
-            if err = d.Set("application", flattenFirewallPolicyApplication(o["application"], d, "application")); err != nil {
-                if !fortiAPIPatch(o["application"]) {
-                    return fmt.Errorf("Error reading application: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("application", flattenFirewallPolicyApplication(o["application"], d, "application")); err != nil {
+			if !fortiAPIPatch(o["application"]) {
+				return fmt.Errorf("Error reading application: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("application"); ok {
+			if err = d.Set("application", flattenFirewallPolicyApplication(o["application"], d, "application")); err != nil {
+				if !fortiAPIPatch(o["application"]) {
+					return fmt.Errorf("Error reading application: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("app_category", flattenFirewallPolicyAppCategory(o["app-category"], d, "app_category")); err != nil {
-            if !fortiAPIPatch(o["app-category"]) {
-                return fmt.Errorf("Error reading app_category: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("app_category"); ok {
-            if err = d.Set("app_category", flattenFirewallPolicyAppCategory(o["app-category"], d, "app_category")); err != nil {
-                if !fortiAPIPatch(o["app-category"]) {
-                    return fmt.Errorf("Error reading app_category: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("app_category", flattenFirewallPolicyAppCategory(o["app-category"], d, "app_category")); err != nil {
+			if !fortiAPIPatch(o["app-category"]) {
+				return fmt.Errorf("Error reading app_category: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("app_category"); ok {
+			if err = d.Set("app_category", flattenFirewallPolicyAppCategory(o["app-category"], d, "app_category")); err != nil {
+				if !fortiAPIPatch(o["app-category"]) {
+					return fmt.Errorf("Error reading app_category: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("url_category", flattenFirewallPolicyUrlCategory(o["url-category"], d, "url_category")); err != nil {
-            if !fortiAPIPatch(o["url-category"]) {
-                return fmt.Errorf("Error reading url_category: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("url_category"); ok {
-            if err = d.Set("url_category", flattenFirewallPolicyUrlCategory(o["url-category"], d, "url_category")); err != nil {
-                if !fortiAPIPatch(o["url-category"]) {
-                    return fmt.Errorf("Error reading url_category: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("url_category", flattenFirewallPolicyUrlCategory(o["url-category"], d, "url_category")); err != nil {
+			if !fortiAPIPatch(o["url-category"]) {
+				return fmt.Errorf("Error reading url_category: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("url_category"); ok {
+			if err = d.Set("url_category", flattenFirewallPolicyUrlCategory(o["url-category"], d, "url_category")); err != nil {
+				if !fortiAPIPatch(o["url-category"]) {
+					return fmt.Errorf("Error reading url_category: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("app_group", flattenFirewallPolicyAppGroup(o["app-group"], d, "app_group")); err != nil {
-            if !fortiAPIPatch(o["app-group"]) {
-                return fmt.Errorf("Error reading app_group: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("app_group"); ok {
-            if err = d.Set("app_group", flattenFirewallPolicyAppGroup(o["app-group"], d, "app_group")); err != nil {
-                if !fortiAPIPatch(o["app-group"]) {
-                    return fmt.Errorf("Error reading app_group: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("app_group", flattenFirewallPolicyAppGroup(o["app-group"], d, "app_group")); err != nil {
+			if !fortiAPIPatch(o["app-group"]) {
+				return fmt.Errorf("Error reading app_group: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("app_group"); ok {
+			if err = d.Set("app_group", flattenFirewallPolicyAppGroup(o["app-group"], d, "app_group")); err != nil {
+				if !fortiAPIPatch(o["app-group"]) {
+					return fmt.Errorf("Error reading app_group: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("nat", flattenFirewallPolicyNat(o["nat"], d, "nat")); err != nil {
 		if !fortiAPIPatch(o["nat"]) {
@@ -2944,21 +2941,21 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("poolname", flattenFirewallPolicyPoolname(o["poolname"], d, "poolname")); err != nil {
-            if !fortiAPIPatch(o["poolname"]) {
-                return fmt.Errorf("Error reading poolname: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("poolname"); ok {
-            if err = d.Set("poolname", flattenFirewallPolicyPoolname(o["poolname"], d, "poolname")); err != nil {
-                if !fortiAPIPatch(o["poolname"]) {
-                    return fmt.Errorf("Error reading poolname: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("poolname", flattenFirewallPolicyPoolname(o["poolname"], d, "poolname")); err != nil {
+			if !fortiAPIPatch(o["poolname"]) {
+				return fmt.Errorf("Error reading poolname: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("poolname"); ok {
+			if err = d.Set("poolname", flattenFirewallPolicyPoolname(o["poolname"], d, "poolname")); err != nil {
+				if !fortiAPIPatch(o["poolname"]) {
+					return fmt.Errorf("Error reading poolname: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("session_ttl", flattenFirewallPolicySessionTtl(o["session-ttl"], d, "session_ttl")); err != nil {
 		if !fortiAPIPatch(o["session-ttl"]) {
@@ -3020,21 +3017,21 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("ntlm_enabled_browsers", flattenFirewallPolicyNtlmEnabledBrowsers(o["ntlm-enabled-browsers"], d, "ntlm_enabled_browsers")); err != nil {
-            if !fortiAPIPatch(o["ntlm-enabled-browsers"]) {
-                return fmt.Errorf("Error reading ntlm_enabled_browsers: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("ntlm_enabled_browsers"); ok {
-            if err = d.Set("ntlm_enabled_browsers", flattenFirewallPolicyNtlmEnabledBrowsers(o["ntlm-enabled-browsers"], d, "ntlm_enabled_browsers")); err != nil {
-                if !fortiAPIPatch(o["ntlm-enabled-browsers"]) {
-                    return fmt.Errorf("Error reading ntlm_enabled_browsers: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("ntlm_enabled_browsers", flattenFirewallPolicyNtlmEnabledBrowsers(o["ntlm-enabled-browsers"], d, "ntlm_enabled_browsers")); err != nil {
+			if !fortiAPIPatch(o["ntlm-enabled-browsers"]) {
+				return fmt.Errorf("Error reading ntlm_enabled_browsers: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("ntlm_enabled_browsers"); ok {
+			if err = d.Set("ntlm_enabled_browsers", flattenFirewallPolicyNtlmEnabledBrowsers(o["ntlm-enabled-browsers"], d, "ntlm_enabled_browsers")); err != nil {
+				if !fortiAPIPatch(o["ntlm-enabled-browsers"]) {
+					return fmt.Errorf("Error reading ntlm_enabled_browsers: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("fsso", flattenFirewallPolicyFsso(o["fsso"], d, "fsso")); err != nil {
 		if !fortiAPIPatch(o["fsso"]) {
@@ -3060,53 +3057,53 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("groups", flattenFirewallPolicyGroups(o["groups"], d, "groups")); err != nil {
-            if !fortiAPIPatch(o["groups"]) {
-                return fmt.Errorf("Error reading groups: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("groups"); ok {
-            if err = d.Set("groups", flattenFirewallPolicyGroups(o["groups"], d, "groups")); err != nil {
-                if !fortiAPIPatch(o["groups"]) {
-                    return fmt.Errorf("Error reading groups: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("groups", flattenFirewallPolicyGroups(o["groups"], d, "groups")); err != nil {
+			if !fortiAPIPatch(o["groups"]) {
+				return fmt.Errorf("Error reading groups: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("groups"); ok {
+			if err = d.Set("groups", flattenFirewallPolicyGroups(o["groups"], d, "groups")); err != nil {
+				if !fortiAPIPatch(o["groups"]) {
+					return fmt.Errorf("Error reading groups: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("users", flattenFirewallPolicyUsers(o["users"], d, "users")); err != nil {
-            if !fortiAPIPatch(o["users"]) {
-                return fmt.Errorf("Error reading users: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("users"); ok {
-            if err = d.Set("users", flattenFirewallPolicyUsers(o["users"], d, "users")); err != nil {
-                if !fortiAPIPatch(o["users"]) {
-                    return fmt.Errorf("Error reading users: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("users", flattenFirewallPolicyUsers(o["users"], d, "users")); err != nil {
+			if !fortiAPIPatch(o["users"]) {
+				return fmt.Errorf("Error reading users: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("users"); ok {
+			if err = d.Set("users", flattenFirewallPolicyUsers(o["users"], d, "users")); err != nil {
+				if !fortiAPIPatch(o["users"]) {
+					return fmt.Errorf("Error reading users: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("devices", flattenFirewallPolicyDevices(o["devices"], d, "devices")); err != nil {
-            if !fortiAPIPatch(o["devices"]) {
-                return fmt.Errorf("Error reading devices: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("devices"); ok {
-            if err = d.Set("devices", flattenFirewallPolicyDevices(o["devices"], d, "devices")); err != nil {
-                if !fortiAPIPatch(o["devices"]) {
-                    return fmt.Errorf("Error reading devices: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("devices", flattenFirewallPolicyDevices(o["devices"], d, "devices")); err != nil {
+			if !fortiAPIPatch(o["devices"]) {
+				return fmt.Errorf("Error reading devices: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("devices"); ok {
+			if err = d.Set("devices", flattenFirewallPolicyDevices(o["devices"], d, "devices")); err != nil {
+				if !fortiAPIPatch(o["devices"]) {
+					return fmt.Errorf("Error reading devices: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("auth_path", flattenFirewallPolicyAuthPath(o["auth-path"], d, "auth_path")); err != nil {
 		if !fortiAPIPatch(o["auth-path"]) {
@@ -3222,21 +3219,21 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("custom_log_fields", flattenFirewallPolicyCustomLogFields(o["custom-log-fields"], d, "custom_log_fields")); err != nil {
-            if !fortiAPIPatch(o["custom-log-fields"]) {
-                return fmt.Errorf("Error reading custom_log_fields: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("custom_log_fields"); ok {
-            if err = d.Set("custom_log_fields", flattenFirewallPolicyCustomLogFields(o["custom-log-fields"], d, "custom_log_fields")); err != nil {
-                if !fortiAPIPatch(o["custom-log-fields"]) {
-                    return fmt.Errorf("Error reading custom_log_fields: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("custom_log_fields", flattenFirewallPolicyCustomLogFields(o["custom-log-fields"], d, "custom_log_fields")); err != nil {
+			if !fortiAPIPatch(o["custom-log-fields"]) {
+				return fmt.Errorf("Error reading custom_log_fields: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("custom_log_fields"); ok {
+			if err = d.Set("custom_log_fields", flattenFirewallPolicyCustomLogFields(o["custom-log-fields"], d, "custom_log_fields")); err != nil {
+				if !fortiAPIPatch(o["custom-log-fields"]) {
+					return fmt.Errorf("Error reading custom_log_fields: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("replacemsg_override_group", flattenFirewallPolicyReplacemsgOverrideGroup(o["replacemsg-override-group"], d, "replacemsg_override_group")); err != nil {
 		if !fortiAPIPatch(o["replacemsg-override-group"]) {
@@ -3292,21 +3289,21 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("ssl_mirror_intf", flattenFirewallPolicySslMirrorIntf(o["ssl-mirror-intf"], d, "ssl_mirror_intf")); err != nil {
-            if !fortiAPIPatch(o["ssl-mirror-intf"]) {
-                return fmt.Errorf("Error reading ssl_mirror_intf: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("ssl_mirror_intf"); ok {
-            if err = d.Set("ssl_mirror_intf", flattenFirewallPolicySslMirrorIntf(o["ssl-mirror-intf"], d, "ssl_mirror_intf")); err != nil {
-                if !fortiAPIPatch(o["ssl-mirror-intf"]) {
-                    return fmt.Errorf("Error reading ssl_mirror_intf: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("ssl_mirror_intf", flattenFirewallPolicySslMirrorIntf(o["ssl-mirror-intf"], d, "ssl_mirror_intf")); err != nil {
+			if !fortiAPIPatch(o["ssl-mirror-intf"]) {
+				return fmt.Errorf("Error reading ssl_mirror_intf: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("ssl_mirror_intf"); ok {
+			if err = d.Set("ssl_mirror_intf", flattenFirewallPolicySslMirrorIntf(o["ssl-mirror-intf"], d, "ssl_mirror_intf")); err != nil {
+				if !fortiAPIPatch(o["ssl-mirror-intf"]) {
+					return fmt.Errorf("Error reading ssl_mirror_intf: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("scan_botnet_connections", flattenFirewallPolicyScanBotnetConnections(o["scan-botnet-connections"], d, "scan_botnet_connections")); err != nil {
 		if !fortiAPIPatch(o["scan-botnet-connections"]) {
@@ -3338,7 +3335,6 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-
 	return nil
 }
 
@@ -3347,7 +3343,6 @@ func flattenFirewallPolicyFortiTestDebug(d *schema.ResourceData, fosdebugsn int,
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandFirewallPolicyPolicyid(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -3373,7 +3368,7 @@ func expandFirewallPolicySrcintf(d *schema.ResourceData, v interface{}, pre stri
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -3404,7 +3399,7 @@ func expandFirewallPolicyDstintf(d *schema.ResourceData, v interface{}, pre stri
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -3435,7 +3430,7 @@ func expandFirewallPolicySrcaddr(d *schema.ResourceData, v interface{}, pre stri
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -3466,7 +3461,7 @@ func expandFirewallPolicyDstaddr(d *schema.ResourceData, v interface{}, pre stri
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -3501,7 +3496,7 @@ func expandFirewallPolicyInternetServiceId(d *schema.ResourceData, v interface{}
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -3532,7 +3527,7 @@ func expandFirewallPolicyInternetServiceGroup(d *schema.ResourceData, v interfac
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -3563,7 +3558,7 @@ func expandFirewallPolicyInternetServiceCustom(d *schema.ResourceData, v interfa
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -3594,7 +3589,7 @@ func expandFirewallPolicyInternetServiceCustomGroup(d *schema.ResourceData, v in
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -3629,7 +3624,7 @@ func expandFirewallPolicyInternetServiceSrcId(d *schema.ResourceData, v interfac
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -3660,7 +3655,7 @@ func expandFirewallPolicyInternetServiceSrcGroup(d *schema.ResourceData, v inter
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -3691,7 +3686,7 @@ func expandFirewallPolicyInternetServiceSrcCustom(d *schema.ResourceData, v inte
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -3722,7 +3717,7 @@ func expandFirewallPolicyInternetServiceSrcCustomGroup(d *schema.ResourceData, v
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -3765,7 +3760,7 @@ func expandFirewallPolicyRtpAddr(d *schema.ResourceData, v interface{}, pre stri
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -3824,7 +3819,7 @@ func expandFirewallPolicyService(d *schema.ResourceData, v interface{}, pre stri
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -3991,7 +3986,7 @@ func expandFirewallPolicyApplication(d *schema.ResourceData, v interface{}, pre 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -4022,7 +4017,7 @@ func expandFirewallPolicyAppCategory(d *schema.ResourceData, v interface{}, pre 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -4053,7 +4048,7 @@ func expandFirewallPolicyUrlCategory(d *schema.ResourceData, v interface{}, pre 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -4084,7 +4079,7 @@ func expandFirewallPolicyAppGroup(d *schema.ResourceData, v interface{}, pre str
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -4135,7 +4130,7 @@ func expandFirewallPolicyPoolname(d *schema.ResourceData, v interface{}, pre str
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -4206,7 +4201,7 @@ func expandFirewallPolicyNtlmEnabledBrowsers(d *schema.ResourceData, v interface
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "user_agent_string"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -4253,7 +4248,7 @@ func expandFirewallPolicyGroups(d *schema.ResourceData, v interface{}, pre strin
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -4284,7 +4279,7 @@ func expandFirewallPolicyUsers(d *schema.ResourceData, v interface{}, pre string
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -4315,7 +4310,7 @@ func expandFirewallPolicyDevices(d *schema.ResourceData, v interface{}, pre stri
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -4422,7 +4417,7 @@ func expandFirewallPolicyCustomLogFields(d *schema.ResourceData, v interface{}, 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "field_id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -4489,7 +4484,7 @@ func expandFirewallPolicySslMirrorIntf(d *schema.ResourceData, v interface{}, pr
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -4528,10 +4523,8 @@ func expandFirewallPolicyVlanFilter(d *schema.ResourceData, v interface{}, pre s
 	return v, nil
 }
 
-
 func getObjectFirewallPolicy(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("policyid"); ok {
 		t, err := expandFirewallPolicyPolicyid(d, v, "policyid")
@@ -5667,7 +5660,5 @@ func getObjectFirewallPolicy(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-
 	return &obj, nil
 }
-

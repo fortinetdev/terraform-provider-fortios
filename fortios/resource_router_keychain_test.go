@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,35 +5,36 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSRouterKeyChain_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSRouterKeyChain_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSRouterKeyChain_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSRouterKeyChainConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSRouterKeyChainExists("fortios_router_keychain.trname"),
-                    resource.TestCheckResourceAttr("fortios_router_keychain.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_router_keychain.trname", "key.0.accept_lifetime", "04:00:00 01 01 2008 04:00:00 01 01 2022"),
-                    resource.TestCheckResourceAttr("fortios_router_keychain.trname", "key.0.key_string", "ewiwn3i23232s212"),
-                    resource.TestCheckResourceAttr("fortios_router_keychain.trname", "key.0.send_lifetime", "04:00:00 01 01 2008 04:00:00 01 01 2022"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSRouterKeyChainConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSRouterKeyChainExists("fortios_router_keychain.trname"),
+					resource.TestCheckResourceAttr("fortios_router_keychain.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_router_keychain.trname", "key.0.accept_lifetime", "04:00:00 01 01 2008 04:00:00 01 01 2022"),
+					resource.TestCheckResourceAttr("fortios_router_keychain.trname", "key.0.key_string", "ewiwn3i23232s212"),
+					resource.TestCheckResourceAttr("fortios_router_keychain.trname", "key.0.send_lifetime", "04:00:00 01 01 2008 04:00:00 01 01 2022"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSRouterKeyChainExists(n string) resource.TestCheckFunc {

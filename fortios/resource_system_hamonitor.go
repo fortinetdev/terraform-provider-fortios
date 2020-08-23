@@ -30,26 +30,25 @@ func resourceSystemHaMonitor() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"monitor_vlan": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"vlan_hb_interval": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 30),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"vlan_hb_lost_threshold": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 60),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
 }
-
 
 func resourceSystemHaMonitorUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -116,7 +115,6 @@ func resourceSystemHaMonitorRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenSystemHaMonitorMonitorVlan(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -129,10 +127,8 @@ func flattenSystemHaMonitorVlanHbLostThreshold(v interface{}, d *schema.Resource
 	return v
 }
 
-
 func refreshObjectSystemHaMonitor(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("monitor_vlan", flattenSystemHaMonitorMonitorVlan(o["monitor-vlan"], d, "monitor_vlan")); err != nil {
 		if !fortiAPIPatch(o["monitor-vlan"]) {
@@ -152,7 +148,6 @@ func refreshObjectSystemHaMonitor(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-
 	return nil
 }
 
@@ -161,7 +156,6 @@ func flattenSystemHaMonitorFortiTestDebug(d *schema.ResourceData, fosdebugsn int
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemHaMonitorMonitorVlan(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -175,10 +169,8 @@ func expandSystemHaMonitorVlanHbLostThreshold(d *schema.ResourceData, v interfac
 	return v, nil
 }
 
-
 func getObjectSystemHaMonitor(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("monitor_vlan"); ok {
 		t, err := expandSystemHaMonitorMonitorVlan(d, v, "monitor_vlan")
@@ -207,7 +199,5 @@ func getObjectSystemHaMonitor(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-
 	return &obj, nil
 }
-

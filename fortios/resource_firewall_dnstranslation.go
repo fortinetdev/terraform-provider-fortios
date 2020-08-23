@@ -30,23 +30,23 @@ func resourceFirewallDnstranslation() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"fosid": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"src": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"dst": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"netmask": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
@@ -143,7 +143,6 @@ func resourceFirewallDnstranslationRead(d *schema.ResourceData, m interface{}) e
 	return nil
 }
 
-
 func flattenFirewallDnstranslationId(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -160,10 +159,8 @@ func flattenFirewallDnstranslationNetmask(v interface{}, d *schema.ResourceData,
 	return v
 }
 
-
 func refreshObjectFirewallDnstranslation(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("fosid", flattenFirewallDnstranslationId(o["id"], d, "fosid")); err != nil {
 		if !fortiAPIPatch(o["id"]) {
@@ -189,7 +186,6 @@ func refreshObjectFirewallDnstranslation(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-
 	return nil
 }
 
@@ -198,7 +194,6 @@ func flattenFirewallDnstranslationFortiTestDebug(d *schema.ResourceData, fosdebu
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandFirewallDnstranslationId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -216,10 +211,8 @@ func expandFirewallDnstranslationNetmask(d *schema.ResourceData, v interface{}, 
 	return v, nil
 }
 
-
 func getObjectFirewallDnstranslation(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("fosid"); ok {
 		t, err := expandFirewallDnstranslationId(d, v, "fosid")
@@ -257,7 +250,5 @@ func getObjectFirewallDnstranslation(d *schema.ResourceData) (*map[string]interf
 		}
 	}
 
-
 	return &obj, nil
 }
-

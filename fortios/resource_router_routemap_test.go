@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,61 +5,62 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSRouterRouteMap_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSRouterRouteMap_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSRouterRouteMap_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSRouterRouteMapConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSRouterRouteMapExists("fortios_router_routemap.trname"),
-                    resource.TestCheckResourceAttr("fortios_router_routemap.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.action", "deny"),
-                    resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.match_community_exact", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.match_flags", "0"),
-                    resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.match_metric", "0"),
-                    resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.match_origin", "none"),
-                    resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.match_route_type", "No type specified"),
-                    resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.match_tag", "0"),
-                    resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_aggregator_as", "0"),
-                    resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_aggregator_ip", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_aspath_action", "prepend"),
-                    resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_atomic_aggregate", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_community_additive", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_dampening_max_suppress", "0"),
-                    resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_dampening_reachability_half_life", "0"),
-                    resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_dampening_reuse", "0"),
-                    resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_dampening_suppress", "0"),
-                    resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_dampening_unreachability_half_life", "0"),
-                    resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_flags", "128"),
-                    resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_ip6_nexthop", "::"),
-                    resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_ip6_nexthop_local", "::"),
-                    resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_ip_nexthop", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_local_preference", "0"),
-                    resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_metric", "0"),
-                    resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_metric_type", "No type specified"),
-                    resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_origin", "none"),
-                    resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_originator_id", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_route_tag", "0"),
-                    resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_tag", "0"),
-                    resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_weight", "21"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSRouterRouteMapConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSRouterRouteMapExists("fortios_router_routemap.trname"),
+					resource.TestCheckResourceAttr("fortios_router_routemap.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.action", "deny"),
+					resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.match_community_exact", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.match_flags", "0"),
+					resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.match_metric", "0"),
+					resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.match_origin", "none"),
+					resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.match_route_type", "No type specified"),
+					resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.match_tag", "0"),
+					resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_aggregator_as", "0"),
+					resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_aggregator_ip", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_aspath_action", "prepend"),
+					resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_atomic_aggregate", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_community_additive", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_dampening_max_suppress", "0"),
+					resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_dampening_reachability_half_life", "0"),
+					resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_dampening_reuse", "0"),
+					resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_dampening_suppress", "0"),
+					resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_dampening_unreachability_half_life", "0"),
+					resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_flags", "128"),
+					resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_ip6_nexthop", "::"),
+					resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_ip6_nexthop_local", "::"),
+					resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_ip_nexthop", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_local_preference", "0"),
+					resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_metric", "0"),
+					resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_metric_type", "No type specified"),
+					resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_origin", "none"),
+					resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_originator_id", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_route_tag", "0"),
+					resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_tag", "0"),
+					resource.TestCheckResourceAttr("fortios_router_routemap.trname", "rule.0.set_weight", "21"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSRouterRouteMapExists(n string) resource.TestCheckFunc {

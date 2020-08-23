@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,44 +5,45 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSystemCentralManagement_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSystemCentralManagement_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSystemCentralManagement_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSystemCentralManagementConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSystemCentralManagementExists("fortios_system_centralmanagement.trname"),
-                    resource.TestCheckResourceAttr("fortios_system_centralmanagement.trname", "allow_monitor", "enable"),
-                    resource.TestCheckResourceAttr("fortios_system_centralmanagement.trname", "allow_push_configuration", "enable"),
-                    resource.TestCheckResourceAttr("fortios_system_centralmanagement.trname", "allow_push_firmware", "enable"),
-                    resource.TestCheckResourceAttr("fortios_system_centralmanagement.trname", "allow_remote_firmware_upgrade", "enable"),
-                    resource.TestCheckResourceAttr("fortios_system_centralmanagement.trname", "enc_algorithm", "high"),
-                    resource.TestCheckResourceAttr("fortios_system_centralmanagement.trname", "fmg_source_ip", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_system_centralmanagement.trname", "fmg_source_ip6", "::"),
-                    resource.TestCheckResourceAttr("fortios_system_centralmanagement.trname", "include_default_servers", "enable"),
-                    resource.TestCheckResourceAttr("fortios_system_centralmanagement.trname", "mode", "normal"),
-                    resource.TestCheckResourceAttr("fortios_system_centralmanagement.trname", "schedule_config_restore", "enable"),
-                    resource.TestCheckResourceAttr("fortios_system_centralmanagement.trname", "schedule_script_restore", "enable"),
-                    resource.TestCheckResourceAttr("fortios_system_centralmanagement.trname", "type", "fortimanager"),
-                    resource.TestCheckResourceAttr("fortios_system_centralmanagement.trname", "vdom", "root"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSystemCentralManagementConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSystemCentralManagementExists("fortios_system_centralmanagement.trname"),
+					resource.TestCheckResourceAttr("fortios_system_centralmanagement.trname", "allow_monitor", "enable"),
+					resource.TestCheckResourceAttr("fortios_system_centralmanagement.trname", "allow_push_configuration", "enable"),
+					resource.TestCheckResourceAttr("fortios_system_centralmanagement.trname", "allow_push_firmware", "enable"),
+					resource.TestCheckResourceAttr("fortios_system_centralmanagement.trname", "allow_remote_firmware_upgrade", "enable"),
+					resource.TestCheckResourceAttr("fortios_system_centralmanagement.trname", "enc_algorithm", "high"),
+					resource.TestCheckResourceAttr("fortios_system_centralmanagement.trname", "fmg_source_ip", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_system_centralmanagement.trname", "fmg_source_ip6", "::"),
+					resource.TestCheckResourceAttr("fortios_system_centralmanagement.trname", "include_default_servers", "enable"),
+					resource.TestCheckResourceAttr("fortios_system_centralmanagement.trname", "mode", "normal"),
+					resource.TestCheckResourceAttr("fortios_system_centralmanagement.trname", "schedule_config_restore", "enable"),
+					resource.TestCheckResourceAttr("fortios_system_centralmanagement.trname", "schedule_script_restore", "enable"),
+					resource.TestCheckResourceAttr("fortios_system_centralmanagement.trname", "type", "fortimanager"),
+					resource.TestCheckResourceAttr("fortios_system_centralmanagement.trname", "vdom", "root"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSystemCentralManagementExists(n string) resource.TestCheckFunc {

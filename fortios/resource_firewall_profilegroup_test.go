@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,34 +5,35 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSFirewallProfileGroup_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSFirewallProfileGroup_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSFirewallProfileGroup_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSFirewallProfileGroupConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSFirewallProfileGroupExists("fortios_firewall_profilegroup.trname"),
-                    resource.TestCheckResourceAttr("fortios_firewall_profilegroup.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_firewall_profilegroup.trname", "profile_protocol_options", "default"),
-                    resource.TestCheckResourceAttr("fortios_firewall_profilegroup.trname", "ssl_ssh_profile", "deep-inspection"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSFirewallProfileGroupConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSFirewallProfileGroupExists("fortios_firewall_profilegroup.trname"),
+					resource.TestCheckResourceAttr("fortios_firewall_profilegroup.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_firewall_profilegroup.trname", "profile_protocol_options", "default"),
+					resource.TestCheckResourceAttr("fortios_firewall_profilegroup.trname", "ssl_ssh_profile", "deep-inspection"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSFirewallProfileGroupExists(n string) resource.TestCheckFunc {

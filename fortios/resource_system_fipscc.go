@@ -30,30 +30,29 @@ func resourceSystemFipsCc() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"entropy_token": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"self_test_period": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 1440),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"key_generation_self_test": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceSystemFipsCcUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -120,7 +119,6 @@ func resourceSystemFipsCcRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenSystemFipsCcStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -137,10 +135,8 @@ func flattenSystemFipsCcKeyGenerationSelfTest(v interface{}, d *schema.ResourceD
 	return v
 }
 
-
 func refreshObjectSystemFipsCc(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("status", flattenSystemFipsCcStatus(o["status"], d, "status")); err != nil {
 		if !fortiAPIPatch(o["status"]) {
@@ -166,7 +162,6 @@ func refreshObjectSystemFipsCc(d *schema.ResourceData, o map[string]interface{})
 		}
 	}
 
-
 	return nil
 }
 
@@ -175,7 +170,6 @@ func flattenSystemFipsCcFortiTestDebug(d *schema.ResourceData, fosdebugsn int, f
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemFipsCcStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -193,10 +187,8 @@ func expandSystemFipsCcKeyGenerationSelfTest(d *schema.ResourceData, v interface
 	return v, nil
 }
 
-
 func getObjectSystemFipsCc(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("status"); ok {
 		t, err := expandSystemFipsCcStatus(d, v, "status")
@@ -234,7 +226,5 @@ func getObjectSystemFipsCc(d *schema.ResourceData) (*map[string]interface{}, err
 		}
 	}
 
-
 	return &obj, nil
 }
-

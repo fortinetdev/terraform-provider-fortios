@@ -30,80 +30,79 @@ func resourceLogSyslogd3OverrideFilter() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"severity": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"forward_traffic": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"local_traffic": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"multicast_traffic": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"sniffer_traffic": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"anomaly": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"netscan_discovery": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"netscan_vulnerability": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"voip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"gtp": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"dns": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssh": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"filter": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 511),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"filter_type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceLogSyslogd3OverrideFilterUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -170,7 +169,6 @@ func resourceLogSyslogd3OverrideFilterRead(d *schema.ResourceData, m interface{}
 	return nil
 }
 
-
 func flattenLogSyslogd3OverrideFilterSeverity(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -227,10 +225,8 @@ func flattenLogSyslogd3OverrideFilterFilterType(v interface{}, d *schema.Resourc
 	return v
 }
 
-
 func refreshObjectLogSyslogd3OverrideFilter(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("severity", flattenLogSyslogd3OverrideFilterSeverity(o["severity"], d, "severity")); err != nil {
 		if !fortiAPIPatch(o["severity"]) {
@@ -316,7 +312,6 @@ func refreshObjectLogSyslogd3OverrideFilter(d *schema.ResourceData, o map[string
 		}
 	}
 
-
 	return nil
 }
 
@@ -325,7 +320,6 @@ func flattenLogSyslogd3OverrideFilterFortiTestDebug(d *schema.ResourceData, fosd
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandLogSyslogd3OverrideFilterSeverity(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -383,10 +377,8 @@ func expandLogSyslogd3OverrideFilterFilterType(d *schema.ResourceData, v interfa
 	return v, nil
 }
 
-
 func getObjectLogSyslogd3OverrideFilter(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("severity"); ok {
 		t, err := expandLogSyslogd3OverrideFilterSeverity(d, v, "severity")
@@ -514,7 +506,5 @@ func getObjectLogSyslogd3OverrideFilter(d *schema.ResourceData) (*map[string]int
 		}
 	}
 
-
 	return &obj, nil
 }
-

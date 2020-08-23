@@ -30,110 +30,110 @@ func resourceSwitchControllerLldpProfile() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"med_tlvs": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"n8021_tlvs": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"n8023_tlvs": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"auto_isl": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"auto_isl_hello_timer": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 30),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"auto_isl_receive_timeout": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 90),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"auto_isl_port_group": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 9),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"med_network_policy": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"status": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"vlan": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4094),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"priority": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 7),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"dscp": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 63),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"custom_tlvs": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"oui": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"subtype": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"information_string": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -232,7 +232,6 @@ func resourceSwitchControllerLldpProfileRead(d *schema.ResourceData, m interface
 	}
 	return nil
 }
-
 
 func flattenSwitchControllerLldpProfileName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -401,10 +400,8 @@ func flattenSwitchControllerLldpProfileCustomTlvsInformationString(v interface{}
 	return v
 }
 
-
 func refreshObjectSwitchControllerLldpProfile(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenSwitchControllerLldpProfileName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -454,38 +451,37 @@ func refreshObjectSwitchControllerLldpProfile(d *schema.ResourceData, o map[stri
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("med_network_policy", flattenSwitchControllerLldpProfileMedNetworkPolicy(o["med-network-policy"], d, "med_network_policy")); err != nil {
-            if !fortiAPIPatch(o["med-network-policy"]) {
-                return fmt.Errorf("Error reading med_network_policy: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("med_network_policy"); ok {
-            if err = d.Set("med_network_policy", flattenSwitchControllerLldpProfileMedNetworkPolicy(o["med-network-policy"], d, "med_network_policy")); err != nil {
-                if !fortiAPIPatch(o["med-network-policy"]) {
-                    return fmt.Errorf("Error reading med_network_policy: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("med_network_policy", flattenSwitchControllerLldpProfileMedNetworkPolicy(o["med-network-policy"], d, "med_network_policy")); err != nil {
+			if !fortiAPIPatch(o["med-network-policy"]) {
+				return fmt.Errorf("Error reading med_network_policy: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("med_network_policy"); ok {
+			if err = d.Set("med_network_policy", flattenSwitchControllerLldpProfileMedNetworkPolicy(o["med-network-policy"], d, "med_network_policy")); err != nil {
+				if !fortiAPIPatch(o["med-network-policy"]) {
+					return fmt.Errorf("Error reading med_network_policy: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("custom_tlvs", flattenSwitchControllerLldpProfileCustomTlvs(o["custom-tlvs"], d, "custom_tlvs")); err != nil {
-            if !fortiAPIPatch(o["custom-tlvs"]) {
-                return fmt.Errorf("Error reading custom_tlvs: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("custom_tlvs"); ok {
-            if err = d.Set("custom_tlvs", flattenSwitchControllerLldpProfileCustomTlvs(o["custom-tlvs"], d, "custom_tlvs")); err != nil {
-                if !fortiAPIPatch(o["custom-tlvs"]) {
-                    return fmt.Errorf("Error reading custom_tlvs: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("custom_tlvs", flattenSwitchControllerLldpProfileCustomTlvs(o["custom-tlvs"], d, "custom_tlvs")); err != nil {
+			if !fortiAPIPatch(o["custom-tlvs"]) {
+				return fmt.Errorf("Error reading custom_tlvs: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("custom_tlvs"); ok {
+			if err = d.Set("custom_tlvs", flattenSwitchControllerLldpProfileCustomTlvs(o["custom-tlvs"], d, "custom_tlvs")); err != nil {
+				if !fortiAPIPatch(o["custom-tlvs"]) {
+					return fmt.Errorf("Error reading custom_tlvs: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -495,7 +491,6 @@ func flattenSwitchControllerLldpProfileFortiTestDebug(d *schema.ResourceData, fo
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSwitchControllerLldpProfileName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -541,7 +536,7 @@ func expandSwitchControllerLldpProfileMedNetworkPolicy(d *schema.ResourceData, v
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -608,7 +603,7 @@ func expandSwitchControllerLldpProfileCustomTlvs(d *schema.ResourceData, v inter
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -654,10 +649,8 @@ func expandSwitchControllerLldpProfileCustomTlvsInformationString(d *schema.Reso
 	return v, nil
 }
 
-
 func getObjectSwitchControllerLldpProfile(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandSwitchControllerLldpProfileName(d, v, "name")
@@ -749,7 +742,5 @@ func getObjectSwitchControllerLldpProfile(d *schema.ResourceData) (*map[string]i
 		}
 	}
 
-
 	return &obj, nil
 }
-

@@ -30,214 +30,214 @@ func resourceUserGroup() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"fosid": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"group_type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"authtimeout": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 43200),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"auth_concurrent_override": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"auth_concurrent_value": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 100),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"http_digest_realm": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"sso_attribute_value": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 511),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"member": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 511),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"match": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"server_name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"group_name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 511),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"user_id": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"password": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"user_name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"sponsor": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"company": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"email": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"mobile_phone": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"sms_server": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"sms_custom_server": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"expire_type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"expire": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 31536000),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"max_accounts": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 1024),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"multiple_guest_add": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"guest": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"user_id": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"password": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 128),
-							Optional: true,
+							Optional:     true,
 						},
 						"mobile_phone": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"sponsor": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"company": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"email": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"expiration": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"comment": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
-							Optional: true,
+							Optional:     true,
 						},
 					},
 				},
@@ -334,7 +334,6 @@ func resourceUserGroupRead(d *schema.ResourceData, m interface{}) error {
 	}
 	return nil
 }
-
 
 func flattenUserGroupName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -618,10 +617,8 @@ func flattenUserGroupGuestComment(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
-
 func refreshObjectUserGroup(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenUserGroupName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -671,37 +668,37 @@ func refreshObjectUserGroup(d *schema.ResourceData, o map[string]interface{}) er
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("member", flattenUserGroupMember(o["member"], d, "member")); err != nil {
-            if !fortiAPIPatch(o["member"]) {
-                return fmt.Errorf("Error reading member: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("member"); ok {
-            if err = d.Set("member", flattenUserGroupMember(o["member"], d, "member")); err != nil {
-                if !fortiAPIPatch(o["member"]) {
-                    return fmt.Errorf("Error reading member: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("member", flattenUserGroupMember(o["member"], d, "member")); err != nil {
+			if !fortiAPIPatch(o["member"]) {
+				return fmt.Errorf("Error reading member: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("member"); ok {
+			if err = d.Set("member", flattenUserGroupMember(o["member"], d, "member")); err != nil {
+				if !fortiAPIPatch(o["member"]) {
+					return fmt.Errorf("Error reading member: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("match", flattenUserGroupMatch(o["match"], d, "match")); err != nil {
-            if !fortiAPIPatch(o["match"]) {
-                return fmt.Errorf("Error reading match: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("match"); ok {
-            if err = d.Set("match", flattenUserGroupMatch(o["match"], d, "match")); err != nil {
-                if !fortiAPIPatch(o["match"]) {
-                    return fmt.Errorf("Error reading match: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("match", flattenUserGroupMatch(o["match"], d, "match")); err != nil {
+			if !fortiAPIPatch(o["match"]) {
+				return fmt.Errorf("Error reading match: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("match"); ok {
+			if err = d.Set("match", flattenUserGroupMatch(o["match"], d, "match")); err != nil {
+				if !fortiAPIPatch(o["match"]) {
+					return fmt.Errorf("Error reading match: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("user_id", flattenUserGroupUserId(o["user-id"], d, "user_id")); err != nil {
 		if !fortiAPIPatch(o["user-id"]) {
@@ -781,22 +778,21 @@ func refreshObjectUserGroup(d *schema.ResourceData, o map[string]interface{}) er
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("guest", flattenUserGroupGuest(o["guest"], d, "guest")); err != nil {
-            if !fortiAPIPatch(o["guest"]) {
-                return fmt.Errorf("Error reading guest: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("guest"); ok {
-            if err = d.Set("guest", flattenUserGroupGuest(o["guest"], d, "guest")); err != nil {
-                if !fortiAPIPatch(o["guest"]) {
-                    return fmt.Errorf("Error reading guest: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("guest", flattenUserGroupGuest(o["guest"], d, "guest")); err != nil {
+			if !fortiAPIPatch(o["guest"]) {
+				return fmt.Errorf("Error reading guest: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("guest"); ok {
+			if err = d.Set("guest", flattenUserGroupGuest(o["guest"], d, "guest")); err != nil {
+				if !fortiAPIPatch(o["guest"]) {
+					return fmt.Errorf("Error reading guest: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -806,7 +802,6 @@ func flattenUserGroupFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosd
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandUserGroupName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -852,7 +847,7 @@ func expandUserGroupMember(d *schema.ResourceData, v interface{}, pre string) (i
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -883,7 +878,7 @@ func expandUserGroupMatch(d *schema.ResourceData, v interface{}, pre string) (in
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -984,7 +979,7 @@ func expandUserGroupGuest(d *schema.ResourceData, v interface{}, pre string) (in
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "user_id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1075,10 +1070,8 @@ func expandUserGroupGuestComment(d *schema.ResourceData, v interface{}, pre stri
 	return v, nil
 }
 
-
 func getObjectUserGroup(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandUserGroupName(d, v, "name")
@@ -1296,7 +1289,5 @@ func getObjectUserGroup(d *schema.ResourceData) (*map[string]interface{}, error)
 		}
 	}
 
-
 	return &obj, nil
 }
-

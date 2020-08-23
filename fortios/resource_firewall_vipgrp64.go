@@ -30,37 +30,37 @@ func resourceFirewallVipgrp64() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"uuid": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"color": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 32),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"comments": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
+				Optional:     true,
 			},
 			"member": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -158,7 +158,6 @@ func resourceFirewallVipgrp64Read(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenFirewallVipgrp64Name(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -211,10 +210,8 @@ func flattenFirewallVipgrp64MemberName(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
-
 func refreshObjectFirewallVipgrp64(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenFirewallVipgrp64Name(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -240,22 +237,21 @@ func refreshObjectFirewallVipgrp64(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("member", flattenFirewallVipgrp64Member(o["member"], d, "member")); err != nil {
-            if !fortiAPIPatch(o["member"]) {
-                return fmt.Errorf("Error reading member: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("member"); ok {
-            if err = d.Set("member", flattenFirewallVipgrp64Member(o["member"], d, "member")); err != nil {
-                if !fortiAPIPatch(o["member"]) {
-                    return fmt.Errorf("Error reading member: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("member", flattenFirewallVipgrp64Member(o["member"], d, "member")); err != nil {
+			if !fortiAPIPatch(o["member"]) {
+				return fmt.Errorf("Error reading member: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("member"); ok {
+			if err = d.Set("member", flattenFirewallVipgrp64Member(o["member"], d, "member")); err != nil {
+				if !fortiAPIPatch(o["member"]) {
+					return fmt.Errorf("Error reading member: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -265,7 +261,6 @@ func flattenFirewallVipgrp64FortiTestDebug(d *schema.ResourceData, fosdebugsn in
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandFirewallVipgrp64Name(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -295,7 +290,7 @@ func expandFirewallVipgrp64Member(d *schema.ResourceData, v interface{}, pre str
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -314,10 +309,8 @@ func expandFirewallVipgrp64MemberName(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
-
 func getObjectFirewallVipgrp64(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandFirewallVipgrp64Name(d, v, "name")
@@ -364,7 +357,5 @@ func getObjectFirewallVipgrp64(d *schema.ResourceData) (*map[string]interface{},
 		}
 	}
 
-
 	return &obj, nil
 }
-

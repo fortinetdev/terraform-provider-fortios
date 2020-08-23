@@ -30,37 +30,37 @@ func resourceIcapServer() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ip_version": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ip_address": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ip6_address": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"max_connections": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
@@ -155,7 +155,6 @@ func resourceIcapServerRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenIcapServerName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -180,10 +179,8 @@ func flattenIcapServerMaxConnections(v interface{}, d *schema.ResourceData, pre 
 	return v
 }
 
-
 func refreshObjectIcapServer(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenIcapServerName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -221,7 +218,6 @@ func refreshObjectIcapServer(d *schema.ResourceData, o map[string]interface{}) e
 		}
 	}
 
-
 	return nil
 }
 
@@ -230,7 +226,6 @@ func flattenIcapServerFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fos
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandIcapServerName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -256,10 +251,8 @@ func expandIcapServerMaxConnections(d *schema.ResourceData, v interface{}, pre s
 	return v, nil
 }
 
-
 func getObjectIcapServer(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandIcapServerName(d, v, "name")
@@ -315,7 +308,5 @@ func getObjectIcapServer(d *schema.ResourceData) (*map[string]interface{}, error
 		}
 	}
 
-
 	return &obj, nil
 }
-

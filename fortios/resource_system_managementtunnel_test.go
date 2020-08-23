@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,37 +5,38 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSystemManagementTunnel_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSystemManagementTunnel_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSystemManagementTunnel_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSystemManagementTunnelConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSystemManagementTunnelExists("fortios_system_managementtunnel.trname"),
-                    resource.TestCheckResourceAttr("fortios_system_managementtunnel.trname", "allow_collect_statistics", "enable"),
-                    resource.TestCheckResourceAttr("fortios_system_managementtunnel.trname", "allow_config_restore", "enable"),
-                    resource.TestCheckResourceAttr("fortios_system_managementtunnel.trname", "allow_push_configuration", "enable"),
-                    resource.TestCheckResourceAttr("fortios_system_managementtunnel.trname", "allow_push_firmware", "enable"),
-                    resource.TestCheckResourceAttr("fortios_system_managementtunnel.trname", "authorized_manager_only", "enable"),
-                    resource.TestCheckResourceAttr("fortios_system_managementtunnel.trname", "status", "enable"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSystemManagementTunnelConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSystemManagementTunnelExists("fortios_system_managementtunnel.trname"),
+					resource.TestCheckResourceAttr("fortios_system_managementtunnel.trname", "allow_collect_statistics", "enable"),
+					resource.TestCheckResourceAttr("fortios_system_managementtunnel.trname", "allow_config_restore", "enable"),
+					resource.TestCheckResourceAttr("fortios_system_managementtunnel.trname", "allow_push_configuration", "enable"),
+					resource.TestCheckResourceAttr("fortios_system_managementtunnel.trname", "allow_push_firmware", "enable"),
+					resource.TestCheckResourceAttr("fortios_system_managementtunnel.trname", "authorized_manager_only", "enable"),
+					resource.TestCheckResourceAttr("fortios_system_managementtunnel.trname", "status", "enable"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSystemManagementTunnelExists(n string) resource.TestCheckFunc {

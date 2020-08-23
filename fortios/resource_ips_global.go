@@ -30,78 +30,77 @@ func resourceIpsGlobal() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"fail_open": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"database": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"traffic_submit": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"anomaly_mode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"session_limit_mode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"intelligent_mode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"socket_size": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 128),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"engine_count": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"sync_session_ttl": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"skype_client_public_ipaddr": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
+				Optional:     true,
 			},
 			"deep_app_insp_timeout": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 2147483647),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"deep_app_insp_db_limit": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 2147483647),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"exclude_signatures": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceIpsGlobalUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -168,7 +167,6 @@ func resourceIpsGlobalRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenIpsGlobalFailOpen(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -221,10 +219,8 @@ func flattenIpsGlobalExcludeSignatures(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
-
 func refreshObjectIpsGlobal(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("fail_open", flattenIpsGlobalFailOpen(o["fail-open"], d, "fail_open")); err != nil {
 		if !fortiAPIPatch(o["fail-open"]) {
@@ -304,7 +300,6 @@ func refreshObjectIpsGlobal(d *schema.ResourceData, o map[string]interface{}) er
 		}
 	}
 
-
 	return nil
 }
 
@@ -313,7 +308,6 @@ func flattenIpsGlobalFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosd
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandIpsGlobalFailOpen(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -367,10 +361,8 @@ func expandIpsGlobalExcludeSignatures(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
-
 func getObjectIpsGlobal(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("fail_open"); ok {
 		t, err := expandIpsGlobalFailOpen(d, v, "fail_open")
@@ -489,7 +481,5 @@ func getObjectIpsGlobal(d *schema.ResourceData) (*map[string]interface{}, error)
 		}
 	}
 
-
 	return &obj, nil
 }
-

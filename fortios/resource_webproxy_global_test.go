@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,44 +5,45 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSWebProxyGlobal_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSWebProxyGlobal_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSWebProxyGlobal_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSWebProxyGlobalConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSWebProxyGlobalExists("fortios_webproxy_global.trname"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_global.trname", "fast_policy_match", "enable"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_global.trname", "forward_proxy_auth", "disable"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_global.trname", "forward_server_affinity_timeout", "30"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_global.trname", "learn_client_ip", "disable"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_global.trname", "max_message_length", "32"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_global.trname", "max_request_length", "4"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_global.trname", "max_waf_body_cache_length", "32"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_global.trname", "proxy_fqdn", "default.fqdn"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_global.trname", "ssl_ca_cert", "Fortinet_CA_SSL"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_global.trname", "ssl_cert", "Fortinet_Factory"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_global.trname", "strict_web_check", "disable"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_global.trname", "tunnel_non_http", "enable"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_global.trname", "unknown_http_version", "best-effort"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSWebProxyGlobalConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSWebProxyGlobalExists("fortios_webproxy_global.trname"),
+					resource.TestCheckResourceAttr("fortios_webproxy_global.trname", "fast_policy_match", "enable"),
+					resource.TestCheckResourceAttr("fortios_webproxy_global.trname", "forward_proxy_auth", "disable"),
+					resource.TestCheckResourceAttr("fortios_webproxy_global.trname", "forward_server_affinity_timeout", "30"),
+					resource.TestCheckResourceAttr("fortios_webproxy_global.trname", "learn_client_ip", "disable"),
+					resource.TestCheckResourceAttr("fortios_webproxy_global.trname", "max_message_length", "32"),
+					resource.TestCheckResourceAttr("fortios_webproxy_global.trname", "max_request_length", "4"),
+					resource.TestCheckResourceAttr("fortios_webproxy_global.trname", "max_waf_body_cache_length", "32"),
+					resource.TestCheckResourceAttr("fortios_webproxy_global.trname", "proxy_fqdn", "default.fqdn"),
+					resource.TestCheckResourceAttr("fortios_webproxy_global.trname", "ssl_ca_cert", "Fortinet_CA_SSL"),
+					resource.TestCheckResourceAttr("fortios_webproxy_global.trname", "ssl_cert", "Fortinet_Factory"),
+					resource.TestCheckResourceAttr("fortios_webproxy_global.trname", "strict_web_check", "disable"),
+					resource.TestCheckResourceAttr("fortios_webproxy_global.trname", "tunnel_non_http", "enable"),
+					resource.TestCheckResourceAttr("fortios_webproxy_global.trname", "unknown_http_version", "best-effort"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSWebProxyGlobalExists(n string) resource.TestCheckFunc {

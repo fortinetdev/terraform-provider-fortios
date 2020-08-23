@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,48 +5,49 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSFirewallPolicy_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSFirewallPolicy_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSFirewallPolicy_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSFirewallPolicyConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSFirewallPolicyExists("fortios_firewall_policy.trname"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy.trname", "action", "accept"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy.trname", "logtraffic", "utm"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy.trname", "policyid", "1"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy.trname", "schedule", "always"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy.trname", "wanopt", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy.trname", "wanopt_detection", "active"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy.trname", "wanopt_passive_opt", "default"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy.trname", "wccp", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy.trname", "webcache", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy.trname", "webcache_https", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy.trname", "wsso", "enable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy.trname", "dstaddr.0.name", "all"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy.trname", "dstintf.0.name", "port4"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy.trname", "service.0.name", "HTTP"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy.trname", "srcaddr.0.name", "all"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy.trname", "srcintf.0.name", "port3"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSFirewallPolicyConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSFirewallPolicyExists("fortios_firewall_policy.trname"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy.trname", "action", "accept"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy.trname", "logtraffic", "utm"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_firewall_policy.trname", "policyid", "1"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy.trname", "schedule", "always"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy.trname", "wanopt", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy.trname", "wanopt_detection", "active"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy.trname", "wanopt_passive_opt", "default"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy.trname", "wccp", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy.trname", "webcache", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy.trname", "webcache_https", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy.trname", "wsso", "enable"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy.trname", "dstaddr.0.name", "all"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy.trname", "dstintf.0.name", "port4"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy.trname", "service.0.name", "HTTP"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy.trname", "srcaddr.0.name", "all"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy.trname", "srcintf.0.name", "port3"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSFirewallPolicyExists(n string) resource.TestCheckFunc {

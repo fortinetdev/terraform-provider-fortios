@@ -30,21 +30,21 @@ func resourceSystemProxyArp() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"fosid": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Required: true,
+				Required:     true,
 			},
 			"interface": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
-				Required: true,
+				Required:     true,
 			},
 			"ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"end_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
@@ -141,7 +141,6 @@ func resourceSystemProxyArpRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenSystemProxyArpId(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -158,10 +157,8 @@ func flattenSystemProxyArpEndIp(v interface{}, d *schema.ResourceData, pre strin
 	return v
 }
 
-
 func refreshObjectSystemProxyArp(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("fosid", flattenSystemProxyArpId(o["id"], d, "fosid")); err != nil {
 		if !fortiAPIPatch(o["id"]) {
@@ -187,7 +184,6 @@ func refreshObjectSystemProxyArp(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-
 	return nil
 }
 
@@ -196,7 +192,6 @@ func flattenSystemProxyArpFortiTestDebug(d *schema.ResourceData, fosdebugsn int,
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemProxyArpId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -214,10 +209,8 @@ func expandSystemProxyArpEndIp(d *schema.ResourceData, v interface{}, pre string
 	return v, nil
 }
 
-
 func getObjectSystemProxyArp(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("fosid"); ok {
 		t, err := expandSystemProxyArpId(d, v, "fosid")
@@ -255,7 +248,5 @@ func getObjectSystemProxyArp(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-
 	return &obj, nil
 }
-

@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,42 +5,43 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSWebfilterFortiguard_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSWebfilterFortiguard_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSWebfilterFortiguard_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSWebfilterFortiguardConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSWebfilterFortiguardExists("fortios_webfilter_fortiguard.trname"),
-                    resource.TestCheckResourceAttr("fortios_webfilter_fortiguard.trname", "cache_mem_percent", "2"),
-                    resource.TestCheckResourceAttr("fortios_webfilter_fortiguard.trname", "cache_mode", "ttl"),
-                    resource.TestCheckResourceAttr("fortios_webfilter_fortiguard.trname", "cache_prefix_match", "enable"),
-                    resource.TestCheckResourceAttr("fortios_webfilter_fortiguard.trname", "close_ports", "disable"),
-                    resource.TestCheckResourceAttr("fortios_webfilter_fortiguard.trname", "ovrd_auth_https", "enable"),
-                    resource.TestCheckResourceAttr("fortios_webfilter_fortiguard.trname", "ovrd_auth_port", "8008"),
-                    resource.TestCheckResourceAttr("fortios_webfilter_fortiguard.trname", "ovrd_auth_port_http", "8008"),
-                    resource.TestCheckResourceAttr("fortios_webfilter_fortiguard.trname", "ovrd_auth_port_https", "8010"),
-                    resource.TestCheckResourceAttr("fortios_webfilter_fortiguard.trname", "ovrd_auth_port_https_flow", "8015"),
-                    resource.TestCheckResourceAttr("fortios_webfilter_fortiguard.trname", "ovrd_auth_port_warning", "8020"),
-                    resource.TestCheckResourceAttr("fortios_webfilter_fortiguard.trname", "warn_auth_https", "enable"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSWebfilterFortiguardConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSWebfilterFortiguardExists("fortios_webfilter_fortiguard.trname"),
+					resource.TestCheckResourceAttr("fortios_webfilter_fortiguard.trname", "cache_mem_percent", "2"),
+					resource.TestCheckResourceAttr("fortios_webfilter_fortiguard.trname", "cache_mode", "ttl"),
+					resource.TestCheckResourceAttr("fortios_webfilter_fortiguard.trname", "cache_prefix_match", "enable"),
+					resource.TestCheckResourceAttr("fortios_webfilter_fortiguard.trname", "close_ports", "disable"),
+					resource.TestCheckResourceAttr("fortios_webfilter_fortiguard.trname", "ovrd_auth_https", "enable"),
+					resource.TestCheckResourceAttr("fortios_webfilter_fortiguard.trname", "ovrd_auth_port", "8008"),
+					resource.TestCheckResourceAttr("fortios_webfilter_fortiguard.trname", "ovrd_auth_port_http", "8008"),
+					resource.TestCheckResourceAttr("fortios_webfilter_fortiguard.trname", "ovrd_auth_port_https", "8010"),
+					resource.TestCheckResourceAttr("fortios_webfilter_fortiguard.trname", "ovrd_auth_port_https_flow", "8015"),
+					resource.TestCheckResourceAttr("fortios_webfilter_fortiguard.trname", "ovrd_auth_port_warning", "8020"),
+					resource.TestCheckResourceAttr("fortios_webfilter_fortiguard.trname", "warn_auth_https", "enable"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSWebfilterFortiguardExists(n string) resource.TestCheckFunc {

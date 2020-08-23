@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,38 +5,39 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSFirewallSshHostKey_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSFirewallSshHostKey_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSFirewallSshHostKey_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSFirewallSshHostKeyConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSFirewallSshHostKeyExists("fortios_firewallssh_hostkey.trname"),
-                    resource.TestCheckResourceAttr("fortios_firewallssh_hostkey.trname", "hostname", "testmachine"),
-                    resource.TestCheckResourceAttr("fortios_firewallssh_hostkey.trname", "ip", "1.1.1.1"),
-                    resource.TestCheckResourceAttr("fortios_firewallssh_hostkey.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_firewallssh_hostkey.trname", "nid", "256"),
-                    resource.TestCheckResourceAttr("fortios_firewallssh_hostkey.trname", "port", "22"),
-                    resource.TestCheckResourceAttr("fortios_firewallssh_hostkey.trname", "status", "trusted"),
-                    resource.TestCheckResourceAttr("fortios_firewallssh_hostkey.trname", "type", "RSA"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSFirewallSshHostKeyConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSFirewallSshHostKeyExists("fortios_firewallssh_hostkey.trname"),
+					resource.TestCheckResourceAttr("fortios_firewallssh_hostkey.trname", "hostname", "testmachine"),
+					resource.TestCheckResourceAttr("fortios_firewallssh_hostkey.trname", "ip", "1.1.1.1"),
+					resource.TestCheckResourceAttr("fortios_firewallssh_hostkey.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_firewallssh_hostkey.trname", "nid", "256"),
+					resource.TestCheckResourceAttr("fortios_firewallssh_hostkey.trname", "port", "22"),
+					resource.TestCheckResourceAttr("fortios_firewallssh_hostkey.trname", "status", "trusted"),
+					resource.TestCheckResourceAttr("fortios_firewallssh_hostkey.trname", "type", "RSA"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSFirewallSshHostKeyExists(n string) resource.TestCheckFunc {

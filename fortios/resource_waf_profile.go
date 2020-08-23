@@ -30,55 +30,55 @@ func resourceWafProfile() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"external": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"extended_log": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"signature": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"main_class": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"status": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"action": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"log": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"severity": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
@@ -86,88 +86,88 @@ func resourceWafProfile() *schema.Resource {
 							},
 						},
 						"disabled_sub_class": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
 						},
 						"disabled_signature": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
 						},
 						"credit_card_detection_threshold": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 128),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"custom_signature": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"name": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"status": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"action": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"log": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"severity": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"direction": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"case_sensitivity": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"pattern": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 511),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"target": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
@@ -176,520 +176,520 @@ func resourceWafProfile() *schema.Resource {
 						},
 					},
 				},
-			},			"constraint": &schema.Schema{
-				Type: schema.TypeList,
+			}, "constraint": &schema.Schema{
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"header_length": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"status": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"length": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 2147483647),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"action": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"log": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"severity": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 								},
 							},
-						},						"content_length": &schema.Schema{
-							Type: schema.TypeList,
+						}, "content_length": &schema.Schema{
+							Type:     schema.TypeList,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"status": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"length": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 2147483647),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"action": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"log": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"severity": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 								},
 							},
-						},						"param_length": &schema.Schema{
-							Type: schema.TypeList,
+						}, "param_length": &schema.Schema{
+							Type:     schema.TypeList,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"status": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"length": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 2147483647),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"action": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"log": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"severity": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 								},
 							},
-						},						"line_length": &schema.Schema{
-							Type: schema.TypeList,
+						}, "line_length": &schema.Schema{
+							Type:     schema.TypeList,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"status": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"length": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 2147483647),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"action": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"log": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"severity": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 								},
 							},
-						},						"url_param_length": &schema.Schema{
-							Type: schema.TypeList,
+						}, "url_param_length": &schema.Schema{
+							Type:     schema.TypeList,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"status": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"length": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 2147483647),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"action": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"log": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"severity": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 								},
 							},
-						},						"version": &schema.Schema{
-							Type: schema.TypeList,
+						}, "version": &schema.Schema{
+							Type:     schema.TypeList,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"status": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"action": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"log": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"severity": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 								},
 							},
-						},						"method": &schema.Schema{
-							Type: schema.TypeList,
+						}, "method": &schema.Schema{
+							Type:     schema.TypeList,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"status": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"action": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"log": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"severity": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 								},
 							},
-						},						"hostname": &schema.Schema{
-							Type: schema.TypeList,
+						}, "hostname": &schema.Schema{
+							Type:     schema.TypeList,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"status": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"action": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"log": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"severity": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 								},
 							},
-						},						"malformed": &schema.Schema{
-							Type: schema.TypeList,
+						}, "malformed": &schema.Schema{
+							Type:     schema.TypeList,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"status": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"action": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"log": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"severity": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 								},
 							},
-						},						"max_cookie": &schema.Schema{
-							Type: schema.TypeList,
+						}, "max_cookie": &schema.Schema{
+							Type:     schema.TypeList,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"status": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"max_cookie": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 2147483647),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"action": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"log": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"severity": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 								},
 							},
-						},						"max_header_line": &schema.Schema{
-							Type: schema.TypeList,
+						}, "max_header_line": &schema.Schema{
+							Type:     schema.TypeList,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"status": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"max_header_line": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 2147483647),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"action": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"log": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"severity": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 								},
 							},
-						},						"max_url_param": &schema.Schema{
-							Type: schema.TypeList,
+						}, "max_url_param": &schema.Schema{
+							Type:     schema.TypeList,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"status": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"max_url_param": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 2147483647),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"action": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"log": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"severity": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 								},
 							},
-						},						"max_range_segment": &schema.Schema{
-							Type: schema.TypeList,
+						}, "max_range_segment": &schema.Schema{
+							Type:     schema.TypeList,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"status": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"max_range_segment": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 2147483647),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"action": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"log": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"severity": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 								},
 							},
-						},						"exception": &schema.Schema{
-							Type: schema.TypeList,
+						}, "exception": &schema.Schema{
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"pattern": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 511),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"regex": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"address": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 63),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"header_length": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"content_length": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"param_length": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"line_length": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"url_param_length": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"version": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"method": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"hostname": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"malformed": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"max_cookie": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"max_header_line": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"max_url_param": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"max_range_segment": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
@@ -698,62 +698,62 @@ func resourceWafProfile() *schema.Resource {
 						},
 					},
 				},
-			},			"method": &schema.Schema{
-				Type: schema.TypeList,
+			}, "method": &schema.Schema{
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"status": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"log": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"severity": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"default_allowed_methods": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"method_policy": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"pattern": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 511),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"regex": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"address": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 63),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"allowed_methods": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
@@ -762,119 +762,119 @@ func resourceWafProfile() *schema.Resource {
 						},
 					},
 				},
-			},			"address_list": &schema.Schema{
-				Type: schema.TypeList,
+			}, "address_list": &schema.Schema{
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"status": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"blocked_log": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"severity": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"trusted_address": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"name": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 64),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
 						},
 						"blocked_address": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"name": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 64),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
 						},
 					},
 				},
-			},			"url_access": &schema.Schema{
-				Type: schema.TypeList,
+			}, "url_access": &schema.Schema{
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"address": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"action": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"log": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"severity": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"access_pattern": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"srcaddr": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 63),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"pattern": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 511),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"regex": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"negate": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
@@ -885,9 +885,9 @@ func resourceWafProfile() *schema.Resource {
 				},
 			},
 			"comment": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 1023),
-				Optional: true,
+				Optional:     true,
 			},
 		},
 	}
@@ -982,7 +982,6 @@ func resourceWafProfileRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenWafProfileName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1004,31 +1003,30 @@ func flattenWafProfileSignature(v interface{}, d *schema.ResourceData, pre strin
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "main_class"
+	pre_append = pre + ".0." + "main_class"
 	if _, ok := i["main-class"]; ok {
 		result["main_class"] = flattenWafProfileSignatureMainClass(i["main-class"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "disabled_sub_class"
+	pre_append = pre + ".0." + "disabled_sub_class"
 	if _, ok := i["disabled-sub-class"]; ok {
 		result["disabled_sub_class"] = flattenWafProfileSignatureDisabledSubClass(i["disabled-sub-class"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "disabled_signature"
+	pre_append = pre + ".0." + "disabled_signature"
 	if _, ok := i["disabled-signature"]; ok {
 		result["disabled_signature"] = flattenWafProfileSignatureDisabledSignature(i["disabled-signature"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "credit_card_detection_threshold"
+	pre_append = pre + ".0." + "credit_card_detection_threshold"
 	if _, ok := i["credit-card-detection-threshold"]; ok {
 		result["credit_card_detection_threshold"] = flattenWafProfileSignatureCreditCardDetectionThreshold(i["credit-card-detection-threshold"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "custom_signature"
+	pre_append = pre + ".0." + "custom_signature"
 	if _, ok := i["custom-signature"]; ok {
 		result["custom_signature"] = flattenWafProfileSignatureCustomSignature(i["custom-signature"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -1299,76 +1297,75 @@ func flattenWafProfileConstraint(v interface{}, d *schema.ResourceData, pre stri
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "header_length"
+	pre_append = pre + ".0." + "header_length"
 	if _, ok := i["header-length"]; ok {
 		result["header_length"] = flattenWafProfileConstraintHeaderLength(i["header-length"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "content_length"
+	pre_append = pre + ".0." + "content_length"
 	if _, ok := i["content-length"]; ok {
 		result["content_length"] = flattenWafProfileConstraintContentLength(i["content-length"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "param_length"
+	pre_append = pre + ".0." + "param_length"
 	if _, ok := i["param-length"]; ok {
 		result["param_length"] = flattenWafProfileConstraintParamLength(i["param-length"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "line_length"
+	pre_append = pre + ".0." + "line_length"
 	if _, ok := i["line-length"]; ok {
 		result["line_length"] = flattenWafProfileConstraintLineLength(i["line-length"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "url_param_length"
+	pre_append = pre + ".0." + "url_param_length"
 	if _, ok := i["url-param-length"]; ok {
 		result["url_param_length"] = flattenWafProfileConstraintUrlParamLength(i["url-param-length"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "version"
+	pre_append = pre + ".0." + "version"
 	if _, ok := i["version"]; ok {
 		result["version"] = flattenWafProfileConstraintVersion(i["version"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "method"
+	pre_append = pre + ".0." + "method"
 	if _, ok := i["method"]; ok {
 		result["method"] = flattenWafProfileConstraintMethod(i["method"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "hostname"
+	pre_append = pre + ".0." + "hostname"
 	if _, ok := i["hostname"]; ok {
 		result["hostname"] = flattenWafProfileConstraintHostname(i["hostname"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "malformed"
+	pre_append = pre + ".0." + "malformed"
 	if _, ok := i["malformed"]; ok {
 		result["malformed"] = flattenWafProfileConstraintMalformed(i["malformed"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "max_cookie"
+	pre_append = pre + ".0." + "max_cookie"
 	if _, ok := i["max-cookie"]; ok {
 		result["max_cookie"] = flattenWafProfileConstraintMaxCookie(i["max-cookie"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "max_header_line"
+	pre_append = pre + ".0." + "max_header_line"
 	if _, ok := i["max-header-line"]; ok {
 		result["max_header_line"] = flattenWafProfileConstraintMaxHeaderLine(i["max-header-line"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "max_url_param"
+	pre_append = pre + ".0." + "max_url_param"
 	if _, ok := i["max-url-param"]; ok {
 		result["max_url_param"] = flattenWafProfileConstraintMaxUrlParam(i["max-url-param"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "max_range_segment"
+	pre_append = pre + ".0." + "max_range_segment"
 	if _, ok := i["max-range-segment"]; ok {
 		result["max_range_segment"] = flattenWafProfileConstraintMaxRangeSegment(i["max-range-segment"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "exception"
+	pre_append = pre + ".0." + "exception"
 	if _, ok := i["exception"]; ok {
 		result["exception"] = flattenWafProfileConstraintException(i["exception"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -1383,31 +1380,30 @@ func flattenWafProfileConstraintHeaderLength(v interface{}, d *schema.ResourceDa
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "status"
+	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
 		result["status"] = flattenWafProfileConstraintHeaderLengthStatus(i["status"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "length"
+	pre_append = pre + ".0." + "length"
 	if _, ok := i["length"]; ok {
 		result["length"] = flattenWafProfileConstraintHeaderLengthLength(i["length"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "action"
+	pre_append = pre + ".0." + "action"
 	if _, ok := i["action"]; ok {
 		result["action"] = flattenWafProfileConstraintHeaderLengthAction(i["action"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := i["log"]; ok {
 		result["log"] = flattenWafProfileConstraintHeaderLengthLog(i["log"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "severity"
+	pre_append = pre + ".0." + "severity"
 	if _, ok := i["severity"]; ok {
 		result["severity"] = flattenWafProfileConstraintHeaderLengthSeverity(i["severity"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -1442,31 +1438,30 @@ func flattenWafProfileConstraintContentLength(v interface{}, d *schema.ResourceD
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "status"
+	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
 		result["status"] = flattenWafProfileConstraintContentLengthStatus(i["status"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "length"
+	pre_append = pre + ".0." + "length"
 	if _, ok := i["length"]; ok {
 		result["length"] = flattenWafProfileConstraintContentLengthLength(i["length"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "action"
+	pre_append = pre + ".0." + "action"
 	if _, ok := i["action"]; ok {
 		result["action"] = flattenWafProfileConstraintContentLengthAction(i["action"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := i["log"]; ok {
 		result["log"] = flattenWafProfileConstraintContentLengthLog(i["log"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "severity"
+	pre_append = pre + ".0." + "severity"
 	if _, ok := i["severity"]; ok {
 		result["severity"] = flattenWafProfileConstraintContentLengthSeverity(i["severity"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -1501,31 +1496,30 @@ func flattenWafProfileConstraintParamLength(v interface{}, d *schema.ResourceDat
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "status"
+	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
 		result["status"] = flattenWafProfileConstraintParamLengthStatus(i["status"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "length"
+	pre_append = pre + ".0." + "length"
 	if _, ok := i["length"]; ok {
 		result["length"] = flattenWafProfileConstraintParamLengthLength(i["length"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "action"
+	pre_append = pre + ".0." + "action"
 	if _, ok := i["action"]; ok {
 		result["action"] = flattenWafProfileConstraintParamLengthAction(i["action"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := i["log"]; ok {
 		result["log"] = flattenWafProfileConstraintParamLengthLog(i["log"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "severity"
+	pre_append = pre + ".0." + "severity"
 	if _, ok := i["severity"]; ok {
 		result["severity"] = flattenWafProfileConstraintParamLengthSeverity(i["severity"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -1560,31 +1554,30 @@ func flattenWafProfileConstraintLineLength(v interface{}, d *schema.ResourceData
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "status"
+	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
 		result["status"] = flattenWafProfileConstraintLineLengthStatus(i["status"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "length"
+	pre_append = pre + ".0." + "length"
 	if _, ok := i["length"]; ok {
 		result["length"] = flattenWafProfileConstraintLineLengthLength(i["length"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "action"
+	pre_append = pre + ".0." + "action"
 	if _, ok := i["action"]; ok {
 		result["action"] = flattenWafProfileConstraintLineLengthAction(i["action"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := i["log"]; ok {
 		result["log"] = flattenWafProfileConstraintLineLengthLog(i["log"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "severity"
+	pre_append = pre + ".0." + "severity"
 	if _, ok := i["severity"]; ok {
 		result["severity"] = flattenWafProfileConstraintLineLengthSeverity(i["severity"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -1619,31 +1612,30 @@ func flattenWafProfileConstraintUrlParamLength(v interface{}, d *schema.Resource
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "status"
+	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
 		result["status"] = flattenWafProfileConstraintUrlParamLengthStatus(i["status"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "length"
+	pre_append = pre + ".0." + "length"
 	if _, ok := i["length"]; ok {
 		result["length"] = flattenWafProfileConstraintUrlParamLengthLength(i["length"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "action"
+	pre_append = pre + ".0." + "action"
 	if _, ok := i["action"]; ok {
 		result["action"] = flattenWafProfileConstraintUrlParamLengthAction(i["action"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := i["log"]; ok {
 		result["log"] = flattenWafProfileConstraintUrlParamLengthLog(i["log"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "severity"
+	pre_append = pre + ".0." + "severity"
 	if _, ok := i["severity"]; ok {
 		result["severity"] = flattenWafProfileConstraintUrlParamLengthSeverity(i["severity"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -1678,26 +1670,25 @@ func flattenWafProfileConstraintVersion(v interface{}, d *schema.ResourceData, p
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "status"
+	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
 		result["status"] = flattenWafProfileConstraintVersionStatus(i["status"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "action"
+	pre_append = pre + ".0." + "action"
 	if _, ok := i["action"]; ok {
 		result["action"] = flattenWafProfileConstraintVersionAction(i["action"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := i["log"]; ok {
 		result["log"] = flattenWafProfileConstraintVersionLog(i["log"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "severity"
+	pre_append = pre + ".0." + "severity"
 	if _, ok := i["severity"]; ok {
 		result["severity"] = flattenWafProfileConstraintVersionSeverity(i["severity"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -1728,26 +1719,25 @@ func flattenWafProfileConstraintMethod(v interface{}, d *schema.ResourceData, pr
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "status"
+	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
 		result["status"] = flattenWafProfileConstraintMethodStatus(i["status"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "action"
+	pre_append = pre + ".0." + "action"
 	if _, ok := i["action"]; ok {
 		result["action"] = flattenWafProfileConstraintMethodAction(i["action"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := i["log"]; ok {
 		result["log"] = flattenWafProfileConstraintMethodLog(i["log"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "severity"
+	pre_append = pre + ".0." + "severity"
 	if _, ok := i["severity"]; ok {
 		result["severity"] = flattenWafProfileConstraintMethodSeverity(i["severity"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -1778,26 +1768,25 @@ func flattenWafProfileConstraintHostname(v interface{}, d *schema.ResourceData, 
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "status"
+	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
 		result["status"] = flattenWafProfileConstraintHostnameStatus(i["status"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "action"
+	pre_append = pre + ".0." + "action"
 	if _, ok := i["action"]; ok {
 		result["action"] = flattenWafProfileConstraintHostnameAction(i["action"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := i["log"]; ok {
 		result["log"] = flattenWafProfileConstraintHostnameLog(i["log"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "severity"
+	pre_append = pre + ".0." + "severity"
 	if _, ok := i["severity"]; ok {
 		result["severity"] = flattenWafProfileConstraintHostnameSeverity(i["severity"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -1828,26 +1817,25 @@ func flattenWafProfileConstraintMalformed(v interface{}, d *schema.ResourceData,
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "status"
+	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
 		result["status"] = flattenWafProfileConstraintMalformedStatus(i["status"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "action"
+	pre_append = pre + ".0." + "action"
 	if _, ok := i["action"]; ok {
 		result["action"] = flattenWafProfileConstraintMalformedAction(i["action"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := i["log"]; ok {
 		result["log"] = flattenWafProfileConstraintMalformedLog(i["log"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "severity"
+	pre_append = pre + ".0." + "severity"
 	if _, ok := i["severity"]; ok {
 		result["severity"] = flattenWafProfileConstraintMalformedSeverity(i["severity"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -1878,31 +1866,30 @@ func flattenWafProfileConstraintMaxCookie(v interface{}, d *schema.ResourceData,
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "status"
+	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
 		result["status"] = flattenWafProfileConstraintMaxCookieStatus(i["status"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "max_cookie"
+	pre_append = pre + ".0." + "max_cookie"
 	if _, ok := i["max-cookie"]; ok {
 		result["max_cookie"] = flattenWafProfileConstraintMaxCookieMaxCookie(i["max-cookie"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "action"
+	pre_append = pre + ".0." + "action"
 	if _, ok := i["action"]; ok {
 		result["action"] = flattenWafProfileConstraintMaxCookieAction(i["action"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := i["log"]; ok {
 		result["log"] = flattenWafProfileConstraintMaxCookieLog(i["log"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "severity"
+	pre_append = pre + ".0." + "severity"
 	if _, ok := i["severity"]; ok {
 		result["severity"] = flattenWafProfileConstraintMaxCookieSeverity(i["severity"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -1937,31 +1924,30 @@ func flattenWafProfileConstraintMaxHeaderLine(v interface{}, d *schema.ResourceD
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "status"
+	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
 		result["status"] = flattenWafProfileConstraintMaxHeaderLineStatus(i["status"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "max_header_line"
+	pre_append = pre + ".0." + "max_header_line"
 	if _, ok := i["max-header-line"]; ok {
 		result["max_header_line"] = flattenWafProfileConstraintMaxHeaderLineMaxHeaderLine(i["max-header-line"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "action"
+	pre_append = pre + ".0." + "action"
 	if _, ok := i["action"]; ok {
 		result["action"] = flattenWafProfileConstraintMaxHeaderLineAction(i["action"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := i["log"]; ok {
 		result["log"] = flattenWafProfileConstraintMaxHeaderLineLog(i["log"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "severity"
+	pre_append = pre + ".0." + "severity"
 	if _, ok := i["severity"]; ok {
 		result["severity"] = flattenWafProfileConstraintMaxHeaderLineSeverity(i["severity"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -1996,31 +1982,30 @@ func flattenWafProfileConstraintMaxUrlParam(v interface{}, d *schema.ResourceDat
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "status"
+	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
 		result["status"] = flattenWafProfileConstraintMaxUrlParamStatus(i["status"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "max_url_param"
+	pre_append = pre + ".0." + "max_url_param"
 	if _, ok := i["max-url-param"]; ok {
 		result["max_url_param"] = flattenWafProfileConstraintMaxUrlParamMaxUrlParam(i["max-url-param"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "action"
+	pre_append = pre + ".0." + "action"
 	if _, ok := i["action"]; ok {
 		result["action"] = flattenWafProfileConstraintMaxUrlParamAction(i["action"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := i["log"]; ok {
 		result["log"] = flattenWafProfileConstraintMaxUrlParamLog(i["log"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "severity"
+	pre_append = pre + ".0." + "severity"
 	if _, ok := i["severity"]; ok {
 		result["severity"] = flattenWafProfileConstraintMaxUrlParamSeverity(i["severity"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -2055,31 +2040,30 @@ func flattenWafProfileConstraintMaxRangeSegment(v interface{}, d *schema.Resourc
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "status"
+	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
 		result["status"] = flattenWafProfileConstraintMaxRangeSegmentStatus(i["status"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "max_range_segment"
+	pre_append = pre + ".0." + "max_range_segment"
 	if _, ok := i["max-range-segment"]; ok {
 		result["max_range_segment"] = flattenWafProfileConstraintMaxRangeSegmentMaxRangeSegment(i["max-range-segment"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "action"
+	pre_append = pre + ".0." + "action"
 	if _, ok := i["action"]; ok {
 		result["action"] = flattenWafProfileConstraintMaxRangeSegmentAction(i["action"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := i["log"]; ok {
 		result["log"] = flattenWafProfileConstraintMaxRangeSegmentLog(i["log"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "severity"
+	pre_append = pre + ".0." + "severity"
 	if _, ok := i["severity"]; ok {
 		result["severity"] = flattenWafProfileConstraintMaxRangeSegmentSeverity(i["severity"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -2294,31 +2278,30 @@ func flattenWafProfileMethod(v interface{}, d *schema.ResourceData, pre string) 
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "status"
+	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
 		result["status"] = flattenWafProfileMethodStatus(i["status"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := i["log"]; ok {
 		result["log"] = flattenWafProfileMethodLog(i["log"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "severity"
+	pre_append = pre + ".0." + "severity"
 	if _, ok := i["severity"]; ok {
 		result["severity"] = flattenWafProfileMethodSeverity(i["severity"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "default_allowed_methods"
+	pre_append = pre + ".0." + "default_allowed_methods"
 	if _, ok := i["default-allowed-methods"]; ok {
 		result["default_allowed_methods"] = flattenWafProfileMethodDefaultAllowedMethods(i["default-allowed-methods"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "method_policy"
+	pre_append = pre + ".0." + "method_policy"
 	if _, ok := i["method-policy"]; ok {
 		result["method_policy"] = flattenWafProfileMethodMethodPolicy(i["method-policy"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -2421,31 +2404,30 @@ func flattenWafProfileAddressList(v interface{}, d *schema.ResourceData, pre str
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "status"
+	pre_append = pre + ".0." + "status"
 	if _, ok := i["status"]; ok {
 		result["status"] = flattenWafProfileAddressListStatus(i["status"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "blocked_log"
+	pre_append = pre + ".0." + "blocked_log"
 	if _, ok := i["blocked-log"]; ok {
 		result["blocked_log"] = flattenWafProfileAddressListBlockedLog(i["blocked-log"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "severity"
+	pre_append = pre + ".0." + "severity"
 	if _, ok := i["severity"]; ok {
 		result["severity"] = flattenWafProfileAddressListSeverity(i["severity"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "trusted_address"
+	pre_append = pre + ".0." + "trusted_address"
 	if _, ok := i["trusted-address"]; ok {
 		result["trusted_address"] = flattenWafProfileAddressListTrustedAddress(i["trusted-address"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "blocked_address"
+	pre_append = pre + ".0." + "blocked_address"
 	if _, ok := i["blocked-address"]; ok {
 		result["blocked_address"] = flattenWafProfileAddressListBlockedAddress(i["blocked-address"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -2688,10 +2670,8 @@ func flattenWafProfileComment(v interface{}, d *schema.ResourceData, pre string)
 	return v
 }
 
-
 func refreshObjectWafProfile(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenWafProfileName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -2711,92 +2691,91 @@ func refreshObjectWafProfile(d *schema.ResourceData, o map[string]interface{}) e
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("signature", flattenWafProfileSignature(o["signature"], d, "signature")); err != nil {
-            if !fortiAPIPatch(o["signature"]) {
-                return fmt.Errorf("Error reading signature: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("signature"); ok {
-            if err = d.Set("signature", flattenWafProfileSignature(o["signature"], d, "signature")); err != nil {
-                if !fortiAPIPatch(o["signature"]) {
-                    return fmt.Errorf("Error reading signature: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("signature", flattenWafProfileSignature(o["signature"], d, "signature")); err != nil {
+			if !fortiAPIPatch(o["signature"]) {
+				return fmt.Errorf("Error reading signature: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("signature"); ok {
+			if err = d.Set("signature", flattenWafProfileSignature(o["signature"], d, "signature")); err != nil {
+				if !fortiAPIPatch(o["signature"]) {
+					return fmt.Errorf("Error reading signature: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("constraint", flattenWafProfileConstraint(o["constraint"], d, "constraint")); err != nil {
-            if !fortiAPIPatch(o["constraint"]) {
-                return fmt.Errorf("Error reading constraint: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("constraint"); ok {
-            if err = d.Set("constraint", flattenWafProfileConstraint(o["constraint"], d, "constraint")); err != nil {
-                if !fortiAPIPatch(o["constraint"]) {
-                    return fmt.Errorf("Error reading constraint: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("constraint", flattenWafProfileConstraint(o["constraint"], d, "constraint")); err != nil {
+			if !fortiAPIPatch(o["constraint"]) {
+				return fmt.Errorf("Error reading constraint: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("constraint"); ok {
+			if err = d.Set("constraint", flattenWafProfileConstraint(o["constraint"], d, "constraint")); err != nil {
+				if !fortiAPIPatch(o["constraint"]) {
+					return fmt.Errorf("Error reading constraint: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("method", flattenWafProfileMethod(o["method"], d, "method")); err != nil {
-            if !fortiAPIPatch(o["method"]) {
-                return fmt.Errorf("Error reading method: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("method"); ok {
-            if err = d.Set("method", flattenWafProfileMethod(o["method"], d, "method")); err != nil {
-                if !fortiAPIPatch(o["method"]) {
-                    return fmt.Errorf("Error reading method: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("method", flattenWafProfileMethod(o["method"], d, "method")); err != nil {
+			if !fortiAPIPatch(o["method"]) {
+				return fmt.Errorf("Error reading method: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("method"); ok {
+			if err = d.Set("method", flattenWafProfileMethod(o["method"], d, "method")); err != nil {
+				if !fortiAPIPatch(o["method"]) {
+					return fmt.Errorf("Error reading method: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("address_list", flattenWafProfileAddressList(o["address-list"], d, "address_list")); err != nil {
-            if !fortiAPIPatch(o["address-list"]) {
-                return fmt.Errorf("Error reading address_list: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("address_list"); ok {
-            if err = d.Set("address_list", flattenWafProfileAddressList(o["address-list"], d, "address_list")); err != nil {
-                if !fortiAPIPatch(o["address-list"]) {
-                    return fmt.Errorf("Error reading address_list: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("address_list", flattenWafProfileAddressList(o["address-list"], d, "address_list")); err != nil {
+			if !fortiAPIPatch(o["address-list"]) {
+				return fmt.Errorf("Error reading address_list: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("address_list"); ok {
+			if err = d.Set("address_list", flattenWafProfileAddressList(o["address-list"], d, "address_list")); err != nil {
+				if !fortiAPIPatch(o["address-list"]) {
+					return fmt.Errorf("Error reading address_list: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("url_access", flattenWafProfileUrlAccess(o["url-access"], d, "url_access")); err != nil {
-            if !fortiAPIPatch(o["url-access"]) {
-                return fmt.Errorf("Error reading url_access: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("url_access"); ok {
-            if err = d.Set("url_access", flattenWafProfileUrlAccess(o["url-access"], d, "url_access")); err != nil {
-                if !fortiAPIPatch(o["url-access"]) {
-                    return fmt.Errorf("Error reading url_access: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("url_access", flattenWafProfileUrlAccess(o["url-access"], d, "url_access")); err != nil {
+			if !fortiAPIPatch(o["url-access"]) {
+				return fmt.Errorf("Error reading url_access: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("url_access"); ok {
+			if err = d.Set("url_access", flattenWafProfileUrlAccess(o["url-access"], d, "url_access")); err != nil {
+				if !fortiAPIPatch(o["url-access"]) {
+					return fmt.Errorf("Error reading url_access: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("comment", flattenWafProfileComment(o["comment"], d, "comment")); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
 		}
 	}
-
 
 	return nil
 }
@@ -2806,7 +2785,6 @@ func flattenWafProfileFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fos
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandWafProfileName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -2829,30 +2807,30 @@ func expandWafProfileSignature(d *schema.ResourceData, v interface{}, pre string
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "main_class"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "main_class"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["main-class"], _ = expandWafProfileSignatureMainClass(d, i["main_class"], pre_append)
 	} else {
 		result["main-class"] = make([]string, 0)
 	}
-	pre_append =  pre + ".0." + "disabled_sub_class"
+	pre_append = pre + ".0." + "disabled_sub_class"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["disabled-sub-class"], _ = expandWafProfileSignatureDisabledSubClass(d, i["disabled_sub_class"], pre_append)
 	} else {
 		result["disabled-sub-class"] = make([]string, 0)
 	}
-	pre_append =  pre + ".0." + "disabled_signature"
+	pre_append = pre + ".0." + "disabled_signature"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["disabled-signature"], _ = expandWafProfileSignatureDisabledSignature(d, i["disabled_signature"], pre_append)
 	} else {
 		result["disabled-signature"] = make([]string, 0)
 	}
-	pre_append =  pre + ".0." + "credit_card_detection_threshold"
+	pre_append = pre + ".0." + "credit_card_detection_threshold"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["credit-card-detection-threshold"], _ = expandWafProfileSignatureCreditCardDetectionThreshold(d, i["credit_card_detection_threshold"], pre_append)
 	}
-	pre_append =  pre + ".0." + "custom_signature"
+	pre_append = pre + ".0." + "custom_signature"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["custom-signature"], _ = expandWafProfileSignatureCustomSignature(d, i["custom_signature"], pre_append)
 	} else {
@@ -2874,7 +2852,7 @@ func expandWafProfileSignatureMainClass(d *schema.ResourceData, v interface{}, p
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2941,7 +2919,7 @@ func expandWafProfileSignatureDisabledSubClass(d *schema.ResourceData, v interfa
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2972,7 +2950,7 @@ func expandWafProfileSignatureDisabledSignature(d *schema.ResourceData, v interf
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -3007,7 +2985,7 @@ func expandWafProfileSignatureCustomSignature(d *schema.ResourceData, v interfac
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -3107,86 +3085,86 @@ func expandWafProfileConstraint(d *schema.ResourceData, v interface{}, pre strin
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "header_length"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "header_length"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["header-length"], _ = expandWafProfileConstraintHeaderLength(d, i["header_length"], pre_append)
 	} else {
 		result["header-length"] = make([]string, 0)
 	}
-	pre_append =  pre + ".0." + "content_length"
+	pre_append = pre + ".0." + "content_length"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["content-length"], _ = expandWafProfileConstraintContentLength(d, i["content_length"], pre_append)
 	} else {
 		result["content-length"] = make([]string, 0)
 	}
-	pre_append =  pre + ".0." + "param_length"
+	pre_append = pre + ".0." + "param_length"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["param-length"], _ = expandWafProfileConstraintParamLength(d, i["param_length"], pre_append)
 	} else {
 		result["param-length"] = make([]string, 0)
 	}
-	pre_append =  pre + ".0." + "line_length"
+	pre_append = pre + ".0." + "line_length"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["line-length"], _ = expandWafProfileConstraintLineLength(d, i["line_length"], pre_append)
 	} else {
 		result["line-length"] = make([]string, 0)
 	}
-	pre_append =  pre + ".0." + "url_param_length"
+	pre_append = pre + ".0." + "url_param_length"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["url-param-length"], _ = expandWafProfileConstraintUrlParamLength(d, i["url_param_length"], pre_append)
 	} else {
 		result["url-param-length"] = make([]string, 0)
 	}
-	pre_append =  pre + ".0." + "version"
+	pre_append = pre + ".0." + "version"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["version"], _ = expandWafProfileConstraintVersion(d, i["version"], pre_append)
 	} else {
 		result["version"] = make([]string, 0)
 	}
-	pre_append =  pre + ".0." + "method"
+	pre_append = pre + ".0." + "method"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["method"], _ = expandWafProfileConstraintMethod(d, i["method"], pre_append)
 	} else {
 		result["method"] = make([]string, 0)
 	}
-	pre_append =  pre + ".0." + "hostname"
+	pre_append = pre + ".0." + "hostname"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["hostname"], _ = expandWafProfileConstraintHostname(d, i["hostname"], pre_append)
 	} else {
 		result["hostname"] = make([]string, 0)
 	}
-	pre_append =  pre + ".0." + "malformed"
+	pre_append = pre + ".0." + "malformed"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["malformed"], _ = expandWafProfileConstraintMalformed(d, i["malformed"], pre_append)
 	} else {
 		result["malformed"] = make([]string, 0)
 	}
-	pre_append =  pre + ".0." + "max_cookie"
+	pre_append = pre + ".0." + "max_cookie"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["max-cookie"], _ = expandWafProfileConstraintMaxCookie(d, i["max_cookie"], pre_append)
 	} else {
 		result["max-cookie"] = make([]string, 0)
 	}
-	pre_append =  pre + ".0." + "max_header_line"
+	pre_append = pre + ".0." + "max_header_line"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["max-header-line"], _ = expandWafProfileConstraintMaxHeaderLine(d, i["max_header_line"], pre_append)
 	} else {
 		result["max-header-line"] = make([]string, 0)
 	}
-	pre_append =  pre + ".0." + "max_url_param"
+	pre_append = pre + ".0." + "max_url_param"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["max-url-param"], _ = expandWafProfileConstraintMaxUrlParam(d, i["max_url_param"], pre_append)
 	} else {
 		result["max-url-param"] = make([]string, 0)
 	}
-	pre_append =  pre + ".0." + "max_range_segment"
+	pre_append = pre + ".0." + "max_range_segment"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["max-range-segment"], _ = expandWafProfileConstraintMaxRangeSegment(d, i["max_range_segment"], pre_append)
 	} else {
 		result["max-range-segment"] = make([]string, 0)
 	}
-	pre_append =  pre + ".0." + "exception"
+	pre_append = pre + ".0." + "exception"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["exception"], _ = expandWafProfileConstraintException(d, i["exception"], pre_append)
 	} else {
@@ -3205,24 +3183,24 @@ func expandWafProfileConstraintHeaderLength(d *schema.ResourceData, v interface{
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "status"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["status"], _ = expandWafProfileConstraintHeaderLengthStatus(d, i["status"], pre_append)
 	}
-	pre_append =  pre + ".0." + "length"
+	pre_append = pre + ".0." + "length"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["length"], _ = expandWafProfileConstraintHeaderLengthLength(d, i["length"], pre_append)
 	}
-	pre_append =  pre + ".0." + "action"
+	pre_append = pre + ".0." + "action"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["action"], _ = expandWafProfileConstraintHeaderLengthAction(d, i["action"], pre_append)
 	}
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["log"], _ = expandWafProfileConstraintHeaderLengthLog(d, i["log"], pre_append)
 	}
-	pre_append =  pre + ".0." + "severity"
+	pre_append = pre + ".0." + "severity"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["severity"], _ = expandWafProfileConstraintHeaderLengthSeverity(d, i["severity"], pre_append)
 	}
@@ -3259,24 +3237,24 @@ func expandWafProfileConstraintContentLength(d *schema.ResourceData, v interface
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "status"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["status"], _ = expandWafProfileConstraintContentLengthStatus(d, i["status"], pre_append)
 	}
-	pre_append =  pre + ".0." + "length"
+	pre_append = pre + ".0." + "length"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["length"], _ = expandWafProfileConstraintContentLengthLength(d, i["length"], pre_append)
 	}
-	pre_append =  pre + ".0." + "action"
+	pre_append = pre + ".0." + "action"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["action"], _ = expandWafProfileConstraintContentLengthAction(d, i["action"], pre_append)
 	}
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["log"], _ = expandWafProfileConstraintContentLengthLog(d, i["log"], pre_append)
 	}
-	pre_append =  pre + ".0." + "severity"
+	pre_append = pre + ".0." + "severity"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["severity"], _ = expandWafProfileConstraintContentLengthSeverity(d, i["severity"], pre_append)
 	}
@@ -3313,24 +3291,24 @@ func expandWafProfileConstraintParamLength(d *schema.ResourceData, v interface{}
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "status"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["status"], _ = expandWafProfileConstraintParamLengthStatus(d, i["status"], pre_append)
 	}
-	pre_append =  pre + ".0." + "length"
+	pre_append = pre + ".0." + "length"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["length"], _ = expandWafProfileConstraintParamLengthLength(d, i["length"], pre_append)
 	}
-	pre_append =  pre + ".0." + "action"
+	pre_append = pre + ".0." + "action"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["action"], _ = expandWafProfileConstraintParamLengthAction(d, i["action"], pre_append)
 	}
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["log"], _ = expandWafProfileConstraintParamLengthLog(d, i["log"], pre_append)
 	}
-	pre_append =  pre + ".0." + "severity"
+	pre_append = pre + ".0." + "severity"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["severity"], _ = expandWafProfileConstraintParamLengthSeverity(d, i["severity"], pre_append)
 	}
@@ -3367,24 +3345,24 @@ func expandWafProfileConstraintLineLength(d *schema.ResourceData, v interface{},
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "status"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["status"], _ = expandWafProfileConstraintLineLengthStatus(d, i["status"], pre_append)
 	}
-	pre_append =  pre + ".0." + "length"
+	pre_append = pre + ".0." + "length"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["length"], _ = expandWafProfileConstraintLineLengthLength(d, i["length"], pre_append)
 	}
-	pre_append =  pre + ".0." + "action"
+	pre_append = pre + ".0." + "action"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["action"], _ = expandWafProfileConstraintLineLengthAction(d, i["action"], pre_append)
 	}
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["log"], _ = expandWafProfileConstraintLineLengthLog(d, i["log"], pre_append)
 	}
-	pre_append =  pre + ".0." + "severity"
+	pre_append = pre + ".0." + "severity"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["severity"], _ = expandWafProfileConstraintLineLengthSeverity(d, i["severity"], pre_append)
 	}
@@ -3421,24 +3399,24 @@ func expandWafProfileConstraintUrlParamLength(d *schema.ResourceData, v interfac
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "status"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["status"], _ = expandWafProfileConstraintUrlParamLengthStatus(d, i["status"], pre_append)
 	}
-	pre_append =  pre + ".0." + "length"
+	pre_append = pre + ".0." + "length"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["length"], _ = expandWafProfileConstraintUrlParamLengthLength(d, i["length"], pre_append)
 	}
-	pre_append =  pre + ".0." + "action"
+	pre_append = pre + ".0." + "action"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["action"], _ = expandWafProfileConstraintUrlParamLengthAction(d, i["action"], pre_append)
 	}
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["log"], _ = expandWafProfileConstraintUrlParamLengthLog(d, i["log"], pre_append)
 	}
-	pre_append =  pre + ".0." + "severity"
+	pre_append = pre + ".0." + "severity"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["severity"], _ = expandWafProfileConstraintUrlParamLengthSeverity(d, i["severity"], pre_append)
 	}
@@ -3475,20 +3453,20 @@ func expandWafProfileConstraintVersion(d *schema.ResourceData, v interface{}, pr
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "status"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["status"], _ = expandWafProfileConstraintVersionStatus(d, i["status"], pre_append)
 	}
-	pre_append =  pre + ".0." + "action"
+	pre_append = pre + ".0." + "action"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["action"], _ = expandWafProfileConstraintVersionAction(d, i["action"], pre_append)
 	}
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["log"], _ = expandWafProfileConstraintVersionLog(d, i["log"], pre_append)
 	}
-	pre_append =  pre + ".0." + "severity"
+	pre_append = pre + ".0." + "severity"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["severity"], _ = expandWafProfileConstraintVersionSeverity(d, i["severity"], pre_append)
 	}
@@ -3521,20 +3499,20 @@ func expandWafProfileConstraintMethod(d *schema.ResourceData, v interface{}, pre
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "status"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["status"], _ = expandWafProfileConstraintMethodStatus(d, i["status"], pre_append)
 	}
-	pre_append =  pre + ".0." + "action"
+	pre_append = pre + ".0." + "action"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["action"], _ = expandWafProfileConstraintMethodAction(d, i["action"], pre_append)
 	}
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["log"], _ = expandWafProfileConstraintMethodLog(d, i["log"], pre_append)
 	}
-	pre_append =  pre + ".0." + "severity"
+	pre_append = pre + ".0." + "severity"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["severity"], _ = expandWafProfileConstraintMethodSeverity(d, i["severity"], pre_append)
 	}
@@ -3567,20 +3545,20 @@ func expandWafProfileConstraintHostname(d *schema.ResourceData, v interface{}, p
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "status"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["status"], _ = expandWafProfileConstraintHostnameStatus(d, i["status"], pre_append)
 	}
-	pre_append =  pre + ".0." + "action"
+	pre_append = pre + ".0." + "action"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["action"], _ = expandWafProfileConstraintHostnameAction(d, i["action"], pre_append)
 	}
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["log"], _ = expandWafProfileConstraintHostnameLog(d, i["log"], pre_append)
 	}
-	pre_append =  pre + ".0." + "severity"
+	pre_append = pre + ".0." + "severity"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["severity"], _ = expandWafProfileConstraintHostnameSeverity(d, i["severity"], pre_append)
 	}
@@ -3613,20 +3591,20 @@ func expandWafProfileConstraintMalformed(d *schema.ResourceData, v interface{}, 
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "status"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["status"], _ = expandWafProfileConstraintMalformedStatus(d, i["status"], pre_append)
 	}
-	pre_append =  pre + ".0." + "action"
+	pre_append = pre + ".0." + "action"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["action"], _ = expandWafProfileConstraintMalformedAction(d, i["action"], pre_append)
 	}
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["log"], _ = expandWafProfileConstraintMalformedLog(d, i["log"], pre_append)
 	}
-	pre_append =  pre + ".0." + "severity"
+	pre_append = pre + ".0." + "severity"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["severity"], _ = expandWafProfileConstraintMalformedSeverity(d, i["severity"], pre_append)
 	}
@@ -3659,24 +3637,24 @@ func expandWafProfileConstraintMaxCookie(d *schema.ResourceData, v interface{}, 
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "status"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["status"], _ = expandWafProfileConstraintMaxCookieStatus(d, i["status"], pre_append)
 	}
-	pre_append =  pre + ".0." + "max_cookie"
+	pre_append = pre + ".0." + "max_cookie"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["max-cookie"], _ = expandWafProfileConstraintMaxCookieMaxCookie(d, i["max_cookie"], pre_append)
 	}
-	pre_append =  pre + ".0." + "action"
+	pre_append = pre + ".0." + "action"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["action"], _ = expandWafProfileConstraintMaxCookieAction(d, i["action"], pre_append)
 	}
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["log"], _ = expandWafProfileConstraintMaxCookieLog(d, i["log"], pre_append)
 	}
-	pre_append =  pre + ".0." + "severity"
+	pre_append = pre + ".0." + "severity"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["severity"], _ = expandWafProfileConstraintMaxCookieSeverity(d, i["severity"], pre_append)
 	}
@@ -3713,24 +3691,24 @@ func expandWafProfileConstraintMaxHeaderLine(d *schema.ResourceData, v interface
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "status"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["status"], _ = expandWafProfileConstraintMaxHeaderLineStatus(d, i["status"], pre_append)
 	}
-	pre_append =  pre + ".0." + "max_header_line"
+	pre_append = pre + ".0." + "max_header_line"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["max-header-line"], _ = expandWafProfileConstraintMaxHeaderLineMaxHeaderLine(d, i["max_header_line"], pre_append)
 	}
-	pre_append =  pre + ".0." + "action"
+	pre_append = pre + ".0." + "action"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["action"], _ = expandWafProfileConstraintMaxHeaderLineAction(d, i["action"], pre_append)
 	}
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["log"], _ = expandWafProfileConstraintMaxHeaderLineLog(d, i["log"], pre_append)
 	}
-	pre_append =  pre + ".0." + "severity"
+	pre_append = pre + ".0." + "severity"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["severity"], _ = expandWafProfileConstraintMaxHeaderLineSeverity(d, i["severity"], pre_append)
 	}
@@ -3767,24 +3745,24 @@ func expandWafProfileConstraintMaxUrlParam(d *schema.ResourceData, v interface{}
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "status"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["status"], _ = expandWafProfileConstraintMaxUrlParamStatus(d, i["status"], pre_append)
 	}
-	pre_append =  pre + ".0." + "max_url_param"
+	pre_append = pre + ".0." + "max_url_param"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["max-url-param"], _ = expandWafProfileConstraintMaxUrlParamMaxUrlParam(d, i["max_url_param"], pre_append)
 	}
-	pre_append =  pre + ".0." + "action"
+	pre_append = pre + ".0." + "action"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["action"], _ = expandWafProfileConstraintMaxUrlParamAction(d, i["action"], pre_append)
 	}
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["log"], _ = expandWafProfileConstraintMaxUrlParamLog(d, i["log"], pre_append)
 	}
-	pre_append =  pre + ".0." + "severity"
+	pre_append = pre + ".0." + "severity"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["severity"], _ = expandWafProfileConstraintMaxUrlParamSeverity(d, i["severity"], pre_append)
 	}
@@ -3821,24 +3799,24 @@ func expandWafProfileConstraintMaxRangeSegment(d *schema.ResourceData, v interfa
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "status"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["status"], _ = expandWafProfileConstraintMaxRangeSegmentStatus(d, i["status"], pre_append)
 	}
-	pre_append =  pre + ".0." + "max_range_segment"
+	pre_append = pre + ".0." + "max_range_segment"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["max-range-segment"], _ = expandWafProfileConstraintMaxRangeSegmentMaxRangeSegment(d, i["max_range_segment"], pre_append)
 	}
-	pre_append =  pre + ".0." + "action"
+	pre_append = pre + ".0." + "action"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["action"], _ = expandWafProfileConstraintMaxRangeSegmentAction(d, i["action"], pre_append)
 	}
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["log"], _ = expandWafProfileConstraintMaxRangeSegmentLog(d, i["log"], pre_append)
 	}
-	pre_append =  pre + ".0." + "severity"
+	pre_append = pre + ".0." + "severity"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["severity"], _ = expandWafProfileConstraintMaxRangeSegmentSeverity(d, i["severity"], pre_append)
 	}
@@ -3878,7 +3856,7 @@ func expandWafProfileConstraintException(d *schema.ResourceData, v interface{}, 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -4050,24 +4028,24 @@ func expandWafProfileMethod(d *schema.ResourceData, v interface{}, pre string) (
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "status"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["status"], _ = expandWafProfileMethodStatus(d, i["status"], pre_append)
 	}
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["log"], _ = expandWafProfileMethodLog(d, i["log"], pre_append)
 	}
-	pre_append =  pre + ".0." + "severity"
+	pre_append = pre + ".0." + "severity"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["severity"], _ = expandWafProfileMethodSeverity(d, i["severity"], pre_append)
 	}
-	pre_append =  pre + ".0." + "default_allowed_methods"
+	pre_append = pre + ".0." + "default_allowed_methods"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["default-allowed-methods"], _ = expandWafProfileMethodDefaultAllowedMethods(d, i["default_allowed_methods"], pre_append)
 	}
-	pre_append =  pre + ".0." + "method_policy"
+	pre_append = pre + ".0." + "method_policy"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["method-policy"], _ = expandWafProfileMethodMethodPolicy(d, i["method_policy"], pre_append)
 	} else {
@@ -4105,7 +4083,7 @@ func expandWafProfileMethodMethodPolicy(d *schema.ResourceData, v interface{}, p
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -4169,26 +4147,26 @@ func expandWafProfileAddressList(d *schema.ResourceData, v interface{}, pre stri
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "status"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "status"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["status"], _ = expandWafProfileAddressListStatus(d, i["status"], pre_append)
 	}
-	pre_append =  pre + ".0." + "blocked_log"
+	pre_append = pre + ".0." + "blocked_log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["blocked-log"], _ = expandWafProfileAddressListBlockedLog(d, i["blocked_log"], pre_append)
 	}
-	pre_append =  pre + ".0." + "severity"
+	pre_append = pre + ".0." + "severity"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["severity"], _ = expandWafProfileAddressListSeverity(d, i["severity"], pre_append)
 	}
-	pre_append =  pre + ".0." + "trusted_address"
+	pre_append = pre + ".0." + "trusted_address"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["trusted-address"], _ = expandWafProfileAddressListTrustedAddress(d, i["trusted_address"], pre_append)
 	} else {
 		result["trusted-address"] = make([]string, 0)
 	}
-	pre_append =  pre + ".0." + "blocked_address"
+	pre_append = pre + ".0." + "blocked_address"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["blocked-address"], _ = expandWafProfileAddressListBlockedAddress(d, i["blocked_address"], pre_append)
 	} else {
@@ -4222,7 +4200,7 @@ func expandWafProfileAddressListTrustedAddress(d *schema.ResourceData, v interfa
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -4253,7 +4231,7 @@ func expandWafProfileAddressListBlockedAddress(d *schema.ResourceData, v interfa
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -4284,7 +4262,7 @@ func expandWafProfileUrlAccess(d *schema.ResourceData, v interface{}, pre string
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -4358,7 +4336,7 @@ func expandWafProfileUrlAccessAccessPattern(d *schema.ResourceData, v interface{
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -4417,10 +4395,8 @@ func expandWafProfileComment(d *schema.ResourceData, v interface{}, pre string) 
 	return v, nil
 }
 
-
 func getObjectWafProfile(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandWafProfileName(d, v, "name")
@@ -4503,7 +4479,5 @@ func getObjectWafProfile(d *schema.ResourceData) (*map[string]interface{}, error
 		}
 	}
 
-
 	return &obj, nil
 }
-

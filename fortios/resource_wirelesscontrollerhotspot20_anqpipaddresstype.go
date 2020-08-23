@@ -30,18 +30,18 @@ func resourceWirelessControllerHotspot20AnqpIpAddressType() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ipv6_address_type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ipv4_address_type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
@@ -138,7 +138,6 @@ func resourceWirelessControllerHotspot20AnqpIpAddressTypeRead(d *schema.Resource
 	return nil
 }
 
-
 func flattenWirelessControllerHotspot20AnqpIpAddressTypeName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -151,10 +150,8 @@ func flattenWirelessControllerHotspot20AnqpIpAddressTypeIpv4AddressType(v interf
 	return v
 }
 
-
 func refreshObjectWirelessControllerHotspot20AnqpIpAddressType(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenWirelessControllerHotspot20AnqpIpAddressTypeName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -174,7 +171,6 @@ func refreshObjectWirelessControllerHotspot20AnqpIpAddressType(d *schema.Resourc
 		}
 	}
 
-
 	return nil
 }
 
@@ -183,7 +179,6 @@ func flattenWirelessControllerHotspot20AnqpIpAddressTypeFortiTestDebug(d *schema
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandWirelessControllerHotspot20AnqpIpAddressTypeName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -197,10 +192,8 @@ func expandWirelessControllerHotspot20AnqpIpAddressTypeIpv4AddressType(d *schema
 	return v, nil
 }
 
-
 func getObjectWirelessControllerHotspot20AnqpIpAddressType(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandWirelessControllerHotspot20AnqpIpAddressTypeName(d, v, "name")
@@ -229,7 +222,5 @@ func getObjectWirelessControllerHotspot20AnqpIpAddressType(d *schema.ResourceDat
 		}
 	}
 
-
 	return &obj, nil
 }
-

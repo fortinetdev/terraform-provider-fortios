@@ -30,31 +30,30 @@ func resourceSystemAutoInstall() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"auto_install_config": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"auto_install_image": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"default_config_file": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"default_image_file": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
 }
-
 
 func resourceSystemAutoInstallUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -121,7 +120,6 @@ func resourceSystemAutoInstallRead(d *schema.ResourceData, m interface{}) error 
 	return nil
 }
 
-
 func flattenSystemAutoInstallAutoInstallConfig(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -138,10 +136,8 @@ func flattenSystemAutoInstallDefaultImageFile(v interface{}, d *schema.ResourceD
 	return v
 }
 
-
 func refreshObjectSystemAutoInstall(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("auto_install_config", flattenSystemAutoInstallAutoInstallConfig(o["auto-install-config"], d, "auto_install_config")); err != nil {
 		if !fortiAPIPatch(o["auto-install-config"]) {
@@ -167,7 +163,6 @@ func refreshObjectSystemAutoInstall(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-
 	return nil
 }
 
@@ -176,7 +171,6 @@ func flattenSystemAutoInstallFortiTestDebug(d *schema.ResourceData, fosdebugsn i
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemAutoInstallAutoInstallConfig(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -194,10 +188,8 @@ func expandSystemAutoInstallDefaultImageFile(d *schema.ResourceData, v interface
 	return v, nil
 }
 
-
 func getObjectSystemAutoInstall(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("auto_install_config"); ok {
 		t, err := expandSystemAutoInstallAutoInstallConfig(d, v, "auto_install_config")
@@ -235,7 +227,5 @@ func getObjectSystemAutoInstall(d *schema.ResourceData) (*map[string]interface{}
 		}
 	}
 
-
 	return &obj, nil
 }
-

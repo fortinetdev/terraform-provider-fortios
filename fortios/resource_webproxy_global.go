@@ -30,111 +30,111 @@ func resourceWebProxyGlobal() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"ssl_cert": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ssl_ca_cert": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"fast_policy_match": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"proxy_fqdn": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Required: true,
+				Required:     true,
 			},
 			"max_request_length": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(2, 64),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"max_message_length": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(16, 256),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"strict_web_check": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"forward_proxy_auth": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"tunnel_non_http": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"unknown_http_version": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"forward_server_affinity_timeout": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(6, 60),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"max_waf_body_cache_length": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(10, 1024),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"webproxy_profile": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"learn_client_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"learn_client_ip_from_header": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"learn_client_ip_srcaddr": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"learn_client_ip_srcaddr6": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -142,7 +142,6 @@ func resourceWebProxyGlobal() *schema.Resource {
 		},
 	}
 }
-
 
 func resourceWebProxyGlobalUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -208,7 +207,6 @@ func resourceWebProxyGlobalRead(d *schema.ResourceData, m interface{}) error {
 	}
 	return nil
 }
-
 
 func flattenWebProxyGlobalSslCert(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -342,10 +340,8 @@ func flattenWebProxyGlobalLearnClientIpSrcaddr6Name(v interface{}, d *schema.Res
 	return v
 }
 
-
 func refreshObjectWebProxyGlobal(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("ssl_cert", flattenWebProxyGlobalSslCert(o["ssl-cert"], d, "ssl_cert")); err != nil {
 		if !fortiAPIPatch(o["ssl-cert"]) {
@@ -437,38 +433,37 @@ func refreshObjectWebProxyGlobal(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("learn_client_ip_srcaddr", flattenWebProxyGlobalLearnClientIpSrcaddr(o["learn-client-ip-srcaddr"], d, "learn_client_ip_srcaddr")); err != nil {
-            if !fortiAPIPatch(o["learn-client-ip-srcaddr"]) {
-                return fmt.Errorf("Error reading learn_client_ip_srcaddr: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("learn_client_ip_srcaddr"); ok {
-            if err = d.Set("learn_client_ip_srcaddr", flattenWebProxyGlobalLearnClientIpSrcaddr(o["learn-client-ip-srcaddr"], d, "learn_client_ip_srcaddr")); err != nil {
-                if !fortiAPIPatch(o["learn-client-ip-srcaddr"]) {
-                    return fmt.Errorf("Error reading learn_client_ip_srcaddr: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("learn_client_ip_srcaddr", flattenWebProxyGlobalLearnClientIpSrcaddr(o["learn-client-ip-srcaddr"], d, "learn_client_ip_srcaddr")); err != nil {
+			if !fortiAPIPatch(o["learn-client-ip-srcaddr"]) {
+				return fmt.Errorf("Error reading learn_client_ip_srcaddr: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("learn_client_ip_srcaddr"); ok {
+			if err = d.Set("learn_client_ip_srcaddr", flattenWebProxyGlobalLearnClientIpSrcaddr(o["learn-client-ip-srcaddr"], d, "learn_client_ip_srcaddr")); err != nil {
+				if !fortiAPIPatch(o["learn-client-ip-srcaddr"]) {
+					return fmt.Errorf("Error reading learn_client_ip_srcaddr: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("learn_client_ip_srcaddr6", flattenWebProxyGlobalLearnClientIpSrcaddr6(o["learn-client-ip-srcaddr6"], d, "learn_client_ip_srcaddr6")); err != nil {
-            if !fortiAPIPatch(o["learn-client-ip-srcaddr6"]) {
-                return fmt.Errorf("Error reading learn_client_ip_srcaddr6: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("learn_client_ip_srcaddr6"); ok {
-            if err = d.Set("learn_client_ip_srcaddr6", flattenWebProxyGlobalLearnClientIpSrcaddr6(o["learn-client-ip-srcaddr6"], d, "learn_client_ip_srcaddr6")); err != nil {
-                if !fortiAPIPatch(o["learn-client-ip-srcaddr6"]) {
-                    return fmt.Errorf("Error reading learn_client_ip_srcaddr6: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("learn_client_ip_srcaddr6", flattenWebProxyGlobalLearnClientIpSrcaddr6(o["learn-client-ip-srcaddr6"], d, "learn_client_ip_srcaddr6")); err != nil {
+			if !fortiAPIPatch(o["learn-client-ip-srcaddr6"]) {
+				return fmt.Errorf("Error reading learn_client_ip_srcaddr6: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("learn_client_ip_srcaddr6"); ok {
+			if err = d.Set("learn_client_ip_srcaddr6", flattenWebProxyGlobalLearnClientIpSrcaddr6(o["learn-client-ip-srcaddr6"], d, "learn_client_ip_srcaddr6")); err != nil {
+				if !fortiAPIPatch(o["learn-client-ip-srcaddr6"]) {
+					return fmt.Errorf("Error reading learn_client_ip_srcaddr6: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -478,7 +473,6 @@ func flattenWebProxyGlobalFortiTestDebug(d *schema.ResourceData, fosdebugsn int,
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandWebProxyGlobalSslCert(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -552,7 +546,7 @@ func expandWebProxyGlobalLearnClientIpSrcaddr(d *schema.ResourceData, v interfac
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -583,7 +577,7 @@ func expandWebProxyGlobalLearnClientIpSrcaddr6(d *schema.ResourceData, v interfa
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -602,10 +596,8 @@ func expandWebProxyGlobalLearnClientIpSrcaddr6Name(d *schema.ResourceData, v int
 	return v, nil
 }
 
-
 func getObjectWebProxyGlobal(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("ssl_cert"); ok {
 		t, err := expandWebProxyGlobalSslCert(d, v, "ssl_cert")
@@ -760,7 +752,5 @@ func getObjectWebProxyGlobal(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-
 	return &obj, nil
 }
-

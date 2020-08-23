@@ -30,59 +30,59 @@ func resourceWebfilterOverride() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"fosid": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"scope": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"user": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
-				Required: true,
+				Required:     true,
 			},
 			"user_group": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"old_profile": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"new_profile": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"ip6": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"expires": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"initiator": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
@@ -177,7 +177,6 @@ func resourceWebfilterOverrideRead(d *schema.ResourceData, m interface{}) error 
 	return nil
 }
 
-
 func flattenWebfilterOverrideId(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -222,10 +221,8 @@ func flattenWebfilterOverrideInitiator(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
-
 func refreshObjectWebfilterOverride(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("fosid", flattenWebfilterOverrideId(o["id"], d, "fosid")); err != nil {
 		if !fortiAPIPatch(o["id"]) {
@@ -293,7 +290,6 @@ func refreshObjectWebfilterOverride(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-
 	return nil
 }
 
@@ -302,7 +298,6 @@ func flattenWebfilterOverrideFortiTestDebug(d *schema.ResourceData, fosdebugsn i
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandWebfilterOverrideId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -348,10 +343,8 @@ func expandWebfilterOverrideInitiator(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
-
 func getObjectWebfilterOverride(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("fosid"); ok {
 		t, err := expandWebfilterOverrideId(d, v, "fosid")
@@ -452,7 +445,5 @@ func getObjectWebfilterOverride(d *schema.ResourceData) (*map[string]interface{}
 		}
 	}
 
-
 	return &obj, nil
 }
-

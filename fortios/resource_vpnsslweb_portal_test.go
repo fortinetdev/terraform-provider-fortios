@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,77 +5,78 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSVpnSslWebPortal_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSVpnSslWebPortal_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSVpnSslWebPortal_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSVpnSslWebPortalConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSVpnSslWebPortalExists("fortios_vpnsslweb_portal.trname"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "allow_user_access", "web ftp smb sftp telnet ssh vnc rdp ping citrix portforward"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "auto_connect", "disable"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "customize_forticlient_download_url", "disable"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "display_bookmark", "enable"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "display_connection_tools", "enable"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "display_history", "enable"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "display_status", "enable"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "dns_server1", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "dns_server2", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "exclusive_routing", "disable"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "forticlient_download", "enable"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "forticlient_download_method", "direct"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "heading", "SSL-VPN Portal"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "hide_sso_credential", "enable"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "host_check", "none"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "ip_mode", "range"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "ipv6_dns_server1", "::"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "ipv6_dns_server2", "::"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "ipv6_exclusive_routing", "disable"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "ipv6_service_restriction", "disable"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "ipv6_split_tunneling", "enable"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "ipv6_tunnel_mode", "enable"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "ipv6_wins_server1", "::"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "ipv6_wins_server2", "::"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "keep_alive", "disable"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "limit_user_logins", "disable"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "mac_addr_action", "allow"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "mac_addr_check", "disable"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "os_check", "disable"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "save_password", "disable"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "service_restriction", "disable"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "skip_check_for_browser", "enable"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "skip_check_for_unsupported_os", "enable"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "smb_ntlmv1_auth", "disable"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "smbv1", "disable"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "split_tunneling", "enable"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "theme", "blue"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "tunnel_mode", "enable"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "user_bookmark", "enable"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "user_group_bookmark", "enable"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "web_mode", "disable"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "wins_server1", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "wins_server2", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "ip_pools.0.name", "SSLVPN_TUNNEL_ADDR1"),
-                    resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "ipv6_pools.0.name", "SSLVPN_TUNNEL_IPv6_ADDR1"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSVpnSslWebPortalConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSVpnSslWebPortalExists("fortios_vpnsslweb_portal.trname"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "allow_user_access", "web ftp smb sftp telnet ssh vnc rdp ping citrix portforward"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "auto_connect", "disable"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "customize_forticlient_download_url", "disable"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "display_bookmark", "enable"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "display_connection_tools", "enable"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "display_history", "enable"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "display_status", "enable"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "dns_server1", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "dns_server2", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "exclusive_routing", "disable"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "forticlient_download", "enable"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "forticlient_download_method", "direct"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "heading", "SSL-VPN Portal"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "hide_sso_credential", "enable"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "host_check", "none"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "ip_mode", "range"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "ipv6_dns_server1", "::"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "ipv6_dns_server2", "::"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "ipv6_exclusive_routing", "disable"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "ipv6_service_restriction", "disable"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "ipv6_split_tunneling", "enable"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "ipv6_tunnel_mode", "enable"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "ipv6_wins_server1", "::"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "ipv6_wins_server2", "::"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "keep_alive", "disable"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "limit_user_logins", "disable"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "mac_addr_action", "allow"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "mac_addr_check", "disable"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "os_check", "disable"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "save_password", "disable"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "service_restriction", "disable"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "skip_check_for_browser", "enable"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "skip_check_for_unsupported_os", "enable"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "smb_ntlmv1_auth", "disable"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "smbv1", "disable"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "split_tunneling", "enable"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "theme", "blue"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "tunnel_mode", "enable"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "user_bookmark", "enable"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "user_group_bookmark", "enable"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "web_mode", "disable"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "wins_server1", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "wins_server2", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "ip_pools.0.name", "SSLVPN_TUNNEL_ADDR1"),
+					resource.TestCheckResourceAttr("fortios_vpnsslweb_portal.trname", "ipv6_pools.0.name", "SSLVPN_TUNNEL_IPv6_ADDR1"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSVpnSslWebPortalExists(n string) resource.TestCheckFunc {

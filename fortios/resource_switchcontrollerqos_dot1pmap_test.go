@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,40 +5,41 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSwitchControllerQosDot1PMap_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSwitchControllerQosDot1PMap_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSwitchControllerQosDot1PMap_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSwitchControllerQosDot1PMapConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSwitchControllerQosDot1PMapExists("fortios_switchcontrollerqos_dot1pmap.trname"),
-                    resource.TestCheckResourceAttr("fortios_switchcontrollerqos_dot1pmap.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_switchcontrollerqos_dot1pmap.trname", "priority_0", "queue-0"),
-                    resource.TestCheckResourceAttr("fortios_switchcontrollerqos_dot1pmap.trname", "priority_1", "queue-0"),
-                    resource.TestCheckResourceAttr("fortios_switchcontrollerqos_dot1pmap.trname", "priority_2", "queue-0"),
-                    resource.TestCheckResourceAttr("fortios_switchcontrollerqos_dot1pmap.trname", "priority_3", "queue-0"),
-                    resource.TestCheckResourceAttr("fortios_switchcontrollerqos_dot1pmap.trname", "priority_4", "queue-0"),
-                    resource.TestCheckResourceAttr("fortios_switchcontrollerqos_dot1pmap.trname", "priority_5", "queue-0"),
-                    resource.TestCheckResourceAttr("fortios_switchcontrollerqos_dot1pmap.trname", "priority_6", "queue-0"),
-                    resource.TestCheckResourceAttr("fortios_switchcontrollerqos_dot1pmap.trname", "priority_7", "queue-0"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSwitchControllerQosDot1PMapConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSwitchControllerQosDot1PMapExists("fortios_switchcontrollerqos_dot1pmap.trname"),
+					resource.TestCheckResourceAttr("fortios_switchcontrollerqos_dot1pmap.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_switchcontrollerqos_dot1pmap.trname", "priority_0", "queue-0"),
+					resource.TestCheckResourceAttr("fortios_switchcontrollerqos_dot1pmap.trname", "priority_1", "queue-0"),
+					resource.TestCheckResourceAttr("fortios_switchcontrollerqos_dot1pmap.trname", "priority_2", "queue-0"),
+					resource.TestCheckResourceAttr("fortios_switchcontrollerqos_dot1pmap.trname", "priority_3", "queue-0"),
+					resource.TestCheckResourceAttr("fortios_switchcontrollerqos_dot1pmap.trname", "priority_4", "queue-0"),
+					resource.TestCheckResourceAttr("fortios_switchcontrollerqos_dot1pmap.trname", "priority_5", "queue-0"),
+					resource.TestCheckResourceAttr("fortios_switchcontrollerqos_dot1pmap.trname", "priority_6", "queue-0"),
+					resource.TestCheckResourceAttr("fortios_switchcontrollerqos_dot1pmap.trname", "priority_7", "queue-0"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSwitchControllerQosDot1PMapExists(n string) resource.TestCheckFunc {

@@ -30,13 +30,13 @@ func resourceWanoptPeer() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"peer_host_id": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
@@ -133,7 +133,6 @@ func resourceWanoptPeerRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenWanoptPeerPeerHostId(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -142,10 +141,8 @@ func flattenWanoptPeerIp(v interface{}, d *schema.ResourceData, pre string) inte
 	return v
 }
 
-
 func refreshObjectWanoptPeer(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("peer_host_id", flattenWanoptPeerPeerHostId(o["peer-host-id"], d, "peer_host_id")); err != nil {
 		if !fortiAPIPatch(o["peer-host-id"]) {
@@ -159,7 +156,6 @@ func refreshObjectWanoptPeer(d *schema.ResourceData, o map[string]interface{}) e
 		}
 	}
 
-
 	return nil
 }
 
@@ -169,7 +165,6 @@ func flattenWanoptPeerFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fos
 	log.Printf("ER List: %v", e)
 }
 
-
 func expandWanoptPeerPeerHostId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
 }
@@ -178,10 +173,8 @@ func expandWanoptPeerIp(d *schema.ResourceData, v interface{}, pre string) (inte
 	return v, nil
 }
 
-
 func getObjectWanoptPeer(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("peer_host_id"); ok {
 		t, err := expandWanoptPeerPeerHostId(d, v, "peer_host_id")
@@ -201,7 +194,5 @@ func getObjectWanoptPeer(d *schema.ResourceData) (*map[string]interface{}, error
 		}
 	}
 
-
 	return &obj, nil
 }
-

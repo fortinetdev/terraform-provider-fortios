@@ -30,55 +30,55 @@ func resourceSpamfilterMheader() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"fosid": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Required: true,
+				Required:     true,
 			},
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"comment": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
+				Optional:     true,
 			},
 			"entries": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"status": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"fieldname": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"fieldbody": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"pattern_type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"action": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -178,7 +178,6 @@ func resourceSpamfilterMheaderRead(d *schema.ResourceData, m interface{}) error 
 	return nil
 }
 
-
 func flattenSpamfilterMheaderId(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -272,10 +271,8 @@ func flattenSpamfilterMheaderEntriesAction(v interface{}, d *schema.ResourceData
 	return v
 }
 
-
 func refreshObjectSpamfilterMheader(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("fosid", flattenSpamfilterMheaderId(o["id"], d, "fosid")); err != nil {
 		if !fortiAPIPatch(o["id"]) {
@@ -295,22 +292,21 @@ func refreshObjectSpamfilterMheader(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("entries", flattenSpamfilterMheaderEntries(o["entries"], d, "entries")); err != nil {
-            if !fortiAPIPatch(o["entries"]) {
-                return fmt.Errorf("Error reading entries: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("entries"); ok {
-            if err = d.Set("entries", flattenSpamfilterMheaderEntries(o["entries"], d, "entries")); err != nil {
-                if !fortiAPIPatch(o["entries"]) {
-                    return fmt.Errorf("Error reading entries: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("entries", flattenSpamfilterMheaderEntries(o["entries"], d, "entries")); err != nil {
+			if !fortiAPIPatch(o["entries"]) {
+				return fmt.Errorf("Error reading entries: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("entries"); ok {
+			if err = d.Set("entries", flattenSpamfilterMheaderEntries(o["entries"], d, "entries")); err != nil {
+				if !fortiAPIPatch(o["entries"]) {
+					return fmt.Errorf("Error reading entries: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -320,7 +316,6 @@ func flattenSpamfilterMheaderFortiTestDebug(d *schema.ResourceData, fosdebugsn i
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSpamfilterMheaderId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -346,7 +341,7 @@ func expandSpamfilterMheaderEntries(d *schema.ResourceData, v interface{}, pre s
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -410,10 +405,8 @@ func expandSpamfilterMheaderEntriesAction(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-
 func getObjectSpamfilterMheader(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("fosid"); ok {
 		t, err := expandSpamfilterMheaderId(d, v, "fosid")
@@ -451,7 +444,5 @@ func getObjectSpamfilterMheader(d *schema.ResourceData) (*map[string]interface{}
 		}
 	}
 
-
 	return &obj, nil
 }
-

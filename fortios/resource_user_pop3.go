@@ -30,29 +30,29 @@ func resourceUserPop3() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"server": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Required: true,
+				Required:     true,
 			},
 			"port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"secure": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssl_min_proto_version": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
@@ -149,7 +149,6 @@ func resourceUserPop3Read(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenUserPop3Name(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -170,10 +169,8 @@ func flattenUserPop3SslMinProtoVersion(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
-
 func refreshObjectUserPop3(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenUserPop3Name(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -205,7 +202,6 @@ func refreshObjectUserPop3(d *schema.ResourceData, o map[string]interface{}) err
 		}
 	}
 
-
 	return nil
 }
 
@@ -214,7 +210,6 @@ func flattenUserPop3FortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosde
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandUserPop3Name(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -236,10 +231,8 @@ func expandUserPop3SslMinProtoVersion(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
-
 func getObjectUserPop3(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandUserPop3Name(d, v, "name")
@@ -286,7 +279,5 @@ func getObjectUserPop3(d *schema.ResourceData) (*map[string]interface{}, error) 
 		}
 	}
 
-
 	return &obj, nil
 }
-

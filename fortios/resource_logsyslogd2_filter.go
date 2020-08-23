@@ -30,80 +30,79 @@ func resourceLogSyslogd2Filter() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"severity": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"forward_traffic": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"local_traffic": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"multicast_traffic": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"sniffer_traffic": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"anomaly": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"netscan_discovery": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"netscan_vulnerability": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"voip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"gtp": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"dns": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssh": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"filter": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 511),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"filter_type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceLogSyslogd2FilterUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -170,7 +169,6 @@ func resourceLogSyslogd2FilterRead(d *schema.ResourceData, m interface{}) error 
 	return nil
 }
 
-
 func flattenLogSyslogd2FilterSeverity(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -227,10 +225,8 @@ func flattenLogSyslogd2FilterFilterType(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
-
 func refreshObjectLogSyslogd2Filter(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("severity", flattenLogSyslogd2FilterSeverity(o["severity"], d, "severity")); err != nil {
 		if !fortiAPIPatch(o["severity"]) {
@@ -316,7 +312,6 @@ func refreshObjectLogSyslogd2Filter(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-
 	return nil
 }
 
@@ -325,7 +320,6 @@ func flattenLogSyslogd2FilterFortiTestDebug(d *schema.ResourceData, fosdebugsn i
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandLogSyslogd2FilterSeverity(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -383,10 +377,8 @@ func expandLogSyslogd2FilterFilterType(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
-
 func getObjectLogSyslogd2Filter(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("severity"); ok {
 		t, err := expandLogSyslogd2FilterSeverity(d, v, "severity")
@@ -514,7 +506,5 @@ func getObjectLogSyslogd2Filter(d *schema.ResourceData) (*map[string]interface{}
 		}
 	}
 
-
 	return &obj, nil
 }
-

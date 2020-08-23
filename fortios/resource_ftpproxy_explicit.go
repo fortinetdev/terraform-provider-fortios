@@ -30,34 +30,33 @@ func resourceFtpProxyExplicit() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"incoming_port": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"incoming_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"outgoing_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"sec_default_action": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceFtpProxyExplicitUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -124,7 +123,6 @@ func resourceFtpProxyExplicitRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenFtpProxyExplicitStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -145,10 +143,8 @@ func flattenFtpProxyExplicitSecDefaultAction(v interface{}, d *schema.ResourceDa
 	return v
 }
 
-
 func refreshObjectFtpProxyExplicit(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("status", flattenFtpProxyExplicitStatus(o["status"], d, "status")); err != nil {
 		if !fortiAPIPatch(o["status"]) {
@@ -180,7 +176,6 @@ func refreshObjectFtpProxyExplicit(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-
 	return nil
 }
 
@@ -189,7 +184,6 @@ func flattenFtpProxyExplicitFortiTestDebug(d *schema.ResourceData, fosdebugsn in
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandFtpProxyExplicitStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -211,10 +205,8 @@ func expandFtpProxyExplicitSecDefaultAction(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
-
 func getObjectFtpProxyExplicit(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("status"); ok {
 		t, err := expandFtpProxyExplicitStatus(d, v, "status")
@@ -261,7 +253,5 @@ func getObjectFtpProxyExplicit(d *schema.ResourceData) (*map[string]interface{},
 		}
 	}
 
-
 	return &obj, nil
 }
-

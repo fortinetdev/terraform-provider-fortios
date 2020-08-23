@@ -30,36 +30,35 @@ func resourceReportSetting() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"pdf_report": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"fortiview": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"report_source": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"web_browsing_threshold": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(3, 15),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"top_n": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(100, 4000),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
 }
-
 
 func resourceReportSettingUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -126,7 +125,6 @@ func resourceReportSettingRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenReportSettingPdfReport(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -147,10 +145,8 @@ func flattenReportSettingTopN(v interface{}, d *schema.ResourceData, pre string)
 	return v
 }
 
-
 func refreshObjectReportSetting(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("pdf_report", flattenReportSettingPdfReport(o["pdf-report"], d, "pdf_report")); err != nil {
 		if !fortiAPIPatch(o["pdf-report"]) {
@@ -182,7 +178,6 @@ func refreshObjectReportSetting(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-
 	return nil
 }
 
@@ -191,7 +186,6 @@ func flattenReportSettingFortiTestDebug(d *schema.ResourceData, fosdebugsn int, 
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandReportSettingPdfReport(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -213,10 +207,8 @@ func expandReportSettingTopN(d *schema.ResourceData, v interface{}, pre string) 
 	return v, nil
 }
 
-
 func getObjectReportSetting(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("pdf_report"); ok {
 		t, err := expandReportSettingPdfReport(d, v, "pdf_report")
@@ -263,7 +255,5 @@ func getObjectReportSetting(d *schema.ResourceData) (*map[string]interface{}, er
 		}
 	}
 
-
 	return &obj, nil
 }
-

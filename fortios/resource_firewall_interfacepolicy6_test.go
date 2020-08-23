@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,47 +5,48 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSFirewallInterfacePolicy6_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSFirewallInterfacePolicy6_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSFirewallInterfacePolicy6_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSFirewallInterfacePolicy6Config(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSFirewallInterfacePolicy6Exists("fortios_firewall_interfacepolicy6.trname"),
-                    resource.TestCheckResourceAttr("fortios_firewall_interfacepolicy6.trname", "address_type", "ipv6"),
-                    resource.TestCheckResourceAttr("fortios_firewall_interfacepolicy6.trname", "application_list_status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_interfacepolicy6.trname", "av_profile_status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_interfacepolicy6.trname", "dlp_sensor_status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_interfacepolicy6.trname", "dsri", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_interfacepolicy6.trname", "interface", "port4"),
-                    resource.TestCheckResourceAttr("fortios_firewall_interfacepolicy6.trname", "ips_sensor_status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_interfacepolicy6.trname", "logtraffic", "all"),
-                    resource.TestCheckResourceAttr("fortios_firewall_interfacepolicy6.trname", "policyid", "1"),
-                    resource.TestCheckResourceAttr("fortios_firewall_interfacepolicy6.trname", "scan_botnet_connections", "block"),
-                    resource.TestCheckResourceAttr("fortios_firewall_interfacepolicy6.trname", "spamfilter_profile_status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_interfacepolicy6.trname", "status", "enable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_interfacepolicy6.trname", "webfilter_profile_status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_interfacepolicy6.trname", "dstaddr6.0.name", "all"),
-                    resource.TestCheckResourceAttr("fortios_firewall_interfacepolicy6.trname", "service6.0.name", "ALL"),
-                    resource.TestCheckResourceAttr("fortios_firewall_interfacepolicy6.trname", "srcaddr6.0.name", "all"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSFirewallInterfacePolicy6Config(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSFirewallInterfacePolicy6Exists("fortios_firewall_interfacepolicy6.trname"),
+					resource.TestCheckResourceAttr("fortios_firewall_interfacepolicy6.trname", "address_type", "ipv6"),
+					resource.TestCheckResourceAttr("fortios_firewall_interfacepolicy6.trname", "application_list_status", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_interfacepolicy6.trname", "av_profile_status", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_interfacepolicy6.trname", "dlp_sensor_status", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_interfacepolicy6.trname", "dsri", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_interfacepolicy6.trname", "interface", "port4"),
+					resource.TestCheckResourceAttr("fortios_firewall_interfacepolicy6.trname", "ips_sensor_status", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_interfacepolicy6.trname", "logtraffic", "all"),
+					resource.TestCheckResourceAttr("fortios_firewall_interfacepolicy6.trname", "policyid", "1"),
+					resource.TestCheckResourceAttr("fortios_firewall_interfacepolicy6.trname", "scan_botnet_connections", "block"),
+					resource.TestCheckResourceAttr("fortios_firewall_interfacepolicy6.trname", "spamfilter_profile_status", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_interfacepolicy6.trname", "status", "enable"),
+					resource.TestCheckResourceAttr("fortios_firewall_interfacepolicy6.trname", "webfilter_profile_status", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_interfacepolicy6.trname", "dstaddr6.0.name", "all"),
+					resource.TestCheckResourceAttr("fortios_firewall_interfacepolicy6.trname", "service6.0.name", "ALL"),
+					resource.TestCheckResourceAttr("fortios_firewall_interfacepolicy6.trname", "srcaddr6.0.name", "all"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSFirewallInterfacePolicy6Exists(n string) resource.TestCheckFunc {

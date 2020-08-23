@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,45 +5,46 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSystemDdns_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSystemDdns_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSystemDdns_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSystemDdnsConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSystemDdnsExists("fortios_system_ddns.trname"),
-                    resource.TestCheckResourceAttr("fortios_system_ddns.trname", "bound_ip", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_system_ddns.trname", "clear_text", "disable"),
-                    resource.TestCheckResourceAttr("fortios_system_ddns.trname", "ddns_auth", "disable"),
-                    resource.TestCheckResourceAttr("fortios_system_ddns.trname", "ddns_domain", "www.s.com"),
-                    resource.TestCheckResourceAttr("fortios_system_ddns.trname", "ddns_password", "ewewcd"),
-                    resource.TestCheckResourceAttr("fortios_system_ddns.trname", "ddns_server", "tzo.com"),
-                    resource.TestCheckResourceAttr("fortios_system_ddns.trname", "ddns_server_ip", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_system_ddns.trname", "ddns_ttl", "300"),
-                    resource.TestCheckResourceAttr("fortios_system_ddns.trname", "ddns_username", "sie2ae"),
-                    resource.TestCheckResourceAttr("fortios_system_ddns.trname", "ddnsid", "1"),
-                    resource.TestCheckResourceAttr("fortios_system_ddns.trname", "ssl_certificate", "Fortinet_Factory"),
-                    resource.TestCheckResourceAttr("fortios_system_ddns.trname", "update_interval", "300"),
-                    resource.TestCheckResourceAttr("fortios_system_ddns.trname", "use_public_ip", "disable"),
-                    resource.TestCheckResourceAttr("fortios_system_ddns.trname", "monitor_interface.0.interface_name", "port2"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSystemDdnsConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSystemDdnsExists("fortios_system_ddns.trname"),
+					resource.TestCheckResourceAttr("fortios_system_ddns.trname", "bound_ip", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_system_ddns.trname", "clear_text", "disable"),
+					resource.TestCheckResourceAttr("fortios_system_ddns.trname", "ddns_auth", "disable"),
+					resource.TestCheckResourceAttr("fortios_system_ddns.trname", "ddns_domain", "www.s.com"),
+					resource.TestCheckResourceAttr("fortios_system_ddns.trname", "ddns_password", "ewewcd"),
+					resource.TestCheckResourceAttr("fortios_system_ddns.trname", "ddns_server", "tzo.com"),
+					resource.TestCheckResourceAttr("fortios_system_ddns.trname", "ddns_server_ip", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_system_ddns.trname", "ddns_ttl", "300"),
+					resource.TestCheckResourceAttr("fortios_system_ddns.trname", "ddns_username", "sie2ae"),
+					resource.TestCheckResourceAttr("fortios_system_ddns.trname", "ddnsid", "1"),
+					resource.TestCheckResourceAttr("fortios_system_ddns.trname", "ssl_certificate", "Fortinet_Factory"),
+					resource.TestCheckResourceAttr("fortios_system_ddns.trname", "update_interval", "300"),
+					resource.TestCheckResourceAttr("fortios_system_ddns.trname", "use_public_ip", "disable"),
+					resource.TestCheckResourceAttr("fortios_system_ddns.trname", "monitor_interface.0.interface_name", "port2"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSystemDdnsExists(n string) resource.TestCheckFunc {

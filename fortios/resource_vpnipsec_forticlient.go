@@ -30,23 +30,23 @@ func resourceVpnIpsecForticlient() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"realm": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"usergroupname": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"phase2name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
@@ -143,7 +143,6 @@ func resourceVpnIpsecForticlientRead(d *schema.ResourceData, m interface{}) erro
 	return nil
 }
 
-
 func flattenVpnIpsecForticlientRealm(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -160,10 +159,8 @@ func flattenVpnIpsecForticlientStatus(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
-
 func refreshObjectVpnIpsecForticlient(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("realm", flattenVpnIpsecForticlientRealm(o["realm"], d, "realm")); err != nil {
 		if !fortiAPIPatch(o["realm"]) {
@@ -189,7 +186,6 @@ func refreshObjectVpnIpsecForticlient(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
-
 	return nil
 }
 
@@ -198,7 +194,6 @@ func flattenVpnIpsecForticlientFortiTestDebug(d *schema.ResourceData, fosdebugsn
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandVpnIpsecForticlientRealm(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -216,10 +211,8 @@ func expandVpnIpsecForticlientStatus(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
-
 func getObjectVpnIpsecForticlient(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("realm"); ok {
 		t, err := expandVpnIpsecForticlientRealm(d, v, "realm")
@@ -257,7 +250,5 @@ func getObjectVpnIpsecForticlient(d *schema.ResourceData) (*map[string]interface
 		}
 	}
 
-
 	return &obj, nil
 }
-

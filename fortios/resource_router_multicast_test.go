@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,52 +5,53 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSRouterMulticast_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSRouterMulticast_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSRouterMulticast_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSRouterMulticastConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSRouterMulticastExists("fortios_router_multicast.trname"),
-                    resource.TestCheckResourceAttr("fortios_router_multicast.trname", "multicast_routing", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_multicast.trname", "route_limit", "2147483647"),
-                    resource.TestCheckResourceAttr("fortios_router_multicast.trname", "route_threshold", "2147483647"),
-                    resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.bsr_allow_quick_refresh", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.bsr_candidate", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.bsr_hash", "10"),
-                    resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.bsr_priority", "0"),
-                    resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.cisco_crp_prefix", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.cisco_ignore_rp_set_priority", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.cisco_register_checksum", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.join_prune_holdtime", "210"),
-                    resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.message_interval", "60"),
-                    resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.null_register_retries", "1"),
-                    resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.register_rate_limit", "0"),
-                    resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.register_rp_reachability", "enable"),
-                    resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.register_source", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.register_source_ip", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.register_supression", "60"),
-                    resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.rp_register_keepalive", "185"),
-                    resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.spt_threshold", "enable"),
-                    resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.ssm", "disable"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSRouterMulticastConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSRouterMulticastExists("fortios_router_multicast.trname"),
+					resource.TestCheckResourceAttr("fortios_router_multicast.trname", "multicast_routing", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_multicast.trname", "route_limit", "2147483647"),
+					resource.TestCheckResourceAttr("fortios_router_multicast.trname", "route_threshold", "2147483647"),
+					resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.bsr_allow_quick_refresh", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.bsr_candidate", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.bsr_hash", "10"),
+					resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.bsr_priority", "0"),
+					resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.cisco_crp_prefix", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.cisco_ignore_rp_set_priority", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.cisco_register_checksum", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.join_prune_holdtime", "210"),
+					resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.message_interval", "60"),
+					resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.null_register_retries", "1"),
+					resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.register_rate_limit", "0"),
+					resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.register_rp_reachability", "enable"),
+					resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.register_source", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.register_source_ip", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.register_supression", "60"),
+					resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.rp_register_keepalive", "185"),
+					resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.spt_threshold", "enable"),
+					resource.TestCheckResourceAttr("fortios_router_multicast.trname", "pim_sm_global.0.ssm", "disable"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSRouterMulticastExists(n string) resource.TestCheckFunc {

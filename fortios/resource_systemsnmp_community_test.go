@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,45 +5,46 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSystemSnmpCommunity_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSystemSnmpCommunity_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSystemSnmpCommunity_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSystemSnmpCommunityConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSystemSnmpCommunityExists("fortios_systemsnmp_community.trname"),
-                    resource.TestCheckResourceAttr("fortios_systemsnmp_community.trname", "events", "cpu-high mem-low log-full intf-ip vpn-tun-up vpn-tun-down ha-switch ha-hb-failure ips-signature ips-anomaly av-virus av-oversize av-pattern av-fragmented fm-if-change bgp-established bgp-backward-transition ha-member-up ha-member-down ent-conf-change av-conserve av-bypass av-oversize-passed av-oversize-blocked ips-pkg-update ips-fail-open faz-disconnect wc-ap-up wc-ap-down fswctl-session-up fswctl-session-down load-balance-real-server-down per-cpu-high"),
-                    resource.TestCheckResourceAttr("fortios_systemsnmp_community.trname", "fosid", "1"),
-                    resource.TestCheckResourceAttr("fortios_systemsnmp_community.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_systemsnmp_community.trname", "query_v1_port", "161"),
-                    resource.TestCheckResourceAttr("fortios_systemsnmp_community.trname", "query_v1_status", "enable"),
-                    resource.TestCheckResourceAttr("fortios_systemsnmp_community.trname", "query_v2c_port", "161"),
-                    resource.TestCheckResourceAttr("fortios_systemsnmp_community.trname", "query_v2c_status", "enable"),
-                    resource.TestCheckResourceAttr("fortios_systemsnmp_community.trname", "status", "enable"),
-                    resource.TestCheckResourceAttr("fortios_systemsnmp_community.trname", "trap_v1_lport", "162"),
-                    resource.TestCheckResourceAttr("fortios_systemsnmp_community.trname", "trap_v1_rport", "162"),
-                    resource.TestCheckResourceAttr("fortios_systemsnmp_community.trname", "trap_v1_status", "enable"),
-                    resource.TestCheckResourceAttr("fortios_systemsnmp_community.trname", "trap_v2c_lport", "162"),
-                    resource.TestCheckResourceAttr("fortios_systemsnmp_community.trname", "trap_v2c_rport", "162"),
-                    resource.TestCheckResourceAttr("fortios_systemsnmp_community.trname", "trap_v2c_status", "enable"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSystemSnmpCommunityConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSystemSnmpCommunityExists("fortios_systemsnmp_community.trname"),
+					resource.TestCheckResourceAttr("fortios_systemsnmp_community.trname", "events", "cpu-high mem-low log-full intf-ip vpn-tun-up vpn-tun-down ha-switch ha-hb-failure ips-signature ips-anomaly av-virus av-oversize av-pattern av-fragmented fm-if-change bgp-established bgp-backward-transition ha-member-up ha-member-down ent-conf-change av-conserve av-bypass av-oversize-passed av-oversize-blocked ips-pkg-update ips-fail-open faz-disconnect wc-ap-up wc-ap-down fswctl-session-up fswctl-session-down load-balance-real-server-down per-cpu-high"),
+					resource.TestCheckResourceAttr("fortios_systemsnmp_community.trname", "fosid", "1"),
+					resource.TestCheckResourceAttr("fortios_systemsnmp_community.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_systemsnmp_community.trname", "query_v1_port", "161"),
+					resource.TestCheckResourceAttr("fortios_systemsnmp_community.trname", "query_v1_status", "enable"),
+					resource.TestCheckResourceAttr("fortios_systemsnmp_community.trname", "query_v2c_port", "161"),
+					resource.TestCheckResourceAttr("fortios_systemsnmp_community.trname", "query_v2c_status", "enable"),
+					resource.TestCheckResourceAttr("fortios_systemsnmp_community.trname", "status", "enable"),
+					resource.TestCheckResourceAttr("fortios_systemsnmp_community.trname", "trap_v1_lport", "162"),
+					resource.TestCheckResourceAttr("fortios_systemsnmp_community.trname", "trap_v1_rport", "162"),
+					resource.TestCheckResourceAttr("fortios_systemsnmp_community.trname", "trap_v1_status", "enable"),
+					resource.TestCheckResourceAttr("fortios_systemsnmp_community.trname", "trap_v2c_lport", "162"),
+					resource.TestCheckResourceAttr("fortios_systemsnmp_community.trname", "trap_v2c_rport", "162"),
+					resource.TestCheckResourceAttr("fortios_systemsnmp_community.trname", "trap_v2c_status", "enable"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSystemSnmpCommunityExists(n string) resource.TestCheckFunc {

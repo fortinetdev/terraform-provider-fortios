@@ -30,70 +30,69 @@ func resourceSystemPasswordPolicyGuestAdmin() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"apply_to": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"minimum_length": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(8, 128),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"min_lower_case_letter": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 128),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"min_upper_case_letter": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 128),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"min_non_alphanumeric": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 128),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"min_number": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 128),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"change_4_characters": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"expire_status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"expire_day": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 999),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"reuse_password": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceSystemPasswordPolicyGuestAdminUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -160,7 +159,6 @@ func resourceSystemPasswordPolicyGuestAdminRead(d *schema.ResourceData, m interf
 	return nil
 }
 
-
 func flattenSystemPasswordPolicyGuestAdminStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -205,10 +203,8 @@ func flattenSystemPasswordPolicyGuestAdminReusePassword(v interface{}, d *schema
 	return v
 }
 
-
 func refreshObjectSystemPasswordPolicyGuestAdmin(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("status", flattenSystemPasswordPolicyGuestAdminStatus(o["status"], d, "status")); err != nil {
 		if !fortiAPIPatch(o["status"]) {
@@ -276,7 +272,6 @@ func refreshObjectSystemPasswordPolicyGuestAdmin(d *schema.ResourceData, o map[s
 		}
 	}
 
-
 	return nil
 }
 
@@ -285,7 +280,6 @@ func flattenSystemPasswordPolicyGuestAdminFortiTestDebug(d *schema.ResourceData,
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemPasswordPolicyGuestAdminStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -331,10 +325,8 @@ func expandSystemPasswordPolicyGuestAdminReusePassword(d *schema.ResourceData, v
 	return v, nil
 }
 
-
 func getObjectSystemPasswordPolicyGuestAdmin(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("status"); ok {
 		t, err := expandSystemPasswordPolicyGuestAdminStatus(d, v, "status")
@@ -435,7 +427,5 @@ func getObjectSystemPasswordPolicyGuestAdmin(d *schema.ResourceData) (*map[strin
 		}
 	}
 
-
 	return &obj, nil
 }
-

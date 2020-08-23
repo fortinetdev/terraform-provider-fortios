@@ -30,87 +30,87 @@ func resourceSystemNtp() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"ntpsync": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"syncinterval": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 1440),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ntpserver": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"server": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"ntpv3": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"authentication": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"key": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 59),
-							Optional: true,
+							Optional:     true,
 						},
 						"key_id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"source_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"source_ip6": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"server_mode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"interface": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"interface_name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -118,7 +118,6 @@ func resourceSystemNtp() *schema.Resource {
 		},
 	}
 }
-
 
 func resourceSystemNtpUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -184,7 +183,6 @@ func resourceSystemNtpRead(d *schema.ResourceData, m interface{}) error {
 	}
 	return nil
 }
-
 
 func flattenSystemNtpNtpsync(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -327,10 +325,8 @@ func flattenSystemNtpInterfaceInterfaceName(v interface{}, d *schema.ResourceDat
 	return v
 }
 
-
 func refreshObjectSystemNtp(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("ntpsync", flattenSystemNtpNtpsync(o["ntpsync"], d, "ntpsync")); err != nil {
 		if !fortiAPIPatch(o["ntpsync"]) {
@@ -350,21 +346,21 @@ func refreshObjectSystemNtp(d *schema.ResourceData, o map[string]interface{}) er
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("ntpserver", flattenSystemNtpNtpserver(o["ntpserver"], d, "ntpserver")); err != nil {
-            if !fortiAPIPatch(o["ntpserver"]) {
-                return fmt.Errorf("Error reading ntpserver: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("ntpserver"); ok {
-            if err = d.Set("ntpserver", flattenSystemNtpNtpserver(o["ntpserver"], d, "ntpserver")); err != nil {
-                if !fortiAPIPatch(o["ntpserver"]) {
-                    return fmt.Errorf("Error reading ntpserver: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("ntpserver", flattenSystemNtpNtpserver(o["ntpserver"], d, "ntpserver")); err != nil {
+			if !fortiAPIPatch(o["ntpserver"]) {
+				return fmt.Errorf("Error reading ntpserver: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("ntpserver"); ok {
+			if err = d.Set("ntpserver", flattenSystemNtpNtpserver(o["ntpserver"], d, "ntpserver")); err != nil {
+				if !fortiAPIPatch(o["ntpserver"]) {
+					return fmt.Errorf("Error reading ntpserver: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("source_ip", flattenSystemNtpSourceIp(o["source-ip"], d, "source_ip")); err != nil {
 		if !fortiAPIPatch(o["source-ip"]) {
@@ -384,22 +380,21 @@ func refreshObjectSystemNtp(d *schema.ResourceData, o map[string]interface{}) er
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("interface", flattenSystemNtpInterface(o["interface"], d, "interface")); err != nil {
-            if !fortiAPIPatch(o["interface"]) {
-                return fmt.Errorf("Error reading interface: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("interface"); ok {
-            if err = d.Set("interface", flattenSystemNtpInterface(o["interface"], d, "interface")); err != nil {
-                if !fortiAPIPatch(o["interface"]) {
-                    return fmt.Errorf("Error reading interface: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("interface", flattenSystemNtpInterface(o["interface"], d, "interface")); err != nil {
+			if !fortiAPIPatch(o["interface"]) {
+				return fmt.Errorf("Error reading interface: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("interface"); ok {
+			if err = d.Set("interface", flattenSystemNtpInterface(o["interface"], d, "interface")); err != nil {
+				if !fortiAPIPatch(o["interface"]) {
+					return fmt.Errorf("Error reading interface: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -409,7 +404,6 @@ func flattenSystemNtpFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosd
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemNtpNtpsync(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -435,7 +429,7 @@ func expandSystemNtpNtpserver(d *schema.ResourceData, v interface{}, pre string)
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -523,7 +517,7 @@ func expandSystemNtpInterface(d *schema.ResourceData, v interface{}, pre string)
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -542,10 +536,8 @@ func expandSystemNtpInterfaceInterfaceName(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
-
 func getObjectSystemNtp(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("ntpsync"); ok {
 		t, err := expandSystemNtpNtpsync(d, v, "ntpsync")
@@ -619,7 +611,5 @@ func getObjectSystemNtp(d *schema.ResourceData) (*map[string]interface{}, error)
 		}
 	}
 
-
 	return &obj, nil
 }
-

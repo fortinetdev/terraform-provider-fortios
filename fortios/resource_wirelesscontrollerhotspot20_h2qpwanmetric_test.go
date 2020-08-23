@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,40 +5,41 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSWirelessControllerHotspot20H2QpWanMetric_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSWirelessControllerHotspot20H2QpWanMetric_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSWirelessControllerHotspot20H2QpWanMetric_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSWirelessControllerHotspot20H2QpWanMetricConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSWirelessControllerHotspot20H2QpWanMetricExists("fortios_wirelesscontrollerhotspot20_h2qpwanmetric.trname"),
-                    resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpwanmetric.trname", "downlink_load", "0"),
-                    resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpwanmetric.trname", "downlink_speed", "2400"),
-                    resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpwanmetric.trname", "link_at_capacity", "disable"),
-                    resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpwanmetric.trname", "link_status", "up"),
-                    resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpwanmetric.trname", "load_measurement_duration", "0"),
-                    resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpwanmetric.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpwanmetric.trname", "symmetric_wan_link", "symmetric"),
-                    resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpwanmetric.trname", "uplink_load", "0"),
-                    resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpwanmetric.trname", "uplink_speed", "2400"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSWirelessControllerHotspot20H2QpWanMetricConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSWirelessControllerHotspot20H2QpWanMetricExists("fortios_wirelesscontrollerhotspot20_h2qpwanmetric.trname"),
+					resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpwanmetric.trname", "downlink_load", "0"),
+					resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpwanmetric.trname", "downlink_speed", "2400"),
+					resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpwanmetric.trname", "link_at_capacity", "disable"),
+					resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpwanmetric.trname", "link_status", "up"),
+					resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpwanmetric.trname", "load_measurement_duration", "0"),
+					resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpwanmetric.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpwanmetric.trname", "symmetric_wan_link", "symmetric"),
+					resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpwanmetric.trname", "uplink_load", "0"),
+					resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpwanmetric.trname", "uplink_speed", "2400"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSWirelessControllerHotspot20H2QpWanMetricExists(n string) resource.TestCheckFunc {

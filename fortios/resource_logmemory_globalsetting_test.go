@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,35 +5,36 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSLogMemoryGlobalSetting_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSLogMemoryGlobalSetting_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSLogMemoryGlobalSetting_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSLogMemoryGlobalSettingConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSLogMemoryGlobalSettingExists("fortios_logmemory_globalsetting.trname"),
-                    resource.TestCheckResourceAttr("fortios_logmemory_globalsetting.trname", "full_final_warning_threshold", "95"),
-                    resource.TestCheckResourceAttr("fortios_logmemory_globalsetting.trname", "full_first_warning_threshold", "75"),
-                    resource.TestCheckResourceAttr("fortios_logmemory_globalsetting.trname", "full_second_warning_threshold", "90"),
-                    resource.TestCheckResourceAttr("fortios_logmemory_globalsetting.trname", "max_size", "163840"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSLogMemoryGlobalSettingConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSLogMemoryGlobalSettingExists("fortios_logmemory_globalsetting.trname"),
+					resource.TestCheckResourceAttr("fortios_logmemory_globalsetting.trname", "full_final_warning_threshold", "95"),
+					resource.TestCheckResourceAttr("fortios_logmemory_globalsetting.trname", "full_first_warning_threshold", "75"),
+					resource.TestCheckResourceAttr("fortios_logmemory_globalsetting.trname", "full_second_warning_threshold", "90"),
+					resource.TestCheckResourceAttr("fortios_logmemory_globalsetting.trname", "max_size", "163840"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSLogMemoryGlobalSettingExists(n string) resource.TestCheckFunc {

@@ -30,30 +30,29 @@ func resourceSystemFssoPolling() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"listening_port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"authentication": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"auth_password": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
-				Optional: true,
+				Optional:     true,
 			},
 		},
 	}
 }
-
 
 func resourceSystemFssoPollingUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -120,7 +119,6 @@ func resourceSystemFssoPollingRead(d *schema.ResourceData, m interface{}) error 
 	return nil
 }
 
-
 func flattenSystemFssoPollingStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -137,10 +135,8 @@ func flattenSystemFssoPollingAuthPassword(v interface{}, d *schema.ResourceData,
 	return v
 }
 
-
 func refreshObjectSystemFssoPolling(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("status", flattenSystemFssoPollingStatus(o["status"], d, "status")); err != nil {
 		if !fortiAPIPatch(o["status"]) {
@@ -166,7 +162,6 @@ func refreshObjectSystemFssoPolling(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-
 	return nil
 }
 
@@ -175,7 +170,6 @@ func flattenSystemFssoPollingFortiTestDebug(d *schema.ResourceData, fosdebugsn i
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemFssoPollingStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -193,10 +187,8 @@ func expandSystemFssoPollingAuthPassword(d *schema.ResourceData, v interface{}, 
 	return v, nil
 }
 
-
 func getObjectSystemFssoPolling(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("status"); ok {
 		t, err := expandSystemFssoPollingStatus(d, v, "status")
@@ -234,7 +226,5 @@ func getObjectSystemFssoPolling(d *schema.ResourceData) (*map[string]interface{}
 		}
 	}
 
-
 	return &obj, nil
 }
-

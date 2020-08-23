@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,42 +5,43 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSFirewallIppool_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSFirewallIppool_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSFirewallIppool_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSFirewallIppoolConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSFirewallIppoolExists("fortios_firewall_ippool.trname"),
-                    resource.TestCheckResourceAttr("fortios_firewall_ippool.trname", "arp_reply", "enable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_ippool.trname", "block_size", "128"),
-                    resource.TestCheckResourceAttr("fortios_firewall_ippool.trname", "endip", "1.0.0.20"),
-                    resource.TestCheckResourceAttr("fortios_firewall_ippool.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_firewall_ippool.trname", "num_blocks_per_user", "8"),
-                    resource.TestCheckResourceAttr("fortios_firewall_ippool.trname", "pba_timeout", "30"),
-                    resource.TestCheckResourceAttr("fortios_firewall_ippool.trname", "permit_any_host", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_ippool.trname", "source_endip", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_firewall_ippool.trname", "source_startip", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_firewall_ippool.trname", "startip", "1.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_firewall_ippool.trname", "type", "overload"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSFirewallIppoolConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSFirewallIppoolExists("fortios_firewall_ippool.trname"),
+					resource.TestCheckResourceAttr("fortios_firewall_ippool.trname", "arp_reply", "enable"),
+					resource.TestCheckResourceAttr("fortios_firewall_ippool.trname", "block_size", "128"),
+					resource.TestCheckResourceAttr("fortios_firewall_ippool.trname", "endip", "1.0.0.20"),
+					resource.TestCheckResourceAttr("fortios_firewall_ippool.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_firewall_ippool.trname", "num_blocks_per_user", "8"),
+					resource.TestCheckResourceAttr("fortios_firewall_ippool.trname", "pba_timeout", "30"),
+					resource.TestCheckResourceAttr("fortios_firewall_ippool.trname", "permit_any_host", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_ippool.trname", "source_endip", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_firewall_ippool.trname", "source_startip", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_firewall_ippool.trname", "startip", "1.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_firewall_ippool.trname", "type", "overload"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSFirewallIppoolExists(n string) resource.TestCheckFunc {

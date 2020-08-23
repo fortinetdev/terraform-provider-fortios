@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,64 +5,65 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSystemHa_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSystemHa_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSystemHa_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSystemHaConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSystemHaExists("fortios_system_ha.trname"),
-                    resource.TestCheckResourceAttr("fortios_system_ha.trname", "cpu_threshold", "5 0 0"),
-                    resource.TestCheckResourceAttr("fortios_system_ha.trname", "encryption", "disable"),
-                    resource.TestCheckResourceAttr("fortios_system_ha.trname", "ftp_proxy_threshold", "5 0 0"),
-                    resource.TestCheckResourceAttr("fortios_system_ha.trname", "gratuitous_arps", "enable"),
-                    resource.TestCheckResourceAttr("fortios_system_ha.trname", "group_id", "0"),
-                    resource.TestCheckResourceAttr("fortios_system_ha.trname", "ha_direct", "disable"),
-                    resource.TestCheckResourceAttr("fortios_system_ha.trname", "ha_eth_type", "8890"),
-                    resource.TestCheckResourceAttr("fortios_system_ha.trname", "ha_mgmt_status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_system_ha.trname", "ha_uptime_diff_margin", "300"),
-                    resource.TestCheckResourceAttr("fortios_system_ha.trname", "hb_interval", "2"),
-                    resource.TestCheckResourceAttr("fortios_system_ha.trname", "hb_lost_threshold", "20"),
-                    resource.TestCheckResourceAttr("fortios_system_ha.trname", "hc_eth_type", "8891"),
-                    resource.TestCheckResourceAttr("fortios_system_ha.trname", "hello_holddown", "20"),
-                    resource.TestCheckResourceAttr("fortios_system_ha.trname", "http_proxy_threshold", "5 0 0"),
-                    resource.TestCheckResourceAttr("fortios_system_ha.trname", "imap_proxy_threshold", "5 0 0"),
-                    resource.TestCheckResourceAttr("fortios_system_ha.trname", "inter_cluster_session_sync", "disable"),
-                    resource.TestCheckResourceAttr("fortios_system_ha.trname", "l2ep_eth_type", "8893"),
-                    resource.TestCheckResourceAttr("fortios_system_ha.trname", "link_failed_signal", "disable"),
-                    resource.TestCheckResourceAttr("fortios_system_ha.trname", "load_balance_all", "disable"),
-                    resource.TestCheckResourceAttr("fortios_system_ha.trname", "memory_compatible_mode", "disable"),
-                    resource.TestCheckResourceAttr("fortios_system_ha.trname", "memory_threshold", "5 0 0"),
-                    resource.TestCheckResourceAttr("fortios_system_ha.trname", "mode", "standalone"),
-                    resource.TestCheckResourceAttr("fortios_system_ha.trname", "multicast_ttl", "600"),
-                    resource.TestCheckResourceAttr("fortios_system_ha.trname", "nntp_proxy_threshold", "5 0 0"),
-                    resource.TestCheckResourceAttr("fortios_system_ha.trname", "override", "disable"),
-                    resource.TestCheckResourceAttr("fortios_system_ha.trname", "override_wait_time", "0"),
-                    resource.TestCheckResourceAttr("fortios_system_ha.trname", "weight", "40 "),
-                    resource.TestCheckResourceAttr("fortios_system_ha.trname", "secondary_vcluster.0.override", "enable"),
-                    resource.TestCheckResourceAttr("fortios_system_ha.trname", "secondary_vcluster.0.override_wait_time", "0"),
-                    resource.TestCheckResourceAttr("fortios_system_ha.trname", "secondary_vcluster.0.pingserver_failover_threshold", "0"),
-                    resource.TestCheckResourceAttr("fortios_system_ha.trname", "secondary_vcluster.0.pingserver_slave_force_reset", "enable"),
-                    resource.TestCheckResourceAttr("fortios_system_ha.trname", "secondary_vcluster.0.priority", "128"),
-                    resource.TestCheckResourceAttr("fortios_system_ha.trname", "secondary_vcluster.0.vcluster_id", "1"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSystemHaConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSystemHaExists("fortios_system_ha.trname"),
+					resource.TestCheckResourceAttr("fortios_system_ha.trname", "cpu_threshold", "5 0 0"),
+					resource.TestCheckResourceAttr("fortios_system_ha.trname", "encryption", "disable"),
+					resource.TestCheckResourceAttr("fortios_system_ha.trname", "ftp_proxy_threshold", "5 0 0"),
+					resource.TestCheckResourceAttr("fortios_system_ha.trname", "gratuitous_arps", "enable"),
+					resource.TestCheckResourceAttr("fortios_system_ha.trname", "group_id", "0"),
+					resource.TestCheckResourceAttr("fortios_system_ha.trname", "ha_direct", "disable"),
+					resource.TestCheckResourceAttr("fortios_system_ha.trname", "ha_eth_type", "8890"),
+					resource.TestCheckResourceAttr("fortios_system_ha.trname", "ha_mgmt_status", "disable"),
+					resource.TestCheckResourceAttr("fortios_system_ha.trname", "ha_uptime_diff_margin", "300"),
+					resource.TestCheckResourceAttr("fortios_system_ha.trname", "hb_interval", "2"),
+					resource.TestCheckResourceAttr("fortios_system_ha.trname", "hb_lost_threshold", "20"),
+					resource.TestCheckResourceAttr("fortios_system_ha.trname", "hc_eth_type", "8891"),
+					resource.TestCheckResourceAttr("fortios_system_ha.trname", "hello_holddown", "20"),
+					resource.TestCheckResourceAttr("fortios_system_ha.trname", "http_proxy_threshold", "5 0 0"),
+					resource.TestCheckResourceAttr("fortios_system_ha.trname", "imap_proxy_threshold", "5 0 0"),
+					resource.TestCheckResourceAttr("fortios_system_ha.trname", "inter_cluster_session_sync", "disable"),
+					resource.TestCheckResourceAttr("fortios_system_ha.trname", "l2ep_eth_type", "8893"),
+					resource.TestCheckResourceAttr("fortios_system_ha.trname", "link_failed_signal", "disable"),
+					resource.TestCheckResourceAttr("fortios_system_ha.trname", "load_balance_all", "disable"),
+					resource.TestCheckResourceAttr("fortios_system_ha.trname", "memory_compatible_mode", "disable"),
+					resource.TestCheckResourceAttr("fortios_system_ha.trname", "memory_threshold", "5 0 0"),
+					resource.TestCheckResourceAttr("fortios_system_ha.trname", "mode", "standalone"),
+					resource.TestCheckResourceAttr("fortios_system_ha.trname", "multicast_ttl", "600"),
+					resource.TestCheckResourceAttr("fortios_system_ha.trname", "nntp_proxy_threshold", "5 0 0"),
+					resource.TestCheckResourceAttr("fortios_system_ha.trname", "override", "disable"),
+					resource.TestCheckResourceAttr("fortios_system_ha.trname", "override_wait_time", "0"),
+					resource.TestCheckResourceAttr("fortios_system_ha.trname", "weight", "40 "),
+					resource.TestCheckResourceAttr("fortios_system_ha.trname", "secondary_vcluster.0.override", "enable"),
+					resource.TestCheckResourceAttr("fortios_system_ha.trname", "secondary_vcluster.0.override_wait_time", "0"),
+					resource.TestCheckResourceAttr("fortios_system_ha.trname", "secondary_vcluster.0.pingserver_failover_threshold", "0"),
+					resource.TestCheckResourceAttr("fortios_system_ha.trname", "secondary_vcluster.0.pingserver_slave_force_reset", "enable"),
+					resource.TestCheckResourceAttr("fortios_system_ha.trname", "secondary_vcluster.0.priority", "128"),
+					resource.TestCheckResourceAttr("fortios_system_ha.trname", "secondary_vcluster.0.vcluster_id", "1"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSystemHaExists(n string) resource.TestCheckFunc {

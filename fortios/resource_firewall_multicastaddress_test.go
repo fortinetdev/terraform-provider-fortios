@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,38 +5,39 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSFirewallMulticastAddress_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSFirewallMulticastAddress_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSFirewallMulticastAddress_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSFirewallMulticastAddressConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSFirewallMulticastAddressExists("fortios_firewall_multicastaddress.trname"),
-                    resource.TestCheckResourceAttr("fortios_firewall_multicastaddress.trname", "color", "0"),
-                    resource.TestCheckResourceAttr("fortios_firewall_multicastaddress.trname", "end_ip", "224.0.0.22"),
-                    resource.TestCheckResourceAttr("fortios_firewall_multicastaddress.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_firewall_multicastaddress.trname", "start_ip", "224.0.0.11"),
-                    resource.TestCheckResourceAttr("fortios_firewall_multicastaddress.trname", "subnet", "224.0.0.11 224.0.0.22"),
-                    resource.TestCheckResourceAttr("fortios_firewall_multicastaddress.trname", "type", "multicastrange"),
-                    resource.TestCheckResourceAttr("fortios_firewall_multicastaddress.trname", "visibility", "enable"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSFirewallMulticastAddressConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSFirewallMulticastAddressExists("fortios_firewall_multicastaddress.trname"),
+					resource.TestCheckResourceAttr("fortios_firewall_multicastaddress.trname", "color", "0"),
+					resource.TestCheckResourceAttr("fortios_firewall_multicastaddress.trname", "end_ip", "224.0.0.22"),
+					resource.TestCheckResourceAttr("fortios_firewall_multicastaddress.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_firewall_multicastaddress.trname", "start_ip", "224.0.0.11"),
+					resource.TestCheckResourceAttr("fortios_firewall_multicastaddress.trname", "subnet", "224.0.0.11 224.0.0.22"),
+					resource.TestCheckResourceAttr("fortios_firewall_multicastaddress.trname", "type", "multicastrange"),
+					resource.TestCheckResourceAttr("fortios_firewall_multicastaddress.trname", "visibility", "enable"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSFirewallMulticastAddressExists(n string) resource.TestCheckFunc {

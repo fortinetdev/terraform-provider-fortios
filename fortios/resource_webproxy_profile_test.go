@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,41 +5,42 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSWebProxyProfile_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSWebProxyProfile_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSWebProxyProfile_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSWebProxyProfileConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSWebProxyProfileExists("fortios_webproxy_profile.trname"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_profile.trname", "header_client_ip", "pass"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_profile.trname", "header_front_end_https", "pass"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_profile.trname", "header_via_request", "add"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_profile.trname", "header_via_response", "pass"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_profile.trname", "header_x_authenticated_groups", "pass"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_profile.trname", "header_x_authenticated_user", "pass"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_profile.trname", "header_x_forwarded_for", "pass"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_profile.trname", "log_header_change", "disable"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_profile.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_webproxy_profile.trname", "strip_encoding", "disable"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSWebProxyProfileConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSWebProxyProfileExists("fortios_webproxy_profile.trname"),
+					resource.TestCheckResourceAttr("fortios_webproxy_profile.trname", "header_client_ip", "pass"),
+					resource.TestCheckResourceAttr("fortios_webproxy_profile.trname", "header_front_end_https", "pass"),
+					resource.TestCheckResourceAttr("fortios_webproxy_profile.trname", "header_via_request", "add"),
+					resource.TestCheckResourceAttr("fortios_webproxy_profile.trname", "header_via_response", "pass"),
+					resource.TestCheckResourceAttr("fortios_webproxy_profile.trname", "header_x_authenticated_groups", "pass"),
+					resource.TestCheckResourceAttr("fortios_webproxy_profile.trname", "header_x_authenticated_user", "pass"),
+					resource.TestCheckResourceAttr("fortios_webproxy_profile.trname", "header_x_forwarded_for", "pass"),
+					resource.TestCheckResourceAttr("fortios_webproxy_profile.trname", "log_header_change", "disable"),
+					resource.TestCheckResourceAttr("fortios_webproxy_profile.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_webproxy_profile.trname", "strip_encoding", "disable"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSWebProxyProfileExists(n string) resource.TestCheckFunc {

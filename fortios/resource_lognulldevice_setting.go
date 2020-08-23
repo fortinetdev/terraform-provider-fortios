@@ -30,13 +30,12 @@ func resourceLogNullDeviceSetting() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 		},
 	}
 }
-
 
 func resourceLogNullDeviceSettingUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -103,22 +102,18 @@ func resourceLogNullDeviceSettingRead(d *schema.ResourceData, m interface{}) err
 	return nil
 }
 
-
 func flattenLogNullDeviceSettingStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
-
 func refreshObjectLogNullDeviceSetting(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("status", flattenLogNullDeviceSettingStatus(o["status"], d, "status")); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
 		}
 	}
-
 
 	return nil
 }
@@ -129,15 +124,12 @@ func flattenLogNullDeviceSettingFortiTestDebug(d *schema.ResourceData, fosdebugs
 	log.Printf("ER List: %v", e)
 }
 
-
 func expandLogNullDeviceSettingStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
 }
 
-
 func getObjectLogNullDeviceSetting(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("status"); ok {
 		t, err := expandLogNullDeviceSettingStatus(d, v, "status")
@@ -148,7 +140,5 @@ func getObjectLogNullDeviceSetting(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
-
 	return &obj, nil
 }
-

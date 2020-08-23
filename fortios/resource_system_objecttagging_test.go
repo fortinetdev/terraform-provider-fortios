@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,37 +5,38 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSystemObjectTagging_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSystemObjectTagging_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSystemObjectTagging_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSystemObjectTaggingConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSystemObjectTaggingExists("fortios_system_objecttagging.trname"),
-                    resource.TestCheckResourceAttr("fortios_system_objecttagging.trname", "address", "disable"),
-                    resource.TestCheckResourceAttr("fortios_system_objecttagging.trname", "category", "s1"),
-                    resource.TestCheckResourceAttr("fortios_system_objecttagging.trname", "color", "0"),
-                    resource.TestCheckResourceAttr("fortios_system_objecttagging.trname", "device", "mandatory"),
-                    resource.TestCheckResourceAttr("fortios_system_objecttagging.trname", "interface", "disable"),
-                    resource.TestCheckResourceAttr("fortios_system_objecttagging.trname", "multiple", "enable"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSystemObjectTaggingConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSystemObjectTaggingExists("fortios_system_objecttagging.trname"),
+					resource.TestCheckResourceAttr("fortios_system_objecttagging.trname", "address", "disable"),
+					resource.TestCheckResourceAttr("fortios_system_objecttagging.trname", "category", "s1"),
+					resource.TestCheckResourceAttr("fortios_system_objecttagging.trname", "color", "0"),
+					resource.TestCheckResourceAttr("fortios_system_objecttagging.trname", "device", "mandatory"),
+					resource.TestCheckResourceAttr("fortios_system_objecttagging.trname", "interface", "disable"),
+					resource.TestCheckResourceAttr("fortios_system_objecttagging.trname", "multiple", "enable"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSystemObjectTaggingExists(n string) resource.TestCheckFunc {

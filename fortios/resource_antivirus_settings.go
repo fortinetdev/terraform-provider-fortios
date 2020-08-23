@@ -30,25 +30,24 @@ func resourceAntivirusSettings() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"default_db": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"grayware": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"override_timeout": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(30, 3600),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
 }
-
 
 func resourceAntivirusSettingsUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -115,7 +114,6 @@ func resourceAntivirusSettingsRead(d *schema.ResourceData, m interface{}) error 
 	return nil
 }
 
-
 func flattenAntivirusSettingsDefaultDb(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -128,10 +126,8 @@ func flattenAntivirusSettingsOverrideTimeout(v interface{}, d *schema.ResourceDa
 	return v
 }
 
-
 func refreshObjectAntivirusSettings(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("default_db", flattenAntivirusSettingsDefaultDb(o["default-db"], d, "default_db")); err != nil {
 		if !fortiAPIPatch(o["default-db"]) {
@@ -151,7 +147,6 @@ func refreshObjectAntivirusSettings(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-
 	return nil
 }
 
@@ -160,7 +155,6 @@ func flattenAntivirusSettingsFortiTestDebug(d *schema.ResourceData, fosdebugsn i
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandAntivirusSettingsDefaultDb(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -174,10 +168,8 @@ func expandAntivirusSettingsOverrideTimeout(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
-
 func getObjectAntivirusSettings(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("default_db"); ok {
 		t, err := expandAntivirusSettingsDefaultDb(d, v, "default_db")
@@ -206,7 +198,5 @@ func getObjectAntivirusSettings(d *schema.ResourceData) (*map[string]interface{}
 		}
 	}
 
-
 	return &obj, nil
 }
-

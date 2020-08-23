@@ -30,64 +30,64 @@ func resourceSystemVxlan() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"interface": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
-				Required: true,
+				Required:     true,
 			},
 			"vni": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 16777215),
-				Required: true,
+				Required:     true,
 			},
 			"ip_version": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"remote_ip": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"ip": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"remote_ip6": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"ip6": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 45),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"dstport": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"multicast_ttl": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
@@ -181,7 +181,6 @@ func resourceSystemVxlanRead(d *schema.ResourceData, m interface{}) error {
 	}
 	return nil
 }
-
 
 func flattenSystemVxlanName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -279,10 +278,8 @@ func flattenSystemVxlanMulticastTtl(v interface{}, d *schema.ResourceData, pre s
 	return v
 }
 
-
 func refreshObjectSystemVxlan(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenSystemVxlanName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -308,37 +305,37 @@ func refreshObjectSystemVxlan(d *schema.ResourceData, o map[string]interface{}) 
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("remote_ip", flattenSystemVxlanRemoteIp(o["remote-ip"], d, "remote_ip")); err != nil {
-            if !fortiAPIPatch(o["remote-ip"]) {
-                return fmt.Errorf("Error reading remote_ip: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("remote_ip"); ok {
-            if err = d.Set("remote_ip", flattenSystemVxlanRemoteIp(o["remote-ip"], d, "remote_ip")); err != nil {
-                if !fortiAPIPatch(o["remote-ip"]) {
-                    return fmt.Errorf("Error reading remote_ip: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("remote_ip", flattenSystemVxlanRemoteIp(o["remote-ip"], d, "remote_ip")); err != nil {
+			if !fortiAPIPatch(o["remote-ip"]) {
+				return fmt.Errorf("Error reading remote_ip: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("remote_ip"); ok {
+			if err = d.Set("remote_ip", flattenSystemVxlanRemoteIp(o["remote-ip"], d, "remote_ip")); err != nil {
+				if !fortiAPIPatch(o["remote-ip"]) {
+					return fmt.Errorf("Error reading remote_ip: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("remote_ip6", flattenSystemVxlanRemoteIp6(o["remote-ip6"], d, "remote_ip6")); err != nil {
-            if !fortiAPIPatch(o["remote-ip6"]) {
-                return fmt.Errorf("Error reading remote_ip6: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("remote_ip6"); ok {
-            if err = d.Set("remote_ip6", flattenSystemVxlanRemoteIp6(o["remote-ip6"], d, "remote_ip6")); err != nil {
-                if !fortiAPIPatch(o["remote-ip6"]) {
-                    return fmt.Errorf("Error reading remote_ip6: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("remote_ip6", flattenSystemVxlanRemoteIp6(o["remote-ip6"], d, "remote_ip6")); err != nil {
+			if !fortiAPIPatch(o["remote-ip6"]) {
+				return fmt.Errorf("Error reading remote_ip6: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("remote_ip6"); ok {
+			if err = d.Set("remote_ip6", flattenSystemVxlanRemoteIp6(o["remote-ip6"], d, "remote_ip6")); err != nil {
+				if !fortiAPIPatch(o["remote-ip6"]) {
+					return fmt.Errorf("Error reading remote_ip6: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("dstport", flattenSystemVxlanDstport(o["dstport"], d, "dstport")); err != nil {
 		if !fortiAPIPatch(o["dstport"]) {
@@ -352,7 +349,6 @@ func refreshObjectSystemVxlan(d *schema.ResourceData, o map[string]interface{}) 
 		}
 	}
 
-
 	return nil
 }
 
@@ -361,7 +357,6 @@ func flattenSystemVxlanFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fo
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemVxlanName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -391,7 +386,7 @@ func expandSystemVxlanRemoteIp(d *schema.ResourceData, v interface{}, pre string
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -422,7 +417,7 @@ func expandSystemVxlanRemoteIp6(d *schema.ResourceData, v interface{}, pre strin
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip6"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -449,10 +444,8 @@ func expandSystemVxlanMulticastTtl(d *schema.ResourceData, v interface{}, pre st
 	return v, nil
 }
 
-
 func getObjectSystemVxlan(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandSystemVxlanName(d, v, "name")
@@ -526,7 +519,5 @@ func getObjectSystemVxlan(d *schema.ResourceData) (*map[string]interface{}, erro
 		}
 	}
 
-
 	return &obj, nil
 }
-

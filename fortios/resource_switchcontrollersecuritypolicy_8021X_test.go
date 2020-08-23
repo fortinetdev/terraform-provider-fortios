@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,45 +5,46 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSwitchControllerSecurityPolicy8021X_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSwitchControllerSecurityPolicy8021X_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSwitchControllerSecurityPolicy8021X_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSwitchControllerSecurityPolicy8021XConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSwitchControllerSecurityPolicy8021XExists("fortios_switchcontrollersecuritypolicy_8021X.trname"),
-                    resource.TestCheckResourceAttr("fortios_switchcontrollersecuritypolicy_8021X.trname", "auth_fail_vlan", "disable"),
-                    resource.TestCheckResourceAttr("fortios_switchcontrollersecuritypolicy_8021X.trname", "auth_fail_vlanid", "0"),
-                    resource.TestCheckResourceAttr("fortios_switchcontrollersecuritypolicy_8021X.trname", "eap_passthru", "disable"),
-                    resource.TestCheckResourceAttr("fortios_switchcontrollersecuritypolicy_8021X.trname", "framevid_apply", "enable"),
-                    resource.TestCheckResourceAttr("fortios_switchcontrollersecuritypolicy_8021X.trname", "guest_auth_delay", "30"),
-                    resource.TestCheckResourceAttr("fortios_switchcontrollersecuritypolicy_8021X.trname", "guest_vlan", "disable"),
-                    resource.TestCheckResourceAttr("fortios_switchcontrollersecuritypolicy_8021X.trname", "guest_vlanid", "100"),
-                    resource.TestCheckResourceAttr("fortios_switchcontrollersecuritypolicy_8021X.trname", "mac_auth_bypass", "disable"),
-                    resource.TestCheckResourceAttr("fortios_switchcontrollersecuritypolicy_8021X.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_switchcontrollersecuritypolicy_8021X.trname", "open_auth", "disable"),
-                    resource.TestCheckResourceAttr("fortios_switchcontrollersecuritypolicy_8021X.trname", "policy_type", "802.1X"),
-                    resource.TestCheckResourceAttr("fortios_switchcontrollersecuritypolicy_8021X.trname", "radius_timeout_overwrite", "disable"),
-                    resource.TestCheckResourceAttr("fortios_switchcontrollersecuritypolicy_8021X.trname", "security_mode", "802.1X"),
-                    resource.TestCheckResourceAttr("fortios_switchcontrollersecuritypolicy_8021X.trname", "user_group.0.name", "Guest-group"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSwitchControllerSecurityPolicy8021XConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSwitchControllerSecurityPolicy8021XExists("fortios_switchcontrollersecuritypolicy_8021X.trname"),
+					resource.TestCheckResourceAttr("fortios_switchcontrollersecuritypolicy_8021X.trname", "auth_fail_vlan", "disable"),
+					resource.TestCheckResourceAttr("fortios_switchcontrollersecuritypolicy_8021X.trname", "auth_fail_vlanid", "0"),
+					resource.TestCheckResourceAttr("fortios_switchcontrollersecuritypolicy_8021X.trname", "eap_passthru", "disable"),
+					resource.TestCheckResourceAttr("fortios_switchcontrollersecuritypolicy_8021X.trname", "framevid_apply", "enable"),
+					resource.TestCheckResourceAttr("fortios_switchcontrollersecuritypolicy_8021X.trname", "guest_auth_delay", "30"),
+					resource.TestCheckResourceAttr("fortios_switchcontrollersecuritypolicy_8021X.trname", "guest_vlan", "disable"),
+					resource.TestCheckResourceAttr("fortios_switchcontrollersecuritypolicy_8021X.trname", "guest_vlanid", "100"),
+					resource.TestCheckResourceAttr("fortios_switchcontrollersecuritypolicy_8021X.trname", "mac_auth_bypass", "disable"),
+					resource.TestCheckResourceAttr("fortios_switchcontrollersecuritypolicy_8021X.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_switchcontrollersecuritypolicy_8021X.trname", "open_auth", "disable"),
+					resource.TestCheckResourceAttr("fortios_switchcontrollersecuritypolicy_8021X.trname", "policy_type", "802.1X"),
+					resource.TestCheckResourceAttr("fortios_switchcontrollersecuritypolicy_8021X.trname", "radius_timeout_overwrite", "disable"),
+					resource.TestCheckResourceAttr("fortios_switchcontrollersecuritypolicy_8021X.trname", "security_mode", "802.1X"),
+					resource.TestCheckResourceAttr("fortios_switchcontrollersecuritypolicy_8021X.trname", "user_group.0.name", "Guest-group"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSwitchControllerSecurityPolicy8021XExists(n string) resource.TestCheckFunc {

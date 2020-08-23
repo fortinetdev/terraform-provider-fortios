@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,35 +5,36 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSWebProxyDebugUrl_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSWebProxyDebugUrl_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSWebProxyDebugUrl_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSWebProxyDebugUrlConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSWebProxyDebugUrlExists("fortios_webproxy_debugurl.trname"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_debugurl.trname", "exact", "enable"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_debugurl.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_webproxy_debugurl.trname", "status", "enable"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_debugurl.trname", "url_pattern", "/examples/servlet/*Servlet"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSWebProxyDebugUrlConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSWebProxyDebugUrlExists("fortios_webproxy_debugurl.trname"),
+					resource.TestCheckResourceAttr("fortios_webproxy_debugurl.trname", "exact", "enable"),
+					resource.TestCheckResourceAttr("fortios_webproxy_debugurl.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_webproxy_debugurl.trname", "status", "enable"),
+					resource.TestCheckResourceAttr("fortios_webproxy_debugurl.trname", "url_pattern", "/examples/servlet/*Servlet"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSWebProxyDebugUrlExists(n string) resource.TestCheckFunc {

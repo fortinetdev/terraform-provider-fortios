@@ -30,25 +30,24 @@ func resourceSystemFtmPush() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"server_port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"server_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceSystemFtmPushUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -115,7 +114,6 @@ func resourceSystemFtmPushRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenSystemFtmPushServerPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -128,10 +126,8 @@ func flattenSystemFtmPushStatus(v interface{}, d *schema.ResourceData, pre strin
 	return v
 }
 
-
 func refreshObjectSystemFtmPush(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("server_port", flattenSystemFtmPushServerPort(o["server-port"], d, "server_port")); err != nil {
 		if !fortiAPIPatch(o["server-port"]) {
@@ -151,7 +147,6 @@ func refreshObjectSystemFtmPush(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-
 	return nil
 }
 
@@ -160,7 +155,6 @@ func flattenSystemFtmPushFortiTestDebug(d *schema.ResourceData, fosdebugsn int, 
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemFtmPushServerPort(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -174,10 +168,8 @@ func expandSystemFtmPushStatus(d *schema.ResourceData, v interface{}, pre string
 	return v, nil
 }
 
-
 func getObjectSystemFtmPush(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("server_port"); ok {
 		t, err := expandSystemFtmPushServerPort(d, v, "server_port")
@@ -206,7 +198,5 @@ func getObjectSystemFtmPush(d *schema.ResourceData) (*map[string]interface{}, er
 		}
 	}
 
-
 	return &obj, nil
 }
-

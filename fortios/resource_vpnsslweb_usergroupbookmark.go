@@ -30,152 +30,152 @@ func resourceVpnSslWebUserGroupBookmark() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"bookmarks": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"apptype": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"url": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 128),
-							Optional: true,
+							Optional:     true,
 						},
 						"host": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 128),
-							Optional: true,
+							Optional:     true,
 						},
 						"folder": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 128),
-							Optional: true,
+							Optional:     true,
 						},
 						"additional_params": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 128),
-							Optional: true,
+							Optional:     true,
 						},
 						"listening_port": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"remote_port": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"show_status_window": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"description": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 128),
-							Optional: true,
+							Optional:     true,
 						},
 						"server_layout": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"security": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"preconnection_id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 2147483648),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"preconnection_blob": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 511),
-							Optional: true,
+							Optional:     true,
 						},
 						"load_balancing_info": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 511),
-							Optional: true,
+							Optional:     true,
 						},
 						"port": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"logon_user": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
+							Optional:     true,
 						},
 						"logon_password": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 128),
-							Optional: true,
+							Optional:     true,
 						},
 						"sso": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"form_data": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"name": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"value": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 63),
-										Optional: true,
+										Optional:     true,
 									},
 								},
 							},
 						},
 						"sso_credential": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"sso_username": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
+							Optional:     true,
 						},
 						"sso_password": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 128),
-							Optional: true,
+							Optional:     true,
 						},
 						"sso_credential_sent_once": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -274,7 +274,6 @@ func resourceVpnSslWebUserGroupBookmarkRead(d *schema.ResourceData, m interface{
 	}
 	return nil
 }
-
 
 func flattenVpnSslWebUserGroupBookmarkName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -564,10 +563,8 @@ func flattenVpnSslWebUserGroupBookmarkBookmarksSsoCredentialSentOnce(v interface
 	return v
 }
 
-
 func refreshObjectVpnSslWebUserGroupBookmark(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenVpnSslWebUserGroupBookmarkName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -575,22 +572,21 @@ func refreshObjectVpnSslWebUserGroupBookmark(d *schema.ResourceData, o map[strin
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("bookmarks", flattenVpnSslWebUserGroupBookmarkBookmarks(o["bookmarks"], d, "bookmarks")); err != nil {
-            if !fortiAPIPatch(o["bookmarks"]) {
-                return fmt.Errorf("Error reading bookmarks: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("bookmarks"); ok {
-            if err = d.Set("bookmarks", flattenVpnSslWebUserGroupBookmarkBookmarks(o["bookmarks"], d, "bookmarks")); err != nil {
-                if !fortiAPIPatch(o["bookmarks"]) {
-                    return fmt.Errorf("Error reading bookmarks: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("bookmarks", flattenVpnSslWebUserGroupBookmarkBookmarks(o["bookmarks"], d, "bookmarks")); err != nil {
+			if !fortiAPIPatch(o["bookmarks"]) {
+				return fmt.Errorf("Error reading bookmarks: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("bookmarks"); ok {
+			if err = d.Set("bookmarks", flattenVpnSslWebUserGroupBookmarkBookmarks(o["bookmarks"], d, "bookmarks")); err != nil {
+				if !fortiAPIPatch(o["bookmarks"]) {
+					return fmt.Errorf("Error reading bookmarks: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -600,7 +596,6 @@ func flattenVpnSslWebUserGroupBookmarkFortiTestDebug(d *schema.ResourceData, fos
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandVpnSslWebUserGroupBookmarkName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -618,7 +613,7 @@ func expandVpnSslWebUserGroupBookmarkBookmarks(d *schema.ResourceData, v interfa
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -838,7 +833,7 @@ func expandVpnSslWebUserGroupBookmarkBookmarksFormData(d *schema.ResourceData, v
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -882,10 +877,8 @@ func expandVpnSslWebUserGroupBookmarkBookmarksSsoCredentialSentOnce(d *schema.Re
 	return v, nil
 }
 
-
 func getObjectVpnSslWebUserGroupBookmark(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandVpnSslWebUserGroupBookmarkName(d, v, "name")
@@ -905,7 +898,5 @@ func getObjectVpnSslWebUserGroupBookmark(d *schema.ResourceData) (*map[string]in
 		}
 	}
 
-
 	return &obj, nil
 }
-

@@ -30,40 +30,40 @@ func resourceWebProxyWisp() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"comment": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
+				Optional:     true,
 			},
 			"outgoing_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"server_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"server_port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
-				Required: true,
+				Required:     true,
 			},
 			"max_connections": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(4, 4096),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"timeout": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 15),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
@@ -158,7 +158,6 @@ func resourceWebProxyWispRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenWebProxyWispName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -187,10 +186,8 @@ func flattenWebProxyWispTimeout(v interface{}, d *schema.ResourceData, pre strin
 	return v
 }
 
-
 func refreshObjectWebProxyWisp(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenWebProxyWispName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -234,7 +231,6 @@ func refreshObjectWebProxyWisp(d *schema.ResourceData, o map[string]interface{})
 		}
 	}
 
-
 	return nil
 }
 
@@ -243,7 +239,6 @@ func flattenWebProxyWispFortiTestDebug(d *schema.ResourceData, fosdebugsn int, f
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandWebProxyWispName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -273,10 +268,8 @@ func expandWebProxyWispTimeout(d *schema.ResourceData, v interface{}, pre string
 	return v, nil
 }
 
-
 func getObjectWebProxyWisp(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandWebProxyWispName(d, v, "name")
@@ -341,7 +334,5 @@ func getObjectWebProxyWisp(d *schema.ResourceData) (*map[string]interface{}, err
 		}
 	}
 
-
 	return &obj, nil
 }
-

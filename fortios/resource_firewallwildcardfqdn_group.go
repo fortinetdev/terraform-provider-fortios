@@ -30,43 +30,43 @@ func resourceFirewallWildcardFqdnGroup() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"uuid": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"member": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"color": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 32),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"comment": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
+				Optional:     true,
 			},
 			"visibility": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
@@ -163,7 +163,6 @@ func resourceFirewallWildcardFqdnGroupRead(d *schema.ResourceData, m interface{}
 	return nil
 }
 
-
 func flattenFirewallWildcardFqdnGroupName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -220,10 +219,8 @@ func flattenFirewallWildcardFqdnGroupVisibility(v interface{}, d *schema.Resourc
 	return v
 }
 
-
 func refreshObjectFirewallWildcardFqdnGroup(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenFirewallWildcardFqdnGroupName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -237,21 +234,21 @@ func refreshObjectFirewallWildcardFqdnGroup(d *schema.ResourceData, o map[string
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("member", flattenFirewallWildcardFqdnGroupMember(o["member"], d, "member")); err != nil {
-            if !fortiAPIPatch(o["member"]) {
-                return fmt.Errorf("Error reading member: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("member"); ok {
-            if err = d.Set("member", flattenFirewallWildcardFqdnGroupMember(o["member"], d, "member")); err != nil {
-                if !fortiAPIPatch(o["member"]) {
-                    return fmt.Errorf("Error reading member: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("member", flattenFirewallWildcardFqdnGroupMember(o["member"], d, "member")); err != nil {
+			if !fortiAPIPatch(o["member"]) {
+				return fmt.Errorf("Error reading member: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("member"); ok {
+			if err = d.Set("member", flattenFirewallWildcardFqdnGroupMember(o["member"], d, "member")); err != nil {
+				if !fortiAPIPatch(o["member"]) {
+					return fmt.Errorf("Error reading member: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("color", flattenFirewallWildcardFqdnGroupColor(o["color"], d, "color")); err != nil {
 		if !fortiAPIPatch(o["color"]) {
@@ -271,7 +268,6 @@ func refreshObjectFirewallWildcardFqdnGroup(d *schema.ResourceData, o map[string
 		}
 	}
 
-
 	return nil
 }
 
@@ -280,7 +276,6 @@ func flattenFirewallWildcardFqdnGroupFortiTestDebug(d *schema.ResourceData, fosd
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandFirewallWildcardFqdnGroupName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -302,7 +297,7 @@ func expandFirewallWildcardFqdnGroupMember(d *schema.ResourceData, v interface{}
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -333,10 +328,8 @@ func expandFirewallWildcardFqdnGroupVisibility(d *schema.ResourceData, v interfa
 	return v, nil
 }
 
-
 func getObjectFirewallWildcardFqdnGroup(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandFirewallWildcardFqdnGroupName(d, v, "name")
@@ -392,7 +385,5 @@ func getObjectFirewallWildcardFqdnGroup(d *schema.ResourceData) (*map[string]int
 		}
 	}
 
-
 	return &obj, nil
 }
-

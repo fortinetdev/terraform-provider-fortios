@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,41 +5,42 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSFirewallCentralSnatMap_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSFirewallCentralSnatMap_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSFirewallCentralSnatMap_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSFirewallCentralSnatMapConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSFirewallCentralSnatMapExists("fortios_firewall_centralsnatmap.trname"),
-                    resource.TestCheckResourceAttr("fortios_firewall_centralsnatmap.trname", "nat", "enable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_centralsnatmap.trname", "nat_port", "0"),
-                    resource.TestCheckResourceAttr("fortios_firewall_centralsnatmap.trname", "orig_port", "0"),
-                    resource.TestCheckResourceAttr("fortios_firewall_centralsnatmap.trname", "policyid", "1"),
-                    resource.TestCheckResourceAttr("fortios_firewall_centralsnatmap.trname", "protocol", "33"),
-                    resource.TestCheckResourceAttr("fortios_firewall_centralsnatmap.trname", "status", "enable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_centralsnatmap.trname", "dst_addr.0.name", "all"),
-                    resource.TestCheckResourceAttr("fortios_firewall_centralsnatmap.trname", "dstintf.0.name", "port3"),
-                    resource.TestCheckResourceAttr("fortios_firewall_centralsnatmap.trname", "orig_addr.0.name", "all"),
-                    resource.TestCheckResourceAttr("fortios_firewall_centralsnatmap.trname", "srcintf.0.name", "port1"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSFirewallCentralSnatMapConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSFirewallCentralSnatMapExists("fortios_firewall_centralsnatmap.trname"),
+					resource.TestCheckResourceAttr("fortios_firewall_centralsnatmap.trname", "nat", "enable"),
+					resource.TestCheckResourceAttr("fortios_firewall_centralsnatmap.trname", "nat_port", "0"),
+					resource.TestCheckResourceAttr("fortios_firewall_centralsnatmap.trname", "orig_port", "0"),
+					resource.TestCheckResourceAttr("fortios_firewall_centralsnatmap.trname", "policyid", "1"),
+					resource.TestCheckResourceAttr("fortios_firewall_centralsnatmap.trname", "protocol", "33"),
+					resource.TestCheckResourceAttr("fortios_firewall_centralsnatmap.trname", "status", "enable"),
+					resource.TestCheckResourceAttr("fortios_firewall_centralsnatmap.trname", "dst_addr.0.name", "all"),
+					resource.TestCheckResourceAttr("fortios_firewall_centralsnatmap.trname", "dstintf.0.name", "port3"),
+					resource.TestCheckResourceAttr("fortios_firewall_centralsnatmap.trname", "orig_addr.0.name", "all"),
+					resource.TestCheckResourceAttr("fortios_firewall_centralsnatmap.trname", "srcintf.0.name", "port1"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSFirewallCentralSnatMapExists(n string) resource.TestCheckFunc {

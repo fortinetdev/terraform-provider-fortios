@@ -30,47 +30,47 @@ func resourceFirewallSshHostKey() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"nid": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"hostname": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"public_key": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 32768),
-				Optional: true,
+				Optional:     true,
 			},
 		},
 	}
@@ -165,7 +165,6 @@ func resourceFirewallSshHostKeyRead(d *schema.ResourceData, m interface{}) error
 	return nil
 }
 
-
 func flattenFirewallSshHostKeyName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -198,10 +197,8 @@ func flattenFirewallSshHostKeyPublicKey(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
-
 func refreshObjectFirewallSshHostKey(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenFirewallSshHostKeyName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -251,7 +248,6 @@ func refreshObjectFirewallSshHostKey(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
-
 	return nil
 }
 
@@ -260,7 +256,6 @@ func flattenFirewallSshHostKeyFortiTestDebug(d *schema.ResourceData, fosdebugsn 
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandFirewallSshHostKeyName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -294,10 +289,8 @@ func expandFirewallSshHostKeyPublicKey(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
-
 func getObjectFirewallSshHostKey(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandFirewallSshHostKeyName(d, v, "name")
@@ -371,7 +364,5 @@ func getObjectFirewallSshHostKey(d *schema.ResourceData) (*map[string]interface{
 		}
 	}
 
-
 	return &obj, nil
 }
-

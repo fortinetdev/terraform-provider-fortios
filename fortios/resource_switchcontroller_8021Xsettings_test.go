@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,34 +5,35 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSwitchController8021XSettings_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSwitchController8021XSettings_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSwitchController8021XSettings_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSwitchController8021XSettingsConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSwitchController8021XSettingsExists("fortios_switchcontroller_8021Xsettings.trname"),
-                    resource.TestCheckResourceAttr("fortios_switchcontroller_8021Xsettings.trname", "link_down_auth", "set-unauth"),
-                    resource.TestCheckResourceAttr("fortios_switchcontroller_8021Xsettings.trname", "max_reauth_attempt", "3"),
-                    resource.TestCheckResourceAttr("fortios_switchcontroller_8021Xsettings.trname", "reauth_period", "12"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSwitchController8021XSettingsConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSwitchController8021XSettingsExists("fortios_switchcontroller_8021Xsettings.trname"),
+					resource.TestCheckResourceAttr("fortios_switchcontroller_8021Xsettings.trname", "link_down_auth", "set-unauth"),
+					resource.TestCheckResourceAttr("fortios_switchcontroller_8021Xsettings.trname", "max_reauth_attempt", "3"),
+					resource.TestCheckResourceAttr("fortios_switchcontroller_8021Xsettings.trname", "reauth_period", "12"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSwitchController8021XSettingsExists(n string) resource.TestCheckFunc {

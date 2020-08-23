@@ -30,69 +30,69 @@ func resourceSwitchControllerQosQueuePolicy() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Required: true,
+				Required:     true,
 			},
 			"schedule": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"rate_by": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"cos_queue": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"description": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"min_rate": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"max_rate": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"min_rate_percent": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"max_rate_percent": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"drop_policy": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"weight": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -189,7 +189,6 @@ func resourceSwitchControllerQosQueuePolicyRead(d *schema.ResourceData, m interf
 	}
 	return nil
 }
-
 
 func flattenSwitchControllerQosQueuePolicyName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -302,10 +301,8 @@ func flattenSwitchControllerQosQueuePolicyCosQueueWeight(v interface{}, d *schem
 	return v
 }
 
-
 func refreshObjectSwitchControllerQosQueuePolicy(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenSwitchControllerQosQueuePolicyName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -325,22 +322,21 @@ func refreshObjectSwitchControllerQosQueuePolicy(d *schema.ResourceData, o map[s
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("cos_queue", flattenSwitchControllerQosQueuePolicyCosQueue(o["cos-queue"], d, "cos_queue")); err != nil {
-            if !fortiAPIPatch(o["cos-queue"]) {
-                return fmt.Errorf("Error reading cos_queue: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("cos_queue"); ok {
-            if err = d.Set("cos_queue", flattenSwitchControllerQosQueuePolicyCosQueue(o["cos-queue"], d, "cos_queue")); err != nil {
-                if !fortiAPIPatch(o["cos-queue"]) {
-                    return fmt.Errorf("Error reading cos_queue: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("cos_queue", flattenSwitchControllerQosQueuePolicyCosQueue(o["cos-queue"], d, "cos_queue")); err != nil {
+			if !fortiAPIPatch(o["cos-queue"]) {
+				return fmt.Errorf("Error reading cos_queue: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("cos_queue"); ok {
+			if err = d.Set("cos_queue", flattenSwitchControllerQosQueuePolicyCosQueue(o["cos-queue"], d, "cos_queue")); err != nil {
+				if !fortiAPIPatch(o["cos-queue"]) {
+					return fmt.Errorf("Error reading cos_queue: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -350,7 +346,6 @@ func flattenSwitchControllerQosQueuePolicyFortiTestDebug(d *schema.ResourceData,
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSwitchControllerQosQueuePolicyName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -376,7 +371,7 @@ func expandSwitchControllerQosQueuePolicyCosQueue(d *schema.ResourceData, v inte
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -458,10 +453,8 @@ func expandSwitchControllerQosQueuePolicyCosQueueWeight(d *schema.ResourceData, 
 	return v, nil
 }
 
-
 func getObjectSwitchControllerQosQueuePolicy(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandSwitchControllerQosQueuePolicyName(d, v, "name")
@@ -499,7 +492,5 @@ func getObjectSwitchControllerQosQueuePolicy(d *schema.ResourceData) (*map[strin
 		}
 	}
 
-
 	return &obj, nil
 }
-

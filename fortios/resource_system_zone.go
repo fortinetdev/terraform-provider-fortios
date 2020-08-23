@@ -30,38 +30,38 @@ func resourceSystemZone() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"tagging": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"category": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"tags": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"name": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 64),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
@@ -70,20 +70,20 @@ func resourceSystemZone() *schema.Resource {
 				},
 			},
 			"intrazone": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"interface": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"interface_name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -180,7 +180,6 @@ func resourceSystemZoneRead(d *schema.ResourceData, m interface{}) error {
 	}
 	return nil
 }
-
 
 func flattenSystemZoneName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -312,10 +311,8 @@ func flattenSystemZoneInterfaceInterfaceName(v interface{}, d *schema.ResourceDa
 	return v
 }
 
-
 func refreshObjectSystemZone(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenSystemZoneName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -323,21 +320,21 @@ func refreshObjectSystemZone(d *schema.ResourceData, o map[string]interface{}) e
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("tagging", flattenSystemZoneTagging(o["tagging"], d, "tagging")); err != nil {
-            if !fortiAPIPatch(o["tagging"]) {
-                return fmt.Errorf("Error reading tagging: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("tagging"); ok {
-            if err = d.Set("tagging", flattenSystemZoneTagging(o["tagging"], d, "tagging")); err != nil {
-                if !fortiAPIPatch(o["tagging"]) {
-                    return fmt.Errorf("Error reading tagging: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("tagging", flattenSystemZoneTagging(o["tagging"], d, "tagging")); err != nil {
+			if !fortiAPIPatch(o["tagging"]) {
+				return fmt.Errorf("Error reading tagging: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("tagging"); ok {
+			if err = d.Set("tagging", flattenSystemZoneTagging(o["tagging"], d, "tagging")); err != nil {
+				if !fortiAPIPatch(o["tagging"]) {
+					return fmt.Errorf("Error reading tagging: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("intrazone", flattenSystemZoneIntrazone(o["intrazone"], d, "intrazone")); err != nil {
 		if !fortiAPIPatch(o["intrazone"]) {
@@ -345,22 +342,21 @@ func refreshObjectSystemZone(d *schema.ResourceData, o map[string]interface{}) e
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("interface", flattenSystemZoneInterface(o["interface"], d, "interface")); err != nil {
-            if !fortiAPIPatch(o["interface"]) {
-                return fmt.Errorf("Error reading interface: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("interface"); ok {
-            if err = d.Set("interface", flattenSystemZoneInterface(o["interface"], d, "interface")); err != nil {
-                if !fortiAPIPatch(o["interface"]) {
-                    return fmt.Errorf("Error reading interface: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("interface", flattenSystemZoneInterface(o["interface"], d, "interface")); err != nil {
+			if !fortiAPIPatch(o["interface"]) {
+				return fmt.Errorf("Error reading interface: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("interface"); ok {
+			if err = d.Set("interface", flattenSystemZoneInterface(o["interface"], d, "interface")); err != nil {
+				if !fortiAPIPatch(o["interface"]) {
+					return fmt.Errorf("Error reading interface: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -370,7 +366,6 @@ func flattenSystemZoneFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fos
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemZoneName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -388,7 +383,7 @@ func expandSystemZoneTagging(d *schema.ResourceData, v interface{}, pre string) 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -435,7 +430,7 @@ func expandSystemZoneTaggingTags(d *schema.ResourceData, v interface{}, pre stri
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -470,7 +465,7 @@ func expandSystemZoneInterface(d *schema.ResourceData, v interface{}, pre string
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -489,10 +484,8 @@ func expandSystemZoneInterfaceInterfaceName(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
-
 func getObjectSystemZone(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandSystemZoneName(d, v, "name")
@@ -530,7 +523,5 @@ func getObjectSystemZone(d *schema.ResourceData) (*map[string]interface{}, error
 		}
 	}
 
-
 	return &obj, nil
 }
-

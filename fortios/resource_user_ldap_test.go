@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,48 +5,49 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSUserLdap_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSUserLdap_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSUserLdap_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSUserLdapConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSUserLdapExists("fortios_user_ldap.trname"),
-                    resource.TestCheckResourceAttr("fortios_user_ldap.trname", "account_key_filter", "(&(userPrincipalName=%s)(!(UserAccountControl:1.2.840.113556.1.4.803:=2)))"),
-                    resource.TestCheckResourceAttr("fortios_user_ldap.trname", "account_key_processing", "same"),
-                    resource.TestCheckResourceAttr("fortios_user_ldap.trname", "cnid", "cn"),
-                    resource.TestCheckResourceAttr("fortios_user_ldap.trname", "dn", "EIWNCIEW"),
-                    resource.TestCheckResourceAttr("fortios_user_ldap.trname", "group_member_check", "user-attr"),
-                    resource.TestCheckResourceAttr("fortios_user_ldap.trname", "group_object_filter", "(&(objectcategory=group)(member=*))"),
-                    resource.TestCheckResourceAttr("fortios_user_ldap.trname", "member_attr", "memberOf"),
-                    resource.TestCheckResourceAttr("fortios_user_ldap.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_user_ldap.trname", "password_expiry_warning", "disable"),
-                    resource.TestCheckResourceAttr("fortios_user_ldap.trname", "password_renewal", "disable"),
-                    resource.TestCheckResourceAttr("fortios_user_ldap.trname", "port", "389"),
-                    resource.TestCheckResourceAttr("fortios_user_ldap.trname", "secure", "disable"),
-                    resource.TestCheckResourceAttr("fortios_user_ldap.trname", "server", "1.1.1.1"),
-                    resource.TestCheckResourceAttr("fortios_user_ldap.trname", "server_identity_check", "disable"),
-                    resource.TestCheckResourceAttr("fortios_user_ldap.trname", "source_ip", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_user_ldap.trname", "ssl_min_proto_version", "default"),
-                    resource.TestCheckResourceAttr("fortios_user_ldap.trname", "type", "simple"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSUserLdapConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSUserLdapExists("fortios_user_ldap.trname"),
+					resource.TestCheckResourceAttr("fortios_user_ldap.trname", "account_key_filter", "(&(userPrincipalName=%s)(!(UserAccountControl:1.2.840.113556.1.4.803:=2)))"),
+					resource.TestCheckResourceAttr("fortios_user_ldap.trname", "account_key_processing", "same"),
+					resource.TestCheckResourceAttr("fortios_user_ldap.trname", "cnid", "cn"),
+					resource.TestCheckResourceAttr("fortios_user_ldap.trname", "dn", "EIWNCIEW"),
+					resource.TestCheckResourceAttr("fortios_user_ldap.trname", "group_member_check", "user-attr"),
+					resource.TestCheckResourceAttr("fortios_user_ldap.trname", "group_object_filter", "(&(objectcategory=group)(member=*))"),
+					resource.TestCheckResourceAttr("fortios_user_ldap.trname", "member_attr", "memberOf"),
+					resource.TestCheckResourceAttr("fortios_user_ldap.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_user_ldap.trname", "password_expiry_warning", "disable"),
+					resource.TestCheckResourceAttr("fortios_user_ldap.trname", "password_renewal", "disable"),
+					resource.TestCheckResourceAttr("fortios_user_ldap.trname", "port", "389"),
+					resource.TestCheckResourceAttr("fortios_user_ldap.trname", "secure", "disable"),
+					resource.TestCheckResourceAttr("fortios_user_ldap.trname", "server", "1.1.1.1"),
+					resource.TestCheckResourceAttr("fortios_user_ldap.trname", "server_identity_check", "disable"),
+					resource.TestCheckResourceAttr("fortios_user_ldap.trname", "source_ip", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_user_ldap.trname", "ssl_min_proto_version", "default"),
+					resource.TestCheckResourceAttr("fortios_user_ldap.trname", "type", "simple"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSUserLdapExists(n string) resource.TestCheckFunc {

@@ -30,23 +30,22 @@ func resourceFirewallIpmacbindingSetting() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"bindthroughfw": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"bindtofw": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"undefinedhost": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 		},
 	}
 }
-
 
 func resourceFirewallIpmacbindingSettingUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -113,7 +112,6 @@ func resourceFirewallIpmacbindingSettingRead(d *schema.ResourceData, m interface
 	return nil
 }
 
-
 func flattenFirewallIpmacbindingSettingBindthroughfw(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -126,10 +124,8 @@ func flattenFirewallIpmacbindingSettingUndefinedhost(v interface{}, d *schema.Re
 	return v
 }
 
-
 func refreshObjectFirewallIpmacbindingSetting(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("bindthroughfw", flattenFirewallIpmacbindingSettingBindthroughfw(o["bindthroughfw"], d, "bindthroughfw")); err != nil {
 		if !fortiAPIPatch(o["bindthroughfw"]) {
@@ -149,7 +145,6 @@ func refreshObjectFirewallIpmacbindingSetting(d *schema.ResourceData, o map[stri
 		}
 	}
 
-
 	return nil
 }
 
@@ -158,7 +153,6 @@ func flattenFirewallIpmacbindingSettingFortiTestDebug(d *schema.ResourceData, fo
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandFirewallIpmacbindingSettingBindthroughfw(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -172,10 +166,8 @@ func expandFirewallIpmacbindingSettingUndefinedhost(d *schema.ResourceData, v in
 	return v, nil
 }
 
-
 func getObjectFirewallIpmacbindingSetting(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("bindthroughfw"); ok {
 		t, err := expandFirewallIpmacbindingSettingBindthroughfw(d, v, "bindthroughfw")
@@ -204,7 +196,5 @@ func getObjectFirewallIpmacbindingSetting(d *schema.ResourceData) (*map[string]i
 		}
 	}
 
-
 	return &obj, nil
 }
-

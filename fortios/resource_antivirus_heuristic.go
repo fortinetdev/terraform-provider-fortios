@@ -30,14 +30,13 @@ func resourceAntivirusHeuristic() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"mode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceAntivirusHeuristicUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -104,22 +103,18 @@ func resourceAntivirusHeuristicRead(d *schema.ResourceData, m interface{}) error
 	return nil
 }
 
-
 func flattenAntivirusHeuristicMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
-
 func refreshObjectAntivirusHeuristic(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("mode", flattenAntivirusHeuristicMode(o["mode"], d, "mode")); err != nil {
 		if !fortiAPIPatch(o["mode"]) {
 			return fmt.Errorf("Error reading mode: %v", err)
 		}
 	}
-
 
 	return nil
 }
@@ -130,15 +125,12 @@ func flattenAntivirusHeuristicFortiTestDebug(d *schema.ResourceData, fosdebugsn 
 	log.Printf("ER List: %v", e)
 }
 
-
 func expandAntivirusHeuristicMode(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
 }
 
-
 func getObjectAntivirusHeuristic(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("mode"); ok {
 		t, err := expandAntivirusHeuristicMode(d, v, "mode")
@@ -149,7 +141,5 @@ func getObjectAntivirusHeuristic(d *schema.ResourceData) (*map[string]interface{
 		}
 	}
 
-
 	return &obj, nil
 }
-

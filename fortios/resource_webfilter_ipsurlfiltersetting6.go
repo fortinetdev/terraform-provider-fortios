@@ -30,31 +30,30 @@ func resourceWebfilterIpsUrlfilterSetting6() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"device": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"distance": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"gateway6": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"geo_filter": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
+				Optional:     true,
 			},
 		},
 	}
 }
-
 
 func resourceWebfilterIpsUrlfilterSetting6Update(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -121,7 +120,6 @@ func resourceWebfilterIpsUrlfilterSetting6Read(d *schema.ResourceData, m interfa
 	return nil
 }
 
-
 func flattenWebfilterIpsUrlfilterSetting6Device(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -138,10 +136,8 @@ func flattenWebfilterIpsUrlfilterSetting6GeoFilter(v interface{}, d *schema.Reso
 	return v
 }
 
-
 func refreshObjectWebfilterIpsUrlfilterSetting6(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("device", flattenWebfilterIpsUrlfilterSetting6Device(o["device"], d, "device")); err != nil {
 		if !fortiAPIPatch(o["device"]) {
@@ -167,7 +163,6 @@ func refreshObjectWebfilterIpsUrlfilterSetting6(d *schema.ResourceData, o map[st
 		}
 	}
 
-
 	return nil
 }
 
@@ -176,7 +171,6 @@ func flattenWebfilterIpsUrlfilterSetting6FortiTestDebug(d *schema.ResourceData, 
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandWebfilterIpsUrlfilterSetting6Device(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -194,10 +188,8 @@ func expandWebfilterIpsUrlfilterSetting6GeoFilter(d *schema.ResourceData, v inte
 	return v, nil
 }
 
-
 func getObjectWebfilterIpsUrlfilterSetting6(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("device"); ok {
 		t, err := expandWebfilterIpsUrlfilterSetting6Device(d, v, "device")
@@ -235,7 +227,5 @@ func getObjectWebfilterIpsUrlfilterSetting6(d *schema.ResourceData) (*map[string
 		}
 	}
 
-
 	return &obj, nil
 }
-

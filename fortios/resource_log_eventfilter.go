@@ -30,64 +30,63 @@ func resourceLogEventfilter() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"event": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"system": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"vpn": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"user": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"router": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"wireless_activity": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"wan_opt": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"endpoint": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ha": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"compliance_check": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"security_rating": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceLogEventfilterUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -154,7 +153,6 @@ func resourceLogEventfilterRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenLogEventfilterEvent(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -199,10 +197,8 @@ func flattenLogEventfilterSecurityRating(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
-
 func refreshObjectLogEventfilter(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("event", flattenLogEventfilterEvent(o["event"], d, "event")); err != nil {
 		if !fortiAPIPatch(o["event"]) {
@@ -270,7 +266,6 @@ func refreshObjectLogEventfilter(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-
 	return nil
 }
 
@@ -279,7 +274,6 @@ func flattenLogEventfilterFortiTestDebug(d *schema.ResourceData, fosdebugsn int,
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandLogEventfilterEvent(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -325,10 +319,8 @@ func expandLogEventfilterSecurityRating(d *schema.ResourceData, v interface{}, p
 	return v, nil
 }
 
-
 func getObjectLogEventfilter(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("event"); ok {
 		t, err := expandLogEventfilterEvent(d, v, "event")
@@ -429,7 +421,5 @@ func getObjectLogEventfilter(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-
 	return &obj, nil
 }
-

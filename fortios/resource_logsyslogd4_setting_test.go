@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,39 +5,40 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSLogSyslogd4Setting_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSLogSyslogd4Setting_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSLogSyslogd4Setting_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSLogSyslogd4SettingConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSLogSyslogd4SettingExists("fortios_logsyslogd4_setting.trname"),
-                    resource.TestCheckResourceAttr("fortios_logsyslogd4_setting.trname", "enc_algorithm", "disable"),
-                    resource.TestCheckResourceAttr("fortios_logsyslogd4_setting.trname", "facility", "local7"),
-                    resource.TestCheckResourceAttr("fortios_logsyslogd4_setting.trname", "format", "default"),
-                    resource.TestCheckResourceAttr("fortios_logsyslogd4_setting.trname", "mode", "udp"),
-                    resource.TestCheckResourceAttr("fortios_logsyslogd4_setting.trname", "port", "514"),
-                    resource.TestCheckResourceAttr("fortios_logsyslogd4_setting.trname", "ssl_min_proto_version", "default"),
-                    resource.TestCheckResourceAttr("fortios_logsyslogd4_setting.trname", "status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_logsyslogd4_setting.trname", "syslog_type", "4"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSLogSyslogd4SettingConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSLogSyslogd4SettingExists("fortios_logsyslogd4_setting.trname"),
+					resource.TestCheckResourceAttr("fortios_logsyslogd4_setting.trname", "enc_algorithm", "disable"),
+					resource.TestCheckResourceAttr("fortios_logsyslogd4_setting.trname", "facility", "local7"),
+					resource.TestCheckResourceAttr("fortios_logsyslogd4_setting.trname", "format", "default"),
+					resource.TestCheckResourceAttr("fortios_logsyslogd4_setting.trname", "mode", "udp"),
+					resource.TestCheckResourceAttr("fortios_logsyslogd4_setting.trname", "port", "514"),
+					resource.TestCheckResourceAttr("fortios_logsyslogd4_setting.trname", "ssl_min_proto_version", "default"),
+					resource.TestCheckResourceAttr("fortios_logsyslogd4_setting.trname", "status", "disable"),
+					resource.TestCheckResourceAttr("fortios_logsyslogd4_setting.trname", "syslog_type", "4"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSLogSyslogd4SettingExists(n string) resource.TestCheckFunc {

@@ -30,39 +30,38 @@ func resourceLogFortiguardOverrideSetting() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"override": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"upload_option": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"upload_interval": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"upload_day": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"upload_time": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceLogFortiguardOverrideSettingUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -129,7 +128,6 @@ func resourceLogFortiguardOverrideSettingRead(d *schema.ResourceData, m interfac
 	return nil
 }
 
-
 func flattenLogFortiguardOverrideSettingOverride(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -154,10 +152,8 @@ func flattenLogFortiguardOverrideSettingUploadTime(v interface{}, d *schema.Reso
 	return v
 }
 
-
 func refreshObjectLogFortiguardOverrideSetting(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("override", flattenLogFortiguardOverrideSettingOverride(o["override"], d, "override")); err != nil {
 		if !fortiAPIPatch(o["override"]) {
@@ -195,7 +191,6 @@ func refreshObjectLogFortiguardOverrideSetting(d *schema.ResourceData, o map[str
 		}
 	}
 
-
 	return nil
 }
 
@@ -204,7 +199,6 @@ func flattenLogFortiguardOverrideSettingFortiTestDebug(d *schema.ResourceData, f
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandLogFortiguardOverrideSettingOverride(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -230,10 +224,8 @@ func expandLogFortiguardOverrideSettingUploadTime(d *schema.ResourceData, v inte
 	return v, nil
 }
 
-
 func getObjectLogFortiguardOverrideSetting(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("override"); ok {
 		t, err := expandLogFortiguardOverrideSettingOverride(d, v, "override")
@@ -289,7 +281,5 @@ func getObjectLogFortiguardOverrideSetting(d *schema.ResourceData) (*map[string]
 		}
 	}
 
-
 	return &obj, nil
 }
-

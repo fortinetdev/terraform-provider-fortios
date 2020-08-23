@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,72 +5,73 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSFirewallPolicy6_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSFirewallPolicy6_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSFirewallPolicy6_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSFirewallPolicy6Config(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSFirewallPolicy6Exists("fortios_firewall_policy6.trname"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "action", "deny"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "diffserv_forward", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "diffserv_reverse", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "diffservcode_forward", "000000"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "diffservcode_rev", "000000"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "dsri", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "dstaddr_negate", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "firewall_session_dirty", "check-all"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "fixedport", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "inbound", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "ippool", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "logtraffic", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "logtraffic_start", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "nat", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "natinbound", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "natoutbound", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "outbound", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "policyid", "1"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "profile_protocol_options", "default"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "profile_type", "single"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "rsso", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "schedule", "always"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "send_deny_packet", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "service_negate", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "srcaddr_negate", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "ssl_mirror", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "status", "enable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "tcp_mss_receiver", "0"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "tcp_mss_sender", "0"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "tcp_session_without_syn", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "timeout_send_rst", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "tos", "0x00"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "tos_mask", "0x00"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "tos_negate", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "utm_status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "dstaddr.0.name", "all"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "dstintf.0.name", "port3"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "service.0.name", "ALL"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "srcaddr.0.name", "all"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "srcintf.0.name", "port4"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSFirewallPolicy6Config(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSFirewallPolicy6Exists("fortios_firewall_policy6.trname"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "action", "deny"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "diffserv_forward", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "diffserv_reverse", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "diffservcode_forward", "000000"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "diffservcode_rev", "000000"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "dsri", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "dstaddr_negate", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "firewall_session_dirty", "check-all"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "fixedport", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "inbound", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "ippool", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "logtraffic", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "logtraffic_start", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "nat", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "natinbound", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "natoutbound", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "outbound", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "policyid", "1"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "profile_protocol_options", "default"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "profile_type", "single"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "rsso", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "schedule", "always"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "send_deny_packet", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "service_negate", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "srcaddr_negate", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "ssl_mirror", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "status", "enable"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "tcp_mss_receiver", "0"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "tcp_mss_sender", "0"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "tcp_session_without_syn", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "timeout_send_rst", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "tos", "0x00"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "tos_mask", "0x00"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "tos_negate", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "utm_status", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "dstaddr.0.name", "all"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "dstintf.0.name", "port3"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "service.0.name", "ALL"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "srcaddr.0.name", "all"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy6.trname", "srcintf.0.name", "port4"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSFirewallPolicy6Exists(n string) resource.TestCheckFunc {

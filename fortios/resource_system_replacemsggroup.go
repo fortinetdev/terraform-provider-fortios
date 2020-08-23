@@ -30,43 +30,43 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"comment": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
+				Optional:     true,
 			},
 			"group_type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"mail": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"msg_type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"buffer": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 32768),
-							Optional: true,
+							Optional:     true,
 						},
 						"header": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"format": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -74,28 +74,28 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 				},
 			},
 			"http": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"msg_type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"buffer": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 32768),
-							Optional: true,
+							Optional:     true,
 						},
 						"header": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"format": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -103,28 +103,28 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 				},
 			},
 			"webproxy": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"msg_type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"buffer": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 32768),
-							Optional: true,
+							Optional:     true,
 						},
 						"header": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"format": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -132,28 +132,28 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 				},
 			},
 			"ftp": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"msg_type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"buffer": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 32768),
-							Optional: true,
+							Optional:     true,
 						},
 						"header": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"format": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -161,28 +161,28 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 				},
 			},
 			"nntp": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"msg_type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"buffer": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 32768),
-							Optional: true,
+							Optional:     true,
 						},
 						"header": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"format": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -190,28 +190,28 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 				},
 			},
 			"fortiguard_wf": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"msg_type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"buffer": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 32768),
-							Optional: true,
+							Optional:     true,
 						},
 						"header": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"format": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -219,28 +219,28 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 				},
 			},
 			"spam": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"msg_type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"buffer": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 32768),
-							Optional: true,
+							Optional:     true,
 						},
 						"header": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"format": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -248,28 +248,28 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 				},
 			},
 			"alertmail": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"msg_type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"buffer": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 32768),
-							Optional: true,
+							Optional:     true,
 						},
 						"header": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"format": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -277,28 +277,28 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 				},
 			},
 			"admin": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"msg_type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"buffer": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 32768),
-							Optional: true,
+							Optional:     true,
 						},
 						"header": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"format": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -306,28 +306,28 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 				},
 			},
 			"auth": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"msg_type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"buffer": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 32768),
-							Optional: true,
+							Optional:     true,
 						},
 						"header": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"format": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -335,28 +335,28 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 				},
 			},
 			"sslvpn": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"msg_type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"buffer": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 32768),
-							Optional: true,
+							Optional:     true,
 						},
 						"header": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"format": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -364,28 +364,28 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 				},
 			},
 			"ec": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"msg_type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"buffer": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 32768),
-							Optional: true,
+							Optional:     true,
 						},
 						"header": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"format": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -393,28 +393,28 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 				},
 			},
 			"device_detection_portal": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"msg_type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"buffer": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 32768),
-							Optional: true,
+							Optional:     true,
 						},
 						"header": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"format": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -422,28 +422,28 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 				},
 			},
 			"nac_quar": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"msg_type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"buffer": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 32768),
-							Optional: true,
+							Optional:     true,
 						},
 						"header": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"format": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -451,28 +451,28 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 				},
 			},
 			"traffic_quota": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"msg_type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"buffer": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 32768),
-							Optional: true,
+							Optional:     true,
 						},
 						"header": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"format": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -480,28 +480,28 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 				},
 			},
 			"utm": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"msg_type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"buffer": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 32768),
-							Optional: true,
+							Optional:     true,
 						},
 						"header": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"format": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -509,28 +509,28 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 				},
 			},
 			"custom_message": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"msg_type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"buffer": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 32768),
-							Optional: true,
+							Optional:     true,
 						},
 						"header": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"format": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -538,28 +538,28 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 				},
 			},
 			"icap": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"msg_type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 28),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"buffer": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 32768),
-							Optional: true,
+							Optional:     true,
 						},
 						"header": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"format": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -658,7 +658,6 @@ func resourceSystemReplacemsgGroupRead(d *schema.ResourceData, m interface{}) er
 	}
 	return nil
 }
-
 
 func flattenSystemReplacemsgGroupName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -1806,10 +1805,8 @@ func flattenSystemReplacemsgGroupIcapFormat(v interface{}, d *schema.ResourceDat
 	return v
 }
 
-
 func refreshObjectSystemReplacemsgGroup(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenSystemReplacemsgGroupName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -1829,294 +1826,293 @@ func refreshObjectSystemReplacemsgGroup(d *schema.ResourceData, o map[string]int
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("mail", flattenSystemReplacemsgGroupMail(o["mail"], d, "mail")); err != nil {
-            if !fortiAPIPatch(o["mail"]) {
-                return fmt.Errorf("Error reading mail: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("mail"); ok {
-            if err = d.Set("mail", flattenSystemReplacemsgGroupMail(o["mail"], d, "mail")); err != nil {
-                if !fortiAPIPatch(o["mail"]) {
-                    return fmt.Errorf("Error reading mail: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("mail", flattenSystemReplacemsgGroupMail(o["mail"], d, "mail")); err != nil {
+			if !fortiAPIPatch(o["mail"]) {
+				return fmt.Errorf("Error reading mail: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("mail"); ok {
+			if err = d.Set("mail", flattenSystemReplacemsgGroupMail(o["mail"], d, "mail")); err != nil {
+				if !fortiAPIPatch(o["mail"]) {
+					return fmt.Errorf("Error reading mail: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("http", flattenSystemReplacemsgGroupHttp(o["http"], d, "http")); err != nil {
-            if !fortiAPIPatch(o["http"]) {
-                return fmt.Errorf("Error reading http: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("http"); ok {
-            if err = d.Set("http", flattenSystemReplacemsgGroupHttp(o["http"], d, "http")); err != nil {
-                if !fortiAPIPatch(o["http"]) {
-                    return fmt.Errorf("Error reading http: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("http", flattenSystemReplacemsgGroupHttp(o["http"], d, "http")); err != nil {
+			if !fortiAPIPatch(o["http"]) {
+				return fmt.Errorf("Error reading http: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("http"); ok {
+			if err = d.Set("http", flattenSystemReplacemsgGroupHttp(o["http"], d, "http")); err != nil {
+				if !fortiAPIPatch(o["http"]) {
+					return fmt.Errorf("Error reading http: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("webproxy", flattenSystemReplacemsgGroupWebproxy(o["webproxy"], d, "webproxy")); err != nil {
-            if !fortiAPIPatch(o["webproxy"]) {
-                return fmt.Errorf("Error reading webproxy: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("webproxy"); ok {
-            if err = d.Set("webproxy", flattenSystemReplacemsgGroupWebproxy(o["webproxy"], d, "webproxy")); err != nil {
-                if !fortiAPIPatch(o["webproxy"]) {
-                    return fmt.Errorf("Error reading webproxy: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("webproxy", flattenSystemReplacemsgGroupWebproxy(o["webproxy"], d, "webproxy")); err != nil {
+			if !fortiAPIPatch(o["webproxy"]) {
+				return fmt.Errorf("Error reading webproxy: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("webproxy"); ok {
+			if err = d.Set("webproxy", flattenSystemReplacemsgGroupWebproxy(o["webproxy"], d, "webproxy")); err != nil {
+				if !fortiAPIPatch(o["webproxy"]) {
+					return fmt.Errorf("Error reading webproxy: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("ftp", flattenSystemReplacemsgGroupFtp(o["ftp"], d, "ftp")); err != nil {
-            if !fortiAPIPatch(o["ftp"]) {
-                return fmt.Errorf("Error reading ftp: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("ftp"); ok {
-            if err = d.Set("ftp", flattenSystemReplacemsgGroupFtp(o["ftp"], d, "ftp")); err != nil {
-                if !fortiAPIPatch(o["ftp"]) {
-                    return fmt.Errorf("Error reading ftp: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("ftp", flattenSystemReplacemsgGroupFtp(o["ftp"], d, "ftp")); err != nil {
+			if !fortiAPIPatch(o["ftp"]) {
+				return fmt.Errorf("Error reading ftp: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("ftp"); ok {
+			if err = d.Set("ftp", flattenSystemReplacemsgGroupFtp(o["ftp"], d, "ftp")); err != nil {
+				if !fortiAPIPatch(o["ftp"]) {
+					return fmt.Errorf("Error reading ftp: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("nntp", flattenSystemReplacemsgGroupNntp(o["nntp"], d, "nntp")); err != nil {
-            if !fortiAPIPatch(o["nntp"]) {
-                return fmt.Errorf("Error reading nntp: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("nntp"); ok {
-            if err = d.Set("nntp", flattenSystemReplacemsgGroupNntp(o["nntp"], d, "nntp")); err != nil {
-                if !fortiAPIPatch(o["nntp"]) {
-                    return fmt.Errorf("Error reading nntp: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("nntp", flattenSystemReplacemsgGroupNntp(o["nntp"], d, "nntp")); err != nil {
+			if !fortiAPIPatch(o["nntp"]) {
+				return fmt.Errorf("Error reading nntp: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("nntp"); ok {
+			if err = d.Set("nntp", flattenSystemReplacemsgGroupNntp(o["nntp"], d, "nntp")); err != nil {
+				if !fortiAPIPatch(o["nntp"]) {
+					return fmt.Errorf("Error reading nntp: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("fortiguard_wf", flattenSystemReplacemsgGroupFortiguardWf(o["fortiguard-wf"], d, "fortiguard_wf")); err != nil {
-            if !fortiAPIPatch(o["fortiguard-wf"]) {
-                return fmt.Errorf("Error reading fortiguard_wf: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("fortiguard_wf"); ok {
-            if err = d.Set("fortiguard_wf", flattenSystemReplacemsgGroupFortiguardWf(o["fortiguard-wf"], d, "fortiguard_wf")); err != nil {
-                if !fortiAPIPatch(o["fortiguard-wf"]) {
-                    return fmt.Errorf("Error reading fortiguard_wf: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("fortiguard_wf", flattenSystemReplacemsgGroupFortiguardWf(o["fortiguard-wf"], d, "fortiguard_wf")); err != nil {
+			if !fortiAPIPatch(o["fortiguard-wf"]) {
+				return fmt.Errorf("Error reading fortiguard_wf: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("fortiguard_wf"); ok {
+			if err = d.Set("fortiguard_wf", flattenSystemReplacemsgGroupFortiguardWf(o["fortiguard-wf"], d, "fortiguard_wf")); err != nil {
+				if !fortiAPIPatch(o["fortiguard-wf"]) {
+					return fmt.Errorf("Error reading fortiguard_wf: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("spam", flattenSystemReplacemsgGroupSpam(o["spam"], d, "spam")); err != nil {
-            if !fortiAPIPatch(o["spam"]) {
-                return fmt.Errorf("Error reading spam: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("spam"); ok {
-            if err = d.Set("spam", flattenSystemReplacemsgGroupSpam(o["spam"], d, "spam")); err != nil {
-                if !fortiAPIPatch(o["spam"]) {
-                    return fmt.Errorf("Error reading spam: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("spam", flattenSystemReplacemsgGroupSpam(o["spam"], d, "spam")); err != nil {
+			if !fortiAPIPatch(o["spam"]) {
+				return fmt.Errorf("Error reading spam: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("spam"); ok {
+			if err = d.Set("spam", flattenSystemReplacemsgGroupSpam(o["spam"], d, "spam")); err != nil {
+				if !fortiAPIPatch(o["spam"]) {
+					return fmt.Errorf("Error reading spam: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("alertmail", flattenSystemReplacemsgGroupAlertmail(o["alertmail"], d, "alertmail")); err != nil {
-            if !fortiAPIPatch(o["alertmail"]) {
-                return fmt.Errorf("Error reading alertmail: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("alertmail"); ok {
-            if err = d.Set("alertmail", flattenSystemReplacemsgGroupAlertmail(o["alertmail"], d, "alertmail")); err != nil {
-                if !fortiAPIPatch(o["alertmail"]) {
-                    return fmt.Errorf("Error reading alertmail: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("alertmail", flattenSystemReplacemsgGroupAlertmail(o["alertmail"], d, "alertmail")); err != nil {
+			if !fortiAPIPatch(o["alertmail"]) {
+				return fmt.Errorf("Error reading alertmail: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("alertmail"); ok {
+			if err = d.Set("alertmail", flattenSystemReplacemsgGroupAlertmail(o["alertmail"], d, "alertmail")); err != nil {
+				if !fortiAPIPatch(o["alertmail"]) {
+					return fmt.Errorf("Error reading alertmail: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("admin", flattenSystemReplacemsgGroupAdmin(o["admin"], d, "admin")); err != nil {
-            if !fortiAPIPatch(o["admin"]) {
-                return fmt.Errorf("Error reading admin: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("admin"); ok {
-            if err = d.Set("admin", flattenSystemReplacemsgGroupAdmin(o["admin"], d, "admin")); err != nil {
-                if !fortiAPIPatch(o["admin"]) {
-                    return fmt.Errorf("Error reading admin: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("admin", flattenSystemReplacemsgGroupAdmin(o["admin"], d, "admin")); err != nil {
+			if !fortiAPIPatch(o["admin"]) {
+				return fmt.Errorf("Error reading admin: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("admin"); ok {
+			if err = d.Set("admin", flattenSystemReplacemsgGroupAdmin(o["admin"], d, "admin")); err != nil {
+				if !fortiAPIPatch(o["admin"]) {
+					return fmt.Errorf("Error reading admin: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("auth", flattenSystemReplacemsgGroupAuth(o["auth"], d, "auth")); err != nil {
-            if !fortiAPIPatch(o["auth"]) {
-                return fmt.Errorf("Error reading auth: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("auth"); ok {
-            if err = d.Set("auth", flattenSystemReplacemsgGroupAuth(o["auth"], d, "auth")); err != nil {
-                if !fortiAPIPatch(o["auth"]) {
-                    return fmt.Errorf("Error reading auth: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("auth", flattenSystemReplacemsgGroupAuth(o["auth"], d, "auth")); err != nil {
+			if !fortiAPIPatch(o["auth"]) {
+				return fmt.Errorf("Error reading auth: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("auth"); ok {
+			if err = d.Set("auth", flattenSystemReplacemsgGroupAuth(o["auth"], d, "auth")); err != nil {
+				if !fortiAPIPatch(o["auth"]) {
+					return fmt.Errorf("Error reading auth: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("sslvpn", flattenSystemReplacemsgGroupSslvpn(o["sslvpn"], d, "sslvpn")); err != nil {
-            if !fortiAPIPatch(o["sslvpn"]) {
-                return fmt.Errorf("Error reading sslvpn: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("sslvpn"); ok {
-            if err = d.Set("sslvpn", flattenSystemReplacemsgGroupSslvpn(o["sslvpn"], d, "sslvpn")); err != nil {
-                if !fortiAPIPatch(o["sslvpn"]) {
-                    return fmt.Errorf("Error reading sslvpn: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("sslvpn", flattenSystemReplacemsgGroupSslvpn(o["sslvpn"], d, "sslvpn")); err != nil {
+			if !fortiAPIPatch(o["sslvpn"]) {
+				return fmt.Errorf("Error reading sslvpn: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("sslvpn"); ok {
+			if err = d.Set("sslvpn", flattenSystemReplacemsgGroupSslvpn(o["sslvpn"], d, "sslvpn")); err != nil {
+				if !fortiAPIPatch(o["sslvpn"]) {
+					return fmt.Errorf("Error reading sslvpn: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("ec", flattenSystemReplacemsgGroupEc(o["ec"], d, "ec")); err != nil {
-            if !fortiAPIPatch(o["ec"]) {
-                return fmt.Errorf("Error reading ec: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("ec"); ok {
-            if err = d.Set("ec", flattenSystemReplacemsgGroupEc(o["ec"], d, "ec")); err != nil {
-                if !fortiAPIPatch(o["ec"]) {
-                    return fmt.Errorf("Error reading ec: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("ec", flattenSystemReplacemsgGroupEc(o["ec"], d, "ec")); err != nil {
+			if !fortiAPIPatch(o["ec"]) {
+				return fmt.Errorf("Error reading ec: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("ec"); ok {
+			if err = d.Set("ec", flattenSystemReplacemsgGroupEc(o["ec"], d, "ec")); err != nil {
+				if !fortiAPIPatch(o["ec"]) {
+					return fmt.Errorf("Error reading ec: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("device_detection_portal", flattenSystemReplacemsgGroupDeviceDetectionPortal(o["device-detection-portal"], d, "device_detection_portal")); err != nil {
-            if !fortiAPIPatch(o["device-detection-portal"]) {
-                return fmt.Errorf("Error reading device_detection_portal: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("device_detection_portal"); ok {
-            if err = d.Set("device_detection_portal", flattenSystemReplacemsgGroupDeviceDetectionPortal(o["device-detection-portal"], d, "device_detection_portal")); err != nil {
-                if !fortiAPIPatch(o["device-detection-portal"]) {
-                    return fmt.Errorf("Error reading device_detection_portal: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("device_detection_portal", flattenSystemReplacemsgGroupDeviceDetectionPortal(o["device-detection-portal"], d, "device_detection_portal")); err != nil {
+			if !fortiAPIPatch(o["device-detection-portal"]) {
+				return fmt.Errorf("Error reading device_detection_portal: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("device_detection_portal"); ok {
+			if err = d.Set("device_detection_portal", flattenSystemReplacemsgGroupDeviceDetectionPortal(o["device-detection-portal"], d, "device_detection_portal")); err != nil {
+				if !fortiAPIPatch(o["device-detection-portal"]) {
+					return fmt.Errorf("Error reading device_detection_portal: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("nac_quar", flattenSystemReplacemsgGroupNacQuar(o["nac-quar"], d, "nac_quar")); err != nil {
-            if !fortiAPIPatch(o["nac-quar"]) {
-                return fmt.Errorf("Error reading nac_quar: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("nac_quar"); ok {
-            if err = d.Set("nac_quar", flattenSystemReplacemsgGroupNacQuar(o["nac-quar"], d, "nac_quar")); err != nil {
-                if !fortiAPIPatch(o["nac-quar"]) {
-                    return fmt.Errorf("Error reading nac_quar: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("nac_quar", flattenSystemReplacemsgGroupNacQuar(o["nac-quar"], d, "nac_quar")); err != nil {
+			if !fortiAPIPatch(o["nac-quar"]) {
+				return fmt.Errorf("Error reading nac_quar: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("nac_quar"); ok {
+			if err = d.Set("nac_quar", flattenSystemReplacemsgGroupNacQuar(o["nac-quar"], d, "nac_quar")); err != nil {
+				if !fortiAPIPatch(o["nac-quar"]) {
+					return fmt.Errorf("Error reading nac_quar: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("traffic_quota", flattenSystemReplacemsgGroupTrafficQuota(o["traffic-quota"], d, "traffic_quota")); err != nil {
-            if !fortiAPIPatch(o["traffic-quota"]) {
-                return fmt.Errorf("Error reading traffic_quota: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("traffic_quota"); ok {
-            if err = d.Set("traffic_quota", flattenSystemReplacemsgGroupTrafficQuota(o["traffic-quota"], d, "traffic_quota")); err != nil {
-                if !fortiAPIPatch(o["traffic-quota"]) {
-                    return fmt.Errorf("Error reading traffic_quota: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("traffic_quota", flattenSystemReplacemsgGroupTrafficQuota(o["traffic-quota"], d, "traffic_quota")); err != nil {
+			if !fortiAPIPatch(o["traffic-quota"]) {
+				return fmt.Errorf("Error reading traffic_quota: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("traffic_quota"); ok {
+			if err = d.Set("traffic_quota", flattenSystemReplacemsgGroupTrafficQuota(o["traffic-quota"], d, "traffic_quota")); err != nil {
+				if !fortiAPIPatch(o["traffic-quota"]) {
+					return fmt.Errorf("Error reading traffic_quota: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("utm", flattenSystemReplacemsgGroupUtm(o["utm"], d, "utm")); err != nil {
-            if !fortiAPIPatch(o["utm"]) {
-                return fmt.Errorf("Error reading utm: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("utm"); ok {
-            if err = d.Set("utm", flattenSystemReplacemsgGroupUtm(o["utm"], d, "utm")); err != nil {
-                if !fortiAPIPatch(o["utm"]) {
-                    return fmt.Errorf("Error reading utm: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("utm", flattenSystemReplacemsgGroupUtm(o["utm"], d, "utm")); err != nil {
+			if !fortiAPIPatch(o["utm"]) {
+				return fmt.Errorf("Error reading utm: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("utm"); ok {
+			if err = d.Set("utm", flattenSystemReplacemsgGroupUtm(o["utm"], d, "utm")); err != nil {
+				if !fortiAPIPatch(o["utm"]) {
+					return fmt.Errorf("Error reading utm: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("custom_message", flattenSystemReplacemsgGroupCustomMessage(o["custom-message"], d, "custom_message")); err != nil {
-            if !fortiAPIPatch(o["custom-message"]) {
-                return fmt.Errorf("Error reading custom_message: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("custom_message"); ok {
-            if err = d.Set("custom_message", flattenSystemReplacemsgGroupCustomMessage(o["custom-message"], d, "custom_message")); err != nil {
-                if !fortiAPIPatch(o["custom-message"]) {
-                    return fmt.Errorf("Error reading custom_message: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("custom_message", flattenSystemReplacemsgGroupCustomMessage(o["custom-message"], d, "custom_message")); err != nil {
+			if !fortiAPIPatch(o["custom-message"]) {
+				return fmt.Errorf("Error reading custom_message: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("custom_message"); ok {
+			if err = d.Set("custom_message", flattenSystemReplacemsgGroupCustomMessage(o["custom-message"], d, "custom_message")); err != nil {
+				if !fortiAPIPatch(o["custom-message"]) {
+					return fmt.Errorf("Error reading custom_message: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("icap", flattenSystemReplacemsgGroupIcap(o["icap"], d, "icap")); err != nil {
-            if !fortiAPIPatch(o["icap"]) {
-                return fmt.Errorf("Error reading icap: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("icap"); ok {
-            if err = d.Set("icap", flattenSystemReplacemsgGroupIcap(o["icap"], d, "icap")); err != nil {
-                if !fortiAPIPatch(o["icap"]) {
-                    return fmt.Errorf("Error reading icap: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("icap", flattenSystemReplacemsgGroupIcap(o["icap"], d, "icap")); err != nil {
+			if !fortiAPIPatch(o["icap"]) {
+				return fmt.Errorf("Error reading icap: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("icap"); ok {
+			if err = d.Set("icap", flattenSystemReplacemsgGroupIcap(o["icap"], d, "icap")); err != nil {
+				if !fortiAPIPatch(o["icap"]) {
+					return fmt.Errorf("Error reading icap: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -2126,7 +2122,6 @@ func flattenSystemReplacemsgGroupFortiTestDebug(d *schema.ResourceData, fosdebug
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemReplacemsgGroupName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -2152,7 +2147,7 @@ func expandSystemReplacemsgGroupMail(d *schema.ResourceData, v interface{}, pre 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2210,7 +2205,7 @@ func expandSystemReplacemsgGroupHttp(d *schema.ResourceData, v interface{}, pre 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2268,7 +2263,7 @@ func expandSystemReplacemsgGroupWebproxy(d *schema.ResourceData, v interface{}, 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2326,7 +2321,7 @@ func expandSystemReplacemsgGroupFtp(d *schema.ResourceData, v interface{}, pre s
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2384,7 +2379,7 @@ func expandSystemReplacemsgGroupNntp(d *schema.ResourceData, v interface{}, pre 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2442,7 +2437,7 @@ func expandSystemReplacemsgGroupFortiguardWf(d *schema.ResourceData, v interface
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2500,7 +2495,7 @@ func expandSystemReplacemsgGroupSpam(d *schema.ResourceData, v interface{}, pre 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2558,7 +2553,7 @@ func expandSystemReplacemsgGroupAlertmail(d *schema.ResourceData, v interface{},
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2616,7 +2611,7 @@ func expandSystemReplacemsgGroupAdmin(d *schema.ResourceData, v interface{}, pre
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2674,7 +2669,7 @@ func expandSystemReplacemsgGroupAuth(d *schema.ResourceData, v interface{}, pre 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2732,7 +2727,7 @@ func expandSystemReplacemsgGroupSslvpn(d *schema.ResourceData, v interface{}, pr
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2790,7 +2785,7 @@ func expandSystemReplacemsgGroupEc(d *schema.ResourceData, v interface{}, pre st
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2848,7 +2843,7 @@ func expandSystemReplacemsgGroupDeviceDetectionPortal(d *schema.ResourceData, v 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2906,7 +2901,7 @@ func expandSystemReplacemsgGroupNacQuar(d *schema.ResourceData, v interface{}, p
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2964,7 +2959,7 @@ func expandSystemReplacemsgGroupTrafficQuota(d *schema.ResourceData, v interface
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -3022,7 +3017,7 @@ func expandSystemReplacemsgGroupUtm(d *schema.ResourceData, v interface{}, pre s
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -3080,7 +3075,7 @@ func expandSystemReplacemsgGroupCustomMessage(d *schema.ResourceData, v interfac
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -3138,7 +3133,7 @@ func expandSystemReplacemsgGroupIcap(d *schema.ResourceData, v interface{}, pre 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -3184,10 +3179,8 @@ func expandSystemReplacemsgGroupIcapFormat(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
-
 func getObjectSystemReplacemsgGroup(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandSystemReplacemsgGroupName(d, v, "name")
@@ -3378,7 +3371,5 @@ func getObjectSystemReplacemsgGroup(d *schema.ResourceData) (*map[string]interfa
 		}
 	}
 
-
 	return &obj, nil
 }
-

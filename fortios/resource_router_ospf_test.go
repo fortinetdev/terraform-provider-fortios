@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,76 +5,77 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSRouterOspf_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSRouterOspf_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSRouterOspf_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSRouterOspfConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSRouterOspfExists("fortios_router_ospf.trname"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "abr_type", "standard"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "auto_cost_ref_bandwidth", "1000"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "bfd", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "database_overflow", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "database_overflow_max_lsas", "10000"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "database_overflow_time_to_recover", "300"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "default_information_metric", "10"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "default_information_metric_type", "2"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "default_information_originate", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "default_metric", "10"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "distance", "110"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "distance_external", "110"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "distance_inter_area", "110"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "distance_intra_area", "110"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "log_neighbour_changes", "enable"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "restart_mode", "none"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "restart_period", "120"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "rfc1583_compatible", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "router_id", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "spf_timers", "5 10"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.0.metric", "0"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.0.metric_type", "2"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.0.name", "connected"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.0.status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.0.tag", "0"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.1.metric", "0"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.1.metric_type", "2"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.1.name", "static"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.1.status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.1.tag", "0"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.2.metric", "0"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.2.metric_type", "2"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.2.name", "rip"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.2.status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.2.tag", "0"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.3.metric", "0"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.3.metric_type", "2"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.3.name", "bgp"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.3.status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.3.tag", "0"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.4.metric", "0"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.4.metric_type", "2"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.4.name", "isis"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.4.status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.4.tag", "0"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSRouterOspfConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSRouterOspfExists("fortios_router_ospf.trname"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "abr_type", "standard"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "auto_cost_ref_bandwidth", "1000"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "bfd", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "database_overflow", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "database_overflow_max_lsas", "10000"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "database_overflow_time_to_recover", "300"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "default_information_metric", "10"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "default_information_metric_type", "2"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "default_information_originate", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "default_metric", "10"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "distance", "110"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "distance_external", "110"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "distance_inter_area", "110"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "distance_intra_area", "110"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "log_neighbour_changes", "enable"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "restart_mode", "none"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "restart_period", "120"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "rfc1583_compatible", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "router_id", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "spf_timers", "5 10"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.0.metric", "0"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.0.metric_type", "2"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.0.name", "connected"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.0.status", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.0.tag", "0"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.1.metric", "0"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.1.metric_type", "2"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.1.name", "static"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.1.status", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.1.tag", "0"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.2.metric", "0"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.2.metric_type", "2"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.2.name", "rip"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.2.status", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.2.tag", "0"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.3.metric", "0"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.3.metric_type", "2"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.3.name", "bgp"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.3.status", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.3.tag", "0"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.4.metric", "0"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.4.metric_type", "2"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.4.name", "isis"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.4.status", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_ospf.trname", "redistribute.4.tag", "0"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSRouterOspfExists(n string) resource.TestCheckFunc {

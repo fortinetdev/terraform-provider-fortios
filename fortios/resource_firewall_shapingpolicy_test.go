@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,49 +5,50 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSFirewallShapingPolicy_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSFirewallShapingPolicy_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSFirewallShapingPolicy_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSFirewallShapingPolicyConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSFirewallShapingPolicyExists("fortios_firewall_shapingpolicy.trname"),
-                    resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "class_id", "0"),
-                    resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "diffserv_forward", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "diffserv_reverse", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "diffservcode_forward", "000000"),
-                    resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "diffservcode_rev", "000000"),
-                    resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "fosid", "1"),
-                    resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "internet_service", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "internet_service_src", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "ip_version", "4"),
-                    resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "status", "enable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "tos", "0x00"),
-                    resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "tos_mask", "0x00"),
-                    resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "tos_negate", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "dstaddr.0.name", "all"),
-                    resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "dstintf.0.name", "port4"),
-                    resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "service.0.name", "ALL"),
-                    resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "srcaddr.0.name", "all"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSFirewallShapingPolicyConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSFirewallShapingPolicyExists("fortios_firewall_shapingpolicy.trname"),
+					resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "class_id", "0"),
+					resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "diffserv_forward", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "diffserv_reverse", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "diffservcode_forward", "000000"),
+					resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "diffservcode_rev", "000000"),
+					resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "fosid", "1"),
+					resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "internet_service", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "internet_service_src", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "ip_version", "4"),
+					resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "status", "enable"),
+					resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "tos", "0x00"),
+					resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "tos_mask", "0x00"),
+					resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "tos_negate", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "dstaddr.0.name", "all"),
+					resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "dstintf.0.name", "port4"),
+					resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "service.0.name", "ALL"),
+					resource.TestCheckResourceAttr("fortios_firewall_shapingpolicy.trname", "srcaddr.0.name", "all"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSFirewallShapingPolicyExists(n string) resource.TestCheckFunc {

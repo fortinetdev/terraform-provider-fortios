@@ -30,35 +30,35 @@ func resourceFirewallWildcardFqdnCustom() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"uuid": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"wildcard_fqdn": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"color": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 32),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"comment": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
+				Optional:     true,
 			},
 			"visibility": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
@@ -155,7 +155,6 @@ func resourceFirewallWildcardFqdnCustomRead(d *schema.ResourceData, m interface{
 	return nil
 }
 
-
 func flattenFirewallWildcardFqdnCustomName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -180,10 +179,8 @@ func flattenFirewallWildcardFqdnCustomVisibility(v interface{}, d *schema.Resour
 	return v
 }
 
-
 func refreshObjectFirewallWildcardFqdnCustom(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenFirewallWildcardFqdnCustomName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -221,7 +218,6 @@ func refreshObjectFirewallWildcardFqdnCustom(d *schema.ResourceData, o map[strin
 		}
 	}
 
-
 	return nil
 }
 
@@ -230,7 +226,6 @@ func flattenFirewallWildcardFqdnCustomFortiTestDebug(d *schema.ResourceData, fos
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandFirewallWildcardFqdnCustomName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -256,10 +251,8 @@ func expandFirewallWildcardFqdnCustomVisibility(d *schema.ResourceData, v interf
 	return v, nil
 }
 
-
 func getObjectFirewallWildcardFqdnCustom(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandFirewallWildcardFqdnCustomName(d, v, "name")
@@ -315,7 +308,5 @@ func getObjectFirewallWildcardFqdnCustom(d *schema.ResourceData) (*map[string]in
 		}
 	}
 
-
 	return &obj, nil
 }
-

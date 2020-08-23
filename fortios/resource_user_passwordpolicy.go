@@ -30,22 +30,22 @@ func resourceUserPasswordPolicy() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"expire_days": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 999),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"warn_days": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 30),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
@@ -140,7 +140,6 @@ func resourceUserPasswordPolicyRead(d *schema.ResourceData, m interface{}) error
 	return nil
 }
 
-
 func flattenUserPasswordPolicyName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -153,10 +152,8 @@ func flattenUserPasswordPolicyWarnDays(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
-
 func refreshObjectUserPasswordPolicy(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenUserPasswordPolicyName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -176,7 +173,6 @@ func refreshObjectUserPasswordPolicy(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
-
 	return nil
 }
 
@@ -185,7 +181,6 @@ func flattenUserPasswordPolicyFortiTestDebug(d *schema.ResourceData, fosdebugsn 
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandUserPasswordPolicyName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -199,10 +194,8 @@ func expandUserPasswordPolicyWarnDays(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
-
 func getObjectUserPasswordPolicy(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandUserPasswordPolicyName(d, v, "name")
@@ -231,7 +224,5 @@ func getObjectUserPasswordPolicy(d *schema.ResourceData) (*map[string]interface{
 		}
 	}
 
-
 	return &obj, nil
 }
-

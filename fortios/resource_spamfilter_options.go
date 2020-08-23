@@ -30,14 +30,13 @@ func resourceSpamfilterOptions() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"dns_timeout": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 30),
-				Required: true,
+				Required:     true,
 			},
 		},
 	}
 }
-
 
 func resourceSpamfilterOptionsUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -104,22 +103,18 @@ func resourceSpamfilterOptionsRead(d *schema.ResourceData, m interface{}) error 
 	return nil
 }
 
-
 func flattenSpamfilterOptionsDnsTimeout(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
-
 func refreshObjectSpamfilterOptions(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("dns_timeout", flattenSpamfilterOptionsDnsTimeout(o["dns-timeout"], d, "dns_timeout")); err != nil {
 		if !fortiAPIPatch(o["dns-timeout"]) {
 			return fmt.Errorf("Error reading dns_timeout: %v", err)
 		}
 	}
-
 
 	return nil
 }
@@ -130,15 +125,12 @@ func flattenSpamfilterOptionsFortiTestDebug(d *schema.ResourceData, fosdebugsn i
 	log.Printf("ER List: %v", e)
 }
 
-
 func expandSpamfilterOptionsDnsTimeout(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
 }
 
-
 func getObjectSpamfilterOptions(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("dns_timeout"); ok {
 		t, err := expandSpamfilterOptionsDnsTimeout(d, v, "dns_timeout")
@@ -149,7 +141,5 @@ func getObjectSpamfilterOptions(d *schema.ResourceData) (*map[string]interface{}
 		}
 	}
 
-
 	return &obj, nil
 }
-

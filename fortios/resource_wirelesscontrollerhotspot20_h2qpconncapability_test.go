@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,43 +5,44 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSWirelessControllerHotspot20H2QpConnCapability_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSWirelessControllerHotspot20H2QpConnCapability_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSWirelessControllerHotspot20H2QpConnCapability_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSWirelessControllerHotspot20H2QpConnCapabilityConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSWirelessControllerHotspot20H2QpConnCapabilityExists("fortios_wirelesscontrollerhotspot20_h2qpconncapability.trname"),
-                    resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpconncapability.trname", "esp_port", "unknown"),
-                    resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpconncapability.trname", "ftp_port", "unknown"),
-                    resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpconncapability.trname", "http_port", "unknown"),
-                    resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpconncapability.trname", "icmp_port", "closed"),
-                    resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpconncapability.trname", "ikev2_port", "unknown"),
-                    resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpconncapability.trname", "ikev2_xx_port", "unknown"),
-                    resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpconncapability.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpconncapability.trname", "pptp_vpn_port", "unknown"),
-                    resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpconncapability.trname", "ssh_port", "unknown"),
-                    resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpconncapability.trname", "tls_port", "unknown"),
-                    resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpconncapability.trname", "voip_tcp_port", "unknown"),
-                    resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpconncapability.trname", "voip_udp_port", "unknown"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSWirelessControllerHotspot20H2QpConnCapabilityConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSWirelessControllerHotspot20H2QpConnCapabilityExists("fortios_wirelesscontrollerhotspot20_h2qpconncapability.trname"),
+					resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpconncapability.trname", "esp_port", "unknown"),
+					resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpconncapability.trname", "ftp_port", "unknown"),
+					resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpconncapability.trname", "http_port", "unknown"),
+					resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpconncapability.trname", "icmp_port", "closed"),
+					resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpconncapability.trname", "ikev2_port", "unknown"),
+					resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpconncapability.trname", "ikev2_xx_port", "unknown"),
+					resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpconncapability.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpconncapability.trname", "pptp_vpn_port", "unknown"),
+					resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpconncapability.trname", "ssh_port", "unknown"),
+					resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpconncapability.trname", "tls_port", "unknown"),
+					resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpconncapability.trname", "voip_tcp_port", "unknown"),
+					resource.TestCheckResourceAttr("fortios_wirelesscontrollerhotspot20_h2qpconncapability.trname", "voip_udp_port", "unknown"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSWirelessControllerHotspot20H2QpConnCapabilityExists(n string) resource.TestCheckFunc {

@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,46 +5,47 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSFirewallPolicy64_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSFirewallPolicy64_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSFirewallPolicy64_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSFirewallPolicy64Config(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSFirewallPolicy64Exists("fortios_firewall_policy64.trname"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy64.trname", "action", "accept"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy64.trname", "dstintf", "port4"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy64.trname", "fixedport", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy64.trname", "ippool", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy64.trname", "logtraffic", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy64.trname", "permit_any_host", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy64.trname", "policyid", "1"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy64.trname", "schedule", "always"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy64.trname", "srcintf", "port3"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy64.trname", "status", "enable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy64.trname", "tcp_mss_receiver", "0"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy64.trname", "tcp_mss_sender", "0"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy64.trname", "dstaddr.0.name", "all"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy64.trname", "service.0.name", "ALL"),
-                    resource.TestCheckResourceAttr("fortios_firewall_policy64.trname", "srcaddr.0.name", "all"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSFirewallPolicy64Config(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSFirewallPolicy64Exists("fortios_firewall_policy64.trname"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy64.trname", "action", "accept"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy64.trname", "dstintf", "port4"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy64.trname", "fixedport", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy64.trname", "ippool", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy64.trname", "logtraffic", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy64.trname", "permit_any_host", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy64.trname", "policyid", "1"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy64.trname", "schedule", "always"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy64.trname", "srcintf", "port3"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy64.trname", "status", "enable"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy64.trname", "tcp_mss_receiver", "0"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy64.trname", "tcp_mss_sender", "0"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy64.trname", "dstaddr.0.name", "all"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy64.trname", "service.0.name", "ALL"),
+					resource.TestCheckResourceAttr("fortios_firewall_policy64.trname", "srcaddr.0.name", "all"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSFirewallPolicy64Exists(n string) resource.TestCheckFunc {

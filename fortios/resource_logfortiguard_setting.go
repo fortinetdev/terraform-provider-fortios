@@ -30,49 +30,48 @@ func resourceLogFortiguardSetting() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"upload_option": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"upload_interval": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"upload_day": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"upload_time": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"enc_algorithm": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssl_min_proto_version": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"source_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceLogFortiguardSettingUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -139,7 +138,6 @@ func resourceLogFortiguardSettingRead(d *schema.ResourceData, m interface{}) err
 	return nil
 }
 
-
 func flattenLogFortiguardSettingStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -172,10 +170,8 @@ func flattenLogFortiguardSettingSourceIp(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
-
 func refreshObjectLogFortiguardSetting(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("status", flattenLogFortiguardSettingStatus(o["status"], d, "status")); err != nil {
 		if !fortiAPIPatch(o["status"]) {
@@ -225,7 +221,6 @@ func refreshObjectLogFortiguardSetting(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
-
 	return nil
 }
 
@@ -234,7 +229,6 @@ func flattenLogFortiguardSettingFortiTestDebug(d *schema.ResourceData, fosdebugs
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandLogFortiguardSettingStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -268,10 +262,8 @@ func expandLogFortiguardSettingSourceIp(d *schema.ResourceData, v interface{}, p
 	return v, nil
 }
 
-
 func getObjectLogFortiguardSetting(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("status"); ok {
 		t, err := expandLogFortiguardSettingStatus(d, v, "status")
@@ -345,7 +337,5 @@ func getObjectLogFortiguardSetting(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
-
 	return &obj, nil
 }
-

@@ -30,33 +30,32 @@ func resourceIpsSettings() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"packet_log_history": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"packet_log_post_attack": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"packet_log_memory": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(64, 8192),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ips_packet_quota": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
 }
-
 
 func resourceIpsSettingsUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -123,7 +122,6 @@ func resourceIpsSettingsRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenIpsSettingsPacketLogHistory(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -140,10 +138,8 @@ func flattenIpsSettingsIpsPacketQuota(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
-
 func refreshObjectIpsSettings(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("packet_log_history", flattenIpsSettingsPacketLogHistory(o["packet-log-history"], d, "packet_log_history")); err != nil {
 		if !fortiAPIPatch(o["packet-log-history"]) {
@@ -169,7 +165,6 @@ func refreshObjectIpsSettings(d *schema.ResourceData, o map[string]interface{}) 
 		}
 	}
 
-
 	return nil
 }
 
@@ -178,7 +173,6 @@ func flattenIpsSettingsFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fo
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandIpsSettingsPacketLogHistory(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -196,10 +190,8 @@ func expandIpsSettingsIpsPacketQuota(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
-
 func getObjectIpsSettings(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("packet_log_history"); ok {
 		t, err := expandIpsSettingsPacketLogHistory(d, v, "packet_log_history")
@@ -237,7 +229,5 @@ func getObjectIpsSettings(d *schema.ResourceData) (*map[string]interface{}, erro
 		}
 	}
 
-
 	return &obj, nil
 }
-

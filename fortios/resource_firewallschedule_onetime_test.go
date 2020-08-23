@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,36 +5,37 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSFirewallScheduleOnetime_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSFirewallScheduleOnetime_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSFirewallScheduleOnetime_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSFirewallScheduleOnetimeConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSFirewallScheduleOnetimeExists("fortios_firewallschedule_onetime.trname"),
-                    resource.TestCheckResourceAttr("fortios_firewallschedule_onetime.trname", "color", "0"),
-                    resource.TestCheckResourceAttr("fortios_firewallschedule_onetime.trname", "end", "00:00 2020/12/12"),
-                    resource.TestCheckResourceAttr("fortios_firewallschedule_onetime.trname", "expiration_days", "2"),
-                    resource.TestCheckResourceAttr("fortios_firewallschedule_onetime.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_firewallschedule_onetime.trname", "start", "00:00 2010/12/12"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSFirewallScheduleOnetimeConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSFirewallScheduleOnetimeExists("fortios_firewallschedule_onetime.trname"),
+					resource.TestCheckResourceAttr("fortios_firewallschedule_onetime.trname", "color", "0"),
+					resource.TestCheckResourceAttr("fortios_firewallschedule_onetime.trname", "end", "00:00 2020/12/12"),
+					resource.TestCheckResourceAttr("fortios_firewallschedule_onetime.trname", "expiration_days", "2"),
+					resource.TestCheckResourceAttr("fortios_firewallschedule_onetime.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_firewallschedule_onetime.trname", "start", "00:00 2010/12/12"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSFirewallScheduleOnetimeExists(n string) resource.TestCheckFunc {

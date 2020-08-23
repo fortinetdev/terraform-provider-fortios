@@ -30,45 +30,45 @@ func resourceFirewallShaperPerIpShaper() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"max_bandwidth": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 16776000),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"bandwidth_unit": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"max_concurrent_session": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 2097000),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"diffserv_forward": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"diffserv_reverse": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"diffservcode_forward": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"diffservcode_rev": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
@@ -165,7 +165,6 @@ func resourceFirewallShaperPerIpShaperRead(d *schema.ResourceData, m interface{}
 	return nil
 }
 
-
 func flattenFirewallShaperPerIpShaperName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -198,10 +197,8 @@ func flattenFirewallShaperPerIpShaperDiffservcodeRev(v interface{}, d *schema.Re
 	return v
 }
 
-
 func refreshObjectFirewallShaperPerIpShaper(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenFirewallShaperPerIpShaperName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -251,7 +248,6 @@ func refreshObjectFirewallShaperPerIpShaper(d *schema.ResourceData, o map[string
 		}
 	}
 
-
 	return nil
 }
 
@@ -260,7 +256,6 @@ func flattenFirewallShaperPerIpShaperFortiTestDebug(d *schema.ResourceData, fosd
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandFirewallShaperPerIpShaperName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -294,10 +289,8 @@ func expandFirewallShaperPerIpShaperDiffservcodeRev(d *schema.ResourceData, v in
 	return v, nil
 }
 
-
 func getObjectFirewallShaperPerIpShaper(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandFirewallShaperPerIpShaperName(d, v, "name")
@@ -371,7 +364,5 @@ func getObjectFirewallShaperPerIpShaper(d *schema.ResourceData) (*map[string]int
 		}
 	}
 
-
 	return &obj, nil
 }
-

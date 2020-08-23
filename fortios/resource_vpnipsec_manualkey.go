@@ -30,47 +30,47 @@ func resourceVpnIpsecManualkey() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"interface": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
-				Required: true,
+				Required:     true,
 			},
 			"remote_gw": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"local_gw": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"authentication": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"encryption": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"authkey": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"enckey": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"localspi": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"remotespi": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 		},
@@ -166,7 +166,6 @@ func resourceVpnIpsecManualkeyRead(d *schema.ResourceData, m interface{}) error 
 	return nil
 }
 
-
 func flattenVpnIpsecManualkeyName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -207,10 +206,8 @@ func flattenVpnIpsecManualkeyRemotespi(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
-
 func refreshObjectVpnIpsecManualkey(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenVpnIpsecManualkeyName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -266,7 +263,6 @@ func refreshObjectVpnIpsecManualkey(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-
 	return nil
 }
 
@@ -275,7 +271,6 @@ func flattenVpnIpsecManualkeyFortiTestDebug(d *schema.ResourceData, fosdebugsn i
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandVpnIpsecManualkeyName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -317,10 +312,8 @@ func expandVpnIpsecManualkeyRemotespi(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
-
 func getObjectVpnIpsecManualkey(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandVpnIpsecManualkeyName(d, v, "name")
@@ -412,7 +405,5 @@ func getObjectVpnIpsecManualkey(d *schema.ResourceData) (*map[string]interface{}
 		}
 	}
 
-
 	return &obj, nil
 }
-

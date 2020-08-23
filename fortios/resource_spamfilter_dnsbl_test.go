@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,37 +5,38 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSpamfilterDnsbl_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSpamfilterDnsbl_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSpamfilterDnsbl_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSpamfilterDnsblConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSpamfilterDnsblExists("fortios_spamfilter_dnsbl.trname"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_dnsbl.trname", "comment", "test"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_dnsbl.trname", "fosid", "1"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_dnsbl.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_dnsbl.trname", "entries.0.action", "reject"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_dnsbl.trname", "entries.0.server", "1.1.1.1"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_dnsbl.trname", "entries.0.status", "enable"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSpamfilterDnsblConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSpamfilterDnsblExists("fortios_spamfilter_dnsbl.trname"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_dnsbl.trname", "comment", "test"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_dnsbl.trname", "fosid", "1"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_dnsbl.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_spamfilter_dnsbl.trname", "entries.0.action", "reject"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_dnsbl.trname", "entries.0.server", "1.1.1.1"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_dnsbl.trname", "entries.0.status", "enable"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSpamfilterDnsblExists(n string) resource.TestCheckFunc {

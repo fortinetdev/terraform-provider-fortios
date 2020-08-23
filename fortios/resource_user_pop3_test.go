@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,36 +5,37 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSUserPop3_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSUserPop3_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSUserPop3_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSUserPop3Config(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSUserPop3Exists("fortios_user_pop3.trname"),
-                    resource.TestCheckResourceAttr("fortios_user_pop3.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_user_pop3.trname", "port", "0"),
-                    resource.TestCheckResourceAttr("fortios_user_pop3.trname", "secure", "pop3s"),
-                    resource.TestCheckResourceAttr("fortios_user_pop3.trname", "server", "1.1.1.1"),
-                    resource.TestCheckResourceAttr("fortios_user_pop3.trname", "ssl_min_proto_version", "default"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSUserPop3Config(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSUserPop3Exists("fortios_user_pop3.trname"),
+					resource.TestCheckResourceAttr("fortios_user_pop3.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_user_pop3.trname", "port", "0"),
+					resource.TestCheckResourceAttr("fortios_user_pop3.trname", "secure", "pop3s"),
+					resource.TestCheckResourceAttr("fortios_user_pop3.trname", "server", "1.1.1.1"),
+					resource.TestCheckResourceAttr("fortios_user_pop3.trname", "ssl_min_proto_version", "default"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSUserPop3Exists(n string) resource.TestCheckFunc {

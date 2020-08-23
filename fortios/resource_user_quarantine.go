@@ -30,60 +30,60 @@ func resourceUserQuarantine() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"quarantine": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"traffic_policy": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"targets": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"entry": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"description": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"macs": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"mac": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"entry_id": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"description": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 63),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"parent": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 63),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
@@ -94,7 +94,6 @@ func resourceUserQuarantine() *schema.Resource {
 		},
 	}
 }
-
 
 func resourceUserQuarantineUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -160,7 +159,6 @@ func resourceUserQuarantineRead(d *schema.ResourceData, m interface{}) error {
 	}
 	return nil
 }
-
 
 func flattenUserQuarantineQuarantine(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -283,10 +281,8 @@ func flattenUserQuarantineTargetsMacsParent(v interface{}, d *schema.ResourceDat
 	return v
 }
 
-
 func refreshObjectUserQuarantine(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("quarantine", flattenUserQuarantineQuarantine(o["quarantine"], d, "quarantine")); err != nil {
 		if !fortiAPIPatch(o["quarantine"]) {
@@ -300,22 +296,21 @@ func refreshObjectUserQuarantine(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("targets", flattenUserQuarantineTargets(o["targets"], d, "targets")); err != nil {
-            if !fortiAPIPatch(o["targets"]) {
-                return fmt.Errorf("Error reading targets: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("targets"); ok {
-            if err = d.Set("targets", flattenUserQuarantineTargets(o["targets"], d, "targets")); err != nil {
-                if !fortiAPIPatch(o["targets"]) {
-                    return fmt.Errorf("Error reading targets: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("targets", flattenUserQuarantineTargets(o["targets"], d, "targets")); err != nil {
+			if !fortiAPIPatch(o["targets"]) {
+				return fmt.Errorf("Error reading targets: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("targets"); ok {
+			if err = d.Set("targets", flattenUserQuarantineTargets(o["targets"], d, "targets")); err != nil {
+				if !fortiAPIPatch(o["targets"]) {
+					return fmt.Errorf("Error reading targets: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -325,7 +320,6 @@ func flattenUserQuarantineFortiTestDebug(d *schema.ResourceData, fosdebugsn int,
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandUserQuarantineQuarantine(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -347,7 +341,7 @@ func expandUserQuarantineTargets(d *schema.ResourceData, v interface{}, pre stri
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "entry"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -394,7 +388,7 @@ func expandUserQuarantineTargetsMacs(d *schema.ResourceData, v interface{}, pre 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -440,10 +434,8 @@ func expandUserQuarantineTargetsMacsParent(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
-
 func getObjectUserQuarantine(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("quarantine"); ok {
 		t, err := expandUserQuarantineQuarantine(d, v, "quarantine")
@@ -472,7 +464,5 @@ func getObjectUserQuarantine(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-
 	return &obj, nil
 }
-

@@ -30,86 +30,86 @@ func resourceSystemApiUser() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"comments": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
+				Optional:     true,
 			},
 			"api_key": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"accprofile": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"vdom": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"schedule": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"cors_allow_origin": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 269),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"peer_auth": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"peer_group": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"trusthost": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"ipv4_trusthost": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"ipv6_trusthost": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -208,7 +208,6 @@ func resourceSystemApiUserRead(d *schema.ResourceData, m interface{}) error {
 	}
 	return nil
 }
-
 
 func flattenSystemApiUserName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -348,10 +347,8 @@ func flattenSystemApiUserTrusthostIpv6Trusthost(v interface{}, d *schema.Resourc
 	return v
 }
 
-
 func refreshObjectSystemApiUser(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenSystemApiUserName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -377,21 +374,21 @@ func refreshObjectSystemApiUser(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("vdom", flattenSystemApiUserVdom(o["vdom"], d, "vdom")); err != nil {
-            if !fortiAPIPatch(o["vdom"]) {
-                return fmt.Errorf("Error reading vdom: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("vdom"); ok {
-            if err = d.Set("vdom", flattenSystemApiUserVdom(o["vdom"], d, "vdom")); err != nil {
-                if !fortiAPIPatch(o["vdom"]) {
-                    return fmt.Errorf("Error reading vdom: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("vdom", flattenSystemApiUserVdom(o["vdom"], d, "vdom")); err != nil {
+			if !fortiAPIPatch(o["vdom"]) {
+				return fmt.Errorf("Error reading vdom: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("vdom"); ok {
+			if err = d.Set("vdom", flattenSystemApiUserVdom(o["vdom"], d, "vdom")); err != nil {
+				if !fortiAPIPatch(o["vdom"]) {
+					return fmt.Errorf("Error reading vdom: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("schedule", flattenSystemApiUserSchedule(o["schedule"], d, "schedule")); err != nil {
 		if !fortiAPIPatch(o["schedule"]) {
@@ -417,22 +414,21 @@ func refreshObjectSystemApiUser(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("trusthost", flattenSystemApiUserTrusthost(o["trusthost"], d, "trusthost")); err != nil {
-            if !fortiAPIPatch(o["trusthost"]) {
-                return fmt.Errorf("Error reading trusthost: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("trusthost"); ok {
-            if err = d.Set("trusthost", flattenSystemApiUserTrusthost(o["trusthost"], d, "trusthost")); err != nil {
-                if !fortiAPIPatch(o["trusthost"]) {
-                    return fmt.Errorf("Error reading trusthost: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("trusthost", flattenSystemApiUserTrusthost(o["trusthost"], d, "trusthost")); err != nil {
+			if !fortiAPIPatch(o["trusthost"]) {
+				return fmt.Errorf("Error reading trusthost: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("trusthost"); ok {
+			if err = d.Set("trusthost", flattenSystemApiUserTrusthost(o["trusthost"], d, "trusthost")); err != nil {
+				if !fortiAPIPatch(o["trusthost"]) {
+					return fmt.Errorf("Error reading trusthost: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -442,7 +438,6 @@ func flattenSystemApiUserFortiTestDebug(d *schema.ResourceData, fosdebugsn int, 
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemApiUserName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -472,7 +467,7 @@ func expandSystemApiUserVdom(d *schema.ResourceData, v interface{}, pre string) 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -519,7 +514,7 @@ func expandSystemApiUserTrusthost(d *schema.ResourceData, v interface{}, pre str
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -565,10 +560,8 @@ func expandSystemApiUserTrusthostIpv6Trusthost(d *schema.ResourceData, v interfa
 	return v, nil
 }
 
-
 func getObjectSystemApiUser(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandSystemApiUserName(d, v, "name")
@@ -660,7 +653,5 @@ func getObjectSystemApiUser(d *schema.ResourceData) (*map[string]interface{}, er
 		}
 	}
 
-
 	return &obj, nil
 }
-

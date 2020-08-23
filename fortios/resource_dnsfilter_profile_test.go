@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,57 +5,58 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSDnsfilterProfile_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSDnsfilterProfile_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSDnsfilterProfile_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSDnsfilterProfileConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSDnsfilterProfileExists("fortios_dnsfilter_profile.trname"),
-                    resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "block_action", "redirect"),
-                    resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "block_botnet", "disable"),
-                    resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "log_all_domain", "disable"),
-                    resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "redirect_portal", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "safe_search", "disable"),
-                    resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "sdns_domain_log", "enable"),
-                    resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "sdns_ftgd_err_log", "enable"),
-                    resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "youtube_restrict", "strict"),
-                    resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "domain_filter.0.domain_filter_table", "0"),
-                    resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "ftgd_dns.0.filters.0.action", "block"),
-                    resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "ftgd_dns.0.filters.0.category", "26"),
-                    resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "ftgd_dns.0.filters.0.id", "1"),
-                    resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "ftgd_dns.0.filters.0.log", "enable"),
-                    resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "ftgd_dns.0.filters.1.action", "block"),
-                    resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "ftgd_dns.0.filters.1.category", "61"),
-                    resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "ftgd_dns.0.filters.1.id", "2"),
-                    resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "ftgd_dns.0.filters.1.log", "enable"),
-                    resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "ftgd_dns.0.filters.2.action", "block"),
-                    resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "ftgd_dns.0.filters.2.category", "86"),
-                    resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "ftgd_dns.0.filters.2.id", "3"),
-                    resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "ftgd_dns.0.filters.2.log", "enable"),
-                    resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "ftgd_dns.0.filters.3.action", "block"),
-                    resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "ftgd_dns.0.filters.3.category", "88"),
-                    resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "ftgd_dns.0.filters.3.id", "4"),
-                    resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "ftgd_dns.0.filters.3.log", "enable"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSDnsfilterProfileConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSDnsfilterProfileExists("fortios_dnsfilter_profile.trname"),
+					resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "block_action", "redirect"),
+					resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "block_botnet", "disable"),
+					resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "log_all_domain", "disable"),
+					resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "redirect_portal", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "safe_search", "disable"),
+					resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "sdns_domain_log", "enable"),
+					resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "sdns_ftgd_err_log", "enable"),
+					resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "youtube_restrict", "strict"),
+					resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "domain_filter.0.domain_filter_table", "0"),
+					resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "ftgd_dns.0.filters.0.action", "block"),
+					resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "ftgd_dns.0.filters.0.category", "26"),
+					resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "ftgd_dns.0.filters.0.id", "1"),
+					resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "ftgd_dns.0.filters.0.log", "enable"),
+					resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "ftgd_dns.0.filters.1.action", "block"),
+					resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "ftgd_dns.0.filters.1.category", "61"),
+					resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "ftgd_dns.0.filters.1.id", "2"),
+					resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "ftgd_dns.0.filters.1.log", "enable"),
+					resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "ftgd_dns.0.filters.2.action", "block"),
+					resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "ftgd_dns.0.filters.2.category", "86"),
+					resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "ftgd_dns.0.filters.2.id", "3"),
+					resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "ftgd_dns.0.filters.2.log", "enable"),
+					resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "ftgd_dns.0.filters.3.action", "block"),
+					resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "ftgd_dns.0.filters.3.category", "88"),
+					resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "ftgd_dns.0.filters.3.id", "4"),
+					resource.TestCheckResourceAttr("fortios_dnsfilter_profile.trname", "ftgd_dns.0.filters.3.log", "enable"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSDnsfilterProfileExists(n string) resource.TestCheckFunc {

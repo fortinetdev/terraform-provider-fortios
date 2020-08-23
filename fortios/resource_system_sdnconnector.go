@@ -30,139 +30,139 @@ func resourceSystemSdnConnector() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"ha_status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"server": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
-				Required: true,
+				Required:     true,
 			},
 			"server_port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"username": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
-				Required: true,
+				Required:     true,
 			},
 			"password": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"access_key": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"secret_key": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 59),
-				Optional: true,
+				Optional:     true,
 			},
 			"region": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"vpc_id": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"tenant_id": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"subscription_id": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"login_endpoint": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"resource_url": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"client_id": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"client_secret": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 59),
-				Optional: true,
+				Optional:     true,
 			},
 			"resource_group": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"azure_region": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"nic": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"ip": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"name": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 63),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"public_ip": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 63),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
@@ -171,32 +171,32 @@ func resourceSystemSdnConnector() *schema.Resource {
 				},
 			},
 			"route_table": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"route": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"name": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 63),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"next_hop": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 127),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
@@ -205,98 +205,98 @@ func resourceSystemSdnConnector() *schema.Resource {
 				},
 			},
 			"user_id": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"compartment_id": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"oci_region": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"oci_cert": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"oci_fingerprint": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"external_ip": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"route": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"use_metadata_iam": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"gcp_project": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"service_account": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"key_passwd": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
-				Optional: true,
+				Optional:     true,
 			},
 			"private_key": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"secret_token": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"update_interval": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 3600),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
@@ -390,7 +390,6 @@ func resourceSystemSdnConnectorRead(d *schema.ResourceData, m interface{}) error
 	}
 	return nil
 }
-
 
 func flattenSystemSdnConnectorName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -764,10 +763,8 @@ func flattenSystemSdnConnectorUpdateInterval(v interface{}, d *schema.ResourceDa
 	return v
 }
 
-
 func refreshObjectSystemSdnConnector(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenSystemSdnConnectorName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -883,37 +880,37 @@ func refreshObjectSystemSdnConnector(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("nic", flattenSystemSdnConnectorNic(o["nic"], d, "nic")); err != nil {
-            if !fortiAPIPatch(o["nic"]) {
-                return fmt.Errorf("Error reading nic: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("nic"); ok {
-            if err = d.Set("nic", flattenSystemSdnConnectorNic(o["nic"], d, "nic")); err != nil {
-                if !fortiAPIPatch(o["nic"]) {
-                    return fmt.Errorf("Error reading nic: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("nic", flattenSystemSdnConnectorNic(o["nic"], d, "nic")); err != nil {
+			if !fortiAPIPatch(o["nic"]) {
+				return fmt.Errorf("Error reading nic: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("nic"); ok {
+			if err = d.Set("nic", flattenSystemSdnConnectorNic(o["nic"], d, "nic")); err != nil {
+				if !fortiAPIPatch(o["nic"]) {
+					return fmt.Errorf("Error reading nic: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("route_table", flattenSystemSdnConnectorRouteTable(o["route-table"], d, "route_table")); err != nil {
-            if !fortiAPIPatch(o["route-table"]) {
-                return fmt.Errorf("Error reading route_table: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("route_table"); ok {
-            if err = d.Set("route_table", flattenSystemSdnConnectorRouteTable(o["route-table"], d, "route_table")); err != nil {
-                if !fortiAPIPatch(o["route-table"]) {
-                    return fmt.Errorf("Error reading route_table: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("route_table", flattenSystemSdnConnectorRouteTable(o["route-table"], d, "route_table")); err != nil {
+			if !fortiAPIPatch(o["route-table"]) {
+				return fmt.Errorf("Error reading route_table: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("route_table"); ok {
+			if err = d.Set("route_table", flattenSystemSdnConnectorRouteTable(o["route-table"], d, "route_table")); err != nil {
+				if !fortiAPIPatch(o["route-table"]) {
+					return fmt.Errorf("Error reading route_table: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("user_id", flattenSystemSdnConnectorUserId(o["user-id"], d, "user_id")); err != nil {
 		if !fortiAPIPatch(o["user-id"]) {
@@ -945,37 +942,37 @@ func refreshObjectSystemSdnConnector(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("external_ip", flattenSystemSdnConnectorExternalIp(o["external-ip"], d, "external_ip")); err != nil {
-            if !fortiAPIPatch(o["external-ip"]) {
-                return fmt.Errorf("Error reading external_ip: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("external_ip"); ok {
-            if err = d.Set("external_ip", flattenSystemSdnConnectorExternalIp(o["external-ip"], d, "external_ip")); err != nil {
-                if !fortiAPIPatch(o["external-ip"]) {
-                    return fmt.Errorf("Error reading external_ip: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("external_ip", flattenSystemSdnConnectorExternalIp(o["external-ip"], d, "external_ip")); err != nil {
+			if !fortiAPIPatch(o["external-ip"]) {
+				return fmt.Errorf("Error reading external_ip: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("external_ip"); ok {
+			if err = d.Set("external_ip", flattenSystemSdnConnectorExternalIp(o["external-ip"], d, "external_ip")); err != nil {
+				if !fortiAPIPatch(o["external-ip"]) {
+					return fmt.Errorf("Error reading external_ip: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("route", flattenSystemSdnConnectorRoute(o["route"], d, "route")); err != nil {
-            if !fortiAPIPatch(o["route"]) {
-                return fmt.Errorf("Error reading route: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("route"); ok {
-            if err = d.Set("route", flattenSystemSdnConnectorRoute(o["route"], d, "route")); err != nil {
-                if !fortiAPIPatch(o["route"]) {
-                    return fmt.Errorf("Error reading route: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("route", flattenSystemSdnConnectorRoute(o["route"], d, "route")); err != nil {
+			if !fortiAPIPatch(o["route"]) {
+				return fmt.Errorf("Error reading route: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("route"); ok {
+			if err = d.Set("route", flattenSystemSdnConnectorRoute(o["route"], d, "route")); err != nil {
+				if !fortiAPIPatch(o["route"]) {
+					return fmt.Errorf("Error reading route: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("use_metadata_iam", flattenSystemSdnConnectorUseMetadataIam(o["use-metadata-iam"], d, "use_metadata_iam")); err != nil {
 		if !fortiAPIPatch(o["use-metadata-iam"]) {
@@ -1019,7 +1016,6 @@ func refreshObjectSystemSdnConnector(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
-
 	return nil
 }
 
@@ -1028,7 +1024,6 @@ func flattenSystemSdnConnectorFortiTestDebug(d *schema.ResourceData, fosdebugsn 
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemSdnConnectorName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -1122,7 +1117,7 @@ func expandSystemSdnConnectorNic(d *schema.ResourceData, v interface{}, pre stri
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1160,7 +1155,7 @@ func expandSystemSdnConnectorNicIp(d *schema.ResourceData, v interface{}, pre st
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1200,7 +1195,7 @@ func expandSystemSdnConnectorRouteTable(d *schema.ResourceData, v interface{}, p
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1238,7 +1233,7 @@ func expandSystemSdnConnectorRouteTableRoute(d *schema.ResourceData, v interface
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1298,7 +1293,7 @@ func expandSystemSdnConnectorExternalIp(d *schema.ResourceData, v interface{}, p
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1329,7 +1324,7 @@ func expandSystemSdnConnectorRoute(d *schema.ResourceData, v interface{}, pre st
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1376,10 +1371,8 @@ func expandSystemSdnConnectorUpdateInterval(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
-
 func getObjectSystemSdnConnector(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandSystemSdnConnectorName(d, v, "name")
@@ -1705,7 +1698,5 @@ func getObjectSystemSdnConnector(d *schema.ResourceData) (*map[string]interface{
 		}
 	}
 
-
 	return &obj, nil
 }
-

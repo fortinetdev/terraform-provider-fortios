@@ -30,114 +30,114 @@ func resourceUserSetting() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"auth_type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"auth_cert": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"auth_ca_cert": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"auth_secure_http": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"auth_http_basic": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"auth_ssl_allow_renegotiation": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"auth_src_mac": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"auth_on_demand": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"auth_timeout": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 1440),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"auth_timeout_type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"auth_portal_timeout": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 30),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"radius_ses_timeout_act": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"auth_blackout_time": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 3600),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"auth_invalid_max": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 100),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"auth_lockout_threshold": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 10),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"auth_lockout_duration": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"auth_ports": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"port": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 65535),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -145,7 +145,6 @@ func resourceUserSetting() *schema.Resource {
 		},
 	}
 }
-
 
 func resourceUserSettingUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -211,7 +210,6 @@ func resourceUserSettingRead(d *schema.ResourceData, m interface{}) error {
 	}
 	return nil
 }
-
 
 func flattenUserSettingAuthType(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -331,10 +329,8 @@ func flattenUserSettingAuthPortsPort(v interface{}, d *schema.ResourceData, pre 
 	return v
 }
 
-
 func refreshObjectUserSetting(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("auth_type", flattenUserSettingAuthType(o["auth-type"], d, "auth_type")); err != nil {
 		if !fortiAPIPatch(o["auth-type"]) {
@@ -432,22 +428,21 @@ func refreshObjectUserSetting(d *schema.ResourceData, o map[string]interface{}) 
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("auth_ports", flattenUserSettingAuthPorts(o["auth-ports"], d, "auth_ports")); err != nil {
-            if !fortiAPIPatch(o["auth-ports"]) {
-                return fmt.Errorf("Error reading auth_ports: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("auth_ports"); ok {
-            if err = d.Set("auth_ports", flattenUserSettingAuthPorts(o["auth-ports"], d, "auth_ports")); err != nil {
-                if !fortiAPIPatch(o["auth-ports"]) {
-                    return fmt.Errorf("Error reading auth_ports: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("auth_ports", flattenUserSettingAuthPorts(o["auth-ports"], d, "auth_ports")); err != nil {
+			if !fortiAPIPatch(o["auth-ports"]) {
+				return fmt.Errorf("Error reading auth_ports: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("auth_ports"); ok {
+			if err = d.Set("auth_ports", flattenUserSettingAuthPorts(o["auth-ports"], d, "auth_ports")); err != nil {
+				if !fortiAPIPatch(o["auth-ports"]) {
+					return fmt.Errorf("Error reading auth_ports: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -457,7 +452,6 @@ func flattenUserSettingFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fo
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandUserSettingAuthType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -535,7 +529,7 @@ func expandUserSettingAuthPorts(d *schema.ResourceData, v interface{}, pre strin
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -572,10 +566,8 @@ func expandUserSettingAuthPortsPort(d *schema.ResourceData, v interface{}, pre s
 	return v, nil
 }
 
-
 func getObjectUserSetting(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("auth_type"); ok {
 		t, err := expandUserSettingAuthType(d, v, "auth_type")
@@ -730,7 +722,5 @@ func getObjectUserSetting(d *schema.ResourceData) (*map[string]interface{}, erro
 		}
 	}
 
-
 	return &obj, nil
 }
-

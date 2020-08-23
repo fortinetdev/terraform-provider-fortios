@@ -30,591 +30,591 @@ func resourceEndpointControlProfile() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"profile_name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"forticlient_winmac_settings": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"forticlient_registration_compliance_action": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"forticlient_ems_compliance": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"forticlient_ems_compliance_action": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"forticlient_ems_entries": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"name": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 64),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
 						},
 						"forticlient_security_posture": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"forticlient_security_posture_compliance_action": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"forticlient_av": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"av_realtime_protection": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"av_signature_up_to_date": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"sandbox_analysis": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"sandbox_address": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"os_av_software_installed": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"forticlient_application_firewall": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"forticlient_application_firewall_list": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"forticlient_wf": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"forticlient_wf_profile": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"forticlient_system_compliance": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"forticlient_system_compliance_action": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"forticlient_minimum_software_version": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"forticlient_win_ver": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"forticlient_mac_ver": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"forticlient_linux_ver": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"forticlient_operating_system": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"os_type": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"os_name": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 127),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
 						},
 						"forticlient_running_app": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"app_name": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 127),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"application_check_rule": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"process_name": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 127),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"app_sha256_signature": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 64),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"process_name2": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 127),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"app_sha256_signature2": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 64),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"process_name3": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 127),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"app_sha256_signature3": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 64),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"process_name4": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 127),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"app_sha256_signature4": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 64),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
 						},
 						"forticlient_registry_entry": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"registry_entry": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 127),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
 						},
 						"forticlient_own_file": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"file": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 127),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
 						},
 						"forticlient_log_upload": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"forticlient_log_upload_level": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"forticlient_log_upload_server": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"forticlient_vuln_scan": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"forticlient_vuln_scan_compliance_action": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"forticlient_vuln_scan_enforce": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"forticlient_vuln_scan_enforce_grace": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 30),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"forticlient_vuln_scan_exempt": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 					},
 				},
-			},			"forticlient_android_settings": &schema.Schema{
-				Type: schema.TypeList,
+			}, "forticlient_android_settings": &schema.Schema{
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"forticlient_wf": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"forticlient_wf_profile": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"disable_wf_when_protected": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"forticlient_vpn_provisioning": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"forticlient_advanced_vpn": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"forticlient_advanced_vpn_buffer": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 32768),
-							Optional: true,
+							Optional:     true,
 						},
 						"forticlient_vpn_settings": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"name": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"type": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"remote_gw": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 255),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"sslvpn_access_port": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(1, 65535),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"sslvpn_require_certificate": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"auth_method": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"preshared_key": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 128),
-										Optional: true,
+										Optional:     true,
 									},
 								},
 							},
 						},
 					},
 				},
-			},			"forticlient_ios_settings": &schema.Schema{
-				Type: schema.TypeList,
+			}, "forticlient_ios_settings": &schema.Schema{
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"forticlient_wf": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"forticlient_wf_profile": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"disable_wf_when_protected": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"client_vpn_provisioning": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"client_vpn_settings": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"name": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"type": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"vpn_configuration_name": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"vpn_configuration_content": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 32768),
-										Optional: true,
+										Optional:     true,
 									},
 									"remote_gw": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 255),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"sslvpn_access_port": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(1, 65535),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"sslvpn_require_certificate": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"auth_method": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"preshared_key": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 128),
-										Optional: true,
+										Optional:     true,
 									},
 								},
 							},
 						},
 						"distribute_configuration_profile": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"configuration_name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"configuration_content": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 32768),
-							Optional: true,
+							Optional:     true,
 						},
 					},
 				},
-			},			"description": &schema.Schema{
-				Type: schema.TypeString,
+			}, "description": &schema.Schema{
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
+				Optional:     true,
 			},
 			"src_addr": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"device_groups": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"users": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"user_groups": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"on_net_addr": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"replacemsg_override_group": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
@@ -709,7 +709,6 @@ func resourceEndpointControlProfileRead(d *schema.ResourceData, m interface{}) e
 	return nil
 }
 
-
 func flattenEndpointControlProfileProfileName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -723,176 +722,175 @@ func flattenEndpointControlProfileForticlientWinmacSettings(v interface{}, d *sc
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "forticlient_registration_compliance_action"
+	pre_append = pre + ".0." + "forticlient_registration_compliance_action"
 	if _, ok := i["forticlient-registration-compliance-action"]; ok {
 		result["forticlient_registration_compliance_action"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRegistrationComplianceAction(i["forticlient-registration-compliance-action"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "forticlient_ems_compliance"
+	pre_append = pre + ".0." + "forticlient_ems_compliance"
 	if _, ok := i["forticlient-ems-compliance"]; ok {
 		result["forticlient_ems_compliance"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientEmsCompliance(i["forticlient-ems-compliance"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "forticlient_ems_compliance_action"
+	pre_append = pre + ".0." + "forticlient_ems_compliance_action"
 	if _, ok := i["forticlient-ems-compliance-action"]; ok {
 		result["forticlient_ems_compliance_action"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientEmsComplianceAction(i["forticlient-ems-compliance-action"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "forticlient_ems_entries"
+	pre_append = pre + ".0." + "forticlient_ems_entries"
 	if _, ok := i["forticlient-ems-entries"]; ok {
 		result["forticlient_ems_entries"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientEmsEntries(i["forticlient-ems-entries"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "forticlient_security_posture"
+	pre_append = pre + ".0." + "forticlient_security_posture"
 	if _, ok := i["forticlient-security-posture"]; ok {
 		result["forticlient_security_posture"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientSecurityPosture(i["forticlient-security-posture"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "forticlient_security_posture_compliance_action"
+	pre_append = pre + ".0." + "forticlient_security_posture_compliance_action"
 	if _, ok := i["forticlient-security-posture-compliance-action"]; ok {
 		result["forticlient_security_posture_compliance_action"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientSecurityPostureComplianceAction(i["forticlient-security-posture-compliance-action"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "forticlient_av"
+	pre_append = pre + ".0." + "forticlient_av"
 	if _, ok := i["forticlient-av"]; ok {
 		result["forticlient_av"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientAv(i["forticlient-av"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "av_realtime_protection"
+	pre_append = pre + ".0." + "av_realtime_protection"
 	if _, ok := i["av-realtime-protection"]; ok {
 		result["av_realtime_protection"] = flattenEndpointControlProfileForticlientWinmacSettingsAvRealtimeProtection(i["av-realtime-protection"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "av_signature_up_to_date"
+	pre_append = pre + ".0." + "av_signature_up_to_date"
 	if _, ok := i["av-signature-up-to-date"]; ok {
 		result["av_signature_up_to_date"] = flattenEndpointControlProfileForticlientWinmacSettingsAvSignatureUpToDate(i["av-signature-up-to-date"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "sandbox_analysis"
+	pre_append = pre + ".0." + "sandbox_analysis"
 	if _, ok := i["sandbox-analysis"]; ok {
 		result["sandbox_analysis"] = flattenEndpointControlProfileForticlientWinmacSettingsSandboxAnalysis(i["sandbox-analysis"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "sandbox_address"
+	pre_append = pre + ".0." + "sandbox_address"
 	if _, ok := i["sandbox-address"]; ok {
 		result["sandbox_address"] = flattenEndpointControlProfileForticlientWinmacSettingsSandboxAddress(i["sandbox-address"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "os_av_software_installed"
+	pre_append = pre + ".0." + "os_av_software_installed"
 	if _, ok := i["os-av-software-installed"]; ok {
 		result["os_av_software_installed"] = flattenEndpointControlProfileForticlientWinmacSettingsOsAvSoftwareInstalled(i["os-av-software-installed"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "forticlient_application_firewall"
+	pre_append = pre + ".0." + "forticlient_application_firewall"
 	if _, ok := i["forticlient-application-firewall"]; ok {
 		result["forticlient_application_firewall"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientApplicationFirewall(i["forticlient-application-firewall"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "forticlient_application_firewall_list"
+	pre_append = pre + ".0." + "forticlient_application_firewall_list"
 	if _, ok := i["forticlient-application-firewall-list"]; ok {
 		result["forticlient_application_firewall_list"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientApplicationFirewallList(i["forticlient-application-firewall-list"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "forticlient_wf"
+	pre_append = pre + ".0." + "forticlient_wf"
 	if _, ok := i["forticlient-wf"]; ok {
 		result["forticlient_wf"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientWf(i["forticlient-wf"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "forticlient_wf_profile"
+	pre_append = pre + ".0." + "forticlient_wf_profile"
 	if _, ok := i["forticlient-wf-profile"]; ok {
 		result["forticlient_wf_profile"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientWfProfile(i["forticlient-wf-profile"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "forticlient_system_compliance"
+	pre_append = pre + ".0." + "forticlient_system_compliance"
 	if _, ok := i["forticlient-system-compliance"]; ok {
 		result["forticlient_system_compliance"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientSystemCompliance(i["forticlient-system-compliance"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "forticlient_system_compliance_action"
+	pre_append = pre + ".0." + "forticlient_system_compliance_action"
 	if _, ok := i["forticlient-system-compliance-action"]; ok {
 		result["forticlient_system_compliance_action"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientSystemComplianceAction(i["forticlient-system-compliance-action"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "forticlient_minimum_software_version"
+	pre_append = pre + ".0." + "forticlient_minimum_software_version"
 	if _, ok := i["forticlient-minimum-software-version"]; ok {
 		result["forticlient_minimum_software_version"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientMinimumSoftwareVersion(i["forticlient-minimum-software-version"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "forticlient_win_ver"
+	pre_append = pre + ".0." + "forticlient_win_ver"
 	if _, ok := i["forticlient-win-ver"]; ok {
 		result["forticlient_win_ver"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientWinVer(i["forticlient-win-ver"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "forticlient_mac_ver"
+	pre_append = pre + ".0." + "forticlient_mac_ver"
 	if _, ok := i["forticlient-mac-ver"]; ok {
 		result["forticlient_mac_ver"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientMacVer(i["forticlient-mac-ver"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "forticlient_linux_ver"
+	pre_append = pre + ".0." + "forticlient_linux_ver"
 	if _, ok := i["forticlient-linux-ver"]; ok {
 		result["forticlient_linux_ver"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientLinuxVer(i["forticlient-linux-ver"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "forticlient_operating_system"
+	pre_append = pre + ".0." + "forticlient_operating_system"
 	if _, ok := i["forticlient-operating-system"]; ok {
 		result["forticlient_operating_system"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientOperatingSystem(i["forticlient-operating-system"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "forticlient_running_app"
+	pre_append = pre + ".0." + "forticlient_running_app"
 	if _, ok := i["forticlient-running-app"]; ok {
 		result["forticlient_running_app"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRunningApp(i["forticlient-running-app"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "forticlient_registry_entry"
+	pre_append = pre + ".0." + "forticlient_registry_entry"
 	if _, ok := i["forticlient-registry-entry"]; ok {
 		result["forticlient_registry_entry"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientRegistryEntry(i["forticlient-registry-entry"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "forticlient_own_file"
+	pre_append = pre + ".0." + "forticlient_own_file"
 	if _, ok := i["forticlient-own-file"]; ok {
 		result["forticlient_own_file"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientOwnFile(i["forticlient-own-file"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "forticlient_log_upload"
+	pre_append = pre + ".0." + "forticlient_log_upload"
 	if _, ok := i["forticlient-log-upload"]; ok {
 		result["forticlient_log_upload"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientLogUpload(i["forticlient-log-upload"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "forticlient_log_upload_level"
+	pre_append = pre + ".0." + "forticlient_log_upload_level"
 	if _, ok := i["forticlient-log-upload-level"]; ok {
 		result["forticlient_log_upload_level"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientLogUploadLevel(i["forticlient-log-upload-level"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "forticlient_log_upload_server"
+	pre_append = pre + ".0." + "forticlient_log_upload_server"
 	if _, ok := i["forticlient-log-upload-server"]; ok {
 		result["forticlient_log_upload_server"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientLogUploadServer(i["forticlient-log-upload-server"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "forticlient_vuln_scan"
+	pre_append = pre + ".0." + "forticlient_vuln_scan"
 	if _, ok := i["forticlient-vuln-scan"]; ok {
 		result["forticlient_vuln_scan"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientVulnScan(i["forticlient-vuln-scan"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "forticlient_vuln_scan_compliance_action"
+	pre_append = pre + ".0." + "forticlient_vuln_scan_compliance_action"
 	if _, ok := i["forticlient-vuln-scan-compliance-action"]; ok {
 		result["forticlient_vuln_scan_compliance_action"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientVulnScanComplianceAction(i["forticlient-vuln-scan-compliance-action"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "forticlient_vuln_scan_enforce"
+	pre_append = pre + ".0." + "forticlient_vuln_scan_enforce"
 	if _, ok := i["forticlient-vuln-scan-enforce"]; ok {
 		result["forticlient_vuln_scan_enforce"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientVulnScanEnforce(i["forticlient-vuln-scan-enforce"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "forticlient_vuln_scan_enforce_grace"
+	pre_append = pre + ".0." + "forticlient_vuln_scan_enforce_grace"
 	if _, ok := i["forticlient-vuln-scan-enforce-grace"]; ok {
 		result["forticlient_vuln_scan_enforce_grace"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientVulnScanEnforceGrace(i["forticlient-vuln-scan-enforce-grace"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "forticlient_vuln_scan_exempt"
+	pre_append = pre + ".0." + "forticlient_vuln_scan_exempt"
 	if _, ok := i["forticlient-vuln-scan-exempt"]; ok {
 		result["forticlient_vuln_scan_exempt"] = flattenEndpointControlProfileForticlientWinmacSettingsForticlientVulnScanExempt(i["forticlient-vuln-scan-exempt"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -1329,41 +1327,40 @@ func flattenEndpointControlProfileForticlientAndroidSettings(v interface{}, d *s
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "forticlient_wf"
+	pre_append = pre + ".0." + "forticlient_wf"
 	if _, ok := i["forticlient-wf"]; ok {
 		result["forticlient_wf"] = flattenEndpointControlProfileForticlientAndroidSettingsForticlientWf(i["forticlient-wf"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "forticlient_wf_profile"
+	pre_append = pre + ".0." + "forticlient_wf_profile"
 	if _, ok := i["forticlient-wf-profile"]; ok {
 		result["forticlient_wf_profile"] = flattenEndpointControlProfileForticlientAndroidSettingsForticlientWfProfile(i["forticlient-wf-profile"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "disable_wf_when_protected"
+	pre_append = pre + ".0." + "disable_wf_when_protected"
 	if _, ok := i["disable-wf-when-protected"]; ok {
 		result["disable_wf_when_protected"] = flattenEndpointControlProfileForticlientAndroidSettingsDisableWfWhenProtected(i["disable-wf-when-protected"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "forticlient_vpn_provisioning"
+	pre_append = pre + ".0." + "forticlient_vpn_provisioning"
 	if _, ok := i["forticlient-vpn-provisioning"]; ok {
 		result["forticlient_vpn_provisioning"] = flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnProvisioning(i["forticlient-vpn-provisioning"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "forticlient_advanced_vpn"
+	pre_append = pre + ".0." + "forticlient_advanced_vpn"
 	if _, ok := i["forticlient-advanced-vpn"]; ok {
 		result["forticlient_advanced_vpn"] = flattenEndpointControlProfileForticlientAndroidSettingsForticlientAdvancedVpn(i["forticlient-advanced-vpn"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "forticlient_advanced_vpn_buffer"
+	pre_append = pre + ".0." + "forticlient_advanced_vpn_buffer"
 	if _, ok := i["forticlient-advanced-vpn-buffer"]; ok {
 		result["forticlient_advanced_vpn_buffer"] = flattenEndpointControlProfileForticlientAndroidSettingsForticlientAdvancedVpnBuffer(i["forticlient-advanced-vpn-buffer"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "forticlient_vpn_settings"
+	pre_append = pre + ".0." + "forticlient_vpn_settings"
 	if _, ok := i["forticlient-vpn-settings"]; ok {
 		result["forticlient_vpn_settings"] = flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettings(i["forticlient-vpn-settings"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -1492,46 +1489,45 @@ func flattenEndpointControlProfileForticlientIosSettings(v interface{}, d *schem
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "forticlient_wf"
+	pre_append = pre + ".0." + "forticlient_wf"
 	if _, ok := i["forticlient-wf"]; ok {
 		result["forticlient_wf"] = flattenEndpointControlProfileForticlientIosSettingsForticlientWf(i["forticlient-wf"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "forticlient_wf_profile"
+	pre_append = pre + ".0." + "forticlient_wf_profile"
 	if _, ok := i["forticlient-wf-profile"]; ok {
 		result["forticlient_wf_profile"] = flattenEndpointControlProfileForticlientIosSettingsForticlientWfProfile(i["forticlient-wf-profile"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "disable_wf_when_protected"
+	pre_append = pre + ".0." + "disable_wf_when_protected"
 	if _, ok := i["disable-wf-when-protected"]; ok {
 		result["disable_wf_when_protected"] = flattenEndpointControlProfileForticlientIosSettingsDisableWfWhenProtected(i["disable-wf-when-protected"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "client_vpn_provisioning"
+	pre_append = pre + ".0." + "client_vpn_provisioning"
 	if _, ok := i["client-vpn-provisioning"]; ok {
 		result["client_vpn_provisioning"] = flattenEndpointControlProfileForticlientIosSettingsClientVpnProvisioning(i["client-vpn-provisioning"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "client_vpn_settings"
+	pre_append = pre + ".0." + "client_vpn_settings"
 	if _, ok := i["client-vpn-settings"]; ok {
 		result["client_vpn_settings"] = flattenEndpointControlProfileForticlientIosSettingsClientVpnSettings(i["client-vpn-settings"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "distribute_configuration_profile"
+	pre_append = pre + ".0." + "distribute_configuration_profile"
 	if _, ok := i["distribute-configuration-profile"]; ok {
 		result["distribute_configuration_profile"] = flattenEndpointControlProfileForticlientIosSettingsDistributeConfigurationProfile(i["distribute-configuration-profile"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "configuration_name"
+	pre_append = pre + ".0." + "configuration_name"
 	if _, ok := i["configuration-name"]; ok {
 		result["configuration_name"] = flattenEndpointControlProfileForticlientIosSettingsConfigurationName(i["configuration-name"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "configuration_content"
+	pre_append = pre + ".0." + "configuration_content"
 	if _, ok := i["configuration-content"]; ok {
 		result["configuration_content"] = flattenEndpointControlProfileForticlientIosSettingsConfigurationContent(i["configuration-content"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -1861,10 +1857,8 @@ func flattenEndpointControlProfileReplacemsgOverrideGroup(v interface{}, d *sche
 	return v
 }
 
-
 func refreshObjectEndpointControlProfile(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("profile_name", flattenEndpointControlProfileProfileName(o["profile-name"], d, "profile_name")); err != nil {
 		if !fortiAPIPatch(o["profile-name"]) {
@@ -1872,53 +1866,53 @@ func refreshObjectEndpointControlProfile(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("forticlient_winmac_settings", flattenEndpointControlProfileForticlientWinmacSettings(o["forticlient-winmac-settings"], d, "forticlient_winmac_settings")); err != nil {
-            if !fortiAPIPatch(o["forticlient-winmac-settings"]) {
-                return fmt.Errorf("Error reading forticlient_winmac_settings: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("forticlient_winmac_settings"); ok {
-            if err = d.Set("forticlient_winmac_settings", flattenEndpointControlProfileForticlientWinmacSettings(o["forticlient-winmac-settings"], d, "forticlient_winmac_settings")); err != nil {
-                if !fortiAPIPatch(o["forticlient-winmac-settings"]) {
-                    return fmt.Errorf("Error reading forticlient_winmac_settings: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("forticlient_winmac_settings", flattenEndpointControlProfileForticlientWinmacSettings(o["forticlient-winmac-settings"], d, "forticlient_winmac_settings")); err != nil {
+			if !fortiAPIPatch(o["forticlient-winmac-settings"]) {
+				return fmt.Errorf("Error reading forticlient_winmac_settings: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("forticlient_winmac_settings"); ok {
+			if err = d.Set("forticlient_winmac_settings", flattenEndpointControlProfileForticlientWinmacSettings(o["forticlient-winmac-settings"], d, "forticlient_winmac_settings")); err != nil {
+				if !fortiAPIPatch(o["forticlient-winmac-settings"]) {
+					return fmt.Errorf("Error reading forticlient_winmac_settings: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("forticlient_android_settings", flattenEndpointControlProfileForticlientAndroidSettings(o["forticlient-android-settings"], d, "forticlient_android_settings")); err != nil {
-            if !fortiAPIPatch(o["forticlient-android-settings"]) {
-                return fmt.Errorf("Error reading forticlient_android_settings: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("forticlient_android_settings"); ok {
-            if err = d.Set("forticlient_android_settings", flattenEndpointControlProfileForticlientAndroidSettings(o["forticlient-android-settings"], d, "forticlient_android_settings")); err != nil {
-                if !fortiAPIPatch(o["forticlient-android-settings"]) {
-                    return fmt.Errorf("Error reading forticlient_android_settings: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("forticlient_android_settings", flattenEndpointControlProfileForticlientAndroidSettings(o["forticlient-android-settings"], d, "forticlient_android_settings")); err != nil {
+			if !fortiAPIPatch(o["forticlient-android-settings"]) {
+				return fmt.Errorf("Error reading forticlient_android_settings: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("forticlient_android_settings"); ok {
+			if err = d.Set("forticlient_android_settings", flattenEndpointControlProfileForticlientAndroidSettings(o["forticlient-android-settings"], d, "forticlient_android_settings")); err != nil {
+				if !fortiAPIPatch(o["forticlient-android-settings"]) {
+					return fmt.Errorf("Error reading forticlient_android_settings: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("forticlient_ios_settings", flattenEndpointControlProfileForticlientIosSettings(o["forticlient-ios-settings"], d, "forticlient_ios_settings")); err != nil {
-            if !fortiAPIPatch(o["forticlient-ios-settings"]) {
-                return fmt.Errorf("Error reading forticlient_ios_settings: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("forticlient_ios_settings"); ok {
-            if err = d.Set("forticlient_ios_settings", flattenEndpointControlProfileForticlientIosSettings(o["forticlient-ios-settings"], d, "forticlient_ios_settings")); err != nil {
-                if !fortiAPIPatch(o["forticlient-ios-settings"]) {
-                    return fmt.Errorf("Error reading forticlient_ios_settings: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("forticlient_ios_settings", flattenEndpointControlProfileForticlientIosSettings(o["forticlient-ios-settings"], d, "forticlient_ios_settings")); err != nil {
+			if !fortiAPIPatch(o["forticlient-ios-settings"]) {
+				return fmt.Errorf("Error reading forticlient_ios_settings: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("forticlient_ios_settings"); ok {
+			if err = d.Set("forticlient_ios_settings", flattenEndpointControlProfileForticlientIosSettings(o["forticlient-ios-settings"], d, "forticlient_ios_settings")); err != nil {
+				if !fortiAPIPatch(o["forticlient-ios-settings"]) {
+					return fmt.Errorf("Error reading forticlient_ios_settings: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("description", flattenEndpointControlProfileDescription(o["description"], d, "description")); err != nil {
 		if !fortiAPIPatch(o["description"]) {
@@ -1926,92 +1920,91 @@ func refreshObjectEndpointControlProfile(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("src_addr", flattenEndpointControlProfileSrcAddr(o["src-addr"], d, "src_addr")); err != nil {
-            if !fortiAPIPatch(o["src-addr"]) {
-                return fmt.Errorf("Error reading src_addr: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("src_addr"); ok {
-            if err = d.Set("src_addr", flattenEndpointControlProfileSrcAddr(o["src-addr"], d, "src_addr")); err != nil {
-                if !fortiAPIPatch(o["src-addr"]) {
-                    return fmt.Errorf("Error reading src_addr: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("src_addr", flattenEndpointControlProfileSrcAddr(o["src-addr"], d, "src_addr")); err != nil {
+			if !fortiAPIPatch(o["src-addr"]) {
+				return fmt.Errorf("Error reading src_addr: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("src_addr"); ok {
+			if err = d.Set("src_addr", flattenEndpointControlProfileSrcAddr(o["src-addr"], d, "src_addr")); err != nil {
+				if !fortiAPIPatch(o["src-addr"]) {
+					return fmt.Errorf("Error reading src_addr: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("device_groups", flattenEndpointControlProfileDeviceGroups(o["device-groups"], d, "device_groups")); err != nil {
-            if !fortiAPIPatch(o["device-groups"]) {
-                return fmt.Errorf("Error reading device_groups: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("device_groups"); ok {
-            if err = d.Set("device_groups", flattenEndpointControlProfileDeviceGroups(o["device-groups"], d, "device_groups")); err != nil {
-                if !fortiAPIPatch(o["device-groups"]) {
-                    return fmt.Errorf("Error reading device_groups: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("device_groups", flattenEndpointControlProfileDeviceGroups(o["device-groups"], d, "device_groups")); err != nil {
+			if !fortiAPIPatch(o["device-groups"]) {
+				return fmt.Errorf("Error reading device_groups: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("device_groups"); ok {
+			if err = d.Set("device_groups", flattenEndpointControlProfileDeviceGroups(o["device-groups"], d, "device_groups")); err != nil {
+				if !fortiAPIPatch(o["device-groups"]) {
+					return fmt.Errorf("Error reading device_groups: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("users", flattenEndpointControlProfileUsers(o["users"], d, "users")); err != nil {
-            if !fortiAPIPatch(o["users"]) {
-                return fmt.Errorf("Error reading users: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("users"); ok {
-            if err = d.Set("users", flattenEndpointControlProfileUsers(o["users"], d, "users")); err != nil {
-                if !fortiAPIPatch(o["users"]) {
-                    return fmt.Errorf("Error reading users: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("users", flattenEndpointControlProfileUsers(o["users"], d, "users")); err != nil {
+			if !fortiAPIPatch(o["users"]) {
+				return fmt.Errorf("Error reading users: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("users"); ok {
+			if err = d.Set("users", flattenEndpointControlProfileUsers(o["users"], d, "users")); err != nil {
+				if !fortiAPIPatch(o["users"]) {
+					return fmt.Errorf("Error reading users: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("user_groups", flattenEndpointControlProfileUserGroups(o["user-groups"], d, "user_groups")); err != nil {
-            if !fortiAPIPatch(o["user-groups"]) {
-                return fmt.Errorf("Error reading user_groups: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("user_groups"); ok {
-            if err = d.Set("user_groups", flattenEndpointControlProfileUserGroups(o["user-groups"], d, "user_groups")); err != nil {
-                if !fortiAPIPatch(o["user-groups"]) {
-                    return fmt.Errorf("Error reading user_groups: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("user_groups", flattenEndpointControlProfileUserGroups(o["user-groups"], d, "user_groups")); err != nil {
+			if !fortiAPIPatch(o["user-groups"]) {
+				return fmt.Errorf("Error reading user_groups: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("user_groups"); ok {
+			if err = d.Set("user_groups", flattenEndpointControlProfileUserGroups(o["user-groups"], d, "user_groups")); err != nil {
+				if !fortiAPIPatch(o["user-groups"]) {
+					return fmt.Errorf("Error reading user_groups: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("on_net_addr", flattenEndpointControlProfileOnNetAddr(o["on-net-addr"], d, "on_net_addr")); err != nil {
-            if !fortiAPIPatch(o["on-net-addr"]) {
-                return fmt.Errorf("Error reading on_net_addr: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("on_net_addr"); ok {
-            if err = d.Set("on_net_addr", flattenEndpointControlProfileOnNetAddr(o["on-net-addr"], d, "on_net_addr")); err != nil {
-                if !fortiAPIPatch(o["on-net-addr"]) {
-                    return fmt.Errorf("Error reading on_net_addr: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("on_net_addr", flattenEndpointControlProfileOnNetAddr(o["on-net-addr"], d, "on_net_addr")); err != nil {
+			if !fortiAPIPatch(o["on-net-addr"]) {
+				return fmt.Errorf("Error reading on_net_addr: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("on_net_addr"); ok {
+			if err = d.Set("on_net_addr", flattenEndpointControlProfileOnNetAddr(o["on-net-addr"], d, "on_net_addr")); err != nil {
+				if !fortiAPIPatch(o["on-net-addr"]) {
+					return fmt.Errorf("Error reading on_net_addr: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("replacemsg_override_group", flattenEndpointControlProfileReplacemsgOverrideGroup(o["replacemsg-override-group"], d, "replacemsg_override_group")); err != nil {
 		if !fortiAPIPatch(o["replacemsg-override-group"]) {
 			return fmt.Errorf("Error reading replacemsg_override_group: %v", err)
 		}
 	}
-
 
 	return nil
 }
@@ -2021,7 +2014,6 @@ func flattenEndpointControlProfileFortiTestDebug(d *schema.ResourceData, fosdebu
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandEndpointControlProfileProfileName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -2036,150 +2028,150 @@ func expandEndpointControlProfileForticlientWinmacSettings(d *schema.ResourceDat
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "forticlient_registration_compliance_action"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "forticlient_registration_compliance_action"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-registration-compliance-action"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientRegistrationComplianceAction(d, i["forticlient_registration_compliance_action"], pre_append)
 	}
-	pre_append =  pre + ".0." + "forticlient_ems_compliance"
+	pre_append = pre + ".0." + "forticlient_ems_compliance"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-ems-compliance"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientEmsCompliance(d, i["forticlient_ems_compliance"], pre_append)
 	}
-	pre_append =  pre + ".0." + "forticlient_ems_compliance_action"
+	pre_append = pre + ".0." + "forticlient_ems_compliance_action"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-ems-compliance-action"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientEmsComplianceAction(d, i["forticlient_ems_compliance_action"], pre_append)
 	}
-	pre_append =  pre + ".0." + "forticlient_ems_entries"
+	pre_append = pre + ".0." + "forticlient_ems_entries"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-ems-entries"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientEmsEntries(d, i["forticlient_ems_entries"], pre_append)
 	} else {
 		result["forticlient-ems-entries"] = make([]string, 0)
 	}
-	pre_append =  pre + ".0." + "forticlient_security_posture"
+	pre_append = pre + ".0." + "forticlient_security_posture"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-security-posture"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientSecurityPosture(d, i["forticlient_security_posture"], pre_append)
 	}
-	pre_append =  pre + ".0." + "forticlient_security_posture_compliance_action"
+	pre_append = pre + ".0." + "forticlient_security_posture_compliance_action"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-security-posture-compliance-action"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientSecurityPostureComplianceAction(d, i["forticlient_security_posture_compliance_action"], pre_append)
 	}
-	pre_append =  pre + ".0." + "forticlient_av"
+	pre_append = pre + ".0." + "forticlient_av"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-av"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientAv(d, i["forticlient_av"], pre_append)
 	}
-	pre_append =  pre + ".0." + "av_realtime_protection"
+	pre_append = pre + ".0." + "av_realtime_protection"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["av-realtime-protection"], _ = expandEndpointControlProfileForticlientWinmacSettingsAvRealtimeProtection(d, i["av_realtime_protection"], pre_append)
 	}
-	pre_append =  pre + ".0." + "av_signature_up_to_date"
+	pre_append = pre + ".0." + "av_signature_up_to_date"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["av-signature-up-to-date"], _ = expandEndpointControlProfileForticlientWinmacSettingsAvSignatureUpToDate(d, i["av_signature_up_to_date"], pre_append)
 	}
-	pre_append =  pre + ".0." + "sandbox_analysis"
+	pre_append = pre + ".0." + "sandbox_analysis"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["sandbox-analysis"], _ = expandEndpointControlProfileForticlientWinmacSettingsSandboxAnalysis(d, i["sandbox_analysis"], pre_append)
 	}
-	pre_append =  pre + ".0." + "sandbox_address"
+	pre_append = pre + ".0." + "sandbox_address"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["sandbox-address"], _ = expandEndpointControlProfileForticlientWinmacSettingsSandboxAddress(d, i["sandbox_address"], pre_append)
 	}
-	pre_append =  pre + ".0." + "os_av_software_installed"
+	pre_append = pre + ".0." + "os_av_software_installed"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["os-av-software-installed"], _ = expandEndpointControlProfileForticlientWinmacSettingsOsAvSoftwareInstalled(d, i["os_av_software_installed"], pre_append)
 	}
-	pre_append =  pre + ".0." + "forticlient_application_firewall"
+	pre_append = pre + ".0." + "forticlient_application_firewall"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-application-firewall"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientApplicationFirewall(d, i["forticlient_application_firewall"], pre_append)
 	}
-	pre_append =  pre + ".0." + "forticlient_application_firewall_list"
+	pre_append = pre + ".0." + "forticlient_application_firewall_list"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-application-firewall-list"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientApplicationFirewallList(d, i["forticlient_application_firewall_list"], pre_append)
 	}
-	pre_append =  pre + ".0." + "forticlient_wf"
+	pre_append = pre + ".0." + "forticlient_wf"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-wf"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientWf(d, i["forticlient_wf"], pre_append)
 	}
-	pre_append =  pre + ".0." + "forticlient_wf_profile"
+	pre_append = pre + ".0." + "forticlient_wf_profile"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-wf-profile"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientWfProfile(d, i["forticlient_wf_profile"], pre_append)
 	}
-	pre_append =  pre + ".0." + "forticlient_system_compliance"
+	pre_append = pre + ".0." + "forticlient_system_compliance"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-system-compliance"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientSystemCompliance(d, i["forticlient_system_compliance"], pre_append)
 	}
-	pre_append =  pre + ".0." + "forticlient_system_compliance_action"
+	pre_append = pre + ".0." + "forticlient_system_compliance_action"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-system-compliance-action"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientSystemComplianceAction(d, i["forticlient_system_compliance_action"], pre_append)
 	}
-	pre_append =  pre + ".0." + "forticlient_minimum_software_version"
+	pre_append = pre + ".0." + "forticlient_minimum_software_version"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-minimum-software-version"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientMinimumSoftwareVersion(d, i["forticlient_minimum_software_version"], pre_append)
 	}
-	pre_append =  pre + ".0." + "forticlient_win_ver"
+	pre_append = pre + ".0." + "forticlient_win_ver"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-win-ver"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientWinVer(d, i["forticlient_win_ver"], pre_append)
 	}
-	pre_append =  pre + ".0." + "forticlient_mac_ver"
+	pre_append = pre + ".0." + "forticlient_mac_ver"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-mac-ver"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientMacVer(d, i["forticlient_mac_ver"], pre_append)
 	}
-	pre_append =  pre + ".0." + "forticlient_linux_ver"
+	pre_append = pre + ".0." + "forticlient_linux_ver"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-linux-ver"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientLinuxVer(d, i["forticlient_linux_ver"], pre_append)
 	}
-	pre_append =  pre + ".0." + "forticlient_operating_system"
+	pre_append = pre + ".0." + "forticlient_operating_system"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-operating-system"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientOperatingSystem(d, i["forticlient_operating_system"], pre_append)
 	} else {
 		result["forticlient-operating-system"] = make([]string, 0)
 	}
-	pre_append =  pre + ".0." + "forticlient_running_app"
+	pre_append = pre + ".0." + "forticlient_running_app"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-running-app"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientRunningApp(d, i["forticlient_running_app"], pre_append)
 	} else {
 		result["forticlient-running-app"] = make([]string, 0)
 	}
-	pre_append =  pre + ".0." + "forticlient_registry_entry"
+	pre_append = pre + ".0." + "forticlient_registry_entry"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-registry-entry"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientRegistryEntry(d, i["forticlient_registry_entry"], pre_append)
 	} else {
 		result["forticlient-registry-entry"] = make([]string, 0)
 	}
-	pre_append =  pre + ".0." + "forticlient_own_file"
+	pre_append = pre + ".0." + "forticlient_own_file"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-own-file"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientOwnFile(d, i["forticlient_own_file"], pre_append)
 	} else {
 		result["forticlient-own-file"] = make([]string, 0)
 	}
-	pre_append =  pre + ".0." + "forticlient_log_upload"
+	pre_append = pre + ".0." + "forticlient_log_upload"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-log-upload"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientLogUpload(d, i["forticlient_log_upload"], pre_append)
 	}
-	pre_append =  pre + ".0." + "forticlient_log_upload_level"
+	pre_append = pre + ".0." + "forticlient_log_upload_level"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-log-upload-level"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientLogUploadLevel(d, i["forticlient_log_upload_level"], pre_append)
 	}
-	pre_append =  pre + ".0." + "forticlient_log_upload_server"
+	pre_append = pre + ".0." + "forticlient_log_upload_server"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-log-upload-server"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientLogUploadServer(d, i["forticlient_log_upload_server"], pre_append)
 	}
-	pre_append =  pre + ".0." + "forticlient_vuln_scan"
+	pre_append = pre + ".0." + "forticlient_vuln_scan"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-vuln-scan"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientVulnScan(d, i["forticlient_vuln_scan"], pre_append)
 	}
-	pre_append =  pre + ".0." + "forticlient_vuln_scan_compliance_action"
+	pre_append = pre + ".0." + "forticlient_vuln_scan_compliance_action"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-vuln-scan-compliance-action"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientVulnScanComplianceAction(d, i["forticlient_vuln_scan_compliance_action"], pre_append)
 	}
-	pre_append =  pre + ".0." + "forticlient_vuln_scan_enforce"
+	pre_append = pre + ".0." + "forticlient_vuln_scan_enforce"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-vuln-scan-enforce"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientVulnScanEnforce(d, i["forticlient_vuln_scan_enforce"], pre_append)
 	}
-	pre_append =  pre + ".0." + "forticlient_vuln_scan_enforce_grace"
+	pre_append = pre + ".0." + "forticlient_vuln_scan_enforce_grace"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-vuln-scan-enforce-grace"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientVulnScanEnforceGrace(d, i["forticlient_vuln_scan_enforce_grace"], pre_append)
 	}
-	pre_append =  pre + ".0." + "forticlient_vuln_scan_exempt"
+	pre_append = pre + ".0." + "forticlient_vuln_scan_exempt"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-vuln-scan-exempt"], _ = expandEndpointControlProfileForticlientWinmacSettingsForticlientVulnScanExempt(d, i["forticlient_vuln_scan_exempt"], pre_append)
 	}
@@ -2211,7 +2203,7 @@ func expandEndpointControlProfileForticlientWinmacSettingsForticlientEmsEntries(
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2314,7 +2306,7 @@ func expandEndpointControlProfileForticlientWinmacSettingsForticlientOperatingSy
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2363,7 +2355,7 @@ func expandEndpointControlProfileForticlientWinmacSettingsForticlientRunningApp(
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2484,7 +2476,7 @@ func expandEndpointControlProfileForticlientWinmacSettingsForticlientRegistryEnt
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2524,7 +2516,7 @@ func expandEndpointControlProfileForticlientWinmacSettingsForticlientOwnFile(d *
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2593,32 +2585,32 @@ func expandEndpointControlProfileForticlientAndroidSettings(d *schema.ResourceDa
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "forticlient_wf"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "forticlient_wf"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-wf"], _ = expandEndpointControlProfileForticlientAndroidSettingsForticlientWf(d, i["forticlient_wf"], pre_append)
 	}
-	pre_append =  pre + ".0." + "forticlient_wf_profile"
+	pre_append = pre + ".0." + "forticlient_wf_profile"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-wf-profile"], _ = expandEndpointControlProfileForticlientAndroidSettingsForticlientWfProfile(d, i["forticlient_wf_profile"], pre_append)
 	}
-	pre_append =  pre + ".0." + "disable_wf_when_protected"
+	pre_append = pre + ".0." + "disable_wf_when_protected"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["disable-wf-when-protected"], _ = expandEndpointControlProfileForticlientAndroidSettingsDisableWfWhenProtected(d, i["disable_wf_when_protected"], pre_append)
 	}
-	pre_append =  pre + ".0." + "forticlient_vpn_provisioning"
+	pre_append = pre + ".0." + "forticlient_vpn_provisioning"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-vpn-provisioning"], _ = expandEndpointControlProfileForticlientAndroidSettingsForticlientVpnProvisioning(d, i["forticlient_vpn_provisioning"], pre_append)
 	}
-	pre_append =  pre + ".0." + "forticlient_advanced_vpn"
+	pre_append = pre + ".0." + "forticlient_advanced_vpn"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-advanced-vpn"], _ = expandEndpointControlProfileForticlientAndroidSettingsForticlientAdvancedVpn(d, i["forticlient_advanced_vpn"], pre_append)
 	}
-	pre_append =  pre + ".0." + "forticlient_advanced_vpn_buffer"
+	pre_append = pre + ".0." + "forticlient_advanced_vpn_buffer"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-advanced-vpn-buffer"], _ = expandEndpointControlProfileForticlientAndroidSettingsForticlientAdvancedVpnBuffer(d, i["forticlient_advanced_vpn_buffer"], pre_append)
 	}
-	pre_append =  pre + ".0." + "forticlient_vpn_settings"
+	pre_append = pre + ".0." + "forticlient_vpn_settings"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-vpn-settings"], _ = expandEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettings(d, i["forticlient_vpn_settings"], pre_append)
 	} else {
@@ -2664,7 +2656,7 @@ func expandEndpointControlProfileForticlientAndroidSettingsForticlientVpnSetting
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2746,38 +2738,38 @@ func expandEndpointControlProfileForticlientIosSettings(d *schema.ResourceData, 
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "forticlient_wf"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "forticlient_wf"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-wf"], _ = expandEndpointControlProfileForticlientIosSettingsForticlientWf(d, i["forticlient_wf"], pre_append)
 	}
-	pre_append =  pre + ".0." + "forticlient_wf_profile"
+	pre_append = pre + ".0." + "forticlient_wf_profile"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["forticlient-wf-profile"], _ = expandEndpointControlProfileForticlientIosSettingsForticlientWfProfile(d, i["forticlient_wf_profile"], pre_append)
 	}
-	pre_append =  pre + ".0." + "disable_wf_when_protected"
+	pre_append = pre + ".0." + "disable_wf_when_protected"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["disable-wf-when-protected"], _ = expandEndpointControlProfileForticlientIosSettingsDisableWfWhenProtected(d, i["disable_wf_when_protected"], pre_append)
 	}
-	pre_append =  pre + ".0." + "client_vpn_provisioning"
+	pre_append = pre + ".0." + "client_vpn_provisioning"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["client-vpn-provisioning"], _ = expandEndpointControlProfileForticlientIosSettingsClientVpnProvisioning(d, i["client_vpn_provisioning"], pre_append)
 	}
-	pre_append =  pre + ".0." + "client_vpn_settings"
+	pre_append = pre + ".0." + "client_vpn_settings"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["client-vpn-settings"], _ = expandEndpointControlProfileForticlientIosSettingsClientVpnSettings(d, i["client_vpn_settings"], pre_append)
 	} else {
 		result["client-vpn-settings"] = make([]string, 0)
 	}
-	pre_append =  pre + ".0." + "distribute_configuration_profile"
+	pre_append = pre + ".0." + "distribute_configuration_profile"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["distribute-configuration-profile"], _ = expandEndpointControlProfileForticlientIosSettingsDistributeConfigurationProfile(d, i["distribute_configuration_profile"], pre_append)
 	}
-	pre_append =  pre + ".0." + "configuration_name"
+	pre_append = pre + ".0." + "configuration_name"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["configuration-name"], _ = expandEndpointControlProfileForticlientIosSettingsConfigurationName(d, i["configuration_name"], pre_append)
 	}
-	pre_append =  pre + ".0." + "configuration_content"
+	pre_append = pre + ".0." + "configuration_content"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["configuration-content"], _ = expandEndpointControlProfileForticlientIosSettingsConfigurationContent(d, i["configuration_content"], pre_append)
 	}
@@ -2813,7 +2805,7 @@ func expandEndpointControlProfileForticlientIosSettingsClientVpnSettings(d *sche
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2932,7 +2924,7 @@ func expandEndpointControlProfileSrcAddr(d *schema.ResourceData, v interface{}, 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2963,7 +2955,7 @@ func expandEndpointControlProfileDeviceGroups(d *schema.ResourceData, v interfac
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2994,7 +2986,7 @@ func expandEndpointControlProfileUsers(d *schema.ResourceData, v interface{}, pr
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -3025,7 +3017,7 @@ func expandEndpointControlProfileUserGroups(d *schema.ResourceData, v interface{
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -3056,7 +3048,7 @@ func expandEndpointControlProfileOnNetAddr(d *schema.ResourceData, v interface{}
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -3079,10 +3071,8 @@ func expandEndpointControlProfileReplacemsgOverrideGroup(d *schema.ResourceData,
 	return v, nil
 }
 
-
 func getObjectEndpointControlProfile(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("profile_name"); ok {
 		t, err := expandEndpointControlProfileProfileName(d, v, "profile_name")
@@ -3183,7 +3173,5 @@ func getObjectEndpointControlProfile(d *schema.ResourceData) (*map[string]interf
 		}
 	}
 
-
 	return &obj, nil
 }
-

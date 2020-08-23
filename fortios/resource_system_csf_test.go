@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,38 +5,39 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSystemCsf_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSystemCsf_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSystemCsf_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSystemCsfConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSystemCsfExists("fortios_system_csf.trname"),
-                    resource.TestCheckResourceAttr("fortios_system_csf.trname", "configuration_sync", "default"),
-                    resource.TestCheckResourceAttr("fortios_system_csf.trname", "management_ip", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_system_csf.trname", "management_port", "33"),
-                    resource.TestCheckResourceAttr("fortios_system_csf.trname", "status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_system_csf.trname", "upstream_ip", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_system_csf.trname", "upstream_port", "8013"),
-                    resource.TestCheckResourceAttr("fortios_system_csf.trname", "group_password", "tmp"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSystemCsfConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSystemCsfExists("fortios_system_csf.trname"),
+					resource.TestCheckResourceAttr("fortios_system_csf.trname", "configuration_sync", "default"),
+					resource.TestCheckResourceAttr("fortios_system_csf.trname", "management_ip", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_system_csf.trname", "management_port", "33"),
+					resource.TestCheckResourceAttr("fortios_system_csf.trname", "status", "disable"),
+					resource.TestCheckResourceAttr("fortios_system_csf.trname", "upstream_ip", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_system_csf.trname", "upstream_port", "8013"),
+					resource.TestCheckResourceAttr("fortios_system_csf.trname", "group_password", "tmp"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSystemCsfExists(n string) resource.TestCheckFunc {

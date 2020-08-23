@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,35 +5,36 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSystemAutoupdatePushUpdate_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSystemAutoupdatePushUpdate_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSystemAutoupdatePushUpdate_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSystemAutoupdatePushUpdateConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSystemAutoupdatePushUpdateExists("fortios_systemautoupdate_pushupdate.trname"),
-                    resource.TestCheckResourceAttr("fortios_systemautoupdate_pushupdate.trname", "address", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_systemautoupdate_pushupdate.trname", "override", "disable"),
-                    resource.TestCheckResourceAttr("fortios_systemautoupdate_pushupdate.trname", "port", "9443"),
-                    resource.TestCheckResourceAttr("fortios_systemautoupdate_pushupdate.trname", "status", "disable"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSystemAutoupdatePushUpdateConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSystemAutoupdatePushUpdateExists("fortios_systemautoupdate_pushupdate.trname"),
+					resource.TestCheckResourceAttr("fortios_systemautoupdate_pushupdate.trname", "address", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_systemautoupdate_pushupdate.trname", "override", "disable"),
+					resource.TestCheckResourceAttr("fortios_systemautoupdate_pushupdate.trname", "port", "9443"),
+					resource.TestCheckResourceAttr("fortios_systemautoupdate_pushupdate.trname", "status", "disable"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSystemAutoupdatePushUpdateExists(n string) resource.TestCheckFunc {

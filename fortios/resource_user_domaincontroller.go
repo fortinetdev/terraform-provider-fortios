@@ -30,56 +30,56 @@ func resourceUserDomainController() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ip_address": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"extra_server": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 100),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"ip_address": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"port": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"domain_name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ldap_server": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 		},
 	}
@@ -174,7 +174,6 @@ func resourceUserDomainControllerRead(d *schema.ResourceData, m interface{}) err
 	return nil
 }
 
-
 func flattenUserDomainControllerName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -249,10 +248,8 @@ func flattenUserDomainControllerLdapServer(v interface{}, d *schema.ResourceData
 	return v
 }
 
-
 func refreshObjectUserDomainController(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenUserDomainControllerName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -272,21 +269,21 @@ func refreshObjectUserDomainController(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("extra_server", flattenUserDomainControllerExtraServer(o["extra-server"], d, "extra_server")); err != nil {
-            if !fortiAPIPatch(o["extra-server"]) {
-                return fmt.Errorf("Error reading extra_server: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("extra_server"); ok {
-            if err = d.Set("extra_server", flattenUserDomainControllerExtraServer(o["extra-server"], d, "extra_server")); err != nil {
-                if !fortiAPIPatch(o["extra-server"]) {
-                    return fmt.Errorf("Error reading extra_server: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("extra_server", flattenUserDomainControllerExtraServer(o["extra-server"], d, "extra_server")); err != nil {
+			if !fortiAPIPatch(o["extra-server"]) {
+				return fmt.Errorf("Error reading extra_server: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("extra_server"); ok {
+			if err = d.Set("extra_server", flattenUserDomainControllerExtraServer(o["extra-server"], d, "extra_server")); err != nil {
+				if !fortiAPIPatch(o["extra-server"]) {
+					return fmt.Errorf("Error reading extra_server: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("domain_name", flattenUserDomainControllerDomainName(o["domain-name"], d, "domain_name")); err != nil {
 		if !fortiAPIPatch(o["domain-name"]) {
@@ -300,7 +297,6 @@ func refreshObjectUserDomainController(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
-
 	return nil
 }
 
@@ -309,7 +305,6 @@ func flattenUserDomainControllerFortiTestDebug(d *schema.ResourceData, fosdebugs
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandUserDomainControllerName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -335,7 +330,7 @@ func expandUserDomainControllerExtraServer(d *schema.ResourceData, v interface{}
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -380,10 +375,8 @@ func expandUserDomainControllerLdapServer(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-
 func getObjectUserDomainController(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandUserDomainControllerName(d, v, "name")
@@ -439,7 +432,5 @@ func getObjectUserDomainController(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
-
 	return &obj, nil
 }
-

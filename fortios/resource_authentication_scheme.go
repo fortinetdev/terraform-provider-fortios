@@ -30,67 +30,67 @@ func resourceAuthenticationScheme() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"method": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"negotiate_ntlm": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"kerberos_keytab": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"domain_controller": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"fsso_agent_for_ntlm": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"require_tfa": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"fsso_guest": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"user_database": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"ssh_ca": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
@@ -185,7 +185,6 @@ func resourceAuthenticationSchemeRead(d *schema.ResourceData, m interface{}) err
 	return nil
 }
 
-
 func flattenAuthenticationSchemeName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -258,10 +257,8 @@ func flattenAuthenticationSchemeSshCa(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
-
 func refreshObjectAuthenticationScheme(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenAuthenticationSchemeName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -311,28 +308,27 @@ func refreshObjectAuthenticationScheme(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("user_database", flattenAuthenticationSchemeUserDatabase(o["user-database"], d, "user_database")); err != nil {
-            if !fortiAPIPatch(o["user-database"]) {
-                return fmt.Errorf("Error reading user_database: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("user_database"); ok {
-            if err = d.Set("user_database", flattenAuthenticationSchemeUserDatabase(o["user-database"], d, "user_database")); err != nil {
-                if !fortiAPIPatch(o["user-database"]) {
-                    return fmt.Errorf("Error reading user_database: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("user_database", flattenAuthenticationSchemeUserDatabase(o["user-database"], d, "user_database")); err != nil {
+			if !fortiAPIPatch(o["user-database"]) {
+				return fmt.Errorf("Error reading user_database: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("user_database"); ok {
+			if err = d.Set("user_database", flattenAuthenticationSchemeUserDatabase(o["user-database"], d, "user_database")); err != nil {
+				if !fortiAPIPatch(o["user-database"]) {
+					return fmt.Errorf("Error reading user_database: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("ssh_ca", flattenAuthenticationSchemeSshCa(o["ssh-ca"], d, "ssh_ca")); err != nil {
 		if !fortiAPIPatch(o["ssh-ca"]) {
 			return fmt.Errorf("Error reading ssh_ca: %v", err)
 		}
 	}
-
 
 	return nil
 }
@@ -342,7 +338,6 @@ func flattenAuthenticationSchemeFortiTestDebug(d *schema.ResourceData, fosdebugs
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandAuthenticationSchemeName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -388,7 +383,7 @@ func expandAuthenticationSchemeUserDatabase(d *schema.ResourceData, v interface{
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -411,10 +406,8 @@ func expandAuthenticationSchemeSshCa(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
-
 func getObjectAuthenticationScheme(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandAuthenticationSchemeName(d, v, "name")
@@ -506,7 +499,5 @@ func getObjectAuthenticationScheme(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
-
 	return &obj, nil
 }
-

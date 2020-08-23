@@ -30,95 +30,94 @@ func resourceVpnCertificateSetting() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"ocsp_status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ocsp_option": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ocsp_default_server": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"check_ca_cert": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"check_ca_chain": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"subject_match": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"cn_match": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"strict_crl_check": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"strict_ocsp_check": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssl_min_proto_version": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"cmp_save_extra_certs": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"certname_rsa1024": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"certname_rsa2048": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"certname_dsa1024": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"certname_dsa2048": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"certname_ecdsa256": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"certname_ecdsa384": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 		},
 	}
 }
-
 
 func resourceVpnCertificateSettingUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -184,7 +183,6 @@ func resourceVpnCertificateSettingRead(d *schema.ResourceData, m interface{}) er
 	}
 	return nil
 }
-
 
 func flattenVpnCertificateSettingOcspStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -254,10 +252,8 @@ func flattenVpnCertificateSettingCertnameEcdsa384(v interface{}, d *schema.Resou
 	return v
 }
 
-
 func refreshObjectVpnCertificateSetting(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("ocsp_status", flattenVpnCertificateSettingOcspStatus(o["ocsp-status"], d, "ocsp_status")); err != nil {
 		if !fortiAPIPatch(o["ocsp-status"]) {
@@ -361,7 +357,6 @@ func refreshObjectVpnCertificateSetting(d *schema.ResourceData, o map[string]int
 		}
 	}
 
-
 	return nil
 }
 
@@ -370,7 +365,6 @@ func flattenVpnCertificateSettingFortiTestDebug(d *schema.ResourceData, fosdebug
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandVpnCertificateSettingOcspStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -440,10 +434,8 @@ func expandVpnCertificateSettingCertnameEcdsa384(d *schema.ResourceData, v inter
 	return v, nil
 }
 
-
 func getObjectVpnCertificateSetting(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("ocsp_status"); ok {
 		t, err := expandVpnCertificateSettingOcspStatus(d, v, "ocsp_status")
@@ -598,7 +590,5 @@ func getObjectVpnCertificateSetting(d *schema.ResourceData) (*map[string]interfa
 		}
 	}
 
-
 	return &obj, nil
 }
-

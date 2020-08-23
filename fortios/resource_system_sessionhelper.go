@@ -30,24 +30,24 @@ func resourceSystemSessionHelper() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"fosid": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"protocol": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
-				Required: true,
+				Required:     true,
 			},
 			"port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
-				Required: true,
+				Required:     true,
 			},
 		},
 	}
@@ -142,7 +142,6 @@ func resourceSystemSessionHelperRead(d *schema.ResourceData, m interface{}) erro
 	return nil
 }
 
-
 func flattenSystemSessionHelperId(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -159,10 +158,8 @@ func flattenSystemSessionHelperPort(v interface{}, d *schema.ResourceData, pre s
 	return v
 }
 
-
 func refreshObjectSystemSessionHelper(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("fosid", flattenSystemSessionHelperId(o["id"], d, "fosid")); err != nil {
 		if !fortiAPIPatch(o["id"]) {
@@ -188,7 +185,6 @@ func refreshObjectSystemSessionHelper(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
-
 	return nil
 }
 
@@ -197,7 +193,6 @@ func flattenSystemSessionHelperFortiTestDebug(d *schema.ResourceData, fosdebugsn
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemSessionHelperId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -215,10 +210,8 @@ func expandSystemSessionHelperPort(d *schema.ResourceData, v interface{}, pre st
 	return v, nil
 }
 
-
 func getObjectSystemSessionHelper(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("fosid"); ok {
 		t, err := expandSystemSessionHelperId(d, v, "fosid")
@@ -256,7 +249,5 @@ func getObjectSystemSessionHelper(d *schema.ResourceData) (*map[string]interface
 		}
 	}
 
-
 	return &obj, nil
 }
-

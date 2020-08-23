@@ -30,53 +30,53 @@ func resourceFirewallShapingProfile() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"profile_name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"comment": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 1023),
-				Optional: true,
+				Optional:     true,
 			},
 			"default_class_id": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(2, 31),
-				Required: true,
+				Required:     true,
 			},
 			"shaping_entries": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"class_id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(2, 31),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"priority": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"guaranteed_bandwidth_percentage": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 100),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"maximum_bandwidth_percentage": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 100),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -174,7 +174,6 @@ func resourceFirewallShapingProfileRead(d *schema.ResourceData, m interface{}) e
 	return nil
 }
 
-
 func flattenFirewallShapingProfileProfileName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -259,10 +258,8 @@ func flattenFirewallShapingProfileShapingEntriesMaximumBandwidthPercentage(v int
 	return v
 }
 
-
 func refreshObjectFirewallShapingProfile(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("profile_name", flattenFirewallShapingProfileProfileName(o["profile-name"], d, "profile_name")); err != nil {
 		if !fortiAPIPatch(o["profile-name"]) {
@@ -282,22 +279,21 @@ func refreshObjectFirewallShapingProfile(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("shaping_entries", flattenFirewallShapingProfileShapingEntries(o["shaping-entries"], d, "shaping_entries")); err != nil {
-            if !fortiAPIPatch(o["shaping-entries"]) {
-                return fmt.Errorf("Error reading shaping_entries: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("shaping_entries"); ok {
-            if err = d.Set("shaping_entries", flattenFirewallShapingProfileShapingEntries(o["shaping-entries"], d, "shaping_entries")); err != nil {
-                if !fortiAPIPatch(o["shaping-entries"]) {
-                    return fmt.Errorf("Error reading shaping_entries: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("shaping_entries", flattenFirewallShapingProfileShapingEntries(o["shaping-entries"], d, "shaping_entries")); err != nil {
+			if !fortiAPIPatch(o["shaping-entries"]) {
+				return fmt.Errorf("Error reading shaping_entries: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("shaping_entries"); ok {
+			if err = d.Set("shaping_entries", flattenFirewallShapingProfileShapingEntries(o["shaping-entries"], d, "shaping_entries")); err != nil {
+				if !fortiAPIPatch(o["shaping-entries"]) {
+					return fmt.Errorf("Error reading shaping_entries: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -307,7 +303,6 @@ func flattenFirewallShapingProfileFortiTestDebug(d *schema.ResourceData, fosdebu
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandFirewallShapingProfileProfileName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -333,7 +328,7 @@ func expandFirewallShapingProfileShapingEntries(d *schema.ResourceData, v interf
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -388,10 +383,8 @@ func expandFirewallShapingProfileShapingEntriesMaximumBandwidthPercentage(d *sch
 	return v, nil
 }
 
-
 func getObjectFirewallShapingProfile(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("profile_name"); ok {
 		t, err := expandFirewallShapingProfileProfileName(d, v, "profile_name")
@@ -429,7 +422,5 @@ func getObjectFirewallShapingProfile(d *schema.ResourceData) (*map[string]interf
 		}
 	}
 
-
 	return &obj, nil
 }
-

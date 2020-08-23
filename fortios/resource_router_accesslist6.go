@@ -30,47 +30,47 @@ func resourceRouterAccessList6() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"comments": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"rule": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"action": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"prefix6": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"exact_match": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"flags": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -168,7 +168,6 @@ func resourceRouterAccessList6Read(d *schema.ResourceData, m interface{}) error 
 	return nil
 }
 
-
 func flattenRouterAccessList6Name(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -249,10 +248,8 @@ func flattenRouterAccessList6RuleFlags(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
-
 func refreshObjectRouterAccessList6(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenRouterAccessList6Name(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -266,22 +263,21 @@ func refreshObjectRouterAccessList6(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("rule", flattenRouterAccessList6Rule(o["rule"], d, "rule")); err != nil {
-            if !fortiAPIPatch(o["rule"]) {
-                return fmt.Errorf("Error reading rule: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("rule"); ok {
-            if err = d.Set("rule", flattenRouterAccessList6Rule(o["rule"], d, "rule")); err != nil {
-                if !fortiAPIPatch(o["rule"]) {
-                    return fmt.Errorf("Error reading rule: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("rule", flattenRouterAccessList6Rule(o["rule"], d, "rule")); err != nil {
+			if !fortiAPIPatch(o["rule"]) {
+				return fmt.Errorf("Error reading rule: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("rule"); ok {
+			if err = d.Set("rule", flattenRouterAccessList6Rule(o["rule"], d, "rule")); err != nil {
+				if !fortiAPIPatch(o["rule"]) {
+					return fmt.Errorf("Error reading rule: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -291,7 +287,6 @@ func flattenRouterAccessList6FortiTestDebug(d *schema.ResourceData, fosdebugsn i
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandRouterAccessList6Name(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -313,7 +308,7 @@ func expandRouterAccessList6Rule(d *schema.ResourceData, v interface{}, pre stri
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -368,10 +363,8 @@ func expandRouterAccessList6RuleFlags(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
-
 func getObjectRouterAccessList6(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandRouterAccessList6Name(d, v, "name")
@@ -400,7 +393,5 @@ func getObjectRouterAccessList6(d *schema.ResourceData) (*map[string]interface{}
 		}
 	}
 
-
 	return &obj, nil
 }
-

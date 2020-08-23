@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,39 +5,40 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSFirewallShaperPerIpShaper_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSFirewallShaperPerIpShaper_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSFirewallShaperPerIpShaper_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSFirewallShaperPerIpShaperConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSFirewallShaperPerIpShaperExists("fortios_firewallshaper_peripshaper.trname"),
-                    resource.TestCheckResourceAttr("fortios_firewallshaper_peripshaper.trname", "bandwidth_unit", "kbps"),
-                    resource.TestCheckResourceAttr("fortios_firewallshaper_peripshaper.trname", "diffserv_forward", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewallshaper_peripshaper.trname", "diffserv_reverse", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewallshaper_peripshaper.trname", "diffservcode_forward", "000000"),
-                    resource.TestCheckResourceAttr("fortios_firewallshaper_peripshaper.trname", "diffservcode_rev", "000000"),
-                    resource.TestCheckResourceAttr("fortios_firewallshaper_peripshaper.trname", "max_bandwidth", "1024"),
-                    resource.TestCheckResourceAttr("fortios_firewallshaper_peripshaper.trname", "max_concurrent_session", "33"),
-                    resource.TestCheckResourceAttr("fortios_firewallshaper_peripshaper.trname", "name", rname),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSFirewallShaperPerIpShaperConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSFirewallShaperPerIpShaperExists("fortios_firewallshaper_peripshaper.trname"),
+					resource.TestCheckResourceAttr("fortios_firewallshaper_peripshaper.trname", "bandwidth_unit", "kbps"),
+					resource.TestCheckResourceAttr("fortios_firewallshaper_peripshaper.trname", "diffserv_forward", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewallshaper_peripshaper.trname", "diffserv_reverse", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewallshaper_peripshaper.trname", "diffservcode_forward", "000000"),
+					resource.TestCheckResourceAttr("fortios_firewallshaper_peripshaper.trname", "diffservcode_rev", "000000"),
+					resource.TestCheckResourceAttr("fortios_firewallshaper_peripshaper.trname", "max_bandwidth", "1024"),
+					resource.TestCheckResourceAttr("fortios_firewallshaper_peripshaper.trname", "max_concurrent_session", "33"),
+					resource.TestCheckResourceAttr("fortios_firewallshaper_peripshaper.trname", "name", rname),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSFirewallShaperPerIpShaperExists(n string) resource.TestCheckFunc {

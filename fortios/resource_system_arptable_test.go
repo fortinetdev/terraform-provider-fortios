@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,35 +5,36 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSystemArpTable_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSystemArpTable_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSystemArpTable_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSystemArpTableConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSystemArpTableExists("fortios_system_arptable.trname"),
-                    resource.TestCheckResourceAttr("fortios_system_arptable.trname", "fosid", "11"),
-                    resource.TestCheckResourceAttr("fortios_system_arptable.trname", "interface", "port2"),
-                    resource.TestCheckResourceAttr("fortios_system_arptable.trname", "ip", "1.1.1.1"),
-                    resource.TestCheckResourceAttr("fortios_system_arptable.trname", "mac", "08:00:27:1c:a3:8b"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSystemArpTableConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSystemArpTableExists("fortios_system_arptable.trname"),
+					resource.TestCheckResourceAttr("fortios_system_arptable.trname", "fosid", "11"),
+					resource.TestCheckResourceAttr("fortios_system_arptable.trname", "interface", "port2"),
+					resource.TestCheckResourceAttr("fortios_system_arptable.trname", "ip", "1.1.1.1"),
+					resource.TestCheckResourceAttr("fortios_system_arptable.trname", "mac", "08:00:27:1c:a3:8b"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSystemArpTableExists(n string) resource.TestCheckFunc {

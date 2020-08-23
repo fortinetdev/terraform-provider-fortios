@@ -30,163 +30,163 @@ func resourceFirewallVip6() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"fosid": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"uuid": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"comment": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
+				Optional:     true,
 			},
 			"type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"src_filter": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"range": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"extip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"mappedip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"arp_reply": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"portforward": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"protocol": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"extport": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"mappedport": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"color": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 32),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ldb_method": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"server_type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"persistence": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"realservers": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"ip": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"port": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 65535),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"status": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"weight": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 255),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"holddown_interval": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(30, 65535),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"healthcheck": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"http_host": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"max_connections": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 2147483647),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"monitor": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"client_ip": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -194,114 +194,114 @@ func resourceFirewallVip6() *schema.Resource {
 				},
 			},
 			"http_cookie_domain_from_host": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"http_cookie_domain": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"http_cookie_path": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"http_cookie_generation": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"http_cookie_age": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 525600),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"http_cookie_share": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"https_cookie_secure": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"http_multiplex": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"http_ip_header": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"http_ip_header_name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"outlook_web_access": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"weblogic_server": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"websphere_server": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssl_mode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssl_certificate": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ssl_dh_bits": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssl_algorithm": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssl_cipher_suites": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"priority": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"cipher": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"versions": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -309,28 +309,28 @@ func resourceFirewallVip6() *schema.Resource {
 				},
 			},
 			"ssl_server_algorithm": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssl_server_cipher_suites": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"priority": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"cipher": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"versions": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -338,157 +338,157 @@ func resourceFirewallVip6() *schema.Resource {
 				},
 			},
 			"ssl_pfs": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssl_min_version": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssl_max_version": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssl_server_min_version": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssl_server_max_version": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssl_send_empty_frags": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssl_client_fallback": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssl_client_renegotiation": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssl_client_session_state_type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssl_client_session_state_timeout": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 14400),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ssl_client_session_state_max": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 10000),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ssl_server_session_state_type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssl_server_session_state_timeout": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 14400),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ssl_server_session_state_max": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 10000),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ssl_http_location_conversion": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssl_http_match_host": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssl_hpkp": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssl_hpkp_primary": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ssl_hpkp_backup": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ssl_hpkp_age": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(60, 157680000),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ssl_hpkp_report_uri": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
+				Optional:     true,
 			},
 			"ssl_hpkp_include_subdomains": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssl_hsts": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssl_hsts_age": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(60, 157680000),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ssl_hsts_include_subdomains": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"monitor": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"max_embryonic_connections": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 100000),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
@@ -582,7 +582,6 @@ func resourceFirewallVip6Read(d *schema.ResourceData, m interface{}) error {
 	}
 	return nil
 }
-
 
 func flattenFirewallVip6Name(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -1130,10 +1129,8 @@ func flattenFirewallVip6MaxEmbryonicConnections(v interface{}, d *schema.Resourc
 	return v
 }
 
-
 func refreshObjectFirewallVip6(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenFirewallVip6Name(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -1165,21 +1162,21 @@ func refreshObjectFirewallVip6(d *schema.ResourceData, o map[string]interface{})
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("src_filter", flattenFirewallVip6SrcFilter(o["src-filter"], d, "src_filter")); err != nil {
-            if !fortiAPIPatch(o["src-filter"]) {
-                return fmt.Errorf("Error reading src_filter: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("src_filter"); ok {
-            if err = d.Set("src_filter", flattenFirewallVip6SrcFilter(o["src-filter"], d, "src_filter")); err != nil {
-                if !fortiAPIPatch(o["src-filter"]) {
-                    return fmt.Errorf("Error reading src_filter: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("src_filter", flattenFirewallVip6SrcFilter(o["src-filter"], d, "src_filter")); err != nil {
+			if !fortiAPIPatch(o["src-filter"]) {
+				return fmt.Errorf("Error reading src_filter: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("src_filter"); ok {
+			if err = d.Set("src_filter", flattenFirewallVip6SrcFilter(o["src-filter"], d, "src_filter")); err != nil {
+				if !fortiAPIPatch(o["src-filter"]) {
+					return fmt.Errorf("Error reading src_filter: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("extip", flattenFirewallVip6Extip(o["extip"], d, "extip")); err != nil {
 		if !fortiAPIPatch(o["extip"]) {
@@ -1247,21 +1244,21 @@ func refreshObjectFirewallVip6(d *schema.ResourceData, o map[string]interface{})
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("realservers", flattenFirewallVip6Realservers(o["realservers"], d, "realservers")); err != nil {
-            if !fortiAPIPatch(o["realservers"]) {
-                return fmt.Errorf("Error reading realservers: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("realservers"); ok {
-            if err = d.Set("realservers", flattenFirewallVip6Realservers(o["realservers"], d, "realservers")); err != nil {
-                if !fortiAPIPatch(o["realservers"]) {
-                    return fmt.Errorf("Error reading realservers: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("realservers", flattenFirewallVip6Realservers(o["realservers"], d, "realservers")); err != nil {
+			if !fortiAPIPatch(o["realservers"]) {
+				return fmt.Errorf("Error reading realservers: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("realservers"); ok {
+			if err = d.Set("realservers", flattenFirewallVip6Realservers(o["realservers"], d, "realservers")); err != nil {
+				if !fortiAPIPatch(o["realservers"]) {
+					return fmt.Errorf("Error reading realservers: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("http_cookie_domain_from_host", flattenFirewallVip6HttpCookieDomainFromHost(o["http-cookie-domain-from-host"], d, "http_cookie_domain_from_host")); err != nil {
 		if !fortiAPIPatch(o["http-cookie-domain-from-host"]) {
@@ -1365,21 +1362,21 @@ func refreshObjectFirewallVip6(d *schema.ResourceData, o map[string]interface{})
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("ssl_cipher_suites", flattenFirewallVip6SslCipherSuites(o["ssl-cipher-suites"], d, "ssl_cipher_suites")); err != nil {
-            if !fortiAPIPatch(o["ssl-cipher-suites"]) {
-                return fmt.Errorf("Error reading ssl_cipher_suites: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("ssl_cipher_suites"); ok {
-            if err = d.Set("ssl_cipher_suites", flattenFirewallVip6SslCipherSuites(o["ssl-cipher-suites"], d, "ssl_cipher_suites")); err != nil {
-                if !fortiAPIPatch(o["ssl-cipher-suites"]) {
-                    return fmt.Errorf("Error reading ssl_cipher_suites: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("ssl_cipher_suites", flattenFirewallVip6SslCipherSuites(o["ssl-cipher-suites"], d, "ssl_cipher_suites")); err != nil {
+			if !fortiAPIPatch(o["ssl-cipher-suites"]) {
+				return fmt.Errorf("Error reading ssl_cipher_suites: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("ssl_cipher_suites"); ok {
+			if err = d.Set("ssl_cipher_suites", flattenFirewallVip6SslCipherSuites(o["ssl-cipher-suites"], d, "ssl_cipher_suites")); err != nil {
+				if !fortiAPIPatch(o["ssl-cipher-suites"]) {
+					return fmt.Errorf("Error reading ssl_cipher_suites: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("ssl_server_algorithm", flattenFirewallVip6SslServerAlgorithm(o["ssl-server-algorithm"], d, "ssl_server_algorithm")); err != nil {
 		if !fortiAPIPatch(o["ssl-server-algorithm"]) {
@@ -1387,21 +1384,21 @@ func refreshObjectFirewallVip6(d *schema.ResourceData, o map[string]interface{})
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("ssl_server_cipher_suites", flattenFirewallVip6SslServerCipherSuites(o["ssl-server-cipher-suites"], d, "ssl_server_cipher_suites")); err != nil {
-            if !fortiAPIPatch(o["ssl-server-cipher-suites"]) {
-                return fmt.Errorf("Error reading ssl_server_cipher_suites: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("ssl_server_cipher_suites"); ok {
-            if err = d.Set("ssl_server_cipher_suites", flattenFirewallVip6SslServerCipherSuites(o["ssl-server-cipher-suites"], d, "ssl_server_cipher_suites")); err != nil {
-                if !fortiAPIPatch(o["ssl-server-cipher-suites"]) {
-                    return fmt.Errorf("Error reading ssl_server_cipher_suites: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("ssl_server_cipher_suites", flattenFirewallVip6SslServerCipherSuites(o["ssl-server-cipher-suites"], d, "ssl_server_cipher_suites")); err != nil {
+			if !fortiAPIPatch(o["ssl-server-cipher-suites"]) {
+				return fmt.Errorf("Error reading ssl_server_cipher_suites: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("ssl_server_cipher_suites"); ok {
+			if err = d.Set("ssl_server_cipher_suites", flattenFirewallVip6SslServerCipherSuites(o["ssl-server-cipher-suites"], d, "ssl_server_cipher_suites")); err != nil {
+				if !fortiAPIPatch(o["ssl-server-cipher-suites"]) {
+					return fmt.Errorf("Error reading ssl_server_cipher_suites: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("ssl_pfs", flattenFirewallVip6SslPfs(o["ssl-pfs"], d, "ssl_pfs")); err != nil {
 		if !fortiAPIPatch(o["ssl-pfs"]) {
@@ -1553,28 +1550,27 @@ func refreshObjectFirewallVip6(d *schema.ResourceData, o map[string]interface{})
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("monitor", flattenFirewallVip6Monitor(o["monitor"], d, "monitor")); err != nil {
-            if !fortiAPIPatch(o["monitor"]) {
-                return fmt.Errorf("Error reading monitor: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("monitor"); ok {
-            if err = d.Set("monitor", flattenFirewallVip6Monitor(o["monitor"], d, "monitor")); err != nil {
-                if !fortiAPIPatch(o["monitor"]) {
-                    return fmt.Errorf("Error reading monitor: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("monitor", flattenFirewallVip6Monitor(o["monitor"], d, "monitor")); err != nil {
+			if !fortiAPIPatch(o["monitor"]) {
+				return fmt.Errorf("Error reading monitor: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("monitor"); ok {
+			if err = d.Set("monitor", flattenFirewallVip6Monitor(o["monitor"], d, "monitor")); err != nil {
+				if !fortiAPIPatch(o["monitor"]) {
+					return fmt.Errorf("Error reading monitor: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("max_embryonic_connections", flattenFirewallVip6MaxEmbryonicConnections(o["max-embryonic-connections"], d, "max_embryonic_connections")); err != nil {
 		if !fortiAPIPatch(o["max-embryonic-connections"]) {
 			return fmt.Errorf("Error reading max_embryonic_connections: %v", err)
 		}
 	}
-
 
 	return nil
 }
@@ -1584,7 +1580,6 @@ func flattenFirewallVip6FortiTestDebug(d *schema.ResourceData, fosdebugsn int, f
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandFirewallVip6Name(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -1618,7 +1613,7 @@ func expandFirewallVip6SrcFilter(d *schema.ResourceData, v interface{}, pre stri
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "range"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1693,7 +1688,7 @@ func expandFirewallVip6Realservers(d *schema.ResourceData, v interface{}, pre st
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1882,7 +1877,7 @@ func expandFirewallVip6SslCipherSuites(d *schema.ResourceData, v interface{}, pr
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1935,7 +1930,7 @@ func expandFirewallVip6SslServerCipherSuites(d *schema.ResourceData, v interface
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2084,7 +2079,7 @@ func expandFirewallVip6Monitor(d *schema.ResourceData, v interface{}, pre string
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2107,10 +2102,8 @@ func expandFirewallVip6MaxEmbryonicConnections(d *schema.ResourceData, v interfa
 	return v, nil
 }
 
-
 func getObjectFirewallVip6(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandFirewallVip6Name(d, v, "name")
@@ -2697,7 +2690,5 @@ func getObjectFirewallVip6(d *schema.ResourceData) (*map[string]interface{}, err
 		}
 	}
 
-
 	return &obj, nil
 }
-

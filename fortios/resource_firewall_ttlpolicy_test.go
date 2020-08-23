@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,39 +5,40 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSFirewallTtlPolicy_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSFirewallTtlPolicy_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSFirewallTtlPolicy_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSFirewallTtlPolicyConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSFirewallTtlPolicyExists("fortios_firewall_ttlpolicy.trname"),
-                    resource.TestCheckResourceAttr("fortios_firewall_ttlpolicy.trname", "action", "accept"),
-                    resource.TestCheckResourceAttr("fortios_firewall_ttlpolicy.trname", "fosid", "1"),
-                    resource.TestCheckResourceAttr("fortios_firewall_ttlpolicy.trname", "schedule", "always"),
-                    resource.TestCheckResourceAttr("fortios_firewall_ttlpolicy.trname", "srcintf", "port3"),
-                    resource.TestCheckResourceAttr("fortios_firewall_ttlpolicy.trname", "status", "enable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_ttlpolicy.trname", "ttl", "23"),
-                    resource.TestCheckResourceAttr("fortios_firewall_ttlpolicy.trname", "service.0.name", "ALL"),
-                    resource.TestCheckResourceAttr("fortios_firewall_ttlpolicy.trname", "srcaddr.0.name", "all"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSFirewallTtlPolicyConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSFirewallTtlPolicyExists("fortios_firewall_ttlpolicy.trname"),
+					resource.TestCheckResourceAttr("fortios_firewall_ttlpolicy.trname", "action", "accept"),
+					resource.TestCheckResourceAttr("fortios_firewall_ttlpolicy.trname", "fosid", "1"),
+					resource.TestCheckResourceAttr("fortios_firewall_ttlpolicy.trname", "schedule", "always"),
+					resource.TestCheckResourceAttr("fortios_firewall_ttlpolicy.trname", "srcintf", "port3"),
+					resource.TestCheckResourceAttr("fortios_firewall_ttlpolicy.trname", "status", "enable"),
+					resource.TestCheckResourceAttr("fortios_firewall_ttlpolicy.trname", "ttl", "23"),
+					resource.TestCheckResourceAttr("fortios_firewall_ttlpolicy.trname", "service.0.name", "ALL"),
+					resource.TestCheckResourceAttr("fortios_firewall_ttlpolicy.trname", "srcaddr.0.name", "all"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSFirewallTtlPolicyExists(n string) resource.TestCheckFunc {

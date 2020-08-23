@@ -30,107 +30,107 @@ func resourceFirewallCentralSnatMap() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"policyid": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"orig_addr": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"srcintf": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"dst_addr": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"dstintf": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"nat_ippool": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"protocol": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
-				Required: true,
+				Required:     true,
 			},
 			"orig_port": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"nat_port": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"nat": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"comments": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 1023),
-				Optional: true,
+				Optional:     true,
 			},
 		},
 	}
@@ -224,7 +224,6 @@ func resourceFirewallCentralSnatMapRead(d *schema.ResourceData, m interface{}) e
 	}
 	return nil
 }
-
 
 func flattenFirewallCentralSnatMapPolicyid(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -434,10 +433,8 @@ func flattenFirewallCentralSnatMapComments(v interface{}, d *schema.ResourceData
 	return v
 }
 
-
 func refreshObjectFirewallCentralSnatMap(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("policyid", flattenFirewallCentralSnatMapPolicyid(o["policyid"], d, "policyid")); err != nil {
 		if !fortiAPIPatch(o["policyid"]) {
@@ -451,85 +448,85 @@ func refreshObjectFirewallCentralSnatMap(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("orig_addr", flattenFirewallCentralSnatMapOrigAddr(o["orig-addr"], d, "orig_addr")); err != nil {
-            if !fortiAPIPatch(o["orig-addr"]) {
-                return fmt.Errorf("Error reading orig_addr: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("orig_addr"); ok {
-            if err = d.Set("orig_addr", flattenFirewallCentralSnatMapOrigAddr(o["orig-addr"], d, "orig_addr")); err != nil {
-                if !fortiAPIPatch(o["orig-addr"]) {
-                    return fmt.Errorf("Error reading orig_addr: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("orig_addr", flattenFirewallCentralSnatMapOrigAddr(o["orig-addr"], d, "orig_addr")); err != nil {
+			if !fortiAPIPatch(o["orig-addr"]) {
+				return fmt.Errorf("Error reading orig_addr: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("orig_addr"); ok {
+			if err = d.Set("orig_addr", flattenFirewallCentralSnatMapOrigAddr(o["orig-addr"], d, "orig_addr")); err != nil {
+				if !fortiAPIPatch(o["orig-addr"]) {
+					return fmt.Errorf("Error reading orig_addr: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("srcintf", flattenFirewallCentralSnatMapSrcintf(o["srcintf"], d, "srcintf")); err != nil {
-            if !fortiAPIPatch(o["srcintf"]) {
-                return fmt.Errorf("Error reading srcintf: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("srcintf"); ok {
-            if err = d.Set("srcintf", flattenFirewallCentralSnatMapSrcintf(o["srcintf"], d, "srcintf")); err != nil {
-                if !fortiAPIPatch(o["srcintf"]) {
-                    return fmt.Errorf("Error reading srcintf: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("srcintf", flattenFirewallCentralSnatMapSrcintf(o["srcintf"], d, "srcintf")); err != nil {
+			if !fortiAPIPatch(o["srcintf"]) {
+				return fmt.Errorf("Error reading srcintf: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("srcintf"); ok {
+			if err = d.Set("srcintf", flattenFirewallCentralSnatMapSrcintf(o["srcintf"], d, "srcintf")); err != nil {
+				if !fortiAPIPatch(o["srcintf"]) {
+					return fmt.Errorf("Error reading srcintf: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("dst_addr", flattenFirewallCentralSnatMapDstAddr(o["dst-addr"], d, "dst_addr")); err != nil {
-            if !fortiAPIPatch(o["dst-addr"]) {
-                return fmt.Errorf("Error reading dst_addr: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("dst_addr"); ok {
-            if err = d.Set("dst_addr", flattenFirewallCentralSnatMapDstAddr(o["dst-addr"], d, "dst_addr")); err != nil {
-                if !fortiAPIPatch(o["dst-addr"]) {
-                    return fmt.Errorf("Error reading dst_addr: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("dst_addr", flattenFirewallCentralSnatMapDstAddr(o["dst-addr"], d, "dst_addr")); err != nil {
+			if !fortiAPIPatch(o["dst-addr"]) {
+				return fmt.Errorf("Error reading dst_addr: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("dst_addr"); ok {
+			if err = d.Set("dst_addr", flattenFirewallCentralSnatMapDstAddr(o["dst-addr"], d, "dst_addr")); err != nil {
+				if !fortiAPIPatch(o["dst-addr"]) {
+					return fmt.Errorf("Error reading dst_addr: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("dstintf", flattenFirewallCentralSnatMapDstintf(o["dstintf"], d, "dstintf")); err != nil {
-            if !fortiAPIPatch(o["dstintf"]) {
-                return fmt.Errorf("Error reading dstintf: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("dstintf"); ok {
-            if err = d.Set("dstintf", flattenFirewallCentralSnatMapDstintf(o["dstintf"], d, "dstintf")); err != nil {
-                if !fortiAPIPatch(o["dstintf"]) {
-                    return fmt.Errorf("Error reading dstintf: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("dstintf", flattenFirewallCentralSnatMapDstintf(o["dstintf"], d, "dstintf")); err != nil {
+			if !fortiAPIPatch(o["dstintf"]) {
+				return fmt.Errorf("Error reading dstintf: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("dstintf"); ok {
+			if err = d.Set("dstintf", flattenFirewallCentralSnatMapDstintf(o["dstintf"], d, "dstintf")); err != nil {
+				if !fortiAPIPatch(o["dstintf"]) {
+					return fmt.Errorf("Error reading dstintf: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("nat_ippool", flattenFirewallCentralSnatMapNatIppool(o["nat-ippool"], d, "nat_ippool")); err != nil {
-            if !fortiAPIPatch(o["nat-ippool"]) {
-                return fmt.Errorf("Error reading nat_ippool: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("nat_ippool"); ok {
-            if err = d.Set("nat_ippool", flattenFirewallCentralSnatMapNatIppool(o["nat-ippool"], d, "nat_ippool")); err != nil {
-                if !fortiAPIPatch(o["nat-ippool"]) {
-                    return fmt.Errorf("Error reading nat_ippool: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("nat_ippool", flattenFirewallCentralSnatMapNatIppool(o["nat-ippool"], d, "nat_ippool")); err != nil {
+			if !fortiAPIPatch(o["nat-ippool"]) {
+				return fmt.Errorf("Error reading nat_ippool: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("nat_ippool"); ok {
+			if err = d.Set("nat_ippool", flattenFirewallCentralSnatMapNatIppool(o["nat-ippool"], d, "nat_ippool")); err != nil {
+				if !fortiAPIPatch(o["nat-ippool"]) {
+					return fmt.Errorf("Error reading nat_ippool: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("protocol", flattenFirewallCentralSnatMapProtocol(o["protocol"], d, "protocol")); err != nil {
 		if !fortiAPIPatch(o["protocol"]) {
@@ -561,7 +558,6 @@ func refreshObjectFirewallCentralSnatMap(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-
 	return nil
 }
 
@@ -570,7 +566,6 @@ func flattenFirewallCentralSnatMapFortiTestDebug(d *schema.ResourceData, fosdebu
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandFirewallCentralSnatMapPolicyid(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -592,7 +587,7 @@ func expandFirewallCentralSnatMapOrigAddr(d *schema.ResourceData, v interface{},
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -623,7 +618,7 @@ func expandFirewallCentralSnatMapSrcintf(d *schema.ResourceData, v interface{}, 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -654,7 +649,7 @@ func expandFirewallCentralSnatMapDstAddr(d *schema.ResourceData, v interface{}, 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -685,7 +680,7 @@ func expandFirewallCentralSnatMapDstintf(d *schema.ResourceData, v interface{}, 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -716,7 +711,7 @@ func expandFirewallCentralSnatMapNatIppool(d *schema.ResourceData, v interface{}
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -755,10 +750,8 @@ func expandFirewallCentralSnatMapComments(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-
 func getObjectFirewallCentralSnatMap(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("policyid"); ok {
 		t, err := expandFirewallCentralSnatMapPolicyid(d, v, "policyid")
@@ -868,7 +861,5 @@ func getObjectFirewallCentralSnatMap(d *schema.ResourceData) (*map[string]interf
 		}
 	}
 
-
 	return &obj, nil
 }
-

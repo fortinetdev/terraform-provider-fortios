@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,36 +5,37 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSFirewallIpTranslation_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSFirewallIpTranslation_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSFirewallIpTranslation_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSFirewallIpTranslationConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSFirewallIpTranslationExists("fortios_firewall_iptranslation.trname"),
-                    resource.TestCheckResourceAttr("fortios_firewall_iptranslation.trname", "endip", "2.2.2.2"),
-                    resource.TestCheckResourceAttr("fortios_firewall_iptranslation.trname", "map_startip", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_firewall_iptranslation.trname", "startip", "1.1.1.1"),
-                    resource.TestCheckResourceAttr("fortios_firewall_iptranslation.trname", "transid", "1"),
-                    resource.TestCheckResourceAttr("fortios_firewall_iptranslation.trname", "type", "SCTP"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSFirewallIpTranslationConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSFirewallIpTranslationExists("fortios_firewall_iptranslation.trname"),
+					resource.TestCheckResourceAttr("fortios_firewall_iptranslation.trname", "endip", "2.2.2.2"),
+					resource.TestCheckResourceAttr("fortios_firewall_iptranslation.trname", "map_startip", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_firewall_iptranslation.trname", "startip", "1.1.1.1"),
+					resource.TestCheckResourceAttr("fortios_firewall_iptranslation.trname", "transid", "1"),
+					resource.TestCheckResourceAttr("fortios_firewall_iptranslation.trname", "type", "SCTP"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSFirewallIpTranslationExists(n string) resource.TestCheckFunc {

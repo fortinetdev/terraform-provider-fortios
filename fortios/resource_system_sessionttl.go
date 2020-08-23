@@ -30,41 +30,41 @@ func resourceSystemSessionTtl() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"default": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"port": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"protocol": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"start_port": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"end_port": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 65535),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"timeout": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -74,7 +74,6 @@ func resourceSystemSessionTtl() *schema.Resource {
 		},
 	}
 }
-
 
 func resourceSystemSessionTtlUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -140,7 +139,6 @@ func resourceSystemSessionTtlRead(d *schema.ResourceData, m interface{}) error {
 	}
 	return nil
 }
-
 
 func flattenSystemSessionTtlDefault(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -218,10 +216,8 @@ func flattenSystemSessionTtlPortTimeout(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
-
 func refreshObjectSystemSessionTtl(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("default", flattenSystemSessionTtlDefault(o["default"], d, "default")); err != nil {
 		if !fortiAPIPatch(o["default"]) {
@@ -229,22 +225,21 @@ func refreshObjectSystemSessionTtl(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("port", flattenSystemSessionTtlPort(o["port"], d, "port")); err != nil {
-            if !fortiAPIPatch(o["port"]) {
-                return fmt.Errorf("Error reading port: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("port"); ok {
-            if err = d.Set("port", flattenSystemSessionTtlPort(o["port"], d, "port")); err != nil {
-                if !fortiAPIPatch(o["port"]) {
-                    return fmt.Errorf("Error reading port: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("port", flattenSystemSessionTtlPort(o["port"], d, "port")); err != nil {
+			if !fortiAPIPatch(o["port"]) {
+				return fmt.Errorf("Error reading port: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("port"); ok {
+			if err = d.Set("port", flattenSystemSessionTtlPort(o["port"], d, "port")); err != nil {
+				if !fortiAPIPatch(o["port"]) {
+					return fmt.Errorf("Error reading port: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -254,7 +249,6 @@ func flattenSystemSessionTtlFortiTestDebug(d *schema.ResourceData, fosdebugsn in
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemSessionTtlDefault(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -272,7 +266,7 @@ func expandSystemSessionTtlPort(d *schema.ResourceData, v interface{}, pre strin
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -327,10 +321,8 @@ func expandSystemSessionTtlPortTimeout(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
-
 func getObjectSystemSessionTtl(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("default"); ok {
 		t, err := expandSystemSessionTtlDefault(d, v, "default")
@@ -350,7 +342,5 @@ func getObjectSystemSessionTtl(d *schema.ResourceData) (*map[string]interface{},
 		}
 	}
 
-
 	return &obj, nil
 }
-

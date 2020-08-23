@@ -30,56 +30,55 @@ func resourceSwitchControllerStpSettings() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"revision": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"hello_time": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 10),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"forward_time": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(4, 30),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"max_age": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(6, 40),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"max_hops": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 40),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"pending_timer": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 15),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
 }
-
 
 func resourceSwitchControllerStpSettingsUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -146,7 +145,6 @@ func resourceSwitchControllerStpSettingsRead(d *schema.ResourceData, m interface
 	return nil
 }
 
-
 func flattenSwitchControllerStpSettingsName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -179,10 +177,8 @@ func flattenSwitchControllerStpSettingsPendingTimer(v interface{}, d *schema.Res
 	return v
 }
 
-
 func refreshObjectSwitchControllerStpSettings(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenSwitchControllerStpSettingsName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -232,7 +228,6 @@ func refreshObjectSwitchControllerStpSettings(d *schema.ResourceData, o map[stri
 		}
 	}
 
-
 	return nil
 }
 
@@ -241,7 +236,6 @@ func flattenSwitchControllerStpSettingsFortiTestDebug(d *schema.ResourceData, fo
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSwitchControllerStpSettingsName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -275,10 +269,8 @@ func expandSwitchControllerStpSettingsPendingTimer(d *schema.ResourceData, v int
 	return v, nil
 }
 
-
 func getObjectSwitchControllerStpSettings(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandSwitchControllerStpSettingsName(d, v, "name")
@@ -352,7 +344,5 @@ func getObjectSwitchControllerStpSettings(d *schema.ResourceData) (*map[string]i
 		}
 	}
 
-
 	return &obj, nil
 }
-

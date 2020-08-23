@@ -30,14 +30,13 @@ func resourceSwitchControllerNetworkMonitorSettings() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"network_monitoring": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceSwitchControllerNetworkMonitorSettingsUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -104,22 +103,18 @@ func resourceSwitchControllerNetworkMonitorSettingsRead(d *schema.ResourceData, 
 	return nil
 }
 
-
 func flattenSwitchControllerNetworkMonitorSettingsNetworkMonitoring(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
-
 func refreshObjectSwitchControllerNetworkMonitorSettings(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("network_monitoring", flattenSwitchControllerNetworkMonitorSettingsNetworkMonitoring(o["network-monitoring"], d, "network_monitoring")); err != nil {
 		if !fortiAPIPatch(o["network-monitoring"]) {
 			return fmt.Errorf("Error reading network_monitoring: %v", err)
 		}
 	}
-
 
 	return nil
 }
@@ -130,15 +125,12 @@ func flattenSwitchControllerNetworkMonitorSettingsFortiTestDebug(d *schema.Resou
 	log.Printf("ER List: %v", e)
 }
 
-
 func expandSwitchControllerNetworkMonitorSettingsNetworkMonitoring(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
 }
 
-
 func getObjectSwitchControllerNetworkMonitorSettings(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("network_monitoring"); ok {
 		t, err := expandSwitchControllerNetworkMonitorSettingsNetworkMonitoring(d, v, "network_monitoring")
@@ -149,7 +141,5 @@ func getObjectSwitchControllerNetworkMonitorSettings(d *schema.ResourceData) (*m
 		}
 	}
 
-
 	return &obj, nil
 }
-

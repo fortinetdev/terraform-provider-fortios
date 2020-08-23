@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,38 +5,39 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSystemNetflow_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSystemNetflow_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSystemNetflow_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSystemNetflowConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSystemNetflowExists("fortios_system_netflow.trname"),
-                    resource.TestCheckResourceAttr("fortios_system_netflow.trname", "active_flow_timeout", "30"),
-                    resource.TestCheckResourceAttr("fortios_system_netflow.trname", "collector_ip", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_system_netflow.trname", "collector_port", "2055"),
-                    resource.TestCheckResourceAttr("fortios_system_netflow.trname", "inactive_flow_timeout", "15"),
-                    resource.TestCheckResourceAttr("fortios_system_netflow.trname", "source_ip", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_system_netflow.trname", "template_tx_counter", "20"),
-                    resource.TestCheckResourceAttr("fortios_system_netflow.trname", "template_tx_timeout", "30"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSystemNetflowConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSystemNetflowExists("fortios_system_netflow.trname"),
+					resource.TestCheckResourceAttr("fortios_system_netflow.trname", "active_flow_timeout", "30"),
+					resource.TestCheckResourceAttr("fortios_system_netflow.trname", "collector_ip", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_system_netflow.trname", "collector_port", "2055"),
+					resource.TestCheckResourceAttr("fortios_system_netflow.trname", "inactive_flow_timeout", "15"),
+					resource.TestCheckResourceAttr("fortios_system_netflow.trname", "source_ip", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_system_netflow.trname", "template_tx_counter", "20"),
+					resource.TestCheckResourceAttr("fortios_system_netflow.trname", "template_tx_timeout", "30"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSystemNetflowExists(n string) resource.TestCheckFunc {

@@ -30,915 +30,915 @@ func resourceSystemInterface() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"vdom": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
-				Required: true,
+				Required:     true,
 			},
 			"vrf": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 31),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"cli_conn_status": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"fortilink": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"mode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"distance": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"priority": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"dhcp_relay_service": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"dhcp_relay_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"dhcp_relay_type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"dhcp_relay_agent_option": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"management_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"allowaccess": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"gwdetect": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ping_serv_status": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"detectserver": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"detectprotocol": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ha_priority": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 50),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"fail_detect": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"fail_detect_option": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"fail_alert_method": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"fail_action_on_extender": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"fail_alert_interfaces": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"dhcp_client_identifier": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 48),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"dhcp_renew_time": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(300, 604800),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ipunnumbered": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"username": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"pppoe_unnumbered_negotiate": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"password": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
-				Optional: true,
+				Optional:     true,
 			},
 			"idle_timeout": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 32767),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"detected_peer_mtu": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"disc_retry_timeout": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"padt_retry_timeout": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"service_name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ac_name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"lcp_echo_interval": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 32767),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"lcp_max_echo_fails": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 32767),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"defaultgw": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"dns_server_override": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"auth_type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"pptp_client": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"pptp_user": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"pptp_password": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
-				Optional: true,
+				Optional:     true,
 			},
 			"pptp_server_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"pptp_auth_type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"pptp_timeout": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"arpforward": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ndiscforward": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"broadcast_forward": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"bfd": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"bfd_desired_min_tx": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 100000),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"bfd_detect_mult": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 50),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"bfd_required_min_rx": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 100000),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"l2forward": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"icmp_send_redirect": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"icmp_accept_redirect": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"vlanforward": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"stpforward": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"stpforward_mode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ips_sniffer_mode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ident_accept": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ipmac": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"subst": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"macaddr": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"substitute_dst_mac": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"speed": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"netbios_forward": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"wins_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"dedicated_to": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"trust_ip_1": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"trust_ip_2": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"trust_ip_3": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"trust_ip6_1": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"trust_ip6_2": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"trust_ip6_3": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"mtu_override": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"mtu": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"wccp": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"netflow_sampler": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"sflow_sampler": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"drop_overlapped_fragment": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"drop_fragment": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"scan_botnet_connections": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"src_check": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"sample_rate": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(10, 99999),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"polling_interval": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"sample_direction": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"explicit_web_proxy": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"explicit_ftp_proxy": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"proxy_captive_portal": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"tcp_mss": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"inbandwidth": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 16776000),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"outbandwidth": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 16776000),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"egress_shaping_profile": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"disconnect_threshold": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 10000),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"spillover_threshold": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 16776000),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ingress_spillover_threshold": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 16776000),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"weight": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"interface": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"external": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"vlanid": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 4094),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"forward_domain": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 2147483647),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"remote_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"member": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"interface_name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"lacp_mode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"lacp_ha_slave": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"lacp_speed": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"min_links": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 32),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"min_links_down": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"algorithm": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"link_up_delay": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(50, 3600000),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"priority_override": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"aggregate": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"redundant_interface": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"managed_device": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"devindex": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"vindex": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"switch": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"description": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
+				Optional:     true,
 			},
 			"alias": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 25),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"security_mode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"captive_portal": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"security_mac_auth_bypass": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"security_external_web": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"security_external_logout": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"replacemsg_override_group": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"security_redirect_url": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"security_exempt_list": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"security_groups": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"device_identification": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"device_user_identification": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"device_identification_active_scan": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"device_access_list": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"device_netscan": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"lldp_reception": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"lldp_transmission": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"lldp_network_policy": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"fortiheartbeat": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"broadcast_forticlient_discovery": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"endpoint_compliance": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"estimated_upstream_bandwidth": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"estimated_downstream_bandwidth": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"vrrp_virtual_mac": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"vrrp": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"vrid": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 255),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"version": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"vrgrp": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 65535),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"vrip": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"priority": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 255),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"adv_interval": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 255),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"start_time": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 255),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"preempt": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"accept_mode": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"vrdst": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"vrdst_priority": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 254),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"status": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"proxy_arp": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"ip": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
@@ -949,184 +949,184 @@ func resourceSystemInterface() *schema.Resource {
 				},
 			},
 			"role": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"snmp_index": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"secondary_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"secondaryip": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"ip": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"allowaccess": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"gwdetect": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"ping_serv_status": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"detectserver": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"detectprotocol": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"ha_priority": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 50),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"preserve_session_route": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"auto_auth_extension_device": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ap_discover": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"fortilink_stacking": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"fortilink_split_interface": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"internal": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"fortilink_backup_link": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"switch_controller_access_vlan": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"switch_controller_traffic_policy": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"switch_controller_igmp_snooping": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"switch_controller_dhcp_snooping": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"switch_controller_dhcp_snooping_verify_mac": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"switch_controller_dhcp_snooping_option82": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"switch_controller_arp_inspection": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"switch_controller_learning_limit": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 128),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"color": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 32),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"tagging": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"category": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"tags": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"name": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 64),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
@@ -1135,67 +1135,67 @@ func resourceSystemInterface() *schema.Resource {
 				},
 			},
 			"ipv6": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"ip6_mode": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"nd_mode": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"nd_cert": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"nd_security_level": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 7),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"nd_timestamp_delta": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 3600),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"nd_timestamp_fuzz": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 60),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"nd_cga_modifier": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"ip6_dns_server_override": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"ip6_address": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"ip6_extra_addr": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"prefix": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
@@ -1203,130 +1203,130 @@ func resourceSystemInterface() *schema.Resource {
 							},
 						},
 						"ip6_allowaccess": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"ip6_send_adv": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"ip6_manage_flag": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"ip6_other_flag": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"ip6_max_interval": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(4, 1800),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"ip6_min_interval": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(3, 1350),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"ip6_link_mtu": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1280, 16000),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"ip6_reachable_time": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 3600000),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"ip6_retrans_time": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"ip6_default_life": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 9000),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"ip6_hop_limit": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"autoconf": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"ip6_upstream_interface": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 15),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"ip6_subnet": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"ip6_prefix_list": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"prefix": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"autonomous_flag": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"onlink_flag": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"valid_life_time": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"preferred_life_time": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"rdnss": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"dnssl": &schema.Schema{
-										Type: schema.TypeList,
+										Type:     schema.TypeList,
 										Optional: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 												"domain": &schema.Schema{
-													Type: schema.TypeString,
+													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 79),
-													Optional: true,
-													Computed: true,
+													Optional:     true,
+													Computed:     true,
 												},
 											},
 										},
@@ -1335,44 +1335,44 @@ func resourceSystemInterface() *schema.Resource {
 							},
 						},
 						"ip6_delegated_prefix_list": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"prefix_id": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"upstream_interface": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 15),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"autonomous_flag": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"onlink_flag": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"subnet": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"rdnss_service": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"rdnss": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
@@ -1380,119 +1380,119 @@ func resourceSystemInterface() *schema.Resource {
 							},
 						},
 						"dhcp6_relay_service": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"dhcp6_relay_type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"dhcp6_relay_ip": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"dhcp6_client_options": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"dhcp6_prefix_delegation": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"dhcp6_information_request": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"dhcp6_prefix_hint": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"dhcp6_prefix_hint_plt": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"dhcp6_prefix_hint_vlt": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"vrrp_virtual_mac6": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"vrip6_link_local": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"vrrp6": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"vrid": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(1, 255),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"vrgrp": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(1, 65535),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"vrip6": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"priority": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(1, 255),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"adv_interval": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(1, 255),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"start_time": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(1, 255),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"preempt": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"accept_mode": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"vrdst6": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"status": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
@@ -1501,7 +1501,7 @@ func resourceSystemInterface() *schema.Resource {
 						},
 					},
 				},
-			},		},
+			}},
 	}
 }
 
@@ -1602,7 +1602,6 @@ func resourceSystemInterfaceRead(d *schema.ResourceData, m interface{}) error {
 	}
 	return nil
 }
-
 
 func flattenSystemInterfaceName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -2796,196 +2795,195 @@ func flattenSystemInterfaceIpv6(v interface{}, d *schema.ResourceData, pre strin
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "ip6_mode"
+	pre_append = pre + ".0." + "ip6_mode"
 	if _, ok := i["ip6-mode"]; ok {
 		result["ip6_mode"] = flattenSystemInterfaceIpv6Ip6Mode(i["ip6-mode"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "nd_mode"
+	pre_append = pre + ".0." + "nd_mode"
 	if _, ok := i["nd-mode"]; ok {
 		result["nd_mode"] = flattenSystemInterfaceIpv6NdMode(i["nd-mode"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "nd_cert"
+	pre_append = pre + ".0." + "nd_cert"
 	if _, ok := i["nd-cert"]; ok {
 		result["nd_cert"] = flattenSystemInterfaceIpv6NdCert(i["nd-cert"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "nd_security_level"
+	pre_append = pre + ".0." + "nd_security_level"
 	if _, ok := i["nd-security-level"]; ok {
 		result["nd_security_level"] = flattenSystemInterfaceIpv6NdSecurityLevel(i["nd-security-level"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "nd_timestamp_delta"
+	pre_append = pre + ".0." + "nd_timestamp_delta"
 	if _, ok := i["nd-timestamp-delta"]; ok {
 		result["nd_timestamp_delta"] = flattenSystemInterfaceIpv6NdTimestampDelta(i["nd-timestamp-delta"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "nd_timestamp_fuzz"
+	pre_append = pre + ".0." + "nd_timestamp_fuzz"
 	if _, ok := i["nd-timestamp-fuzz"]; ok {
 		result["nd_timestamp_fuzz"] = flattenSystemInterfaceIpv6NdTimestampFuzz(i["nd-timestamp-fuzz"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "nd_cga_modifier"
+	pre_append = pre + ".0." + "nd_cga_modifier"
 	if _, ok := i["nd-cga-modifier"]; ok {
 		result["nd_cga_modifier"] = flattenSystemInterfaceIpv6NdCgaModifier(i["nd-cga-modifier"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "ip6_dns_server_override"
+	pre_append = pre + ".0." + "ip6_dns_server_override"
 	if _, ok := i["ip6-dns-server-override"]; ok {
 		result["ip6_dns_server_override"] = flattenSystemInterfaceIpv6Ip6DnsServerOverride(i["ip6-dns-server-override"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "ip6_address"
+	pre_append = pre + ".0." + "ip6_address"
 	if _, ok := i["ip6-address"]; ok {
 		result["ip6_address"] = flattenSystemInterfaceIpv6Ip6Address(i["ip6-address"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "ip6_extra_addr"
+	pre_append = pre + ".0." + "ip6_extra_addr"
 	if _, ok := i["ip6-extra-addr"]; ok {
 		result["ip6_extra_addr"] = flattenSystemInterfaceIpv6Ip6ExtraAddr(i["ip6-extra-addr"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "ip6_allowaccess"
+	pre_append = pre + ".0." + "ip6_allowaccess"
 	if _, ok := i["ip6-allowaccess"]; ok {
 		result["ip6_allowaccess"] = flattenSystemInterfaceIpv6Ip6Allowaccess(i["ip6-allowaccess"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "ip6_send_adv"
+	pre_append = pre + ".0." + "ip6_send_adv"
 	if _, ok := i["ip6-send-adv"]; ok {
 		result["ip6_send_adv"] = flattenSystemInterfaceIpv6Ip6SendAdv(i["ip6-send-adv"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "ip6_manage_flag"
+	pre_append = pre + ".0." + "ip6_manage_flag"
 	if _, ok := i["ip6-manage-flag"]; ok {
 		result["ip6_manage_flag"] = flattenSystemInterfaceIpv6Ip6ManageFlag(i["ip6-manage-flag"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "ip6_other_flag"
+	pre_append = pre + ".0." + "ip6_other_flag"
 	if _, ok := i["ip6-other-flag"]; ok {
 		result["ip6_other_flag"] = flattenSystemInterfaceIpv6Ip6OtherFlag(i["ip6-other-flag"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "ip6_max_interval"
+	pre_append = pre + ".0." + "ip6_max_interval"
 	if _, ok := i["ip6-max-interval"]; ok {
 		result["ip6_max_interval"] = flattenSystemInterfaceIpv6Ip6MaxInterval(i["ip6-max-interval"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "ip6_min_interval"
+	pre_append = pre + ".0." + "ip6_min_interval"
 	if _, ok := i["ip6-min-interval"]; ok {
 		result["ip6_min_interval"] = flattenSystemInterfaceIpv6Ip6MinInterval(i["ip6-min-interval"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "ip6_link_mtu"
+	pre_append = pre + ".0." + "ip6_link_mtu"
 	if _, ok := i["ip6-link-mtu"]; ok {
 		result["ip6_link_mtu"] = flattenSystemInterfaceIpv6Ip6LinkMtu(i["ip6-link-mtu"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "ip6_reachable_time"
+	pre_append = pre + ".0." + "ip6_reachable_time"
 	if _, ok := i["ip6-reachable-time"]; ok {
 		result["ip6_reachable_time"] = flattenSystemInterfaceIpv6Ip6ReachableTime(i["ip6-reachable-time"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "ip6_retrans_time"
+	pre_append = pre + ".0." + "ip6_retrans_time"
 	if _, ok := i["ip6-retrans-time"]; ok {
 		result["ip6_retrans_time"] = flattenSystemInterfaceIpv6Ip6RetransTime(i["ip6-retrans-time"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "ip6_default_life"
+	pre_append = pre + ".0." + "ip6_default_life"
 	if _, ok := i["ip6-default-life"]; ok {
 		result["ip6_default_life"] = flattenSystemInterfaceIpv6Ip6DefaultLife(i["ip6-default-life"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "ip6_hop_limit"
+	pre_append = pre + ".0." + "ip6_hop_limit"
 	if _, ok := i["ip6-hop-limit"]; ok {
 		result["ip6_hop_limit"] = flattenSystemInterfaceIpv6Ip6HopLimit(i["ip6-hop-limit"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "autoconf"
+	pre_append = pre + ".0." + "autoconf"
 	if _, ok := i["autoconf"]; ok {
 		result["autoconf"] = flattenSystemInterfaceIpv6Autoconf(i["autoconf"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "ip6_upstream_interface"
+	pre_append = pre + ".0." + "ip6_upstream_interface"
 	if _, ok := i["ip6-upstream-interface"]; ok {
 		result["ip6_upstream_interface"] = flattenSystemInterfaceIpv6Ip6UpstreamInterface(i["ip6-upstream-interface"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "ip6_subnet"
+	pre_append = pre + ".0." + "ip6_subnet"
 	if _, ok := i["ip6-subnet"]; ok {
 		result["ip6_subnet"] = flattenSystemInterfaceIpv6Ip6Subnet(i["ip6-subnet"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "ip6_prefix_list"
+	pre_append = pre + ".0." + "ip6_prefix_list"
 	if _, ok := i["ip6-prefix-list"]; ok {
 		result["ip6_prefix_list"] = flattenSystemInterfaceIpv6Ip6PrefixList(i["ip6-prefix-list"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "ip6_delegated_prefix_list"
+	pre_append = pre + ".0." + "ip6_delegated_prefix_list"
 	if _, ok := i["ip6-delegated-prefix-list"]; ok {
 		result["ip6_delegated_prefix_list"] = flattenSystemInterfaceIpv6Ip6DelegatedPrefixList(i["ip6-delegated-prefix-list"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "dhcp6_relay_service"
+	pre_append = pre + ".0." + "dhcp6_relay_service"
 	if _, ok := i["dhcp6-relay-service"]; ok {
 		result["dhcp6_relay_service"] = flattenSystemInterfaceIpv6Dhcp6RelayService(i["dhcp6-relay-service"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "dhcp6_relay_type"
+	pre_append = pre + ".0." + "dhcp6_relay_type"
 	if _, ok := i["dhcp6-relay-type"]; ok {
 		result["dhcp6_relay_type"] = flattenSystemInterfaceIpv6Dhcp6RelayType(i["dhcp6-relay-type"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "dhcp6_relay_ip"
+	pre_append = pre + ".0." + "dhcp6_relay_ip"
 	if _, ok := i["dhcp6-relay-ip"]; ok {
 		result["dhcp6_relay_ip"] = flattenSystemInterfaceIpv6Dhcp6RelayIp(i["dhcp6-relay-ip"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "dhcp6_client_options"
+	pre_append = pre + ".0." + "dhcp6_client_options"
 	if _, ok := i["dhcp6-client-options"]; ok {
 		result["dhcp6_client_options"] = flattenSystemInterfaceIpv6Dhcp6ClientOptions(i["dhcp6-client-options"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "dhcp6_prefix_delegation"
+	pre_append = pre + ".0." + "dhcp6_prefix_delegation"
 	if _, ok := i["dhcp6-prefix-delegation"]; ok {
 		result["dhcp6_prefix_delegation"] = flattenSystemInterfaceIpv6Dhcp6PrefixDelegation(i["dhcp6-prefix-delegation"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "dhcp6_information_request"
+	pre_append = pre + ".0." + "dhcp6_information_request"
 	if _, ok := i["dhcp6-information-request"]; ok {
 		result["dhcp6_information_request"] = flattenSystemInterfaceIpv6Dhcp6InformationRequest(i["dhcp6-information-request"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "dhcp6_prefix_hint"
+	pre_append = pre + ".0." + "dhcp6_prefix_hint"
 	if _, ok := i["dhcp6-prefix-hint"]; ok {
 		result["dhcp6_prefix_hint"] = flattenSystemInterfaceIpv6Dhcp6PrefixHint(i["dhcp6-prefix-hint"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "dhcp6_prefix_hint_plt"
+	pre_append = pre + ".0." + "dhcp6_prefix_hint_plt"
 	if _, ok := i["dhcp6-prefix-hint-plt"]; ok {
 		result["dhcp6_prefix_hint_plt"] = flattenSystemInterfaceIpv6Dhcp6PrefixHintPlt(i["dhcp6-prefix-hint-plt"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "dhcp6_prefix_hint_vlt"
+	pre_append = pre + ".0." + "dhcp6_prefix_hint_vlt"
 	if _, ok := i["dhcp6-prefix-hint-vlt"]; ok {
 		result["dhcp6_prefix_hint_vlt"] = flattenSystemInterfaceIpv6Dhcp6PrefixHintVlt(i["dhcp6-prefix-hint-vlt"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "vrrp_virtual_mac6"
+	pre_append = pre + ".0." + "vrrp_virtual_mac6"
 	if _, ok := i["vrrp-virtual-mac6"]; ok {
 		result["vrrp_virtual_mac6"] = flattenSystemInterfaceIpv6VrrpVirtualMac6(i["vrrp-virtual-mac6"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "vrip6_link_local"
+	pre_append = pre + ".0." + "vrip6_link_local"
 	if _, ok := i["vrip6_link_local"]; ok {
 		result["vrip6_link_local"] = flattenSystemInterfaceIpv6Vrip6_Link_Local(i["vrip6_link_local"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "vrrp6"
+	pre_append = pre + ".0." + "vrrp6"
 	if _, ok := i["vrrp6"]; ok {
 		result["vrrp6"] = flattenSystemInterfaceIpv6Vrrp6(i["vrrp6"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -3492,10 +3490,8 @@ func flattenSystemInterfaceIpv6Vrrp6Status(v interface{}, d *schema.ResourceData
 	return v
 }
 
-
 func refreshObjectSystemInterface(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenSystemInterfaceName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -3641,21 +3637,21 @@ func refreshObjectSystemInterface(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("fail_alert_interfaces", flattenSystemInterfaceFailAlertInterfaces(o["fail-alert-interfaces"], d, "fail_alert_interfaces")); err != nil {
-            if !fortiAPIPatch(o["fail-alert-interfaces"]) {
-                return fmt.Errorf("Error reading fail_alert_interfaces: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("fail_alert_interfaces"); ok {
-            if err = d.Set("fail_alert_interfaces", flattenSystemInterfaceFailAlertInterfaces(o["fail-alert-interfaces"], d, "fail_alert_interfaces")); err != nil {
-                if !fortiAPIPatch(o["fail-alert-interfaces"]) {
-                    return fmt.Errorf("Error reading fail_alert_interfaces: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("fail_alert_interfaces", flattenSystemInterfaceFailAlertInterfaces(o["fail-alert-interfaces"], d, "fail_alert_interfaces")); err != nil {
+			if !fortiAPIPatch(o["fail-alert-interfaces"]) {
+				return fmt.Errorf("Error reading fail_alert_interfaces: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("fail_alert_interfaces"); ok {
+			if err = d.Set("fail_alert_interfaces", flattenSystemInterfaceFailAlertInterfaces(o["fail-alert-interfaces"], d, "fail_alert_interfaces")); err != nil {
+				if !fortiAPIPatch(o["fail-alert-interfaces"]) {
+					return fmt.Errorf("Error reading fail_alert_interfaces: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("dhcp_client_identifier", flattenSystemInterfaceDhcpClientIdentifier(o["dhcp-client-identifier"], d, "dhcp_client_identifier")); err != nil {
 		if !fortiAPIPatch(o["dhcp-client-identifier"]) {
@@ -4149,21 +4145,21 @@ func refreshObjectSystemInterface(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("member", flattenSystemInterfaceMember(o["member"], d, "member")); err != nil {
-            if !fortiAPIPatch(o["member"]) {
-                return fmt.Errorf("Error reading member: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("member"); ok {
-            if err = d.Set("member", flattenSystemInterfaceMember(o["member"], d, "member")); err != nil {
-                if !fortiAPIPatch(o["member"]) {
-                    return fmt.Errorf("Error reading member: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("member", flattenSystemInterfaceMember(o["member"], d, "member")); err != nil {
+			if !fortiAPIPatch(o["member"]) {
+				return fmt.Errorf("Error reading member: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("member"); ok {
+			if err = d.Set("member", flattenSystemInterfaceMember(o["member"], d, "member")); err != nil {
+				if !fortiAPIPatch(o["member"]) {
+					return fmt.Errorf("Error reading member: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("lacp_mode", flattenSystemInterfaceLacpMode(o["lacp-mode"], d, "lacp_mode")); err != nil {
 		if !fortiAPIPatch(o["lacp-mode"]) {
@@ -4225,21 +4221,21 @@ func refreshObjectSystemInterface(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("managed_device", flattenSystemInterfaceManagedDevice(o["managed-device"], d, "managed_device")); err != nil {
-            if !fortiAPIPatch(o["managed-device"]) {
-                return fmt.Errorf("Error reading managed_device: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("managed_device"); ok {
-            if err = d.Set("managed_device", flattenSystemInterfaceManagedDevice(o["managed-device"], d, "managed_device")); err != nil {
-                if !fortiAPIPatch(o["managed-device"]) {
-                    return fmt.Errorf("Error reading managed_device: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("managed_device", flattenSystemInterfaceManagedDevice(o["managed-device"], d, "managed_device")); err != nil {
+			if !fortiAPIPatch(o["managed-device"]) {
+				return fmt.Errorf("Error reading managed_device: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("managed_device"); ok {
+			if err = d.Set("managed_device", flattenSystemInterfaceManagedDevice(o["managed-device"], d, "managed_device")); err != nil {
+				if !fortiAPIPatch(o["managed-device"]) {
+					return fmt.Errorf("Error reading managed_device: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("devindex", flattenSystemInterfaceDevindex(o["devindex"], d, "devindex")); err != nil {
 		if !fortiAPIPatch(o["devindex"]) {
@@ -4319,21 +4315,21 @@ func refreshObjectSystemInterface(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("security_groups", flattenSystemInterfaceSecurityGroups(o["security-groups"], d, "security_groups")); err != nil {
-            if !fortiAPIPatch(o["security-groups"]) {
-                return fmt.Errorf("Error reading security_groups: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("security_groups"); ok {
-            if err = d.Set("security_groups", flattenSystemInterfaceSecurityGroups(o["security-groups"], d, "security_groups")); err != nil {
-                if !fortiAPIPatch(o["security-groups"]) {
-                    return fmt.Errorf("Error reading security_groups: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("security_groups", flattenSystemInterfaceSecurityGroups(o["security-groups"], d, "security_groups")); err != nil {
+			if !fortiAPIPatch(o["security-groups"]) {
+				return fmt.Errorf("Error reading security_groups: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("security_groups"); ok {
+			if err = d.Set("security_groups", flattenSystemInterfaceSecurityGroups(o["security-groups"], d, "security_groups")); err != nil {
+				if !fortiAPIPatch(o["security-groups"]) {
+					return fmt.Errorf("Error reading security_groups: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("device_identification", flattenSystemInterfaceDeviceIdentification(o["device-identification"], d, "device_identification")); err != nil {
 		if !fortiAPIPatch(o["device-identification"]) {
@@ -4419,21 +4415,21 @@ func refreshObjectSystemInterface(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("vrrp", flattenSystemInterfaceVrrp(o["vrrp"], d, "vrrp")); err != nil {
-            if !fortiAPIPatch(o["vrrp"]) {
-                return fmt.Errorf("Error reading vrrp: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("vrrp"); ok {
-            if err = d.Set("vrrp", flattenSystemInterfaceVrrp(o["vrrp"], d, "vrrp")); err != nil {
-                if !fortiAPIPatch(o["vrrp"]) {
-                    return fmt.Errorf("Error reading vrrp: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("vrrp", flattenSystemInterfaceVrrp(o["vrrp"], d, "vrrp")); err != nil {
+			if !fortiAPIPatch(o["vrrp"]) {
+				return fmt.Errorf("Error reading vrrp: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("vrrp"); ok {
+			if err = d.Set("vrrp", flattenSystemInterfaceVrrp(o["vrrp"], d, "vrrp")); err != nil {
+				if !fortiAPIPatch(o["vrrp"]) {
+					return fmt.Errorf("Error reading vrrp: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("role", flattenSystemInterfaceRole(o["role"], d, "role")); err != nil {
 		if !fortiAPIPatch(o["role"]) {
@@ -4453,21 +4449,21 @@ func refreshObjectSystemInterface(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("secondaryip", flattenSystemInterfaceSecondaryip(o["secondaryip"], d, "secondaryip")); err != nil {
-            if !fortiAPIPatch(o["secondaryip"]) {
-                return fmt.Errorf("Error reading secondaryip: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("secondaryip"); ok {
-            if err = d.Set("secondaryip", flattenSystemInterfaceSecondaryip(o["secondaryip"], d, "secondaryip")); err != nil {
-                if !fortiAPIPatch(o["secondaryip"]) {
-                    return fmt.Errorf("Error reading secondaryip: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("secondaryip", flattenSystemInterfaceSecondaryip(o["secondaryip"], d, "secondaryip")); err != nil {
+			if !fortiAPIPatch(o["secondaryip"]) {
+				return fmt.Errorf("Error reading secondaryip: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("secondaryip"); ok {
+			if err = d.Set("secondaryip", flattenSystemInterfaceSecondaryip(o["secondaryip"], d, "secondaryip")); err != nil {
+				if !fortiAPIPatch(o["secondaryip"]) {
+					return fmt.Errorf("Error reading secondaryip: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("preserve_session_route", flattenSystemInterfacePreserveSessionRoute(o["preserve-session-route"], d, "preserve_session_route")); err != nil {
 		if !fortiAPIPatch(o["preserve-session-route"]) {
@@ -4565,38 +4561,37 @@ func refreshObjectSystemInterface(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("tagging", flattenSystemInterfaceTagging(o["tagging"], d, "tagging")); err != nil {
-            if !fortiAPIPatch(o["tagging"]) {
-                return fmt.Errorf("Error reading tagging: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("tagging"); ok {
-            if err = d.Set("tagging", flattenSystemInterfaceTagging(o["tagging"], d, "tagging")); err != nil {
-                if !fortiAPIPatch(o["tagging"]) {
-                    return fmt.Errorf("Error reading tagging: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("tagging", flattenSystemInterfaceTagging(o["tagging"], d, "tagging")); err != nil {
+			if !fortiAPIPatch(o["tagging"]) {
+				return fmt.Errorf("Error reading tagging: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("tagging"); ok {
+			if err = d.Set("tagging", flattenSystemInterfaceTagging(o["tagging"], d, "tagging")); err != nil {
+				if !fortiAPIPatch(o["tagging"]) {
+					return fmt.Errorf("Error reading tagging: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("ipv6", flattenSystemInterfaceIpv6(o["ipv6"], d, "ipv6")); err != nil {
-            if !fortiAPIPatch(o["ipv6"]) {
-                return fmt.Errorf("Error reading ipv6: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("ipv6"); ok {
-            if err = d.Set("ipv6", flattenSystemInterfaceIpv6(o["ipv6"], d, "ipv6")); err != nil {
-                if !fortiAPIPatch(o["ipv6"]) {
-                    return fmt.Errorf("Error reading ipv6: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("ipv6", flattenSystemInterfaceIpv6(o["ipv6"], d, "ipv6")); err != nil {
+			if !fortiAPIPatch(o["ipv6"]) {
+				return fmt.Errorf("Error reading ipv6: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("ipv6"); ok {
+			if err = d.Set("ipv6", flattenSystemInterfaceIpv6(o["ipv6"], d, "ipv6")); err != nil {
+				if !fortiAPIPatch(o["ipv6"]) {
+					return fmt.Errorf("Error reading ipv6: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -4606,7 +4601,6 @@ func flattenSystemInterfaceFortiTestDebug(d *schema.ResourceData, fosdebugsn int
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemInterfaceName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -4716,7 +4710,7 @@ func expandSystemInterfaceFailAlertInterfaces(d *schema.ResourceData, v interfac
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -5075,7 +5069,7 @@ func expandSystemInterfaceMember(d *schema.ResourceData, v interface{}, pre stri
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -5146,7 +5140,7 @@ func expandSystemInterfaceManagedDevice(d *schema.ResourceData, v interface{}, p
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -5229,7 +5223,7 @@ func expandSystemInterfaceSecurityGroups(d *schema.ResourceData, v interface{}, 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -5316,7 +5310,7 @@ func expandSystemInterfaceVrrp(d *schema.ResourceData, v interface{}, pre string
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrid"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -5453,7 +5447,7 @@ func expandSystemInterfaceVrrpProxyArp(d *schema.ResourceData, v interface{}, pr
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -5505,7 +5499,7 @@ func expandSystemInterfaceSecondaryip(d *schema.ResourceData, v interface{}, pre
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -5663,7 +5657,7 @@ func expandSystemInterfaceTagging(d *schema.ResourceData, v interface{}, pre str
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -5710,7 +5704,7 @@ func expandSystemInterfaceTaggingTags(d *schema.ResourceData, v interface{}, pre
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -5738,162 +5732,162 @@ func expandSystemInterfaceIpv6(d *schema.ResourceData, v interface{}, pre string
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "ip6_mode"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "ip6_mode"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ip6-mode"], _ = expandSystemInterfaceIpv6Ip6Mode(d, i["ip6_mode"], pre_append)
 	}
-	pre_append =  pre + ".0." + "nd_mode"
+	pre_append = pre + ".0." + "nd_mode"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["nd-mode"], _ = expandSystemInterfaceIpv6NdMode(d, i["nd_mode"], pre_append)
 	}
-	pre_append =  pre + ".0." + "nd_cert"
+	pre_append = pre + ".0." + "nd_cert"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["nd-cert"], _ = expandSystemInterfaceIpv6NdCert(d, i["nd_cert"], pre_append)
 	}
-	pre_append =  pre + ".0." + "nd_security_level"
+	pre_append = pre + ".0." + "nd_security_level"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["nd-security-level"], _ = expandSystemInterfaceIpv6NdSecurityLevel(d, i["nd_security_level"], pre_append)
 	}
-	pre_append =  pre + ".0." + "nd_timestamp_delta"
+	pre_append = pre + ".0." + "nd_timestamp_delta"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["nd-timestamp-delta"], _ = expandSystemInterfaceIpv6NdTimestampDelta(d, i["nd_timestamp_delta"], pre_append)
 	}
-	pre_append =  pre + ".0." + "nd_timestamp_fuzz"
+	pre_append = pre + ".0." + "nd_timestamp_fuzz"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["nd-timestamp-fuzz"], _ = expandSystemInterfaceIpv6NdTimestampFuzz(d, i["nd_timestamp_fuzz"], pre_append)
 	}
-	pre_append =  pre + ".0." + "nd_cga_modifier"
+	pre_append = pre + ".0." + "nd_cga_modifier"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["nd-cga-modifier"], _ = expandSystemInterfaceIpv6NdCgaModifier(d, i["nd_cga_modifier"], pre_append)
 	}
-	pre_append =  pre + ".0." + "ip6_dns_server_override"
+	pre_append = pre + ".0." + "ip6_dns_server_override"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ip6-dns-server-override"], _ = expandSystemInterfaceIpv6Ip6DnsServerOverride(d, i["ip6_dns_server_override"], pre_append)
 	}
-	pre_append =  pre + ".0." + "ip6_address"
+	pre_append = pre + ".0." + "ip6_address"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ip6-address"], _ = expandSystemInterfaceIpv6Ip6Address(d, i["ip6_address"], pre_append)
 	}
-	pre_append =  pre + ".0." + "ip6_extra_addr"
+	pre_append = pre + ".0." + "ip6_extra_addr"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ip6-extra-addr"], _ = expandSystemInterfaceIpv6Ip6ExtraAddr(d, i["ip6_extra_addr"], pre_append)
 	} else {
 		result["ip6-extra-addr"] = make([]string, 0)
 	}
-	pre_append =  pre + ".0." + "ip6_allowaccess"
+	pre_append = pre + ".0." + "ip6_allowaccess"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ip6-allowaccess"], _ = expandSystemInterfaceIpv6Ip6Allowaccess(d, i["ip6_allowaccess"], pre_append)
 	}
-	pre_append =  pre + ".0." + "ip6_send_adv"
+	pre_append = pre + ".0." + "ip6_send_adv"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ip6-send-adv"], _ = expandSystemInterfaceIpv6Ip6SendAdv(d, i["ip6_send_adv"], pre_append)
 	}
-	pre_append =  pre + ".0." + "ip6_manage_flag"
+	pre_append = pre + ".0." + "ip6_manage_flag"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ip6-manage-flag"], _ = expandSystemInterfaceIpv6Ip6ManageFlag(d, i["ip6_manage_flag"], pre_append)
 	}
-	pre_append =  pre + ".0." + "ip6_other_flag"
+	pre_append = pre + ".0." + "ip6_other_flag"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ip6-other-flag"], _ = expandSystemInterfaceIpv6Ip6OtherFlag(d, i["ip6_other_flag"], pre_append)
 	}
-	pre_append =  pre + ".0." + "ip6_max_interval"
+	pre_append = pre + ".0." + "ip6_max_interval"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ip6-max-interval"], _ = expandSystemInterfaceIpv6Ip6MaxInterval(d, i["ip6_max_interval"], pre_append)
 	}
-	pre_append =  pre + ".0." + "ip6_min_interval"
+	pre_append = pre + ".0." + "ip6_min_interval"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ip6-min-interval"], _ = expandSystemInterfaceIpv6Ip6MinInterval(d, i["ip6_min_interval"], pre_append)
 	}
-	pre_append =  pre + ".0." + "ip6_link_mtu"
+	pre_append = pre + ".0." + "ip6_link_mtu"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ip6-link-mtu"], _ = expandSystemInterfaceIpv6Ip6LinkMtu(d, i["ip6_link_mtu"], pre_append)
 	}
-	pre_append =  pre + ".0." + "ip6_reachable_time"
+	pre_append = pre + ".0." + "ip6_reachable_time"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ip6-reachable-time"], _ = expandSystemInterfaceIpv6Ip6ReachableTime(d, i["ip6_reachable_time"], pre_append)
 	}
-	pre_append =  pre + ".0." + "ip6_retrans_time"
+	pre_append = pre + ".0." + "ip6_retrans_time"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ip6-retrans-time"], _ = expandSystemInterfaceIpv6Ip6RetransTime(d, i["ip6_retrans_time"], pre_append)
 	}
-	pre_append =  pre + ".0." + "ip6_default_life"
+	pre_append = pre + ".0." + "ip6_default_life"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ip6-default-life"], _ = expandSystemInterfaceIpv6Ip6DefaultLife(d, i["ip6_default_life"], pre_append)
 	}
-	pre_append =  pre + ".0." + "ip6_hop_limit"
+	pre_append = pre + ".0." + "ip6_hop_limit"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ip6-hop-limit"], _ = expandSystemInterfaceIpv6Ip6HopLimit(d, i["ip6_hop_limit"], pre_append)
 	}
-	pre_append =  pre + ".0." + "autoconf"
+	pre_append = pre + ".0." + "autoconf"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["autoconf"], _ = expandSystemInterfaceIpv6Autoconf(d, i["autoconf"], pre_append)
 	}
-	pre_append =  pre + ".0." + "ip6_upstream_interface"
+	pre_append = pre + ".0." + "ip6_upstream_interface"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ip6-upstream-interface"], _ = expandSystemInterfaceIpv6Ip6UpstreamInterface(d, i["ip6_upstream_interface"], pre_append)
 	}
-	pre_append =  pre + ".0." + "ip6_subnet"
+	pre_append = pre + ".0." + "ip6_subnet"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ip6-subnet"], _ = expandSystemInterfaceIpv6Ip6Subnet(d, i["ip6_subnet"], pre_append)
 	}
-	pre_append =  pre + ".0." + "ip6_prefix_list"
+	pre_append = pre + ".0." + "ip6_prefix_list"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ip6-prefix-list"], _ = expandSystemInterfaceIpv6Ip6PrefixList(d, i["ip6_prefix_list"], pre_append)
 	} else {
 		result["ip6-prefix-list"] = make([]string, 0)
 	}
-	pre_append =  pre + ".0." + "ip6_delegated_prefix_list"
+	pre_append = pre + ".0." + "ip6_delegated_prefix_list"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ip6-delegated-prefix-list"], _ = expandSystemInterfaceIpv6Ip6DelegatedPrefixList(d, i["ip6_delegated_prefix_list"], pre_append)
 	} else {
 		result["ip6-delegated-prefix-list"] = make([]string, 0)
 	}
-	pre_append =  pre + ".0." + "dhcp6_relay_service"
+	pre_append = pre + ".0." + "dhcp6_relay_service"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["dhcp6-relay-service"], _ = expandSystemInterfaceIpv6Dhcp6RelayService(d, i["dhcp6_relay_service"], pre_append)
 	}
-	pre_append =  pre + ".0." + "dhcp6_relay_type"
+	pre_append = pre + ".0." + "dhcp6_relay_type"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["dhcp6-relay-type"], _ = expandSystemInterfaceIpv6Dhcp6RelayType(d, i["dhcp6_relay_type"], pre_append)
 	}
-	pre_append =  pre + ".0." + "dhcp6_relay_ip"
+	pre_append = pre + ".0." + "dhcp6_relay_ip"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["dhcp6-relay-ip"], _ = expandSystemInterfaceIpv6Dhcp6RelayIp(d, i["dhcp6_relay_ip"], pre_append)
 	}
-	pre_append =  pre + ".0." + "dhcp6_client_options"
+	pre_append = pre + ".0." + "dhcp6_client_options"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["dhcp6-client-options"], _ = expandSystemInterfaceIpv6Dhcp6ClientOptions(d, i["dhcp6_client_options"], pre_append)
 	}
-	pre_append =  pre + ".0." + "dhcp6_prefix_delegation"
+	pre_append = pre + ".0." + "dhcp6_prefix_delegation"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["dhcp6-prefix-delegation"], _ = expandSystemInterfaceIpv6Dhcp6PrefixDelegation(d, i["dhcp6_prefix_delegation"], pre_append)
 	}
-	pre_append =  pre + ".0." + "dhcp6_information_request"
+	pre_append = pre + ".0." + "dhcp6_information_request"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["dhcp6-information-request"], _ = expandSystemInterfaceIpv6Dhcp6InformationRequest(d, i["dhcp6_information_request"], pre_append)
 	}
-	pre_append =  pre + ".0." + "dhcp6_prefix_hint"
+	pre_append = pre + ".0." + "dhcp6_prefix_hint"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["dhcp6-prefix-hint"], _ = expandSystemInterfaceIpv6Dhcp6PrefixHint(d, i["dhcp6_prefix_hint"], pre_append)
 	}
-	pre_append =  pre + ".0." + "dhcp6_prefix_hint_plt"
+	pre_append = pre + ".0." + "dhcp6_prefix_hint_plt"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["dhcp6-prefix-hint-plt"], _ = expandSystemInterfaceIpv6Dhcp6PrefixHintPlt(d, i["dhcp6_prefix_hint_plt"], pre_append)
 	}
-	pre_append =  pre + ".0." + "dhcp6_prefix_hint_vlt"
+	pre_append = pre + ".0." + "dhcp6_prefix_hint_vlt"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["dhcp6-prefix-hint-vlt"], _ = expandSystemInterfaceIpv6Dhcp6PrefixHintVlt(d, i["dhcp6_prefix_hint_vlt"], pre_append)
 	}
-	pre_append =  pre + ".0." + "vrrp_virtual_mac6"
+	pre_append = pre + ".0." + "vrrp_virtual_mac6"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["vrrp-virtual-mac6"], _ = expandSystemInterfaceIpv6VrrpVirtualMac6(d, i["vrrp_virtual_mac6"], pre_append)
 	}
-	pre_append =  pre + ".0." + "vrip6_link_local"
+	pre_append = pre + ".0." + "vrip6_link_local"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["vrip6_link_local"], _ = expandSystemInterfaceIpv6Vrip6_Link_Local(d, i["vrip6_link_local"], pre_append)
 	}
-	pre_append =  pre + ".0." + "vrrp6"
+	pre_append = pre + ".0." + "vrrp6"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["vrrp6"], _ = expandSystemInterfaceIpv6Vrrp6(d, i["vrrp6"], pre_append)
 	} else {
@@ -5951,7 +5945,7 @@ func expandSystemInterfaceIpv6Ip6ExtraAddr(d *schema.ResourceData, v interface{}
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -6038,7 +6032,7 @@ func expandSystemInterfaceIpv6Ip6PrefixList(d *schema.ResourceData, v interface{
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -6121,7 +6115,7 @@ func expandSystemInterfaceIpv6Ip6PrefixListDnssl(d *schema.ResourceData, v inter
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -6152,7 +6146,7 @@ func expandSystemInterfaceIpv6Ip6DelegatedPrefixList(d *schema.ResourceData, v i
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -6281,7 +6275,7 @@ func expandSystemInterfaceIpv6Vrrp6(d *schema.ResourceData, v interface{}, pre s
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrid"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -6381,10 +6375,8 @@ func expandSystemInterfaceIpv6Vrrp6Status(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-
 func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandSystemInterfaceName(d, v, "name")
@@ -7916,7 +7908,5 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-
 	return &obj, nil
 }
-

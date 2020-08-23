@@ -30,42 +30,41 @@ func resourceSystemFortisandbox() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"server": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"source_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"enc_algorithm": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssl_min_proto_version": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"email": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
 }
-
 
 func resourceSystemFortisandboxUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -132,7 +131,6 @@ func resourceSystemFortisandboxRead(d *schema.ResourceData, m interface{}) error
 	return nil
 }
 
-
 func flattenSystemFortisandboxStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -157,10 +155,8 @@ func flattenSystemFortisandboxEmail(v interface{}, d *schema.ResourceData, pre s
 	return v
 }
 
-
 func refreshObjectSystemFortisandbox(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("status", flattenSystemFortisandboxStatus(o["status"], d, "status")); err != nil {
 		if !fortiAPIPatch(o["status"]) {
@@ -198,7 +194,6 @@ func refreshObjectSystemFortisandbox(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
-
 	return nil
 }
 
@@ -207,7 +202,6 @@ func flattenSystemFortisandboxFortiTestDebug(d *schema.ResourceData, fosdebugsn 
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemFortisandboxStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -233,10 +227,8 @@ func expandSystemFortisandboxEmail(d *schema.ResourceData, v interface{}, pre st
 	return v, nil
 }
 
-
 func getObjectSystemFortisandbox(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("status"); ok {
 		t, err := expandSystemFortisandboxStatus(d, v, "status")
@@ -292,7 +284,5 @@ func getObjectSystemFortisandbox(d *schema.ResourceData) (*map[string]interface{
 		}
 	}
 
-
 	return &obj, nil
 }
-

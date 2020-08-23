@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,34 +5,35 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSRouterMulticastFlow_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSRouterMulticastFlow_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSRouterMulticastFlow_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSRouterMulticastFlowConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSRouterMulticastFlowExists("fortios_router_multicastflow.trname"),
-                    resource.TestCheckResourceAttr("fortios_router_multicastflow.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_router_multicastflow.trname", "flows.0.group_addr", "224.252.0.0"),
-                    resource.TestCheckResourceAttr("fortios_router_multicastflow.trname", "flows.0.source_addr", "224.112.0.0"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSRouterMulticastFlowConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSRouterMulticastFlowExists("fortios_router_multicastflow.trname"),
+					resource.TestCheckResourceAttr("fortios_router_multicastflow.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_router_multicastflow.trname", "flows.0.group_addr", "224.252.0.0"),
+					resource.TestCheckResourceAttr("fortios_router_multicastflow.trname", "flows.0.source_addr", "224.112.0.0"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSRouterMulticastFlowExists(n string) resource.TestCheckFunc {

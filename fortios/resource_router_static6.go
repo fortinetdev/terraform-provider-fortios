@@ -30,65 +30,65 @@ func resourceRouterStatic6() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"seq_num": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"dst": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"gateway": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"device": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"devindex": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"distance": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"priority": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"comment": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
+				Optional:     true,
 			},
 			"blackhole": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"virtual_wan_link": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"bfd": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
@@ -185,7 +185,6 @@ func resourceRouterStatic6Read(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenRouterStatic6SeqNum(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -234,10 +233,8 @@ func flattenRouterStatic6Bfd(v interface{}, d *schema.ResourceData, pre string) 
 	return v
 }
 
-
 func refreshObjectRouterStatic6(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("seq_num", flattenRouterStatic6SeqNum(o["seq-num"], d, "seq_num")); err != nil {
 		if !fortiAPIPatch(o["seq-num"]) {
@@ -311,7 +308,6 @@ func refreshObjectRouterStatic6(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-
 	return nil
 }
 
@@ -320,7 +316,6 @@ func flattenRouterStatic6FortiTestDebug(d *schema.ResourceData, fosdebugsn int, 
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandRouterStatic6SeqNum(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -370,10 +365,8 @@ func expandRouterStatic6Bfd(d *schema.ResourceData, v interface{}, pre string) (
 	return v, nil
 }
 
-
 func getObjectRouterStatic6(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("seq_num"); ok {
 		t, err := expandRouterStatic6SeqNum(d, v, "seq_num")
@@ -483,7 +476,5 @@ func getObjectRouterStatic6(d *schema.ResourceData) (*map[string]interface{}, er
 		}
 	}
 
-
 	return &obj, nil
 }
-

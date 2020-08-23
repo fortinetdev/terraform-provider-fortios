@@ -30,71 +30,71 @@ func resourceSpamfilterBwl() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"fosid": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Required: true,
+				Required:     true,
 			},
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"comment": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
+				Optional:     true,
 			},
 			"entries": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"status": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"action": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"addr_type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"ip4_subnet": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"ip6_subnet": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"pattern_type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"email_pattern": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -191,7 +191,6 @@ func resourceSpamfilterBwlRead(d *schema.ResourceData, m interface{}) error {
 	}
 	return nil
 }
-
 
 func flattenSpamfilterBwlId(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -320,10 +319,8 @@ func flattenSpamfilterBwlEntriesEmailPattern(v interface{}, d *schema.ResourceDa
 	return v
 }
 
-
 func refreshObjectSpamfilterBwl(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("fosid", flattenSpamfilterBwlId(o["id"], d, "fosid")); err != nil {
 		if !fortiAPIPatch(o["id"]) {
@@ -343,22 +340,21 @@ func refreshObjectSpamfilterBwl(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("entries", flattenSpamfilterBwlEntries(o["entries"], d, "entries")); err != nil {
-            if !fortiAPIPatch(o["entries"]) {
-                return fmt.Errorf("Error reading entries: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("entries"); ok {
-            if err = d.Set("entries", flattenSpamfilterBwlEntries(o["entries"], d, "entries")); err != nil {
-                if !fortiAPIPatch(o["entries"]) {
-                    return fmt.Errorf("Error reading entries: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("entries", flattenSpamfilterBwlEntries(o["entries"], d, "entries")); err != nil {
+			if !fortiAPIPatch(o["entries"]) {
+				return fmt.Errorf("Error reading entries: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("entries"); ok {
+			if err = d.Set("entries", flattenSpamfilterBwlEntries(o["entries"], d, "entries")); err != nil {
+				if !fortiAPIPatch(o["entries"]) {
+					return fmt.Errorf("Error reading entries: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -368,7 +364,6 @@ func flattenSpamfilterBwlFortiTestDebug(d *schema.ResourceData, fosdebugsn int, 
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSpamfilterBwlId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -394,7 +389,7 @@ func expandSpamfilterBwlEntries(d *schema.ResourceData, v interface{}, pre strin
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -485,10 +480,8 @@ func expandSpamfilterBwlEntriesEmailPattern(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
-
 func getObjectSpamfilterBwl(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("fosid"); ok {
 		t, err := expandSpamfilterBwlId(d, v, "fosid")
@@ -526,7 +519,5 @@ func getObjectSpamfilterBwl(d *schema.ResourceData) (*map[string]interface{}, er
 		}
 	}
 
-
 	return &obj, nil
 }
-

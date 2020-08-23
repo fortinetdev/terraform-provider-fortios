@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,36 +5,37 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSFirewallScheduleGroup_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    var0 := "var0" + rname
-    log.Printf(var0)
-    log.Printf("TestAccFortiOSFirewallScheduleGroup_basic %s", rname)
+	rname := acctest.RandString(8)
+	var0 := "var0" + rname
+	log.Printf(var0)
+	log.Printf("TestAccFortiOSFirewallScheduleGroup_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSFirewallScheduleGroupConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSFirewallScheduleGroupExists("fortios_firewallschedule_group.trname"),
-                    resource.TestCheckResourceAttr("fortios_firewallschedule_group.trname", "color", "0"),
-                    resource.TestCheckResourceAttr("fortios_firewallschedule_group.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_firewallschedule_group.trname", "member.0.name", var0),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSFirewallScheduleGroupConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSFirewallScheduleGroupExists("fortios_firewallschedule_group.trname"),
+					resource.TestCheckResourceAttr("fortios_firewallschedule_group.trname", "color", "0"),
+					resource.TestCheckResourceAttr("fortios_firewallschedule_group.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_firewallschedule_group.trname", "member.0.name", var0),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSFirewallScheduleGroupExists(n string) resource.TestCheckFunc {

@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,43 +5,44 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSEndpointControlSettings_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSEndpointControlSettings_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSEndpointControlSettings_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSEndpointControlSettingsConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSEndpointControlSettingsExists("fortios_endpointcontrol_settings.trname"),
-                    resource.TestCheckResourceAttr("fortios_endpointcontrol_settings.trname", "download_location", "fortiguard"),
-                    resource.TestCheckResourceAttr("fortios_endpointcontrol_settings.trname", "forticlient_avdb_update_interval", "8"),
-                    resource.TestCheckResourceAttr("fortios_endpointcontrol_settings.trname", "forticlient_dereg_unsupported_client", "enable"),
-                    resource.TestCheckResourceAttr("fortios_endpointcontrol_settings.trname", "forticlient_ems_rest_api_call_timeout", "5000"),
-                    resource.TestCheckResourceAttr("fortios_endpointcontrol_settings.trname", "forticlient_keepalive_interval", "60"),
-                    resource.TestCheckResourceAttr("fortios_endpointcontrol_settings.trname", "forticlient_offline_grace", "disable"),
-                    resource.TestCheckResourceAttr("fortios_endpointcontrol_settings.trname", "forticlient_offline_grace_interval", "120"),
-                    resource.TestCheckResourceAttr("fortios_endpointcontrol_settings.trname", "forticlient_reg_key_enforce", "disable"),
-                    resource.TestCheckResourceAttr("fortios_endpointcontrol_settings.trname", "forticlient_reg_timeout", "7"),
-                    resource.TestCheckResourceAttr("fortios_endpointcontrol_settings.trname", "forticlient_sys_update_interval", "720"),
-                    resource.TestCheckResourceAttr("fortios_endpointcontrol_settings.trname", "forticlient_user_avatar", "enable"),
-                    resource.TestCheckResourceAttr("fortios_endpointcontrol_settings.trname", "forticlient_warning_interval", "1"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSEndpointControlSettingsConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSEndpointControlSettingsExists("fortios_endpointcontrol_settings.trname"),
+					resource.TestCheckResourceAttr("fortios_endpointcontrol_settings.trname", "download_location", "fortiguard"),
+					resource.TestCheckResourceAttr("fortios_endpointcontrol_settings.trname", "forticlient_avdb_update_interval", "8"),
+					resource.TestCheckResourceAttr("fortios_endpointcontrol_settings.trname", "forticlient_dereg_unsupported_client", "enable"),
+					resource.TestCheckResourceAttr("fortios_endpointcontrol_settings.trname", "forticlient_ems_rest_api_call_timeout", "5000"),
+					resource.TestCheckResourceAttr("fortios_endpointcontrol_settings.trname", "forticlient_keepalive_interval", "60"),
+					resource.TestCheckResourceAttr("fortios_endpointcontrol_settings.trname", "forticlient_offline_grace", "disable"),
+					resource.TestCheckResourceAttr("fortios_endpointcontrol_settings.trname", "forticlient_offline_grace_interval", "120"),
+					resource.TestCheckResourceAttr("fortios_endpointcontrol_settings.trname", "forticlient_reg_key_enforce", "disable"),
+					resource.TestCheckResourceAttr("fortios_endpointcontrol_settings.trname", "forticlient_reg_timeout", "7"),
+					resource.TestCheckResourceAttr("fortios_endpointcontrol_settings.trname", "forticlient_sys_update_interval", "720"),
+					resource.TestCheckResourceAttr("fortios_endpointcontrol_settings.trname", "forticlient_user_avatar", "enable"),
+					resource.TestCheckResourceAttr("fortios_endpointcontrol_settings.trname", "forticlient_warning_interval", "1"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSEndpointControlSettingsExists(n string) resource.TestCheckFunc {

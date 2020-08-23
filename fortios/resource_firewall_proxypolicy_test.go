@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,57 +5,58 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSFirewallProxyPolicy_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSFirewallProxyPolicy_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSFirewallProxyPolicy_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSFirewallProxyPolicyConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSFirewallProxyPolicyExists("fortios_firewall_proxypolicy.trname"),
-                    resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "action", "deny"),
-                    resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "disclaimer", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "dstaddr_negate", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "http_tunnel_auth", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "internet_service", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "internet_service_negate", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "logtraffic", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "logtraffic_start", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "policyid", "1"),
-                    resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "profile_protocol_options", "default"),
-                    resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "profile_type", "single"),
-                    resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "proxy", "transparent-web"),
-                    resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "scan_botnet_connections", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "schedule", "always"),
-                    resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "service_negate", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "srcaddr_negate", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "status", "enable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "transparent", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "utm_status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "webcache", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "webcache_https", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "dstaddr.0.name", "all"),
-                    resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "dstintf.0.name", "port4"),
-                    resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "service.0.name", "webproxy"),
-                    resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "srcaddr.0.name", "all"),
-                    resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "srcintf.0.name", "port3"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSFirewallProxyPolicyConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSFirewallProxyPolicyExists("fortios_firewall_proxypolicy.trname"),
+					resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "action", "deny"),
+					resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "disclaimer", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "dstaddr_negate", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "http_tunnel_auth", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "internet_service", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "internet_service_negate", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "logtraffic", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "logtraffic_start", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "policyid", "1"),
+					resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "profile_protocol_options", "default"),
+					resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "profile_type", "single"),
+					resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "proxy", "transparent-web"),
+					resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "scan_botnet_connections", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "schedule", "always"),
+					resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "service_negate", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "srcaddr_negate", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "status", "enable"),
+					resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "transparent", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "utm_status", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "webcache", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "webcache_https", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "dstaddr.0.name", "all"),
+					resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "dstintf.0.name", "port4"),
+					resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "service.0.name", "webproxy"),
+					resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "srcaddr.0.name", "all"),
+					resource.TestCheckResourceAttr("fortios_firewall_proxypolicy.trname", "srcintf.0.name", "port3"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSFirewallProxyPolicyExists(n string) resource.TestCheckFunc {

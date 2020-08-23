@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,34 +5,35 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSWanoptSettings_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSWanoptSettings_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSWanoptSettings_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSWanoptSettingsConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSWanoptSettingsExists("fortios_wanopt_settings.trname"),
-                    resource.TestCheckResourceAttr("fortios_wanopt_settings.trname", "auto_detect_algorithm", "simple"),
-                    resource.TestCheckResourceAttr("fortios_wanopt_settings.trname", "host_id", "default-id"),
-                    resource.TestCheckResourceAttr("fortios_wanopt_settings.trname", "tunnel_ssl_algorithm", "high"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSWanoptSettingsConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSWanoptSettingsExists("fortios_wanopt_settings.trname"),
+					resource.TestCheckResourceAttr("fortios_wanopt_settings.trname", "auto_detect_algorithm", "simple"),
+					resource.TestCheckResourceAttr("fortios_wanopt_settings.trname", "host_id", "default-id"),
+					resource.TestCheckResourceAttr("fortios_wanopt_settings.trname", "tunnel_ssl_algorithm", "high"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSWanoptSettingsExists(n string) resource.TestCheckFunc {

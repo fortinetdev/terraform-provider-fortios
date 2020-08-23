@@ -30,30 +30,29 @@ func resourceSystemVdomNetflow() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"vdom_netflow": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"collector_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"collector_port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"source_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceSystemVdomNetflowUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -120,7 +119,6 @@ func resourceSystemVdomNetflowRead(d *schema.ResourceData, m interface{}) error 
 	return nil
 }
 
-
 func flattenSystemVdomNetflowVdomNetflow(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -137,10 +135,8 @@ func flattenSystemVdomNetflowSourceIp(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
-
 func refreshObjectSystemVdomNetflow(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("vdom_netflow", flattenSystemVdomNetflowVdomNetflow(o["vdom-netflow"], d, "vdom_netflow")); err != nil {
 		if !fortiAPIPatch(o["vdom-netflow"]) {
@@ -166,7 +162,6 @@ func refreshObjectSystemVdomNetflow(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-
 	return nil
 }
 
@@ -175,7 +170,6 @@ func flattenSystemVdomNetflowFortiTestDebug(d *schema.ResourceData, fosdebugsn i
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemVdomNetflowVdomNetflow(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -193,10 +187,8 @@ func expandSystemVdomNetflowSourceIp(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
-
 func getObjectSystemVdomNetflow(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("vdom_netflow"); ok {
 		t, err := expandSystemVdomNetflowVdomNetflow(d, v, "vdom_netflow")
@@ -234,7 +226,5 @@ func getObjectSystemVdomNetflow(d *schema.ResourceData) (*map[string]interface{}
 		}
 	}
 
-
 	return &obj, nil
 }
-

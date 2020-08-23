@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,44 +5,45 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSystemInterface_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSystemInterface_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSystemInterface_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSystemInterfaceConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSystemInterfaceExists("fortios_system_interface.trname"),
-                    resource.TestCheckResourceAttr("fortios_system_interface.trname", "algorithm", "L4"),
-                    resource.TestCheckResourceAttr("fortios_system_interface.trname", "defaultgw", "enable"),
-                    resource.TestCheckResourceAttr("fortios_system_interface.trname", "distance", "5"),
-                    resource.TestCheckResourceAttr("fortios_system_interface.trname", "ip", "0.0.0.0 0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_system_interface.trname", "mtu", "1500"),
-                    resource.TestCheckResourceAttr("fortios_system_interface.trname", "mtu_override", "disable"),
-                    resource.TestCheckResourceAttr("fortios_system_interface.trname", "name", "port3"),
-                    resource.TestCheckResourceAttr("fortios_system_interface.trname", "type", "physical"),
-                    resource.TestCheckResourceAttr("fortios_system_interface.trname", "vdom", "root"),
-                    resource.TestCheckResourceAttr("fortios_system_interface.trname", "mode", "dhcp"),
-                    resource.TestCheckResourceAttr("fortios_system_interface.trname", "snmp_index", "3"),
-                    resource.TestCheckResourceAttr("fortios_system_interface.trname", "description", "Created by Terraform Provider for FortiOS"),
-                    resource.TestCheckResourceAttr("fortios_system_interface.trname", "ipv6.0.nd_mode", "basic"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSystemInterfaceConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSystemInterfaceExists("fortios_system_interface.trname"),
+					resource.TestCheckResourceAttr("fortios_system_interface.trname", "algorithm", "L4"),
+					resource.TestCheckResourceAttr("fortios_system_interface.trname", "defaultgw", "enable"),
+					resource.TestCheckResourceAttr("fortios_system_interface.trname", "distance", "5"),
+					resource.TestCheckResourceAttr("fortios_system_interface.trname", "ip", "0.0.0.0 0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_system_interface.trname", "mtu", "1500"),
+					resource.TestCheckResourceAttr("fortios_system_interface.trname", "mtu_override", "disable"),
+					resource.TestCheckResourceAttr("fortios_system_interface.trname", "name", "port3"),
+					resource.TestCheckResourceAttr("fortios_system_interface.trname", "type", "physical"),
+					resource.TestCheckResourceAttr("fortios_system_interface.trname", "vdom", "root"),
+					resource.TestCheckResourceAttr("fortios_system_interface.trname", "mode", "dhcp"),
+					resource.TestCheckResourceAttr("fortios_system_interface.trname", "snmp_index", "3"),
+					resource.TestCheckResourceAttr("fortios_system_interface.trname", "description", "Created by Terraform Provider for FortiOS"),
+					resource.TestCheckResourceAttr("fortios_system_interface.trname", "ipv6.0.nd_mode", "basic"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSystemInterfaceExists(n string) resource.TestCheckFunc {

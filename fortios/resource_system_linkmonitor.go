@@ -30,136 +30,136 @@ func resourceSystemLinkMonitor() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"addr_mode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"srcintf": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"server": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"address": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"protocol": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"gateway_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"gateway_ip6": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"source_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"source_ip6": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"http_get": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 1024),
-				Required: true,
+				Required:     true,
 			},
 			"http_agent": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 1024),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"http_match": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 1024),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"interval": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 3600),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"failtime": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 3600),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"recoverytime": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 3600),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"security_mode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"password": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
-				Optional: true,
+				Optional:     true,
 			},
 			"packet_size": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(64, 1024),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ha_priority": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 50),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"update_cascade_interface": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"update_static_route": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
@@ -255,7 +255,6 @@ func resourceSystemLinkMonitorRead(d *schema.ResourceData, m interface{}) error 
 	}
 	return nil
 }
-
 
 func flattenSystemLinkMonitorName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -381,10 +380,8 @@ func flattenSystemLinkMonitorStatus(v interface{}, d *schema.ResourceData, pre s
 	return v
 }
 
-
 func refreshObjectSystemLinkMonitor(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenSystemLinkMonitorName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -404,21 +401,21 @@ func refreshObjectSystemLinkMonitor(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("server", flattenSystemLinkMonitorServer(o["server"], d, "server")); err != nil {
-            if !fortiAPIPatch(o["server"]) {
-                return fmt.Errorf("Error reading server: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("server"); ok {
-            if err = d.Set("server", flattenSystemLinkMonitorServer(o["server"], d, "server")); err != nil {
-                if !fortiAPIPatch(o["server"]) {
-                    return fmt.Errorf("Error reading server: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("server", flattenSystemLinkMonitorServer(o["server"], d, "server")); err != nil {
+			if !fortiAPIPatch(o["server"]) {
+				return fmt.Errorf("Error reading server: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("server"); ok {
+			if err = d.Set("server", flattenSystemLinkMonitorServer(o["server"], d, "server")); err != nil {
+				if !fortiAPIPatch(o["server"]) {
+					return fmt.Errorf("Error reading server: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("protocol", flattenSystemLinkMonitorProtocol(o["protocol"], d, "protocol")); err != nil {
 		if !fortiAPIPatch(o["protocol"]) {
@@ -534,7 +531,6 @@ func refreshObjectSystemLinkMonitor(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-
 	return nil
 }
 
@@ -543,7 +539,6 @@ func flattenSystemLinkMonitorFortiTestDebug(d *schema.ResourceData, fosdebugsn i
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemLinkMonitorName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -569,7 +564,7 @@ func expandSystemLinkMonitorServer(d *schema.ResourceData, v interface{}, pre st
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "address"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -664,10 +659,8 @@ func expandSystemLinkMonitorStatus(d *schema.ResourceData, v interface{}, pre st
 	return v, nil
 }
 
-
 func getObjectSystemLinkMonitor(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandSystemLinkMonitorName(d, v, "name")
@@ -876,7 +869,5 @@ func getObjectSystemLinkMonitor(d *schema.ResourceData) (*map[string]interface{}
 		}
 	}
 
-
 	return &obj, nil
 }
-

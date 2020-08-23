@@ -30,140 +30,140 @@ func resourceSystemAutomationAction() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"action_type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"email_to": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"email_subject": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 511),
-				Optional: true,
+				Optional:     true,
 			},
 			"minimum_interval": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 2592000),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"delay": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 3600),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"required": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"aws_api_id": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"aws_region": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"aws_domain": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Required: true,
+				Required:     true,
 			},
 			"aws_api_stage": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"aws_api_path": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"aws_api_key": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
-				Optional: true,
+				Optional:     true,
 			},
 			"protocol": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"method": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"uri": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
+				Optional:     true,
 			},
 			"http_body": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 1023),
-				Optional: true,
+				Optional:     true,
 			},
 			"port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"headers": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"header": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"security_tag": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"sdn_connector": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -260,7 +260,6 @@ func resourceSystemAutomationActionRead(d *schema.ResourceData, m interface{}) e
 	}
 	return nil
 }
-
 
 func flattenSystemAutomationActionName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -442,10 +441,8 @@ func flattenSystemAutomationActionSdnConnectorName(v interface{}, d *schema.Reso
 	return v
 }
 
-
 func refreshObjectSystemAutomationAction(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenSystemAutomationActionName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -459,21 +456,21 @@ func refreshObjectSystemAutomationAction(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("email_to", flattenSystemAutomationActionEmailTo(o["email-to"], d, "email_to")); err != nil {
-            if !fortiAPIPatch(o["email-to"]) {
-                return fmt.Errorf("Error reading email_to: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("email_to"); ok {
-            if err = d.Set("email_to", flattenSystemAutomationActionEmailTo(o["email-to"], d, "email_to")); err != nil {
-                if !fortiAPIPatch(o["email-to"]) {
-                    return fmt.Errorf("Error reading email_to: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("email_to", flattenSystemAutomationActionEmailTo(o["email-to"], d, "email_to")); err != nil {
+			if !fortiAPIPatch(o["email-to"]) {
+				return fmt.Errorf("Error reading email_to: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("email_to"); ok {
+			if err = d.Set("email_to", flattenSystemAutomationActionEmailTo(o["email-to"], d, "email_to")); err != nil {
+				if !fortiAPIPatch(o["email-to"]) {
+					return fmt.Errorf("Error reading email_to: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("email_subject", flattenSystemAutomationActionEmailSubject(o["email-subject"], d, "email_subject")); err != nil {
 		if !fortiAPIPatch(o["email-subject"]) {
@@ -565,21 +562,21 @@ func refreshObjectSystemAutomationAction(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("headers", flattenSystemAutomationActionHeaders(o["headers"], d, "headers")); err != nil {
-            if !fortiAPIPatch(o["headers"]) {
-                return fmt.Errorf("Error reading headers: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("headers"); ok {
-            if err = d.Set("headers", flattenSystemAutomationActionHeaders(o["headers"], d, "headers")); err != nil {
-                if !fortiAPIPatch(o["headers"]) {
-                    return fmt.Errorf("Error reading headers: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("headers", flattenSystemAutomationActionHeaders(o["headers"], d, "headers")); err != nil {
+			if !fortiAPIPatch(o["headers"]) {
+				return fmt.Errorf("Error reading headers: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("headers"); ok {
+			if err = d.Set("headers", flattenSystemAutomationActionHeaders(o["headers"], d, "headers")); err != nil {
+				if !fortiAPIPatch(o["headers"]) {
+					return fmt.Errorf("Error reading headers: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("security_tag", flattenSystemAutomationActionSecurityTag(o["security-tag"], d, "security_tag")); err != nil {
 		if !fortiAPIPatch(o["security-tag"]) {
@@ -587,22 +584,21 @@ func refreshObjectSystemAutomationAction(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("sdn_connector", flattenSystemAutomationActionSdnConnector(o["sdn-connector"], d, "sdn_connector")); err != nil {
-            if !fortiAPIPatch(o["sdn-connector"]) {
-                return fmt.Errorf("Error reading sdn_connector: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("sdn_connector"); ok {
-            if err = d.Set("sdn_connector", flattenSystemAutomationActionSdnConnector(o["sdn-connector"], d, "sdn_connector")); err != nil {
-                if !fortiAPIPatch(o["sdn-connector"]) {
-                    return fmt.Errorf("Error reading sdn_connector: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("sdn_connector", flattenSystemAutomationActionSdnConnector(o["sdn-connector"], d, "sdn_connector")); err != nil {
+			if !fortiAPIPatch(o["sdn-connector"]) {
+				return fmt.Errorf("Error reading sdn_connector: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("sdn_connector"); ok {
+			if err = d.Set("sdn_connector", flattenSystemAutomationActionSdnConnector(o["sdn-connector"], d, "sdn_connector")); err != nil {
+				if !fortiAPIPatch(o["sdn-connector"]) {
+					return fmt.Errorf("Error reading sdn_connector: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -612,7 +608,6 @@ func flattenSystemAutomationActionFortiTestDebug(d *schema.ResourceData, fosdebu
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemAutomationActionName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -634,7 +629,7 @@ func expandSystemAutomationActionEmailTo(d *schema.ResourceData, v interface{}, 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -725,7 +720,7 @@ func expandSystemAutomationActionHeaders(d *schema.ResourceData, v interface{}, 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -760,7 +755,7 @@ func expandSystemAutomationActionSdnConnector(d *schema.ResourceData, v interfac
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -779,10 +774,8 @@ func expandSystemAutomationActionSdnConnectorName(d *schema.ResourceData, v inte
 	return v, nil
 }
 
-
 func getObjectSystemAutomationAction(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandSystemAutomationActionName(d, v, "name")
@@ -973,7 +966,5 @@ func getObjectSystemAutomationAction(d *schema.ResourceData) (*map[string]interf
 		}
 	}
 
-
 	return &obj, nil
 }
-

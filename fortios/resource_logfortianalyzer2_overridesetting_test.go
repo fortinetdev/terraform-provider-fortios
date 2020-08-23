@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,47 +5,48 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSLogFortianalyzer2OverrideSetting_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSLogFortianalyzer2OverrideSetting_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSLogFortianalyzer2OverrideSetting_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSLogFortianalyzer2OverrideSettingConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSLogFortianalyzer2OverrideSettingExists("fortios_logfortianalyzer2_overridesetting.trname"),
-                    resource.TestCheckResourceAttr("fortios_logfortianalyzer2_overridesetting.trname", "__change_ip", "0"),
-                    resource.TestCheckResourceAttr("fortios_logfortianalyzer2_overridesetting.trname", "conn_timeout", "10"),
-                    resource.TestCheckResourceAttr("fortios_logfortianalyzer2_overridesetting.trname", "enc_algorithm", "high"),
-                    resource.TestCheckResourceAttr("fortios_logfortianalyzer2_overridesetting.trname", "faz_type", "5"),
-                    resource.TestCheckResourceAttr("fortios_logfortianalyzer2_overridesetting.trname", "hmac_algorithm", "sha256"),
-                    resource.TestCheckResourceAttr("fortios_logfortianalyzer2_overridesetting.trname", "ips_archive", "enable"),
-                    resource.TestCheckResourceAttr("fortios_logfortianalyzer2_overridesetting.trname", "monitor_failure_retry_period", "5"),
-                    resource.TestCheckResourceAttr("fortios_logfortianalyzer2_overridesetting.trname", "monitor_keepalive_period", "5"),
-                    resource.TestCheckResourceAttr("fortios_logfortianalyzer2_overridesetting.trname", "override", "disable"),
-                    resource.TestCheckResourceAttr("fortios_logfortianalyzer2_overridesetting.trname", "reliable", "disable"),
-                    resource.TestCheckResourceAttr("fortios_logfortianalyzer2_overridesetting.trname", "ssl_min_proto_version", "default"),
-                    resource.TestCheckResourceAttr("fortios_logfortianalyzer2_overridesetting.trname", "status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_logfortianalyzer2_overridesetting.trname", "upload_interval", "daily"),
-                    resource.TestCheckResourceAttr("fortios_logfortianalyzer2_overridesetting.trname", "upload_option", "5-minute"),
-                    resource.TestCheckResourceAttr("fortios_logfortianalyzer2_overridesetting.trname", "upload_time", "00:59"),
-                    resource.TestCheckResourceAttr("fortios_logfortianalyzer2_overridesetting.trname", "use_management_vdom", "disable"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSLogFortianalyzer2OverrideSettingConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSLogFortianalyzer2OverrideSettingExists("fortios_logfortianalyzer2_overridesetting.trname"),
+					resource.TestCheckResourceAttr("fortios_logfortianalyzer2_overridesetting.trname", "__change_ip", "0"),
+					resource.TestCheckResourceAttr("fortios_logfortianalyzer2_overridesetting.trname", "conn_timeout", "10"),
+					resource.TestCheckResourceAttr("fortios_logfortianalyzer2_overridesetting.trname", "enc_algorithm", "high"),
+					resource.TestCheckResourceAttr("fortios_logfortianalyzer2_overridesetting.trname", "faz_type", "5"),
+					resource.TestCheckResourceAttr("fortios_logfortianalyzer2_overridesetting.trname", "hmac_algorithm", "sha256"),
+					resource.TestCheckResourceAttr("fortios_logfortianalyzer2_overridesetting.trname", "ips_archive", "enable"),
+					resource.TestCheckResourceAttr("fortios_logfortianalyzer2_overridesetting.trname", "monitor_failure_retry_period", "5"),
+					resource.TestCheckResourceAttr("fortios_logfortianalyzer2_overridesetting.trname", "monitor_keepalive_period", "5"),
+					resource.TestCheckResourceAttr("fortios_logfortianalyzer2_overridesetting.trname", "override", "disable"),
+					resource.TestCheckResourceAttr("fortios_logfortianalyzer2_overridesetting.trname", "reliable", "disable"),
+					resource.TestCheckResourceAttr("fortios_logfortianalyzer2_overridesetting.trname", "ssl_min_proto_version", "default"),
+					resource.TestCheckResourceAttr("fortios_logfortianalyzer2_overridesetting.trname", "status", "disable"),
+					resource.TestCheckResourceAttr("fortios_logfortianalyzer2_overridesetting.trname", "upload_interval", "daily"),
+					resource.TestCheckResourceAttr("fortios_logfortianalyzer2_overridesetting.trname", "upload_option", "5-minute"),
+					resource.TestCheckResourceAttr("fortios_logfortianalyzer2_overridesetting.trname", "upload_time", "00:59"),
+					resource.TestCheckResourceAttr("fortios_logfortianalyzer2_overridesetting.trname", "use_management_vdom", "disable"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSLogFortianalyzer2OverrideSettingExists(n string) resource.TestCheckFunc {

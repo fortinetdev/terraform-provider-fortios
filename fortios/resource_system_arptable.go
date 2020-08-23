@@ -30,21 +30,21 @@ func resourceSystemArpTable() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"fosid": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Required: true,
+				Required:     true,
 			},
 			"interface": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
-				Required: true,
+				Required:     true,
 			},
 			"ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"mac": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 		},
@@ -140,7 +140,6 @@ func resourceSystemArpTableRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenSystemArpTableId(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -157,10 +156,8 @@ func flattenSystemArpTableMac(v interface{}, d *schema.ResourceData, pre string)
 	return v
 }
 
-
 func refreshObjectSystemArpTable(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("fosid", flattenSystemArpTableId(o["id"], d, "fosid")); err != nil {
 		if !fortiAPIPatch(o["id"]) {
@@ -186,7 +183,6 @@ func refreshObjectSystemArpTable(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-
 	return nil
 }
 
@@ -195,7 +191,6 @@ func flattenSystemArpTableFortiTestDebug(d *schema.ResourceData, fosdebugsn int,
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemArpTableId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -213,10 +208,8 @@ func expandSystemArpTableMac(d *schema.ResourceData, v interface{}, pre string) 
 	return v, nil
 }
 
-
 func getObjectSystemArpTable(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("fosid"); ok {
 		t, err := expandSystemArpTableId(d, v, "fosid")
@@ -254,7 +247,5 @@ func getObjectSystemArpTable(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-
 	return &obj, nil
 }
-

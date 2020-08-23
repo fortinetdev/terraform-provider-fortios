@@ -30,21 +30,20 @@ func resourceWebfilterIpsUrlfilterCacheSetting() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"dns_retry_interval": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 2147483),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"extended_ttl": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 2147483),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
 }
-
 
 func resourceWebfilterIpsUrlfilterCacheSettingUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -111,7 +110,6 @@ func resourceWebfilterIpsUrlfilterCacheSettingRead(d *schema.ResourceData, m int
 	return nil
 }
 
-
 func flattenWebfilterIpsUrlfilterCacheSettingDnsRetryInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -120,10 +118,8 @@ func flattenWebfilterIpsUrlfilterCacheSettingExtendedTtl(v interface{}, d *schem
 	return v
 }
 
-
 func refreshObjectWebfilterIpsUrlfilterCacheSetting(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("dns_retry_interval", flattenWebfilterIpsUrlfilterCacheSettingDnsRetryInterval(o["dns-retry-interval"], d, "dns_retry_interval")); err != nil {
 		if !fortiAPIPatch(o["dns-retry-interval"]) {
@@ -137,7 +133,6 @@ func refreshObjectWebfilterIpsUrlfilterCacheSetting(d *schema.ResourceData, o ma
 		}
 	}
 
-
 	return nil
 }
 
@@ -147,7 +142,6 @@ func flattenWebfilterIpsUrlfilterCacheSettingFortiTestDebug(d *schema.ResourceDa
 	log.Printf("ER List: %v", e)
 }
 
-
 func expandWebfilterIpsUrlfilterCacheSettingDnsRetryInterval(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
 }
@@ -156,10 +150,8 @@ func expandWebfilterIpsUrlfilterCacheSettingExtendedTtl(d *schema.ResourceData, 
 	return v, nil
 }
 
-
 func getObjectWebfilterIpsUrlfilterCacheSetting(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("dns_retry_interval"); ok {
 		t, err := expandWebfilterIpsUrlfilterCacheSettingDnsRetryInterval(d, v, "dns_retry_interval")
@@ -179,7 +171,5 @@ func getObjectWebfilterIpsUrlfilterCacheSetting(d *schema.ResourceData) (*map[st
 		}
 	}
 
-
 	return &obj, nil
 }
-

@@ -30,20 +30,20 @@ func resourceWebfilterFtgdLocalCat() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"fosid": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(140, 191),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"desc": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
-				Required: true,
+				Required:     true,
 			},
 		},
 	}
@@ -138,7 +138,6 @@ func resourceWebfilterFtgdLocalCatRead(d *schema.ResourceData, m interface{}) er
 	return nil
 }
 
-
 func flattenWebfilterFtgdLocalCatStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -151,10 +150,8 @@ func flattenWebfilterFtgdLocalCatDesc(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
-
 func refreshObjectWebfilterFtgdLocalCat(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("status", flattenWebfilterFtgdLocalCatStatus(o["status"], d, "status")); err != nil {
 		if !fortiAPIPatch(o["status"]) {
@@ -174,7 +171,6 @@ func refreshObjectWebfilterFtgdLocalCat(d *schema.ResourceData, o map[string]int
 		}
 	}
 
-
 	return nil
 }
 
@@ -183,7 +179,6 @@ func flattenWebfilterFtgdLocalCatFortiTestDebug(d *schema.ResourceData, fosdebug
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandWebfilterFtgdLocalCatStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -197,10 +192,8 @@ func expandWebfilterFtgdLocalCatDesc(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
-
 func getObjectWebfilterFtgdLocalCat(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("status"); ok {
 		t, err := expandWebfilterFtgdLocalCatStatus(d, v, "status")
@@ -229,7 +222,5 @@ func getObjectWebfilterFtgdLocalCat(d *schema.ResourceData) (*map[string]interfa
 		}
 	}
 
-
 	return &obj, nil
 }
-

@@ -30,101 +30,101 @@ func resourceIcapProfile() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"replacemsg_group": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"request": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"response": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"streaming_content_bypass": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"request_server": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"response_server": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"request_failure": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"response_failure": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"request_path": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"response_path": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"methods": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"response_req_hdr": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"icap_headers": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 79),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"content": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 255),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"base64_encoding": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -223,7 +223,6 @@ func resourceIcapProfileRead(d *schema.ResourceData, m interface{}) error {
 	}
 	return nil
 }
-
 
 func flattenIcapProfileReplacemsgGroup(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -340,10 +339,8 @@ func flattenIcapProfileIcapHeadersBase64Encoding(v interface{}, d *schema.Resour
 	return v
 }
 
-
 func refreshObjectIcapProfile(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("replacemsg_group", flattenIcapProfileReplacemsgGroup(o["replacemsg-group"], d, "replacemsg_group")); err != nil {
 		if !fortiAPIPatch(o["replacemsg-group"]) {
@@ -423,22 +420,21 @@ func refreshObjectIcapProfile(d *schema.ResourceData, o map[string]interface{}) 
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("icap_headers", flattenIcapProfileIcapHeaders(o["icap-headers"], d, "icap_headers")); err != nil {
-            if !fortiAPIPatch(o["icap-headers"]) {
-                return fmt.Errorf("Error reading icap_headers: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("icap_headers"); ok {
-            if err = d.Set("icap_headers", flattenIcapProfileIcapHeaders(o["icap-headers"], d, "icap_headers")); err != nil {
-                if !fortiAPIPatch(o["icap-headers"]) {
-                    return fmt.Errorf("Error reading icap_headers: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("icap_headers", flattenIcapProfileIcapHeaders(o["icap-headers"], d, "icap_headers")); err != nil {
+			if !fortiAPIPatch(o["icap-headers"]) {
+				return fmt.Errorf("Error reading icap_headers: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("icap_headers"); ok {
+			if err = d.Set("icap_headers", flattenIcapProfileIcapHeaders(o["icap-headers"], d, "icap_headers")); err != nil {
+				if !fortiAPIPatch(o["icap-headers"]) {
+					return fmt.Errorf("Error reading icap_headers: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -448,7 +444,6 @@ func flattenIcapProfileFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fo
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandIcapProfileReplacemsgGroup(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -514,7 +509,7 @@ func expandIcapProfileIcapHeaders(d *schema.ResourceData, v interface{}, pre str
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -560,10 +555,8 @@ func expandIcapProfileIcapHeadersBase64Encoding(d *schema.ResourceData, v interf
 	return v, nil
 }
 
-
 func getObjectIcapProfile(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("replacemsg_group"); ok {
 		t, err := expandIcapProfileReplacemsgGroup(d, v, "replacemsg_group")
@@ -691,7 +684,5 @@ func getObjectIcapProfile(d *schema.ResourceData) (*map[string]interface{}, erro
 		}
 	}
 
-
 	return &obj, nil
 }
-

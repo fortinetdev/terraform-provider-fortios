@@ -30,33 +30,32 @@ func resourceLogMemoryGlobalSetting() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"max_size": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"full_first_warning_threshold": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 98),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"full_second_warning_threshold": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(2, 99),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"full_final_warning_threshold": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(3, 100),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
 }
-
 
 func resourceLogMemoryGlobalSettingUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -123,7 +122,6 @@ func resourceLogMemoryGlobalSettingRead(d *schema.ResourceData, m interface{}) e
 	return nil
 }
 
-
 func flattenLogMemoryGlobalSettingMaxSize(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -140,10 +138,8 @@ func flattenLogMemoryGlobalSettingFullFinalWarningThreshold(v interface{}, d *sc
 	return v
 }
 
-
 func refreshObjectLogMemoryGlobalSetting(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("max_size", flattenLogMemoryGlobalSettingMaxSize(o["max-size"], d, "max_size")); err != nil {
 		if !fortiAPIPatch(o["max-size"]) {
@@ -169,7 +165,6 @@ func refreshObjectLogMemoryGlobalSetting(d *schema.ResourceData, o map[string]in
 		}
 	}
 
-
 	return nil
 }
 
@@ -178,7 +173,6 @@ func flattenLogMemoryGlobalSettingFortiTestDebug(d *schema.ResourceData, fosdebu
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandLogMemoryGlobalSettingMaxSize(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -196,10 +190,8 @@ func expandLogMemoryGlobalSettingFullFinalWarningThreshold(d *schema.ResourceDat
 	return v, nil
 }
 
-
 func getObjectLogMemoryGlobalSetting(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("max_size"); ok {
 		t, err := expandLogMemoryGlobalSettingMaxSize(d, v, "max_size")
@@ -237,7 +229,5 @@ func getObjectLogMemoryGlobalSetting(d *schema.ResourceData) (*map[string]interf
 		}
 	}
 
-
 	return &obj, nil
 }
-

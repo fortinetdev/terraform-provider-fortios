@@ -30,404 +30,404 @@ func resourceReportLayout() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"title": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"subtitle": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"description": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"style_theme": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"options": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"format": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"schedule_type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"day": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"time": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"cutoff_option": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"cutoff_time": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"email_send": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"email_recipients": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 511),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"max_pdf_report": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 365),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"page": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"paper": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"column_break_before": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"page_break_before": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"options": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"header": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"style": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 71),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"header_item": &schema.Schema{
-										Type: schema.TypeList,
+										Type:     schema.TypeList,
 										Optional: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 												"id": &schema.Schema{
-													Type: schema.TypeInt,
+													Type:         schema.TypeInt,
 													ValidateFunc: validation.IntBetween(0, 4294967295),
-													Optional: true,
-													Computed: true,
+													Optional:     true,
+													Computed:     true,
 												},
 												"description": &schema.Schema{
-													Type: schema.TypeString,
+													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 63),
-													Optional: true,
-													Computed: true,
+													Optional:     true,
+													Computed:     true,
 												},
 												"type": &schema.Schema{
-													Type: schema.TypeString,
+													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
 												},
 												"style": &schema.Schema{
-													Type: schema.TypeString,
+													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 71),
-													Optional: true,
-													Computed: true,
+													Optional:     true,
+													Computed:     true,
 												},
 												"content": &schema.Schema{
-													Type: schema.TypeString,
+													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 511),
-													Optional: true,
-													Computed: true,
+													Optional:     true,
+													Computed:     true,
 												},
 												"img_src": &schema.Schema{
-													Type: schema.TypeString,
+													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 127),
-													Optional: true,
-													Computed: true,
+													Optional:     true,
+													Computed:     true,
 												},
 											},
 										},
 									},
 								},
 							},
-						},						"footer": &schema.Schema{
-							Type: schema.TypeList,
+						}, "footer": &schema.Schema{
+							Type:     schema.TypeList,
 							Optional: true,
 							MaxItems: 1,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"style": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 71),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"footer_item": &schema.Schema{
-										Type: schema.TypeList,
+										Type:     schema.TypeList,
 										Optional: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 												"id": &schema.Schema{
-													Type: schema.TypeInt,
+													Type:         schema.TypeInt,
 													ValidateFunc: validation.IntBetween(0, 4294967295),
-													Optional: true,
-													Computed: true,
+													Optional:     true,
+													Computed:     true,
 												},
 												"description": &schema.Schema{
-													Type: schema.TypeString,
+													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 63),
-													Optional: true,
-													Computed: true,
+													Optional:     true,
+													Computed:     true,
 												},
 												"type": &schema.Schema{
-													Type: schema.TypeString,
+													Type:     schema.TypeString,
 													Optional: true,
 													Computed: true,
 												},
 												"style": &schema.Schema{
-													Type: schema.TypeString,
+													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 71),
-													Optional: true,
-													Computed: true,
+													Optional:     true,
+													Computed:     true,
 												},
 												"content": &schema.Schema{
-													Type: schema.TypeString,
+													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 511),
-													Optional: true,
-													Computed: true,
+													Optional:     true,
+													Computed:     true,
 												},
 												"img_src": &schema.Schema{
-													Type: schema.TypeString,
+													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 127),
-													Optional: true,
-													Computed: true,
+													Optional:     true,
+													Computed:     true,
 												},
 											},
 										},
 									},
 								},
 							},
-						},					},
+						}},
 				},
-			},			"body_item": &schema.Schema{
-				Type: schema.TypeList,
+			}, "body_item": &schema.Schema{
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"description": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"style": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 71),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"top_n": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"hide": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"parameters": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"name": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 127),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"value": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 1023),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
 						},
 						"text_component": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"content": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 511),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"img_src": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"list_component": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"list": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"content": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 127),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
 						},
 						"chart": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 71),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"chart_options": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"drill_down_items": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 11),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"drill_down_types": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 7),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"table_column_widths": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 179),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"table_caption_style": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 71),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"table_head_style": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 71),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"table_odd_row_style": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 71),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"table_even_row_style": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 71),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"misc_component": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"column": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"title": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 511),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -525,7 +525,6 @@ func resourceReportLayoutRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenReportLayoutName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -595,36 +594,35 @@ func flattenReportLayoutPage(v interface{}, d *schema.ResourceData, pre string) 
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "paper"
+	pre_append = pre + ".0." + "paper"
 	if _, ok := i["paper"]; ok {
 		result["paper"] = flattenReportLayoutPagePaper(i["paper"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "column_break_before"
+	pre_append = pre + ".0." + "column_break_before"
 	if _, ok := i["column-break-before"]; ok {
 		result["column_break_before"] = flattenReportLayoutPageColumnBreakBefore(i["column-break-before"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "page_break_before"
+	pre_append = pre + ".0." + "page_break_before"
 	if _, ok := i["page-break-before"]; ok {
 		result["page_break_before"] = flattenReportLayoutPagePageBreakBefore(i["page-break-before"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "options"
+	pre_append = pre + ".0." + "options"
 	if _, ok := i["options"]; ok {
 		result["options"] = flattenReportLayoutPageOptions(i["options"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "header"
+	pre_append = pre + ".0." + "header"
 	if _, ok := i["header"]; ok {
 		result["header"] = flattenReportLayoutPageHeader(i["header"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "footer"
+	pre_append = pre + ".0." + "footer"
 	if _, ok := i["footer"]; ok {
 		result["footer"] = flattenReportLayoutPageFooter(i["footer"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -655,16 +653,15 @@ func flattenReportLayoutPageHeader(v interface{}, d *schema.ResourceData, pre st
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "style"
+	pre_append = pre + ".0." + "style"
 	if _, ok := i["style"]; ok {
 		result["style"] = flattenReportLayoutPageHeaderStyle(i["style"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "header_item"
+	pre_append = pre + ".0." + "header_item"
 	if _, ok := i["header-item"]; ok {
 		result["header_item"] = flattenReportLayoutPageHeaderHeaderItem(i["header-item"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -764,16 +761,15 @@ func flattenReportLayoutPageFooter(v interface{}, d *schema.ResourceData, pre st
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "style"
+	pre_append = pre + ".0." + "style"
 	if _, ok := i["style"]; ok {
 		result["style"] = flattenReportLayoutPageFooterStyle(i["style"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "footer_item"
+	pre_append = pre + ".0." + "footer_item"
 	if _, ok := i["footer-item"]; ok {
 		result["footer_item"] = flattenReportLayoutPageFooterFooterItem(i["footer-item"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -1198,10 +1194,8 @@ func flattenReportLayoutBodyItemTitle(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
-
 func refreshObjectReportLayout(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenReportLayoutName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -1293,38 +1287,37 @@ func refreshObjectReportLayout(d *schema.ResourceData, o map[string]interface{})
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("page", flattenReportLayoutPage(o["page"], d, "page")); err != nil {
-            if !fortiAPIPatch(o["page"]) {
-                return fmt.Errorf("Error reading page: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("page"); ok {
-            if err = d.Set("page", flattenReportLayoutPage(o["page"], d, "page")); err != nil {
-                if !fortiAPIPatch(o["page"]) {
-                    return fmt.Errorf("Error reading page: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("page", flattenReportLayoutPage(o["page"], d, "page")); err != nil {
+			if !fortiAPIPatch(o["page"]) {
+				return fmt.Errorf("Error reading page: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("page"); ok {
+			if err = d.Set("page", flattenReportLayoutPage(o["page"], d, "page")); err != nil {
+				if !fortiAPIPatch(o["page"]) {
+					return fmt.Errorf("Error reading page: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("body_item", flattenReportLayoutBodyItem(o["body-item"], d, "body_item")); err != nil {
-            if !fortiAPIPatch(o["body-item"]) {
-                return fmt.Errorf("Error reading body_item: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("body_item"); ok {
-            if err = d.Set("body_item", flattenReportLayoutBodyItem(o["body-item"], d, "body_item")); err != nil {
-                if !fortiAPIPatch(o["body-item"]) {
-                    return fmt.Errorf("Error reading body_item: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("body_item", flattenReportLayoutBodyItem(o["body-item"], d, "body_item")); err != nil {
+			if !fortiAPIPatch(o["body-item"]) {
+				return fmt.Errorf("Error reading body_item: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("body_item"); ok {
+			if err = d.Set("body_item", flattenReportLayoutBodyItem(o["body-item"], d, "body_item")); err != nil {
+				if !fortiAPIPatch(o["body-item"]) {
+					return fmt.Errorf("Error reading body_item: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -1334,7 +1327,6 @@ func flattenReportLayoutFortiTestDebug(d *schema.ResourceData, fosdebugsn int, f
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandReportLayoutName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -1405,30 +1397,30 @@ func expandReportLayoutPage(d *schema.ResourceData, v interface{}, pre string) (
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "paper"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "paper"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["paper"], _ = expandReportLayoutPagePaper(d, i["paper"], pre_append)
 	}
-	pre_append =  pre + ".0." + "column_break_before"
+	pre_append = pre + ".0." + "column_break_before"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["column-break-before"], _ = expandReportLayoutPageColumnBreakBefore(d, i["column_break_before"], pre_append)
 	}
-	pre_append =  pre + ".0." + "page_break_before"
+	pre_append = pre + ".0." + "page_break_before"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["page-break-before"], _ = expandReportLayoutPagePageBreakBefore(d, i["page_break_before"], pre_append)
 	}
-	pre_append =  pre + ".0." + "options"
+	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["options"], _ = expandReportLayoutPageOptions(d, i["options"], pre_append)
 	}
-	pre_append =  pre + ".0." + "header"
+	pre_append = pre + ".0." + "header"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["header"], _ = expandReportLayoutPageHeader(d, i["header"], pre_append)
 	} else {
 		result["header"] = make([]string, 0)
 	}
-	pre_append =  pre + ".0." + "footer"
+	pre_append = pre + ".0." + "footer"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["footer"], _ = expandReportLayoutPageFooter(d, i["footer"], pre_append)
 	} else {
@@ -1463,12 +1455,12 @@ func expandReportLayoutPageHeader(d *schema.ResourceData, v interface{}, pre str
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "style"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "style"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["style"], _ = expandReportLayoutPageHeaderStyle(d, i["style"], pre_append)
 	}
-	pre_append =  pre + ".0." + "header_item"
+	pre_append = pre + ".0." + "header_item"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["header-item"], _ = expandReportLayoutPageHeaderHeaderItem(d, i["header_item"], pre_append)
 	} else {
@@ -1494,7 +1486,7 @@ func expandReportLayoutPageHeaderHeaderItem(d *schema.ResourceData, v interface{
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1567,12 +1559,12 @@ func expandReportLayoutPageFooter(d *schema.ResourceData, v interface{}, pre str
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "style"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "style"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["style"], _ = expandReportLayoutPageFooterStyle(d, i["style"], pre_append)
 	}
-	pre_append =  pre + ".0." + "footer_item"
+	pre_append = pre + ".0." + "footer_item"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["footer-item"], _ = expandReportLayoutPageFooterFooterItem(d, i["footer_item"], pre_append)
 	} else {
@@ -1598,7 +1590,7 @@ func expandReportLayoutPageFooterFooterItem(d *schema.ResourceData, v interface{
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1674,7 +1666,7 @@ func expandReportLayoutBodyItem(d *schema.ResourceData, v interface{}, pre strin
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1844,7 +1836,7 @@ func expandReportLayoutBodyItemParameters(d *schema.ResourceData, v interface{},
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1909,7 +1901,7 @@ func expandReportLayoutBodyItemList(d *schema.ResourceData, v interface{}, pre s
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -1985,10 +1977,8 @@ func expandReportLayoutBodyItemTitle(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
-
 func getObjectReportLayout(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandReportLayoutName(d, v, "name")
@@ -2143,7 +2133,5 @@ func getObjectReportLayout(d *schema.ResourceData) (*map[string]interface{}, err
 		}
 	}
 
-
 	return &obj, nil
 }
-

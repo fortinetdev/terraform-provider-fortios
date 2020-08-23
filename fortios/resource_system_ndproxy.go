@@ -30,20 +30,20 @@ func resourceSystemNdProxy() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"member": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"interface_name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -51,7 +51,6 @@ func resourceSystemNdProxy() *schema.Resource {
 		},
 	}
 }
-
 
 func resourceSystemNdProxyUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -118,7 +117,6 @@ func resourceSystemNdProxyRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenSystemNdProxyStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -159,10 +157,8 @@ func flattenSystemNdProxyMemberInterfaceName(v interface{}, d *schema.ResourceDa
 	return v
 }
 
-
 func refreshObjectSystemNdProxy(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("status", flattenSystemNdProxyStatus(o["status"], d, "status")); err != nil {
 		if !fortiAPIPatch(o["status"]) {
@@ -170,22 +166,21 @@ func refreshObjectSystemNdProxy(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("member", flattenSystemNdProxyMember(o["member"], d, "member")); err != nil {
-            if !fortiAPIPatch(o["member"]) {
-                return fmt.Errorf("Error reading member: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("member"); ok {
-            if err = d.Set("member", flattenSystemNdProxyMember(o["member"], d, "member")); err != nil {
-                if !fortiAPIPatch(o["member"]) {
-                    return fmt.Errorf("Error reading member: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("member", flattenSystemNdProxyMember(o["member"], d, "member")); err != nil {
+			if !fortiAPIPatch(o["member"]) {
+				return fmt.Errorf("Error reading member: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("member"); ok {
+			if err = d.Set("member", flattenSystemNdProxyMember(o["member"], d, "member")); err != nil {
+				if !fortiAPIPatch(o["member"]) {
+					return fmt.Errorf("Error reading member: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -195,7 +190,6 @@ func flattenSystemNdProxyFortiTestDebug(d *schema.ResourceData, fosdebugsn int, 
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemNdProxyStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -213,7 +207,7 @@ func expandSystemNdProxyMember(d *schema.ResourceData, v interface{}, pre string
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -232,10 +226,8 @@ func expandSystemNdProxyMemberInterfaceName(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
-
 func getObjectSystemNdProxy(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("status"); ok {
 		t, err := expandSystemNdProxyStatus(d, v, "status")
@@ -255,7 +247,5 @@ func getObjectSystemNdProxy(d *schema.ResourceData) (*map[string]interface{}, er
 		}
 	}
 
-
 	return &obj, nil
 }
-

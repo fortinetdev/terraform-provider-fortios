@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,50 +5,51 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSExtenderControllerExtender_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSExtenderControllerExtender_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSExtenderControllerExtender_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSExtenderControllerExtenderConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSExtenderControllerExtenderExists("fortios_extendercontroller_extender.trname"),
-                    resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "admin", "disable"),
-                    resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "billing_start_day", "1"),
-                    resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "conn_status", "0"),
-                    resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "dial_mode", "always-connect"),
-                    resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "dial_status", "0"),
-                    resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "ext_name", "332"),
-                    resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "fosid", "1"),
-                    resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "initiated_update", "disable"),
-                    resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "mode", "standalone"),
-                    resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "modem_type", "gsm/lte"),
-                    resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "multi_mode", "auto"),
-                    resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "ppp_auth_protocol", "auto"),
-                    resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "ppp_echo_request", "disable"),
-                    resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "quota_limit_mb", "0"),
-                    resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "redial", "none"),
-                    resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "roaming", "disable"),
-                    resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "role", "primary"),
-                    resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "vdom", "0"),
-                    resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "wimax_auth_protocol", "tls"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSExtenderControllerExtenderConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSExtenderControllerExtenderExists("fortios_extendercontroller_extender.trname"),
+					resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "admin", "disable"),
+					resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "billing_start_day", "1"),
+					resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "conn_status", "0"),
+					resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "dial_mode", "always-connect"),
+					resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "dial_status", "0"),
+					resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "ext_name", "332"),
+					resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "fosid", "1"),
+					resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "initiated_update", "disable"),
+					resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "mode", "standalone"),
+					resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "modem_type", "gsm/lte"),
+					resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "multi_mode", "auto"),
+					resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "ppp_auth_protocol", "auto"),
+					resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "ppp_echo_request", "disable"),
+					resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "quota_limit_mb", "0"),
+					resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "redial", "none"),
+					resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "roaming", "disable"),
+					resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "role", "primary"),
+					resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "vdom", "0"),
+					resource.TestCheckResourceAttr("fortios_extendercontroller_extender.trname", "wimax_auth_protocol", "tls"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSExtenderControllerExtenderExists(n string) resource.TestCheckFunc {

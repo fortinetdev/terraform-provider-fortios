@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,39 +5,40 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSystemAutomationTrigger_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSystemAutomationTrigger_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSystemAutomationTrigger_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSystemAutomationTriggerConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSystemAutomationTriggerExists("fortios_system_automationtrigger.trname"),
-                    resource.TestCheckResourceAttr("fortios_system_automationtrigger.trname", "event_type", "event-log"),
-                    resource.TestCheckResourceAttr("fortios_system_automationtrigger.trname", "ioc_level", "high"),
-                    resource.TestCheckResourceAttr("fortios_system_automationtrigger.trname", "license_type", "forticare-support"),
-                    resource.TestCheckResourceAttr("fortios_system_automationtrigger.trname", "logid", "32002"),
-                    resource.TestCheckResourceAttr("fortios_system_automationtrigger.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_system_automationtrigger.trname", "trigger_frequency", "daily"),
-                    resource.TestCheckResourceAttr("fortios_system_automationtrigger.trname", "trigger_minute", "60"),
-                    resource.TestCheckResourceAttr("fortios_system_automationtrigger.trname", "trigger_type", "event-based"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSystemAutomationTriggerConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSystemAutomationTriggerExists("fortios_system_automationtrigger.trname"),
+					resource.TestCheckResourceAttr("fortios_system_automationtrigger.trname", "event_type", "event-log"),
+					resource.TestCheckResourceAttr("fortios_system_automationtrigger.trname", "ioc_level", "high"),
+					resource.TestCheckResourceAttr("fortios_system_automationtrigger.trname", "license_type", "forticare-support"),
+					resource.TestCheckResourceAttr("fortios_system_automationtrigger.trname", "logid", "32002"),
+					resource.TestCheckResourceAttr("fortios_system_automationtrigger.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_system_automationtrigger.trname", "trigger_frequency", "daily"),
+					resource.TestCheckResourceAttr("fortios_system_automationtrigger.trname", "trigger_minute", "60"),
+					resource.TestCheckResourceAttr("fortios_system_automationtrigger.trname", "trigger_type", "event-based"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSystemAutomationTriggerExists(n string) resource.TestCheckFunc {

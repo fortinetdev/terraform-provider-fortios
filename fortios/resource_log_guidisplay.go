@@ -30,24 +30,23 @@ func resourceLogGuiDisplay() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"resolve_hosts": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"resolve_apps": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"fortiview_unscanned_apps": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceLogGuiDisplayUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -114,7 +113,6 @@ func resourceLogGuiDisplayRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenLogGuiDisplayResolveHosts(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -127,10 +125,8 @@ func flattenLogGuiDisplayFortiviewUnscannedApps(v interface{}, d *schema.Resourc
 	return v
 }
 
-
 func refreshObjectLogGuiDisplay(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("resolve_hosts", flattenLogGuiDisplayResolveHosts(o["resolve-hosts"], d, "resolve_hosts")); err != nil {
 		if !fortiAPIPatch(o["resolve-hosts"]) {
@@ -150,7 +146,6 @@ func refreshObjectLogGuiDisplay(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-
 	return nil
 }
 
@@ -159,7 +154,6 @@ func flattenLogGuiDisplayFortiTestDebug(d *schema.ResourceData, fosdebugsn int, 
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandLogGuiDisplayResolveHosts(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -173,10 +167,8 @@ func expandLogGuiDisplayFortiviewUnscannedApps(d *schema.ResourceData, v interfa
 	return v, nil
 }
 
-
 func getObjectLogGuiDisplay(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("resolve_hosts"); ok {
 		t, err := expandLogGuiDisplayResolveHosts(d, v, "resolve_hosts")
@@ -205,7 +197,5 @@ func getObjectLogGuiDisplay(d *schema.ResourceData) (*map[string]interface{}, er
 		}
 	}
 
-
 	return &obj, nil
 }
-

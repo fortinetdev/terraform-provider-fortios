@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,38 +5,39 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSDnsfilterDomainFilter_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSDnsfilterDomainFilter_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSDnsfilterDomainFilter_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSDnsfilterDomainFilterConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSDnsfilterDomainFilterExists("fortios_dnsfilter_domainfilter.trname"),
-                    resource.TestCheckResourceAttr("fortios_dnsfilter_domainfilter.trname", "fosid", "1"),
-                    resource.TestCheckResourceAttr("fortios_dnsfilter_domainfilter.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_dnsfilter_domainfilter.trname", "entries.0.action", "block"),
-                    resource.TestCheckResourceAttr("fortios_dnsfilter_domainfilter.trname", "entries.0.domain", "bac.com"),
-                    resource.TestCheckResourceAttr("fortios_dnsfilter_domainfilter.trname", "entries.0.id", "1"),
-                    resource.TestCheckResourceAttr("fortios_dnsfilter_domainfilter.trname", "entries.0.status", "enable"),
-                    resource.TestCheckResourceAttr("fortios_dnsfilter_domainfilter.trname", "entries.0.type", "simple"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSDnsfilterDomainFilterConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSDnsfilterDomainFilterExists("fortios_dnsfilter_domainfilter.trname"),
+					resource.TestCheckResourceAttr("fortios_dnsfilter_domainfilter.trname", "fosid", "1"),
+					resource.TestCheckResourceAttr("fortios_dnsfilter_domainfilter.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_dnsfilter_domainfilter.trname", "entries.0.action", "block"),
+					resource.TestCheckResourceAttr("fortios_dnsfilter_domainfilter.trname", "entries.0.domain", "bac.com"),
+					resource.TestCheckResourceAttr("fortios_dnsfilter_domainfilter.trname", "entries.0.id", "1"),
+					resource.TestCheckResourceAttr("fortios_dnsfilter_domainfilter.trname", "entries.0.status", "enable"),
+					resource.TestCheckResourceAttr("fortios_dnsfilter_domainfilter.trname", "entries.0.type", "simple"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSDnsfilterDomainFilterExists(n string) resource.TestCheckFunc {

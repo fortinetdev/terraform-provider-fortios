@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,33 +5,34 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSwitchControllerSflow_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSwitchControllerSflow_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSwitchControllerSflow_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSwitchControllerSflowConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSwitchControllerSflowExists("fortios_switchcontroller_sflow.trname"),
-                    resource.TestCheckResourceAttr("fortios_switchcontroller_sflow.trname", "collector_ip", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_switchcontroller_sflow.trname", "collector_port", "6343"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSwitchControllerSflowConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSwitchControllerSflowExists("fortios_switchcontroller_sflow.trname"),
+					resource.TestCheckResourceAttr("fortios_switchcontroller_sflow.trname", "collector_ip", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_switchcontroller_sflow.trname", "collector_port", "6343"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSwitchControllerSflowExists(n string) resource.TestCheckFunc {

@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,36 +5,37 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSwitchControllerLldpSettings_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSwitchControllerLldpSettings_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSwitchControllerLldpSettings_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSwitchControllerLldpSettingsConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSwitchControllerLldpSettingsExists("fortios_switchcontroller_lldpsettings.trname"),
-                    resource.TestCheckResourceAttr("fortios_switchcontroller_lldpsettings.trname", "fast_start_interval", "2"),
-                    resource.TestCheckResourceAttr("fortios_switchcontroller_lldpsettings.trname", "management_interface", "internal"),
-                    resource.TestCheckResourceAttr("fortios_switchcontroller_lldpsettings.trname", "status", "enable"),
-                    resource.TestCheckResourceAttr("fortios_switchcontroller_lldpsettings.trname", "tx_hold", "4"),
-                    resource.TestCheckResourceAttr("fortios_switchcontroller_lldpsettings.trname", "tx_interval", "30"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSwitchControllerLldpSettingsConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSwitchControllerLldpSettingsExists("fortios_switchcontroller_lldpsettings.trname"),
+					resource.TestCheckResourceAttr("fortios_switchcontroller_lldpsettings.trname", "fast_start_interval", "2"),
+					resource.TestCheckResourceAttr("fortios_switchcontroller_lldpsettings.trname", "management_interface", "internal"),
+					resource.TestCheckResourceAttr("fortios_switchcontroller_lldpsettings.trname", "status", "enable"),
+					resource.TestCheckResourceAttr("fortios_switchcontroller_lldpsettings.trname", "tx_hold", "4"),
+					resource.TestCheckResourceAttr("fortios_switchcontroller_lldpsettings.trname", "tx_interval", "30"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSwitchControllerLldpSettingsExists(n string) resource.TestCheckFunc {

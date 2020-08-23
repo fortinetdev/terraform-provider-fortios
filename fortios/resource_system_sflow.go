@@ -30,24 +30,23 @@ func resourceSystemSflow() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"collector_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"collector_port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"source_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceSystemSflowUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -114,7 +113,6 @@ func resourceSystemSflowRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenSystemSflowCollectorIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -127,10 +125,8 @@ func flattenSystemSflowSourceIp(v interface{}, d *schema.ResourceData, pre strin
 	return v
 }
 
-
 func refreshObjectSystemSflow(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("collector_ip", flattenSystemSflowCollectorIp(o["collector-ip"], d, "collector_ip")); err != nil {
 		if !fortiAPIPatch(o["collector-ip"]) {
@@ -150,7 +146,6 @@ func refreshObjectSystemSflow(d *schema.ResourceData, o map[string]interface{}) 
 		}
 	}
 
-
 	return nil
 }
 
@@ -159,7 +154,6 @@ func flattenSystemSflowFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fo
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemSflowCollectorIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -173,10 +167,8 @@ func expandSystemSflowSourceIp(d *schema.ResourceData, v interface{}, pre string
 	return v, nil
 }
 
-
 func getObjectSystemSflow(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("collector_ip"); ok {
 		t, err := expandSystemSflowCollectorIp(d, v, "collector_ip")
@@ -205,7 +197,5 @@ func getObjectSystemSflow(d *schema.ResourceData) (*map[string]interface{}, erro
 		}
 	}
 
-
 	return &obj, nil
 }
-

@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,37 +5,38 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSystemProbeResponse_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSystemProbeResponse_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSystemProbeResponse_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSystemProbeResponseConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSystemProbeResponseExists("fortios_system_proberesponse.trname"),
-                    resource.TestCheckResourceAttr("fortios_system_proberesponse.trname", "http_probe_value", "OK"),
-                    resource.TestCheckResourceAttr("fortios_system_proberesponse.trname", "mode", "none"),
-                    resource.TestCheckResourceAttr("fortios_system_proberesponse.trname", "port", "8008"),
-                    resource.TestCheckResourceAttr("fortios_system_proberesponse.trname", "security_mode", "none"),
-                    resource.TestCheckResourceAttr("fortios_system_proberesponse.trname", "timeout", "300"),
-                    resource.TestCheckResourceAttr("fortios_system_proberesponse.trname", "ttl_mode", "retain"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSystemProbeResponseConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSystemProbeResponseExists("fortios_system_proberesponse.trname"),
+					resource.TestCheckResourceAttr("fortios_system_proberesponse.trname", "http_probe_value", "OK"),
+					resource.TestCheckResourceAttr("fortios_system_proberesponse.trname", "mode", "none"),
+					resource.TestCheckResourceAttr("fortios_system_proberesponse.trname", "port", "8008"),
+					resource.TestCheckResourceAttr("fortios_system_proberesponse.trname", "security_mode", "none"),
+					resource.TestCheckResourceAttr("fortios_system_proberesponse.trname", "timeout", "300"),
+					resource.TestCheckResourceAttr("fortios_system_proberesponse.trname", "ttl_mode", "retain"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSystemProbeResponseExists(n string) resource.TestCheckFunc {

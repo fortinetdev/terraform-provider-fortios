@@ -30,31 +30,30 @@ func resourceWanoptRemoteStorage() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"local_cache_id": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"remote_cache_id": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"remote_cache_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceWanoptRemoteStorageUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -121,7 +120,6 @@ func resourceWanoptRemoteStorageRead(d *schema.ResourceData, m interface{}) erro
 	return nil
 }
 
-
 func flattenWanoptRemoteStorageStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -138,10 +136,8 @@ func flattenWanoptRemoteStorageRemoteCacheIp(v interface{}, d *schema.ResourceDa
 	return v
 }
 
-
 func refreshObjectWanoptRemoteStorage(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("status", flattenWanoptRemoteStorageStatus(o["status"], d, "status")); err != nil {
 		if !fortiAPIPatch(o["status"]) {
@@ -167,7 +163,6 @@ func refreshObjectWanoptRemoteStorage(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
-
 	return nil
 }
 
@@ -176,7 +171,6 @@ func flattenWanoptRemoteStorageFortiTestDebug(d *schema.ResourceData, fosdebugsn
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandWanoptRemoteStorageStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -194,10 +188,8 @@ func expandWanoptRemoteStorageRemoteCacheIp(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
-
 func getObjectWanoptRemoteStorage(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("status"); ok {
 		t, err := expandWanoptRemoteStorageStatus(d, v, "status")
@@ -235,7 +227,5 @@ func getObjectWanoptRemoteStorage(d *schema.ResourceData) (*map[string]interface
 		}
 	}
 
-
 	return &obj, nil
 }
-

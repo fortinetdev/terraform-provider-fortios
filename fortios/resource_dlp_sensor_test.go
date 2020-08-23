@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,37 +5,38 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSDlpSensor_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSDlpSensor_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSDlpSensor_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSDlpSensorConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSDlpSensorExists("fortios_dlp_sensor.trname"),
-                    resource.TestCheckResourceAttr("fortios_dlp_sensor.trname", "dlp_log", "enable"),
-                    resource.TestCheckResourceAttr("fortios_dlp_sensor.trname", "extended_log", "disable"),
-                    resource.TestCheckResourceAttr("fortios_dlp_sensor.trname", "flow_based", "enable"),
-                    resource.TestCheckResourceAttr("fortios_dlp_sensor.trname", "nac_quar_log", "disable"),
-                    resource.TestCheckResourceAttr("fortios_dlp_sensor.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_dlp_sensor.trname", "summary_proto", "smtp pop3"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSDlpSensorConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSDlpSensorExists("fortios_dlp_sensor.trname"),
+					resource.TestCheckResourceAttr("fortios_dlp_sensor.trname", "dlp_log", "enable"),
+					resource.TestCheckResourceAttr("fortios_dlp_sensor.trname", "extended_log", "disable"),
+					resource.TestCheckResourceAttr("fortios_dlp_sensor.trname", "flow_based", "enable"),
+					resource.TestCheckResourceAttr("fortios_dlp_sensor.trname", "nac_quar_log", "disable"),
+					resource.TestCheckResourceAttr("fortios_dlp_sensor.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_dlp_sensor.trname", "summary_proto", "smtp pop3"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSDlpSensorExists(n string) resource.TestCheckFunc {

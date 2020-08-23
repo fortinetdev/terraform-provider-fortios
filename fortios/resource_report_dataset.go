@@ -30,78 +30,78 @@ func resourceReportDataset() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 71),
-				Required: true,
+				Required:     true,
 			},
 			"policy": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"query": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 2047),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"field": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 71),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"displayname": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"parameters": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"display_name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"field": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"data_type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -200,7 +200,6 @@ func resourceReportDatasetRead(d *schema.ResourceData, m interface{}) error {
 	}
 	return nil
 }
-
 
 func flattenReportDatasetName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -340,10 +339,8 @@ func flattenReportDatasetParametersDataType(v interface{}, d *schema.ResourceDat
 	return v
 }
 
-
 func refreshObjectReportDataset(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenReportDatasetName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -363,38 +360,37 @@ func refreshObjectReportDataset(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("field", flattenReportDatasetField(o["field"], d, "field")); err != nil {
-            if !fortiAPIPatch(o["field"]) {
-                return fmt.Errorf("Error reading field: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("field"); ok {
-            if err = d.Set("field", flattenReportDatasetField(o["field"], d, "field")); err != nil {
-                if !fortiAPIPatch(o["field"]) {
-                    return fmt.Errorf("Error reading field: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("field", flattenReportDatasetField(o["field"], d, "field")); err != nil {
+			if !fortiAPIPatch(o["field"]) {
+				return fmt.Errorf("Error reading field: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("field"); ok {
+			if err = d.Set("field", flattenReportDatasetField(o["field"], d, "field")); err != nil {
+				if !fortiAPIPatch(o["field"]) {
+					return fmt.Errorf("Error reading field: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("parameters", flattenReportDatasetParameters(o["parameters"], d, "parameters")); err != nil {
-            if !fortiAPIPatch(o["parameters"]) {
-                return fmt.Errorf("Error reading parameters: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("parameters"); ok {
-            if err = d.Set("parameters", flattenReportDatasetParameters(o["parameters"], d, "parameters")); err != nil {
-                if !fortiAPIPatch(o["parameters"]) {
-                    return fmt.Errorf("Error reading parameters: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("parameters", flattenReportDatasetParameters(o["parameters"], d, "parameters")); err != nil {
+			if !fortiAPIPatch(o["parameters"]) {
+				return fmt.Errorf("Error reading parameters: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("parameters"); ok {
+			if err = d.Set("parameters", flattenReportDatasetParameters(o["parameters"], d, "parameters")); err != nil {
+				if !fortiAPIPatch(o["parameters"]) {
+					return fmt.Errorf("Error reading parameters: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -404,7 +400,6 @@ func flattenReportDatasetFortiTestDebug(d *schema.ResourceData, fosdebugsn int, 
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandReportDatasetName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -430,7 +425,7 @@ func expandReportDatasetField(d *schema.ResourceData, v interface{}, pre string)
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -488,7 +483,7 @@ func expandReportDatasetParameters(d *schema.ResourceData, v interface{}, pre st
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -534,10 +529,8 @@ func expandReportDatasetParametersDataType(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
-
 func getObjectReportDataset(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandReportDatasetName(d, v, "name")
@@ -584,7 +577,5 @@ func getObjectReportDataset(d *schema.ResourceData) (*map[string]interface{}, er
 		}
 	}
 
-
 	return &obj, nil
 }
-

@@ -30,55 +30,55 @@ func resourceSwitchControllerTrafficPolicy() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Required: true,
+				Required:     true,
 			},
 			"description": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"policer_status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"guaranteed_bandwidth": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 524287000),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"guaranteed_burst": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"maximum_burst": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"cos": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 7),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"fosid": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
@@ -173,7 +173,6 @@ func resourceSwitchControllerTrafficPolicyRead(d *schema.ResourceData, m interfa
 	return nil
 }
 
-
 func flattenSwitchControllerTrafficPolicyName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -210,10 +209,8 @@ func flattenSwitchControllerTrafficPolicyId(v interface{}, d *schema.ResourceDat
 	return v
 }
 
-
 func refreshObjectSwitchControllerTrafficPolicy(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenSwitchControllerTrafficPolicyName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -269,7 +266,6 @@ func refreshObjectSwitchControllerTrafficPolicy(d *schema.ResourceData, o map[st
 		}
 	}
 
-
 	return nil
 }
 
@@ -278,7 +274,6 @@ func flattenSwitchControllerTrafficPolicyFortiTestDebug(d *schema.ResourceData, 
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSwitchControllerTrafficPolicyName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -316,10 +311,8 @@ func expandSwitchControllerTrafficPolicyId(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
-
 func getObjectSwitchControllerTrafficPolicy(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandSwitchControllerTrafficPolicyName(d, v, "name")
@@ -402,7 +395,5 @@ func getObjectSwitchControllerTrafficPolicy(d *schema.ResourceData) (*map[string
 		}
 	}
 
-
 	return &obj, nil
 }
-

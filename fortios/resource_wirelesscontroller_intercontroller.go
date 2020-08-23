@@ -30,56 +30,56 @@ func resourceWirelessControllerInterController() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"inter_controller_mode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"inter_controller_key": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
-				Optional: true,
+				Optional:     true,
 			},
 			"inter_controller_pri": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"fast_failover_max": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(3, 64),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"fast_failover_wait": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(10, 86400),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"inter_controller_peer": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"peer_ip": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"peer_port": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1024, 49150),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"peer_priority": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -89,7 +89,6 @@ func resourceWirelessControllerInterController() *schema.Resource {
 		},
 	}
 }
-
 
 func resourceWirelessControllerInterControllerUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -155,7 +154,6 @@ func resourceWirelessControllerInterControllerRead(d *schema.ResourceData, m int
 	}
 	return nil
 }
-
 
 func flattenWirelessControllerInterControllerInterControllerMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -240,10 +238,8 @@ func flattenWirelessControllerInterControllerInterControllerPeerPeerPriority(v i
 	return v
 }
 
-
 func refreshObjectWirelessControllerInterController(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("inter_controller_mode", flattenWirelessControllerInterControllerInterControllerMode(o["inter-controller-mode"], d, "inter_controller_mode")); err != nil {
 		if !fortiAPIPatch(o["inter-controller-mode"]) {
@@ -275,22 +271,21 @@ func refreshObjectWirelessControllerInterController(d *schema.ResourceData, o ma
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("inter_controller_peer", flattenWirelessControllerInterControllerInterControllerPeer(o["inter-controller-peer"], d, "inter_controller_peer")); err != nil {
-            if !fortiAPIPatch(o["inter-controller-peer"]) {
-                return fmt.Errorf("Error reading inter_controller_peer: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("inter_controller_peer"); ok {
-            if err = d.Set("inter_controller_peer", flattenWirelessControllerInterControllerInterControllerPeer(o["inter-controller-peer"], d, "inter_controller_peer")); err != nil {
-                if !fortiAPIPatch(o["inter-controller-peer"]) {
-                    return fmt.Errorf("Error reading inter_controller_peer: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("inter_controller_peer", flattenWirelessControllerInterControllerInterControllerPeer(o["inter-controller-peer"], d, "inter_controller_peer")); err != nil {
+			if !fortiAPIPatch(o["inter-controller-peer"]) {
+				return fmt.Errorf("Error reading inter_controller_peer: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("inter_controller_peer"); ok {
+			if err = d.Set("inter_controller_peer", flattenWirelessControllerInterControllerInterControllerPeer(o["inter-controller-peer"], d, "inter_controller_peer")); err != nil {
+				if !fortiAPIPatch(o["inter-controller-peer"]) {
+					return fmt.Errorf("Error reading inter_controller_peer: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -300,7 +295,6 @@ func flattenWirelessControllerInterControllerFortiTestDebug(d *schema.ResourceDa
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandWirelessControllerInterControllerInterControllerMode(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -334,7 +328,7 @@ func expandWirelessControllerInterControllerInterControllerPeer(d *schema.Resour
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -380,10 +374,8 @@ func expandWirelessControllerInterControllerInterControllerPeerPeerPriority(d *s
 	return v, nil
 }
 
-
 func getObjectWirelessControllerInterController(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("inter_controller_mode"); ok {
 		t, err := expandWirelessControllerInterControllerInterControllerMode(d, v, "inter_controller_mode")
@@ -439,7 +431,5 @@ func getObjectWirelessControllerInterController(d *schema.ResourceData) (*map[st
 		}
 	}
 
-
 	return &obj, nil
 }
-

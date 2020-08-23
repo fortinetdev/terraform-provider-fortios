@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,41 +5,42 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSUserGroup_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSUserGroup_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSUserGroup_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSUserGroupConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSUserGroupExists("fortios_user_group.trname"),
-                    resource.TestCheckResourceAttr("fortios_user_group.trname", "company", "optional"),
-                    resource.TestCheckResourceAttr("fortios_user_group.trname", "email", "enable"),
-                    resource.TestCheckResourceAttr("fortios_user_group.trname", "expire", "14400"),
-                    resource.TestCheckResourceAttr("fortios_user_group.trname", "expire_type", "immediately"),
-                    resource.TestCheckResourceAttr("fortios_user_group.trname", "group_type", "firewall"),
-                    resource.TestCheckResourceAttr("fortios_user_group.trname", "max_accounts", "0"),
-                    resource.TestCheckResourceAttr("fortios_user_group.trname", "mobile_phone", "disable"),
-                    resource.TestCheckResourceAttr("fortios_user_group.trname", "multiple_guest_add", "disable"),
-                    resource.TestCheckResourceAttr("fortios_user_group.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_user_group.trname", "member.0.name", "guest"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSUserGroupConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSUserGroupExists("fortios_user_group.trname"),
+					resource.TestCheckResourceAttr("fortios_user_group.trname", "company", "optional"),
+					resource.TestCheckResourceAttr("fortios_user_group.trname", "email", "enable"),
+					resource.TestCheckResourceAttr("fortios_user_group.trname", "expire", "14400"),
+					resource.TestCheckResourceAttr("fortios_user_group.trname", "expire_type", "immediately"),
+					resource.TestCheckResourceAttr("fortios_user_group.trname", "group_type", "firewall"),
+					resource.TestCheckResourceAttr("fortios_user_group.trname", "max_accounts", "0"),
+					resource.TestCheckResourceAttr("fortios_user_group.trname", "mobile_phone", "disable"),
+					resource.TestCheckResourceAttr("fortios_user_group.trname", "multiple_guest_add", "disable"),
+					resource.TestCheckResourceAttr("fortios_user_group.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_user_group.trname", "member.0.name", "guest"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSUserGroupExists(n string) resource.TestCheckFunc {

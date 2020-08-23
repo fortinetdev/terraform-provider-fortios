@@ -30,156 +30,156 @@ func resourceFirewallServiceCustom() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"proxy": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"category": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"protocol": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"helper": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"iprange": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"fqdn": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"protocol_number": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 254),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"icmptype": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"icmpcode": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"tcp_portrange": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"udp_portrange": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"sctp_portrange": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"tcp_halfclose_timer": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 86400),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"tcp_halfopen_timer": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 86400),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"tcp_timewait_timer": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 300),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"udp_idle_timer": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 86400),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"session_ttl": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(300, 604800),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"check_reset_range": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"comment": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
+				Optional:     true,
 			},
 			"color": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 32),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"visibility": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"app_service_type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"app_category": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"application": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -276,7 +276,6 @@ func resourceFirewallServiceCustomRead(d *schema.ResourceData, m interface{}) er
 	}
 	return nil
 }
-
 
 func flattenFirewallServiceCustomName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -442,10 +441,8 @@ func flattenFirewallServiceCustomApplicationId(v interface{}, d *schema.Resource
 	return v
 }
 
-
 func refreshObjectFirewallServiceCustom(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenFirewallServiceCustomName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -585,38 +582,37 @@ func refreshObjectFirewallServiceCustom(d *schema.ResourceData, o map[string]int
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("app_category", flattenFirewallServiceCustomAppCategory(o["app-category"], d, "app_category")); err != nil {
-            if !fortiAPIPatch(o["app-category"]) {
-                return fmt.Errorf("Error reading app_category: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("app_category"); ok {
-            if err = d.Set("app_category", flattenFirewallServiceCustomAppCategory(o["app-category"], d, "app_category")); err != nil {
-                if !fortiAPIPatch(o["app-category"]) {
-                    return fmt.Errorf("Error reading app_category: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("app_category", flattenFirewallServiceCustomAppCategory(o["app-category"], d, "app_category")); err != nil {
+			if !fortiAPIPatch(o["app-category"]) {
+				return fmt.Errorf("Error reading app_category: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("app_category"); ok {
+			if err = d.Set("app_category", flattenFirewallServiceCustomAppCategory(o["app-category"], d, "app_category")); err != nil {
+				if !fortiAPIPatch(o["app-category"]) {
+					return fmt.Errorf("Error reading app_category: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("application", flattenFirewallServiceCustomApplication(o["application"], d, "application")); err != nil {
-            if !fortiAPIPatch(o["application"]) {
-                return fmt.Errorf("Error reading application: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("application"); ok {
-            if err = d.Set("application", flattenFirewallServiceCustomApplication(o["application"], d, "application")); err != nil {
-                if !fortiAPIPatch(o["application"]) {
-                    return fmt.Errorf("Error reading application: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("application", flattenFirewallServiceCustomApplication(o["application"], d, "application")); err != nil {
+			if !fortiAPIPatch(o["application"]) {
+				return fmt.Errorf("Error reading application: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("application"); ok {
+			if err = d.Set("application", flattenFirewallServiceCustomApplication(o["application"], d, "application")); err != nil {
+				if !fortiAPIPatch(o["application"]) {
+					return fmt.Errorf("Error reading application: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -626,7 +622,6 @@ func flattenFirewallServiceCustomFortiTestDebug(d *schema.ResourceData, fosdebug
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandFirewallServiceCustomName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -732,7 +727,7 @@ func expandFirewallServiceCustomAppCategory(d *schema.ResourceData, v interface{
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -763,7 +758,7 @@ func expandFirewallServiceCustomApplication(d *schema.ResourceData, v interface{
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -782,10 +777,8 @@ func expandFirewallServiceCustomApplicationId(d *schema.ResourceData, v interfac
 	return v, nil
 }
 
-
 func getObjectFirewallServiceCustom(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandFirewallServiceCustomName(d, v, "name")
@@ -1012,7 +1005,5 @@ func getObjectFirewallServiceCustom(d *schema.ResourceData) (*map[string]interfa
 		}
 	}
 
-
 	return &obj, nil
 }
-

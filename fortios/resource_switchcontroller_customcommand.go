@@ -30,21 +30,21 @@ func resourceSwitchControllerCustomCommand() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"command_name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"description": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"command": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 4095),
-				Required: true,
+				Required:     true,
 			},
 		},
 	}
@@ -139,7 +139,6 @@ func resourceSwitchControllerCustomCommandRead(d *schema.ResourceData, m interfa
 	return nil
 }
 
-
 func flattenSwitchControllerCustomCommandCommandName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -152,10 +151,8 @@ func flattenSwitchControllerCustomCommandCommand(v interface{}, d *schema.Resour
 	return v
 }
 
-
 func refreshObjectSwitchControllerCustomCommand(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("command_name", flattenSwitchControllerCustomCommandCommandName(o["command-name"], d, "command_name")); err != nil {
 		if !fortiAPIPatch(o["command-name"]) {
@@ -175,7 +172,6 @@ func refreshObjectSwitchControllerCustomCommand(d *schema.ResourceData, o map[st
 		}
 	}
 
-
 	return nil
 }
 
@@ -184,7 +180,6 @@ func flattenSwitchControllerCustomCommandFortiTestDebug(d *schema.ResourceData, 
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSwitchControllerCustomCommandCommandName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -198,10 +193,8 @@ func expandSwitchControllerCustomCommandCommand(d *schema.ResourceData, v interf
 	return v, nil
 }
 
-
 func getObjectSwitchControllerCustomCommand(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("command_name"); ok {
 		t, err := expandSwitchControllerCustomCommandCommandName(d, v, "command_name")
@@ -230,7 +223,5 @@ func getObjectSwitchControllerCustomCommand(d *schema.ResourceData) (*map[string
 		}
 	}
 
-
 	return &obj, nil
 }
-

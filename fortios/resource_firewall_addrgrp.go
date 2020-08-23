@@ -30,91 +30,91 @@ func resourceFirewallAddrgrp() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Required: true,
+				Required:     true,
 			},
 			"uuid": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"member": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"comment": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
+				Optional:     true,
 			},
 			"exclude": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"exclude_member": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"visibility": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"color": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 32),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"tagging": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"category": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"tags": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"name": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 64),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
@@ -123,7 +123,7 @@ func resourceFirewallAddrgrp() *schema.Resource {
 				},
 			},
 			"allow_routing": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
@@ -219,7 +219,6 @@ func resourceFirewallAddrgrpRead(d *schema.ResourceData, m interface{}) error {
 	}
 	return nil
 }
-
 
 func flattenFirewallAddrgrpName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -407,10 +406,8 @@ func flattenFirewallAddrgrpAllowRouting(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
-
 func refreshObjectFirewallAddrgrp(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenFirewallAddrgrpName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -424,21 +421,21 @@ func refreshObjectFirewallAddrgrp(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("member", flattenFirewallAddrgrpMember(o["member"], d, "member")); err != nil {
-            if !fortiAPIPatch(o["member"]) {
-                return fmt.Errorf("Error reading member: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("member"); ok {
-            if err = d.Set("member", flattenFirewallAddrgrpMember(o["member"], d, "member")); err != nil {
-                if !fortiAPIPatch(o["member"]) {
-                    return fmt.Errorf("Error reading member: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("member", flattenFirewallAddrgrpMember(o["member"], d, "member")); err != nil {
+			if !fortiAPIPatch(o["member"]) {
+				return fmt.Errorf("Error reading member: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("member"); ok {
+			if err = d.Set("member", flattenFirewallAddrgrpMember(o["member"], d, "member")); err != nil {
+				if !fortiAPIPatch(o["member"]) {
+					return fmt.Errorf("Error reading member: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("comment", flattenFirewallAddrgrpComment(o["comment"], d, "comment")); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
@@ -452,21 +449,21 @@ func refreshObjectFirewallAddrgrp(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("exclude_member", flattenFirewallAddrgrpExcludeMember(o["exclude-member"], d, "exclude_member")); err != nil {
-            if !fortiAPIPatch(o["exclude-member"]) {
-                return fmt.Errorf("Error reading exclude_member: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("exclude_member"); ok {
-            if err = d.Set("exclude_member", flattenFirewallAddrgrpExcludeMember(o["exclude-member"], d, "exclude_member")); err != nil {
-                if !fortiAPIPatch(o["exclude-member"]) {
-                    return fmt.Errorf("Error reading exclude_member: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("exclude_member", flattenFirewallAddrgrpExcludeMember(o["exclude-member"], d, "exclude_member")); err != nil {
+			if !fortiAPIPatch(o["exclude-member"]) {
+				return fmt.Errorf("Error reading exclude_member: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("exclude_member"); ok {
+			if err = d.Set("exclude_member", flattenFirewallAddrgrpExcludeMember(o["exclude-member"], d, "exclude_member")); err != nil {
+				if !fortiAPIPatch(o["exclude-member"]) {
+					return fmt.Errorf("Error reading exclude_member: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("visibility", flattenFirewallAddrgrpVisibility(o["visibility"], d, "visibility")); err != nil {
 		if !fortiAPIPatch(o["visibility"]) {
@@ -480,28 +477,27 @@ func refreshObjectFirewallAddrgrp(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("tagging", flattenFirewallAddrgrpTagging(o["tagging"], d, "tagging")); err != nil {
-            if !fortiAPIPatch(o["tagging"]) {
-                return fmt.Errorf("Error reading tagging: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("tagging"); ok {
-            if err = d.Set("tagging", flattenFirewallAddrgrpTagging(o["tagging"], d, "tagging")); err != nil {
-                if !fortiAPIPatch(o["tagging"]) {
-                    return fmt.Errorf("Error reading tagging: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("tagging", flattenFirewallAddrgrpTagging(o["tagging"], d, "tagging")); err != nil {
+			if !fortiAPIPatch(o["tagging"]) {
+				return fmt.Errorf("Error reading tagging: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("tagging"); ok {
+			if err = d.Set("tagging", flattenFirewallAddrgrpTagging(o["tagging"], d, "tagging")); err != nil {
+				if !fortiAPIPatch(o["tagging"]) {
+					return fmt.Errorf("Error reading tagging: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("allow_routing", flattenFirewallAddrgrpAllowRouting(o["allow-routing"], d, "allow_routing")); err != nil {
 		if !fortiAPIPatch(o["allow-routing"]) {
 			return fmt.Errorf("Error reading allow_routing: %v", err)
 		}
 	}
-
 
 	return nil
 }
@@ -511,7 +507,6 @@ func flattenFirewallAddrgrpFortiTestDebug(d *schema.ResourceData, fosdebugsn int
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandFirewallAddrgrpName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -533,7 +528,7 @@ func expandFirewallAddrgrpMember(d *schema.ResourceData, v interface{}, pre stri
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -572,7 +567,7 @@ func expandFirewallAddrgrpExcludeMember(d *schema.ResourceData, v interface{}, p
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -611,7 +606,7 @@ func expandFirewallAddrgrpTagging(d *schema.ResourceData, v interface{}, pre str
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -658,7 +653,7 @@ func expandFirewallAddrgrpTaggingTags(d *schema.ResourceData, v interface{}, pre
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -681,10 +676,8 @@ func expandFirewallAddrgrpAllowRouting(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
-
 func getObjectFirewallAddrgrp(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandFirewallAddrgrpName(d, v, "name")
@@ -776,7 +769,5 @@ func getObjectFirewallAddrgrp(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-
 	return &obj, nil
 }
-

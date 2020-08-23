@@ -30,369 +30,369 @@ func resourceSystemAdmin() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"wildcard": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"remote_auth": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"remote_group": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"password": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"peer_auth": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"peer_group": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"trusthost1": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"trusthost2": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"trusthost3": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"trusthost4": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"trusthost5": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"trusthost6": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"trusthost7": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"trusthost8": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"trusthost9": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"trusthost10": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ip6_trusthost1": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ip6_trusthost2": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ip6_trusthost3": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ip6_trusthost4": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ip6_trusthost5": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ip6_trusthost6": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ip6_trusthost7": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ip6_trusthost8": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ip6_trusthost9": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ip6_trusthost10": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"accprofile": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"allow_remove_admin_session": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"comments": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
+				Optional:     true,
 			},
 			"hidden": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"vdom": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"ssh_public_key1": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssh_public_key2": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssh_public_key3": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssh_certificate": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"schedule": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"accprofile_override": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"radius_vdom_override": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"password_expire": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"force_password_change": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"gui_dashboard": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"scope": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"layout_type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"columns": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(5, 20),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"widget": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"type": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"x_pos": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 1000),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"y_pos": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 1000),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"width": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(1, 50),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"height": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(1, 50),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"interface": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 15),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"region": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"industry": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"fabric_device": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"title": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 127),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"report_by": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"timeframe": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"sort_by": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 127),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"visualization": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"filters": &schema.Schema{
-										Type: schema.TypeList,
+										Type:     schema.TypeList,
 										Optional: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 												"id": &schema.Schema{
-													Type: schema.TypeInt,
+													Type:         schema.TypeInt,
 													ValidateFunc: validation.IntBetween(0, 4294967295),
-													Optional: true,
-													Computed: true,
+													Optional:     true,
+													Computed:     true,
 												},
 												"key": &schema.Schema{
-													Type: schema.TypeString,
+													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 127),
-													Optional: true,
-													Computed: true,
+													Optional:     true,
+													Computed:     true,
 												},
 												"value": &schema.Schema{
-													Type: schema.TypeString,
+													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 127),
-													Optional: true,
-													Computed: true,
+													Optional:     true,
+													Computed:     true,
 												},
 											},
 										},
@@ -404,92 +404,92 @@ func resourceSystemAdmin() *schema.Resource {
 				},
 			},
 			"two_factor": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"fortitoken": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 16),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"email_to": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"sms_server": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"sms_custom_server": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"sms_phone": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"guest_auth": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"guest_usergroups": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"guest_lang": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"history0": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"history1": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"login_time": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"usr_name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"last_login": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"last_failed_login": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -497,43 +497,43 @@ func resourceSystemAdmin() *schema.Resource {
 				},
 			},
 			"gui_global_menu_favorites": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"gui_vdom_menu_favorites": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"gui_new_feature_acknowledge": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -630,7 +630,6 @@ func resourceSystemAdminRead(d *schema.ResourceData, m interface{}) error {
 	}
 	return nil
 }
-
 
 func flattenSystemAdminName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -1434,10 +1433,8 @@ func flattenSystemAdminGuiNewFeatureAcknowledgeId(v interface{}, d *schema.Resou
 	return v
 }
 
-
 func refreshObjectSystemAdmin(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenSystemAdminName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -1619,21 +1616,21 @@ func refreshObjectSystemAdmin(d *schema.ResourceData, o map[string]interface{}) 
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("vdom", flattenSystemAdminVdom(o["vdom"], d, "vdom")); err != nil {
-            if !fortiAPIPatch(o["vdom"]) {
-                return fmt.Errorf("Error reading vdom: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("vdom"); ok {
-            if err = d.Set("vdom", flattenSystemAdminVdom(o["vdom"], d, "vdom")); err != nil {
-                if !fortiAPIPatch(o["vdom"]) {
-                    return fmt.Errorf("Error reading vdom: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("vdom", flattenSystemAdminVdom(o["vdom"], d, "vdom")); err != nil {
+			if !fortiAPIPatch(o["vdom"]) {
+				return fmt.Errorf("Error reading vdom: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("vdom"); ok {
+			if err = d.Set("vdom", flattenSystemAdminVdom(o["vdom"], d, "vdom")); err != nil {
+				if !fortiAPIPatch(o["vdom"]) {
+					return fmt.Errorf("Error reading vdom: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("ssh_public_key1", flattenSystemAdminSshPublicKey1(o["ssh-public-key1"], d, "ssh_public_key1")); err != nil {
 		if !fortiAPIPatch(o["ssh-public-key1"]) {
@@ -1689,21 +1686,21 @@ func refreshObjectSystemAdmin(d *schema.ResourceData, o map[string]interface{}) 
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("gui_dashboard", flattenSystemAdminGuiDashboard(o["gui-dashboard"], d, "gui_dashboard")); err != nil {
-            if !fortiAPIPatch(o["gui-dashboard"]) {
-                return fmt.Errorf("Error reading gui_dashboard: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("gui_dashboard"); ok {
-            if err = d.Set("gui_dashboard", flattenSystemAdminGuiDashboard(o["gui-dashboard"], d, "gui_dashboard")); err != nil {
-                if !fortiAPIPatch(o["gui-dashboard"]) {
-                    return fmt.Errorf("Error reading gui_dashboard: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("gui_dashboard", flattenSystemAdminGuiDashboard(o["gui-dashboard"], d, "gui_dashboard")); err != nil {
+			if !fortiAPIPatch(o["gui-dashboard"]) {
+				return fmt.Errorf("Error reading gui_dashboard: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("gui_dashboard"); ok {
+			if err = d.Set("gui_dashboard", flattenSystemAdminGuiDashboard(o["gui-dashboard"], d, "gui_dashboard")); err != nil {
+				if !fortiAPIPatch(o["gui-dashboard"]) {
+					return fmt.Errorf("Error reading gui_dashboard: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("two_factor", flattenSystemAdminTwoFactor(o["two-factor"], d, "two_factor")); err != nil {
 		if !fortiAPIPatch(o["two-factor"]) {
@@ -1747,21 +1744,21 @@ func refreshObjectSystemAdmin(d *schema.ResourceData, o map[string]interface{}) 
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("guest_usergroups", flattenSystemAdminGuestUsergroups(o["guest-usergroups"], d, "guest_usergroups")); err != nil {
-            if !fortiAPIPatch(o["guest-usergroups"]) {
-                return fmt.Errorf("Error reading guest_usergroups: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("guest_usergroups"); ok {
-            if err = d.Set("guest_usergroups", flattenSystemAdminGuestUsergroups(o["guest-usergroups"], d, "guest_usergroups")); err != nil {
-                if !fortiAPIPatch(o["guest-usergroups"]) {
-                    return fmt.Errorf("Error reading guest_usergroups: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("guest_usergroups", flattenSystemAdminGuestUsergroups(o["guest-usergroups"], d, "guest_usergroups")); err != nil {
+			if !fortiAPIPatch(o["guest-usergroups"]) {
+				return fmt.Errorf("Error reading guest_usergroups: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("guest_usergroups"); ok {
+			if err = d.Set("guest_usergroups", flattenSystemAdminGuestUsergroups(o["guest-usergroups"], d, "guest_usergroups")); err != nil {
+				if !fortiAPIPatch(o["guest-usergroups"]) {
+					return fmt.Errorf("Error reading guest_usergroups: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("guest_lang", flattenSystemAdminGuestLang(o["guest-lang"], d, "guest_lang")); err != nil {
 		if !fortiAPIPatch(o["guest-lang"]) {
@@ -1781,70 +1778,69 @@ func refreshObjectSystemAdmin(d *schema.ResourceData, o map[string]interface{}) 
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("login_time", flattenSystemAdminLoginTime(o["login-time"], d, "login_time")); err != nil {
-            if !fortiAPIPatch(o["login-time"]) {
-                return fmt.Errorf("Error reading login_time: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("login_time"); ok {
-            if err = d.Set("login_time", flattenSystemAdminLoginTime(o["login-time"], d, "login_time")); err != nil {
-                if !fortiAPIPatch(o["login-time"]) {
-                    return fmt.Errorf("Error reading login_time: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("login_time", flattenSystemAdminLoginTime(o["login-time"], d, "login_time")); err != nil {
+			if !fortiAPIPatch(o["login-time"]) {
+				return fmt.Errorf("Error reading login_time: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("login_time"); ok {
+			if err = d.Set("login_time", flattenSystemAdminLoginTime(o["login-time"], d, "login_time")); err != nil {
+				if !fortiAPIPatch(o["login-time"]) {
+					return fmt.Errorf("Error reading login_time: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("gui_global_menu_favorites", flattenSystemAdminGuiGlobalMenuFavorites(o["gui-global-menu-favorites"], d, "gui_global_menu_favorites")); err != nil {
-            if !fortiAPIPatch(o["gui-global-menu-favorites"]) {
-                return fmt.Errorf("Error reading gui_global_menu_favorites: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("gui_global_menu_favorites"); ok {
-            if err = d.Set("gui_global_menu_favorites", flattenSystemAdminGuiGlobalMenuFavorites(o["gui-global-menu-favorites"], d, "gui_global_menu_favorites")); err != nil {
-                if !fortiAPIPatch(o["gui-global-menu-favorites"]) {
-                    return fmt.Errorf("Error reading gui_global_menu_favorites: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("gui_global_menu_favorites", flattenSystemAdminGuiGlobalMenuFavorites(o["gui-global-menu-favorites"], d, "gui_global_menu_favorites")); err != nil {
+			if !fortiAPIPatch(o["gui-global-menu-favorites"]) {
+				return fmt.Errorf("Error reading gui_global_menu_favorites: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("gui_global_menu_favorites"); ok {
+			if err = d.Set("gui_global_menu_favorites", flattenSystemAdminGuiGlobalMenuFavorites(o["gui-global-menu-favorites"], d, "gui_global_menu_favorites")); err != nil {
+				if !fortiAPIPatch(o["gui-global-menu-favorites"]) {
+					return fmt.Errorf("Error reading gui_global_menu_favorites: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("gui_vdom_menu_favorites", flattenSystemAdminGuiVdomMenuFavorites(o["gui-vdom-menu-favorites"], d, "gui_vdom_menu_favorites")); err != nil {
-            if !fortiAPIPatch(o["gui-vdom-menu-favorites"]) {
-                return fmt.Errorf("Error reading gui_vdom_menu_favorites: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("gui_vdom_menu_favorites"); ok {
-            if err = d.Set("gui_vdom_menu_favorites", flattenSystemAdminGuiVdomMenuFavorites(o["gui-vdom-menu-favorites"], d, "gui_vdom_menu_favorites")); err != nil {
-                if !fortiAPIPatch(o["gui-vdom-menu-favorites"]) {
-                    return fmt.Errorf("Error reading gui_vdom_menu_favorites: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("gui_vdom_menu_favorites", flattenSystemAdminGuiVdomMenuFavorites(o["gui-vdom-menu-favorites"], d, "gui_vdom_menu_favorites")); err != nil {
+			if !fortiAPIPatch(o["gui-vdom-menu-favorites"]) {
+				return fmt.Errorf("Error reading gui_vdom_menu_favorites: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("gui_vdom_menu_favorites"); ok {
+			if err = d.Set("gui_vdom_menu_favorites", flattenSystemAdminGuiVdomMenuFavorites(o["gui-vdom-menu-favorites"], d, "gui_vdom_menu_favorites")); err != nil {
+				if !fortiAPIPatch(o["gui-vdom-menu-favorites"]) {
+					return fmt.Errorf("Error reading gui_vdom_menu_favorites: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("gui_new_feature_acknowledge", flattenSystemAdminGuiNewFeatureAcknowledge(o["gui-new-feature-acknowledge"], d, "gui_new_feature_acknowledge")); err != nil {
-            if !fortiAPIPatch(o["gui-new-feature-acknowledge"]) {
-                return fmt.Errorf("Error reading gui_new_feature_acknowledge: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("gui_new_feature_acknowledge"); ok {
-            if err = d.Set("gui_new_feature_acknowledge", flattenSystemAdminGuiNewFeatureAcknowledge(o["gui-new-feature-acknowledge"], d, "gui_new_feature_acknowledge")); err != nil {
-                if !fortiAPIPatch(o["gui-new-feature-acknowledge"]) {
-                    return fmt.Errorf("Error reading gui_new_feature_acknowledge: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("gui_new_feature_acknowledge", flattenSystemAdminGuiNewFeatureAcknowledge(o["gui-new-feature-acknowledge"], d, "gui_new_feature_acknowledge")); err != nil {
+			if !fortiAPIPatch(o["gui-new-feature-acknowledge"]) {
+				return fmt.Errorf("Error reading gui_new_feature_acknowledge: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("gui_new_feature_acknowledge"); ok {
+			if err = d.Set("gui_new_feature_acknowledge", flattenSystemAdminGuiNewFeatureAcknowledge(o["gui-new-feature-acknowledge"], d, "gui_new_feature_acknowledge")); err != nil {
+				if !fortiAPIPatch(o["gui-new-feature-acknowledge"]) {
+					return fmt.Errorf("Error reading gui_new_feature_acknowledge: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -1854,7 +1850,6 @@ func flattenSystemAdminFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fo
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemAdminName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -1992,7 +1987,7 @@ func expandSystemAdminVdom(d *schema.ResourceData, v interface{}, pre string) (i
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2059,7 +2054,7 @@ func expandSystemAdminGuiDashboard(d *schema.ResourceData, v interface{}, pre st
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2133,7 +2128,7 @@ func expandSystemAdminGuiDashboardWidget(d *schema.ResourceData, v interface{}, 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2297,7 +2292,7 @@ func expandSystemAdminGuiDashboardWidgetFilters(d *schema.ResourceData, v interf
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2374,7 +2369,7 @@ func expandSystemAdminGuestUsergroups(d *schema.ResourceData, v interface{}, pre
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2417,7 +2412,7 @@ func expandSystemAdminLoginTime(d *schema.ResourceData, v interface{}, pre strin
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "usr_name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2466,7 +2461,7 @@ func expandSystemAdminGuiGlobalMenuFavorites(d *schema.ResourceData, v interface
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2497,7 +2492,7 @@ func expandSystemAdminGuiVdomMenuFavorites(d *schema.ResourceData, v interface{}
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2528,7 +2523,7 @@ func expandSystemAdminGuiNewFeatureAcknowledge(d *schema.ResourceData, v interfa
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2547,10 +2542,8 @@ func expandSystemAdminGuiNewFeatureAcknowledgeId(d *schema.ResourceData, v inter
 	return v, nil
 }
 
-
 func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandSystemAdminName(d, v, "name")
@@ -3065,7 +3058,5 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 		}
 	}
 
-
 	return &obj, nil
 }
-

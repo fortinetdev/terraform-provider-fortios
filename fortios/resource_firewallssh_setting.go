@@ -30,62 +30,61 @@ func resourceFirewallSshSetting() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"caname": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"untrusted_caname": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"hostkey_rsa2048": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"hostkey_dsa1024": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"hostkey_ecdsa256": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"hostkey_ecdsa384": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"hostkey_ecdsa521": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"hostkey_ed25519": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"host_trusted_checking": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceFirewallSshSettingUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -152,7 +151,6 @@ func resourceFirewallSshSettingRead(d *schema.ResourceData, m interface{}) error
 	return nil
 }
 
-
 func flattenFirewallSshSettingCaname(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -189,10 +187,8 @@ func flattenFirewallSshSettingHostTrustedChecking(v interface{}, d *schema.Resou
 	return v
 }
 
-
 func refreshObjectFirewallSshSetting(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("caname", flattenFirewallSshSettingCaname(o["caname"], d, "caname")); err != nil {
 		if !fortiAPIPatch(o["caname"]) {
@@ -248,7 +244,6 @@ func refreshObjectFirewallSshSetting(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
-
 	return nil
 }
 
@@ -257,7 +252,6 @@ func flattenFirewallSshSettingFortiTestDebug(d *schema.ResourceData, fosdebugsn 
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandFirewallSshSettingCaname(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -295,10 +289,8 @@ func expandFirewallSshSettingHostTrustedChecking(d *schema.ResourceData, v inter
 	return v, nil
 }
 
-
 func getObjectFirewallSshSetting(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("caname"); ok {
 		t, err := expandFirewallSshSettingCaname(d, v, "caname")
@@ -381,7 +373,5 @@ func getObjectFirewallSshSetting(d *schema.ResourceData) (*map[string]interface{
 		}
 	}
 
-
 	return &obj, nil
 }
-

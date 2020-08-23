@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,35 +5,36 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSystemConsole_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSystemConsole_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSystemConsole_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSystemConsoleConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSystemConsoleExists("fortios_system_console.trname"),
-                    resource.TestCheckResourceAttr("fortios_system_console.trname", "baudrate", "9600"),
-                    resource.TestCheckResourceAttr("fortios_system_console.trname", "login", "enable"),
-                    resource.TestCheckResourceAttr("fortios_system_console.trname", "mode", "line"),
-                    resource.TestCheckResourceAttr("fortios_system_console.trname", "output", "more"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSystemConsoleConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSystemConsoleExists("fortios_system_console.trname"),
+					resource.TestCheckResourceAttr("fortios_system_console.trname", "baudrate", "9600"),
+					resource.TestCheckResourceAttr("fortios_system_console.trname", "login", "enable"),
+					resource.TestCheckResourceAttr("fortios_system_console.trname", "mode", "line"),
+					resource.TestCheckResourceAttr("fortios_system_console.trname", "output", "more"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSystemConsoleExists(n string) resource.TestCheckFunc {

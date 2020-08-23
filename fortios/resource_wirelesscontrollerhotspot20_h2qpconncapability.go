@@ -30,63 +30,63 @@ func resourceWirelessControllerHotspot20H2QpConnCapability() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"icmp_port": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ftp_port": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssh_port": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"http_port": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"tls_port": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"pptp_vpn_port": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"voip_tcp_port": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"voip_udp_port": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ikev2_port": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ikev2_xx_port": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"esp_port": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
@@ -183,7 +183,6 @@ func resourceWirelessControllerHotspot20H2QpConnCapabilityRead(d *schema.Resourc
 	return nil
 }
 
-
 func flattenWirelessControllerHotspot20H2QpConnCapabilityName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -232,10 +231,8 @@ func flattenWirelessControllerHotspot20H2QpConnCapabilityEspPort(v interface{}, 
 	return v
 }
 
-
 func refreshObjectWirelessControllerHotspot20H2QpConnCapability(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenWirelessControllerHotspot20H2QpConnCapabilityName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -309,7 +306,6 @@ func refreshObjectWirelessControllerHotspot20H2QpConnCapability(d *schema.Resour
 		}
 	}
 
-
 	return nil
 }
 
@@ -318,7 +314,6 @@ func flattenWirelessControllerHotspot20H2QpConnCapabilityFortiTestDebug(d *schem
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandWirelessControllerHotspot20H2QpConnCapabilityName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -368,10 +363,8 @@ func expandWirelessControllerHotspot20H2QpConnCapabilityEspPort(d *schema.Resour
 	return v, nil
 }
 
-
 func getObjectWirelessControllerHotspot20H2QpConnCapability(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandWirelessControllerHotspot20H2QpConnCapabilityName(d, v, "name")
@@ -481,7 +474,5 @@ func getObjectWirelessControllerHotspot20H2QpConnCapability(d *schema.ResourceDa
 		}
 	}
 
-
 	return &obj, nil
 }
-

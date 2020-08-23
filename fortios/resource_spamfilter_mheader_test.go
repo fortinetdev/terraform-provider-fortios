@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,40 +5,41 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSpamfilterMheader_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSpamfilterMheader_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSpamfilterMheader_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSpamfilterMheaderConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSpamfilterMheaderExists("fortios_spamfilter_mheader.trname"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_mheader.trname", "comment", "test"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_mheader.trname", "fosid", "1"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_mheader.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_mheader.trname", "entries.0.action", "spam"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_mheader.trname", "entries.0.fieldbody", "scstest"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_mheader.trname", "entries.0.fieldname", "EIWEtest"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_mheader.trname", "entries.0.id", "1"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_mheader.trname", "entries.0.pattern_type", "wildcard"),
-                    resource.TestCheckResourceAttr("fortios_spamfilter_mheader.trname", "entries.0.status", "enable"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSpamfilterMheaderConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSpamfilterMheaderExists("fortios_spamfilter_mheader.trname"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_mheader.trname", "comment", "test"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_mheader.trname", "fosid", "1"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_mheader.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_spamfilter_mheader.trname", "entries.0.action", "spam"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_mheader.trname", "entries.0.fieldbody", "scstest"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_mheader.trname", "entries.0.fieldname", "EIWEtest"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_mheader.trname", "entries.0.id", "1"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_mheader.trname", "entries.0.pattern_type", "wildcard"),
+					resource.TestCheckResourceAttr("fortios_spamfilter_mheader.trname", "entries.0.status", "enable"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSpamfilterMheaderExists(n string) resource.TestCheckFunc {

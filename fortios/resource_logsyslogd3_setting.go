@@ -30,95 +30,94 @@ func resourceLogSyslogd3Setting() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"server": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"mode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"facility": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"source_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"format": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"enc_algorithm": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ssl_min_proto_version": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"certificate": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"custom_field_name": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"custom": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"syslog_type": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
 }
-
 
 func resourceLogSyslogd3SettingUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -184,7 +183,6 @@ func resourceLogSyslogd3SettingRead(d *schema.ResourceData, m interface{}) error
 	}
 	return nil
 }
-
 
 func flattenLogSyslogd3SettingStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -284,10 +282,8 @@ func flattenLogSyslogd3SettingSyslogType(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
-
 func refreshObjectLogSyslogd3Setting(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("status", flattenLogSyslogd3SettingStatus(o["status"], d, "status")); err != nil {
 		if !fortiAPIPatch(o["status"]) {
@@ -349,28 +345,27 @@ func refreshObjectLogSyslogd3Setting(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("custom_field_name", flattenLogSyslogd3SettingCustomFieldName(o["custom-field-name"], d, "custom_field_name")); err != nil {
-            if !fortiAPIPatch(o["custom-field-name"]) {
-                return fmt.Errorf("Error reading custom_field_name: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("custom_field_name"); ok {
-            if err = d.Set("custom_field_name", flattenLogSyslogd3SettingCustomFieldName(o["custom-field-name"], d, "custom_field_name")); err != nil {
-                if !fortiAPIPatch(o["custom-field-name"]) {
-                    return fmt.Errorf("Error reading custom_field_name: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("custom_field_name", flattenLogSyslogd3SettingCustomFieldName(o["custom-field-name"], d, "custom_field_name")); err != nil {
+			if !fortiAPIPatch(o["custom-field-name"]) {
+				return fmt.Errorf("Error reading custom_field_name: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("custom_field_name"); ok {
+			if err = d.Set("custom_field_name", flattenLogSyslogd3SettingCustomFieldName(o["custom-field-name"], d, "custom_field_name")); err != nil {
+				if !fortiAPIPatch(o["custom-field-name"]) {
+					return fmt.Errorf("Error reading custom_field_name: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("syslog_type", flattenLogSyslogd3SettingSyslogType(o["syslog-type"], d, "syslog_type")); err != nil {
 		if !fortiAPIPatch(o["syslog-type"]) {
 			return fmt.Errorf("Error reading syslog_type: %v", err)
 		}
 	}
-
 
 	return nil
 }
@@ -380,7 +375,6 @@ func flattenLogSyslogd3SettingFortiTestDebug(d *schema.ResourceData, fosdebugsn 
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandLogSyslogd3SettingStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -434,7 +428,7 @@ func expandLogSyslogd3SettingCustomFieldName(d *schema.ResourceData, v interface
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -475,10 +469,8 @@ func expandLogSyslogd3SettingSyslogType(d *schema.ResourceData, v interface{}, p
 	return v, nil
 }
 
-
 func getObjectLogSyslogd3Setting(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("status"); ok {
 		t, err := expandLogSyslogd3SettingStatus(d, v, "status")
@@ -588,7 +580,5 @@ func getObjectLogSyslogd3Setting(d *schema.ResourceData) (*map[string]interface{
 		}
 	}
 
-
 	return &obj, nil
 }
-

@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,56 +5,57 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSLogDiskSetting_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSLogDiskSetting_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSLogDiskSetting_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSLogDiskSettingConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSLogDiskSettingExists("fortios_logdisk_setting.trname"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "diskfull", "overwrite"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "dlp_archive_quota", "0"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "full_final_warning_threshold", "95"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "full_first_warning_threshold", "75"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "full_second_warning_threshold", "90"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "ips_archive", "enable"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "log_quota", "0"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "max_log_file_size", "20"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "max_policy_packet_capture_size", "100"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "maximum_log_age", "7"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "report_quota", "0"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "roll_day", "sunday"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "roll_schedule", "daily"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "roll_time", "00:00"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "source_ip", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "status", "enable"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "upload", "disable"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "upload_delete_files", "enable"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "upload_destination", "ftp-server"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "upload_ssl_conn", "default"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "uploadip", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "uploadport", "21"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "uploadsched", "disable"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "uploadtime", "00:00"),
-                    resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "uploadtype", "traffic event virus webfilter IPS spamfilter dlp-archive anomaly voip dlp app-ctrl waf netscan gtp dns"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSLogDiskSettingConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSLogDiskSettingExists("fortios_logdisk_setting.trname"),
+					resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "diskfull", "overwrite"),
+					resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "dlp_archive_quota", "0"),
+					resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "full_final_warning_threshold", "95"),
+					resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "full_first_warning_threshold", "75"),
+					resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "full_second_warning_threshold", "90"),
+					resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "ips_archive", "enable"),
+					resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "log_quota", "0"),
+					resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "max_log_file_size", "20"),
+					resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "max_policy_packet_capture_size", "100"),
+					resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "maximum_log_age", "7"),
+					resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "report_quota", "0"),
+					resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "roll_day", "sunday"),
+					resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "roll_schedule", "daily"),
+					resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "roll_time", "00:00"),
+					resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "source_ip", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "status", "enable"),
+					resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "upload", "disable"),
+					resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "upload_delete_files", "enable"),
+					resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "upload_destination", "ftp-server"),
+					resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "upload_ssl_conn", "default"),
+					resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "uploadip", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "uploadport", "21"),
+					resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "uploadsched", "disable"),
+					resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "uploadtime", "00:00"),
+					resource.TestCheckResourceAttr("fortios_logdisk_setting.trname", "uploadtype", "traffic event virus webfilter IPS spamfilter dlp-archive anomaly voip dlp app-ctrl waf netscan gtp dns"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSLogDiskSettingExists(n string) resource.TestCheckFunc {

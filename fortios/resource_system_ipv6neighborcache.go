@@ -30,21 +30,21 @@ func resourceSystemIpv6NeighborCache() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"fosid": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Required: true,
+				Required:     true,
 			},
 			"interface": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
-				Required: true,
+				Required:     true,
 			},
 			"ipv6": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"mac": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 		},
@@ -140,7 +140,6 @@ func resourceSystemIpv6NeighborCacheRead(d *schema.ResourceData, m interface{}) 
 	return nil
 }
 
-
 func flattenSystemIpv6NeighborCacheId(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -157,10 +156,8 @@ func flattenSystemIpv6NeighborCacheMac(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
-
 func refreshObjectSystemIpv6NeighborCache(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("fosid", flattenSystemIpv6NeighborCacheId(o["id"], d, "fosid")); err != nil {
 		if !fortiAPIPatch(o["id"]) {
@@ -186,7 +183,6 @@ func refreshObjectSystemIpv6NeighborCache(d *schema.ResourceData, o map[string]i
 		}
 	}
 
-
 	return nil
 }
 
@@ -195,7 +191,6 @@ func flattenSystemIpv6NeighborCacheFortiTestDebug(d *schema.ResourceData, fosdeb
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemIpv6NeighborCacheId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -213,10 +208,8 @@ func expandSystemIpv6NeighborCacheMac(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
-
 func getObjectSystemIpv6NeighborCache(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("fosid"); ok {
 		t, err := expandSystemIpv6NeighborCacheId(d, v, "fosid")
@@ -254,7 +247,5 @@ func getObjectSystemIpv6NeighborCache(d *schema.ResourceData) (*map[string]inter
 		}
 	}
 
-
 	return &obj, nil
 }
-

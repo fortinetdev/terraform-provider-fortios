@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,43 +5,44 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSUserLocal_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    var0 := "var0" + rname
-    log.Printf(var0)
-    log.Printf("TestAccFortiOSUserLocal_basic %s", rname)
+	rname := acctest.RandString(8)
+	var0 := "var0" + rname
+	log.Printf(var0)
+	log.Printf("TestAccFortiOSUserLocal_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSUserLocalConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSUserLocalExists("fortios_user_local.trname"),
-                    resource.TestCheckResourceAttr("fortios_user_local.trname", "auth_concurrent_override", "disable"),
-                    resource.TestCheckResourceAttr("fortios_user_local.trname", "auth_concurrent_value", "0"),
-                    resource.TestCheckResourceAttr("fortios_user_local.trname", "authtimeout", "0"),
-                    resource.TestCheckResourceAttr("fortios_user_local.trname", "ldap_server", var0),
-                    resource.TestCheckResourceAttr("fortios_user_local.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_user_local.trname", "passwd_time", "0000-00-00 00:00:00"),
-                    resource.TestCheckResourceAttr("fortios_user_local.trname", "sms_server", "fortiguard"),
-                    resource.TestCheckResourceAttr("fortios_user_local.trname", "status", "enable"),
-                    resource.TestCheckResourceAttr("fortios_user_local.trname", "two_factor", "disable"),
-                    resource.TestCheckResourceAttr("fortios_user_local.trname", "type", "ldap"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSUserLocalConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSUserLocalExists("fortios_user_local.trname"),
+					resource.TestCheckResourceAttr("fortios_user_local.trname", "auth_concurrent_override", "disable"),
+					resource.TestCheckResourceAttr("fortios_user_local.trname", "auth_concurrent_value", "0"),
+					resource.TestCheckResourceAttr("fortios_user_local.trname", "authtimeout", "0"),
+					resource.TestCheckResourceAttr("fortios_user_local.trname", "ldap_server", var0),
+					resource.TestCheckResourceAttr("fortios_user_local.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_user_local.trname", "passwd_time", "0000-00-00 00:00:00"),
+					resource.TestCheckResourceAttr("fortios_user_local.trname", "sms_server", "fortiguard"),
+					resource.TestCheckResourceAttr("fortios_user_local.trname", "status", "enable"),
+					resource.TestCheckResourceAttr("fortios_user_local.trname", "two_factor", "disable"),
+					resource.TestCheckResourceAttr("fortios_user_local.trname", "type", "ldap"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSUserLocalExists(n string) resource.TestCheckFunc {

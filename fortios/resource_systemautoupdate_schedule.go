@@ -30,25 +30,24 @@ func resourceSystemAutoupdateSchedule() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"frequency": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"time": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"day": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 		},
 	}
 }
-
 
 func resourceSystemAutoupdateScheduleUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -115,7 +114,6 @@ func resourceSystemAutoupdateScheduleRead(d *schema.ResourceData, m interface{})
 	return nil
 }
 
-
 func flattenSystemAutoupdateScheduleStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -132,10 +130,8 @@ func flattenSystemAutoupdateScheduleDay(v interface{}, d *schema.ResourceData, p
 	return v
 }
 
-
 func refreshObjectSystemAutoupdateSchedule(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("status", flattenSystemAutoupdateScheduleStatus(o["status"], d, "status")); err != nil {
 		if !fortiAPIPatch(o["status"]) {
@@ -161,7 +157,6 @@ func refreshObjectSystemAutoupdateSchedule(d *schema.ResourceData, o map[string]
 		}
 	}
 
-
 	return nil
 }
 
@@ -170,7 +165,6 @@ func flattenSystemAutoupdateScheduleFortiTestDebug(d *schema.ResourceData, fosde
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemAutoupdateScheduleStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -188,10 +182,8 @@ func expandSystemAutoupdateScheduleDay(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
-
 func getObjectSystemAutoupdateSchedule(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("status"); ok {
 		t, err := expandSystemAutoupdateScheduleStatus(d, v, "status")
@@ -229,7 +221,5 @@ func getObjectSystemAutoupdateSchedule(d *schema.ResourceData) (*map[string]inte
 		}
 	}
 
-
 	return &obj, nil
 }
-

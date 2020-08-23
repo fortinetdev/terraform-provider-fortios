@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,38 +5,39 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSUserDomainController_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    var0 := "var0" + rname
-    log.Printf(var0)
-    log.Printf("TestAccFortiOSUserDomainController_basic %s", rname)
+	rname := acctest.RandString(8)
+	var0 := "var0" + rname
+	log.Printf(var0)
+	log.Printf("TestAccFortiOSUserDomainController_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSUserDomainControllerConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSUserDomainControllerExists("fortios_user_domaincontroller.trname"),
-                    resource.TestCheckResourceAttr("fortios_user_domaincontroller.trname", "domain_name", "s.com"),
-                    resource.TestCheckResourceAttr("fortios_user_domaincontroller.trname", "ip_address", "1.1.1.1"),
-                    resource.TestCheckResourceAttr("fortios_user_domaincontroller.trname", "ldap_server", var0),
-                    resource.TestCheckResourceAttr("fortios_user_domaincontroller.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_user_domaincontroller.trname", "port", "445"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSUserDomainControllerConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSUserDomainControllerExists("fortios_user_domaincontroller.trname"),
+					resource.TestCheckResourceAttr("fortios_user_domaincontroller.trname", "domain_name", "s.com"),
+					resource.TestCheckResourceAttr("fortios_user_domaincontroller.trname", "ip_address", "1.1.1.1"),
+					resource.TestCheckResourceAttr("fortios_user_domaincontroller.trname", "ldap_server", var0),
+					resource.TestCheckResourceAttr("fortios_user_domaincontroller.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_user_domaincontroller.trname", "port", "445"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSUserDomainControllerExists(n string) resource.TestCheckFunc {

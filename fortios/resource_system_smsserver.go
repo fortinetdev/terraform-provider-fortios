@@ -30,15 +30,15 @@ func resourceSystemSmsServer() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"mail_server": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Required: true,
+				Required:     true,
 			},
 		},
 	}
@@ -133,7 +133,6 @@ func resourceSystemSmsServerRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenSystemSmsServerName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -142,10 +141,8 @@ func flattenSystemSmsServerMailServer(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
-
 func refreshObjectSystemSmsServer(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenSystemSmsServerName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -159,7 +156,6 @@ func refreshObjectSystemSmsServer(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-
 	return nil
 }
 
@@ -169,7 +165,6 @@ func flattenSystemSmsServerFortiTestDebug(d *schema.ResourceData, fosdebugsn int
 	log.Printf("ER List: %v", e)
 }
 
-
 func expandSystemSmsServerName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
 }
@@ -178,10 +173,8 @@ func expandSystemSmsServerMailServer(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
-
 func getObjectSystemSmsServer(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandSystemSmsServerName(d, v, "name")
@@ -201,7 +194,5 @@ func getObjectSystemSmsServer(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-
 	return &obj, nil
 }
-

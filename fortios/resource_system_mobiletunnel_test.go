@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,45 +5,46 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSystemMobileTunnel_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSystemMobileTunnel_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSystemMobileTunnel_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSystemMobileTunnelConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSystemMobileTunnelExists("fortios_system_mobiletunnel.trname"),
-                    resource.TestCheckResourceAttr("fortios_system_mobiletunnel.trname", "hash_algorithm", "hmac-md5"),
-                    resource.TestCheckResourceAttr("fortios_system_mobiletunnel.trname", "home_address", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_system_mobiletunnel.trname", "home_agent", "1.1.1.1"),
-                    resource.TestCheckResourceAttr("fortios_system_mobiletunnel.trname", "lifetime", "65535"),
-                    resource.TestCheckResourceAttr("fortios_system_mobiletunnel.trname", "n_mhae_key", "'ENC M2wyM3DcnUhqgich7vsLk5oVuPAI9LTkcFNt0c3jI1ujC6w1XBot7gsRAf2S8X5dagfUnJGhZ5LrQxw21e4y8oXuCOLp8MmaRZbCkxYCAl1wm/wVY3aNzVk2+jE='"),
-                    resource.TestCheckResourceAttr("fortios_system_mobiletunnel.trname", "n_mhae_key_type", "ascii"),
-                    resource.TestCheckResourceAttr("fortios_system_mobiletunnel.trname", "n_mhae_spi", "256"),
-                    resource.TestCheckResourceAttr("fortios_system_mobiletunnel.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_system_mobiletunnel.trname", "reg_interval", "5"),
-                    resource.TestCheckResourceAttr("fortios_system_mobiletunnel.trname", "reg_retry", "3"),
-                    resource.TestCheckResourceAttr("fortios_system_mobiletunnel.trname", "renew_interval", "60"),
-                    resource.TestCheckResourceAttr("fortios_system_mobiletunnel.trname", "roaming_interface", "port3"),
-                    resource.TestCheckResourceAttr("fortios_system_mobiletunnel.trname", "status", "disable"),
-                    resource.TestCheckResourceAttr("fortios_system_mobiletunnel.trname", "tunnel_mode", "gre"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSystemMobileTunnelConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSystemMobileTunnelExists("fortios_system_mobiletunnel.trname"),
+					resource.TestCheckResourceAttr("fortios_system_mobiletunnel.trname", "hash_algorithm", "hmac-md5"),
+					resource.TestCheckResourceAttr("fortios_system_mobiletunnel.trname", "home_address", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_system_mobiletunnel.trname", "home_agent", "1.1.1.1"),
+					resource.TestCheckResourceAttr("fortios_system_mobiletunnel.trname", "lifetime", "65535"),
+					resource.TestCheckResourceAttr("fortios_system_mobiletunnel.trname", "n_mhae_key", "'ENC M2wyM3DcnUhqgich7vsLk5oVuPAI9LTkcFNt0c3jI1ujC6w1XBot7gsRAf2S8X5dagfUnJGhZ5LrQxw21e4y8oXuCOLp8MmaRZbCkxYCAl1wm/wVY3aNzVk2+jE='"),
+					resource.TestCheckResourceAttr("fortios_system_mobiletunnel.trname", "n_mhae_key_type", "ascii"),
+					resource.TestCheckResourceAttr("fortios_system_mobiletunnel.trname", "n_mhae_spi", "256"),
+					resource.TestCheckResourceAttr("fortios_system_mobiletunnel.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_system_mobiletunnel.trname", "reg_interval", "5"),
+					resource.TestCheckResourceAttr("fortios_system_mobiletunnel.trname", "reg_retry", "3"),
+					resource.TestCheckResourceAttr("fortios_system_mobiletunnel.trname", "renew_interval", "60"),
+					resource.TestCheckResourceAttr("fortios_system_mobiletunnel.trname", "roaming_interface", "port3"),
+					resource.TestCheckResourceAttr("fortios_system_mobiletunnel.trname", "status", "disable"),
+					resource.TestCheckResourceAttr("fortios_system_mobiletunnel.trname", "tunnel_mode", "gre"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSystemMobileTunnelExists(n string) resource.TestCheckFunc {

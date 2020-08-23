@@ -30,20 +30,19 @@ func resourceSwitchControllerIgmpSnooping() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"aging_time": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(15, 3600),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"flood_unknown_multicast": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceSwitchControllerIgmpSnoopingUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -110,7 +109,6 @@ func resourceSwitchControllerIgmpSnoopingRead(d *schema.ResourceData, m interfac
 	return nil
 }
 
-
 func flattenSwitchControllerIgmpSnoopingAgingTime(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -119,10 +117,8 @@ func flattenSwitchControllerIgmpSnoopingFloodUnknownMulticast(v interface{}, d *
 	return v
 }
 
-
 func refreshObjectSwitchControllerIgmpSnooping(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("aging_time", flattenSwitchControllerIgmpSnoopingAgingTime(o["aging-time"], d, "aging_time")); err != nil {
 		if !fortiAPIPatch(o["aging-time"]) {
@@ -136,7 +132,6 @@ func refreshObjectSwitchControllerIgmpSnooping(d *schema.ResourceData, o map[str
 		}
 	}
 
-
 	return nil
 }
 
@@ -146,7 +141,6 @@ func flattenSwitchControllerIgmpSnoopingFortiTestDebug(d *schema.ResourceData, f
 	log.Printf("ER List: %v", e)
 }
 
-
 func expandSwitchControllerIgmpSnoopingAgingTime(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
 }
@@ -155,10 +149,8 @@ func expandSwitchControllerIgmpSnoopingFloodUnknownMulticast(d *schema.ResourceD
 	return v, nil
 }
 
-
 func getObjectSwitchControllerIgmpSnooping(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("aging_time"); ok {
 		t, err := expandSwitchControllerIgmpSnoopingAgingTime(d, v, "aging_time")
@@ -178,7 +170,5 @@ func getObjectSwitchControllerIgmpSnooping(d *schema.ResourceData) (*map[string]
 		}
 	}
 
-
 	return &obj, nil
 }
-

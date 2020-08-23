@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,33 +5,34 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSFirewallInternetServiceExtension_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSFirewallInternetServiceExtension_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSFirewallInternetServiceExtension_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSFirewallInternetServiceExtensionConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSFirewallInternetServiceExtensionExists("fortios_firewall_internetserviceextension.trname"),
-                    resource.TestCheckResourceAttr("fortios_firewall_internetserviceextension.trname", "comment", "EIWE"),
-                    resource.TestCheckResourceAttr("fortios_firewall_internetserviceextension.trname", "fosid", "65536"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSFirewallInternetServiceExtensionConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSFirewallInternetServiceExtensionExists("fortios_firewall_internetserviceextension.trname"),
+					resource.TestCheckResourceAttr("fortios_firewall_internetserviceextension.trname", "comment", "EIWE"),
+					resource.TestCheckResourceAttr("fortios_firewall_internetserviceextension.trname", "fosid", "65536"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSFirewallInternetServiceExtensionExists(n string) resource.TestCheckFunc {

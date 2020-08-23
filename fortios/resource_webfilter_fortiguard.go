@@ -30,76 +30,75 @@ func resourceWebfilterFortiguard() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"cache_mode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"cache_prefix_match": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"cache_mem_percent": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 15),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ovrd_auth_port_http": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ovrd_auth_port_https": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ovrd_auth_port_https_flow": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ovrd_auth_port_warning": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ovrd_auth_https": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"warn_auth_https": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"close_ports": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"request_packet_size_limit": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(576, 10000),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ovrd_auth_port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
 }
-
 
 func resourceWebfilterFortiguardUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -166,7 +165,6 @@ func resourceWebfilterFortiguardRead(d *schema.ResourceData, m interface{}) erro
 	return nil
 }
 
-
 func flattenWebfilterFortiguardCacheMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -215,10 +213,8 @@ func flattenWebfilterFortiguardOvrdAuthPort(v interface{}, d *schema.ResourceDat
 	return v
 }
 
-
 func refreshObjectWebfilterFortiguard(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("cache_mode", flattenWebfilterFortiguardCacheMode(o["cache-mode"], d, "cache_mode")); err != nil {
 		if !fortiAPIPatch(o["cache-mode"]) {
@@ -292,7 +288,6 @@ func refreshObjectWebfilterFortiguard(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
-
 	return nil
 }
 
@@ -301,7 +296,6 @@ func flattenWebfilterFortiguardFortiTestDebug(d *schema.ResourceData, fosdebugsn
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandWebfilterFortiguardCacheMode(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -351,10 +345,8 @@ func expandWebfilterFortiguardOvrdAuthPort(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
-
 func getObjectWebfilterFortiguard(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("cache_mode"); ok {
 		t, err := expandWebfilterFortiguardCacheMode(d, v, "cache_mode")
@@ -464,7 +456,5 @@ func getObjectWebfilterFortiguard(d *schema.ResourceData) (*map[string]interface
 		}
 	}
 
-
 	return &obj, nil
 }
-

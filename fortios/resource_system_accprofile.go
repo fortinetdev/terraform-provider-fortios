@@ -30,255 +30,255 @@ func resourceSystemAccprofile() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"scope": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"comments": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
+				Optional:     true,
 			},
 			"secfabgrp": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ftviewgrp": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"authgrp": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"sysgrp": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"netgrp": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"loggrp": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"fwgrp": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"vpngrp": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"utmgrp": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"wanoptgrp": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"wifi": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"netgrp_permission": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"cfg": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"packet_capture": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"route_cfg": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 					},
 				},
-			},			"sysgrp_permission": &schema.Schema{
-				Type: schema.TypeList,
+			}, "sysgrp_permission": &schema.Schema{
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"admin": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"upd": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"cfg": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"mnt": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 					},
 				},
-			},			"fwgrp_permission": &schema.Schema{
-				Type: schema.TypeList,
+			}, "fwgrp_permission": &schema.Schema{
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"policy": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"address": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"service": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"schedule": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 					},
 				},
-			},			"loggrp_permission": &schema.Schema{
-				Type: schema.TypeList,
+			}, "loggrp_permission": &schema.Schema{
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"config": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"data_access": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"report_access": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"threat_weight": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 					},
 				},
-			},			"utmgrp_permission": &schema.Schema{
-				Type: schema.TypeList,
+			}, "utmgrp_permission": &schema.Schema{
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"antivirus": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"ips": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"webfilter": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"spamfilter": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"data_loss_prevention": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"application_control": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"icap": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"voip": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"waf": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"dnsfilter": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"endpoint_control": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 					},
 				},
-			},			"admintimeout_override": &schema.Schema{
-				Type: schema.TypeString,
+			}, "admintimeout_override": &schema.Schema{
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"admintimeout": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 480),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
@@ -373,7 +373,6 @@ func resourceSystemAccprofileRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenSystemAccprofileName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -439,21 +438,20 @@ func flattenSystemAccprofileNetgrpPermission(v interface{}, d *schema.ResourceDa
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "cfg"
+	pre_append = pre + ".0." + "cfg"
 	if _, ok := i["cfg"]; ok {
 		result["cfg"] = flattenSystemAccprofileNetgrpPermissionCfg(i["cfg"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "packet_capture"
+	pre_append = pre + ".0." + "packet_capture"
 	if _, ok := i["packet-capture"]; ok {
 		result["packet_capture"] = flattenSystemAccprofileNetgrpPermissionPacketCapture(i["packet-capture"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "route_cfg"
+	pre_append = pre + ".0." + "route_cfg"
 	if _, ok := i["route-cfg"]; ok {
 		result["route_cfg"] = flattenSystemAccprofileNetgrpPermissionRouteCfg(i["route-cfg"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -480,26 +478,25 @@ func flattenSystemAccprofileSysgrpPermission(v interface{}, d *schema.ResourceDa
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "admin"
+	pre_append = pre + ".0." + "admin"
 	if _, ok := i["admin"]; ok {
 		result["admin"] = flattenSystemAccprofileSysgrpPermissionAdmin(i["admin"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "upd"
+	pre_append = pre + ".0." + "upd"
 	if _, ok := i["upd"]; ok {
 		result["upd"] = flattenSystemAccprofileSysgrpPermissionUpd(i["upd"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "cfg"
+	pre_append = pre + ".0." + "cfg"
 	if _, ok := i["cfg"]; ok {
 		result["cfg"] = flattenSystemAccprofileSysgrpPermissionCfg(i["cfg"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "mnt"
+	pre_append = pre + ".0." + "mnt"
 	if _, ok := i["mnt"]; ok {
 		result["mnt"] = flattenSystemAccprofileSysgrpPermissionMnt(i["mnt"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -530,26 +527,25 @@ func flattenSystemAccprofileFwgrpPermission(v interface{}, d *schema.ResourceDat
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "policy"
+	pre_append = pre + ".0." + "policy"
 	if _, ok := i["policy"]; ok {
 		result["policy"] = flattenSystemAccprofileFwgrpPermissionPolicy(i["policy"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "address"
+	pre_append = pre + ".0." + "address"
 	if _, ok := i["address"]; ok {
 		result["address"] = flattenSystemAccprofileFwgrpPermissionAddress(i["address"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "service"
+	pre_append = pre + ".0." + "service"
 	if _, ok := i["service"]; ok {
 		result["service"] = flattenSystemAccprofileFwgrpPermissionService(i["service"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "schedule"
+	pre_append = pre + ".0." + "schedule"
 	if _, ok := i["schedule"]; ok {
 		result["schedule"] = flattenSystemAccprofileFwgrpPermissionSchedule(i["schedule"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -580,26 +576,25 @@ func flattenSystemAccprofileLoggrpPermission(v interface{}, d *schema.ResourceDa
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "config"
+	pre_append = pre + ".0." + "config"
 	if _, ok := i["config"]; ok {
 		result["config"] = flattenSystemAccprofileLoggrpPermissionConfig(i["config"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "data_access"
+	pre_append = pre + ".0." + "data_access"
 	if _, ok := i["data-access"]; ok {
 		result["data_access"] = flattenSystemAccprofileLoggrpPermissionDataAccess(i["data-access"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "report_access"
+	pre_append = pre + ".0." + "report_access"
 	if _, ok := i["report-access"]; ok {
 		result["report_access"] = flattenSystemAccprofileLoggrpPermissionReportAccess(i["report-access"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "threat_weight"
+	pre_append = pre + ".0." + "threat_weight"
 	if _, ok := i["threat-weight"]; ok {
 		result["threat_weight"] = flattenSystemAccprofileLoggrpPermissionThreatWeight(i["threat-weight"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -630,61 +625,60 @@ func flattenSystemAccprofileUtmgrpPermission(v interface{}, d *schema.ResourceDa
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "antivirus"
+	pre_append = pre + ".0." + "antivirus"
 	if _, ok := i["antivirus"]; ok {
 		result["antivirus"] = flattenSystemAccprofileUtmgrpPermissionAntivirus(i["antivirus"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "ips"
+	pre_append = pre + ".0." + "ips"
 	if _, ok := i["ips"]; ok {
 		result["ips"] = flattenSystemAccprofileUtmgrpPermissionIps(i["ips"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "webfilter"
+	pre_append = pre + ".0." + "webfilter"
 	if _, ok := i["webfilter"]; ok {
 		result["webfilter"] = flattenSystemAccprofileUtmgrpPermissionWebfilter(i["webfilter"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "spamfilter"
+	pre_append = pre + ".0." + "spamfilter"
 	if _, ok := i["spamfilter"]; ok {
 		result["spamfilter"] = flattenSystemAccprofileUtmgrpPermissionSpamfilter(i["spamfilter"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "data_loss_prevention"
+	pre_append = pre + ".0." + "data_loss_prevention"
 	if _, ok := i["data-loss-prevention"]; ok {
 		result["data_loss_prevention"] = flattenSystemAccprofileUtmgrpPermissionDataLossPrevention(i["data-loss-prevention"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "application_control"
+	pre_append = pre + ".0." + "application_control"
 	if _, ok := i["application-control"]; ok {
 		result["application_control"] = flattenSystemAccprofileUtmgrpPermissionApplicationControl(i["application-control"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "icap"
+	pre_append = pre + ".0." + "icap"
 	if _, ok := i["icap"]; ok {
 		result["icap"] = flattenSystemAccprofileUtmgrpPermissionIcap(i["icap"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "voip"
+	pre_append = pre + ".0." + "voip"
 	if _, ok := i["voip"]; ok {
 		result["voip"] = flattenSystemAccprofileUtmgrpPermissionVoip(i["voip"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "waf"
+	pre_append = pre + ".0." + "waf"
 	if _, ok := i["waf"]; ok {
 		result["waf"] = flattenSystemAccprofileUtmgrpPermissionWaf(i["waf"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "dnsfilter"
+	pre_append = pre + ".0." + "dnsfilter"
 	if _, ok := i["dnsfilter"]; ok {
 		result["dnsfilter"] = flattenSystemAccprofileUtmgrpPermissionDnsfilter(i["dnsfilter"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "endpoint_control"
+	pre_append = pre + ".0." + "endpoint_control"
 	if _, ok := i["endpoint-control"]; ok {
 		result["endpoint_control"] = flattenSystemAccprofileUtmgrpPermissionEndpointControl(i["endpoint-control"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -742,10 +736,8 @@ func flattenSystemAccprofileAdmintimeout(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
-
 func refreshObjectSystemAccprofile(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenSystemAccprofileName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -831,85 +823,85 @@ func refreshObjectSystemAccprofile(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("netgrp_permission", flattenSystemAccprofileNetgrpPermission(o["netgrp-permission"], d, "netgrp_permission")); err != nil {
-            if !fortiAPIPatch(o["netgrp-permission"]) {
-                return fmt.Errorf("Error reading netgrp_permission: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("netgrp_permission"); ok {
-            if err = d.Set("netgrp_permission", flattenSystemAccprofileNetgrpPermission(o["netgrp-permission"], d, "netgrp_permission")); err != nil {
-                if !fortiAPIPatch(o["netgrp-permission"]) {
-                    return fmt.Errorf("Error reading netgrp_permission: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("netgrp_permission", flattenSystemAccprofileNetgrpPermission(o["netgrp-permission"], d, "netgrp_permission")); err != nil {
+			if !fortiAPIPatch(o["netgrp-permission"]) {
+				return fmt.Errorf("Error reading netgrp_permission: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("netgrp_permission"); ok {
+			if err = d.Set("netgrp_permission", flattenSystemAccprofileNetgrpPermission(o["netgrp-permission"], d, "netgrp_permission")); err != nil {
+				if !fortiAPIPatch(o["netgrp-permission"]) {
+					return fmt.Errorf("Error reading netgrp_permission: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("sysgrp_permission", flattenSystemAccprofileSysgrpPermission(o["sysgrp-permission"], d, "sysgrp_permission")); err != nil {
-            if !fortiAPIPatch(o["sysgrp-permission"]) {
-                return fmt.Errorf("Error reading sysgrp_permission: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("sysgrp_permission"); ok {
-            if err = d.Set("sysgrp_permission", flattenSystemAccprofileSysgrpPermission(o["sysgrp-permission"], d, "sysgrp_permission")); err != nil {
-                if !fortiAPIPatch(o["sysgrp-permission"]) {
-                    return fmt.Errorf("Error reading sysgrp_permission: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("sysgrp_permission", flattenSystemAccprofileSysgrpPermission(o["sysgrp-permission"], d, "sysgrp_permission")); err != nil {
+			if !fortiAPIPatch(o["sysgrp-permission"]) {
+				return fmt.Errorf("Error reading sysgrp_permission: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("sysgrp_permission"); ok {
+			if err = d.Set("sysgrp_permission", flattenSystemAccprofileSysgrpPermission(o["sysgrp-permission"], d, "sysgrp_permission")); err != nil {
+				if !fortiAPIPatch(o["sysgrp-permission"]) {
+					return fmt.Errorf("Error reading sysgrp_permission: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("fwgrp_permission", flattenSystemAccprofileFwgrpPermission(o["fwgrp-permission"], d, "fwgrp_permission")); err != nil {
-            if !fortiAPIPatch(o["fwgrp-permission"]) {
-                return fmt.Errorf("Error reading fwgrp_permission: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("fwgrp_permission"); ok {
-            if err = d.Set("fwgrp_permission", flattenSystemAccprofileFwgrpPermission(o["fwgrp-permission"], d, "fwgrp_permission")); err != nil {
-                if !fortiAPIPatch(o["fwgrp-permission"]) {
-                    return fmt.Errorf("Error reading fwgrp_permission: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("fwgrp_permission", flattenSystemAccprofileFwgrpPermission(o["fwgrp-permission"], d, "fwgrp_permission")); err != nil {
+			if !fortiAPIPatch(o["fwgrp-permission"]) {
+				return fmt.Errorf("Error reading fwgrp_permission: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("fwgrp_permission"); ok {
+			if err = d.Set("fwgrp_permission", flattenSystemAccprofileFwgrpPermission(o["fwgrp-permission"], d, "fwgrp_permission")); err != nil {
+				if !fortiAPIPatch(o["fwgrp-permission"]) {
+					return fmt.Errorf("Error reading fwgrp_permission: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("loggrp_permission", flattenSystemAccprofileLoggrpPermission(o["loggrp-permission"], d, "loggrp_permission")); err != nil {
-            if !fortiAPIPatch(o["loggrp-permission"]) {
-                return fmt.Errorf("Error reading loggrp_permission: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("loggrp_permission"); ok {
-            if err = d.Set("loggrp_permission", flattenSystemAccprofileLoggrpPermission(o["loggrp-permission"], d, "loggrp_permission")); err != nil {
-                if !fortiAPIPatch(o["loggrp-permission"]) {
-                    return fmt.Errorf("Error reading loggrp_permission: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("loggrp_permission", flattenSystemAccprofileLoggrpPermission(o["loggrp-permission"], d, "loggrp_permission")); err != nil {
+			if !fortiAPIPatch(o["loggrp-permission"]) {
+				return fmt.Errorf("Error reading loggrp_permission: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("loggrp_permission"); ok {
+			if err = d.Set("loggrp_permission", flattenSystemAccprofileLoggrpPermission(o["loggrp-permission"], d, "loggrp_permission")); err != nil {
+				if !fortiAPIPatch(o["loggrp-permission"]) {
+					return fmt.Errorf("Error reading loggrp_permission: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("utmgrp_permission", flattenSystemAccprofileUtmgrpPermission(o["utmgrp-permission"], d, "utmgrp_permission")); err != nil {
-            if !fortiAPIPatch(o["utmgrp-permission"]) {
-                return fmt.Errorf("Error reading utmgrp_permission: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("utmgrp_permission"); ok {
-            if err = d.Set("utmgrp_permission", flattenSystemAccprofileUtmgrpPermission(o["utmgrp-permission"], d, "utmgrp_permission")); err != nil {
-                if !fortiAPIPatch(o["utmgrp-permission"]) {
-                    return fmt.Errorf("Error reading utmgrp_permission: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("utmgrp_permission", flattenSystemAccprofileUtmgrpPermission(o["utmgrp-permission"], d, "utmgrp_permission")); err != nil {
+			if !fortiAPIPatch(o["utmgrp-permission"]) {
+				return fmt.Errorf("Error reading utmgrp_permission: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("utmgrp_permission"); ok {
+			if err = d.Set("utmgrp_permission", flattenSystemAccprofileUtmgrpPermission(o["utmgrp-permission"], d, "utmgrp_permission")); err != nil {
+				if !fortiAPIPatch(o["utmgrp-permission"]) {
+					return fmt.Errorf("Error reading utmgrp_permission: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("admintimeout_override", flattenSystemAccprofileAdmintimeoutOverride(o["admintimeout-override"], d, "admintimeout_override")); err != nil {
 		if !fortiAPIPatch(o["admintimeout-override"]) {
@@ -923,7 +915,6 @@ func refreshObjectSystemAccprofile(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-
 	return nil
 }
 
@@ -932,7 +923,6 @@ func flattenSystemAccprofileFortiTestDebug(d *schema.ResourceData, fosdebugsn in
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemAccprofileName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -999,16 +989,16 @@ func expandSystemAccprofileNetgrpPermission(d *schema.ResourceData, v interface{
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "cfg"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "cfg"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["cfg"], _ = expandSystemAccprofileNetgrpPermissionCfg(d, i["cfg"], pre_append)
 	}
-	pre_append =  pre + ".0." + "packet_capture"
+	pre_append = pre + ".0." + "packet_capture"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["packet-capture"], _ = expandSystemAccprofileNetgrpPermissionPacketCapture(d, i["packet_capture"], pre_append)
 	}
-	pre_append =  pre + ".0." + "route_cfg"
+	pre_append = pre + ".0." + "route_cfg"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["route-cfg"], _ = expandSystemAccprofileNetgrpPermissionRouteCfg(d, i["route_cfg"], pre_append)
 	}
@@ -1037,20 +1027,20 @@ func expandSystemAccprofileSysgrpPermission(d *schema.ResourceData, v interface{
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "admin"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "admin"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["admin"], _ = expandSystemAccprofileSysgrpPermissionAdmin(d, i["admin"], pre_append)
 	}
-	pre_append =  pre + ".0." + "upd"
+	pre_append = pre + ".0." + "upd"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["upd"], _ = expandSystemAccprofileSysgrpPermissionUpd(d, i["upd"], pre_append)
 	}
-	pre_append =  pre + ".0." + "cfg"
+	pre_append = pre + ".0." + "cfg"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["cfg"], _ = expandSystemAccprofileSysgrpPermissionCfg(d, i["cfg"], pre_append)
 	}
-	pre_append =  pre + ".0." + "mnt"
+	pre_append = pre + ".0." + "mnt"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["mnt"], _ = expandSystemAccprofileSysgrpPermissionMnt(d, i["mnt"], pre_append)
 	}
@@ -1083,20 +1073,20 @@ func expandSystemAccprofileFwgrpPermission(d *schema.ResourceData, v interface{}
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "policy"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "policy"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["policy"], _ = expandSystemAccprofileFwgrpPermissionPolicy(d, i["policy"], pre_append)
 	}
-	pre_append =  pre + ".0." + "address"
+	pre_append = pre + ".0." + "address"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["address"], _ = expandSystemAccprofileFwgrpPermissionAddress(d, i["address"], pre_append)
 	}
-	pre_append =  pre + ".0." + "service"
+	pre_append = pre + ".0." + "service"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["service"], _ = expandSystemAccprofileFwgrpPermissionService(d, i["service"], pre_append)
 	}
-	pre_append =  pre + ".0." + "schedule"
+	pre_append = pre + ".0." + "schedule"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["schedule"], _ = expandSystemAccprofileFwgrpPermissionSchedule(d, i["schedule"], pre_append)
 	}
@@ -1129,20 +1119,20 @@ func expandSystemAccprofileLoggrpPermission(d *schema.ResourceData, v interface{
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "config"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "config"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["config"], _ = expandSystemAccprofileLoggrpPermissionConfig(d, i["config"], pre_append)
 	}
-	pre_append =  pre + ".0." + "data_access"
+	pre_append = pre + ".0." + "data_access"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["data-access"], _ = expandSystemAccprofileLoggrpPermissionDataAccess(d, i["data_access"], pre_append)
 	}
-	pre_append =  pre + ".0." + "report_access"
+	pre_append = pre + ".0." + "report_access"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["report-access"], _ = expandSystemAccprofileLoggrpPermissionReportAccess(d, i["report_access"], pre_append)
 	}
-	pre_append =  pre + ".0." + "threat_weight"
+	pre_append = pre + ".0." + "threat_weight"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["threat-weight"], _ = expandSystemAccprofileLoggrpPermissionThreatWeight(d, i["threat_weight"], pre_append)
 	}
@@ -1175,48 +1165,48 @@ func expandSystemAccprofileUtmgrpPermission(d *schema.ResourceData, v interface{
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "antivirus"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "antivirus"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["antivirus"], _ = expandSystemAccprofileUtmgrpPermissionAntivirus(d, i["antivirus"], pre_append)
 	}
-	pre_append =  pre + ".0." + "ips"
+	pre_append = pre + ".0." + "ips"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["ips"], _ = expandSystemAccprofileUtmgrpPermissionIps(d, i["ips"], pre_append)
 	}
-	pre_append =  pre + ".0." + "webfilter"
+	pre_append = pre + ".0." + "webfilter"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["webfilter"], _ = expandSystemAccprofileUtmgrpPermissionWebfilter(d, i["webfilter"], pre_append)
 	}
-	pre_append =  pre + ".0." + "spamfilter"
+	pre_append = pre + ".0." + "spamfilter"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["spamfilter"], _ = expandSystemAccprofileUtmgrpPermissionSpamfilter(d, i["spamfilter"], pre_append)
 	}
-	pre_append =  pre + ".0." + "data_loss_prevention"
+	pre_append = pre + ".0." + "data_loss_prevention"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["data-loss-prevention"], _ = expandSystemAccprofileUtmgrpPermissionDataLossPrevention(d, i["data_loss_prevention"], pre_append)
 	}
-	pre_append =  pre + ".0." + "application_control"
+	pre_append = pre + ".0." + "application_control"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["application-control"], _ = expandSystemAccprofileUtmgrpPermissionApplicationControl(d, i["application_control"], pre_append)
 	}
-	pre_append =  pre + ".0." + "icap"
+	pre_append = pre + ".0." + "icap"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["icap"], _ = expandSystemAccprofileUtmgrpPermissionIcap(d, i["icap"], pre_append)
 	}
-	pre_append =  pre + ".0." + "voip"
+	pre_append = pre + ".0." + "voip"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["voip"], _ = expandSystemAccprofileUtmgrpPermissionVoip(d, i["voip"], pre_append)
 	}
-	pre_append =  pre + ".0." + "waf"
+	pre_append = pre + ".0." + "waf"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["waf"], _ = expandSystemAccprofileUtmgrpPermissionWaf(d, i["waf"], pre_append)
 	}
-	pre_append =  pre + ".0." + "dnsfilter"
+	pre_append = pre + ".0." + "dnsfilter"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["dnsfilter"], _ = expandSystemAccprofileUtmgrpPermissionDnsfilter(d, i["dnsfilter"], pre_append)
 	}
-	pre_append =  pre + ".0." + "endpoint_control"
+	pre_append = pre + ".0." + "endpoint_control"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["endpoint-control"], _ = expandSystemAccprofileUtmgrpPermissionEndpointControl(d, i["endpoint_control"], pre_append)
 	}
@@ -1276,10 +1266,8 @@ func expandSystemAccprofileAdmintimeout(d *schema.ResourceData, v interface{}, p
 	return v, nil
 }
 
-
 func getObjectSystemAccprofile(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandSystemAccprofileName(d, v, "name")
@@ -1470,7 +1458,5 @@ func getObjectSystemAccprofile(d *schema.ResourceData) (*map[string]interface{},
 		}
 	}
 
-
 	return &obj, nil
 }
-

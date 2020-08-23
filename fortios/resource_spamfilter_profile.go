@@ -30,240 +30,240 @@ func resourceSpamfilterProfile() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"comment": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
+				Optional:     true,
 			},
 			"flow_based": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"replacemsg_group": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"spam_log": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"spam_log_fortiguard_response": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"spam_filtering": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"external": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"options": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"imap": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"log": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"action": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"tag_type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"tag_msg": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
-			},			"pop3": &schema.Schema{
-				Type: schema.TypeList,
+			}, "pop3": &schema.Schema{
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"log": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"action": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"tag_type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"tag_msg": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
-			},			"smtp": &schema.Schema{
-				Type: schema.TypeList,
+			}, "smtp": &schema.Schema{
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"log": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"action": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"tag_type": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"tag_msg": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 63),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"hdrip": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"local_override": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 					},
 				},
-			},			"mapi": &schema.Schema{
-				Type: schema.TypeList,
+			}, "mapi": &schema.Schema{
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"log": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"action": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 					},
 				},
-			},			"msn_hotmail": &schema.Schema{
-				Type: schema.TypeList,
+			}, "msn_hotmail": &schema.Schema{
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"log": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 					},
 				},
-			},			"yahoo_mail": &schema.Schema{
-				Type: schema.TypeList,
+			}, "yahoo_mail": &schema.Schema{
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"log": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 					},
 				},
-			},			"gmail": &schema.Schema{
-				Type: schema.TypeList,
+			}, "gmail": &schema.Schema{
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"log": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 					},
 				},
-			},			"spam_bword_threshold": &schema.Schema{
-				Type: schema.TypeInt,
+			}, "spam_bword_threshold": &schema.Schema{
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 2147483647),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"spam_bword_table": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"spam_bwl_table": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"spam_mheader_table": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"spam_rbl_table": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"spam_iptrust_table": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
@@ -358,7 +358,6 @@ func resourceSpamfilterProfileRead(d *schema.ResourceData, m interface{}) error 
 	return nil
 }
 
-
 func flattenSpamfilterProfileName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -404,26 +403,25 @@ func flattenSpamfilterProfileImap(v interface{}, d *schema.ResourceData, pre str
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := i["log"]; ok {
 		result["log"] = flattenSpamfilterProfileImapLog(i["log"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "action"
+	pre_append = pre + ".0." + "action"
 	if _, ok := i["action"]; ok {
 		result["action"] = flattenSpamfilterProfileImapAction(i["action"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "tag_type"
+	pre_append = pre + ".0." + "tag_type"
 	if _, ok := i["tag-type"]; ok {
 		result["tag_type"] = flattenSpamfilterProfileImapTagType(i["tag-type"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "tag_msg"
+	pre_append = pre + ".0." + "tag_msg"
 	if _, ok := i["tag-msg"]; ok {
 		result["tag_msg"] = flattenSpamfilterProfileImapTagMsg(i["tag-msg"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -454,26 +452,25 @@ func flattenSpamfilterProfilePop3(v interface{}, d *schema.ResourceData, pre str
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := i["log"]; ok {
 		result["log"] = flattenSpamfilterProfilePop3Log(i["log"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "action"
+	pre_append = pre + ".0." + "action"
 	if _, ok := i["action"]; ok {
 		result["action"] = flattenSpamfilterProfilePop3Action(i["action"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "tag_type"
+	pre_append = pre + ".0." + "tag_type"
 	if _, ok := i["tag-type"]; ok {
 		result["tag_type"] = flattenSpamfilterProfilePop3TagType(i["tag-type"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "tag_msg"
+	pre_append = pre + ".0." + "tag_msg"
 	if _, ok := i["tag-msg"]; ok {
 		result["tag_msg"] = flattenSpamfilterProfilePop3TagMsg(i["tag-msg"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -504,36 +501,35 @@ func flattenSpamfilterProfileSmtp(v interface{}, d *schema.ResourceData, pre str
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := i["log"]; ok {
 		result["log"] = flattenSpamfilterProfileSmtpLog(i["log"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "action"
+	pre_append = pre + ".0." + "action"
 	if _, ok := i["action"]; ok {
 		result["action"] = flattenSpamfilterProfileSmtpAction(i["action"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "tag_type"
+	pre_append = pre + ".0." + "tag_type"
 	if _, ok := i["tag-type"]; ok {
 		result["tag_type"] = flattenSpamfilterProfileSmtpTagType(i["tag-type"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "tag_msg"
+	pre_append = pre + ".0." + "tag_msg"
 	if _, ok := i["tag-msg"]; ok {
 		result["tag_msg"] = flattenSpamfilterProfileSmtpTagMsg(i["tag-msg"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "hdrip"
+	pre_append = pre + ".0." + "hdrip"
 	if _, ok := i["hdrip"]; ok {
 		result["hdrip"] = flattenSpamfilterProfileSmtpHdrip(i["hdrip"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "local_override"
+	pre_append = pre + ".0." + "local_override"
 	if _, ok := i["local-override"]; ok {
 		result["local_override"] = flattenSpamfilterProfileSmtpLocalOverride(i["local-override"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -572,16 +568,15 @@ func flattenSpamfilterProfileMapi(v interface{}, d *schema.ResourceData, pre str
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := i["log"]; ok {
 		result["log"] = flattenSpamfilterProfileMapiLog(i["log"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "action"
+	pre_append = pre + ".0." + "action"
 	if _, ok := i["action"]; ok {
 		result["action"] = flattenSpamfilterProfileMapiAction(i["action"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -604,11 +599,10 @@ func flattenSpamfilterProfileMsnHotmail(v interface{}, d *schema.ResourceData, p
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := i["log"]; ok {
 		result["log"] = flattenSpamfilterProfileMsnHotmailLog(i["log"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -627,11 +621,10 @@ func flattenSpamfilterProfileYahooMail(v interface{}, d *schema.ResourceData, pr
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := i["log"]; ok {
 		result["log"] = flattenSpamfilterProfileYahooMailLog(i["log"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -650,11 +643,10 @@ func flattenSpamfilterProfileGmail(v interface{}, d *schema.ResourceData, pre st
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "log"
+	pre_append = pre + ".0." + "log"
 	if _, ok := i["log"]; ok {
 		result["log"] = flattenSpamfilterProfileGmailLog(i["log"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -688,10 +680,8 @@ func flattenSpamfilterProfileSpamIptrustTable(v interface{}, d *schema.ResourceD
 	return v
 }
 
-
 func refreshObjectSpamfilterProfile(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenSpamfilterProfileName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -747,117 +737,117 @@ func refreshObjectSpamfilterProfile(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("imap", flattenSpamfilterProfileImap(o["imap"], d, "imap")); err != nil {
-            if !fortiAPIPatch(o["imap"]) {
-                return fmt.Errorf("Error reading imap: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("imap"); ok {
-            if err = d.Set("imap", flattenSpamfilterProfileImap(o["imap"], d, "imap")); err != nil {
-                if !fortiAPIPatch(o["imap"]) {
-                    return fmt.Errorf("Error reading imap: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("imap", flattenSpamfilterProfileImap(o["imap"], d, "imap")); err != nil {
+			if !fortiAPIPatch(o["imap"]) {
+				return fmt.Errorf("Error reading imap: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("imap"); ok {
+			if err = d.Set("imap", flattenSpamfilterProfileImap(o["imap"], d, "imap")); err != nil {
+				if !fortiAPIPatch(o["imap"]) {
+					return fmt.Errorf("Error reading imap: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("pop3", flattenSpamfilterProfilePop3(o["pop3"], d, "pop3")); err != nil {
-            if !fortiAPIPatch(o["pop3"]) {
-                return fmt.Errorf("Error reading pop3: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("pop3"); ok {
-            if err = d.Set("pop3", flattenSpamfilterProfilePop3(o["pop3"], d, "pop3")); err != nil {
-                if !fortiAPIPatch(o["pop3"]) {
-                    return fmt.Errorf("Error reading pop3: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("pop3", flattenSpamfilterProfilePop3(o["pop3"], d, "pop3")); err != nil {
+			if !fortiAPIPatch(o["pop3"]) {
+				return fmt.Errorf("Error reading pop3: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("pop3"); ok {
+			if err = d.Set("pop3", flattenSpamfilterProfilePop3(o["pop3"], d, "pop3")); err != nil {
+				if !fortiAPIPatch(o["pop3"]) {
+					return fmt.Errorf("Error reading pop3: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("smtp", flattenSpamfilterProfileSmtp(o["smtp"], d, "smtp")); err != nil {
-            if !fortiAPIPatch(o["smtp"]) {
-                return fmt.Errorf("Error reading smtp: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("smtp"); ok {
-            if err = d.Set("smtp", flattenSpamfilterProfileSmtp(o["smtp"], d, "smtp")); err != nil {
-                if !fortiAPIPatch(o["smtp"]) {
-                    return fmt.Errorf("Error reading smtp: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("smtp", flattenSpamfilterProfileSmtp(o["smtp"], d, "smtp")); err != nil {
+			if !fortiAPIPatch(o["smtp"]) {
+				return fmt.Errorf("Error reading smtp: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("smtp"); ok {
+			if err = d.Set("smtp", flattenSpamfilterProfileSmtp(o["smtp"], d, "smtp")); err != nil {
+				if !fortiAPIPatch(o["smtp"]) {
+					return fmt.Errorf("Error reading smtp: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("mapi", flattenSpamfilterProfileMapi(o["mapi"], d, "mapi")); err != nil {
-            if !fortiAPIPatch(o["mapi"]) {
-                return fmt.Errorf("Error reading mapi: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("mapi"); ok {
-            if err = d.Set("mapi", flattenSpamfilterProfileMapi(o["mapi"], d, "mapi")); err != nil {
-                if !fortiAPIPatch(o["mapi"]) {
-                    return fmt.Errorf("Error reading mapi: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("mapi", flattenSpamfilterProfileMapi(o["mapi"], d, "mapi")); err != nil {
+			if !fortiAPIPatch(o["mapi"]) {
+				return fmt.Errorf("Error reading mapi: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("mapi"); ok {
+			if err = d.Set("mapi", flattenSpamfilterProfileMapi(o["mapi"], d, "mapi")); err != nil {
+				if !fortiAPIPatch(o["mapi"]) {
+					return fmt.Errorf("Error reading mapi: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("msn_hotmail", flattenSpamfilterProfileMsnHotmail(o["msn-hotmail"], d, "msn_hotmail")); err != nil {
-            if !fortiAPIPatch(o["msn-hotmail"]) {
-                return fmt.Errorf("Error reading msn_hotmail: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("msn_hotmail"); ok {
-            if err = d.Set("msn_hotmail", flattenSpamfilterProfileMsnHotmail(o["msn-hotmail"], d, "msn_hotmail")); err != nil {
-                if !fortiAPIPatch(o["msn-hotmail"]) {
-                    return fmt.Errorf("Error reading msn_hotmail: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("msn_hotmail", flattenSpamfilterProfileMsnHotmail(o["msn-hotmail"], d, "msn_hotmail")); err != nil {
+			if !fortiAPIPatch(o["msn-hotmail"]) {
+				return fmt.Errorf("Error reading msn_hotmail: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("msn_hotmail"); ok {
+			if err = d.Set("msn_hotmail", flattenSpamfilterProfileMsnHotmail(o["msn-hotmail"], d, "msn_hotmail")); err != nil {
+				if !fortiAPIPatch(o["msn-hotmail"]) {
+					return fmt.Errorf("Error reading msn_hotmail: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("yahoo_mail", flattenSpamfilterProfileYahooMail(o["yahoo-mail"], d, "yahoo_mail")); err != nil {
-            if !fortiAPIPatch(o["yahoo-mail"]) {
-                return fmt.Errorf("Error reading yahoo_mail: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("yahoo_mail"); ok {
-            if err = d.Set("yahoo_mail", flattenSpamfilterProfileYahooMail(o["yahoo-mail"], d, "yahoo_mail")); err != nil {
-                if !fortiAPIPatch(o["yahoo-mail"]) {
-                    return fmt.Errorf("Error reading yahoo_mail: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("yahoo_mail", flattenSpamfilterProfileYahooMail(o["yahoo-mail"], d, "yahoo_mail")); err != nil {
+			if !fortiAPIPatch(o["yahoo-mail"]) {
+				return fmt.Errorf("Error reading yahoo_mail: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("yahoo_mail"); ok {
+			if err = d.Set("yahoo_mail", flattenSpamfilterProfileYahooMail(o["yahoo-mail"], d, "yahoo_mail")); err != nil {
+				if !fortiAPIPatch(o["yahoo-mail"]) {
+					return fmt.Errorf("Error reading yahoo_mail: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("gmail", flattenSpamfilterProfileGmail(o["gmail"], d, "gmail")); err != nil {
-            if !fortiAPIPatch(o["gmail"]) {
-                return fmt.Errorf("Error reading gmail: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("gmail"); ok {
-            if err = d.Set("gmail", flattenSpamfilterProfileGmail(o["gmail"], d, "gmail")); err != nil {
-                if !fortiAPIPatch(o["gmail"]) {
-                    return fmt.Errorf("Error reading gmail: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("gmail", flattenSpamfilterProfileGmail(o["gmail"], d, "gmail")); err != nil {
+			if !fortiAPIPatch(o["gmail"]) {
+				return fmt.Errorf("Error reading gmail: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("gmail"); ok {
+			if err = d.Set("gmail", flattenSpamfilterProfileGmail(o["gmail"], d, "gmail")); err != nil {
+				if !fortiAPIPatch(o["gmail"]) {
+					return fmt.Errorf("Error reading gmail: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("spam_bword_threshold", flattenSpamfilterProfileSpamBwordThreshold(o["spam-bword-threshold"], d, "spam_bword_threshold")); err != nil {
 		if !fortiAPIPatch(o["spam-bword-threshold"]) {
@@ -895,7 +885,6 @@ func refreshObjectSpamfilterProfile(d *schema.ResourceData, o map[string]interfa
 		}
 	}
 
-
 	return nil
 }
 
@@ -904,7 +893,6 @@ func flattenSpamfilterProfileFortiTestDebug(d *schema.ResourceData, fosdebugsn i
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSpamfilterProfileName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -951,20 +939,20 @@ func expandSpamfilterProfileImap(d *schema.ResourceData, v interface{}, pre stri
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "log"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["log"], _ = expandSpamfilterProfileImapLog(d, i["log"], pre_append)
 	}
-	pre_append =  pre + ".0." + "action"
+	pre_append = pre + ".0." + "action"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["action"], _ = expandSpamfilterProfileImapAction(d, i["action"], pre_append)
 	}
-	pre_append =  pre + ".0." + "tag_type"
+	pre_append = pre + ".0." + "tag_type"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["tag-type"], _ = expandSpamfilterProfileImapTagType(d, i["tag_type"], pre_append)
 	}
-	pre_append =  pre + ".0." + "tag_msg"
+	pre_append = pre + ".0." + "tag_msg"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["tag-msg"], _ = expandSpamfilterProfileImapTagMsg(d, i["tag_msg"], pre_append)
 	}
@@ -997,20 +985,20 @@ func expandSpamfilterProfilePop3(d *schema.ResourceData, v interface{}, pre stri
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "log"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["log"], _ = expandSpamfilterProfilePop3Log(d, i["log"], pre_append)
 	}
-	pre_append =  pre + ".0." + "action"
+	pre_append = pre + ".0." + "action"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["action"], _ = expandSpamfilterProfilePop3Action(d, i["action"], pre_append)
 	}
-	pre_append =  pre + ".0." + "tag_type"
+	pre_append = pre + ".0." + "tag_type"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["tag-type"], _ = expandSpamfilterProfilePop3TagType(d, i["tag_type"], pre_append)
 	}
-	pre_append =  pre + ".0." + "tag_msg"
+	pre_append = pre + ".0." + "tag_msg"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["tag-msg"], _ = expandSpamfilterProfilePop3TagMsg(d, i["tag_msg"], pre_append)
 	}
@@ -1043,28 +1031,28 @@ func expandSpamfilterProfileSmtp(d *schema.ResourceData, v interface{}, pre stri
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "log"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["log"], _ = expandSpamfilterProfileSmtpLog(d, i["log"], pre_append)
 	}
-	pre_append =  pre + ".0." + "action"
+	pre_append = pre + ".0." + "action"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["action"], _ = expandSpamfilterProfileSmtpAction(d, i["action"], pre_append)
 	}
-	pre_append =  pre + ".0." + "tag_type"
+	pre_append = pre + ".0." + "tag_type"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["tag-type"], _ = expandSpamfilterProfileSmtpTagType(d, i["tag_type"], pre_append)
 	}
-	pre_append =  pre + ".0." + "tag_msg"
+	pre_append = pre + ".0." + "tag_msg"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["tag-msg"], _ = expandSpamfilterProfileSmtpTagMsg(d, i["tag_msg"], pre_append)
 	}
-	pre_append =  pre + ".0." + "hdrip"
+	pre_append = pre + ".0." + "hdrip"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["hdrip"], _ = expandSpamfilterProfileSmtpHdrip(d, i["hdrip"], pre_append)
 	}
-	pre_append =  pre + ".0." + "local_override"
+	pre_append = pre + ".0." + "local_override"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["local-override"], _ = expandSpamfilterProfileSmtpLocalOverride(d, i["local_override"], pre_append)
 	}
@@ -1105,12 +1093,12 @@ func expandSpamfilterProfileMapi(d *schema.ResourceData, v interface{}, pre stri
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "log"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["log"], _ = expandSpamfilterProfileMapiLog(d, i["log"], pre_append)
 	}
-	pre_append =  pre + ".0." + "action"
+	pre_append = pre + ".0." + "action"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["action"], _ = expandSpamfilterProfileMapiAction(d, i["action"], pre_append)
 	}
@@ -1135,8 +1123,8 @@ func expandSpamfilterProfileMsnHotmail(d *schema.ResourceData, v interface{}, pr
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "log"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["log"], _ = expandSpamfilterProfileMsnHotmailLog(d, i["log"], pre_append)
 	}
@@ -1157,8 +1145,8 @@ func expandSpamfilterProfileYahooMail(d *schema.ResourceData, v interface{}, pre
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "log"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["log"], _ = expandSpamfilterProfileYahooMailLog(d, i["log"], pre_append)
 	}
@@ -1179,8 +1167,8 @@ func expandSpamfilterProfileGmail(d *schema.ResourceData, v interface{}, pre str
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "log"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "log"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["log"], _ = expandSpamfilterProfileGmailLog(d, i["log"], pre_append)
 	}
@@ -1216,10 +1204,8 @@ func expandSpamfilterProfileSpamIptrustTable(d *schema.ResourceData, v interface
 	return v, nil
 }
 
-
 func getObjectSpamfilterProfile(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandSpamfilterProfileName(d, v, "name")
@@ -1419,7 +1405,5 @@ func getObjectSpamfilterProfile(d *schema.ResourceData) (*map[string]interface{}
 		}
 	}
 
-
 	return &obj, nil
 }
-

@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,38 +5,39 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSWebProxyUrlMatch_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    var0 := "var0" + rname
-    log.Printf(var0)
-    log.Printf("TestAccFortiOSWebProxyUrlMatch_basic %s", rname)
+	rname := acctest.RandString(8)
+	var0 := "var0" + rname
+	log.Printf(var0)
+	log.Printf("TestAccFortiOSWebProxyUrlMatch_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSWebProxyUrlMatchConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSWebProxyUrlMatchExists("fortios_webproxy_urlmatch.trname"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_urlmatch.trname", "cache_exemption", "disable"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_urlmatch.trname", "forward_server", var0),
-                    resource.TestCheckResourceAttr("fortios_webproxy_urlmatch.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_webproxy_urlmatch.trname", "status", "enable"),
-                    resource.TestCheckResourceAttr("fortios_webproxy_urlmatch.trname", "url_pattern", "/examples/servlet/*Servlet"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSWebProxyUrlMatchConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSWebProxyUrlMatchExists("fortios_webproxy_urlmatch.trname"),
+					resource.TestCheckResourceAttr("fortios_webproxy_urlmatch.trname", "cache_exemption", "disable"),
+					resource.TestCheckResourceAttr("fortios_webproxy_urlmatch.trname", "forward_server", var0),
+					resource.TestCheckResourceAttr("fortios_webproxy_urlmatch.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_webproxy_urlmatch.trname", "status", "enable"),
+					resource.TestCheckResourceAttr("fortios_webproxy_urlmatch.trname", "url_pattern", "/examples/servlet/*Servlet"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSWebProxyUrlMatchExists(n string) resource.TestCheckFunc {

@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,38 +5,39 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSwitchControllerStpSettings_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSwitchControllerStpSettings_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSwitchControllerStpSettings_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSwitchControllerStpSettingsConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSwitchControllerStpSettingsExists("fortios_switchcontroller_stpsettings.trname"),
-                    resource.TestCheckResourceAttr("fortios_switchcontroller_stpsettings.trname", "forward_time", "15"),
-                    resource.TestCheckResourceAttr("fortios_switchcontroller_stpsettings.trname", "hello_time", "2"),
-                    resource.TestCheckResourceAttr("fortios_switchcontroller_stpsettings.trname", "max_age", "20"),
-                    resource.TestCheckResourceAttr("fortios_switchcontroller_stpsettings.trname", "max_hops", "20"),
-                    resource.TestCheckResourceAttr("fortios_switchcontroller_stpsettings.trname", "pending_timer", "4"),
-                    resource.TestCheckResourceAttr("fortios_switchcontroller_stpsettings.trname", "revision", "0"),
-                    resource.TestCheckResourceAttr("fortios_switchcontroller_stpsettings.trname", "status", "enable"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSwitchControllerStpSettingsConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSwitchControllerStpSettingsExists("fortios_switchcontroller_stpsettings.trname"),
+					resource.TestCheckResourceAttr("fortios_switchcontroller_stpsettings.trname", "forward_time", "15"),
+					resource.TestCheckResourceAttr("fortios_switchcontroller_stpsettings.trname", "hello_time", "2"),
+					resource.TestCheckResourceAttr("fortios_switchcontroller_stpsettings.trname", "max_age", "20"),
+					resource.TestCheckResourceAttr("fortios_switchcontroller_stpsettings.trname", "max_hops", "20"),
+					resource.TestCheckResourceAttr("fortios_switchcontroller_stpsettings.trname", "pending_timer", "4"),
+					resource.TestCheckResourceAttr("fortios_switchcontroller_stpsettings.trname", "revision", "0"),
+					resource.TestCheckResourceAttr("fortios_switchcontroller_stpsettings.trname", "status", "enable"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSwitchControllerStpSettingsExists(n string) resource.TestCheckFunc {

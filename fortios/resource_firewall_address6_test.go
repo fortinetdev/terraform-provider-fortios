@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,41 +5,42 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSFirewallAddress6_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSFirewallAddress6_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSFirewallAddress6_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSFirewallAddress6Config(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSFirewallAddress6Exists("fortios_firewall_address6.trname"),
-                    resource.TestCheckResourceAttr("fortios_firewall_address6.trname", "cache_ttl", "0"),
-                    resource.TestCheckResourceAttr("fortios_firewall_address6.trname", "color", "0"),
-                    resource.TestCheckResourceAttr("fortios_firewall_address6.trname", "end_ip", "::"),
-                    resource.TestCheckResourceAttr("fortios_firewall_address6.trname", "host", "fdff:ffff::"),
-                    resource.TestCheckResourceAttr("fortios_firewall_address6.trname", "host_type", "any"),
-                    resource.TestCheckResourceAttr("fortios_firewall_address6.trname", "ip6", "fdff:ffff::/120"),
-                    resource.TestCheckResourceAttr("fortios_firewall_address6.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_firewall_address6.trname", "start_ip", "fdff:ffff::"),
-                    resource.TestCheckResourceAttr("fortios_firewall_address6.trname", "type", "ipprefix"),
-                    resource.TestCheckResourceAttr("fortios_firewall_address6.trname", "visibility", "enable"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSFirewallAddress6Config(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSFirewallAddress6Exists("fortios_firewall_address6.trname"),
+					resource.TestCheckResourceAttr("fortios_firewall_address6.trname", "cache_ttl", "0"),
+					resource.TestCheckResourceAttr("fortios_firewall_address6.trname", "color", "0"),
+					resource.TestCheckResourceAttr("fortios_firewall_address6.trname", "end_ip", "::"),
+					resource.TestCheckResourceAttr("fortios_firewall_address6.trname", "host", "fdff:ffff::"),
+					resource.TestCheckResourceAttr("fortios_firewall_address6.trname", "host_type", "any"),
+					resource.TestCheckResourceAttr("fortios_firewall_address6.trname", "ip6", "fdff:ffff::/120"),
+					resource.TestCheckResourceAttr("fortios_firewall_address6.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_firewall_address6.trname", "start_ip", "fdff:ffff::"),
+					resource.TestCheckResourceAttr("fortios_firewall_address6.trname", "type", "ipprefix"),
+					resource.TestCheckResourceAttr("fortios_firewall_address6.trname", "visibility", "enable"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSFirewallAddress6Exists(n string) resource.TestCheckFunc {

@@ -30,26 +30,26 @@ func resourceVpnSslWebRealm() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"url_path": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"max_concurrent_user": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"login_page": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 32768),
-				Optional: true,
+				Optional:     true,
 			},
 			"virtual_host": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
+				Optional:     true,
 			},
 		},
 	}
@@ -144,7 +144,6 @@ func resourceVpnSslWebRealmRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenVpnSslWebRealmUrlPath(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -161,10 +160,8 @@ func flattenVpnSslWebRealmVirtualHost(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
-
 func refreshObjectVpnSslWebRealm(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("url_path", flattenVpnSslWebRealmUrlPath(o["url-path"], d, "url_path")); err != nil {
 		if !fortiAPIPatch(o["url-path"]) {
@@ -190,7 +187,6 @@ func refreshObjectVpnSslWebRealm(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-
 	return nil
 }
 
@@ -199,7 +195,6 @@ func flattenVpnSslWebRealmFortiTestDebug(d *schema.ResourceData, fosdebugsn int,
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandVpnSslWebRealmUrlPath(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -217,10 +212,8 @@ func expandVpnSslWebRealmVirtualHost(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
-
 func getObjectVpnSslWebRealm(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("url_path"); ok {
 		t, err := expandVpnSslWebRealmUrlPath(d, v, "url_path")
@@ -258,7 +251,5 @@ func getObjectVpnSslWebRealm(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-
 	return &obj, nil
 }
-

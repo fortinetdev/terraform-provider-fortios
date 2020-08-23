@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,40 +5,41 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSWanoptContentDeliveryNetworkRule_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSWanoptContentDeliveryNetworkRule_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSWanoptContentDeliveryNetworkRule_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSWanoptContentDeliveryNetworkRuleConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSWanoptContentDeliveryNetworkRuleExists("fortios_wanopt_contentdeliverynetworkrule.trname"),
-                    resource.TestCheckResourceAttr("fortios_wanopt_contentdeliverynetworkrule.trname", "category", "vcache"),
-                    resource.TestCheckResourceAttr("fortios_wanopt_contentdeliverynetworkrule.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_wanopt_contentdeliverynetworkrule.trname", "request_cache_control", "disable"),
-                    resource.TestCheckResourceAttr("fortios_wanopt_contentdeliverynetworkrule.trname", "response_cache_control", "disable"),
-                    resource.TestCheckResourceAttr("fortios_wanopt_contentdeliverynetworkrule.trname", "response_expires", "enable"),
-                    resource.TestCheckResourceAttr("fortios_wanopt_contentdeliverynetworkrule.trname", "status", "enable"),
-                    resource.TestCheckResourceAttr("fortios_wanopt_contentdeliverynetworkrule.trname", "text_response_vcache", "enable"),
-                    resource.TestCheckResourceAttr("fortios_wanopt_contentdeliverynetworkrule.trname", "updateserver", "disable"),
-                    resource.TestCheckResourceAttr("fortios_wanopt_contentdeliverynetworkrule.trname", "host_domain_name_suffix.0.name", "kaf.com"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSWanoptContentDeliveryNetworkRuleConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSWanoptContentDeliveryNetworkRuleExists("fortios_wanopt_contentdeliverynetworkrule.trname"),
+					resource.TestCheckResourceAttr("fortios_wanopt_contentdeliverynetworkrule.trname", "category", "vcache"),
+					resource.TestCheckResourceAttr("fortios_wanopt_contentdeliverynetworkrule.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_wanopt_contentdeliverynetworkrule.trname", "request_cache_control", "disable"),
+					resource.TestCheckResourceAttr("fortios_wanopt_contentdeliverynetworkrule.trname", "response_cache_control", "disable"),
+					resource.TestCheckResourceAttr("fortios_wanopt_contentdeliverynetworkrule.trname", "response_expires", "enable"),
+					resource.TestCheckResourceAttr("fortios_wanopt_contentdeliverynetworkrule.trname", "status", "enable"),
+					resource.TestCheckResourceAttr("fortios_wanopt_contentdeliverynetworkrule.trname", "text_response_vcache", "enable"),
+					resource.TestCheckResourceAttr("fortios_wanopt_contentdeliverynetworkrule.trname", "updateserver", "disable"),
+					resource.TestCheckResourceAttr("fortios_wanopt_contentdeliverynetworkrule.trname", "host_domain_name_suffix.0.name", "kaf.com"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSWanoptContentDeliveryNetworkRuleExists(n string) resource.TestCheckFunc {

@@ -30,23 +30,23 @@ func resourceFirewallIppool6() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"startip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"endip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"comments": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
+				Optional:     true,
 			},
 		},
 	}
@@ -141,7 +141,6 @@ func resourceFirewallIppool6Read(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenFirewallIppool6Name(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -158,10 +157,8 @@ func flattenFirewallIppool6Comments(v interface{}, d *schema.ResourceData, pre s
 	return v
 }
 
-
 func refreshObjectFirewallIppool6(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenFirewallIppool6Name(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -187,7 +184,6 @@ func refreshObjectFirewallIppool6(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-
 	return nil
 }
 
@@ -196,7 +192,6 @@ func flattenFirewallIppool6FortiTestDebug(d *schema.ResourceData, fosdebugsn int
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandFirewallIppool6Name(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -214,10 +209,8 @@ func expandFirewallIppool6Comments(d *schema.ResourceData, v interface{}, pre st
 	return v, nil
 }
 
-
 func getObjectFirewallIppool6(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandFirewallIppool6Name(d, v, "name")
@@ -255,7 +248,5 @@ func getObjectFirewallIppool6(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-
 	return &obj, nil
 }
-

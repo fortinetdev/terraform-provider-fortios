@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,36 +5,37 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSFirewallIpmacbindingTable_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSFirewallIpmacbindingTable_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSFirewallIpmacbindingTable_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSFirewallIpmacbindingTableConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSFirewallIpmacbindingTableExists("fortios_firewallipmacbinding_table.trname"),
-                    resource.TestCheckResourceAttr("fortios_firewallipmacbinding_table.trname", "ip", "1.1.1.1"),
-                    resource.TestCheckResourceAttr("fortios_firewallipmacbinding_table.trname", "mac", "00:01:6c:06:a6:29"),
-                    resource.TestCheckResourceAttr("fortios_firewallipmacbinding_table.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_firewallipmacbinding_table.trname", "seq_num", "1"),
-                    resource.TestCheckResourceAttr("fortios_firewallipmacbinding_table.trname", "status", "disable"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSFirewallIpmacbindingTableConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSFirewallIpmacbindingTableExists("fortios_firewallipmacbinding_table.trname"),
+					resource.TestCheckResourceAttr("fortios_firewallipmacbinding_table.trname", "ip", "1.1.1.1"),
+					resource.TestCheckResourceAttr("fortios_firewallipmacbinding_table.trname", "mac", "00:01:6c:06:a6:29"),
+					resource.TestCheckResourceAttr("fortios_firewallipmacbinding_table.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_firewallipmacbinding_table.trname", "seq_num", "1"),
+					resource.TestCheckResourceAttr("fortios_firewallipmacbinding_table.trname", "status", "disable"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSFirewallIpmacbindingTableExists(n string) resource.TestCheckFunc {

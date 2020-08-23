@@ -30,19 +30,18 @@ func resourceSwitchControllerSwitchLog() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"severity": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceSwitchControllerSwitchLogUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -109,7 +108,6 @@ func resourceSwitchControllerSwitchLogRead(d *schema.ResourceData, m interface{}
 	return nil
 }
 
-
 func flattenSwitchControllerSwitchLogStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -118,10 +116,8 @@ func flattenSwitchControllerSwitchLogSeverity(v interface{}, d *schema.ResourceD
 	return v
 }
 
-
 func refreshObjectSwitchControllerSwitchLog(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("status", flattenSwitchControllerSwitchLogStatus(o["status"], d, "status")); err != nil {
 		if !fortiAPIPatch(o["status"]) {
@@ -135,7 +131,6 @@ func refreshObjectSwitchControllerSwitchLog(d *schema.ResourceData, o map[string
 		}
 	}
 
-
 	return nil
 }
 
@@ -145,7 +140,6 @@ func flattenSwitchControllerSwitchLogFortiTestDebug(d *schema.ResourceData, fosd
 	log.Printf("ER List: %v", e)
 }
 
-
 func expandSwitchControllerSwitchLogStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
 }
@@ -154,10 +148,8 @@ func expandSwitchControllerSwitchLogSeverity(d *schema.ResourceData, v interface
 	return v, nil
 }
 
-
 func getObjectSwitchControllerSwitchLog(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("status"); ok {
 		t, err := expandSwitchControllerSwitchLogStatus(d, v, "status")
@@ -177,7 +169,5 @@ func getObjectSwitchControllerSwitchLog(d *schema.ResourceData) (*map[string]int
 		}
 	}
 
-
 	return &obj, nil
 }
-

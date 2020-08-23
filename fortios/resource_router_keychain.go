@@ -30,36 +30,36 @@ func resourceRouterKeyChain() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"key": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 2147483647),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"accept_lifetime": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"send_lifetime": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"key_string": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -157,7 +157,6 @@ func resourceRouterKeyChainRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenRouterKeyChainName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -225,10 +224,8 @@ func flattenRouterKeyChainKeyKeyString(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
-
 func refreshObjectRouterKeyChain(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenRouterKeyChainName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -236,22 +233,21 @@ func refreshObjectRouterKeyChain(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("key", flattenRouterKeyChainKey(o["key"], d, "key")); err != nil {
-            if !fortiAPIPatch(o["key"]) {
-                return fmt.Errorf("Error reading key: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("key"); ok {
-            if err = d.Set("key", flattenRouterKeyChainKey(o["key"], d, "key")); err != nil {
-                if !fortiAPIPatch(o["key"]) {
-                    return fmt.Errorf("Error reading key: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("key", flattenRouterKeyChainKey(o["key"], d, "key")); err != nil {
+			if !fortiAPIPatch(o["key"]) {
+				return fmt.Errorf("Error reading key: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("key"); ok {
+			if err = d.Set("key", flattenRouterKeyChainKey(o["key"], d, "key")); err != nil {
+				if !fortiAPIPatch(o["key"]) {
+					return fmt.Errorf("Error reading key: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -261,7 +257,6 @@ func flattenRouterKeyChainFortiTestDebug(d *schema.ResourceData, fosdebugsn int,
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandRouterKeyChainName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -279,7 +274,7 @@ func expandRouterKeyChainKey(d *schema.ResourceData, v interface{}, pre string) 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -325,10 +320,8 @@ func expandRouterKeyChainKeyKeyString(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
-
 func getObjectRouterKeyChain(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandRouterKeyChainName(d, v, "name")
@@ -348,7 +341,5 @@ func getObjectRouterKeyChain(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-
 	return &obj, nil
 }
-

@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,34 +5,35 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSystemVirtualWanLink_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSystemVirtualWanLink_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSystemVirtualWanLink_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSystemVirtualWanLinkConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSystemVirtualWanLinkExists("fortios_system_virtualwanlink.trname"),
-                    resource.TestCheckResourceAttr("fortios_system_virtualwanlink.trname", "fail_detect", "disable"),
-                    resource.TestCheckResourceAttr("fortios_system_virtualwanlink.trname", "load_balance_mode", "source-ip-based"),
-                    resource.TestCheckResourceAttr("fortios_system_virtualwanlink.trname", "status", "disable"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSystemVirtualWanLinkConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSystemVirtualWanLinkExists("fortios_system_virtualwanlink.trname"),
+					resource.TestCheckResourceAttr("fortios_system_virtualwanlink.trname", "fail_detect", "disable"),
+					resource.TestCheckResourceAttr("fortios_system_virtualwanlink.trname", "load_balance_mode", "source-ip-based"),
+					resource.TestCheckResourceAttr("fortios_system_virtualwanlink.trname", "status", "disable"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSystemVirtualWanLinkExists(n string) resource.TestCheckFunc {

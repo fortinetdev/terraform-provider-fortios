@@ -30,29 +30,29 @@ func resourceFirewallScheduleOnetime() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
-				Required: true,
+				Required:     true,
 			},
 			"start": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"end": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 			"color": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 32),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"expiration_days": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 100),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
@@ -147,7 +147,6 @@ func resourceFirewallScheduleOnetimeRead(d *schema.ResourceData, m interface{}) 
 	return nil
 }
 
-
 func flattenFirewallScheduleOnetimeName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -168,10 +167,8 @@ func flattenFirewallScheduleOnetimeExpirationDays(v interface{}, d *schema.Resou
 	return v
 }
 
-
 func refreshObjectFirewallScheduleOnetime(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenFirewallScheduleOnetimeName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -203,7 +200,6 @@ func refreshObjectFirewallScheduleOnetime(d *schema.ResourceData, o map[string]i
 		}
 	}
 
-
 	return nil
 }
 
@@ -212,7 +208,6 @@ func flattenFirewallScheduleOnetimeFortiTestDebug(d *schema.ResourceData, fosdeb
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandFirewallScheduleOnetimeName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -234,10 +229,8 @@ func expandFirewallScheduleOnetimeExpirationDays(d *schema.ResourceData, v inter
 	return v, nil
 }
 
-
 func getObjectFirewallScheduleOnetime(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandFirewallScheduleOnetimeName(d, v, "name")
@@ -284,7 +277,5 @@ func getObjectFirewallScheduleOnetime(d *schema.ResourceData) (*map[string]inter
 		}
 	}
 
-
 	return &obj, nil
 }
-

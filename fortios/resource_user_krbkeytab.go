@@ -30,25 +30,25 @@ func resourceUserKrbKeytab() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"principal": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 511),
-				Required: true,
+				Required:     true,
 			},
 			"ldap_server": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"keytab": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 2047),
-				Required: true,
+				Required:     true,
 			},
 		},
 	}
@@ -143,7 +143,6 @@ func resourceUserKrbKeytabRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenUserKrbKeytabName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -160,10 +159,8 @@ func flattenUserKrbKeytabKeytab(v interface{}, d *schema.ResourceData, pre strin
 	return v
 }
 
-
 func refreshObjectUserKrbKeytab(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenUserKrbKeytabName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -189,7 +186,6 @@ func refreshObjectUserKrbKeytab(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-
 	return nil
 }
 
@@ -198,7 +194,6 @@ func flattenUserKrbKeytabFortiTestDebug(d *schema.ResourceData, fosdebugsn int, 
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandUserKrbKeytabName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -216,10 +211,8 @@ func expandUserKrbKeytabKeytab(d *schema.ResourceData, v interface{}, pre string
 	return v, nil
 }
 
-
 func getObjectUserKrbKeytab(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandUserKrbKeytabName(d, v, "name")
@@ -257,7 +250,5 @@ func getObjectUserKrbKeytab(d *schema.ResourceData) (*map[string]interface{}, er
 		}
 	}
 
-
 	return &obj, nil
 }
-

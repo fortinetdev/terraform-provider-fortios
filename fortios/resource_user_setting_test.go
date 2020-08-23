@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,46 +5,47 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSUserSetting_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSUserSetting_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSUserSetting_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSUserSettingConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSUserSettingExists("fortios_user_setting.trname"),
-                    resource.TestCheckResourceAttr("fortios_user_setting.trname", "auth_blackout_time", "0"),
-                    resource.TestCheckResourceAttr("fortios_user_setting.trname", "auth_cert", "Fortinet_Factory"),
-                    resource.TestCheckResourceAttr("fortios_user_setting.trname", "auth_http_basic", "disable"),
-                    resource.TestCheckResourceAttr("fortios_user_setting.trname", "auth_invalid_max", "5"),
-                    resource.TestCheckResourceAttr("fortios_user_setting.trname", "auth_lockout_duration", "0"),
-                    resource.TestCheckResourceAttr("fortios_user_setting.trname", "auth_lockout_threshold", "3"),
-                    resource.TestCheckResourceAttr("fortios_user_setting.trname", "auth_on_demand", "implicitly"),
-                    resource.TestCheckResourceAttr("fortios_user_setting.trname", "auth_portal_timeout", "3"),
-                    resource.TestCheckResourceAttr("fortios_user_setting.trname", "auth_secure_http", "disable"),
-                    resource.TestCheckResourceAttr("fortios_user_setting.trname", "auth_src_mac", "enable"),
-                    resource.TestCheckResourceAttr("fortios_user_setting.trname", "auth_ssl_allow_renegotiation", "disable"),
-                    resource.TestCheckResourceAttr("fortios_user_setting.trname", "auth_timeout", "5"),
-                    resource.TestCheckResourceAttr("fortios_user_setting.trname", "auth_timeout_type", "idle-timeout"),
-                    resource.TestCheckResourceAttr("fortios_user_setting.trname", "auth_type", "http https ftp telnet"),
-                    resource.TestCheckResourceAttr("fortios_user_setting.trname", "radius_ses_timeout_act", "hard-timeout"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSUserSettingConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSUserSettingExists("fortios_user_setting.trname"),
+					resource.TestCheckResourceAttr("fortios_user_setting.trname", "auth_blackout_time", "0"),
+					resource.TestCheckResourceAttr("fortios_user_setting.trname", "auth_cert", "Fortinet_Factory"),
+					resource.TestCheckResourceAttr("fortios_user_setting.trname", "auth_http_basic", "disable"),
+					resource.TestCheckResourceAttr("fortios_user_setting.trname", "auth_invalid_max", "5"),
+					resource.TestCheckResourceAttr("fortios_user_setting.trname", "auth_lockout_duration", "0"),
+					resource.TestCheckResourceAttr("fortios_user_setting.trname", "auth_lockout_threshold", "3"),
+					resource.TestCheckResourceAttr("fortios_user_setting.trname", "auth_on_demand", "implicitly"),
+					resource.TestCheckResourceAttr("fortios_user_setting.trname", "auth_portal_timeout", "3"),
+					resource.TestCheckResourceAttr("fortios_user_setting.trname", "auth_secure_http", "disable"),
+					resource.TestCheckResourceAttr("fortios_user_setting.trname", "auth_src_mac", "enable"),
+					resource.TestCheckResourceAttr("fortios_user_setting.trname", "auth_ssl_allow_renegotiation", "disable"),
+					resource.TestCheckResourceAttr("fortios_user_setting.trname", "auth_timeout", "5"),
+					resource.TestCheckResourceAttr("fortios_user_setting.trname", "auth_timeout_type", "idle-timeout"),
+					resource.TestCheckResourceAttr("fortios_user_setting.trname", "auth_type", "http https ftp telnet"),
+					resource.TestCheckResourceAttr("fortios_user_setting.trname", "radius_ses_timeout_act", "hard-timeout"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSUserSettingExists(n string) resource.TestCheckFunc {

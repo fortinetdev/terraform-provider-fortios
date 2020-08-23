@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,50 +5,51 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSLogSetting_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSLogSetting_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSLogSetting_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSLogSettingConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSLogSettingExists("fortios_log_setting.trname"),
-                    resource.TestCheckResourceAttr("fortios_log_setting.trname", "brief_traffic_format", "disable"),
-                    resource.TestCheckResourceAttr("fortios_log_setting.trname", "daemon_log", "disable"),
-                    resource.TestCheckResourceAttr("fortios_log_setting.trname", "expolicy_implicit_log", "disable"),
-                    resource.TestCheckResourceAttr("fortios_log_setting.trname", "faz_override", "disable"),
-                    resource.TestCheckResourceAttr("fortios_log_setting.trname", "fwpolicy6_implicit_log", "disable"),
-                    resource.TestCheckResourceAttr("fortios_log_setting.trname", "fwpolicy_implicit_log", "disable"),
-                    resource.TestCheckResourceAttr("fortios_log_setting.trname", "local_in_allow", "disable"),
-                    resource.TestCheckResourceAttr("fortios_log_setting.trname", "local_in_deny_broadcast", "disable"),
-                    resource.TestCheckResourceAttr("fortios_log_setting.trname", "local_in_deny_unicast", "disable"),
-                    resource.TestCheckResourceAttr("fortios_log_setting.trname", "local_out", "disable"),
-                    resource.TestCheckResourceAttr("fortios_log_setting.trname", "log_invalid_packet", "disable"),
-                    resource.TestCheckResourceAttr("fortios_log_setting.trname", "log_policy_comment", "disable"),
-                    resource.TestCheckResourceAttr("fortios_log_setting.trname", "log_policy_name", "disable"),
-                    resource.TestCheckResourceAttr("fortios_log_setting.trname", "log_user_in_upper", "disable"),
-                    resource.TestCheckResourceAttr("fortios_log_setting.trname", "neighbor_event", "disable"),
-                    resource.TestCheckResourceAttr("fortios_log_setting.trname", "resolve_ip", "disable"),
-                    resource.TestCheckResourceAttr("fortios_log_setting.trname", "resolve_port", "enable"),
-                    resource.TestCheckResourceAttr("fortios_log_setting.trname", "syslog_override", "disable"),
-                    resource.TestCheckResourceAttr("fortios_log_setting.trname", "user_anonymize", "disable"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSLogSettingConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSLogSettingExists("fortios_log_setting.trname"),
+					resource.TestCheckResourceAttr("fortios_log_setting.trname", "brief_traffic_format", "disable"),
+					resource.TestCheckResourceAttr("fortios_log_setting.trname", "daemon_log", "disable"),
+					resource.TestCheckResourceAttr("fortios_log_setting.trname", "expolicy_implicit_log", "disable"),
+					resource.TestCheckResourceAttr("fortios_log_setting.trname", "faz_override", "disable"),
+					resource.TestCheckResourceAttr("fortios_log_setting.trname", "fwpolicy6_implicit_log", "disable"),
+					resource.TestCheckResourceAttr("fortios_log_setting.trname", "fwpolicy_implicit_log", "disable"),
+					resource.TestCheckResourceAttr("fortios_log_setting.trname", "local_in_allow", "disable"),
+					resource.TestCheckResourceAttr("fortios_log_setting.trname", "local_in_deny_broadcast", "disable"),
+					resource.TestCheckResourceAttr("fortios_log_setting.trname", "local_in_deny_unicast", "disable"),
+					resource.TestCheckResourceAttr("fortios_log_setting.trname", "local_out", "disable"),
+					resource.TestCheckResourceAttr("fortios_log_setting.trname", "log_invalid_packet", "disable"),
+					resource.TestCheckResourceAttr("fortios_log_setting.trname", "log_policy_comment", "disable"),
+					resource.TestCheckResourceAttr("fortios_log_setting.trname", "log_policy_name", "disable"),
+					resource.TestCheckResourceAttr("fortios_log_setting.trname", "log_user_in_upper", "disable"),
+					resource.TestCheckResourceAttr("fortios_log_setting.trname", "neighbor_event", "disable"),
+					resource.TestCheckResourceAttr("fortios_log_setting.trname", "resolve_ip", "disable"),
+					resource.TestCheckResourceAttr("fortios_log_setting.trname", "resolve_port", "enable"),
+					resource.TestCheckResourceAttr("fortios_log_setting.trname", "syslog_override", "disable"),
+					resource.TestCheckResourceAttr("fortios_log_setting.trname", "user_anonymize", "disable"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSLogSettingExists(n string) resource.TestCheckFunc {

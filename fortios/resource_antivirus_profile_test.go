@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,43 +5,44 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSAntivirusProfile_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSAntivirusProfile_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSAntivirusProfile_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSAntivirusProfileConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSAntivirusProfileExists("fortios_antivirus_profile.trname"),
-                    resource.TestCheckResourceAttr("fortios_antivirus_profile.trname", "analytics_bl_filetype", "0"),
-                    resource.TestCheckResourceAttr("fortios_antivirus_profile.trname", "analytics_db", "disable"),
-                    resource.TestCheckResourceAttr("fortios_antivirus_profile.trname", "analytics_max_upload", "10"),
-                    resource.TestCheckResourceAttr("fortios_antivirus_profile.trname", "analytics_wl_filetype", "0"),
-                    resource.TestCheckResourceAttr("fortios_antivirus_profile.trname", "av_block_log", "enable"),
-                    resource.TestCheckResourceAttr("fortios_antivirus_profile.trname", "av_virus_log", "enable"),
-                    resource.TestCheckResourceAttr("fortios_antivirus_profile.trname", "extended_log", "disable"),
-                    resource.TestCheckResourceAttr("fortios_antivirus_profile.trname", "ftgd_analytics", "disable"),
-                    resource.TestCheckResourceAttr("fortios_antivirus_profile.trname", "inspection_mode", "flow-based"),
-                    resource.TestCheckResourceAttr("fortios_antivirus_profile.trname", "mobile_malware_db", "enable"),
-                    resource.TestCheckResourceAttr("fortios_antivirus_profile.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_antivirus_profile.trname", "scan_mode", "quick"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSAntivirusProfileConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSAntivirusProfileExists("fortios_antivirus_profile.trname"),
+					resource.TestCheckResourceAttr("fortios_antivirus_profile.trname", "analytics_bl_filetype", "0"),
+					resource.TestCheckResourceAttr("fortios_antivirus_profile.trname", "analytics_db", "disable"),
+					resource.TestCheckResourceAttr("fortios_antivirus_profile.trname", "analytics_max_upload", "10"),
+					resource.TestCheckResourceAttr("fortios_antivirus_profile.trname", "analytics_wl_filetype", "0"),
+					resource.TestCheckResourceAttr("fortios_antivirus_profile.trname", "av_block_log", "enable"),
+					resource.TestCheckResourceAttr("fortios_antivirus_profile.trname", "av_virus_log", "enable"),
+					resource.TestCheckResourceAttr("fortios_antivirus_profile.trname", "extended_log", "disable"),
+					resource.TestCheckResourceAttr("fortios_antivirus_profile.trname", "ftgd_analytics", "disable"),
+					resource.TestCheckResourceAttr("fortios_antivirus_profile.trname", "inspection_mode", "flow-based"),
+					resource.TestCheckResourceAttr("fortios_antivirus_profile.trname", "mobile_malware_db", "enable"),
+					resource.TestCheckResourceAttr("fortios_antivirus_profile.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_antivirus_profile.trname", "scan_mode", "quick"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSAntivirusProfileExists(n string) resource.TestCheckFunc {

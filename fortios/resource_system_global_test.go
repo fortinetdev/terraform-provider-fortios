@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,35 +5,36 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSystemGlobal_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSystemGlobal_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSystemGlobal_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSystemGlobalConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSystemGlobalExists("fortios_system_global.trname"),
-                    resource.TestCheckResourceAttr("fortios_system_global.trname", "admin_sport", "443"),
-                    resource.TestCheckResourceAttr("fortios_system_global.trname", "alias", "FGVM02TM20003062"),
-                    resource.TestCheckResourceAttr("fortios_system_global.trname", "hostname", "ste11"),
-                    resource.TestCheckResourceAttr("fortios_system_global.trname", "timezone", "04"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSystemGlobalConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSystemGlobalExists("fortios_system_global.trname"),
+					resource.TestCheckResourceAttr("fortios_system_global.trname", "admin_sport", "443"),
+					resource.TestCheckResourceAttr("fortios_system_global.trname", "alias", "FGVM02TM20003062"),
+					resource.TestCheckResourceAttr("fortios_system_global.trname", "hostname", "ste11"),
+					resource.TestCheckResourceAttr("fortios_system_global.trname", "timezone", "04"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSystemGlobalExists(n string) resource.TestCheckFunc {

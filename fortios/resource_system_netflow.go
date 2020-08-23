@@ -30,49 +30,48 @@ func resourceSystemNetflow() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"collector_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"collector_port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"source_ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"active_flow_timeout": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 60),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"inactive_flow_timeout": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(10, 600),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"template_tx_timeout": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 1440),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"template_tx_counter": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(10, 6000),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
 }
-
 
 func resourceSystemNetflowUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -139,7 +138,6 @@ func resourceSystemNetflowRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenSystemNetflowCollectorIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -168,10 +166,8 @@ func flattenSystemNetflowTemplateTxCounter(v interface{}, d *schema.ResourceData
 	return v
 }
 
-
 func refreshObjectSystemNetflow(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("collector_ip", flattenSystemNetflowCollectorIp(o["collector-ip"], d, "collector_ip")); err != nil {
 		if !fortiAPIPatch(o["collector-ip"]) {
@@ -215,7 +211,6 @@ func refreshObjectSystemNetflow(d *schema.ResourceData, o map[string]interface{}
 		}
 	}
 
-
 	return nil
 }
 
@@ -224,7 +219,6 @@ func flattenSystemNetflowFortiTestDebug(d *schema.ResourceData, fosdebugsn int, 
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemNetflowCollectorIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -254,10 +248,8 @@ func expandSystemNetflowTemplateTxCounter(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-
 func getObjectSystemNetflow(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("collector_ip"); ok {
 		t, err := expandSystemNetflowCollectorIp(d, v, "collector_ip")
@@ -322,7 +314,5 @@ func getObjectSystemNetflow(d *schema.ResourceData) (*map[string]interface{}, er
 		}
 	}
 
-
 	return &obj, nil
 }
-

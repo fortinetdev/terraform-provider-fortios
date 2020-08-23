@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,49 +5,50 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSSystemResourceLimits_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSSystemResourceLimits_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSSystemResourceLimits_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSSystemResourceLimitsConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSSystemResourceLimitsExists("fortios_system_resourcelimits.trname"),
-                    resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "custom_service", "0"),
-                    resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "dialup_tunnel", "0"),
-                    resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "firewall_address", "41024"),
-                    resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "firewall_addrgrp", "10692"),
-                    resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "firewall_policy", "41024"),
-                    resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "ipsec_phase1", "2000"),
-                    resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "ipsec_phase1_interface", "0"),
-                    resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "ipsec_phase2", "2000"),
-                    resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "ipsec_phase2_interface", "0"),
-                    resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "log_disk_quota", "30235"),
-                    resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "onetime_schedule", "0"),
-                    resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "proxy", "64000"),
-                    resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "recurring_schedule", "0"),
-                    resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "service_group", "0"),
-                    resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "session", "0"),
-                    resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "sslvpn", "0"),
-                    resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "user", "0"),
-                    resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "user_group", "0"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSSystemResourceLimitsConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSSystemResourceLimitsExists("fortios_system_resourcelimits.trname"),
+					resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "custom_service", "0"),
+					resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "dialup_tunnel", "0"),
+					resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "firewall_address", "41024"),
+					resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "firewall_addrgrp", "10692"),
+					resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "firewall_policy", "41024"),
+					resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "ipsec_phase1", "2000"),
+					resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "ipsec_phase1_interface", "0"),
+					resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "ipsec_phase2", "2000"),
+					resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "ipsec_phase2_interface", "0"),
+					resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "log_disk_quota", "30235"),
+					resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "onetime_schedule", "0"),
+					resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "proxy", "64000"),
+					resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "recurring_schedule", "0"),
+					resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "service_group", "0"),
+					resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "session", "0"),
+					resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "sslvpn", "0"),
+					resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "user", "0"),
+					resource.TestCheckResourceAttr("fortios_system_resourcelimits.trname", "user_group", "0"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSSystemResourceLimitsExists(n string) resource.TestCheckFunc {

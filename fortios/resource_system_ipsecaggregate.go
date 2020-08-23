@@ -30,27 +30,27 @@ func resourceSystemIpsecAggregate() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"member": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"tunnel_name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"algorithm": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
@@ -147,7 +147,6 @@ func resourceSystemIpsecAggregateRead(d *schema.ResourceData, m interface{}) err
 	return nil
 }
 
-
 func flattenSystemIpsecAggregateName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -192,10 +191,8 @@ func flattenSystemIpsecAggregateAlgorithm(v interface{}, d *schema.ResourceData,
 	return v
 }
 
-
 func refreshObjectSystemIpsecAggregate(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenSystemIpsecAggregateName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -203,28 +200,27 @@ func refreshObjectSystemIpsecAggregate(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("member", flattenSystemIpsecAggregateMember(o["member"], d, "member")); err != nil {
-            if !fortiAPIPatch(o["member"]) {
-                return fmt.Errorf("Error reading member: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("member"); ok {
-            if err = d.Set("member", flattenSystemIpsecAggregateMember(o["member"], d, "member")); err != nil {
-                if !fortiAPIPatch(o["member"]) {
-                    return fmt.Errorf("Error reading member: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("member", flattenSystemIpsecAggregateMember(o["member"], d, "member")); err != nil {
+			if !fortiAPIPatch(o["member"]) {
+				return fmt.Errorf("Error reading member: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("member"); ok {
+			if err = d.Set("member", flattenSystemIpsecAggregateMember(o["member"], d, "member")); err != nil {
+				if !fortiAPIPatch(o["member"]) {
+					return fmt.Errorf("Error reading member: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("algorithm", flattenSystemIpsecAggregateAlgorithm(o["algorithm"], d, "algorithm")); err != nil {
 		if !fortiAPIPatch(o["algorithm"]) {
 			return fmt.Errorf("Error reading algorithm: %v", err)
 		}
 	}
-
 
 	return nil
 }
@@ -234,7 +230,6 @@ func flattenSystemIpsecAggregateFortiTestDebug(d *schema.ResourceData, fosdebugs
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemIpsecAggregateName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -252,7 +247,7 @@ func expandSystemIpsecAggregateMember(d *schema.ResourceData, v interface{}, pre
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tunnel_name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -275,10 +270,8 @@ func expandSystemIpsecAggregateAlgorithm(d *schema.ResourceData, v interface{}, 
 	return v, nil
 }
 
-
 func getObjectSystemIpsecAggregate(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandSystemIpsecAggregateName(d, v, "name")
@@ -307,7 +300,5 @@ func getObjectSystemIpsecAggregate(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
-
 	return &obj, nil
 }
-

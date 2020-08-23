@@ -30,17 +30,17 @@ func resourceWebfilterFtgdLocalRating() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"url": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 511),
-				Required: true,
+				Required:     true,
 			},
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"rating": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Required: true,
 			},
 		},
@@ -136,7 +136,6 @@ func resourceWebfilterFtgdLocalRatingRead(d *schema.ResourceData, m interface{})
 	return nil
 }
 
-
 func flattenWebfilterFtgdLocalRatingUrl(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -149,10 +148,8 @@ func flattenWebfilterFtgdLocalRatingRating(v interface{}, d *schema.ResourceData
 	return v
 }
 
-
 func refreshObjectWebfilterFtgdLocalRating(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("url", flattenWebfilterFtgdLocalRatingUrl(o["url"], d, "url")); err != nil {
 		if !fortiAPIPatch(o["url"]) {
@@ -172,7 +169,6 @@ func refreshObjectWebfilterFtgdLocalRating(d *schema.ResourceData, o map[string]
 		}
 	}
 
-
 	return nil
 }
 
@@ -181,7 +177,6 @@ func flattenWebfilterFtgdLocalRatingFortiTestDebug(d *schema.ResourceData, fosde
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandWebfilterFtgdLocalRatingUrl(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -195,10 +190,8 @@ func expandWebfilterFtgdLocalRatingRating(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-
 func getObjectWebfilterFtgdLocalRating(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("url"); ok {
 		t, err := expandWebfilterFtgdLocalRatingUrl(d, v, "url")
@@ -227,7 +220,5 @@ func getObjectWebfilterFtgdLocalRating(d *schema.ResourceData) (*map[string]inte
 		}
 	}
 
-
 	return &obj, nil
 }
-

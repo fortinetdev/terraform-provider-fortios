@@ -30,156 +30,156 @@ func resourceRouterPolicy() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"seq_num": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"input_device": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"src": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"subnet": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"srcaddr": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"src_negate": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"dst": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"subnet": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"dstaddr": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"dst_negate": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"action": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"protocol": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"start_port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"end_port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"start_source_port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"end_source_port": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"gateway": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"output_device": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"tos": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"tos_mask": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"comments": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
+				Optional:     true,
 			},
 		},
 	}
@@ -273,7 +273,6 @@ func resourceRouterPolicyRead(d *schema.ResourceData, m interface{}) error {
 	}
 	return nil
 }
-
 
 func flattenRouterPolicySeqNum(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -515,10 +514,8 @@ func flattenRouterPolicyComments(v interface{}, d *schema.ResourceData, pre stri
 	return v
 }
 
-
 func refreshObjectRouterPolicy(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("seq_num", flattenRouterPolicySeqNum(o["seq-num"], d, "seq_num")); err != nil {
 		if !fortiAPIPatch(o["seq-num"]) {
@@ -526,53 +523,53 @@ func refreshObjectRouterPolicy(d *schema.ResourceData, o map[string]interface{})
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("input_device", flattenRouterPolicyInputDevice(o["input-device"], d, "input_device")); err != nil {
-            if !fortiAPIPatch(o["input-device"]) {
-                return fmt.Errorf("Error reading input_device: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("input_device"); ok {
-            if err = d.Set("input_device", flattenRouterPolicyInputDevice(o["input-device"], d, "input_device")); err != nil {
-                if !fortiAPIPatch(o["input-device"]) {
-                    return fmt.Errorf("Error reading input_device: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("input_device", flattenRouterPolicyInputDevice(o["input-device"], d, "input_device")); err != nil {
+			if !fortiAPIPatch(o["input-device"]) {
+				return fmt.Errorf("Error reading input_device: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("input_device"); ok {
+			if err = d.Set("input_device", flattenRouterPolicyInputDevice(o["input-device"], d, "input_device")); err != nil {
+				if !fortiAPIPatch(o["input-device"]) {
+					return fmt.Errorf("Error reading input_device: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("src", flattenRouterPolicySrc(o["src"], d, "src")); err != nil {
-            if !fortiAPIPatch(o["src"]) {
-                return fmt.Errorf("Error reading src: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("src"); ok {
-            if err = d.Set("src", flattenRouterPolicySrc(o["src"], d, "src")); err != nil {
-                if !fortiAPIPatch(o["src"]) {
-                    return fmt.Errorf("Error reading src: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("src", flattenRouterPolicySrc(o["src"], d, "src")); err != nil {
+			if !fortiAPIPatch(o["src"]) {
+				return fmt.Errorf("Error reading src: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("src"); ok {
+			if err = d.Set("src", flattenRouterPolicySrc(o["src"], d, "src")); err != nil {
+				if !fortiAPIPatch(o["src"]) {
+					return fmt.Errorf("Error reading src: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("srcaddr", flattenRouterPolicySrcaddr(o["srcaddr"], d, "srcaddr")); err != nil {
-            if !fortiAPIPatch(o["srcaddr"]) {
-                return fmt.Errorf("Error reading srcaddr: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("srcaddr"); ok {
-            if err = d.Set("srcaddr", flattenRouterPolicySrcaddr(o["srcaddr"], d, "srcaddr")); err != nil {
-                if !fortiAPIPatch(o["srcaddr"]) {
-                    return fmt.Errorf("Error reading srcaddr: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("srcaddr", flattenRouterPolicySrcaddr(o["srcaddr"], d, "srcaddr")); err != nil {
+			if !fortiAPIPatch(o["srcaddr"]) {
+				return fmt.Errorf("Error reading srcaddr: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("srcaddr"); ok {
+			if err = d.Set("srcaddr", flattenRouterPolicySrcaddr(o["srcaddr"], d, "srcaddr")); err != nil {
+				if !fortiAPIPatch(o["srcaddr"]) {
+					return fmt.Errorf("Error reading srcaddr: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("src_negate", flattenRouterPolicySrcNegate(o["src-negate"], d, "src_negate")); err != nil {
 		if !fortiAPIPatch(o["src-negate"]) {
@@ -580,37 +577,37 @@ func refreshObjectRouterPolicy(d *schema.ResourceData, o map[string]interface{})
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("dst", flattenRouterPolicyDst(o["dst"], d, "dst")); err != nil {
-            if !fortiAPIPatch(o["dst"]) {
-                return fmt.Errorf("Error reading dst: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("dst"); ok {
-            if err = d.Set("dst", flattenRouterPolicyDst(o["dst"], d, "dst")); err != nil {
-                if !fortiAPIPatch(o["dst"]) {
-                    return fmt.Errorf("Error reading dst: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("dst", flattenRouterPolicyDst(o["dst"], d, "dst")); err != nil {
+			if !fortiAPIPatch(o["dst"]) {
+				return fmt.Errorf("Error reading dst: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("dst"); ok {
+			if err = d.Set("dst", flattenRouterPolicyDst(o["dst"], d, "dst")); err != nil {
+				if !fortiAPIPatch(o["dst"]) {
+					return fmt.Errorf("Error reading dst: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("dstaddr", flattenRouterPolicyDstaddr(o["dstaddr"], d, "dstaddr")); err != nil {
-            if !fortiAPIPatch(o["dstaddr"]) {
-                return fmt.Errorf("Error reading dstaddr: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("dstaddr"); ok {
-            if err = d.Set("dstaddr", flattenRouterPolicyDstaddr(o["dstaddr"], d, "dstaddr")); err != nil {
-                if !fortiAPIPatch(o["dstaddr"]) {
-                    return fmt.Errorf("Error reading dstaddr: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("dstaddr", flattenRouterPolicyDstaddr(o["dstaddr"], d, "dstaddr")); err != nil {
+			if !fortiAPIPatch(o["dstaddr"]) {
+				return fmt.Errorf("Error reading dstaddr: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("dstaddr"); ok {
+			if err = d.Set("dstaddr", flattenRouterPolicyDstaddr(o["dstaddr"], d, "dstaddr")); err != nil {
+				if !fortiAPIPatch(o["dstaddr"]) {
+					return fmt.Errorf("Error reading dstaddr: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("dst_negate", flattenRouterPolicyDstNegate(o["dst-negate"], d, "dst_negate")); err != nil {
 		if !fortiAPIPatch(o["dst-negate"]) {
@@ -690,7 +687,6 @@ func refreshObjectRouterPolicy(d *schema.ResourceData, o map[string]interface{})
 		}
 	}
 
-
 	return nil
 }
 
@@ -699,7 +695,6 @@ func flattenRouterPolicyFortiTestDebug(d *schema.ResourceData, fosdebugsn int, f
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandRouterPolicySeqNum(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -717,7 +712,7 @@ func expandRouterPolicyInputDevice(d *schema.ResourceData, v interface{}, pre st
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -748,7 +743,7 @@ func expandRouterPolicySrc(d *schema.ResourceData, v interface{}, pre string) (i
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -779,7 +774,7 @@ func expandRouterPolicySrcaddr(d *schema.ResourceData, v interface{}, pre string
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -814,7 +809,7 @@ func expandRouterPolicyDst(d *schema.ResourceData, v interface{}, pre string) (i
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -845,7 +840,7 @@ func expandRouterPolicyDstaddr(d *schema.ResourceData, v interface{}, pre string
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -916,10 +911,8 @@ func expandRouterPolicyComments(d *schema.ResourceData, v interface{}, pre strin
 	return v, nil
 }
 
-
 func getObjectRouterPolicy(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("seq_num"); ok {
 		t, err := expandRouterPolicySeqNum(d, v, "seq_num")
@@ -1101,7 +1094,5 @@ func getObjectRouterPolicy(d *schema.ResourceData) (*map[string]interface{}, err
 		}
 	}
 
-
 	return &obj, nil
 }
-

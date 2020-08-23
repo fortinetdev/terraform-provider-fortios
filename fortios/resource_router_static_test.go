@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,47 +5,48 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSRouterStatic_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSRouterStatic_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSRouterStatic_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSRouterStaticConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSRouterStaticExists("fortios_router_static.trname"),
-                    resource.TestCheckResourceAttr("fortios_router_static.trname", "bfd", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_static.trname", "blackhole", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_static.trname", "device", "port4"),
-                    resource.TestCheckResourceAttr("fortios_router_static.trname", "distance", "10"),
-                    resource.TestCheckResourceAttr("fortios_router_static.trname", "dst", "1.0.0.0 255.240.0.0"),
-                    resource.TestCheckResourceAttr("fortios_router_static.trname", "dynamic_gateway", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_static.trname", "gateway", "0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_router_static.trname", "internet_service", "0"),
-                    resource.TestCheckResourceAttr("fortios_router_static.trname", "link_monitor_exempt", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_static.trname", "priority", "22"),
-                    resource.TestCheckResourceAttr("fortios_router_static.trname", "seq_num", "1"),
-                    resource.TestCheckResourceAttr("fortios_router_static.trname", "src", "0.0.0.0 0.0.0.0"),
-                    resource.TestCheckResourceAttr("fortios_router_static.trname", "status", "enable"),
-                    resource.TestCheckResourceAttr("fortios_router_static.trname", "virtual_wan_link", "disable"),
-                    resource.TestCheckResourceAttr("fortios_router_static.trname", "vrf", "0"),
-                    resource.TestCheckResourceAttr("fortios_router_static.trname", "weight", "2"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSRouterStaticConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSRouterStaticExists("fortios_router_static.trname"),
+					resource.TestCheckResourceAttr("fortios_router_static.trname", "bfd", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_static.trname", "blackhole", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_static.trname", "device", "port4"),
+					resource.TestCheckResourceAttr("fortios_router_static.trname", "distance", "10"),
+					resource.TestCheckResourceAttr("fortios_router_static.trname", "dst", "1.0.0.0 255.240.0.0"),
+					resource.TestCheckResourceAttr("fortios_router_static.trname", "dynamic_gateway", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_static.trname", "gateway", "0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_router_static.trname", "internet_service", "0"),
+					resource.TestCheckResourceAttr("fortios_router_static.trname", "link_monitor_exempt", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_static.trname", "priority", "22"),
+					resource.TestCheckResourceAttr("fortios_router_static.trname", "seq_num", "1"),
+					resource.TestCheckResourceAttr("fortios_router_static.trname", "src", "0.0.0.0 0.0.0.0"),
+					resource.TestCheckResourceAttr("fortios_router_static.trname", "status", "enable"),
+					resource.TestCheckResourceAttr("fortios_router_static.trname", "virtual_wan_link", "disable"),
+					resource.TestCheckResourceAttr("fortios_router_static.trname", "vrf", "0"),
+					resource.TestCheckResourceAttr("fortios_router_static.trname", "weight", "2"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSRouterStaticExists(n string) resource.TestCheckFunc {

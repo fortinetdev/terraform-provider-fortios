@@ -30,64 +30,64 @@ func resourceDnsfilterProfile() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"comment": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
+				Optional:     true,
 			},
 			"domain_filter": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"domain_filter_table": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
-			},			"ftgd_dns": &schema.Schema{
-				Type: schema.TypeList,
+			}, "ftgd_dns": &schema.Schema{
+				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"options": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"filters": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 255),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"category": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 255),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"action": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"log": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
@@ -96,56 +96,56 @@ func resourceDnsfilterProfile() *schema.Resource {
 						},
 					},
 				},
-			},			"log_all_domain": &schema.Schema{
-				Type: schema.TypeString,
+			}, "log_all_domain": &schema.Schema{
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"sdns_ftgd_err_log": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"sdns_domain_log": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"block_action": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"redirect_portal": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"block_botnet": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"safe_search": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"youtube_restrict": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"external_ip_blocklist": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
@@ -243,7 +243,6 @@ func resourceDnsfilterProfileRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenDnsfilterProfileName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -261,11 +260,10 @@ func flattenDnsfilterProfileDomainFilter(v interface{}, d *schema.ResourceData, 
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "domain_filter_table"
+	pre_append = pre + ".0." + "domain_filter_table"
 	if _, ok := i["domain-filter-table"]; ok {
 		result["domain_filter_table"] = flattenDnsfilterProfileDomainFilterDomainFilterTable(i["domain-filter-table"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -284,16 +282,15 @@ func flattenDnsfilterProfileFtgdDns(v interface{}, d *schema.ResourceData, pre s
 	result := make(map[string]interface{})
 
 	pre_append := "" // complex
-	pre_append =  pre + ".0." + "options"
+	pre_append = pre + ".0." + "options"
 	if _, ok := i["options"]; ok {
 		result["options"] = flattenDnsfilterProfileFtgdDnsOptions(i["options"], d, pre_append)
 	}
 
-	pre_append =  pre + ".0." + "filters"
+	pre_append = pre + ".0." + "filters"
 	if _, ok := i["filters"]; ok {
 		result["filters"] = flattenDnsfilterProfileFtgdDnsFilters(i["filters"], d, pre_append)
 	}
-
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
@@ -434,10 +431,8 @@ func flattenDnsfilterProfileExternalIpBlocklistName(v interface{}, d *schema.Res
 	return v
 }
 
-
 func refreshObjectDnsfilterProfile(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenDnsfilterProfileName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -451,37 +446,37 @@ func refreshObjectDnsfilterProfile(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("domain_filter", flattenDnsfilterProfileDomainFilter(o["domain-filter"], d, "domain_filter")); err != nil {
-            if !fortiAPIPatch(o["domain-filter"]) {
-                return fmt.Errorf("Error reading domain_filter: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("domain_filter"); ok {
-            if err = d.Set("domain_filter", flattenDnsfilterProfileDomainFilter(o["domain-filter"], d, "domain_filter")); err != nil {
-                if !fortiAPIPatch(o["domain-filter"]) {
-                    return fmt.Errorf("Error reading domain_filter: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("domain_filter", flattenDnsfilterProfileDomainFilter(o["domain-filter"], d, "domain_filter")); err != nil {
+			if !fortiAPIPatch(o["domain-filter"]) {
+				return fmt.Errorf("Error reading domain_filter: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("domain_filter"); ok {
+			if err = d.Set("domain_filter", flattenDnsfilterProfileDomainFilter(o["domain-filter"], d, "domain_filter")); err != nil {
+				if !fortiAPIPatch(o["domain-filter"]) {
+					return fmt.Errorf("Error reading domain_filter: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("ftgd_dns", flattenDnsfilterProfileFtgdDns(o["ftgd-dns"], d, "ftgd_dns")); err != nil {
-            if !fortiAPIPatch(o["ftgd-dns"]) {
-                return fmt.Errorf("Error reading ftgd_dns: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("ftgd_dns"); ok {
-            if err = d.Set("ftgd_dns", flattenDnsfilterProfileFtgdDns(o["ftgd-dns"], d, "ftgd_dns")); err != nil {
-                if !fortiAPIPatch(o["ftgd-dns"]) {
-                    return fmt.Errorf("Error reading ftgd_dns: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("ftgd_dns", flattenDnsfilterProfileFtgdDns(o["ftgd-dns"], d, "ftgd_dns")); err != nil {
+			if !fortiAPIPatch(o["ftgd-dns"]) {
+				return fmt.Errorf("Error reading ftgd_dns: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("ftgd_dns"); ok {
+			if err = d.Set("ftgd_dns", flattenDnsfilterProfileFtgdDns(o["ftgd-dns"], d, "ftgd_dns")); err != nil {
+				if !fortiAPIPatch(o["ftgd-dns"]) {
+					return fmt.Errorf("Error reading ftgd_dns: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("log_all_domain", flattenDnsfilterProfileLogAllDomain(o["log-all-domain"], d, "log_all_domain")); err != nil {
 		if !fortiAPIPatch(o["log-all-domain"]) {
@@ -531,22 +526,21 @@ func refreshObjectDnsfilterProfile(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("external_ip_blocklist", flattenDnsfilterProfileExternalIpBlocklist(o["external-ip-blocklist"], d, "external_ip_blocklist")); err != nil {
-            if !fortiAPIPatch(o["external-ip-blocklist"]) {
-                return fmt.Errorf("Error reading external_ip_blocklist: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("external_ip_blocklist"); ok {
-            if err = d.Set("external_ip_blocklist", flattenDnsfilterProfileExternalIpBlocklist(o["external-ip-blocklist"], d, "external_ip_blocklist")); err != nil {
-                if !fortiAPIPatch(o["external-ip-blocklist"]) {
-                    return fmt.Errorf("Error reading external_ip_blocklist: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("external_ip_blocklist", flattenDnsfilterProfileExternalIpBlocklist(o["external-ip-blocklist"], d, "external_ip_blocklist")); err != nil {
+			if !fortiAPIPatch(o["external-ip-blocklist"]) {
+				return fmt.Errorf("Error reading external_ip_blocklist: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("external_ip_blocklist"); ok {
+			if err = d.Set("external_ip_blocklist", flattenDnsfilterProfileExternalIpBlocklist(o["external-ip-blocklist"], d, "external_ip_blocklist")); err != nil {
+				if !fortiAPIPatch(o["external-ip-blocklist"]) {
+					return fmt.Errorf("Error reading external_ip_blocklist: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -556,7 +550,6 @@ func flattenDnsfilterProfileFortiTestDebug(d *schema.ResourceData, fosdebugsn in
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandDnsfilterProfileName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -575,8 +568,8 @@ func expandDnsfilterProfileDomainFilter(d *schema.ResourceData, v interface{}, p
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "domain_filter_table"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "domain_filter_table"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["domain-filter-table"], _ = expandDnsfilterProfileDomainFilterDomainFilterTable(d, i["domain_filter_table"], pre_append)
 	}
@@ -597,12 +590,12 @@ func expandDnsfilterProfileFtgdDns(d *schema.ResourceData, v interface{}, pre st
 	i := l[0].(map[string]interface{})
 	result := make(map[string]interface{})
 
-	pre_append := ""  // complex
-	pre_append =  pre + ".0." + "options"
+	pre_append := "" // complex
+	pre_append = pre + ".0." + "options"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["options"], _ = expandDnsfilterProfileFtgdDnsOptions(d, i["options"], pre_append)
 	}
-	pre_append =  pre + ".0." + "filters"
+	pre_append = pre + ".0." + "filters"
 	if _, ok := d.GetOk(pre_append); ok {
 		result["filters"], _ = expandDnsfilterProfileFtgdDnsFilters(d, i["filters"], pre_append)
 	} else {
@@ -628,7 +621,7 @@ func expandDnsfilterProfileFtgdDnsFilters(d *schema.ResourceData, v interface{},
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -718,7 +711,7 @@ func expandDnsfilterProfileExternalIpBlocklist(d *schema.ResourceData, v interfa
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -737,10 +730,8 @@ func expandDnsfilterProfileExternalIpBlocklistName(d *schema.ResourceData, v int
 	return v, nil
 }
 
-
 func getObjectDnsfilterProfile(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandDnsfilterProfileName(d, v, "name")
@@ -859,7 +850,5 @@ func getObjectDnsfilterProfile(d *schema.ResourceData) (*map[string]interface{},
 		}
 	}
 
-
 	return &obj, nil
 }
-

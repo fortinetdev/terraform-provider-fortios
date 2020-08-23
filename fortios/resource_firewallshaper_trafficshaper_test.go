@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,39 +5,40 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSFirewallShaperTrafficShaper_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSFirewallShaperTrafficShaper_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSFirewallShaperTrafficShaper_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSFirewallShaperTrafficShaperConfig(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSFirewallShaperTrafficShaperExists("fortios_firewallshaper_trafficshaper.trname"),
-                    resource.TestCheckResourceAttr("fortios_firewallshaper_trafficshaper.trname", "bandwidth_unit", "kbps"),
-                    resource.TestCheckResourceAttr("fortios_firewallshaper_trafficshaper.trname", "diffserv", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewallshaper_trafficshaper.trname", "diffservcode", "000000"),
-                    resource.TestCheckResourceAttr("fortios_firewallshaper_trafficshaper.trname", "guaranteed_bandwidth", "0"),
-                    resource.TestCheckResourceAttr("fortios_firewallshaper_trafficshaper.trname", "maximum_bandwidth", "1024"),
-                    resource.TestCheckResourceAttr("fortios_firewallshaper_trafficshaper.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_firewallshaper_trafficshaper.trname", "per_policy", "disable"),
-                    resource.TestCheckResourceAttr("fortios_firewallshaper_trafficshaper.trname", "priority", "low"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSFirewallShaperTrafficShaperConfig(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSFirewallShaperTrafficShaperExists("fortios_firewallshaper_trafficshaper.trname"),
+					resource.TestCheckResourceAttr("fortios_firewallshaper_trafficshaper.trname", "bandwidth_unit", "kbps"),
+					resource.TestCheckResourceAttr("fortios_firewallshaper_trafficshaper.trname", "diffserv", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewallshaper_trafficshaper.trname", "diffservcode", "000000"),
+					resource.TestCheckResourceAttr("fortios_firewallshaper_trafficshaper.trname", "guaranteed_bandwidth", "0"),
+					resource.TestCheckResourceAttr("fortios_firewallshaper_trafficshaper.trname", "maximum_bandwidth", "1024"),
+					resource.TestCheckResourceAttr("fortios_firewallshaper_trafficshaper.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_firewallshaper_trafficshaper.trname", "per_policy", "disable"),
+					resource.TestCheckResourceAttr("fortios_firewallshaper_trafficshaper.trname", "priority", "low"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSFirewallShaperTrafficShaperExists(n string) resource.TestCheckFunc {

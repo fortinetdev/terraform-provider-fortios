@@ -30,46 +30,45 @@ func resourceSystemFm() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"fosid": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ip": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"vdom": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"auto_backup": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"scheduled_config_restore": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ipsec": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 		},
 	}
 }
-
 
 func resourceSystemFmUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
@@ -136,7 +135,6 @@ func resourceSystemFmRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenSystemFmStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -165,10 +163,8 @@ func flattenSystemFmIpsec(v interface{}, d *schema.ResourceData, pre string) int
 	return v
 }
 
-
 func refreshObjectSystemFm(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("status", flattenSystemFmStatus(o["status"], d, "status")); err != nil {
 		if !fortiAPIPatch(o["status"]) {
@@ -212,7 +208,6 @@ func refreshObjectSystemFm(d *schema.ResourceData, o map[string]interface{}) err
 		}
 	}
 
-
 	return nil
 }
 
@@ -221,7 +216,6 @@ func flattenSystemFmFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosde
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemFmStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -251,10 +245,8 @@ func expandSystemFmIpsec(d *schema.ResourceData, v interface{}, pre string) (int
 	return v, nil
 }
 
-
 func getObjectSystemFm(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("status"); ok {
 		t, err := expandSystemFmStatus(d, v, "status")
@@ -319,7 +311,5 @@ func getObjectSystemFm(d *schema.ResourceData) (*map[string]interface{}, error) 
 		}
 	}
 
-
 	return &obj, nil
 }
-

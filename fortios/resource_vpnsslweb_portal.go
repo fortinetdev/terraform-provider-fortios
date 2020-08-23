@@ -30,349 +30,349 @@ func resourceVpnSslWebPortal() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"tunnel_mode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ip_mode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"auto_connect": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"keep_alive": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"save_password": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ip_pools": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"exclusive_routing": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"service_restriction": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"split_tunneling": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"split_tunneling_routing_address": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"dns_server1": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"dns_server2": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"dns_suffix": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 253),
-				Optional: true,
+				Optional:     true,
 			},
 			"wins_server1": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"wins_server2": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ipv6_tunnel_mode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ipv6_pools": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"ipv6_exclusive_routing": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ipv6_service_restriction": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ipv6_split_tunneling": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ipv6_split_tunneling_routing_address": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"ipv6_dns_server1": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ipv6_dns_server2": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ipv6_wins_server1": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"ipv6_wins_server2": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"web_mode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"display_bookmark": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"user_bookmark": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"allow_user_access": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"user_group_bookmark": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"bookmark_group": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"bookmarks": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"name": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"apptype": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"url": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 128),
-										Optional: true,
+										Optional:     true,
 									},
 									"host": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 128),
-										Optional: true,
+										Optional:     true,
 									},
 									"folder": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 128),
-										Optional: true,
+										Optional:     true,
 									},
 									"additional_params": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 128),
-										Optional: true,
+										Optional:     true,
 									},
 									"listening_port": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 65535),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"remote_port": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 65535),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"show_status_window": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"description": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 128),
-										Optional: true,
+										Optional:     true,
 									},
 									"server_layout": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"security": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"preconnection_id": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 2147483648),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"preconnection_blob": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 511),
-										Optional: true,
+										Optional:     true,
 									},
 									"load_balancing_info": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 511),
-										Optional: true,
+										Optional:     true,
 									},
 									"port": &schema.Schema{
-										Type: schema.TypeInt,
+										Type:         schema.TypeInt,
 										ValidateFunc: validation.IntBetween(0, 65535),
-										Optional: true,
-										Computed: true,
+										Optional:     true,
+										Computed:     true,
 									},
 									"logon_user": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
-										Optional: true,
+										Optional:     true,
 									},
 									"logon_password": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 128),
-										Optional: true,
+										Optional:     true,
 									},
 									"sso": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"form_data": &schema.Schema{
-										Type: schema.TypeList,
+										Type:     schema.TypeList,
 										Optional: true,
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 												"name": &schema.Schema{
-													Type: schema.TypeString,
+													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 35),
-													Optional: true,
-													Computed: true,
+													Optional:     true,
+													Computed:     true,
 												},
 												"value": &schema.Schema{
-													Type: schema.TypeString,
+													Type:         schema.TypeString,
 													ValidateFunc: validation.StringLenBetween(0, 63),
-													Optional: true,
+													Optional:     true,
 												},
 											},
 										},
 									},
 									"sso_credential": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
 									"sso_username": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 35),
-										Optional: true,
+										Optional:     true,
 									},
 									"sso_password": &schema.Schema{
-										Type: schema.TypeString,
+										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 128),
-										Optional: true,
+										Optional:     true,
 									},
 									"sso_credential_sent_once": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
@@ -383,116 +383,116 @@ func resourceVpnSslWebPortal() *schema.Resource {
 				},
 			},
 			"display_connection_tools": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"display_history": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"display_status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"heading": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"redir_url": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
+				Optional:     true,
 			},
 			"theme": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"custom_lang": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"smb_ntlmv1_auth": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"smbv1": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"host_check": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"host_check_interval": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(120, 259200),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"host_check_policy": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"limit_user_logins": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"mac_addr_check": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"mac_addr_action": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"mac_addr_check_rule": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"mac_addr_mask": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(1, 48),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"mac_addr_list": &schema.Schema{
-							Type: schema.TypeList,
+							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"addr": &schema.Schema{
-										Type: schema.TypeString,
+										Type:     schema.TypeString,
 										Optional: true,
 										Computed: true,
 									},
@@ -503,34 +503,34 @@ func resourceVpnSslWebPortal() *schema.Resource {
 				},
 			},
 			"os_check": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"os_check_list": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"action": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"tolerance": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 255),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"latest_patch_level": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -538,78 +538,78 @@ func resourceVpnSslWebPortal() *schema.Resource {
 				},
 			},
 			"forticlient_download": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"forticlient_download_method": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"customize_forticlient_download_url": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"windows_forticlient_download_url": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 1023),
-				Optional: true,
+				Optional:     true,
 			},
 			"macos_forticlient_download_url": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 1023),
-				Optional: true,
+				Optional:     true,
 			},
 			"skip_check_for_unsupported_os": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"skip_check_for_browser": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"hide_sso_credential": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"split_dns": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967294),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"domains": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 1024),
-							Optional: true,
+							Optional:     true,
 						},
 						"dns_server1": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"dns_server2": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"ipv6_dns_server1": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"ipv6_dns_server2": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -708,7 +708,6 @@ func resourceVpnSslWebPortalRead(d *schema.ResourceData, m interface{}) error {
 	}
 	return nil
 }
-
 
 func flattenVpnSslWebPortalName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -1645,10 +1644,8 @@ func flattenVpnSslWebPortalSplitDnsIpv6DnsServer2(v interface{}, d *schema.Resou
 	return v
 }
 
-
 func refreshObjectVpnSslWebPortal(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenVpnSslWebPortalName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -1686,21 +1683,21 @@ func refreshObjectVpnSslWebPortal(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("ip_pools", flattenVpnSslWebPortalIpPools(o["ip-pools"], d, "ip_pools")); err != nil {
-            if !fortiAPIPatch(o["ip-pools"]) {
-                return fmt.Errorf("Error reading ip_pools: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("ip_pools"); ok {
-            if err = d.Set("ip_pools", flattenVpnSslWebPortalIpPools(o["ip-pools"], d, "ip_pools")); err != nil {
-                if !fortiAPIPatch(o["ip-pools"]) {
-                    return fmt.Errorf("Error reading ip_pools: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("ip_pools", flattenVpnSslWebPortalIpPools(o["ip-pools"], d, "ip_pools")); err != nil {
+			if !fortiAPIPatch(o["ip-pools"]) {
+				return fmt.Errorf("Error reading ip_pools: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("ip_pools"); ok {
+			if err = d.Set("ip_pools", flattenVpnSslWebPortalIpPools(o["ip-pools"], d, "ip_pools")); err != nil {
+				if !fortiAPIPatch(o["ip-pools"]) {
+					return fmt.Errorf("Error reading ip_pools: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("exclusive_routing", flattenVpnSslWebPortalExclusiveRouting(o["exclusive-routing"], d, "exclusive_routing")); err != nil {
 		if !fortiAPIPatch(o["exclusive-routing"]) {
@@ -1720,21 +1717,21 @@ func refreshObjectVpnSslWebPortal(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("split_tunneling_routing_address", flattenVpnSslWebPortalSplitTunnelingRoutingAddress(o["split-tunneling-routing-address"], d, "split_tunneling_routing_address")); err != nil {
-            if !fortiAPIPatch(o["split-tunneling-routing-address"]) {
-                return fmt.Errorf("Error reading split_tunneling_routing_address: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("split_tunneling_routing_address"); ok {
-            if err = d.Set("split_tunneling_routing_address", flattenVpnSslWebPortalSplitTunnelingRoutingAddress(o["split-tunneling-routing-address"], d, "split_tunneling_routing_address")); err != nil {
-                if !fortiAPIPatch(o["split-tunneling-routing-address"]) {
-                    return fmt.Errorf("Error reading split_tunneling_routing_address: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("split_tunneling_routing_address", flattenVpnSslWebPortalSplitTunnelingRoutingAddress(o["split-tunneling-routing-address"], d, "split_tunneling_routing_address")); err != nil {
+			if !fortiAPIPatch(o["split-tunneling-routing-address"]) {
+				return fmt.Errorf("Error reading split_tunneling_routing_address: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("split_tunneling_routing_address"); ok {
+			if err = d.Set("split_tunneling_routing_address", flattenVpnSslWebPortalSplitTunnelingRoutingAddress(o["split-tunneling-routing-address"], d, "split_tunneling_routing_address")); err != nil {
+				if !fortiAPIPatch(o["split-tunneling-routing-address"]) {
+					return fmt.Errorf("Error reading split_tunneling_routing_address: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("dns_server1", flattenVpnSslWebPortalDnsServer1(o["dns-server1"], d, "dns_server1")); err != nil {
 		if !fortiAPIPatch(o["dns-server1"]) {
@@ -1772,21 +1769,21 @@ func refreshObjectVpnSslWebPortal(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("ipv6_pools", flattenVpnSslWebPortalIpv6Pools(o["ipv6-pools"], d, "ipv6_pools")); err != nil {
-            if !fortiAPIPatch(o["ipv6-pools"]) {
-                return fmt.Errorf("Error reading ipv6_pools: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("ipv6_pools"); ok {
-            if err = d.Set("ipv6_pools", flattenVpnSslWebPortalIpv6Pools(o["ipv6-pools"], d, "ipv6_pools")); err != nil {
-                if !fortiAPIPatch(o["ipv6-pools"]) {
-                    return fmt.Errorf("Error reading ipv6_pools: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("ipv6_pools", flattenVpnSslWebPortalIpv6Pools(o["ipv6-pools"], d, "ipv6_pools")); err != nil {
+			if !fortiAPIPatch(o["ipv6-pools"]) {
+				return fmt.Errorf("Error reading ipv6_pools: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("ipv6_pools"); ok {
+			if err = d.Set("ipv6_pools", flattenVpnSslWebPortalIpv6Pools(o["ipv6-pools"], d, "ipv6_pools")); err != nil {
+				if !fortiAPIPatch(o["ipv6-pools"]) {
+					return fmt.Errorf("Error reading ipv6_pools: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("ipv6_exclusive_routing", flattenVpnSslWebPortalIpv6ExclusiveRouting(o["ipv6-exclusive-routing"], d, "ipv6_exclusive_routing")); err != nil {
 		if !fortiAPIPatch(o["ipv6-exclusive-routing"]) {
@@ -1806,21 +1803,21 @@ func refreshObjectVpnSslWebPortal(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("ipv6_split_tunneling_routing_address", flattenVpnSslWebPortalIpv6SplitTunnelingRoutingAddress(o["ipv6-split-tunneling-routing-address"], d, "ipv6_split_tunneling_routing_address")); err != nil {
-            if !fortiAPIPatch(o["ipv6-split-tunneling-routing-address"]) {
-                return fmt.Errorf("Error reading ipv6_split_tunneling_routing_address: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("ipv6_split_tunneling_routing_address"); ok {
-            if err = d.Set("ipv6_split_tunneling_routing_address", flattenVpnSslWebPortalIpv6SplitTunnelingRoutingAddress(o["ipv6-split-tunneling-routing-address"], d, "ipv6_split_tunneling_routing_address")); err != nil {
-                if !fortiAPIPatch(o["ipv6-split-tunneling-routing-address"]) {
-                    return fmt.Errorf("Error reading ipv6_split_tunneling_routing_address: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("ipv6_split_tunneling_routing_address", flattenVpnSslWebPortalIpv6SplitTunnelingRoutingAddress(o["ipv6-split-tunneling-routing-address"], d, "ipv6_split_tunneling_routing_address")); err != nil {
+			if !fortiAPIPatch(o["ipv6-split-tunneling-routing-address"]) {
+				return fmt.Errorf("Error reading ipv6_split_tunneling_routing_address: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("ipv6_split_tunneling_routing_address"); ok {
+			if err = d.Set("ipv6_split_tunneling_routing_address", flattenVpnSslWebPortalIpv6SplitTunnelingRoutingAddress(o["ipv6-split-tunneling-routing-address"], d, "ipv6_split_tunneling_routing_address")); err != nil {
+				if !fortiAPIPatch(o["ipv6-split-tunneling-routing-address"]) {
+					return fmt.Errorf("Error reading ipv6_split_tunneling_routing_address: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("ipv6_dns_server1", flattenVpnSslWebPortalIpv6DnsServer1(o["ipv6-dns-server1"], d, "ipv6_dns_server1")); err != nil {
 		if !fortiAPIPatch(o["ipv6-dns-server1"]) {
@@ -1876,21 +1873,21 @@ func refreshObjectVpnSslWebPortal(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("bookmark_group", flattenVpnSslWebPortalBookmarkGroup(o["bookmark-group"], d, "bookmark_group")); err != nil {
-            if !fortiAPIPatch(o["bookmark-group"]) {
-                return fmt.Errorf("Error reading bookmark_group: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("bookmark_group"); ok {
-            if err = d.Set("bookmark_group", flattenVpnSslWebPortalBookmarkGroup(o["bookmark-group"], d, "bookmark_group")); err != nil {
-                if !fortiAPIPatch(o["bookmark-group"]) {
-                    return fmt.Errorf("Error reading bookmark_group: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("bookmark_group", flattenVpnSslWebPortalBookmarkGroup(o["bookmark-group"], d, "bookmark_group")); err != nil {
+			if !fortiAPIPatch(o["bookmark-group"]) {
+				return fmt.Errorf("Error reading bookmark_group: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("bookmark_group"); ok {
+			if err = d.Set("bookmark_group", flattenVpnSslWebPortalBookmarkGroup(o["bookmark-group"], d, "bookmark_group")); err != nil {
+				if !fortiAPIPatch(o["bookmark-group"]) {
+					return fmt.Errorf("Error reading bookmark_group: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("display_connection_tools", flattenVpnSslWebPortalDisplayConnectionTools(o["display-connection-tools"], d, "display_connection_tools")); err != nil {
 		if !fortiAPIPatch(o["display-connection-tools"]) {
@@ -1958,21 +1955,21 @@ func refreshObjectVpnSslWebPortal(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("host_check_policy", flattenVpnSslWebPortalHostCheckPolicy(o["host-check-policy"], d, "host_check_policy")); err != nil {
-            if !fortiAPIPatch(o["host-check-policy"]) {
-                return fmt.Errorf("Error reading host_check_policy: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("host_check_policy"); ok {
-            if err = d.Set("host_check_policy", flattenVpnSslWebPortalHostCheckPolicy(o["host-check-policy"], d, "host_check_policy")); err != nil {
-                if !fortiAPIPatch(o["host-check-policy"]) {
-                    return fmt.Errorf("Error reading host_check_policy: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("host_check_policy", flattenVpnSslWebPortalHostCheckPolicy(o["host-check-policy"], d, "host_check_policy")); err != nil {
+			if !fortiAPIPatch(o["host-check-policy"]) {
+				return fmt.Errorf("Error reading host_check_policy: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("host_check_policy"); ok {
+			if err = d.Set("host_check_policy", flattenVpnSslWebPortalHostCheckPolicy(o["host-check-policy"], d, "host_check_policy")); err != nil {
+				if !fortiAPIPatch(o["host-check-policy"]) {
+					return fmt.Errorf("Error reading host_check_policy: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("limit_user_logins", flattenVpnSslWebPortalLimitUserLogins(o["limit-user-logins"], d, "limit_user_logins")); err != nil {
 		if !fortiAPIPatch(o["limit-user-logins"]) {
@@ -1992,21 +1989,21 @@ func refreshObjectVpnSslWebPortal(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("mac_addr_check_rule", flattenVpnSslWebPortalMacAddrCheckRule(o["mac-addr-check-rule"], d, "mac_addr_check_rule")); err != nil {
-            if !fortiAPIPatch(o["mac-addr-check-rule"]) {
-                return fmt.Errorf("Error reading mac_addr_check_rule: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("mac_addr_check_rule"); ok {
-            if err = d.Set("mac_addr_check_rule", flattenVpnSslWebPortalMacAddrCheckRule(o["mac-addr-check-rule"], d, "mac_addr_check_rule")); err != nil {
-                if !fortiAPIPatch(o["mac-addr-check-rule"]) {
-                    return fmt.Errorf("Error reading mac_addr_check_rule: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("mac_addr_check_rule", flattenVpnSslWebPortalMacAddrCheckRule(o["mac-addr-check-rule"], d, "mac_addr_check_rule")); err != nil {
+			if !fortiAPIPatch(o["mac-addr-check-rule"]) {
+				return fmt.Errorf("Error reading mac_addr_check_rule: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("mac_addr_check_rule"); ok {
+			if err = d.Set("mac_addr_check_rule", flattenVpnSslWebPortalMacAddrCheckRule(o["mac-addr-check-rule"], d, "mac_addr_check_rule")); err != nil {
+				if !fortiAPIPatch(o["mac-addr-check-rule"]) {
+					return fmt.Errorf("Error reading mac_addr_check_rule: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("os_check", flattenVpnSslWebPortalOsCheck(o["os-check"], d, "os_check")); err != nil {
 		if !fortiAPIPatch(o["os-check"]) {
@@ -2014,21 +2011,21 @@ func refreshObjectVpnSslWebPortal(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("os_check_list", flattenVpnSslWebPortalOsCheckList(o["os-check-list"], d, "os_check_list")); err != nil {
-            if !fortiAPIPatch(o["os-check-list"]) {
-                return fmt.Errorf("Error reading os_check_list: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("os_check_list"); ok {
-            if err = d.Set("os_check_list", flattenVpnSslWebPortalOsCheckList(o["os-check-list"], d, "os_check_list")); err != nil {
-                if !fortiAPIPatch(o["os-check-list"]) {
-                    return fmt.Errorf("Error reading os_check_list: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("os_check_list", flattenVpnSslWebPortalOsCheckList(o["os-check-list"], d, "os_check_list")); err != nil {
+			if !fortiAPIPatch(o["os-check-list"]) {
+				return fmt.Errorf("Error reading os_check_list: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("os_check_list"); ok {
+			if err = d.Set("os_check_list", flattenVpnSslWebPortalOsCheckList(o["os-check-list"], d, "os_check_list")); err != nil {
+				if !fortiAPIPatch(o["os-check-list"]) {
+					return fmt.Errorf("Error reading os_check_list: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("forticlient_download", flattenVpnSslWebPortalForticlientDownload(o["forticlient-download"], d, "forticlient_download")); err != nil {
 		if !fortiAPIPatch(o["forticlient-download"]) {
@@ -2078,22 +2075,21 @@ func refreshObjectVpnSslWebPortal(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("split_dns", flattenVpnSslWebPortalSplitDns(o["split-dns"], d, "split_dns")); err != nil {
-            if !fortiAPIPatch(o["split-dns"]) {
-                return fmt.Errorf("Error reading split_dns: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("split_dns"); ok {
-            if err = d.Set("split_dns", flattenVpnSslWebPortalSplitDns(o["split-dns"], d, "split_dns")); err != nil {
-                if !fortiAPIPatch(o["split-dns"]) {
-                    return fmt.Errorf("Error reading split_dns: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("split_dns", flattenVpnSslWebPortalSplitDns(o["split-dns"], d, "split_dns")); err != nil {
+			if !fortiAPIPatch(o["split-dns"]) {
+				return fmt.Errorf("Error reading split_dns: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("split_dns"); ok {
+			if err = d.Set("split_dns", flattenVpnSslWebPortalSplitDns(o["split-dns"], d, "split_dns")); err != nil {
+				if !fortiAPIPatch(o["split-dns"]) {
+					return fmt.Errorf("Error reading split_dns: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -2103,7 +2099,6 @@ func flattenVpnSslWebPortalFortiTestDebug(d *schema.ResourceData, fosdebugsn int
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandVpnSslWebPortalName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -2141,7 +2136,7 @@ func expandVpnSslWebPortalIpPools(d *schema.ResourceData, v interface{}, pre str
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2184,7 +2179,7 @@ func expandVpnSslWebPortalSplitTunnelingRoutingAddress(d *schema.ResourceData, v
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2239,7 +2234,7 @@ func expandVpnSslWebPortalIpv6Pools(d *schema.ResourceData, v interface{}, pre s
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2282,7 +2277,7 @@ func expandVpnSslWebPortalIpv6SplitTunnelingRoutingAddress(d *schema.ResourceDat
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2349,7 +2344,7 @@ func expandVpnSslWebPortalBookmarkGroup(d *schema.ResourceData, v interface{}, p
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2387,7 +2382,7 @@ func expandVpnSslWebPortalBookmarkGroupBookmarks(d *schema.ResourceData, v inter
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2607,7 +2602,7 @@ func expandVpnSslWebPortalBookmarkGroupBookmarksFormData(d *schema.ResourceData,
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2707,7 +2702,7 @@ func expandVpnSslWebPortalHostCheckPolicy(d *schema.ResourceData, v interface{},
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2750,7 +2745,7 @@ func expandVpnSslWebPortalMacAddrCheckRule(d *schema.ResourceData, v interface{}
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2797,7 +2792,7 @@ func expandVpnSslWebPortalMacAddrCheckRuleMacAddrList(d *schema.ResourceData, v 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "addr"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2832,7 +2827,7 @@ func expandVpnSslWebPortalOsCheckList(d *schema.ResourceData, v interface{}, pre
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2922,7 +2917,7 @@ func expandVpnSslWebPortalSplitDns(d *schema.ResourceData, v interface{}, pre st
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -2986,10 +2981,8 @@ func expandVpnSslWebPortalSplitDnsIpv6DnsServer2(d *schema.ResourceData, v inter
 	return v, nil
 }
 
-
 func getObjectVpnSslWebPortal(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandVpnSslWebPortalName(d, v, "name")
@@ -3522,7 +3515,5 @@ func getObjectVpnSslWebPortal(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-
 	return &obj, nil
 }
-

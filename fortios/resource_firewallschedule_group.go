@@ -30,29 +30,29 @@ func resourceFirewallScheduleGroup() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
-				Required: true,
+				Required:     true,
 			},
 			"member": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Required: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"color": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 32),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
@@ -147,7 +147,6 @@ func resourceFirewallScheduleGroupRead(d *schema.ResourceData, m interface{}) er
 	return nil
 }
 
-
 func flattenFirewallScheduleGroupName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -192,10 +191,8 @@ func flattenFirewallScheduleGroupColor(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
-
 func refreshObjectFirewallScheduleGroup(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenFirewallScheduleGroupName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -203,28 +200,27 @@ func refreshObjectFirewallScheduleGroup(d *schema.ResourceData, o map[string]int
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("member", flattenFirewallScheduleGroupMember(o["member"], d, "member")); err != nil {
-            if !fortiAPIPatch(o["member"]) {
-                return fmt.Errorf("Error reading member: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("member"); ok {
-            if err = d.Set("member", flattenFirewallScheduleGroupMember(o["member"], d, "member")); err != nil {
-                if !fortiAPIPatch(o["member"]) {
-                    return fmt.Errorf("Error reading member: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("member", flattenFirewallScheduleGroupMember(o["member"], d, "member")); err != nil {
+			if !fortiAPIPatch(o["member"]) {
+				return fmt.Errorf("Error reading member: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("member"); ok {
+			if err = d.Set("member", flattenFirewallScheduleGroupMember(o["member"], d, "member")); err != nil {
+				if !fortiAPIPatch(o["member"]) {
+					return fmt.Errorf("Error reading member: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("color", flattenFirewallScheduleGroupColor(o["color"], d, "color")); err != nil {
 		if !fortiAPIPatch(o["color"]) {
 			return fmt.Errorf("Error reading color: %v", err)
 		}
 	}
-
 
 	return nil
 }
@@ -234,7 +230,6 @@ func flattenFirewallScheduleGroupFortiTestDebug(d *schema.ResourceData, fosdebug
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandFirewallScheduleGroupName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -252,7 +247,7 @@ func expandFirewallScheduleGroupMember(d *schema.ResourceData, v interface{}, pr
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -275,10 +270,8 @@ func expandFirewallScheduleGroupColor(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
-
 func getObjectFirewallScheduleGroup(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandFirewallScheduleGroupName(d, v, "name")
@@ -307,7 +300,5 @@ func getObjectFirewallScheduleGroup(d *schema.ResourceData) (*map[string]interfa
 		}
 	}
 
-
 	return &obj, nil
 }
-

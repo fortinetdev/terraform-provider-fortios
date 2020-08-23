@@ -30,19 +30,19 @@ func resourceSystemDscpBasedPriority() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"fosid": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ds": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 63),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"priority": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
@@ -139,7 +139,6 @@ func resourceSystemDscpBasedPriorityRead(d *schema.ResourceData, m interface{}) 
 	return nil
 }
 
-
 func flattenSystemDscpBasedPriorityId(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -152,10 +151,8 @@ func flattenSystemDscpBasedPriorityPriority(v interface{}, d *schema.ResourceDat
 	return v
 }
 
-
 func refreshObjectSystemDscpBasedPriority(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("fosid", flattenSystemDscpBasedPriorityId(o["id"], d, "fosid")); err != nil {
 		if !fortiAPIPatch(o["id"]) {
@@ -175,7 +172,6 @@ func refreshObjectSystemDscpBasedPriority(d *schema.ResourceData, o map[string]i
 		}
 	}
 
-
 	return nil
 }
 
@@ -184,7 +180,6 @@ func flattenSystemDscpBasedPriorityFortiTestDebug(d *schema.ResourceData, fosdeb
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSystemDscpBasedPriorityId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -198,10 +193,8 @@ func expandSystemDscpBasedPriorityPriority(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
-
 func getObjectSystemDscpBasedPriority(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("fosid"); ok {
 		t, err := expandSystemDscpBasedPriorityId(d, v, "fosid")
@@ -230,7 +223,5 @@ func getObjectSystemDscpBasedPriority(d *schema.ResourceData) (*map[string]inter
 		}
 	}
 
-
 	return &obj, nil
 }
-

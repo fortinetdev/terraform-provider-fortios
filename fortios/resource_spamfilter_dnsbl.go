@@ -30,44 +30,44 @@ func resourceSpamfilterDnsbl() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"fosid": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Required: true,
+				Required:     true,
 			},
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required: true,
+				Required:     true,
 			},
 			"comment": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
+				Optional:     true,
 			},
 			"entries": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"status": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
 						"id": &schema.Schema{
-							Type: schema.TypeInt,
+							Type:         schema.TypeInt,
 							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"server": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 127),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 						"action": &schema.Schema{
-							Type: schema.TypeString,
+							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
 						},
@@ -167,7 +167,6 @@ func resourceSpamfilterDnsblRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
-
 func flattenSpamfilterDnsblId(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -243,10 +242,8 @@ func flattenSpamfilterDnsblEntriesAction(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
-
 func refreshObjectSpamfilterDnsbl(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("fosid", flattenSpamfilterDnsblId(o["id"], d, "fosid")); err != nil {
 		if !fortiAPIPatch(o["id"]) {
@@ -266,22 +263,21 @@ func refreshObjectSpamfilterDnsbl(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("entries", flattenSpamfilterDnsblEntries(o["entries"], d, "entries")); err != nil {
-            if !fortiAPIPatch(o["entries"]) {
-                return fmt.Errorf("Error reading entries: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("entries"); ok {
-            if err = d.Set("entries", flattenSpamfilterDnsblEntries(o["entries"], d, "entries")); err != nil {
-                if !fortiAPIPatch(o["entries"]) {
-                    return fmt.Errorf("Error reading entries: %v", err)
-                }
-            }
-        }
-    }
-
+	if isImportTable() {
+		if err = d.Set("entries", flattenSpamfilterDnsblEntries(o["entries"], d, "entries")); err != nil {
+			if !fortiAPIPatch(o["entries"]) {
+				return fmt.Errorf("Error reading entries: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("entries"); ok {
+			if err = d.Set("entries", flattenSpamfilterDnsblEntries(o["entries"], d, "entries")); err != nil {
+				if !fortiAPIPatch(o["entries"]) {
+					return fmt.Errorf("Error reading entries: %v", err)
+				}
+			}
+		}
+	}
 
 	return nil
 }
@@ -291,7 +287,6 @@ func flattenSpamfilterDnsblFortiTestDebug(d *schema.ResourceData, fosdebugsn int
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandSpamfilterDnsblId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -317,7 +312,7 @@ func expandSpamfilterDnsblEntries(d *schema.ResourceData, v interface{}, pre str
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -363,10 +358,8 @@ func expandSpamfilterDnsblEntriesAction(d *schema.ResourceData, v interface{}, p
 	return v, nil
 }
 
-
 func getObjectSpamfilterDnsbl(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("fosid"); ok {
 		t, err := expandSpamfilterDnsblId(d, v, "fosid")
@@ -404,7 +397,5 @@ func getObjectSpamfilterDnsbl(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-
 	return &obj, nil
 }
-

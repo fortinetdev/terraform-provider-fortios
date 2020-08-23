@@ -30,80 +30,80 @@ func resourceAuthenticationRule() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"status": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"protocol": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"srcaddr": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"srcaddr6": &schema.Schema{
-				Type: schema.TypeList,
+				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
-							Type: schema.TypeString,
+							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
-							Optional: true,
-							Computed: true,
+							Optional:     true,
+							Computed:     true,
 						},
 					},
 				},
 			},
 			"ip_based": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"active_auth_method": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"sso_auth_method": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"web_auth_cookie": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"transaction_based": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"comments": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 1023),
-				Optional: true,
+				Optional:     true,
 			},
 		},
 	}
@@ -197,7 +197,6 @@ func resourceAuthenticationRuleRead(d *schema.ResourceData, m interface{}) error
 	}
 	return nil
 }
-
 
 func flattenAuthenticationRuleName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
@@ -307,10 +306,8 @@ func flattenAuthenticationRuleComments(v interface{}, d *schema.ResourceData, pr
 	return v
 }
 
-
 func refreshObjectAuthenticationRule(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenAuthenticationRuleName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -330,37 +327,37 @@ func refreshObjectAuthenticationRule(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
-    if isImportTable() {
-        if err = d.Set("srcaddr", flattenAuthenticationRuleSrcaddr(o["srcaddr"], d, "srcaddr")); err != nil {
-            if !fortiAPIPatch(o["srcaddr"]) {
-                return fmt.Errorf("Error reading srcaddr: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("srcaddr"); ok {
-            if err = d.Set("srcaddr", flattenAuthenticationRuleSrcaddr(o["srcaddr"], d, "srcaddr")); err != nil {
-                if !fortiAPIPatch(o["srcaddr"]) {
-                    return fmt.Errorf("Error reading srcaddr: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("srcaddr", flattenAuthenticationRuleSrcaddr(o["srcaddr"], d, "srcaddr")); err != nil {
+			if !fortiAPIPatch(o["srcaddr"]) {
+				return fmt.Errorf("Error reading srcaddr: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("srcaddr"); ok {
+			if err = d.Set("srcaddr", flattenAuthenticationRuleSrcaddr(o["srcaddr"], d, "srcaddr")); err != nil {
+				if !fortiAPIPatch(o["srcaddr"]) {
+					return fmt.Errorf("Error reading srcaddr: %v", err)
+				}
+			}
+		}
+	}
 
-    if isImportTable() {
-        if err = d.Set("srcaddr6", flattenAuthenticationRuleSrcaddr6(o["srcaddr6"], d, "srcaddr6")); err != nil {
-            if !fortiAPIPatch(o["srcaddr6"]) {
-                return fmt.Errorf("Error reading srcaddr6: %v", err)
-            }
-        }
-    } else {
-        if _, ok := d.GetOk("srcaddr6"); ok {
-            if err = d.Set("srcaddr6", flattenAuthenticationRuleSrcaddr6(o["srcaddr6"], d, "srcaddr6")); err != nil {
-                if !fortiAPIPatch(o["srcaddr6"]) {
-                    return fmt.Errorf("Error reading srcaddr6: %v", err)
-                }
-            }
-        }
-    }
+	if isImportTable() {
+		if err = d.Set("srcaddr6", flattenAuthenticationRuleSrcaddr6(o["srcaddr6"], d, "srcaddr6")); err != nil {
+			if !fortiAPIPatch(o["srcaddr6"]) {
+				return fmt.Errorf("Error reading srcaddr6: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("srcaddr6"); ok {
+			if err = d.Set("srcaddr6", flattenAuthenticationRuleSrcaddr6(o["srcaddr6"], d, "srcaddr6")); err != nil {
+				if !fortiAPIPatch(o["srcaddr6"]) {
+					return fmt.Errorf("Error reading srcaddr6: %v", err)
+				}
+			}
+		}
+	}
 
 	if err = d.Set("ip_based", flattenAuthenticationRuleIpBased(o["ip-based"], d, "ip_based")); err != nil {
 		if !fortiAPIPatch(o["ip-based"]) {
@@ -398,7 +395,6 @@ func refreshObjectAuthenticationRule(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
-
 	return nil
 }
 
@@ -407,7 +403,6 @@ func flattenAuthenticationRuleFortiTestDebug(d *schema.ResourceData, fosdebugsn 
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandAuthenticationRuleName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -433,7 +428,7 @@ func expandAuthenticationRuleSrcaddr(d *schema.ResourceData, v interface{}, pre 
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -464,7 +459,7 @@ func expandAuthenticationRuleSrcaddr6(d *schema.ResourceData, v interface{}, pre
 	for _, r := range l {
 		tmp := make(map[string]interface{})
 		i := r.(map[string]interface{})
-		pre_append := ""  // table
+		pre_append := "" // table
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
@@ -507,10 +502,8 @@ func expandAuthenticationRuleComments(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
-
 func getObjectAuthenticationRule(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandAuthenticationRuleName(d, v, "name")
@@ -611,7 +604,5 @@ func getObjectAuthenticationRule(d *schema.ResourceData) (*map[string]interface{
 		}
 	}
 
-
 	return &obj, nil
 }
-

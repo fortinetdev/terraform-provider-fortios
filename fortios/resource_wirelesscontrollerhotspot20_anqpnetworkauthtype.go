@@ -30,21 +30,21 @@ func resourceWirelessControllerHotspot20AnqpNetworkAuthType() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"auth_type": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"url": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
@@ -139,7 +139,6 @@ func resourceWirelessControllerHotspot20AnqpNetworkAuthTypeRead(d *schema.Resour
 	return nil
 }
 
-
 func flattenWirelessControllerHotspot20AnqpNetworkAuthTypeName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -152,10 +151,8 @@ func flattenWirelessControllerHotspot20AnqpNetworkAuthTypeUrl(v interface{}, d *
 	return v
 }
 
-
 func refreshObjectWirelessControllerHotspot20AnqpNetworkAuthType(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenWirelessControllerHotspot20AnqpNetworkAuthTypeName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -175,7 +172,6 @@ func refreshObjectWirelessControllerHotspot20AnqpNetworkAuthType(d *schema.Resou
 		}
 	}
 
-
 	return nil
 }
 
@@ -184,7 +180,6 @@ func flattenWirelessControllerHotspot20AnqpNetworkAuthTypeFortiTestDebug(d *sche
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandWirelessControllerHotspot20AnqpNetworkAuthTypeName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -198,10 +193,8 @@ func expandWirelessControllerHotspot20AnqpNetworkAuthTypeUrl(d *schema.ResourceD
 	return v, nil
 }
 
-
 func getObjectWirelessControllerHotspot20AnqpNetworkAuthType(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandWirelessControllerHotspot20AnqpNetworkAuthTypeName(d, v, "name")
@@ -230,7 +223,5 @@ func getObjectWirelessControllerHotspot20AnqpNetworkAuthType(d *schema.ResourceD
 		}
 	}
 
-
 	return &obj, nil
 }
-

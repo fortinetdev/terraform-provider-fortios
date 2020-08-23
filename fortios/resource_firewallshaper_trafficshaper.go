@@ -30,45 +30,45 @@ func resourceFirewallShaperTrafficShaper() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"name": &schema.Schema{
-				Type: schema.TypeString,
+				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"guaranteed_bandwidth": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 16776000),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"maximum_bandwidth": &schema.Schema{
-				Type: schema.TypeInt,
+				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 16776000),
-				Optional: true,
-				Computed: true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"bandwidth_unit": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"priority": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"per_policy": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"diffserv": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
 			"diffservcode": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 			},
@@ -165,7 +165,6 @@ func resourceFirewallShaperTrafficShaperRead(d *schema.ResourceData, m interface
 	return nil
 }
 
-
 func flattenFirewallShaperTrafficShaperName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -198,10 +197,8 @@ func flattenFirewallShaperTrafficShaperDiffservcode(v interface{}, d *schema.Res
 	return v
 }
 
-
 func refreshObjectFirewallShaperTrafficShaper(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
-
 
 	if err = d.Set("name", flattenFirewallShaperTrafficShaperName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
@@ -251,7 +248,6 @@ func refreshObjectFirewallShaperTrafficShaper(d *schema.ResourceData, o map[stri
 		}
 	}
 
-
 	return nil
 }
 
@@ -260,7 +256,6 @@ func flattenFirewallShaperTrafficShaperFortiTestDebug(d *schema.ResourceData, fo
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
 	log.Printf("ER List: %v", e)
 }
-
 
 func expandFirewallShaperTrafficShaperName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
@@ -294,10 +289,8 @@ func expandFirewallShaperTrafficShaperDiffservcode(d *schema.ResourceData, v int
 	return v, nil
 }
 
-
 func getObjectFirewallShaperTrafficShaper(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
-
 
 	if v, ok := d.GetOk("name"); ok {
 		t, err := expandFirewallShaperTrafficShaperName(d, v, "name")
@@ -371,7 +364,5 @@ func getObjectFirewallShaperTrafficShaper(d *schema.ResourceData) (*map[string]i
 		}
 	}
 
-
 	return &obj, nil
 }
-

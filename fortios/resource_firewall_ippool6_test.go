@@ -1,4 +1,3 @@
-
 // Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
@@ -6,34 +5,35 @@
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
 package fortios
+
 import (
-    "fmt"
+	"fmt"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
+	"github.com/hashicorp/terraform-plugin-sdk/terraform"
 	"log"
-    "testing"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
-    "github.com/hashicorp/terraform-plugin-sdk/helper/resource"
-    "github.com/hashicorp/terraform-plugin-sdk/terraform"
+	"testing"
 )
 
 func TestAccFortiOSFirewallIppool6_basic(t *testing.T) {
-    rname := acctest.RandString(8)
-    log.Printf("TestAccFortiOSFirewallIppool6_basic %s", rname)
+	rname := acctest.RandString(8)
+	log.Printf("TestAccFortiOSFirewallIppool6_basic %s", rname)
 
-    resource.Test(t, resource.TestCase{
-        PreCheck:     func() { testAccPreCheck(t) },
-        Providers:    testAccProviders,
-        Steps: []resource.TestStep{
-            {
-                Config: testAccFortiOSFirewallIppool6Config(rname),
-                Check: resource.ComposeTestCheckFunc(
-                    testAccCheckFortiOSFirewallIppool6Exists("fortios_firewall_ippool6.trname"),
-                    resource.TestCheckResourceAttr("fortios_firewall_ippool6.trname", "endip", "2001:3ca1:10f:1a:121b::19"),
-                    resource.TestCheckResourceAttr("fortios_firewall_ippool6.trname", "name", rname),
-                    resource.TestCheckResourceAttr("fortios_firewall_ippool6.trname", "startip", "2001:3ca1:10f:1a:121b::10"),
-                ),
-            },
-        },
-    })
+	resource.Test(t, resource.TestCase{
+		PreCheck:  func() { testAccPreCheck(t) },
+		Providers: testAccProviders,
+		Steps: []resource.TestStep{
+			{
+				Config: testAccFortiOSFirewallIppool6Config(rname),
+				Check: resource.ComposeTestCheckFunc(
+					testAccCheckFortiOSFirewallIppool6Exists("fortios_firewall_ippool6.trname"),
+					resource.TestCheckResourceAttr("fortios_firewall_ippool6.trname", "endip", "2001:3ca1:10f:1a:121b::19"),
+					resource.TestCheckResourceAttr("fortios_firewall_ippool6.trname", "name", rname),
+					resource.TestCheckResourceAttr("fortios_firewall_ippool6.trname", "startip", "2001:3ca1:10f:1a:121b::10"),
+				),
+			},
+		},
+	})
 }
 
 func testAccCheckFortiOSFirewallIppool6Exists(n string) resource.TestCheckFunc {
