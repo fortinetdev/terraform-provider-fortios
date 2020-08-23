@@ -1,0 +1,423 @@
+// Copyright 2020 Fortinet, Inc. All rights reserved.
+// Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
+// Documentation:
+// Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu),
+// Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
+
+// Description: Configure NAT64.
+
+package fortios
+
+import (
+	"fmt"
+	"log"
+	"strconv"
+
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
+)
+
+func resourceSystemNat64() *schema.Resource {
+	return &schema.Resource{
+		Create: resourceSystemNat64Update,
+		Read:   resourceSystemNat64Read,
+		Update: resourceSystemNat64Update,
+		Delete: resourceSystemNat64Delete,
+
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
+
+		Schema: map[string]*schema.Schema{
+			"status": &schema.Schema{
+				Type: schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"nat64_prefix": &schema.Schema{
+				Type: schema.TypeString,
+				Required: true,
+			},
+			"secondary_prefix_status": &schema.Schema{
+				Type: schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"secondary_prefix": &schema.Schema{
+				Type: schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 35),
+							Optional: true,
+							Computed: true,
+						},
+						"nat64_prefix": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"always_synthesize_aaaa_record": &schema.Schema{
+				Type: schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"generate_ipv6_fragment_header": &schema.Schema{
+				Type: schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"nat46_force_ipv4_packet_forwarding": &schema.Schema{
+				Type: schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+		},
+	}
+}
+
+
+func resourceSystemNat64Update(d *schema.ResourceData, m interface{}) error {
+	mkey := d.Id()
+	c := m.(*FortiClient).Client
+	c.Retries = 1
+
+	obj, err := getObjectSystemNat64(d)
+	if err != nil {
+		return fmt.Errorf("Error updating SystemNat64 resource while getting object: %v", err)
+	}
+
+	o, err := c.UpdateSystemNat64(obj, mkey)
+	if err != nil {
+		return fmt.Errorf("Error updating SystemNat64 resource: %v", err)
+	}
+
+	log.Printf(strconv.Itoa(c.Retries))
+	if o["mkey"] != nil && o["mkey"] != "" {
+		d.SetId(o["mkey"].(string))
+	} else {
+		d.SetId("SystemNat64")
+	}
+
+	return resourceSystemNat64Read(d, m)
+}
+
+func resourceSystemNat64Delete(d *schema.ResourceData, m interface{}) error {
+	mkey := d.Id()
+
+	c := m.(*FortiClient).Client
+	c.Retries = 1
+
+	err := c.DeleteSystemNat64(mkey)
+	if err != nil {
+		return fmt.Errorf("Error deleting SystemNat64 resource: %v", err)
+	}
+
+	d.SetId("")
+
+	return nil
+}
+
+func resourceSystemNat64Read(d *schema.ResourceData, m interface{}) error {
+	mkey := d.Id()
+
+	c := m.(*FortiClient).Client
+	c.Retries = 1
+
+	o, err := c.ReadSystemNat64(mkey)
+	if err != nil {
+		return fmt.Errorf("Error reading SystemNat64 resource: %v", err)
+	}
+
+	if o == nil {
+		log.Printf("[WARN] resource (%s) not found, removing from state", d.Id())
+		d.SetId("")
+		return nil
+	}
+
+	err = refreshObjectSystemNat64(d, o)
+	if err != nil {
+		return fmt.Errorf("Error reading SystemNat64 resource from API: %v", err)
+	}
+	return nil
+}
+
+
+func flattenSystemNat64Status(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemNat64Nat64Prefix(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemNat64SecondaryPrefixStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemNat64SecondaryPrefix(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = flattenSystemNat64SecondaryPrefixName(i["name"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "nat64_prefix"
+		if _, ok := i["nat64-prefix"]; ok {
+			tmp["nat64_prefix"] = flattenSystemNat64SecondaryPrefixNat64Prefix(i["nat64-prefix"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func flattenSystemNat64SecondaryPrefixName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemNat64SecondaryPrefixNat64Prefix(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemNat64AlwaysSynthesizeAaaaRecord(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemNat64GenerateIpv6FragmentHeader(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemNat64Nat46ForceIpv4PacketForwarding(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+
+func refreshObjectSystemNat64(d *schema.ResourceData, o map[string]interface{}) error {
+	var err error
+
+
+	if err = d.Set("status", flattenSystemNat64Status(o["status"], d, "status")); err != nil {
+		if !fortiAPIPatch(o["status"]) {
+			return fmt.Errorf("Error reading status: %v", err)
+		}
+	}
+
+	if err = d.Set("nat64_prefix", flattenSystemNat64Nat64Prefix(o["nat64-prefix"], d, "nat64_prefix")); err != nil {
+		if !fortiAPIPatch(o["nat64-prefix"]) {
+			return fmt.Errorf("Error reading nat64_prefix: %v", err)
+		}
+	}
+
+	if err = d.Set("secondary_prefix_status", flattenSystemNat64SecondaryPrefixStatus(o["secondary-prefix-status"], d, "secondary_prefix_status")); err != nil {
+		if !fortiAPIPatch(o["secondary-prefix-status"]) {
+			return fmt.Errorf("Error reading secondary_prefix_status: %v", err)
+		}
+	}
+
+    if isImportTable() {
+        if err = d.Set("secondary_prefix", flattenSystemNat64SecondaryPrefix(o["secondary-prefix"], d, "secondary_prefix")); err != nil {
+            if !fortiAPIPatch(o["secondary-prefix"]) {
+                return fmt.Errorf("Error reading secondary_prefix: %v", err)
+            }
+        }
+    } else {
+        if _, ok := d.GetOk("secondary_prefix"); ok {
+            if err = d.Set("secondary_prefix", flattenSystemNat64SecondaryPrefix(o["secondary-prefix"], d, "secondary_prefix")); err != nil {
+                if !fortiAPIPatch(o["secondary-prefix"]) {
+                    return fmt.Errorf("Error reading secondary_prefix: %v", err)
+                }
+            }
+        }
+    }
+
+	if err = d.Set("always_synthesize_aaaa_record", flattenSystemNat64AlwaysSynthesizeAaaaRecord(o["always-synthesize-aaaa-record"], d, "always_synthesize_aaaa_record")); err != nil {
+		if !fortiAPIPatch(o["always-synthesize-aaaa-record"]) {
+			return fmt.Errorf("Error reading always_synthesize_aaaa_record: %v", err)
+		}
+	}
+
+	if err = d.Set("generate_ipv6_fragment_header", flattenSystemNat64GenerateIpv6FragmentHeader(o["generate-ipv6-fragment-header"], d, "generate_ipv6_fragment_header")); err != nil {
+		if !fortiAPIPatch(o["generate-ipv6-fragment-header"]) {
+			return fmt.Errorf("Error reading generate_ipv6_fragment_header: %v", err)
+		}
+	}
+
+	if err = d.Set("nat46_force_ipv4_packet_forwarding", flattenSystemNat64Nat46ForceIpv4PacketForwarding(o["nat46-force-ipv4-packet-forwarding"], d, "nat46_force_ipv4_packet_forwarding")); err != nil {
+		if !fortiAPIPatch(o["nat46-force-ipv4-packet-forwarding"]) {
+			return fmt.Errorf("Error reading nat46_force_ipv4_packet_forwarding: %v", err)
+		}
+	}
+
+
+	return nil
+}
+
+func flattenSystemNat64FortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
+	log.Printf(strconv.Itoa(fosdebugsn))
+	e := validation.IntBetween(fosdebugbeg, fosdebugend)
+	log.Printf("ER List: %v", e)
+}
+
+
+func expandSystemNat64Status(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemNat64Nat64Prefix(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemNat64SecondaryPrefixStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemNat64SecondaryPrefix(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := ""  // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["name"], _ = expandSystemNat64SecondaryPrefixName(d, i["name"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "nat64_prefix"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["nat64-prefix"], _ = expandSystemNat64SecondaryPrefixNat64Prefix(d, i["nat64_prefix"], pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemNat64SecondaryPrefixName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemNat64SecondaryPrefixNat64Prefix(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemNat64AlwaysSynthesizeAaaaRecord(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemNat64GenerateIpv6FragmentHeader(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemNat64Nat46ForceIpv4PacketForwarding(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+
+func getObjectSystemNat64(d *schema.ResourceData) (*map[string]interface{}, error) {
+	obj := make(map[string]interface{})
+
+
+	if v, ok := d.GetOk("status"); ok {
+		t, err := expandSystemNat64Status(d, v, "status")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["status"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("nat64_prefix"); ok {
+		t, err := expandSystemNat64Nat64Prefix(d, v, "nat64_prefix")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["nat64-prefix"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("secondary_prefix_status"); ok {
+		t, err := expandSystemNat64SecondaryPrefixStatus(d, v, "secondary_prefix_status")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["secondary-prefix-status"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("secondary_prefix"); ok {
+		t, err := expandSystemNat64SecondaryPrefix(d, v, "secondary_prefix")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["secondary-prefix"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("always_synthesize_aaaa_record"); ok {
+		t, err := expandSystemNat64AlwaysSynthesizeAaaaRecord(d, v, "always_synthesize_aaaa_record")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["always-synthesize-aaaa-record"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("generate_ipv6_fragment_header"); ok {
+		t, err := expandSystemNat64GenerateIpv6FragmentHeader(d, v, "generate_ipv6_fragment_header")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["generate-ipv6-fragment-header"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("nat46_force_ipv4_packet_forwarding"); ok {
+		t, err := expandSystemNat64Nat46ForceIpv4PacketForwarding(d, v, "nat46_force_ipv4_packet_forwarding")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["nat46-force-ipv4-packet-forwarding"] = t
+		}
+	}
+
+
+	return &obj, nil
+}
+
