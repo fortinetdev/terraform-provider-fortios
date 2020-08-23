@@ -1,0 +1,41 @@
+---
+subcategory: "FortiGate Webfilter"
+layout: "fortios"
+page_title: "FortiOS: fortios_webfilter_ipsurlfiltercachesetting"
+description: |-
+  Configure IPS URL filter cache settings.
+---
+
+# fortios_webfilter_ipsurlfiltercachesetting
+Configure IPS URL filter cache settings.
+
+## Example Usage
+
+```hcl
+resource "fortios_webfilter_ipsurlfiltercachesetting" "trname" {
+  dns_retry_interval = 0
+  extended_ttl       = 0
+}
+```
+
+## Argument Reference
+
+The following arguments are supported:
+
+* `dns_retry_interval` - Retry interval. Refresh DNS faster than TTL to capture multiple IPs for hosts. 0 means use DNS server's TTL only.
+* `extended_ttl` - Extend time to live beyond reported by DNS. 0 means use DNS server's TTL
+
+
+## Attribute Reference
+
+In addition to all the above arguments, the following attributes are exported:
+* `id` - an identifier for the resource.
+
+## Import
+
+Webfilter IpsUrlfilterCacheSetting can be imported using any of these accepted formats:
+```
+$ export "FORTIOS_IMPORT_TABLE"="true"
+$ terraform import fortios_webfilter_ipsurlfiltercachesetting.labelname WebfilterIpsUrlfilterCacheSetting
+$ unset "FORTIOS_IMPORT_TABLE"
+```
