@@ -360,7 +360,7 @@ func resourceNetworkingInterfacePortRead(d *schema.ResourceData, m interface{}) 
 
 	//Refresh property
 	//d.Set("portname", o.Portname)
-	d.Set("ip", validateConvIPMask2CDIR(d.Get("ip").(string), o.Ipf))
+	d.Set("ip", validateConvIPMask2CIDR(d.Get("ip").(string), o.Ipf))
 	d.Set("alias", o.Alias)
 	d.Set("status", o.Status)
 	d.Set("device_identification", o.DeviceIdentification)

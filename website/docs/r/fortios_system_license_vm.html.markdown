@@ -2,7 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_system_license_vm"
 sidebar_current: "docs-fortios-resource-system-license-vm"
-subcategory: "FortiGate"
+subcategory: "FortiGate System"
 description: |-
   Provides a resource to update VM license using uploaded file for FortiOS. Reboots immediately if successful.
 ---

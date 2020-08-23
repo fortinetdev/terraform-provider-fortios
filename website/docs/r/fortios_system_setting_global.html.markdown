@@ -2,7 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_system_setting_global"
 sidebar_current: "docs-fortios-resource-system-setting-global"
-subcategory: "FortiGate"
+subcategory: "FortiGate OldVersion"
 description: |-
   Provides a resource to configure options related to the overall operation of FortiOS.
 ---
@@ -10,6 +10,8 @@ description: |-
 # fortios_system_setting_global
 
 Provides a resource to configure options related to the overall operation of FortiOS.
+
+~> **Warning:** The resource will be deprecated and replaced by `fortios_system_global`.
 
 ## Example Usage
 

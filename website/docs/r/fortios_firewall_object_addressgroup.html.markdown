@@ -2,13 +2,15 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_firewall_object_addressgroup"
 sidebar_current: "docs-fortios-resource-firewall-object-addressgroup"
-subcategory: "FortiGate"
+subcategory: "FortiGate OldVersion"
 description: |-
   Provides a resource to configure firewall address group used in firewall policies of FortiOS.
 ---
 
 # fortios_firewall_object_addressgroup
 Provides a resource to configure firewall address group used in firewall policies of FortiOS.
+
+~> **Warning:** The resource will be deprecated and replaced by `fortios_firewall_addrgrp`.
 
 ## Example Usage
 ```hcl

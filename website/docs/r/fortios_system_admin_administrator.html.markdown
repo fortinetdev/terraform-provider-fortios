@@ -2,13 +2,15 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_system_admin_administrator"
 sidebar_current: "docs-fortios-resource-system-admin-administrator"
-subcategory: "FortiGate"
+subcategory: "FortiGate OldVersion"
 description: |-
   Provides a resource to configure administrator accounts of FortiOS.
 ---
 
 # fortios_system_admin_administrator
 Provides a resource to configure administrator accounts of FortiOS.
+
+~> **Warning:** The resource will be deprecated and replaced by `fortios_system_admin`.
 
 ## Example Usage
 ```hcl

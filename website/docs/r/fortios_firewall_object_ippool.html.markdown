@@ -2,13 +2,15 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_firewall_object_ippool"
 sidebar_current: "docs-fortios-resource-firewall-object-ippool"
-subcategory: "FortiGate"
+subcategory: "FortiGate OldVersion"
 description: |-
   Provides a resource to configure IPv4 IP address pools of FortiOS.
 ---
 
 # fortios_firewall_object_ippool
 Provides a resource to configure IPv4 IP address pools of FortiOS.
+
+~> **Warning:** The resource will be deprecated and replaced by `fortios_firewall_ippool`.
 
 ## Example Usage for Overload Ippool
 ```hcl

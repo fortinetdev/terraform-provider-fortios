@@ -2,13 +2,15 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_networking_interface_port"
 sidebar_current: "docs-fortios-resource-networking-interface-port"
-subcategory: "FortiGate"
+subcategory: "FortiGate OldVersion"
 description: |-
   Provides a resource to configure interface settings of FortiOS.
 ---
 
 # fortios_networking_interface_port
 Provides a resource to configure interface settings of FortiOS.
+
+~> **Warning:** The resource will be deprecated and replaced by `fortios_system_interface`.
 
 ## Example Usage for Loopback Interface
 ```hcl

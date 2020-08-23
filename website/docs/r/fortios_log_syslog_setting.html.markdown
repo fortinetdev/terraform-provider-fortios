@@ -2,13 +2,15 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_log_syslog_setting"
 sidebar_current: "docs-fortios-resource-log-syslog-setting"
-subcategory: "FortiGate"
+subcategory: "FortiGate OldVersion"
 description: |-
   Provides a resource to configure logging to remote Syslog logging servers.
 ---
 
 # fortios_log_syslog_setting
 Provides a resource to configure logging to remote Syslog logging servers.
+
+~> **Warning:** The resource will be deprecated and replaced by `fortios_logsyslogd_setting`.
 
 ## Example Usage
 ```hcl

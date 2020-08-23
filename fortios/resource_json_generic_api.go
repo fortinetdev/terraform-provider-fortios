@@ -55,7 +55,7 @@ func resourceJSONGenericAPICreateUpdate(d *schema.ResourceData, m interface{}) e
 	//Call process by sdk
 	res, err := c.CreateJSONGenericAPI(i)
 	if err != nil {
-		return fmt.Errorf("Error creating json generic api: %s", err)
+		return fmt.Errorf("Error creating json generic api: %v", err)
 	}
 
 	//Set index for d

@@ -2,13 +2,15 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_firewall_object_servicecategory"
 sidebar_current: "docs-fortios-resource-firewall-object-servicecategory"
-subcategory: "FortiGate"
+subcategory: "FortiGate OldVersion"
 description: |-
   Provides a resource to configure firewall service categories of FortiOS.
 ---
 
 # fortios_firewall_object_servicecategory
 Provides a resource to configure firewall service category of FortiOS.
+
+~> **Warning:** The resource will be deprecated and replaced by `fortios_firewallservice_category`.
 
 ## Example Usage
 ```hcl

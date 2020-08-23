@@ -213,7 +213,7 @@ func resourceNetworkingRouteStaticRead(d *schema.ResourceData, m interface{}) er
 	}
 
 	//Refresh property
-	d.Set("dst", validateConvIPMask2CDIR(d.Get("dst").(string), o.Dst))
+	d.Set("dst", validateConvIPMask2CIDR(d.Get("dst").(string), o.Dst))
 	d.Set("gateway", o.Gateway)
 	d.Set("blackhole", o.Blackhole)
 	d.Set("distance", o.Distance)

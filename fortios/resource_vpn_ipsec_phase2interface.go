@@ -320,14 +320,14 @@ func resourceVPNIPsecPhase2InterfaceRead(d *schema.ResourceData, m interface{}) 
 	d.Set("src_start_ip", o.SrcStartIP)
 	d.Set("src_end_ip", o.SrcEndIP)
 	// d.Set("src_subnet", o.SrcSubnet)
-	d.Set("src_subnet", validateConvIPMask2CDIR(d.Get("src_subnet").(string), o.SrcSubnet))
+	d.Set("src_subnet", validateConvIPMask2CIDR(d.Get("src_subnet").(string), o.SrcSubnet))
 	d.Set("dst_addr_type", o.DstAddrType)
 	d.Set("src_name", o.SrcName)
 	d.Set("dst_name", o.DstName)
 	d.Set("dst_start_ip", o.DstStartIP)
 	d.Set("dst_end_ip", o.DstEndIP)
 	// d.Set("dst_subnet", o.DstSubnet)
-	d.Set("dst_subnet", validateConvIPMask2CDIR(d.Get("dst_subnet").(string), o.DstSubnet))
+	d.Set("dst_subnet", validateConvIPMask2CIDR(d.Get("dst_subnet").(string), o.DstSubnet))
 
 	return nil
 }

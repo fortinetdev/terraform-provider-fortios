@@ -2,13 +2,15 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_firewall_object_service"
 sidebar_current: "docs-fortios-resource-firewall-object-service"
-subcategory: "FortiGate"
+subcategory: "FortiGate OldVersion"
 description: |-
   Provides a resource to configure firewall service of FortiOS.
 ---
 
 # fortios_firewall_object_service
 Provides a resource to configure firewall service of FortiOS.
+
+~> **Warning:** The resource will be deprecated and replaced by `fortios_firewallservice_custom`.
 
 ## Example Usage for Fqdn Service
 ```hcl

@@ -51,14 +51,14 @@ func (c *Config) CreateClient() (interface{}, error) {
 	if bFOSExist {
 		err := createFortiOSClient(&fClient, c)
 		if err != nil {
-			return nil, fmt.Errorf("Error create fortios client: %s", err)
+			return nil, fmt.Errorf("Error create fortios client: %v", err)
 		}
 	}
 
 	if bFMGExist {
 		err := createFortiManagerClient(&fClient, c)
 		if err != nil {
-			return nil, fmt.Errorf("Error create fortimanager client: %s", err)
+			return nil, fmt.Errorf("Error create fortimanager client: %v", err)
 		}
 	} else {
 		fClient.ClientFortimanager = fmgclient.NewEmptyClient()
@@ -117,13 +117,13 @@ func createFortiOSClient(fClient *FortiClient, c *Config) error {
 	if auth.CABundle != "" {
 		f, err := os.Open(auth.CABundle)
 		if err != nil {
-			return fmt.Errorf("Error reading CA Bundle: %s", err)
+			return fmt.Errorf("Error reading CA Bundle: %v", err)
 		}
 		defer f.Close()
 
 		caBundle, err := ioutil.ReadAll(f)
 		if err != nil {
-			return fmt.Errorf("Error reading CA Bundle: %s", err)
+			return fmt.Errorf("Error reading CA Bundle: %v", err)
 		}
 
 		pool := x509.NewCertPool()
@@ -196,13 +196,13 @@ func createFortiManagerClient(fClient *FortiClient, c *Config) error {
 		if c.FMG_CABundle != "" {
 			f, err := os.Open(c.FMG_CABundle)
 			if err != nil {
-				return fmt.Errorf("Error open CA Bundle file: %s", err)
+				return fmt.Errorf("Error open CA Bundle file: %v", err)
 			}
 			defer f.Close()
 
 			caBundle, err := ioutil.ReadAll(f)
 			if err != nil {
-				return fmt.Errorf("Error reading CA Bundle: %s", err)
+				return fmt.Errorf("Error reading CA Bundle: %v", err)
 			}
 
 			pool := x509.NewCertPool()

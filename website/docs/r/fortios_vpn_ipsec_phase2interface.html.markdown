@@ -2,7 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_vpn_ipsec_phase2interface"
 sidebar_current: "docs-fortios-resource-vpn-ipsec-phase2interface"
-subcategory: "FortiGate"
+subcategory: "FortiGate OldVersion"
 description: |-
   Provides a resource to use phase2-interface to add or edit a phase 2 configuration on a route-based (interface mode) IPsec tunnel.
 ---
@@ -10,6 +10,8 @@ description: |-
 # fortios_vpn_ipsec_phase2interface
 
 Provides a resource to use phase2-interface to add or edit a phase 2 configuration on a route-based (interface mode) IPsec tunnel.
+
+~> **Warning:** The resource will be deprecated and replaced by `fortios_vpnipsec_phase2interface`.
 
 ## Example Usage for Site to Site/Pre-shared Key
 

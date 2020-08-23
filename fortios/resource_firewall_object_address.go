@@ -291,7 +291,7 @@ func resourceFirewallObjectAddressRead(d *schema.ResourceData, m interface{}) er
 	d.Set("name", o.Name)
 	d.Set("type", o.Type)
 	if o.Type == "ipmask" {
-		d.Set("subnet", validateConvIPMask2CDIR(d.Get("subnet").(string), o.Subnet))
+		d.Set("subnet", validateConvIPMask2CIDR(d.Get("subnet").(string), o.Subnet))
 	}
 
 	if o.Type == "iprange" {

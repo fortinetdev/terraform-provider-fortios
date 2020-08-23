@@ -2,13 +2,15 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_log_fortianalyzer_setting"
 sidebar_current: "docs-fortios-resource-log-fortianalyzer-setting"
-subcategory: "FortiGate"
+subcategory: "FortiGate OldVersion"
 description: |-
   Provides a resource to configure configure logging to FortiAnalyzer log management devices.
 ---
 
 # fortios_log_fortianalyzer_setting
 Provides a resource to configure configure logging to FortiAnalyzer log management devices.
+
+~> **Warning:** The resource will be deprecated and replaced by `fortios_logfortianalyzer_setting`.
 
 ## Example Usage
 ```hcl

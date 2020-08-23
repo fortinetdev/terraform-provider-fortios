@@ -2,13 +2,15 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_system_setting_dns"
 sidebar_current: "docs-fortios-resource-system-setting-dns"
-subcategory: "FortiGate"
+subcategory: "FortiGate OldVersion"
 description: |-
   Provides a resource to configure DNS of FortiOS.
 ---
 
 # fortios_system_setting_dns
 Provides a resource to configure DNS of FortiOS.
+
+~> **Warning:** The resource will be deprecated and replaced by `fortios_system_dns`.
 
 ## Example Usage
 ```hcl

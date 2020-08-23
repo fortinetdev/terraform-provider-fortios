@@ -10,7 +10,7 @@ description: |-
 
 The FortiOS provider is used to interact with the resources supported by FortiOS and FortiManager. We need to configure the provider with the proper credentials before it can be used.
 
-Two products are supported now: FortiGate and FortiManager, please use the navigation to the left to read more details about the available resources.
+Two products are supported now: FortiGate and FortiManager, please use the navigation on the left to read more details about the available resources.
 
 ## Configuration for FortiGate
 

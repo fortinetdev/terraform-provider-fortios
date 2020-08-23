@@ -2,13 +2,15 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_system_admin_profiles"
 sidebar_current: "docs-fortios-resource-system-admin-profiles"
-subcategory: "FortiGate"
+subcategory: "FortiGate OldVersion"
 description: |-
   Provides a resource to configure access profiles of FortiOS.
 ---
 
 # fortios_system_admin_profiles
 Provides a resource to configure access profiles of FortiOS.
+
+~> **Warning:** The resource will be deprecated and replaced by `fortios_system_accprofile`.
 
 ## Example Usage
 ```hcl

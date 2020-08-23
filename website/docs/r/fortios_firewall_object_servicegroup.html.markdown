@@ -2,13 +2,15 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_firewall_object_servicegroup"
 sidebar_current: "docs-fortios-resource-firewall-object-servicegroup"
-subcategory: "FortiGate"
+subcategory: "FortiGate OldVersion"
 description: |-
   Provides a resource to configure firewall service group of FortiOS.
 ---
 
 # fortios_firewall_object_servicegroup
 Provides a resource to configure firewall service group of FortiOS.
+
+~> **Warning:** The resource will be deprecated and replaced by `fortios_firewallservice_group`.
 
 ## Example Usage
 ```hcl

@@ -41,9 +41,12 @@ func resourceFirewallSecurityPolicySeqCreateUpdate(d *schema.ResourceData, m int
 	c.Retries = 1
 
 	//Get Params from d
-	srcId := d.Get("policy_src_id").(int)
-	dstId := d.Get("policy_dst_id").(int)
+	srcIdPatch := d.Get("policy_src_id").(int)
+	dstIdPatch := d.Get("policy_dst_id").(int)
 	alterPos := d.Get("alter_position").(string)
+
+	srcId := strconv.Itoa(srcIdPatch)
+	dstId := strconv.Itoa(dstIdPatch)
 
 	if alterPos != "before" && alterPos != "after" {
 		return fmt.Errorf("<alter_position> param should be only 'after' or 'before'")
@@ -54,7 +57,7 @@ func resourceFirewallSecurityPolicySeqCreateUpdate(d *schema.ResourceData, m int
 		return fmt.Errorf("Error Altering Firewall Security Policy Sequence: %s", err)
 	}
 
-	d.SetId(strconv.Itoa(srcId))
+	d.SetId(srcId)
 
 	return nil
 }

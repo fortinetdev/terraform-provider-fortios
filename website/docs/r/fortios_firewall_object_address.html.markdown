@@ -2,13 +2,15 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_firewall_object_address"
 sidebar_current: "docs-fortios-resource-firewall-object-address"
-subcategory: "FortiGate"
+subcategory: "FortiGate OldVersion"
 description: |-
   Provides a resource to configure firewall addresses used in firewall policies of FortiOS.
 ---
 
 # fortios_firewall_object_address
 Provides a resource to configure firewall addresses used in firewall policies of FortiOS.
+
+~> **Warning:** The resource will be deprecated and replaced by `fortios_firewall_address`.
 
 ## Example Usage for Iprange Address
 ```hcl

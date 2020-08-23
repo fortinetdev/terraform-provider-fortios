@@ -34,7 +34,6 @@ func TestAccFortiOSNetworkingInterfacePort_Physical(t *testing.T) {
 					resource.TestCheckResourceAttr("fortios_networking_interface_port.test1", "dns_server_override", "enable"),
 					resource.TestCheckResourceAttr("fortios_networking_interface_port.test1", "defaultgw", "enable"),
 					resource.TestCheckResourceAttr("fortios_networking_interface_port.test1", "distance", "5"),
-					resource.TestCheckResourceAttr("fortios_networking_interface_port.test1", "description", "Terraform Test"),
 					resource.TestCheckResourceAttr("fortios_networking_interface_port.test1", "type", "physical"),
 				),
 			},
@@ -154,7 +153,6 @@ resource "fortios_networking_interface_port" "test1" {
 	name = "port3"
 	ip = "93.133.133.110 255.255.255.0"
 	alias = "physicalport3"
-	description = "Terraform Test"
 	status = "up"
 	device_identification = "enable"
 	tcp_mss = "3232"

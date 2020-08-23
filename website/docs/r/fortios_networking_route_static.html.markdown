@@ -2,13 +2,15 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_networking_route_static"
 sidebar_current: "docs-fortios-resource-networking-route-static"
-subcategory: "FortiGate"
+subcategory: "FortiGate OldVersion"
 description: |-
   Provides a resource to configure static route of FortiOS.
 ---
 
 # fortios_networking_route_static
 Provides a resource to configure static route of FortiOS.
+
+~> **Warning:** The resource will be deprecated and replaced by `fortios_router_static`.
 
 ## Example Usage
 ```hcl

@@ -2,13 +2,15 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_firewall_security_policy"
 sidebar_current: "docs-fortios-resource-firewall-security-policy"
-subcategory: "FortiGate"
+subcategory: "FortiGate OldVersion"
 description: |-
   Provides a resource to configure firewall policies of FortiOS.
 ---
 
 # fortios_firewall_security_policy
 Provides a resource to configure firewall policies of FortiOS.
+
+~> **Warning:** The resource will be deprecated and replaced by `fortios_firewall_policy`.
 
 ## Example Usage 1
 ```hcl

@@ -2,7 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_firewall_security_policyseq"
 sidebar_current: "docs-fortios-resource-firewall-security-policyseq"
-subcategory: "FortiGate"
+subcategory: "FortiGate Firewall"
 description: |-
   Provides a resource to alter firewall security policy sequence
 ---

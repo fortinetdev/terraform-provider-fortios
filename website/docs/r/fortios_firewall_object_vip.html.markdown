@@ -2,13 +2,15 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_firewall_object_vip"
 sidebar_current: "docs-fortios-resource-firewall-object-vip"
-subcategory: "FortiGate"
+subcategory: "FortiGate OldVersion"
 description: |-
   Provides a resource to configure firewall virtual IPs (VIPs) of FortiOS.
 ---
 
 # fortios_firewall_object_vip
 Provides a resource to configure firewall virtual IPs (VIPs) of FortiOS.
+
+~> **Warning:** The resource will be deprecated and replaced by `fortios_firewall_vip`.
 
 ## Example Usage
 ```hcl
