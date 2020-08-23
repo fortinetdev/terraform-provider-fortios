@@ -1,0 +1,43 @@
+---
+subcategory: "FortiGate System"
+layout: "fortios"
+page_title: "FortiOS: fortios_system_hamonitor"
+description: |-
+  Configure HA monitor.
+---
+
+# fortios_system_hamonitor
+Configure HA monitor.
+
+## Example Usage
+
+```hcl
+resource "fortios_system_hamonitor" "trname" {
+  monitor_vlan           = "disable"
+  vlan_hb_interval       = 5
+  vlan_hb_lost_threshold = 3
+}
+```
+
+## Argument Reference
+
+The following arguments are supported:
+
+* `monitor_vlan` - Enable/disable monitor VLAN interfaces.
+* `vlan_hb_interval` - Configure heartbeat interval (seconds).
+* `vlan_hb_lost_threshold` - VLAN lost heartbeat threshold (1 - 60).
+
+
+## Attribute Reference
+
+In addition to all the above arguments, the following attributes are exported:
+* `id` - an identifier for the resource.
+
+## Import
+
+System HaMonitor can be imported using any of these accepted formats:
+```
+$ export "FORTIOS_IMPORT_TABLE"="true"
+$ terraform import fortios_system_hamonitor.labelname SystemHaMonitor
+$ unset "FORTIOS_IMPORT_TABLE"
+```
