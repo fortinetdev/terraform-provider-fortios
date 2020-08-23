@@ -1,0 +1,43 @@
+---
+subcategory: "FortiGate System"
+layout: "fortios"
+page_title: "FortiOS: fortios_system_tosbasedpriority"
+description: |-
+  Configure Type of Service (ToS) based priority table to set network traffic priorities.
+---
+
+# fortios_system_tosbasedpriority
+Configure Type of Service (ToS) based priority table to set network traffic priorities.
+
+## Example Usage
+
+```hcl
+resource "fortios_system_tosbasedpriority" "trname" {
+  fosid    = 1
+  priority = "low"
+  tos      = 11
+}
+```
+
+## Argument Reference
+
+The following arguments are supported:
+
+* `fosid` - Item ID.
+* `tos` - Value of the ToS byte in the IP datagram header (0-15, 8: minimize delay, 4: maximize throughput, 2: maximize reliability, 1: minimize monetary cost, and 0: default service).
+* `priority` - ToS based priority level to low, medium or high (these priorities match firewall traffic shaping priorities) (default = medium).
+
+
+## Attribute Reference
+
+In addition to all the above arguments, the following attributes are exported:
+* `id` - an identifier for the resource with format {{fosid}}.
+
+## Import
+
+System TosBasedPriority can be imported using any of these accepted formats:
+```
+$ export "FORTIOS_IMPORT_TABLE"="true"
+$ terraform import fortios_system_tosbasedpriority.labelname {{fosid}}
+$ unset "FORTIOS_IMPORT_TABLE"
+```
