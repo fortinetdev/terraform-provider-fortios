@@ -1,0 +1,87 @@
+---
+subcategory: "FortiGate Firewall"
+layout: "fortios"
+page_title: "FortiOS: fortios_firewall_addrgrp"
+description: |-
+  Configure IPv4 address groups.
+---
+
+# fortios_firewall_addrgrp
+Configure IPv4 address groups.
+
+## Example Usage
+
+```hcl
+resource "fortios_firewall_address" "trname1" {
+  allow_routing = "disable"
+  cache_ttl     = 0
+  color         = 0
+  end_ip        = "255.0.0.0"
+  name          = "1"
+  start_ip      = "12.0.0.0"
+  subnet        = "12.0.0.0 255.0.0.0"
+  type          = "ipmask"
+  visibility    = "enable"
+  wildcard      = "12.0.0.0 255.0.0.0"
+}
+
+resource "fortios_firewall_addrgrp" "trname" {
+  allow_routing = "disable"
+  color         = 0
+  exclude       = "disable"
+  name          = "group1"
+  visibility    = "enable"
+
+  member {
+    name = fortios_firewall_address.trname1.name
+  }
+}
+```
+
+## Argument Reference
+
+The following arguments are supported:
+
+* `name` - (Required) Address group name.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `member` - (Required) Address objects contained within the group.
+* `comment` - Comment.
+* `exclude` - Enable/disable address exclusion.
+* `exclude_member` - Address exclusion member.
+* `visibility` - Enable/disable address visibility in the GUI.
+* `color` - Color of icon on the GUI.
+* `tagging` - Config object tagging.
+* `allow_routing` - Enable/disable use of this group in the static route configuration.
+
+The `member` block supports:
+
+* `name` - Address name.
+
+The `exclude_member` block supports:
+
+* `name` - Address name.
+
+The `tagging` block supports:
+
+* `name` - Tagging entry name.
+* `category` - Tag category.
+* `tags` - Tags.
+
+The `tags` block supports:
+
+* `name` - Tag name.
+
+
+## Attribute Reference
+
+In addition to all the above arguments, the following attributes are exported:
+* `id` - an identifier for the resource with format {{name}}.
+
+## Import
+
+Firewall Addrgrp can be imported using any of these accepted formats:
+```
+$ export "FORTIOS_IMPORT_TABLE"="true"
+$ terraform import fortios_firewall_addrgrp.labelname {{name}}
+$ unset "FORTIOS_IMPORT_TABLE"
+```
