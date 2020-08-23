@@ -1,0 +1,3384 @@
+// Copyright 2020 Fortinet, Inc. All rights reserved.
+// Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
+// Documentation:
+// Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu),
+// Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
+
+// Description: Configure replacement message groups.
+
+package fortios
+
+import (
+	"fmt"
+	"log"
+	"strconv"
+
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
+	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
+)
+
+func resourceSystemReplacemsgGroup() *schema.Resource {
+	return &schema.Resource{
+		Create: resourceSystemReplacemsgGroupCreate,
+		Read:   resourceSystemReplacemsgGroupRead,
+		Update: resourceSystemReplacemsgGroupUpdate,
+		Delete: resourceSystemReplacemsgGroupDelete,
+
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
+
+		Schema: map[string]*schema.Schema{
+			"name": &schema.Schema{
+				Type: schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional: true,
+				Computed: true,
+			},
+			"comment": &schema.Schema{
+				Type: schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 255),
+				Optional: true,
+			},
+			"group_type": &schema.Schema{
+				Type: schema.TypeString,
+				Required: true,
+			},
+			"mail": &schema.Schema{
+				Type: schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"msg_type": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 28),
+							Optional: true,
+							Computed: true,
+						},
+						"buffer": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 32768),
+							Optional: true,
+						},
+						"header": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"format": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"http": &schema.Schema{
+				Type: schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"msg_type": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 28),
+							Optional: true,
+							Computed: true,
+						},
+						"buffer": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 32768),
+							Optional: true,
+						},
+						"header": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"format": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"webproxy": &schema.Schema{
+				Type: schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"msg_type": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 28),
+							Optional: true,
+							Computed: true,
+						},
+						"buffer": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 32768),
+							Optional: true,
+						},
+						"header": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"format": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"ftp": &schema.Schema{
+				Type: schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"msg_type": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 28),
+							Optional: true,
+							Computed: true,
+						},
+						"buffer": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 32768),
+							Optional: true,
+						},
+						"header": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"format": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"nntp": &schema.Schema{
+				Type: schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"msg_type": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 28),
+							Optional: true,
+							Computed: true,
+						},
+						"buffer": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 32768),
+							Optional: true,
+						},
+						"header": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"format": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"fortiguard_wf": &schema.Schema{
+				Type: schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"msg_type": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 28),
+							Optional: true,
+							Computed: true,
+						},
+						"buffer": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 32768),
+							Optional: true,
+						},
+						"header": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"format": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"spam": &schema.Schema{
+				Type: schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"msg_type": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 28),
+							Optional: true,
+							Computed: true,
+						},
+						"buffer": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 32768),
+							Optional: true,
+						},
+						"header": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"format": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"alertmail": &schema.Schema{
+				Type: schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"msg_type": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 28),
+							Optional: true,
+							Computed: true,
+						},
+						"buffer": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 32768),
+							Optional: true,
+						},
+						"header": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"format": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"admin": &schema.Schema{
+				Type: schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"msg_type": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 28),
+							Optional: true,
+							Computed: true,
+						},
+						"buffer": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 32768),
+							Optional: true,
+						},
+						"header": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"format": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"auth": &schema.Schema{
+				Type: schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"msg_type": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 28),
+							Optional: true,
+							Computed: true,
+						},
+						"buffer": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 32768),
+							Optional: true,
+						},
+						"header": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"format": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"sslvpn": &schema.Schema{
+				Type: schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"msg_type": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 28),
+							Optional: true,
+							Computed: true,
+						},
+						"buffer": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 32768),
+							Optional: true,
+						},
+						"header": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"format": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"ec": &schema.Schema{
+				Type: schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"msg_type": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 28),
+							Optional: true,
+							Computed: true,
+						},
+						"buffer": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 32768),
+							Optional: true,
+						},
+						"header": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"format": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"device_detection_portal": &schema.Schema{
+				Type: schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"msg_type": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 28),
+							Optional: true,
+							Computed: true,
+						},
+						"buffer": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 32768),
+							Optional: true,
+						},
+						"header": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"format": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"nac_quar": &schema.Schema{
+				Type: schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"msg_type": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 28),
+							Optional: true,
+							Computed: true,
+						},
+						"buffer": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 32768),
+							Optional: true,
+						},
+						"header": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"format": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"traffic_quota": &schema.Schema{
+				Type: schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"msg_type": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 28),
+							Optional: true,
+							Computed: true,
+						},
+						"buffer": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 32768),
+							Optional: true,
+						},
+						"header": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"format": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"utm": &schema.Schema{
+				Type: schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"msg_type": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 28),
+							Optional: true,
+							Computed: true,
+						},
+						"buffer": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 32768),
+							Optional: true,
+						},
+						"header": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"format": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"custom_message": &schema.Schema{
+				Type: schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"msg_type": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 28),
+							Optional: true,
+							Computed: true,
+						},
+						"buffer": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 32768),
+							Optional: true,
+						},
+						"header": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"format": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"icap": &schema.Schema{
+				Type: schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"msg_type": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 28),
+							Optional: true,
+							Computed: true,
+						},
+						"buffer": &schema.Schema{
+							Type: schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 32768),
+							Optional: true,
+						},
+						"header": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"format": &schema.Schema{
+							Type: schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
+			},
+		},
+	}
+}
+
+func resourceSystemReplacemsgGroupCreate(d *schema.ResourceData, m interface{}) error {
+	c := m.(*FortiClient).Client
+	c.Retries = 1
+
+	obj, err := getObjectSystemReplacemsgGroup(d)
+	if err != nil {
+		return fmt.Errorf("Error creating SystemReplacemsgGroup resource while getting object: %v", err)
+	}
+
+	o, err := c.CreateSystemReplacemsgGroup(obj)
+
+	if err != nil {
+		return fmt.Errorf("Error creating SystemReplacemsgGroup resource: %v", err)
+	}
+
+	if o["mkey"] != nil && o["mkey"] != "" {
+		d.SetId(o["mkey"].(string))
+	} else {
+		d.SetId("SystemReplacemsgGroup")
+	}
+
+	return resourceSystemReplacemsgGroupRead(d, m)
+}
+
+func resourceSystemReplacemsgGroupUpdate(d *schema.ResourceData, m interface{}) error {
+	mkey := d.Id()
+	c := m.(*FortiClient).Client
+	c.Retries = 1
+
+	obj, err := getObjectSystemReplacemsgGroup(d)
+	if err != nil {
+		return fmt.Errorf("Error updating SystemReplacemsgGroup resource while getting object: %v", err)
+	}
+
+	o, err := c.UpdateSystemReplacemsgGroup(obj, mkey)
+	if err != nil {
+		return fmt.Errorf("Error updating SystemReplacemsgGroup resource: %v", err)
+	}
+
+	log.Printf(strconv.Itoa(c.Retries))
+	if o["mkey"] != nil && o["mkey"] != "" {
+		d.SetId(o["mkey"].(string))
+	} else {
+		d.SetId("SystemReplacemsgGroup")
+	}
+
+	return resourceSystemReplacemsgGroupRead(d, m)
+}
+
+func resourceSystemReplacemsgGroupDelete(d *schema.ResourceData, m interface{}) error {
+	mkey := d.Id()
+
+	c := m.(*FortiClient).Client
+	c.Retries = 1
+
+	err := c.DeleteSystemReplacemsgGroup(mkey)
+	if err != nil {
+		return fmt.Errorf("Error deleting SystemReplacemsgGroup resource: %v", err)
+	}
+
+	d.SetId("")
+
+	return nil
+}
+
+func resourceSystemReplacemsgGroupRead(d *schema.ResourceData, m interface{}) error {
+	mkey := d.Id()
+
+	c := m.(*FortiClient).Client
+	c.Retries = 1
+
+	o, err := c.ReadSystemReplacemsgGroup(mkey)
+	if err != nil {
+		return fmt.Errorf("Error reading SystemReplacemsgGroup resource: %v", err)
+	}
+
+	if o == nil {
+		log.Printf("[WARN] resource (%s) not found, removing from state", d.Id())
+		d.SetId("")
+		return nil
+	}
+
+	err = refreshObjectSystemReplacemsgGroup(d, o)
+	if err != nil {
+		return fmt.Errorf("Error reading SystemReplacemsgGroup resource from API: %v", err)
+	}
+	return nil
+}
+
+
+func flattenSystemReplacemsgGroupName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupComment(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupGroupType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupMail(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := i["msg-type"]; ok {
+			tmp["msg_type"] = flattenSystemReplacemsgGroupMailMsgType(i["msg-type"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := i["buffer"]; ok {
+			tmp["buffer"] = flattenSystemReplacemsgGroupMailBuffer(i["buffer"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := i["header"]; ok {
+			tmp["header"] = flattenSystemReplacemsgGroupMailHeader(i["header"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := i["format"]; ok {
+			tmp["format"] = flattenSystemReplacemsgGroupMailFormat(i["format"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func flattenSystemReplacemsgGroupMailMsgType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupMailBuffer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupMailHeader(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupMailFormat(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupHttp(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := i["msg-type"]; ok {
+			tmp["msg_type"] = flattenSystemReplacemsgGroupHttpMsgType(i["msg-type"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := i["buffer"]; ok {
+			tmp["buffer"] = flattenSystemReplacemsgGroupHttpBuffer(i["buffer"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := i["header"]; ok {
+			tmp["header"] = flattenSystemReplacemsgGroupHttpHeader(i["header"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := i["format"]; ok {
+			tmp["format"] = flattenSystemReplacemsgGroupHttpFormat(i["format"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func flattenSystemReplacemsgGroupHttpMsgType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupHttpBuffer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupHttpHeader(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupHttpFormat(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupWebproxy(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := i["msg-type"]; ok {
+			tmp["msg_type"] = flattenSystemReplacemsgGroupWebproxyMsgType(i["msg-type"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := i["buffer"]; ok {
+			tmp["buffer"] = flattenSystemReplacemsgGroupWebproxyBuffer(i["buffer"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := i["header"]; ok {
+			tmp["header"] = flattenSystemReplacemsgGroupWebproxyHeader(i["header"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := i["format"]; ok {
+			tmp["format"] = flattenSystemReplacemsgGroupWebproxyFormat(i["format"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func flattenSystemReplacemsgGroupWebproxyMsgType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupWebproxyBuffer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupWebproxyHeader(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupWebproxyFormat(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupFtp(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := i["msg-type"]; ok {
+			tmp["msg_type"] = flattenSystemReplacemsgGroupFtpMsgType(i["msg-type"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := i["buffer"]; ok {
+			tmp["buffer"] = flattenSystemReplacemsgGroupFtpBuffer(i["buffer"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := i["header"]; ok {
+			tmp["header"] = flattenSystemReplacemsgGroupFtpHeader(i["header"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := i["format"]; ok {
+			tmp["format"] = flattenSystemReplacemsgGroupFtpFormat(i["format"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func flattenSystemReplacemsgGroupFtpMsgType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupFtpBuffer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupFtpHeader(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupFtpFormat(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupNntp(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := i["msg-type"]; ok {
+			tmp["msg_type"] = flattenSystemReplacemsgGroupNntpMsgType(i["msg-type"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := i["buffer"]; ok {
+			tmp["buffer"] = flattenSystemReplacemsgGroupNntpBuffer(i["buffer"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := i["header"]; ok {
+			tmp["header"] = flattenSystemReplacemsgGroupNntpHeader(i["header"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := i["format"]; ok {
+			tmp["format"] = flattenSystemReplacemsgGroupNntpFormat(i["format"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func flattenSystemReplacemsgGroupNntpMsgType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupNntpBuffer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupNntpHeader(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupNntpFormat(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupFortiguardWf(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := i["msg-type"]; ok {
+			tmp["msg_type"] = flattenSystemReplacemsgGroupFortiguardWfMsgType(i["msg-type"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := i["buffer"]; ok {
+			tmp["buffer"] = flattenSystemReplacemsgGroupFortiguardWfBuffer(i["buffer"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := i["header"]; ok {
+			tmp["header"] = flattenSystemReplacemsgGroupFortiguardWfHeader(i["header"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := i["format"]; ok {
+			tmp["format"] = flattenSystemReplacemsgGroupFortiguardWfFormat(i["format"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func flattenSystemReplacemsgGroupFortiguardWfMsgType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupFortiguardWfBuffer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupFortiguardWfHeader(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupFortiguardWfFormat(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupSpam(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := i["msg-type"]; ok {
+			tmp["msg_type"] = flattenSystemReplacemsgGroupSpamMsgType(i["msg-type"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := i["buffer"]; ok {
+			tmp["buffer"] = flattenSystemReplacemsgGroupSpamBuffer(i["buffer"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := i["header"]; ok {
+			tmp["header"] = flattenSystemReplacemsgGroupSpamHeader(i["header"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := i["format"]; ok {
+			tmp["format"] = flattenSystemReplacemsgGroupSpamFormat(i["format"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func flattenSystemReplacemsgGroupSpamMsgType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupSpamBuffer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupSpamHeader(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupSpamFormat(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupAlertmail(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := i["msg-type"]; ok {
+			tmp["msg_type"] = flattenSystemReplacemsgGroupAlertmailMsgType(i["msg-type"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := i["buffer"]; ok {
+			tmp["buffer"] = flattenSystemReplacemsgGroupAlertmailBuffer(i["buffer"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := i["header"]; ok {
+			tmp["header"] = flattenSystemReplacemsgGroupAlertmailHeader(i["header"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := i["format"]; ok {
+			tmp["format"] = flattenSystemReplacemsgGroupAlertmailFormat(i["format"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func flattenSystemReplacemsgGroupAlertmailMsgType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupAlertmailBuffer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupAlertmailHeader(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupAlertmailFormat(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupAdmin(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := i["msg-type"]; ok {
+			tmp["msg_type"] = flattenSystemReplacemsgGroupAdminMsgType(i["msg-type"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := i["buffer"]; ok {
+			tmp["buffer"] = flattenSystemReplacemsgGroupAdminBuffer(i["buffer"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := i["header"]; ok {
+			tmp["header"] = flattenSystemReplacemsgGroupAdminHeader(i["header"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := i["format"]; ok {
+			tmp["format"] = flattenSystemReplacemsgGroupAdminFormat(i["format"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func flattenSystemReplacemsgGroupAdminMsgType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupAdminBuffer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupAdminHeader(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupAdminFormat(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupAuth(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := i["msg-type"]; ok {
+			tmp["msg_type"] = flattenSystemReplacemsgGroupAuthMsgType(i["msg-type"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := i["buffer"]; ok {
+			tmp["buffer"] = flattenSystemReplacemsgGroupAuthBuffer(i["buffer"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := i["header"]; ok {
+			tmp["header"] = flattenSystemReplacemsgGroupAuthHeader(i["header"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := i["format"]; ok {
+			tmp["format"] = flattenSystemReplacemsgGroupAuthFormat(i["format"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func flattenSystemReplacemsgGroupAuthMsgType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupAuthBuffer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupAuthHeader(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupAuthFormat(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupSslvpn(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := i["msg-type"]; ok {
+			tmp["msg_type"] = flattenSystemReplacemsgGroupSslvpnMsgType(i["msg-type"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := i["buffer"]; ok {
+			tmp["buffer"] = flattenSystemReplacemsgGroupSslvpnBuffer(i["buffer"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := i["header"]; ok {
+			tmp["header"] = flattenSystemReplacemsgGroupSslvpnHeader(i["header"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := i["format"]; ok {
+			tmp["format"] = flattenSystemReplacemsgGroupSslvpnFormat(i["format"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func flattenSystemReplacemsgGroupSslvpnMsgType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupSslvpnBuffer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupSslvpnHeader(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupSslvpnFormat(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupEc(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := i["msg-type"]; ok {
+			tmp["msg_type"] = flattenSystemReplacemsgGroupEcMsgType(i["msg-type"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := i["buffer"]; ok {
+			tmp["buffer"] = flattenSystemReplacemsgGroupEcBuffer(i["buffer"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := i["header"]; ok {
+			tmp["header"] = flattenSystemReplacemsgGroupEcHeader(i["header"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := i["format"]; ok {
+			tmp["format"] = flattenSystemReplacemsgGroupEcFormat(i["format"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func flattenSystemReplacemsgGroupEcMsgType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupEcBuffer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupEcHeader(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupEcFormat(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupDeviceDetectionPortal(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := i["msg-type"]; ok {
+			tmp["msg_type"] = flattenSystemReplacemsgGroupDeviceDetectionPortalMsgType(i["msg-type"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := i["buffer"]; ok {
+			tmp["buffer"] = flattenSystemReplacemsgGroupDeviceDetectionPortalBuffer(i["buffer"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := i["header"]; ok {
+			tmp["header"] = flattenSystemReplacemsgGroupDeviceDetectionPortalHeader(i["header"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := i["format"]; ok {
+			tmp["format"] = flattenSystemReplacemsgGroupDeviceDetectionPortalFormat(i["format"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func flattenSystemReplacemsgGroupDeviceDetectionPortalMsgType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupDeviceDetectionPortalBuffer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupDeviceDetectionPortalHeader(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupDeviceDetectionPortalFormat(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupNacQuar(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := i["msg-type"]; ok {
+			tmp["msg_type"] = flattenSystemReplacemsgGroupNacQuarMsgType(i["msg-type"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := i["buffer"]; ok {
+			tmp["buffer"] = flattenSystemReplacemsgGroupNacQuarBuffer(i["buffer"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := i["header"]; ok {
+			tmp["header"] = flattenSystemReplacemsgGroupNacQuarHeader(i["header"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := i["format"]; ok {
+			tmp["format"] = flattenSystemReplacemsgGroupNacQuarFormat(i["format"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func flattenSystemReplacemsgGroupNacQuarMsgType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupNacQuarBuffer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupNacQuarHeader(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupNacQuarFormat(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupTrafficQuota(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := i["msg-type"]; ok {
+			tmp["msg_type"] = flattenSystemReplacemsgGroupTrafficQuotaMsgType(i["msg-type"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := i["buffer"]; ok {
+			tmp["buffer"] = flattenSystemReplacemsgGroupTrafficQuotaBuffer(i["buffer"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := i["header"]; ok {
+			tmp["header"] = flattenSystemReplacemsgGroupTrafficQuotaHeader(i["header"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := i["format"]; ok {
+			tmp["format"] = flattenSystemReplacemsgGroupTrafficQuotaFormat(i["format"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func flattenSystemReplacemsgGroupTrafficQuotaMsgType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupTrafficQuotaBuffer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupTrafficQuotaHeader(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupTrafficQuotaFormat(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupUtm(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := i["msg-type"]; ok {
+			tmp["msg_type"] = flattenSystemReplacemsgGroupUtmMsgType(i["msg-type"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := i["buffer"]; ok {
+			tmp["buffer"] = flattenSystemReplacemsgGroupUtmBuffer(i["buffer"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := i["header"]; ok {
+			tmp["header"] = flattenSystemReplacemsgGroupUtmHeader(i["header"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := i["format"]; ok {
+			tmp["format"] = flattenSystemReplacemsgGroupUtmFormat(i["format"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func flattenSystemReplacemsgGroupUtmMsgType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupUtmBuffer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupUtmHeader(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupUtmFormat(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupCustomMessage(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := i["msg-type"]; ok {
+			tmp["msg_type"] = flattenSystemReplacemsgGroupCustomMessageMsgType(i["msg-type"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := i["buffer"]; ok {
+			tmp["buffer"] = flattenSystemReplacemsgGroupCustomMessageBuffer(i["buffer"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := i["header"]; ok {
+			tmp["header"] = flattenSystemReplacemsgGroupCustomMessageHeader(i["header"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := i["format"]; ok {
+			tmp["format"] = flattenSystemReplacemsgGroupCustomMessageFormat(i["format"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func flattenSystemReplacemsgGroupCustomMessageMsgType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupCustomMessageBuffer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupCustomMessageHeader(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupCustomMessageFormat(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupIcap(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := i["msg-type"]; ok {
+			tmp["msg_type"] = flattenSystemReplacemsgGroupIcapMsgType(i["msg-type"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := i["buffer"]; ok {
+			tmp["buffer"] = flattenSystemReplacemsgGroupIcapBuffer(i["buffer"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := i["header"]; ok {
+			tmp["header"] = flattenSystemReplacemsgGroupIcapHeader(i["header"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := i["format"]; ok {
+			tmp["format"] = flattenSystemReplacemsgGroupIcapFormat(i["format"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func flattenSystemReplacemsgGroupIcapMsgType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupIcapBuffer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupIcapHeader(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenSystemReplacemsgGroupIcapFormat(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+
+func refreshObjectSystemReplacemsgGroup(d *schema.ResourceData, o map[string]interface{}) error {
+	var err error
+
+
+	if err = d.Set("name", flattenSystemReplacemsgGroupName(o["name"], d, "name")); err != nil {
+		if !fortiAPIPatch(o["name"]) {
+			return fmt.Errorf("Error reading name: %v", err)
+		}
+	}
+
+	if err = d.Set("comment", flattenSystemReplacemsgGroupComment(o["comment"], d, "comment")); err != nil {
+		if !fortiAPIPatch(o["comment"]) {
+			return fmt.Errorf("Error reading comment: %v", err)
+		}
+	}
+
+	if err = d.Set("group_type", flattenSystemReplacemsgGroupGroupType(o["group-type"], d, "group_type")); err != nil {
+		if !fortiAPIPatch(o["group-type"]) {
+			return fmt.Errorf("Error reading group_type: %v", err)
+		}
+	}
+
+    if isImportTable() {
+        if err = d.Set("mail", flattenSystemReplacemsgGroupMail(o["mail"], d, "mail")); err != nil {
+            if !fortiAPIPatch(o["mail"]) {
+                return fmt.Errorf("Error reading mail: %v", err)
+            }
+        }
+    } else {
+        if _, ok := d.GetOk("mail"); ok {
+            if err = d.Set("mail", flattenSystemReplacemsgGroupMail(o["mail"], d, "mail")); err != nil {
+                if !fortiAPIPatch(o["mail"]) {
+                    return fmt.Errorf("Error reading mail: %v", err)
+                }
+            }
+        }
+    }
+
+    if isImportTable() {
+        if err = d.Set("http", flattenSystemReplacemsgGroupHttp(o["http"], d, "http")); err != nil {
+            if !fortiAPIPatch(o["http"]) {
+                return fmt.Errorf("Error reading http: %v", err)
+            }
+        }
+    } else {
+        if _, ok := d.GetOk("http"); ok {
+            if err = d.Set("http", flattenSystemReplacemsgGroupHttp(o["http"], d, "http")); err != nil {
+                if !fortiAPIPatch(o["http"]) {
+                    return fmt.Errorf("Error reading http: %v", err)
+                }
+            }
+        }
+    }
+
+    if isImportTable() {
+        if err = d.Set("webproxy", flattenSystemReplacemsgGroupWebproxy(o["webproxy"], d, "webproxy")); err != nil {
+            if !fortiAPIPatch(o["webproxy"]) {
+                return fmt.Errorf("Error reading webproxy: %v", err)
+            }
+        }
+    } else {
+        if _, ok := d.GetOk("webproxy"); ok {
+            if err = d.Set("webproxy", flattenSystemReplacemsgGroupWebproxy(o["webproxy"], d, "webproxy")); err != nil {
+                if !fortiAPIPatch(o["webproxy"]) {
+                    return fmt.Errorf("Error reading webproxy: %v", err)
+                }
+            }
+        }
+    }
+
+    if isImportTable() {
+        if err = d.Set("ftp", flattenSystemReplacemsgGroupFtp(o["ftp"], d, "ftp")); err != nil {
+            if !fortiAPIPatch(o["ftp"]) {
+                return fmt.Errorf("Error reading ftp: %v", err)
+            }
+        }
+    } else {
+        if _, ok := d.GetOk("ftp"); ok {
+            if err = d.Set("ftp", flattenSystemReplacemsgGroupFtp(o["ftp"], d, "ftp")); err != nil {
+                if !fortiAPIPatch(o["ftp"]) {
+                    return fmt.Errorf("Error reading ftp: %v", err)
+                }
+            }
+        }
+    }
+
+    if isImportTable() {
+        if err = d.Set("nntp", flattenSystemReplacemsgGroupNntp(o["nntp"], d, "nntp")); err != nil {
+            if !fortiAPIPatch(o["nntp"]) {
+                return fmt.Errorf("Error reading nntp: %v", err)
+            }
+        }
+    } else {
+        if _, ok := d.GetOk("nntp"); ok {
+            if err = d.Set("nntp", flattenSystemReplacemsgGroupNntp(o["nntp"], d, "nntp")); err != nil {
+                if !fortiAPIPatch(o["nntp"]) {
+                    return fmt.Errorf("Error reading nntp: %v", err)
+                }
+            }
+        }
+    }
+
+    if isImportTable() {
+        if err = d.Set("fortiguard_wf", flattenSystemReplacemsgGroupFortiguardWf(o["fortiguard-wf"], d, "fortiguard_wf")); err != nil {
+            if !fortiAPIPatch(o["fortiguard-wf"]) {
+                return fmt.Errorf("Error reading fortiguard_wf: %v", err)
+            }
+        }
+    } else {
+        if _, ok := d.GetOk("fortiguard_wf"); ok {
+            if err = d.Set("fortiguard_wf", flattenSystemReplacemsgGroupFortiguardWf(o["fortiguard-wf"], d, "fortiguard_wf")); err != nil {
+                if !fortiAPIPatch(o["fortiguard-wf"]) {
+                    return fmt.Errorf("Error reading fortiguard_wf: %v", err)
+                }
+            }
+        }
+    }
+
+    if isImportTable() {
+        if err = d.Set("spam", flattenSystemReplacemsgGroupSpam(o["spam"], d, "spam")); err != nil {
+            if !fortiAPIPatch(o["spam"]) {
+                return fmt.Errorf("Error reading spam: %v", err)
+            }
+        }
+    } else {
+        if _, ok := d.GetOk("spam"); ok {
+            if err = d.Set("spam", flattenSystemReplacemsgGroupSpam(o["spam"], d, "spam")); err != nil {
+                if !fortiAPIPatch(o["spam"]) {
+                    return fmt.Errorf("Error reading spam: %v", err)
+                }
+            }
+        }
+    }
+
+    if isImportTable() {
+        if err = d.Set("alertmail", flattenSystemReplacemsgGroupAlertmail(o["alertmail"], d, "alertmail")); err != nil {
+            if !fortiAPIPatch(o["alertmail"]) {
+                return fmt.Errorf("Error reading alertmail: %v", err)
+            }
+        }
+    } else {
+        if _, ok := d.GetOk("alertmail"); ok {
+            if err = d.Set("alertmail", flattenSystemReplacemsgGroupAlertmail(o["alertmail"], d, "alertmail")); err != nil {
+                if !fortiAPIPatch(o["alertmail"]) {
+                    return fmt.Errorf("Error reading alertmail: %v", err)
+                }
+            }
+        }
+    }
+
+    if isImportTable() {
+        if err = d.Set("admin", flattenSystemReplacemsgGroupAdmin(o["admin"], d, "admin")); err != nil {
+            if !fortiAPIPatch(o["admin"]) {
+                return fmt.Errorf("Error reading admin: %v", err)
+            }
+        }
+    } else {
+        if _, ok := d.GetOk("admin"); ok {
+            if err = d.Set("admin", flattenSystemReplacemsgGroupAdmin(o["admin"], d, "admin")); err != nil {
+                if !fortiAPIPatch(o["admin"]) {
+                    return fmt.Errorf("Error reading admin: %v", err)
+                }
+            }
+        }
+    }
+
+    if isImportTable() {
+        if err = d.Set("auth", flattenSystemReplacemsgGroupAuth(o["auth"], d, "auth")); err != nil {
+            if !fortiAPIPatch(o["auth"]) {
+                return fmt.Errorf("Error reading auth: %v", err)
+            }
+        }
+    } else {
+        if _, ok := d.GetOk("auth"); ok {
+            if err = d.Set("auth", flattenSystemReplacemsgGroupAuth(o["auth"], d, "auth")); err != nil {
+                if !fortiAPIPatch(o["auth"]) {
+                    return fmt.Errorf("Error reading auth: %v", err)
+                }
+            }
+        }
+    }
+
+    if isImportTable() {
+        if err = d.Set("sslvpn", flattenSystemReplacemsgGroupSslvpn(o["sslvpn"], d, "sslvpn")); err != nil {
+            if !fortiAPIPatch(o["sslvpn"]) {
+                return fmt.Errorf("Error reading sslvpn: %v", err)
+            }
+        }
+    } else {
+        if _, ok := d.GetOk("sslvpn"); ok {
+            if err = d.Set("sslvpn", flattenSystemReplacemsgGroupSslvpn(o["sslvpn"], d, "sslvpn")); err != nil {
+                if !fortiAPIPatch(o["sslvpn"]) {
+                    return fmt.Errorf("Error reading sslvpn: %v", err)
+                }
+            }
+        }
+    }
+
+    if isImportTable() {
+        if err = d.Set("ec", flattenSystemReplacemsgGroupEc(o["ec"], d, "ec")); err != nil {
+            if !fortiAPIPatch(o["ec"]) {
+                return fmt.Errorf("Error reading ec: %v", err)
+            }
+        }
+    } else {
+        if _, ok := d.GetOk("ec"); ok {
+            if err = d.Set("ec", flattenSystemReplacemsgGroupEc(o["ec"], d, "ec")); err != nil {
+                if !fortiAPIPatch(o["ec"]) {
+                    return fmt.Errorf("Error reading ec: %v", err)
+                }
+            }
+        }
+    }
+
+    if isImportTable() {
+        if err = d.Set("device_detection_portal", flattenSystemReplacemsgGroupDeviceDetectionPortal(o["device-detection-portal"], d, "device_detection_portal")); err != nil {
+            if !fortiAPIPatch(o["device-detection-portal"]) {
+                return fmt.Errorf("Error reading device_detection_portal: %v", err)
+            }
+        }
+    } else {
+        if _, ok := d.GetOk("device_detection_portal"); ok {
+            if err = d.Set("device_detection_portal", flattenSystemReplacemsgGroupDeviceDetectionPortal(o["device-detection-portal"], d, "device_detection_portal")); err != nil {
+                if !fortiAPIPatch(o["device-detection-portal"]) {
+                    return fmt.Errorf("Error reading device_detection_portal: %v", err)
+                }
+            }
+        }
+    }
+
+    if isImportTable() {
+        if err = d.Set("nac_quar", flattenSystemReplacemsgGroupNacQuar(o["nac-quar"], d, "nac_quar")); err != nil {
+            if !fortiAPIPatch(o["nac-quar"]) {
+                return fmt.Errorf("Error reading nac_quar: %v", err)
+            }
+        }
+    } else {
+        if _, ok := d.GetOk("nac_quar"); ok {
+            if err = d.Set("nac_quar", flattenSystemReplacemsgGroupNacQuar(o["nac-quar"], d, "nac_quar")); err != nil {
+                if !fortiAPIPatch(o["nac-quar"]) {
+                    return fmt.Errorf("Error reading nac_quar: %v", err)
+                }
+            }
+        }
+    }
+
+    if isImportTable() {
+        if err = d.Set("traffic_quota", flattenSystemReplacemsgGroupTrafficQuota(o["traffic-quota"], d, "traffic_quota")); err != nil {
+            if !fortiAPIPatch(o["traffic-quota"]) {
+                return fmt.Errorf("Error reading traffic_quota: %v", err)
+            }
+        }
+    } else {
+        if _, ok := d.GetOk("traffic_quota"); ok {
+            if err = d.Set("traffic_quota", flattenSystemReplacemsgGroupTrafficQuota(o["traffic-quota"], d, "traffic_quota")); err != nil {
+                if !fortiAPIPatch(o["traffic-quota"]) {
+                    return fmt.Errorf("Error reading traffic_quota: %v", err)
+                }
+            }
+        }
+    }
+
+    if isImportTable() {
+        if err = d.Set("utm", flattenSystemReplacemsgGroupUtm(o["utm"], d, "utm")); err != nil {
+            if !fortiAPIPatch(o["utm"]) {
+                return fmt.Errorf("Error reading utm: %v", err)
+            }
+        }
+    } else {
+        if _, ok := d.GetOk("utm"); ok {
+            if err = d.Set("utm", flattenSystemReplacemsgGroupUtm(o["utm"], d, "utm")); err != nil {
+                if !fortiAPIPatch(o["utm"]) {
+                    return fmt.Errorf("Error reading utm: %v", err)
+                }
+            }
+        }
+    }
+
+    if isImportTable() {
+        if err = d.Set("custom_message", flattenSystemReplacemsgGroupCustomMessage(o["custom-message"], d, "custom_message")); err != nil {
+            if !fortiAPIPatch(o["custom-message"]) {
+                return fmt.Errorf("Error reading custom_message: %v", err)
+            }
+        }
+    } else {
+        if _, ok := d.GetOk("custom_message"); ok {
+            if err = d.Set("custom_message", flattenSystemReplacemsgGroupCustomMessage(o["custom-message"], d, "custom_message")); err != nil {
+                if !fortiAPIPatch(o["custom-message"]) {
+                    return fmt.Errorf("Error reading custom_message: %v", err)
+                }
+            }
+        }
+    }
+
+    if isImportTable() {
+        if err = d.Set("icap", flattenSystemReplacemsgGroupIcap(o["icap"], d, "icap")); err != nil {
+            if !fortiAPIPatch(o["icap"]) {
+                return fmt.Errorf("Error reading icap: %v", err)
+            }
+        }
+    } else {
+        if _, ok := d.GetOk("icap"); ok {
+            if err = d.Set("icap", flattenSystemReplacemsgGroupIcap(o["icap"], d, "icap")); err != nil {
+                if !fortiAPIPatch(o["icap"]) {
+                    return fmt.Errorf("Error reading icap: %v", err)
+                }
+            }
+        }
+    }
+
+
+	return nil
+}
+
+func flattenSystemReplacemsgGroupFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
+	log.Printf(strconv.Itoa(fosdebugsn))
+	e := validation.IntBetween(fosdebugbeg, fosdebugend)
+	log.Printf("ER List: %v", e)
+}
+
+
+func expandSystemReplacemsgGroupName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupComment(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupGroupType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupMail(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := ""  // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["msg-type"], _ = expandSystemReplacemsgGroupMailMsgType(d, i["msg_type"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["buffer"], _ = expandSystemReplacemsgGroupMailBuffer(d, i["buffer"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["header"], _ = expandSystemReplacemsgGroupMailHeader(d, i["header"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["format"], _ = expandSystemReplacemsgGroupMailFormat(d, i["format"], pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemReplacemsgGroupMailMsgType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupMailBuffer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupMailHeader(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupMailFormat(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupHttp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := ""  // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["msg-type"], _ = expandSystemReplacemsgGroupHttpMsgType(d, i["msg_type"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["buffer"], _ = expandSystemReplacemsgGroupHttpBuffer(d, i["buffer"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["header"], _ = expandSystemReplacemsgGroupHttpHeader(d, i["header"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["format"], _ = expandSystemReplacemsgGroupHttpFormat(d, i["format"], pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemReplacemsgGroupHttpMsgType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupHttpBuffer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupHttpHeader(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupHttpFormat(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupWebproxy(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := ""  // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["msg-type"], _ = expandSystemReplacemsgGroupWebproxyMsgType(d, i["msg_type"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["buffer"], _ = expandSystemReplacemsgGroupWebproxyBuffer(d, i["buffer"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["header"], _ = expandSystemReplacemsgGroupWebproxyHeader(d, i["header"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["format"], _ = expandSystemReplacemsgGroupWebproxyFormat(d, i["format"], pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemReplacemsgGroupWebproxyMsgType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupWebproxyBuffer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupWebproxyHeader(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupWebproxyFormat(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupFtp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := ""  // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["msg-type"], _ = expandSystemReplacemsgGroupFtpMsgType(d, i["msg_type"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["buffer"], _ = expandSystemReplacemsgGroupFtpBuffer(d, i["buffer"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["header"], _ = expandSystemReplacemsgGroupFtpHeader(d, i["header"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["format"], _ = expandSystemReplacemsgGroupFtpFormat(d, i["format"], pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemReplacemsgGroupFtpMsgType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupFtpBuffer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupFtpHeader(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupFtpFormat(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupNntp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := ""  // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["msg-type"], _ = expandSystemReplacemsgGroupNntpMsgType(d, i["msg_type"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["buffer"], _ = expandSystemReplacemsgGroupNntpBuffer(d, i["buffer"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["header"], _ = expandSystemReplacemsgGroupNntpHeader(d, i["header"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["format"], _ = expandSystemReplacemsgGroupNntpFormat(d, i["format"], pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemReplacemsgGroupNntpMsgType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupNntpBuffer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupNntpHeader(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupNntpFormat(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupFortiguardWf(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := ""  // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["msg-type"], _ = expandSystemReplacemsgGroupFortiguardWfMsgType(d, i["msg_type"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["buffer"], _ = expandSystemReplacemsgGroupFortiguardWfBuffer(d, i["buffer"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["header"], _ = expandSystemReplacemsgGroupFortiguardWfHeader(d, i["header"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["format"], _ = expandSystemReplacemsgGroupFortiguardWfFormat(d, i["format"], pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemReplacemsgGroupFortiguardWfMsgType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupFortiguardWfBuffer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupFortiguardWfHeader(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupFortiguardWfFormat(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupSpam(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := ""  // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["msg-type"], _ = expandSystemReplacemsgGroupSpamMsgType(d, i["msg_type"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["buffer"], _ = expandSystemReplacemsgGroupSpamBuffer(d, i["buffer"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["header"], _ = expandSystemReplacemsgGroupSpamHeader(d, i["header"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["format"], _ = expandSystemReplacemsgGroupSpamFormat(d, i["format"], pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemReplacemsgGroupSpamMsgType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupSpamBuffer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupSpamHeader(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupSpamFormat(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupAlertmail(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := ""  // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["msg-type"], _ = expandSystemReplacemsgGroupAlertmailMsgType(d, i["msg_type"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["buffer"], _ = expandSystemReplacemsgGroupAlertmailBuffer(d, i["buffer"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["header"], _ = expandSystemReplacemsgGroupAlertmailHeader(d, i["header"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["format"], _ = expandSystemReplacemsgGroupAlertmailFormat(d, i["format"], pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemReplacemsgGroupAlertmailMsgType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupAlertmailBuffer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupAlertmailHeader(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupAlertmailFormat(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupAdmin(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := ""  // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["msg-type"], _ = expandSystemReplacemsgGroupAdminMsgType(d, i["msg_type"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["buffer"], _ = expandSystemReplacemsgGroupAdminBuffer(d, i["buffer"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["header"], _ = expandSystemReplacemsgGroupAdminHeader(d, i["header"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["format"], _ = expandSystemReplacemsgGroupAdminFormat(d, i["format"], pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemReplacemsgGroupAdminMsgType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupAdminBuffer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupAdminHeader(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupAdminFormat(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupAuth(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := ""  // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["msg-type"], _ = expandSystemReplacemsgGroupAuthMsgType(d, i["msg_type"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["buffer"], _ = expandSystemReplacemsgGroupAuthBuffer(d, i["buffer"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["header"], _ = expandSystemReplacemsgGroupAuthHeader(d, i["header"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["format"], _ = expandSystemReplacemsgGroupAuthFormat(d, i["format"], pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemReplacemsgGroupAuthMsgType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupAuthBuffer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupAuthHeader(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupAuthFormat(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupSslvpn(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := ""  // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["msg-type"], _ = expandSystemReplacemsgGroupSslvpnMsgType(d, i["msg_type"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["buffer"], _ = expandSystemReplacemsgGroupSslvpnBuffer(d, i["buffer"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["header"], _ = expandSystemReplacemsgGroupSslvpnHeader(d, i["header"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["format"], _ = expandSystemReplacemsgGroupSslvpnFormat(d, i["format"], pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemReplacemsgGroupSslvpnMsgType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupSslvpnBuffer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupSslvpnHeader(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupSslvpnFormat(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupEc(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := ""  // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["msg-type"], _ = expandSystemReplacemsgGroupEcMsgType(d, i["msg_type"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["buffer"], _ = expandSystemReplacemsgGroupEcBuffer(d, i["buffer"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["header"], _ = expandSystemReplacemsgGroupEcHeader(d, i["header"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["format"], _ = expandSystemReplacemsgGroupEcFormat(d, i["format"], pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemReplacemsgGroupEcMsgType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupEcBuffer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupEcHeader(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupEcFormat(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupDeviceDetectionPortal(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := ""  // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["msg-type"], _ = expandSystemReplacemsgGroupDeviceDetectionPortalMsgType(d, i["msg_type"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["buffer"], _ = expandSystemReplacemsgGroupDeviceDetectionPortalBuffer(d, i["buffer"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["header"], _ = expandSystemReplacemsgGroupDeviceDetectionPortalHeader(d, i["header"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["format"], _ = expandSystemReplacemsgGroupDeviceDetectionPortalFormat(d, i["format"], pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemReplacemsgGroupDeviceDetectionPortalMsgType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupDeviceDetectionPortalBuffer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupDeviceDetectionPortalHeader(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupDeviceDetectionPortalFormat(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupNacQuar(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := ""  // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["msg-type"], _ = expandSystemReplacemsgGroupNacQuarMsgType(d, i["msg_type"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["buffer"], _ = expandSystemReplacemsgGroupNacQuarBuffer(d, i["buffer"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["header"], _ = expandSystemReplacemsgGroupNacQuarHeader(d, i["header"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["format"], _ = expandSystemReplacemsgGroupNacQuarFormat(d, i["format"], pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemReplacemsgGroupNacQuarMsgType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupNacQuarBuffer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupNacQuarHeader(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupNacQuarFormat(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupTrafficQuota(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := ""  // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["msg-type"], _ = expandSystemReplacemsgGroupTrafficQuotaMsgType(d, i["msg_type"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["buffer"], _ = expandSystemReplacemsgGroupTrafficQuotaBuffer(d, i["buffer"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["header"], _ = expandSystemReplacemsgGroupTrafficQuotaHeader(d, i["header"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["format"], _ = expandSystemReplacemsgGroupTrafficQuotaFormat(d, i["format"], pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemReplacemsgGroupTrafficQuotaMsgType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupTrafficQuotaBuffer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupTrafficQuotaHeader(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupTrafficQuotaFormat(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupUtm(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := ""  // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["msg-type"], _ = expandSystemReplacemsgGroupUtmMsgType(d, i["msg_type"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["buffer"], _ = expandSystemReplacemsgGroupUtmBuffer(d, i["buffer"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["header"], _ = expandSystemReplacemsgGroupUtmHeader(d, i["header"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["format"], _ = expandSystemReplacemsgGroupUtmFormat(d, i["format"], pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemReplacemsgGroupUtmMsgType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupUtmBuffer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupUtmHeader(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupUtmFormat(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupCustomMessage(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := ""  // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["msg-type"], _ = expandSystemReplacemsgGroupCustomMessageMsgType(d, i["msg_type"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["buffer"], _ = expandSystemReplacemsgGroupCustomMessageBuffer(d, i["buffer"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["header"], _ = expandSystemReplacemsgGroupCustomMessageHeader(d, i["header"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["format"], _ = expandSystemReplacemsgGroupCustomMessageFormat(d, i["format"], pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemReplacemsgGroupCustomMessageMsgType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupCustomMessageBuffer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupCustomMessageHeader(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupCustomMessageFormat(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupIcap(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := ""  // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "msg_type"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["msg-type"], _ = expandSystemReplacemsgGroupIcapMsgType(d, i["msg_type"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "buffer"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["buffer"], _ = expandSystemReplacemsgGroupIcapBuffer(d, i["buffer"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "header"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["header"], _ = expandSystemReplacemsgGroupIcapHeader(d, i["header"], pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "format"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["format"], _ = expandSystemReplacemsgGroupIcapFormat(d, i["format"], pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemReplacemsgGroupIcapMsgType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupIcapBuffer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupIcapHeader(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemReplacemsgGroupIcapFormat(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+
+func getObjectSystemReplacemsgGroup(d *schema.ResourceData) (*map[string]interface{}, error) {
+	obj := make(map[string]interface{})
+
+
+	if v, ok := d.GetOk("name"); ok {
+		t, err := expandSystemReplacemsgGroupName(d, v, "name")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["name"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("comment"); ok {
+		t, err := expandSystemReplacemsgGroupComment(d, v, "comment")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["comment"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("group_type"); ok {
+		t, err := expandSystemReplacemsgGroupGroupType(d, v, "group_type")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["group-type"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("mail"); ok {
+		t, err := expandSystemReplacemsgGroupMail(d, v, "mail")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["mail"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("http"); ok {
+		t, err := expandSystemReplacemsgGroupHttp(d, v, "http")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["http"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("webproxy"); ok {
+		t, err := expandSystemReplacemsgGroupWebproxy(d, v, "webproxy")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["webproxy"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ftp"); ok {
+		t, err := expandSystemReplacemsgGroupFtp(d, v, "ftp")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ftp"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("nntp"); ok {
+		t, err := expandSystemReplacemsgGroupNntp(d, v, "nntp")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["nntp"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fortiguard_wf"); ok {
+		t, err := expandSystemReplacemsgGroupFortiguardWf(d, v, "fortiguard_wf")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fortiguard-wf"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("spam"); ok {
+		t, err := expandSystemReplacemsgGroupSpam(d, v, "spam")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["spam"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("alertmail"); ok {
+		t, err := expandSystemReplacemsgGroupAlertmail(d, v, "alertmail")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["alertmail"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("admin"); ok {
+		t, err := expandSystemReplacemsgGroupAdmin(d, v, "admin")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["admin"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("auth"); ok {
+		t, err := expandSystemReplacemsgGroupAuth(d, v, "auth")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["auth"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("sslvpn"); ok {
+		t, err := expandSystemReplacemsgGroupSslvpn(d, v, "sslvpn")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["sslvpn"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ec"); ok {
+		t, err := expandSystemReplacemsgGroupEc(d, v, "ec")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ec"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("device_detection_portal"); ok {
+		t, err := expandSystemReplacemsgGroupDeviceDetectionPortal(d, v, "device_detection_portal")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["device-detection-portal"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("nac_quar"); ok {
+		t, err := expandSystemReplacemsgGroupNacQuar(d, v, "nac_quar")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["nac-quar"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("traffic_quota"); ok {
+		t, err := expandSystemReplacemsgGroupTrafficQuota(d, v, "traffic_quota")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["traffic-quota"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("utm"); ok {
+		t, err := expandSystemReplacemsgGroupUtm(d, v, "utm")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["utm"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("custom_message"); ok {
+		t, err := expandSystemReplacemsgGroupCustomMessage(d, v, "custom_message")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["custom-message"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("icap"); ok {
+		t, err := expandSystemReplacemsgGroupIcap(d, v, "icap")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["icap"] = t
+		}
+	}
+
+
+	return &obj, nil
+}
+
