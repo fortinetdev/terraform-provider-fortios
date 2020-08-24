@@ -2,7 +2,7 @@
 layout: "fortios"
 page_title: "FortiOS: fortios_system_license_vdom"
 sidebar_current: "docs-fortios-resource-system-license-vdom"
-subcategory: "FortiGate"
+subcategory: "FortiGate System"
 description: |-
   Provides a resource to add a VDOM license for FortiOS.
 ---
