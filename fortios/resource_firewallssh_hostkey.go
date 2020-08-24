@@ -56,10 +56,9 @@ func resourceFirewallSshHostKey() *schema.Resource {
 				Computed: true,
 			},
 			"port": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"hostname": &schema.Schema{
 				Type:         schema.TypeString,

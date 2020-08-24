@@ -30,10 +30,9 @@ func resourceFirewallCentralSnatMap() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"policyid": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,

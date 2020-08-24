@@ -143,28 +143,24 @@ func resourceWebfilterProfile() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"bword_threshold": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 2147483647),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"bword_table": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"urlfilter_table": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"content_header_list": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"blacklist": &schema.Schema{
 							Type:     schema.TypeString,
@@ -218,10 +214,9 @@ func resourceWebfilterProfile() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"channel_id": &schema.Schema{
 							Type:         schema.TypeString,
@@ -329,10 +324,9 @@ func resourceWebfilterProfile() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
 									},
 									"category": &schema.Schema{
 										Type:     schema.TypeString,
@@ -350,10 +344,9 @@ func resourceWebfilterProfile() *schema.Resource {
 										Computed: true,
 									},
 									"value": &schema.Schema{
-										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(1, 4294967295),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
 									},
 									"duration": &schema.Schema{
 										Type:     schema.TypeString,

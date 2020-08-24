@@ -30,10 +30,9 @@ func resourceLogMemoryGlobalSetting() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"max_size": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"full_first_warning_threshold": &schema.Schema{
 				Type:         schema.TypeInt,

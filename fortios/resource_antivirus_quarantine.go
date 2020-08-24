@@ -42,10 +42,9 @@ func resourceAntivirusQuarantine() *schema.Resource {
 				Computed:     true,
 			},
 			"quarantine_quota": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"drop_infected": &schema.Schema{
 				Type:     schema.TypeString,

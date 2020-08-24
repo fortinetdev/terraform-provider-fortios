@@ -216,10 +216,9 @@ func resourceSystemHa() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"interface": &schema.Schema{
 							Type:         schema.TypeString,
@@ -374,10 +373,9 @@ func resourceSystemHa() *schema.Resource {
 				Computed: true,
 			},
 			"pingserver_flip_timeout": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(6, 2147483647),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"vdom": &schema.Schema{
 				Type:     schema.TypeString,

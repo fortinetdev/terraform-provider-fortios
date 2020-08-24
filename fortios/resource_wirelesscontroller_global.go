@@ -85,10 +85,9 @@ func resourceWirelessControllerGlobal() *schema.Resource {
 				Computed: true,
 			},
 			"max_clients": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"rogue_scan_mac_adjacency": &schema.Schema{
 				Type:         schema.TypeInt,

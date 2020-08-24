@@ -193,10 +193,9 @@ func resourceVpnIpsecPhase1() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"start_ip": &schema.Schema{
 							Type:     schema.TypeString,
@@ -264,10 +263,9 @@ func resourceVpnIpsecPhase1() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"start_ip": &schema.Schema{
 							Type:     schema.TypeString,
@@ -392,10 +390,9 @@ func resourceVpnIpsecPhase1() *schema.Resource {
 				Computed:     true,
 			},
 			"priority": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"localid": &schema.Schema{
 				Type:         schema.TypeString,

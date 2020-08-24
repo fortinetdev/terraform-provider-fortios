@@ -46,10 +46,9 @@ func resourceDnsfilterProfile() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"domain_filter_table": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 					},
 				},

@@ -64,10 +64,9 @@ func resourceRouterOspf() *schema.Resource {
 				Computed: true,
 			},
 			"database_overflow_max_lsas": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"database_overflow_time_to_recover": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -177,10 +176,9 @@ func resourceRouterOspf() *schema.Resource {
 							Computed: true,
 						},
 						"default_cost": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"nssa_translator_role": &schema.Schema{
 							Type:     schema.TypeString,
@@ -224,10 +222,9 @@ func resourceRouterOspf() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
 									},
 									"prefix": &schema.Schema{
 										Type:     schema.TypeString,
@@ -322,10 +319,9 @@ func resourceRouterOspf() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
 									},
 									"list": &schema.Schema{
 										Type:         schema.TypeString,
@@ -481,10 +477,9 @@ func resourceRouterOspf() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"prefix": &schema.Schema{
 							Type:     schema.TypeString,
@@ -505,10 +500,9 @@ func resourceRouterOspf() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"ip": &schema.Schema{
 							Type:     schema.TypeString,
@@ -556,10 +550,9 @@ func resourceRouterOspf() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"prefix": &schema.Schema{
 							Type:     schema.TypeString,
@@ -567,10 +560,9 @@ func resourceRouterOspf() *schema.Resource {
 							Computed: true,
 						},
 						"tag": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"advertise": &schema.Schema{
 							Type:     schema.TypeString,
@@ -586,10 +578,9 @@ func resourceRouterOspf() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"access_list": &schema.Schema{
 							Type:         schema.TypeString,
@@ -639,10 +630,9 @@ func resourceRouterOspf() *schema.Resource {
 							Computed: true,
 						},
 						"tag": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 					},
 				},

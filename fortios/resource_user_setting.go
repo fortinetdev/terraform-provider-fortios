@@ -112,10 +112,9 @@ func resourceUserSetting() *schema.Resource {
 				Computed:     true,
 			},
 			"auth_lockout_duration": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"auth_ports": &schema.Schema{
 				Type:     schema.TypeList,
@@ -123,10 +122,9 @@ func resourceUserSetting() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"type": &schema.Schema{
 							Type:     schema.TypeString,

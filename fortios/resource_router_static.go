@@ -30,10 +30,9 @@ func resourceRouterStatic() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"seq_num": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -67,10 +66,9 @@ func resourceRouterStatic() *schema.Resource {
 				Computed:     true,
 			},
 			"priority": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"device": &schema.Schema{
 				Type:         schema.TypeString,
@@ -104,10 +102,9 @@ func resourceRouterStatic() *schema.Resource {
 				Computed:     true,
 			},
 			"internet_service": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"internet_service_custom": &schema.Schema{
 				Type:         schema.TypeString,

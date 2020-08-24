@@ -116,10 +116,9 @@ func resourceWanoptContentDeliveryNetworkRule() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
 									},
 									"target": &schema.Schema{
 										Type:     schema.TypeString,
@@ -149,10 +148,9 @@ func resourceWanoptContentDeliveryNetworkRule() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
 									},
 									"target": &schema.Schema{
 										Type:     schema.TypeString,
@@ -194,10 +192,9 @@ func resourceWanoptContentDeliveryNetworkRule() *schema.Resource {
 										Computed:     true,
 									},
 									"start_skip": &schema.Schema{
-										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
 									},
 									"start_direction": &schema.Schema{
 										Type:     schema.TypeString,
@@ -211,10 +208,9 @@ func resourceWanoptContentDeliveryNetworkRule() *schema.Resource {
 										Computed:     true,
 									},
 									"end_skip": &schema.Schema{
-										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
 									},
 									"end_direction": &schema.Schema{
 										Type:     schema.TypeString,

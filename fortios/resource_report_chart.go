@@ -35,10 +35,9 @@ func resourceReportChart() *schema.Resource {
 				Required:     true,
 			},
 			"policy": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"type": &schema.Schema{
 				Type:     schema.TypeString,
@@ -56,10 +55,9 @@ func resourceReportChart() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"chart_name": &schema.Schema{
 							Type:         schema.TypeString,
@@ -292,10 +290,9 @@ func resourceReportChart() *schema.Resource {
 				Computed:     true,
 			},
 			"title_font_size": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"background": &schema.Schema{
 				Type:         schema.TypeString,
@@ -315,10 +312,9 @@ func resourceReportChart() *schema.Resource {
 				Computed: true,
 			},
 			"legend_font_size": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"column": &schema.Schema{
 				Type:     schema.TypeList,
@@ -326,10 +322,9 @@ func resourceReportChart() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"header_value": &schema.Schema{
 							Type:         schema.TypeString,
@@ -367,10 +362,9 @@ func resourceReportChart() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
 									},
 									"op": &schema.Schema{
 										Type:     schema.TypeString,

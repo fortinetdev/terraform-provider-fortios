@@ -30,16 +30,14 @@ func resourceRouterMulticast() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"route_threshold": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(1, 2147483647),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"route_limit": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(1, 2147483647),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"multicast_routing": &schema.Schema{
 				Type:     schema.TypeString,
@@ -198,10 +196,9 @@ func resourceRouterMulticast() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
 									},
 									"ip_address": &schema.Schema{
 										Type:     schema.TypeString,
@@ -275,10 +272,9 @@ func resourceRouterMulticast() *schema.Resource {
 							Computed: true,
 						},
 						"dr_priority": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(1, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"propagation_delay": &schema.Schema{
 							Type:         schema.TypeInt,

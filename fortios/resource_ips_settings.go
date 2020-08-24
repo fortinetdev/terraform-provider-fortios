@@ -48,10 +48,9 @@ func resourceIpsSettings() *schema.Resource {
 				Computed:     true,
 			},
 			"ips_packet_quota": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 		},
 	}

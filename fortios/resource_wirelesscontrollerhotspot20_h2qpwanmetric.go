@@ -51,16 +51,14 @@ func resourceWirelessControllerHotspot20H2QpWanMetric() *schema.Resource {
 				Computed: true,
 			},
 			"uplink_speed": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"downlink_speed": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"uplink_load": &schema.Schema{
 				Type:         schema.TypeInt,

@@ -57,10 +57,9 @@ func resourceWafProfile() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
 									},
 									"status": &schema.Schema{
 										Type:     schema.TypeString,
@@ -91,10 +90,9 @@ func resourceWafProfile() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
 									},
 								},
 							},
@@ -105,10 +103,9 @@ func resourceWafProfile() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
 									},
 								},
 							},
@@ -194,10 +191,9 @@ func resourceWafProfile() *schema.Resource {
 										Computed: true,
 									},
 									"length": &schema.Schema{
-										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(0, 2147483647),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
 									},
 									"action": &schema.Schema{
 										Type:     schema.TypeString,
@@ -228,10 +224,9 @@ func resourceWafProfile() *schema.Resource {
 										Computed: true,
 									},
 									"length": &schema.Schema{
-										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(0, 2147483647),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
 									},
 									"action": &schema.Schema{
 										Type:     schema.TypeString,
@@ -262,10 +257,9 @@ func resourceWafProfile() *schema.Resource {
 										Computed: true,
 									},
 									"length": &schema.Schema{
-										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(0, 2147483647),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
 									},
 									"action": &schema.Schema{
 										Type:     schema.TypeString,
@@ -296,10 +290,9 @@ func resourceWafProfile() *schema.Resource {
 										Computed: true,
 									},
 									"length": &schema.Schema{
-										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(0, 2147483647),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
 									},
 									"action": &schema.Schema{
 										Type:     schema.TypeString,
@@ -330,10 +323,9 @@ func resourceWafProfile() *schema.Resource {
 										Computed: true,
 									},
 									"length": &schema.Schema{
-										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(0, 2147483647),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
 									},
 									"action": &schema.Schema{
 										Type:     schema.TypeString,
@@ -476,10 +468,9 @@ func resourceWafProfile() *schema.Resource {
 										Computed: true,
 									},
 									"max_cookie": &schema.Schema{
-										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(0, 2147483647),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
 									},
 									"action": &schema.Schema{
 										Type:     schema.TypeString,
@@ -510,10 +501,9 @@ func resourceWafProfile() *schema.Resource {
 										Computed: true,
 									},
 									"max_header_line": &schema.Schema{
-										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(0, 2147483647),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
 									},
 									"action": &schema.Schema{
 										Type:     schema.TypeString,
@@ -544,10 +534,9 @@ func resourceWafProfile() *schema.Resource {
 										Computed: true,
 									},
 									"max_url_param": &schema.Schema{
-										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(0, 2147483647),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
 									},
 									"action": &schema.Schema{
 										Type:     schema.TypeString,
@@ -578,10 +567,9 @@ func resourceWafProfile() *schema.Resource {
 										Computed: true,
 									},
 									"max_range_segment": &schema.Schema{
-										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(0, 2147483647),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
 									},
 									"action": &schema.Schema{
 										Type:     schema.TypeString,
@@ -606,10 +594,9 @@ func resourceWafProfile() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
 									},
 									"pattern": &schema.Schema{
 										Type:         schema.TypeString,
@@ -730,10 +717,9 @@ func resourceWafProfile() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
 									},
 									"pattern": &schema.Schema{
 										Type:         schema.TypeString,
@@ -819,10 +805,9 @@ func resourceWafProfile() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"address": &schema.Schema{
 							Type:         schema.TypeString,
@@ -851,10 +836,9 @@ func resourceWafProfile() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
 									},
 									"srcaddr": &schema.Schema{
 										Type:         schema.TypeString,

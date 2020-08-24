@@ -30,9 +30,8 @@ func resourceSystemProxyArp() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"fosid": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Required:     true,
+				Type:     schema.TypeInt,
+				Required: true,
 			},
 			"interface": &schema.Schema{
 				Type:         schema.TypeString,

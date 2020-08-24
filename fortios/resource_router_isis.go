@@ -221,10 +221,9 @@ func resourceRouterIsis() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"net": &schema.Schema{
 							Type:     schema.TypeString,
@@ -307,10 +306,9 @@ func resourceRouterIsis() *schema.Resource {
 							Computed: true,
 						},
 						"lsp_interval": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(1, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"lsp_retransmit_interval": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -402,10 +400,9 @@ func resourceRouterIsis() *schema.Resource {
 							Computed: true,
 						},
 						"mesh_group_id": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 					},
 				},
@@ -416,10 +413,9 @@ func resourceRouterIsis() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"prefix": &schema.Schema{
 							Type:     schema.TypeString,
@@ -440,10 +436,9 @@ func resourceRouterIsis() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"prefix6": &schema.Schema{
 							Type:     schema.TypeString,
@@ -475,10 +470,9 @@ func resourceRouterIsis() *schema.Resource {
 							Computed: true,
 						},
 						"metric": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4261412864),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"metric_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -516,10 +510,9 @@ func resourceRouterIsis() *schema.Resource {
 							Computed: true,
 						},
 						"metric": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4261412864),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"metric_type": &schema.Schema{
 							Type:     schema.TypeString,

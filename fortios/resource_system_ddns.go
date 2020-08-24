@@ -30,10 +30,9 @@ func resourceSystemDdns() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"ddnsid": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"ddns_server": &schema.Schema{
 				Type:     schema.TypeString,

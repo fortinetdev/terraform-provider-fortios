@@ -129,10 +129,9 @@ func resourceFirewallVip6() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"ip": &schema.Schema{
 							Type:     schema.TypeString,
@@ -174,10 +173,9 @@ func resourceFirewallVip6() *schema.Resource {
 							Computed:     true,
 						},
 						"max_connections": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 2147483647),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"monitor": &schema.Schema{
 							Type:         schema.TypeString,
@@ -211,10 +209,9 @@ func resourceFirewallVip6() *schema.Resource {
 				Computed:     true,
 			},
 			"http_cookie_generation": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"http_cookie_age": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -290,10 +287,9 @@ func resourceFirewallVip6() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"priority": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"cipher": &schema.Schema{
 							Type:     schema.TypeString,
@@ -319,10 +315,9 @@ func resourceFirewallVip6() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"priority": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"cipher": &schema.Schema{
 							Type:     schema.TypeString,

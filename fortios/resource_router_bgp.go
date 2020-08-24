@@ -30,9 +30,8 @@ func resourceRouterBgp() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"as": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Required:     true,
+				Type:     schema.TypeInt,
+				Required: true,
 			},
 			"router_id": &schema.Schema{
 				Type:     schema.TypeString,
@@ -147,10 +146,9 @@ func resourceRouterBgp() *schema.Resource {
 				Computed: true,
 			},
 			"confederation_identifier": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(1, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"confederation_peers": &schema.Schema{
 				Type:     schema.TypeList,
@@ -203,10 +201,9 @@ func resourceRouterBgp() *schema.Resource {
 				Computed:     true,
 			},
 			"default_local_preference": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"scan_time": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -283,10 +280,9 @@ func resourceRouterBgp() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"prefix": &schema.Schema{
 							Type:     schema.TypeString,
@@ -312,10 +308,9 @@ func resourceRouterBgp() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"prefix6": &schema.Schema{
 							Type:     schema.TypeString,
@@ -618,16 +613,14 @@ func resourceRouterBgp() *schema.Resource {
 							Computed:     true,
 						},
 						"maximum_prefix": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(1, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"maximum_prefix6": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(1, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"maximum_prefix_threshold": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -676,16 +669,14 @@ func resourceRouterBgp() *schema.Resource {
 							Computed:     true,
 						},
 						"remote_as": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(1, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"local_as": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"local_as_no_prepend": &schema.Schema{
 							Type:     schema.TypeString,
@@ -1123,16 +1114,14 @@ func resourceRouterBgp() *schema.Resource {
 							Computed:     true,
 						},
 						"maximum_prefix": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(1, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"maximum_prefix6": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(1, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"maximum_prefix_threshold": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -1181,16 +1170,14 @@ func resourceRouterBgp() *schema.Resource {
 							Computed:     true,
 						},
 						"remote_as": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(1, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"local_as": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"local_as_no_prepend": &schema.Schema{
 							Type:     schema.TypeString,
@@ -1321,10 +1308,9 @@ func resourceRouterBgp() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"prefix": &schema.Schema{
 							Type:     schema.TypeString,
@@ -1352,10 +1338,9 @@ func resourceRouterBgp() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"prefix6": &schema.Schema{
 							Type:     schema.TypeString,
@@ -1383,10 +1368,9 @@ func resourceRouterBgp() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"prefix": &schema.Schema{
 							Type:     schema.TypeString,
@@ -1413,10 +1397,9 @@ func resourceRouterBgp() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"prefix6": &schema.Schema{
 							Type:     schema.TypeString,
@@ -1493,10 +1476,9 @@ func resourceRouterBgp() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"neighbour_prefix": &schema.Schema{
 							Type:     schema.TypeString,

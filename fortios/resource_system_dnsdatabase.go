@@ -75,9 +75,8 @@ func resourceSystemDnsDatabase() *schema.Resource {
 				Computed:     true,
 			},
 			"ttl": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 2147483647),
-				Required:     true,
+				Type:     schema.TypeInt,
+				Required: true,
 			},
 			"authoritative": &schema.Schema{
 				Type:     schema.TypeString,
@@ -99,10 +98,9 @@ func resourceSystemDnsDatabase() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -115,10 +113,9 @@ func resourceSystemDnsDatabase() *schema.Resource {
 							Computed: true,
 						},
 						"ttl": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 2147483647),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"preference": &schema.Schema{
 							Type:         schema.TypeInt,

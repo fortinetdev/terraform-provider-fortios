@@ -154,10 +154,9 @@ func resourceReportLayout() *schema.Resource {
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 												"id": &schema.Schema{
-													Type:         schema.TypeInt,
-													ValidateFunc: validation.IntBetween(0, 4294967295),
-													Optional:     true,
-													Computed:     true,
+													Type:     schema.TypeInt,
+													Optional: true,
+													Computed: true,
 												},
 												"description": &schema.Schema{
 													Type:         schema.TypeString,
@@ -211,10 +210,9 @@ func resourceReportLayout() *schema.Resource {
 										Elem: &schema.Resource{
 											Schema: map[string]*schema.Schema{
 												"id": &schema.Schema{
-													Type:         schema.TypeInt,
-													ValidateFunc: validation.IntBetween(0, 4294967295),
-													Optional:     true,
-													Computed:     true,
+													Type:     schema.TypeInt,
+													Optional: true,
+													Computed: true,
 												},
 												"description": &schema.Schema{
 													Type:         schema.TypeString,
@@ -258,10 +256,9 @@ func resourceReportLayout() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"description": &schema.Schema{
 							Type:         schema.TypeString,
@@ -281,10 +278,9 @@ func resourceReportLayout() *schema.Resource {
 							Computed:     true,
 						},
 						"top_n": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"hide": &schema.Schema{
 							Type:     schema.TypeString,
@@ -297,10 +293,9 @@ func resourceReportLayout() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
 									},
 									"name": &schema.Schema{
 										Type:         schema.TypeString,
@@ -345,10 +340,9 @@ func resourceReportLayout() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
 									},
 									"content": &schema.Schema{
 										Type:         schema.TypeString,
@@ -418,10 +412,9 @@ func resourceReportLayout() *schema.Resource {
 							Computed: true,
 						},
 						"column": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"title": &schema.Schema{
 							Type:         schema.TypeString,

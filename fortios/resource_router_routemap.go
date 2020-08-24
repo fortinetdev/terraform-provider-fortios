@@ -46,10 +46,9 @@ func resourceRouterRouteMap() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"action": &schema.Schema{
 							Type:     schema.TypeString,
@@ -109,10 +108,9 @@ func resourceRouterRouteMap() *schema.Resource {
 							Computed:     true,
 						},
 						"match_metric": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"match_route_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -120,16 +118,14 @@ func resourceRouterRouteMap() *schema.Resource {
 							Computed: true,
 						},
 						"match_tag": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"set_aggregator_as": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"set_aggregator_ip": &schema.Schema{
 							Type:     schema.TypeString,
@@ -259,16 +255,14 @@ func resourceRouterRouteMap() *schema.Resource {
 							Computed: true,
 						},
 						"set_local_preference": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"set_metric": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"set_metric_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -286,16 +280,14 @@ func resourceRouterRouteMap() *schema.Resource {
 							Computed: true,
 						},
 						"set_tag": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"set_weight": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"set_flags": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -310,10 +302,9 @@ func resourceRouterRouteMap() *schema.Resource {
 							Computed:     true,
 						},
 						"set_route_tag": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 					},
 				},

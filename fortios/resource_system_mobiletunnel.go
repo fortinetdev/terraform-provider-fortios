@@ -75,9 +75,8 @@ func resourceSystemMobileTunnel() *schema.Resource {
 				Required:     true,
 			},
 			"n_mhae_spi": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Required:     true,
+				Type:     schema.TypeInt,
+				Required: true,
 			},
 			"n_mhae_key_type": &schema.Schema{
 				Type:     schema.TypeString,
@@ -102,10 +101,9 @@ func resourceSystemMobileTunnel() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"interface": &schema.Schema{
 							Type:         schema.TypeString,

@@ -30,10 +30,9 @@ func resourceRouterStatic6() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"seq_num": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -55,10 +54,9 @@ func resourceRouterStatic6() *schema.Resource {
 				Required:     true,
 			},
 			"devindex": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"distance": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -67,10 +65,9 @@ func resourceRouterStatic6() *schema.Resource {
 				Computed:     true,
 			},
 			"priority": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"comment": &schema.Schema{
 				Type:         schema.TypeString,

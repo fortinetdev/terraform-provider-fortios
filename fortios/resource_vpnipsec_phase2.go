@@ -96,10 +96,9 @@ func resourceVpnIpsecPhase2() *schema.Resource {
 				Computed:     true,
 			},
 			"keylifekbs": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(5120, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"keylife_type": &schema.Schema{
 				Type:     schema.TypeString,

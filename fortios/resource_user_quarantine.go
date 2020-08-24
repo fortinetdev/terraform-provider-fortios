@@ -68,10 +68,9 @@ func resourceUserQuarantine() *schema.Resource {
 										Computed: true,
 									},
 									"entry_id": &schema.Schema{
-										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
 									},
 									"description": &schema.Schema{
 										Type:         schema.TypeString,

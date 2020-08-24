@@ -36,10 +36,9 @@ func resourceDlpSettings() *schema.Resource {
 				Computed:     true,
 			},
 			"size": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(16, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"db_mode": &schema.Schema{
 				Type:     schema.TypeString,

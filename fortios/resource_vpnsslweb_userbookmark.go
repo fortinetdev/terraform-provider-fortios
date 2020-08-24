@@ -110,10 +110,9 @@ func resourceVpnSslWebUserBookmark() *schema.Resource {
 							Computed: true,
 						},
 						"preconnection_id": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 2147483648),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"preconnection_blob": &schema.Schema{
 							Type:         schema.TypeString,

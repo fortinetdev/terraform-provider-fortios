@@ -82,16 +82,14 @@ func resourceIpsGlobal() *schema.Resource {
 				Optional:     true,
 			},
 			"deep_app_insp_timeout": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 2147483647),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"deep_app_insp_db_limit": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 2147483647),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"exclude_signatures": &schema.Schema{
 				Type:     schema.TypeString,

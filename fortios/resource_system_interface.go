@@ -47,10 +47,9 @@ func resourceSystemInterface() *schema.Resource {
 				Computed:     true,
 			},
 			"cli_conn_status": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"fortilink": &schema.Schema{
 				Type:     schema.TypeString,
@@ -69,10 +68,9 @@ func resourceSystemInterface() *schema.Resource {
 				Computed:     true,
 			},
 			"priority": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"dhcp_relay_service": &schema.Schema{
 				Type:     schema.TypeString,
@@ -210,22 +208,19 @@ func resourceSystemInterface() *schema.Resource {
 				Computed:     true,
 			},
 			"detected_peer_mtu": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"disc_retry_timeout": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"padt_retry_timeout": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"service_name": &schema.Schema{
 				Type:         schema.TypeString,
@@ -462,10 +457,9 @@ func resourceSystemInterface() *schema.Resource {
 				Computed: true,
 			},
 			"mtu": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"wccp": &schema.Schema{
 				Type:     schema.TypeString,
@@ -535,10 +529,9 @@ func resourceSystemInterface() *schema.Resource {
 				Computed: true,
 			},
 			"tcp_mss": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"inbandwidth": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -600,10 +593,9 @@ func resourceSystemInterface() *schema.Resource {
 				Computed:     true,
 			},
 			"forward_domain": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 2147483647),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"remote_ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -693,10 +685,9 @@ func resourceSystemInterface() *schema.Resource {
 				},
 			},
 			"devindex": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"vindex": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -727,10 +718,9 @@ func resourceSystemInterface() *schema.Resource {
 				Computed: true,
 			},
 			"captive_portal": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"security_mac_auth_bypass": &schema.Schema{
 				Type:     schema.TypeString,
@@ -839,16 +829,14 @@ func resourceSystemInterface() *schema.Resource {
 				Computed: true,
 			},
 			"estimated_upstream_bandwidth": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"estimated_downstream_bandwidth": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"vrrp_virtual_mac": &schema.Schema{
 				Type:     schema.TypeString,
@@ -932,10 +920,9 @@ func resourceSystemInterface() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"id": &schema.Schema{
-										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
 									},
 									"ip": &schema.Schema{
 										Type:     schema.TypeString,
@@ -954,10 +941,9 @@ func resourceSystemInterface() *schema.Resource {
 				Computed: true,
 			},
 			"snmp_index": &schema.Schema{
-				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(0, 4294967295),
-				Optional:     true,
-				Computed:     true,
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"secondary_ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -970,10 +956,9 @@ func resourceSystemInterface() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"ip": &schema.Schema{
 							Type:     schema.TypeString,
@@ -1247,10 +1232,9 @@ func resourceSystemInterface() *schema.Resource {
 							Computed:     true,
 						},
 						"ip6_retrans_time": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"ip6_default_life": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -1301,16 +1285,14 @@ func resourceSystemInterface() *schema.Resource {
 										Computed: true,
 									},
 									"valid_life_time": &schema.Schema{
-										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
 									},
 									"preferred_life_time": &schema.Schema{
-										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
 									},
 									"rdnss": &schema.Schema{
 										Type:     schema.TypeString,
@@ -1340,10 +1322,9 @@ func resourceSystemInterface() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"prefix_id": &schema.Schema{
-										Type:         schema.TypeInt,
-										ValidateFunc: validation.IntBetween(0, 4294967295),
-										Optional:     true,
-										Computed:     true,
+										Type:     schema.TypeInt,
+										Optional: true,
+										Computed: true,
 									},
 									"upstream_interface": &schema.Schema{
 										Type:         schema.TypeString,
@@ -1415,16 +1396,14 @@ func resourceSystemInterface() *schema.Resource {
 							Computed: true,
 						},
 						"dhcp6_prefix_hint_plt": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"dhcp6_prefix_hint_vlt": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(0, 4294967295),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
 						},
 						"vrrp_virtual_mac6": &schema.Schema{
 							Type:     schema.TypeString,
