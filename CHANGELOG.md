@@ -4,7 +4,6 @@
 
 FEATURES:
 
-* **New Resource:** ` fortios_fmg_devicemanager_device`
 * **New Resource:** ` resource_wirelesscontrollerhotspot20_icon`
 * **New Resource:** ` resource_wirelesscontrollerhotspot20_h2qpwanmetric`
 * **New Resource:** ` resource_wirelesscontrollerhotspot20_h2qpoperatorname`
