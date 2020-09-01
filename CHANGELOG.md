@@ -1,5 +1,32 @@
 ## 1.6.0 (Unreleased)
 
+## 1.5.2 (Sep 2, 2020)
+
+IMPROVEMENTS:
+
+* Improve doc category
+* Improve doc `To change the admin default port`
+
+BUG FIXES:
+
+*  Remove the required attribute of remote_gw in fortios_vpnipsec_phase1interfaceas #75
+
+FEATURES:
+
+* **New Resource:** ` fortios_system_settings`
+* **New Resource:** ` fortios_application_rulesettings`
+* **New Resource:** ` fortios_firewall_sslsshprofile`
+* **New Resource:** ` fortios_firewallssh_localca`
+* **New Resource:** ` fortios_firewallssh_localkey`
+* **New Resource:** ` fortios_router_aspathlist`
+* **New Resource:** ` fortios_router_bfd`
+* **New Resource:** ` fortios_router_bfd6`
+* **New Resource:** ` fortios_system_switchinterface`
+* **New Resource:** ` fortios_system_vdom`
+* **New Resource:** ` fortios_system_vdomlink`
+* **New Resource:** ` system_virtualwirepair`
+* **New Resource:** ` user_devicegroup`
+
 ## 1.5.1 (Aug 25, 2020)
 
 IMPROVEMENTS:
