@@ -124,7 +124,7 @@ The following arguments are supported:
 * `ike_version` - IKE protocol version.
 * `local_gw` - IPv4 address of the local gateway's external interface.
 * `local_gw6` - IPv6 address of the local gateway's external interface.
-* `remote_gw` - (Required) IPv4 address of the remote gateway's external interface.
+* `remote_gw` - IPv4 address of the remote gateway's external interface.
 * `remote_gw6` - IPv6 address of the remote gateway's external interface.
 * `remotegw_ddns` - Domain name of remote gateway (eg. name.DDNS.com).
 * `keylife` - Time to wait in seconds before phase 1 encryption key expires.

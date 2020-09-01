@@ -1,5 +1,12 @@
 ## 1.6.0 (Unreleased)
 
+
+## 1.5.3 (Sep 2, 2020)
+
+BUG FIXES:
+
+*  Fix fortios_vpnipsec_phase1interfaceas bugs
+
 ## 1.5.2 (Sep 2, 2020)
 
 IMPROVEMENTS:

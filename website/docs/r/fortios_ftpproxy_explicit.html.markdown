@@ -1,5 +1,5 @@
 ---
-subcategory: "FortiGate Ftp-Proxy"
+subcategory: "FortiGate FTP-Proxy"
 layout: "fortios"
 page_title: "FortiOS: fortios_ftpproxy_explicit"
 description: |-
