@@ -1,5 +1,5 @@
 ---
-subcategory: "FortiGate Spamfilter"
+subcategory: "FortiGate SpamFilter"
 layout: "fortios"
 page_title: "FortiOS: fortios_spamfilter_dnsbl"
 description: |-

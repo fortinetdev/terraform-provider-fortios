@@ -1,5 +1,5 @@
 ---
-subcategory: "FortiGate Icap"
+subcategory: "FortiGate ICAP"
 layout: "fortios"
 page_title: "FortiOS: fortios_icap_profile"
 description: |-

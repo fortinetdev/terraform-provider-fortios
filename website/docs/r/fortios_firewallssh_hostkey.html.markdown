@@ -16,7 +16,6 @@ resource "fortios_firewallssh_hostkey" "trname" {
   hostname = "testmachine"
   ip       = "1.1.1.1"
   name     = "hostkeys1"
-  nid      = "256"
   port     = 22
   status   = "trusted"
   type     = "RSA"

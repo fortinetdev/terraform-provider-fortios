@@ -1,5 +1,5 @@
 ---
-subcategory: "FortiGate Vpn"
+subcategory: "FortiGate VPN"
 layout: "fortios"
 page_title: "FortiOS: fortios_vpnipsec_phase1"
 description: |-
@@ -96,7 +96,7 @@ The following arguments are supported:
 * `type` - Remote gateway type.
 * `interface` - (Required) Local physical, aggregate, or VLAN outgoing interface.
 * `ike_version` - IKE protocol version.
-* `remote_gw` - (Required) Remote VPN gateway.
+* `remote_gw` - Remote VPN gateway.
 * `local_gw` - Local VPN gateway.
 * `remotegw_ddns` - Domain name of remote gateway (eg. name.DDNS.com).
 * `keylife` - Time to wait in seconds before phase 1 encryption key expires.

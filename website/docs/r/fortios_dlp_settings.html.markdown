@@ -1,5 +1,5 @@
 ---
-subcategory: "FortiGate Dlp"
+subcategory: "FortiGate DLP"
 layout: "fortios"
 page_title: "FortiOS: fortios_dlp_settings"
 description: |-

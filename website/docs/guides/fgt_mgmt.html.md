@@ -1,7 +1,7 @@
 ---
 subcategory: ""
 layout: "fortios"
-page_title: "Change the admin default port"
+page_title: "To change the admin default port"
 description: |-
   Change the admin default port to the custom port.
 ---
@@ -9,7 +9,7 @@ description: |-
 # Change the admin default port to the custom port
 
 
-To access the FortiGate via api user, port 443 is used for HTTPS (by default). If the port is changed or intended to be changed, refer to the details below:
+To access the FortiGate via api user, port 443 is used for HTTPS (by default). If the port is changed or intended to be changed, refer to the details below (Let us assume that the customized port is 8443):
 
 ## Option I
 1 Configure the Firewall's admin_sport to 8443 manually.

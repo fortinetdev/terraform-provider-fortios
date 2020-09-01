@@ -1,5 +1,5 @@
 ---
-subcategory: "FortiGate Wanopt"
+subcategory: "FortiGate WANOpt"
 layout: "fortios"
 page_title: "FortiOS: fortios_wanopt_webcache"
 description: |-

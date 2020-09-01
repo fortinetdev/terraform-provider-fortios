@@ -1,5 +1,5 @@
 ---
-subcategory: "FortiGate Webfilter"
+subcategory: "FortiGate WebFilter"
 layout: "fortios"
 page_title: "FortiOS: fortios_webfilter_urlfilter"
 description: |-

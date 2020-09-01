@@ -1,5 +1,5 @@
 ---
-subcategory: "FortiGate Waf"
+subcategory: "FortiGate WAF"
 layout: "fortios"
 page_title: "FortiOS: fortios_waf_profile"
 description: |-

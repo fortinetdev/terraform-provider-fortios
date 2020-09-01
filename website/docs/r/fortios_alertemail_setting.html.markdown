@@ -1,5 +1,5 @@
 ---
-subcategory: "FortiGate Alertemail"
+subcategory: "FortiGate AlertEmail"
 layout: "fortios"
 page_title: "FortiOS: fortios_alertemail_setting"
 description: |-

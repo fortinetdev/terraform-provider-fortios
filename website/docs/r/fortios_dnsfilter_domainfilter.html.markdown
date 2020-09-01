@@ -1,5 +1,5 @@
 ---
-subcategory: "FortiGate Dnsfilter"
+subcategory: "FortiGate DNSFilter"
 layout: "fortios"
 page_title: "FortiOS: fortios_dnsfilter_domainfilter"
 description: |-

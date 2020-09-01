@@ -1,5 +1,5 @@
 ---
-subcategory: "FortiGate Ips"
+subcategory: "FortiGate IPS"
 layout: "fortios"
 page_title: "FortiOS: fortios_ips_settings"
 description: |-

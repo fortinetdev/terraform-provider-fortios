@@ -1,5 +1,5 @@
 ---
-subcategory: "FortiGate Vpn"
+subcategory: "FortiGate VPN"
 layout: "fortios"
 page_title: "FortiOS: fortios_vpncertificate_setting"
 description: |-

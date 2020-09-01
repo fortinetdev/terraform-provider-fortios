@@ -1,12 +1,12 @@
 ---
 subcategory: ""
 layout: "fortios"
-page_title: "Debugging for FortiGate"
+page_title: "The debugging method for FortiGate"
 description: |-
   Debugging for FortiGate.
 ---
 
-# Debugging for FortiGate	
+# Debugging for FortiGate
 
 Verbose output can help with debugging. To enable verbose debugging, use the following commands in the FortiGate CLI:
 

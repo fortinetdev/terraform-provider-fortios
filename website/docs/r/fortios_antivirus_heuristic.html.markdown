@@ -1,5 +1,5 @@
 ---
-subcategory: "FortiGate Antivirus"
+subcategory: "FortiGate AntiVirus"
 layout: "fortios"
 page_title: "FortiOS: fortios_antivirus_heuristic"
 description: |-

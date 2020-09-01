@@ -1,5 +1,5 @@
 ---
-subcategory: "FortiGate Voip"
+subcategory: "FortiGate VoIP"
 layout: "fortios"
 page_title: "FortiOS: fortios_voip_profile"
 description: |-

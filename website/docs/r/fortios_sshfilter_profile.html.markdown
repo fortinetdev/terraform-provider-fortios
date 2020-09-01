@@ -1,5 +1,5 @@
 ---
-subcategory: "FortiGate Ssh-Filter"
+subcategory: "FortiGate SSHFilter"
 layout: "fortios"
 page_title: "FortiOS: fortios_sshfilter_profile"
 description: |-
