@@ -439,7 +439,8 @@ func resourceSystemHa() *schema.Resource {
 						},
 					},
 				},
-			}, "ha_direct": &schema.Schema{
+			},
+			"ha_direct": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,

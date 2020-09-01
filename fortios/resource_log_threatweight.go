@@ -66,7 +66,8 @@ func resourceLogThreatWeight() *schema.Resource {
 						},
 					},
 				},
-			}, "blocked_connection": &schema.Schema{
+			},
+			"blocked_connection": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -144,7 +145,8 @@ func resourceLogThreatWeight() *schema.Resource {
 						},
 					},
 				},
-			}, "ips": &schema.Schema{
+			},
+			"ips": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
@@ -177,7 +179,8 @@ func resourceLogThreatWeight() *schema.Resource {
 						},
 					},
 				},
-			}, "web": &schema.Schema{
+			},
+			"web": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{

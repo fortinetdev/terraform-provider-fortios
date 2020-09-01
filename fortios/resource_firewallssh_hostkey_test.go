@@ -30,7 +30,6 @@ func TestAccFortiOSFirewallSshHostKey_basic(t *testing.T) {
 					resource.TestCheckResourceAttr("fortios_firewallssh_hostkey.trname", "hostname", "testmachine"),
 					resource.TestCheckResourceAttr("fortios_firewallssh_hostkey.trname", "ip", "1.1.1.1"),
 					resource.TestCheckResourceAttr("fortios_firewallssh_hostkey.trname", "name", rname),
-					resource.TestCheckResourceAttr("fortios_firewallssh_hostkey.trname", "nid", "256"),
 					resource.TestCheckResourceAttr("fortios_firewallssh_hostkey.trname", "port", "22"),
 					resource.TestCheckResourceAttr("fortios_firewallssh_hostkey.trname", "status", "trusted"),
 					resource.TestCheckResourceAttr("fortios_firewallssh_hostkey.trname", "type", "RSA"),
@@ -97,7 +96,6 @@ resource "fortios_firewallssh_hostkey" "trname" {
   hostname = "testmachine"
   ip       = "1.1.1.1"
   name     = "%[1]s"
-  nid      = "256"
   port     = 22
   status   = "trusted"
   type     = "RSA"

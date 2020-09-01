@@ -75,7 +75,8 @@ func resourceSystemLldpNetworkPolicy() *schema.Resource {
 						},
 					},
 				},
-			}, "voice_signaling": &schema.Schema{
+			},
+			"voice_signaling": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
@@ -111,7 +112,8 @@ func resourceSystemLldpNetworkPolicy() *schema.Resource {
 						},
 					},
 				},
-			}, "guest": &schema.Schema{
+			},
+			"guest": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
@@ -147,7 +149,8 @@ func resourceSystemLldpNetworkPolicy() *schema.Resource {
 						},
 					},
 				},
-			}, "guest_voice_signaling": &schema.Schema{
+			},
+			"guest_voice_signaling": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
@@ -183,7 +186,8 @@ func resourceSystemLldpNetworkPolicy() *schema.Resource {
 						},
 					},
 				},
-			}, "softphone": &schema.Schema{
+			},
+			"softphone": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
@@ -219,7 +223,8 @@ func resourceSystemLldpNetworkPolicy() *schema.Resource {
 						},
 					},
 				},
-			}, "video_conferencing": &schema.Schema{
+			},
+			"video_conferencing": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
@@ -255,7 +260,8 @@ func resourceSystemLldpNetworkPolicy() *schema.Resource {
 						},
 					},
 				},
-			}, "streaming_video": &schema.Schema{
+			},
+			"streaming_video": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
@@ -291,7 +297,8 @@ func resourceSystemLldpNetworkPolicy() *schema.Resource {
 						},
 					},
 				},
-			}, "video_signaling": &schema.Schema{
+			},
+			"video_signaling": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
@@ -327,7 +334,8 @@ func resourceSystemLldpNetworkPolicy() *schema.Resource {
 						},
 					},
 				},
-			}},
+			},
+		},
 	}
 }
 

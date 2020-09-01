@@ -181,8 +181,7 @@ func resourceSystemGlobal() *schema.Resource {
 				Computed: true,
 			},
 			"max_dlpstat_memory": &schema.Schema{
-				Type: schema.TypeInt,
-
+				Type:     schema.TypeInt,
 				Optional: true,
 				Computed: true,
 			},

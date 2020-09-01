@@ -344,7 +344,8 @@ func resourceEndpointControlProfile() *schema.Resource {
 						},
 					},
 				},
-			}, "forticlient_android_settings": &schema.Schema{
+			},
+			"forticlient_android_settings": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
@@ -429,7 +430,8 @@ func resourceEndpointControlProfile() *schema.Resource {
 						},
 					},
 				},
-			}, "forticlient_ios_settings": &schema.Schema{
+			},
+			"forticlient_ios_settings": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
@@ -531,7 +533,8 @@ func resourceEndpointControlProfile() *schema.Resource {
 						},
 					},
 				},
-			}, "description": &schema.Schema{
+			},
+			"description": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,

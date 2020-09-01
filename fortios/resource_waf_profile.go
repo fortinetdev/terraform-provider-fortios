@@ -173,7 +173,8 @@ func resourceWafProfile() *schema.Resource {
 						},
 					},
 				},
-			}, "constraint": &schema.Schema{
+			},
+			"constraint": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
@@ -212,7 +213,8 @@ func resourceWafProfile() *schema.Resource {
 									},
 								},
 							},
-						}, "content_length": &schema.Schema{
+						},
+						"content_length": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
 							MaxItems: 1,
@@ -245,7 +247,8 @@ func resourceWafProfile() *schema.Resource {
 									},
 								},
 							},
-						}, "param_length": &schema.Schema{
+						},
+						"param_length": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
 							MaxItems: 1,
@@ -278,7 +281,8 @@ func resourceWafProfile() *schema.Resource {
 									},
 								},
 							},
-						}, "line_length": &schema.Schema{
+						},
+						"line_length": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
 							MaxItems: 1,
@@ -311,7 +315,8 @@ func resourceWafProfile() *schema.Resource {
 									},
 								},
 							},
-						}, "url_param_length": &schema.Schema{
+						},
+						"url_param_length": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
 							MaxItems: 1,
@@ -344,7 +349,8 @@ func resourceWafProfile() *schema.Resource {
 									},
 								},
 							},
-						}, "version": &schema.Schema{
+						},
+						"version": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
 							MaxItems: 1,
@@ -372,7 +378,8 @@ func resourceWafProfile() *schema.Resource {
 									},
 								},
 							},
-						}, "method": &schema.Schema{
+						},
+						"method": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
 							MaxItems: 1,
@@ -400,7 +407,8 @@ func resourceWafProfile() *schema.Resource {
 									},
 								},
 							},
-						}, "hostname": &schema.Schema{
+						},
+						"hostname": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
 							MaxItems: 1,
@@ -428,7 +436,8 @@ func resourceWafProfile() *schema.Resource {
 									},
 								},
 							},
-						}, "malformed": &schema.Schema{
+						},
+						"malformed": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
 							MaxItems: 1,
@@ -456,7 +465,8 @@ func resourceWafProfile() *schema.Resource {
 									},
 								},
 							},
-						}, "max_cookie": &schema.Schema{
+						},
+						"max_cookie": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
 							MaxItems: 1,
@@ -489,7 +499,8 @@ func resourceWafProfile() *schema.Resource {
 									},
 								},
 							},
-						}, "max_header_line": &schema.Schema{
+						},
+						"max_header_line": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
 							MaxItems: 1,
@@ -522,7 +533,8 @@ func resourceWafProfile() *schema.Resource {
 									},
 								},
 							},
-						}, "max_url_param": &schema.Schema{
+						},
+						"max_url_param": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
 							MaxItems: 1,
@@ -555,7 +567,8 @@ func resourceWafProfile() *schema.Resource {
 									},
 								},
 							},
-						}, "max_range_segment": &schema.Schema{
+						},
+						"max_range_segment": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
 							MaxItems: 1,
@@ -588,7 +601,8 @@ func resourceWafProfile() *schema.Resource {
 									},
 								},
 							},
-						}, "exception": &schema.Schema{
+						},
+						"exception": &schema.Schema{
 							Type:     schema.TypeList,
 							Optional: true,
 							Elem: &schema.Resource{
@@ -685,7 +699,8 @@ func resourceWafProfile() *schema.Resource {
 						},
 					},
 				},
-			}, "method": &schema.Schema{
+			},
+			"method": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
@@ -748,7 +763,8 @@ func resourceWafProfile() *schema.Resource {
 						},
 					},
 				},
-			}, "address_list": &schema.Schema{
+			},
+			"address_list": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
@@ -799,7 +815,8 @@ func resourceWafProfile() *schema.Resource {
 						},
 					},
 				},
-			}, "url_access": &schema.Schema{
+			},
+			"url_access": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{

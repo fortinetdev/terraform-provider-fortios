@@ -154,7 +154,8 @@ func resourceSystemClusterSync() *schema.Resource {
 						},
 					},
 				},
-			}},
+			},
+		},
 	}
 }
 

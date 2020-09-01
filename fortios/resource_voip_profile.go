@@ -534,7 +534,8 @@ func resourceVoipProfile() *schema.Resource {
 						},
 					},
 				},
-			}, "sccp": &schema.Schema{
+			},
+			"sccp": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
@@ -573,7 +574,8 @@ func resourceVoipProfile() *schema.Resource {
 						},
 					},
 				},
-			}},
+			},
+		},
 	}
 }
 

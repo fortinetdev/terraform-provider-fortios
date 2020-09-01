@@ -52,7 +52,8 @@ func resourceVpnIpsecPhase1() *schema.Resource {
 			},
 			"remote_gw": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"local_gw": &schema.Schema{
 				Type:     schema.TypeString,

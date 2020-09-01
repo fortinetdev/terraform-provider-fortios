@@ -216,7 +216,8 @@ func resourceRouterMulticast() *schema.Resource {
 						},
 					},
 				},
-			}, "interface": &schema.Schema{
+			},
+			"interface": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
@@ -396,7 +397,8 @@ func resourceRouterMulticast() *schema.Resource {
 									},
 								},
 							},
-						}},
+						},
+					},
 				},
 			},
 		},

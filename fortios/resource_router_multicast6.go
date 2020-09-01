@@ -97,7 +97,8 @@ func resourceRouterMulticast6() *schema.Resource {
 						},
 					},
 				},
-			}},
+			},
+		},
 	}
 }
 

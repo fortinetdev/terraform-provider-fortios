@@ -1480,7 +1480,8 @@ func resourceSystemInterface() *schema.Resource {
 						},
 					},
 				},
-			}},
+			},
+		},
 	}
 }
 

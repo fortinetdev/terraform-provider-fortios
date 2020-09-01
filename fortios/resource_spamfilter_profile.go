@@ -104,7 +104,8 @@ func resourceSpamfilterProfile() *schema.Resource {
 						},
 					},
 				},
-			}, "pop3": &schema.Schema{
+			},
+			"pop3": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
@@ -133,7 +134,8 @@ func resourceSpamfilterProfile() *schema.Resource {
 						},
 					},
 				},
-			}, "smtp": &schema.Schema{
+			},
+			"smtp": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
@@ -172,7 +174,8 @@ func resourceSpamfilterProfile() *schema.Resource {
 						},
 					},
 				},
-			}, "mapi": &schema.Schema{
+			},
+			"mapi": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
@@ -190,7 +193,8 @@ func resourceSpamfilterProfile() *schema.Resource {
 						},
 					},
 				},
-			}, "msn_hotmail": &schema.Schema{
+			},
+			"msn_hotmail": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
@@ -203,7 +207,8 @@ func resourceSpamfilterProfile() *schema.Resource {
 						},
 					},
 				},
-			}, "yahoo_mail": &schema.Schema{
+			},
+			"yahoo_mail": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
@@ -216,7 +221,8 @@ func resourceSpamfilterProfile() *schema.Resource {
 						},
 					},
 				},
-			}, "gmail": &schema.Schema{
+			},
+			"gmail": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
@@ -229,7 +235,8 @@ func resourceSpamfilterProfile() *schema.Resource {
 						},
 					},
 				},
-			}, "spam_bword_threshold": &schema.Schema{
+			},
+			"spam_bword_threshold": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
 				Computed: true,

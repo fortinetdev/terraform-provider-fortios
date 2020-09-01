@@ -136,7 +136,8 @@ func resourceWebfilterProfile() *schema.Resource {
 						},
 					},
 				},
-			}, "web": &schema.Schema{
+			},
+			"web": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
@@ -203,7 +204,8 @@ func resourceWebfilterProfile() *schema.Resource {
 						},
 					},
 				},
-			}, "youtube_channel_status": &schema.Schema{
+			},
+			"youtube_channel_status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -390,7 +392,8 @@ func resourceWebfilterProfile() *schema.Resource {
 						},
 					},
 				},
-			}, "wisp": &schema.Schema{
+			},
+			"wisp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,

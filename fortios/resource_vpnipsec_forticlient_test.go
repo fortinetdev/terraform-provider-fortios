@@ -245,5 +245,27 @@ resource "fortios_vpnipsec_forticlient" "trname" {
   status        = "enable"
   usergroupname = "Guest-group"
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 `, name)
 }

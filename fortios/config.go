@@ -44,3 +44,13 @@ func isImportTable() bool {
 	}
 	return false
 }
+
+func convintflist2i(v interface{}) interface{} {
+	if t, ok := v.([]interface{}); ok {
+		if len(t) == 0 {
+			return v
+		}
+		return t[0]
+	}
+	return v
+}

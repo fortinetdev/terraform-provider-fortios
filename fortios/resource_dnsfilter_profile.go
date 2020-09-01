@@ -52,7 +52,8 @@ func resourceDnsfilterProfile() *schema.Resource {
 						},
 					},
 				},
-			}, "ftgd_dns": &schema.Schema{
+			},
+			"ftgd_dns": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
@@ -95,7 +96,8 @@ func resourceDnsfilterProfile() *schema.Resource {
 						},
 					},
 				},
-			}, "log_all_domain": &schema.Schema{
+			},
+			"log_all_domain": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,

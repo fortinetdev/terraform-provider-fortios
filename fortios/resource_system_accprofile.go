@@ -122,7 +122,8 @@ func resourceSystemAccprofile() *schema.Resource {
 						},
 					},
 				},
-			}, "sysgrp_permission": &schema.Schema{
+			},
+			"sysgrp_permission": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
@@ -150,7 +151,8 @@ func resourceSystemAccprofile() *schema.Resource {
 						},
 					},
 				},
-			}, "fwgrp_permission": &schema.Schema{
+			},
+			"fwgrp_permission": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
@@ -178,7 +180,8 @@ func resourceSystemAccprofile() *schema.Resource {
 						},
 					},
 				},
-			}, "loggrp_permission": &schema.Schema{
+			},
+			"loggrp_permission": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
@@ -206,7 +209,8 @@ func resourceSystemAccprofile() *schema.Resource {
 						},
 					},
 				},
-			}, "utmgrp_permission": &schema.Schema{
+			},
+			"utmgrp_permission": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
 				MaxItems: 1,
@@ -269,7 +273,8 @@ func resourceSystemAccprofile() *schema.Resource {
 						},
 					},
 				},
-			}, "admintimeout_override": &schema.Schema{
+			},
+			"admintimeout_override": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
