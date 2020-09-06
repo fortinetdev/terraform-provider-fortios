@@ -122,6 +122,5 @@ resource "fortios_wanopt_webcache" "trname" {
   neg_resp_time      = 0
   reval_pnc          = "disable"
 }
-
 `)
 }

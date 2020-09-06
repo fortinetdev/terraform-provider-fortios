@@ -173,7 +173,5 @@ resource "fortios_spamfilter_profile" "trname" {
     log = "disable"
   }
 }
-
-
 `, name)
 }

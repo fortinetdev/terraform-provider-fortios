@@ -96,6 +96,5 @@ resource "fortios_systemsnmp_sysinfo" "trname" {
   trap_log_full_threshold   = 90
   trap_low_memory_threshold = 80
 }
-
 `)
 }

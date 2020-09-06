@@ -94,6 +94,5 @@ resource "fortios_log_customfield" "trname" {
   name  = "%[1]s"
   value = "logteststr"
 }
-
 `, name)
 }

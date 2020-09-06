@@ -98,6 +98,5 @@ resource "fortios_wirelesscontroller_intercontroller" "trname" {
   inter_controller_mode = "disable"
   inter_controller_pri  = "primary"
 }
-
 `)
 }

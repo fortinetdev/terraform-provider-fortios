@@ -94,6 +94,5 @@ resource "fortios_waf_profile" "trname" {
   external     = "disable"
   name         = "%[1]s"
 }
-
 `, name)
 }

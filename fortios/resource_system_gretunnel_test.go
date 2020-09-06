@@ -120,6 +120,5 @@ resource "fortios_system_gretunnel" "trname" {
   sequence_number_reception    = "disable"
   sequence_number_transmission = "enable"
 }
-
 `, name)
 }

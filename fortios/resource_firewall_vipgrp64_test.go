@@ -114,9 +114,5 @@ resource "fortios_firewall_vipgrp64" "trname" {
     name = fortios_firewall_vip64.trname1.name
   }
 }
-
-
-
-
 `, name)
 }

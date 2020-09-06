@@ -115,7 +115,5 @@ resource "fortios_firewall_address6template" "trname" {
     name      = "state"
   }
 }
-
-
 `, name)
 }

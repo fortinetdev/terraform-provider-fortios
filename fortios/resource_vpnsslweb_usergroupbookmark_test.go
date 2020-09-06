@@ -117,6 +117,5 @@ resource "fortios_vpnsslweb_usergroupbookmark" "trname" {
     url                      = "www.aaa.com"
   }
 }
-
 `)
 }

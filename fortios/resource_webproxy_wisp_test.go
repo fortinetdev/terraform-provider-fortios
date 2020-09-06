@@ -100,8 +100,5 @@ resource "fortios_webproxy_wisp" "trname" {
   server_port     = 15868
   timeout         = 5
 }
-
-
-
 `, name)
 }

@@ -239,6 +239,5 @@ resource "fortios_vpnipsec_phase2" "trname" {
 
 
 }
-
 `, name)
 }

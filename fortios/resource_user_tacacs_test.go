@@ -98,6 +98,5 @@ resource "fortios_user_tacacs" "trname" {
   port          = 2342
   server        = "1.1.1.1"
 }
-
 `, name)
 }

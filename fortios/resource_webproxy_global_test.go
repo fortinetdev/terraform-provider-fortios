@@ -114,6 +114,5 @@ resource "fortios_webproxy_global" "trname" {
   tunnel_non_http                 = "enable"
   unknown_http_version            = "best-effort"
 }
-
 `)
 }

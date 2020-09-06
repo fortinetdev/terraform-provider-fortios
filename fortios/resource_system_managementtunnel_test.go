@@ -100,6 +100,5 @@ resource "fortios_system_managementtunnel" "trname" {
   authorized_manager_only  = "enable"
   status                   = "enable"
 }
-
 `)
 }

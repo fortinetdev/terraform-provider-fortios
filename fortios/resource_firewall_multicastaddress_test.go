@@ -102,6 +102,5 @@ resource "fortios_firewall_multicastaddress" "trname" {
   type       = "multicastrange"
   visibility = "enable"
 }
-
 `, name)
 }

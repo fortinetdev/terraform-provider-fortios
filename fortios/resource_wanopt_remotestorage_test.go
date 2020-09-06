@@ -92,6 +92,5 @@ resource "fortios_wanopt_remotestorage" "trname" {
   remote_cache_ip = "0.0.0.0"
   status          = "disable"
 }
-
 `)
 }

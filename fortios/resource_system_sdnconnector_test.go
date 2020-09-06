@@ -110,6 +110,5 @@ resource "fortios_system_sdnconnector" "trname" {
   use_metadata_iam = "disable"
   username         = "sg"
 }
-
 `, name)
 }

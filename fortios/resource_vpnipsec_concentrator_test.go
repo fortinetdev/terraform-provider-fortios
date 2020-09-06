@@ -92,6 +92,5 @@ resource "fortios_vpnipsec_concentrator" "trname" {
   name      = "%[1]s"
   src_check = "disable"
 }
-
 `, name)
 }

@@ -90,7 +90,5 @@ func testAccFortiOSWirelessControllerHotspot20IconConfig(name string) string {
 resource "fortios_wirelesscontrollerhotspot20_icon" "trname" {
   name = "%[1]s"
 }
-
-
 `, name)
 }

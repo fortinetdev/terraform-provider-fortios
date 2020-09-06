@@ -92,7 +92,5 @@ resource "fortios_switchcontroller_switchlog" "trname" {
   severity = "critical"
   status   = "enable"
 }
-
-
 `)
 }

@@ -92,6 +92,5 @@ resource "fortios_endpointcontrol_forticlientregistrationsync" "trname" {
   peer_ip   = "1.1.1.1"
   peer_name = "1"
 }
-
 `)
 }

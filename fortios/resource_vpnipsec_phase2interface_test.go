@@ -246,6 +246,5 @@ resource "fortios_vpnipsec_phase2interface" "trname2" {
   src_port                 = 0
   src_subnet               = "0.0.0.0 0.0.0.0"
 }
-
 `, name)
 }

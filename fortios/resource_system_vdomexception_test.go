@@ -96,7 +96,5 @@ resource "fortios_system_vdomexception" "trname" {
   oid    = 7150
   scope  = "all"
 }
-
-
 `)
 }

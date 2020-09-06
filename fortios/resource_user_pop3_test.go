@@ -98,8 +98,5 @@ resource "fortios_user_pop3" "trname" {
   server                = "1.1.1.1"
   ssl_min_proto_version = "default"
 }
-
-
-
 `, name)
 }

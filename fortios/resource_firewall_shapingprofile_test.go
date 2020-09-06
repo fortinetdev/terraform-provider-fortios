@@ -105,6 +105,5 @@ resource "fortios_firewall_shapingprofile" "trname" {
     priority                        = "high"
   }
 }
-
 `)
 }

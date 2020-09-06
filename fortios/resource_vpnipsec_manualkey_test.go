@@ -108,7 +108,5 @@ resource "fortios_vpnipsec_manualkey" "trname" {
   remote_gw      = "1.1.1.1"
   remotespi      = "0x100"
 }
-
-
 `, name)
 }

@@ -143,7 +143,6 @@ resource "fortios_vpnipsec_phase2interface" "trname1" {
   src_subnet               = "0.0.0.0 0.0.0.0"
 }
 
-
 resource "fortios_system_ipsecaggregate" "trname" {
   algorithm = "round-robin"
   member {

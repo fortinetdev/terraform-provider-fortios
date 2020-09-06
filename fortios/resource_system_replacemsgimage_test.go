@@ -94,16 +94,5 @@ resource "fortios_system_replacemsgimage" "trname" {
   name         = "%[1]s"
   image_base64 = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEWAAABFgAVshLGQAAAAMSURBVBhXY/j//z8ABf4C/qc1gYQAAAAASUVORK5CYII="
 }
-
-
-
-
-
-
-
-
-
-
-
 `, name)
 }

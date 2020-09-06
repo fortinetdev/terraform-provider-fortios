@@ -104,6 +104,5 @@ resource "fortios_firewallshaper_trafficshaper" "trname" {
   per_policy           = "disable"
   priority             = "low"
 }
-
 `, name)
 }

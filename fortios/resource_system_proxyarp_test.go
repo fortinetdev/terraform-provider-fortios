@@ -96,7 +96,5 @@ resource "fortios_system_proxyarp" "trname" {
   interface = "port4"
   ip        = "1.1.1.1"
 }
-
-
 `)
 }

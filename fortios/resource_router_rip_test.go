@@ -145,7 +145,5 @@ resource "fortios_router_rip" "trname" {
     status = "disable"
   }
 }
-
-
 `)
 }

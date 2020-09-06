@@ -282,6 +282,5 @@ resource "fortios_vpnipsec_phase1interface" "trname2" {
   wizard_type               = "custom"
   xauthtype                 = "disable"
 }
-
 `, name)
 }

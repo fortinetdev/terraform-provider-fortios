@@ -120,8 +120,5 @@ resource "fortios_firewallservice_custom" "trname" {
   udp_idle_timer      = 0
   visibility          = "enable"
 }
-
-
-
 `, name)
 }

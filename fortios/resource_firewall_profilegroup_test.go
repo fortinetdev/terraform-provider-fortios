@@ -94,6 +94,5 @@ resource "fortios_firewall_profilegroup" "trname" {
   profile_protocol_options = "default"
   ssl_ssh_profile          = "deep-inspection"
 }
-
 `, name)
 }

@@ -92,6 +92,5 @@ resource "fortios_system_smsserver" "trname" {
   mail_server = "1.1.1.2"
   name        = "%[1]s"
 }
-
 `, name)
 }

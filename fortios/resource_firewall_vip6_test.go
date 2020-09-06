@@ -188,11 +188,5 @@ resource "fortios_firewall_vip6" "trname" {
   weblogic_server                  = "disable"
   websphere_server                 = "disable"
 }
-
-
-
-
-
-
 `, name)
 }

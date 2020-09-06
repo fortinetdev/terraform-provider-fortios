@@ -100,6 +100,5 @@ resource "fortios_system_externalresource" "trname" {
   status       = "enable"
   type         = "category"
 }
-
 `, name)
 }

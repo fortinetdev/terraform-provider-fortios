@@ -120,10 +120,5 @@ resource "fortios_system_admin" "trname" {
     name = "root"
   }
 }
-
-
-
-
-
 `, name)
 }

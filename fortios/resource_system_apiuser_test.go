@@ -177,6 +177,5 @@ resource "fortios_system_apiuser" "test2" {
     ipv6_trusthost = "101:101:ffff:ffff::/0"
   }
 }
-
 `, name)
 }

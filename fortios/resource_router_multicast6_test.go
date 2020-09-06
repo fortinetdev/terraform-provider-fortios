@@ -97,6 +97,5 @@ resource "fortios_router_multicast6" "trname" {
     register_rate_limit = 0
   }
 }
-
 `)
 }

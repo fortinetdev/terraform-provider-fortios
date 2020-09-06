@@ -101,6 +101,5 @@ resource "fortios_switchcontrollerqos_ipdscpmap" "trname" {
     name      = "1"
   }
 }
-
 `, name)
 }

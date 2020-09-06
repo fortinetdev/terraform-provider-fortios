@@ -96,9 +96,5 @@ resource "fortios_system_fipscc" "trname" {
   self_test_period         = 1440
   status                   = "disable"
 }
-
-
-
-
 `)
 }

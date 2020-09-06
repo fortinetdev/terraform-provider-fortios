@@ -113,6 +113,5 @@ resource "fortios_firewall_localinpolicy6" "trname" {
     name = "all"
   }
 }
-
 `)
 }

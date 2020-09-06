@@ -102,6 +102,5 @@ resource "fortios_system_vxlan" "trname" {
   name = "%[1]s"
   vni  = 3
 }
-
 `, name)
 }

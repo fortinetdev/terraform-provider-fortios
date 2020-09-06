@@ -108,7 +108,5 @@ resource "fortios_firewallwildcardfqdn_group" "trname" {
     name = fortios_firewallwildcardfqdn_custom.trname1.name
   }
 }
-
-
 `, name)
 }

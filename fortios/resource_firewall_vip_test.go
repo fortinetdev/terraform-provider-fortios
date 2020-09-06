@@ -199,9 +199,5 @@ resource "fortios_firewall_vip" "trname" {
     range = "3.0.0.0-3.0.0.1"
   }
 }
-
-
-
-
 `, name)
 }

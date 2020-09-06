@@ -127,6 +127,5 @@ resource "fortios_firewall_policy64" "trname" {
     name = "all"
   }
 }
-
 `)
 }

@@ -154,6 +154,5 @@ resource "fortios_dnsfilter_profile" "trname" {
     }
   }
 }
-
 `, name)
 }

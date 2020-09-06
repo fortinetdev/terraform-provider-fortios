@@ -94,8 +94,5 @@ resource "fortios_system_dnsserver" "trname" {
   mode              = "forward-only"
   name              = "port3"
 }
-
-
-
 `)
 }

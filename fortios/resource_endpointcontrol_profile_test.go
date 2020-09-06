@@ -180,6 +180,5 @@ resource "fortios_endpointcontrol_profile" "trname" {
     name = "guest"
   }
 }
-
 `)
 }

@@ -108,7 +108,5 @@ resource "fortios_firewall_address6" "trname" {
   type       = "ipprefix"
   visibility = "enable"
 }
-
-
 `, name)
 }

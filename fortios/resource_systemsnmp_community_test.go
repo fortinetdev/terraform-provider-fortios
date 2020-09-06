@@ -116,6 +116,5 @@ resource "fortios_systemsnmp_community" "trname" {
   trap_v2c_rport   = 162
   trap_v2c_status  = "enable"
 }
-
 `, name)
 }

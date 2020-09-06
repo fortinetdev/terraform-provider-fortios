@@ -142,7 +142,5 @@ resource "fortios_user_radius" "trname" {
   use_management_vdom          = "disable"
   username_case_sensitive      = "disable"
 }
-
-
 `, name)
 }

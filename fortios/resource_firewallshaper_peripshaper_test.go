@@ -104,7 +104,5 @@ resource "fortios_firewallshaper_peripshaper" "trname" {
   max_concurrent_session = 33
   name                   = "%[1]s"
 }
-
-
 `, name)
 }

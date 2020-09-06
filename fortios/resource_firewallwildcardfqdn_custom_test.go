@@ -96,6 +96,5 @@ resource "fortios_firewallwildcardfqdn_custom" "trname" {
   visibility    = "enable"
   wildcard_fqdn = "*.go.google.com"
 }
-
 `, name)
 }

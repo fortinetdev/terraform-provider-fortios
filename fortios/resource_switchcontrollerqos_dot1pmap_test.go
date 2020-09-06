@@ -106,6 +106,5 @@ resource "fortios_switchcontrollerqos_dot1pmap" "trname" {
   priority_6 = "queue-0"
   priority_7 = "queue-0"
 }
-
 `, name)
 }

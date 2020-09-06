@@ -189,7 +189,5 @@ resource "fortios_router_ospf" "trname" {
     tag         = 0
   }
 }
-
-
 `)
 }

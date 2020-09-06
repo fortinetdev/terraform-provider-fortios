@@ -103,6 +103,5 @@ resource "fortios_spamfilter_dnsbl" "trname" {
     status = "enable"
   }
 }
-
 `, name)
 }

@@ -96,7 +96,5 @@ resource "fortios_webproxy_debugurl" "trname" {
   status      = "enable"
   url_pattern = "/examples/servlet/*Servlet"
 }
-
-
 `, name)
 }

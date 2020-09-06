@@ -159,6 +159,5 @@ resource "fortios_router_ospf6" "trname" {
     status      = "disable"
   }
 }
-
 `)
 }

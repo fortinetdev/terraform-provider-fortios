@@ -102,10 +102,5 @@ resource "fortios_firewall_ldbmonitor" "trname" {
   timeout            = 2
   type               = "ping"
 }
-
-
-
-
-
 `, name)
 }

@@ -183,8 +183,5 @@ resource "fortios_system_accprofile" "test12" {
     webfilter            = "none"
   }
 }
-
-
-
 `, name)
 }

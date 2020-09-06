@@ -95,6 +95,5 @@ resource "fortios_firewall_authportal" "trname" {
     name = "Guest-group"
   }
 }
-
 `)
 }

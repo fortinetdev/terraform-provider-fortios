@@ -102,7 +102,5 @@ resource "fortios_system_fortimanager" "trname" {
   ipsec                                = "disable"
   vdom                                 = "root"
 }
-
-
 `)
 }

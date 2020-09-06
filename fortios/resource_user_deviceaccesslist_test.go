@@ -92,7 +92,5 @@ resource "fortios_user_deviceaccesslist" "trname" {
   default_action = "accept"
   name           = "%[1]s"
 }
-
-
 `, name)
 }

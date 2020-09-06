@@ -92,6 +92,5 @@ resource "fortios_systemlldp_networkpolicy" "trname" {
   comment = "test"
   name    = "%[1]s"
 }
-
 `, name)
 }

@@ -139,6 +139,5 @@ resource "fortios_router_isis" "trname" {
   spf_interval_exp_l2  = "500 50000"
 
 }
-
 `)
 }

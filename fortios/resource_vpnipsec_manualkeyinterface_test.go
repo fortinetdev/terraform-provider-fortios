@@ -116,7 +116,5 @@ resource "fortios_vpnipsec_manualkeyinterface" "trname" {
   remote_gw6 = "::"
   remote_spi = "0x100"
 }
-
-
 `, name)
 }

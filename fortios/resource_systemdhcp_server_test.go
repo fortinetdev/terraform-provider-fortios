@@ -111,6 +111,5 @@ resource "fortios_systemdhcp_server" "trname" {
     start_ip = "1.1.1.1"
   }
 }
-
 `)
 }

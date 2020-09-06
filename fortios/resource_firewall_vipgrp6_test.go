@@ -152,6 +152,5 @@ resource "fortios_firewall_vipgrp6" "trname" {
     name = fortios_firewall_vip6.trname1.name
   }
 }
-
 `, name)
 }

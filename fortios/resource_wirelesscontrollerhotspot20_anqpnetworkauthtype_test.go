@@ -94,6 +94,5 @@ resource "fortios_wirelesscontrollerhotspot20_anqpnetworkauthtype" "trname" {
   name      = "%[1]s"
   url       = "www.example.com"
 }
-
 `, name)
 }

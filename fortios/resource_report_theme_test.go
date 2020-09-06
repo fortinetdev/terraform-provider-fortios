@@ -96,6 +96,5 @@ resource "fortios_report_theme" "trname" {
   name              = "%[1]s"
   page_orient       = "portrait"
 }
-
 `, name)
 }

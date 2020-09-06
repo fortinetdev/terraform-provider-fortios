@@ -107,6 +107,5 @@ resource "fortios_firewallschedule_group" "trname" {
     name = fortios_firewallschedule_recurring.trname1.name
   }
 }
-
 `, name)
 }

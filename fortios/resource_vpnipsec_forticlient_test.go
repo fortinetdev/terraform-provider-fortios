@@ -238,34 +238,11 @@ resource "fortios_vpnipsec_phase2interface" "trname3" {
   src_subnet6              = "::/0"
 }
 
-
 resource "fortios_vpnipsec_forticlient" "trname" {
   phase2name    = fortios_vpnipsec_phase2interface.trname3.name
   realm         = "1"
   status        = "enable"
   usergroupname = "Guest-group"
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 `, name)
 }

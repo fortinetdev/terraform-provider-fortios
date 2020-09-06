@@ -218,7 +218,5 @@ resource "fortios_webfilter_profile" "trname" {
     youtube_restrict    = "none"
   }
 }
-
-
 `, name)
 }

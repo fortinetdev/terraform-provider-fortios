@@ -112,6 +112,5 @@ resource "fortios_ips_global" "trname" {
   sync_session_ttl       = "enable"
   traffic_submit         = "disable"
 }
-
 `)
 }

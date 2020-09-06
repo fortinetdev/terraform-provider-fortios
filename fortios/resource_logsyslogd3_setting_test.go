@@ -104,6 +104,5 @@ resource "fortios_logsyslogd3_setting" "trname" {
   status                = "disable"
   syslog_type           = 3
 }
-
 `)
 }

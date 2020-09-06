@@ -90,8 +90,5 @@ func testAccFortiOSRouterSettingConfig(name string) string {
 resource "fortios_router_setting" "trname" {
   hostname = "s1"
 }
-
-
-
 `)
 }

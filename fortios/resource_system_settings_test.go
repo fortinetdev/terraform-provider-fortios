@@ -92,13 +92,11 @@ func testAccCheckSystemSettingsDestroy(s *terraform.State) error {
 func testAccFortiOSSystemSettingsConfig(name string) string {
 	return fmt.Sprintf(`
 resource "fortios_system_settings" "trname" {
-    allow_linkdown_path            = "disable"
-    gui_webfilter                  = "enable"
-    opmode                         = "nat"
-    sip_ssl_port                   = 5061
-    status                         = "enable"
+  allow_linkdown_path = "disable"
+  gui_webfilter       = "enable"
+  opmode              = "nat"
+  sip_ssl_port        = 5061
+  status              = "enable"
 }
-
-
 `)
 }

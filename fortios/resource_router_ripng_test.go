@@ -141,6 +141,5 @@ resource "fortios_router_ripng" "trname" {
     status = "disable"
   }
 }
-
 `)
 }

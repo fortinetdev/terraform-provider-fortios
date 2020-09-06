@@ -111,6 +111,5 @@ resource "fortios_spamfilter_bwl" "trname" {
     type         = "ip"
   }
 }
-
 `, name)
 }

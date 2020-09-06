@@ -116,7 +116,5 @@ resource "fortios_systemsnmp_user" "trname" {
   trap_rport     = 162
   trap_status    = "enable"
 }
-
-
 `, name)
 }

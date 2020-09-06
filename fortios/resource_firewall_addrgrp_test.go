@@ -118,6 +118,5 @@ resource "fortios_firewall_addrgrp" "trname" {
     name = fortios_firewall_address.trname1.name
   }
 }
-
 `, name)
 }

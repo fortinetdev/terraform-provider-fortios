@@ -120,7 +120,5 @@ resource "fortios_firewallservice_group" "trname" {
     name = fortios_firewallservice_custom.trname1.name
   }
 }
-
-
 `, name)
 }

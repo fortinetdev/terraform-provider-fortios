@@ -136,6 +136,5 @@ resource "fortios_firewall_shapingpolicy" "trname" {
     name = "all"
   }
 }
-
 `, name)
 }

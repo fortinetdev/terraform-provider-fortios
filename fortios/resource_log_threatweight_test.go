@@ -275,6 +275,5 @@ resource "fortios_log_threatweight" "trname" {
     level    = "low"
   }
 }
-
 `)
 }

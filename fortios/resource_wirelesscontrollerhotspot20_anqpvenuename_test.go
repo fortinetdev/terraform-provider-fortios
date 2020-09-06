@@ -98,6 +98,5 @@ resource "fortios_wirelesscontrollerhotspot20_anqpvenuename" "trname" {
     value = "3"
   }
 }
-
 `, name)
 }

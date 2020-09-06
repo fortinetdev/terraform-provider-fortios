@@ -116,7 +116,5 @@ resource "fortios_system_mobiletunnel" "trname" {
   status            = "disable"
   tunnel_mode       = "gre"
 }
-
-
 `, name)
 }

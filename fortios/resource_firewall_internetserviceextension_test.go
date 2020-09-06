@@ -92,21 +92,5 @@ resource "fortios_firewall_internetserviceextension" "trname" {
   comment = "EIWE"
   fosid   = 65536
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 `)
 }

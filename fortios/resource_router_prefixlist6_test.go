@@ -90,6 +90,5 @@ func testAccFortiOSRouterPrefixList6Config(name string) string {
 resource "fortios_router_prefixlist6" "trname" {
   name = "%[1]s"
 }
-
 `, name)
 }

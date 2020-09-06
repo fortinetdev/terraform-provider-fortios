@@ -96,6 +96,5 @@ resource "fortios_webfilter_urlfilter" "trname" {
   name                  = "%[1]s"
   one_arm_ips_urlfilter = "enable"
 }
-
 `, name)
 }

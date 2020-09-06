@@ -202,6 +202,5 @@ resource "fortios_voip_profile" "trname" {
     update_rate                    = 0
   }
 }
-
 `, name)
 }

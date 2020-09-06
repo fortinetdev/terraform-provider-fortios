@@ -13,12 +13,12 @@ Configure Autonomous System (AS) path lists.
 
 ```hcl
 resource "fortios_router_aspathlist" "trname" {
-    name = "aspath1"
+  name = "aspath1"
 
-    rule {
-        action = "deny"
-        regexp = "/d+/n"
-    }
+  rule {
+    action = "deny"
+    regexp = "/d+/n"
+  }
 }
 ```
 

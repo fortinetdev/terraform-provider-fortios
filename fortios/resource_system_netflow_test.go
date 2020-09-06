@@ -102,6 +102,5 @@ resource "fortios_system_netflow" "trname" {
   template_tx_counter   = 20
   template_tx_timeout   = 30
 }
-
 `)
 }

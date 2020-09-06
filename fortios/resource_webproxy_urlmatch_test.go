@@ -110,7 +110,5 @@ resource "fortios_webproxy_urlmatch" "trname" {
   status          = "enable"
   url_pattern     = "/examples/servlet/*Servlet"
 }
-
-
 `, name)
 }

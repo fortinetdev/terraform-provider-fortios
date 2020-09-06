@@ -98,6 +98,5 @@ resource "fortios_vpncertificate_ocspserver" "trname" {
   unavail_action = "revoke"
   url            = "www.tetserv.com"
 }
-
 `, name)
 }

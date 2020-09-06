@@ -92,6 +92,5 @@ resource "fortios_system_zone" "trname" {
   intrazone = "allow"
   name      = "%[1]s"
 }
-
 `, name)
 }

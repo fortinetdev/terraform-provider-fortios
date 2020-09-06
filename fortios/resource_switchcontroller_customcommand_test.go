@@ -92,8 +92,5 @@ resource "fortios_switchcontroller_customcommand" "trname" {
   command      = "ls"
   command_name = "1"
 }
-
-
-
 `)
 }

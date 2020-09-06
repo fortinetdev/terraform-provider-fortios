@@ -98,6 +98,5 @@ resource "fortios_report_setting" "trname" {
   top_n                  = 1000
   web_browsing_threshold = 3
 }
-
 `)
 }

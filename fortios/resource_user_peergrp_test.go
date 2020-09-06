@@ -106,8 +106,5 @@ resource "fortios_user_peergrp" "trname" {
     name = fortios_user_peer.trname2.name
   }
 }
-
-
-
 `, name)
 }

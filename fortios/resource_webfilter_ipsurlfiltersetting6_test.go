@@ -92,6 +92,5 @@ resource "fortios_webfilter_ipsurlfiltersetting6" "trname" {
   distance = 1
   gateway6 = "::"
 }
-
 `)
 }

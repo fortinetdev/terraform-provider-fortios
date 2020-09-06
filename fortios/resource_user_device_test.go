@@ -96,7 +96,5 @@ resource "fortios_user_device" "trname" {
   mac      = "08:00:20:0a:8c:6d"
   type     = "unknown"
 }
-
-
 `)
 }

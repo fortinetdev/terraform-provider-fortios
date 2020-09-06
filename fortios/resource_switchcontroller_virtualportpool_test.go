@@ -92,6 +92,5 @@ resource "fortios_switchcontroller_virtualportpool" "trname" {
   description = "virtualport"
   name        = "%[1]s"
 }
-
 `, name)
 }

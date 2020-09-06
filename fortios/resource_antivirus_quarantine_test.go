@@ -104,6 +104,5 @@ resource "fortios_antivirus_quarantine" "trname" {
   store_heuristic  = "imap smtp pop3 http ftp nntp imaps smtps pop3s https ftps mapi cifs"
   store_infected   = "imap smtp pop3 http ftp nntp imaps smtps pop3s https ftps mapi cifs"
 }
-
 `)
 }

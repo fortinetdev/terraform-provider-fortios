@@ -96,6 +96,5 @@ resource "fortios_system_vdomnetflow" "trname" {
   source_ip      = "0.0.0.0"
   vdom_netflow   = "disable"
 }
-
 `)
 }

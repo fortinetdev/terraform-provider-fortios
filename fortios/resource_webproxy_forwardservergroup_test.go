@@ -115,9 +115,5 @@ resource "fortios_webproxy_forwardservergroup" "trname1" {
     weight = 12
   }
 }
-
-
-
-
 `, name)
 }

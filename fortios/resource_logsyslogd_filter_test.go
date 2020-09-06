@@ -110,6 +110,5 @@ resource "fortios_logsyslogd_filter" "trname" {
   ssh               = "enable"
   voip              = "enable"
 }
-
 `)
 }

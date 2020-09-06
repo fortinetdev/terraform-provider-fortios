@@ -112,6 +112,5 @@ resource "fortios_firewall_vip46" "trname" {
   protocol    = "tcp"
   type        = "static-nat"
 }
-
 `, name)
 }

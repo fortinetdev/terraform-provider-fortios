@@ -94,7 +94,5 @@ resource "fortios_system_hamonitor" "trname" {
   vlan_hb_interval       = 5
   vlan_hb_lost_threshold = 3
 }
-
-
 `)
 }

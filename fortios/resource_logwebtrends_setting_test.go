@@ -90,6 +90,5 @@ func testAccFortiOSLogWebtrendsSettingConfig(name string) string {
 resource "fortios_logwebtrends_setting" "trname" {
   status = "disable"
 }
-
 `)
 }

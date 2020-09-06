@@ -108,7 +108,5 @@ resource "fortios_webproxy_profile" "trname" {
   name                          = "%[1]s"
   strip_encoding                = "disable"
 }
-
-
 `, name)
 }

@@ -100,6 +100,5 @@ resource "fortios_system_networkvisibility" "trname" {
   hostname_ttl                    = 86400
   source_location                 = "enable"
 }
-
 `)
 }

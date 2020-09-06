@@ -96,7 +96,5 @@ resource "fortios_firewall_multicastaddress6" "trname" {
   name       = "%[1]s"
   visibility = "enable"
 }
-
-
 `, name)
 }

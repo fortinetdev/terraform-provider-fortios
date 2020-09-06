@@ -102,6 +102,5 @@ resource "fortios_webproxy_forwardserver" "trname" {
   port               = 3128
   server_down_option = "block"
 }
-
 `, name)
 }

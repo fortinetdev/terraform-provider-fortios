@@ -96,6 +96,5 @@ resource "fortios_wanopt_cacheservice" "trname" {
   device_id              = "default_dev_id"
   prefer_scenario        = "balance"
 }
-
 `)
 }

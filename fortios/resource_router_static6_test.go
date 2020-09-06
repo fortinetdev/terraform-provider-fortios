@@ -110,6 +110,5 @@ resource "fortios_router_static6" "trname" {
   status           = "enable"
   virtual_wan_link = "disable"
 }
-
 `)
 }

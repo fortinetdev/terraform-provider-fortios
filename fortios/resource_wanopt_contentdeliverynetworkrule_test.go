@@ -109,6 +109,5 @@ resource "fortios_wanopt_contentdeliverynetworkrule" "trname" {
     name = "kaf.com"
   }
 }
-
 `, name)
 }

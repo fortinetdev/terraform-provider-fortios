@@ -92,6 +92,5 @@ resource "fortios_firewall_identitybasedroute" "trname" {
   comments = "test"
   name     = "%[1]s"
 }
-
 `, name)
 }

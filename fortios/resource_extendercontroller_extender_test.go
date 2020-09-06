@@ -126,8 +126,5 @@ resource "fortios_extendercontroller_extender" "trname" {
   vdom                = 0
   wimax_auth_protocol = "tls"
 }
-
-
-
 `)
 }
