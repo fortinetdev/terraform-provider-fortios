@@ -41,7 +41,7 @@ The following arguments are supported:
 * `wildcard` - Enable/disable wildcard RADIUS authentication.
 * `remote_auth` - Enable/disable authentication using a remote RADIUS, LDAP, or TACACS+ server.
 * `remote_group` - User group name used for remote auth.
-* `password` - (Required) Admin user password.
+* `password` - Admin user password.
 * `peer_auth` - Set to enable peer certificate authentication (for HTTPS admin access).
 * `peer_group` - Name of peer group defined under config user group which has PKI members. Used for peer certificate authentication (for HTTPS admin access).
 * `trusthost1` - Any IPv4 address or subnet address and netmask from which the administrator can connect to the FortiGate unit. Default allows access from any IPv4 address.

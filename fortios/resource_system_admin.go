@@ -53,7 +53,8 @@ func resourceSystemAdmin() *schema.Resource {
 			},
 			"password": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"peer_auth": &schema.Schema{
 				Type:     schema.TypeString,
