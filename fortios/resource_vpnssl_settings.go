@@ -34,6 +34,16 @@ func resourceVpnSslSettings() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ssl_max_proto_ver": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"ssl_min_proto_ver": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"tlsv1_0": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -544,6 +554,14 @@ func resourceVpnSslSettingsRead(d *schema.ResourceData, m interface{}) error {
 }
 
 func flattenVpnSslSettingsReqclientcert(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenVpnSslSettingsSslMaxProtoVer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenVpnSslSettingsSslMinProtoVer(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1232,6 +1250,18 @@ func refreshObjectVpnSslSettings(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
+	if err = d.Set("ssl_max_proto_ver", flattenVpnSslSettingsSslMaxProtoVer(o["ssl-max-proto-ver"], d, "ssl_max_proto_ver")); err != nil {
+		if !fortiAPIPatch(o["ssl-max-proto-ver"]) {
+			return fmt.Errorf("Error reading ssl_max_proto_ver: %v", err)
+		}
+	}
+
+	if err = d.Set("ssl_min_proto_ver", flattenVpnSslSettingsSslMinProtoVer(o["ssl-min-proto-ver"], d, "ssl_min_proto_ver")); err != nil {
+		if !fortiAPIPatch(o["ssl-min-proto-ver"]) {
+			return fmt.Errorf("Error reading ssl_min_proto_ver: %v", err)
+		}
+	}
+
 	if err = d.Set("tlsv1_0", flattenVpnSslSettingsTlsv10(o["tlsv1-0"], d, "tlsv1_0")); err != nil {
 		if !fortiAPIPatch(o["tlsv1-0"]) {
 			return fmt.Errorf("Error reading tlsv1_0: %v", err)
@@ -1626,6 +1656,14 @@ func flattenVpnSslSettingsFortiTestDebug(d *schema.ResourceData, fosdebugsn int,
 }
 
 func expandVpnSslSettingsReqclientcert(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnSslSettingsSslMaxProtoVer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnSslSettingsSslMinProtoVer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
 }
 
@@ -2269,6 +2307,24 @@ func getObjectVpnSslSettings(d *schema.ResourceData) (*map[string]interface{}, e
 			return &obj, err
 		} else if t != nil {
 			obj["reqclientcert"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ssl_max_proto_ver"); ok {
+		t, err := expandVpnSslSettingsSslMaxProtoVer(d, v, "ssl_max_proto_ver")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ssl-max-proto-ver"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ssl_min_proto_ver"); ok {
+		t, err := expandVpnSslSettingsSslMinProtoVer(d, v, "ssl_min_proto_ver")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ssl-min-proto-ver"] = t
 		}
 	}
 

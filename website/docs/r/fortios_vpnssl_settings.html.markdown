@@ -26,6 +26,8 @@ resource "fortios_vpnssl_settings" "trname" {
 The following arguments are supported:
 
 * `reqclientcert` - Enable to require client certificates for all SSL-VPN users.
+* `ssl_max_proto_ver` - SSL maximum protocol version.
+* `ssl_min_proto_ver` - SSL minimum protocol version.
 * `tlsv1_0` - Enable/disable TLSv1.0.
 * `tlsv1_1` - Enable/disable TLSv1.1.
 * `tlsv1_2` - Enable/disable TLSv1.2.

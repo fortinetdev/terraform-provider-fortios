@@ -16252,6 +16252,7 @@ func (c *FortiSDKClient) ReadLogSyslogdOverrideFilter(mkey string) (mapTmp map[s
 	return
 }
 
+
 // UpdateLogSyslogd2Setting API operation for FortiOS updates the specified Setting.
 // Returns the index value of the Setting and execution result when the request executes successfully.
 // Returns error for service API and SDK errors.
