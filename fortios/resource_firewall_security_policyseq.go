@@ -28,7 +28,7 @@ func resourceFirewallSecurityPolicySeq() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
-			"policy_status": &schema.Schema{
+			"state_policy_srcdst_pos": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Default:  "",
@@ -163,15 +163,15 @@ func resourceFirewallSecurityPolicySeqRead(d *schema.ResourceData, m interface{}
 			log.Printf("[WARN] Error reading Firewall Security Policy List for (%s): %s", d.Id(), err)
 		}
 
-		policy_status := ""
+		state_policy_srcdst_pos := ""
 
 		if now_sid == -1 || now_did == -1 {
 			if now_sid == -1 && now_did == -1 {
-				policy_status = "policies with policy_src_id(" + strconv.Itoa(sid) + ")  and policy_dst_id(" + strconv.Itoa(did) + ") were deleted"
+				state_policy_srcdst_pos = "policies with policy_src_id(" + strconv.Itoa(sid) + ")  and policy_dst_id(" + strconv.Itoa(did) + ") were deleted"
 			} else if now_sid == -1 {
-				policy_status = "policy with policy_src_id(" + strconv.Itoa(sid) + ") was deleted"
+				state_policy_srcdst_pos = "policy with policy_src_id(" + strconv.Itoa(sid) + ") was deleted"
 			} else if now_did == -1 {
-				policy_status = "policy with policy_dst_id(" + strconv.Itoa(did) + ") was deleted"
+				state_policy_srcdst_pos = "policy with policy_dst_id(" + strconv.Itoa(did) + ") was deleted"
 			}
 		} else {
 			bconsistent := true
@@ -191,14 +191,14 @@ func resourceFirewallSecurityPolicySeqRead(d *schema.ResourceData, m interface{}
 				relative_pos := now_sid - now_did
 
 				if relative_pos > 0 {
-					policy_status = "policy with policy_src_id(" + strconv.Itoa(sid) + ") is " + strconv.Itoa(relative_pos) + " behind policy with policy_dst_id(" + strconv.Itoa(did) + ")"
+					state_policy_srcdst_pos = "policy with policy_src_id(" + strconv.Itoa(sid) + ") is " + strconv.Itoa(relative_pos) + " behind policy with policy_dst_id(" + strconv.Itoa(did) + ")"
 				} else {
-					policy_status = "policy with policy_src_id(" + strconv.Itoa(sid) + ") is " + strconv.Itoa(-relative_pos) + " ahead of policy with policy_dst_id(" + strconv.Itoa(did) + ")"
+					state_policy_srcdst_pos = "policy with policy_src_id(" + strconv.Itoa(sid) + ") is " + strconv.Itoa(-relative_pos) + " ahead of policy with policy_dst_id(" + strconv.Itoa(did) + ")"
 				}
 			}
 		}
 
-		d.Set("policy_status", policy_status)
+		d.Set("state_policy_srcdst_pos", state_policy_srcdst_pos)
 
 	}
 

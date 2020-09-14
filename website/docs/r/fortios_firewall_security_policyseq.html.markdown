@@ -64,8 +64,8 @@ Expected Result:
 * After the action of the above example, the policies on the FortiOS is 3,1,2
 
 Auxiliary information:
-* Attribute `policy_status` is used to get the lastest relative position of the policy with policy_src_id and the policy with policy_dst_id. See policy_status in the Attributes section for more information.
-* Attribute `state_policy_list` includes the latest policy list(by sequence). See state_policy_list in the Attributes section for more information.
+* Attribute `state_policy_srcdst_pos` is used to get the lastest relative position of the policy with policy_src_id and the policy with policy_dst_id. See state_policy_srcdst_pos in the Attributes section for more information.
+* Attribute `state_policy_list` includes the latest policy list(by sequence) for reference. See state_policy_list in the Attributes section for more information.
 
 ## Argument Reference
 The following arguments are supported:
@@ -81,12 +81,12 @@ The following attributes are exported:
 * `policy_src_id` - The policy id which you want to alter
 * `policy_dst_id` - The dest policy id which you want to alter
 * `alter_position` - The alter position: should only be "before" or "after"
-* `policy_status` - The parameter is read-only, it is used to get the lastest relative position of the policy with policy_src_id and the policy with policy_dst_id, which can help check whether the latest relative position of the two plicies matches the configuration, and help check whether they have been deleted. This is generally used in the following situations: These two policies are deleted or moved outside of Terraform. Terraform plan will determine the consistency of the state based on this attribute. It includs the following states:
+* `state_policy_srcdst_pos` - The parameter is read-only, it is used to get the lastest relative position of the policy with policy_src_id and the policy with policy_dst_id, which can help check whether the latest relative position of the two plicies matches the configuration, and help check whether they have been deleted. This is generally used in the following situations: These two policies are deleted or moved outside of Terraform. Terraform plan will determine the consistency of the state based on this attribute. It includs the following states:
   * ""(empty string): the lastest relative position of the two plicies is same as the configuration.
   * Similar to "policy with policy_src_id(3) is 1 ahead of policy with policy_dst_id(5)" or "policy with policy_src_id(3) is 4 behind policy with policy_dst_id(5)" : The lastest relative position of the two plicies doesn't match the configuration and terraform outputs the relative position offset. Here 5 and 3 here are the policyid of the corresponding policy
   * Similar to "policy with policy_dst_id(5) was deleted" or "policy with policy_src_id(3) was deleted" or "policies with policy_src_id(3) and policy_dst_id(5) were deleted":  It indicates that one or both of these two policies have been deleted outside of terraform.
 
-* `state_policy_list` - The parameter is read-only, it is used to get the latest policy list(by sequence), where the policy with policy_src_id and the policy with policy_dst_id will be marked with * . It will be updated after each terraform apply or terraform refresh.
+* `state_policy_list` - The parameter is read-only, it is used to get the latest policy list(by sequence) for reference, where the policy with policy_src_id and the policy with policy_dst_id will be marked with * . It will be updated after each terraform apply or terraform refresh.
 
 
 ## A More Detailed Example:
@@ -184,7 +184,7 @@ The following attributes are exported:
         id                = "7"
         policy_dst_id     = 5
         policy_src_id     = 7
-      - policy_status     = "policy with policy_src_id(7) is 2 ahead of policy with policy_dst_id(5)" -> null
+      - state_policy_srcdst_pos     = "policy with policy_src_id(7) is 2 ahead of policy with policy_dst_id(5)" -> null
         state_policy_list = [
             {
                 action   = "accept"
@@ -216,7 +216,7 @@ The following attributes are exported:
 
   Plan: 0 to add, 1 to change, 0 to destroy.
   ```
-  We can find that `policy_status` has been changed from "" to:"policy with policy_src_id(7) is 2 ahead of policy with policy_dst_id(5)", This also means that the relative position and configuration of the two policies does not match.
+  We can find that `state_policy_srcdst_pos` has been changed from "" to:"policy with policy_src_id(7) is 2 ahead of policy with policy_dst_id(5)", This also means that the relative position and configuration of the two policies does not match.
 
   5 Execute terraform apply again, 7 will be moved behind 5, terraform plan will show the status is consistent.
   ```hcl
