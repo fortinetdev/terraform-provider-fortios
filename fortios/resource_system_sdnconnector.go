@@ -45,12 +45,14 @@ func resourceSystemSdnConnector() *schema.Resource {
 			},
 			"ha_status": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"server": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
-				Required:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"server_port": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -61,11 +63,13 @@ func resourceSystemSdnConnector() *schema.Resource {
 			"username": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
-				Required:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"password": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"access_key": &schema.Schema{
 				Type:         schema.TypeString,

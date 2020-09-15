@@ -90,14 +90,14 @@ The following arguments are supported:
 * `extaddr` - External FQDN address name.
 * `mappedip` - IP address or address range on the destination network to which the external IP address is mapped.
 * `mapped_addr` - Mapped FQDN address name.
-* `extintf` - (Required) Interface connected to the source network that receives the packets that will be forwarded to the destination network.
+* `extintf` - Interface connected to the source network that receives the packets that will be forwarded to the destination network.
 * `arp_reply` - Enable to respond to ARP requests for this virtual IP address. Enabled by default.
 * `server_type` - Protocol to be load balanced by the virtual server (also called the server load balance virtual IP).
 * `persistence` - Configure how to make sure that clients connect to the same server every time they make a request that is part of the same session.
 * `nat_source_vip` - Enable/disable forcing the source NAT mapped IP to the external IP for all traffic.
 * `portforward` - Enable/disable port forwarding.
 * `protocol` - Protocol to use when forwarding packets.
-* `extport` - (Required) Incoming port number range that you want to map to a port number range on the destination network.
+* `extport` - Incoming port number range that you want to map to a port number range on the destination network.
 * `mappedport` - Port number range on the destination network to which the external port number range is mapped.
 * `gratuitous_arp_interval` - Enable to have the VIP send gratuitous ARPs. 0=disabled. Set from 5 up to 8640000 seconds to enable.
 * `srcintf_filter` - Interfaces to which the VIP applies. Separate the names with spaces.

@@ -34,11 +34,11 @@ The following arguments are supported:
 * `name` - SDN connector name.
 * `status` - (Required) Enable/disable connection to the remote SDN connector.
 * `type` - (Required) Type of SDN connector.
-* `ha_status` - (Required) Enable/disable use for FortiGate HA service.
-* `server` - (Required) Server address of the remote SDN connector.
+* `ha_status` - Enable/disable use for FortiGate HA service.
+* `server` - Server address of the remote SDN connector.
 * `server_port` - Port number of the remote SDN connector.
-* `username` - (Required) Username of the remote SDN connector as login credentials.
-* `password` - (Required) Password of the remote SDN connector as login credentials.
+* `username` - Username of the remote SDN connector as login credentials.
+* `password` - Password of the remote SDN connector as login credentials.
 * `access_key` - AWS access key ID.
 * `secret_key` - AWS secret access key.
 * `region` - AWS region name.

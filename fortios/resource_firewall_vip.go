@@ -137,7 +137,8 @@ func resourceFirewallVip() *schema.Resource {
 			"extintf": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"arp_reply": &schema.Schema{
 				Type:     schema.TypeString,
@@ -171,7 +172,8 @@ func resourceFirewallVip() *schema.Resource {
 			},
 			"extport": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"mappedport": &schema.Schema{
 				Type:     schema.TypeString,
