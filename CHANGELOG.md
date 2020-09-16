@@ -1,5 +1,21 @@
 ## 1.7.0 (Unreleased)
 
+## 1.6.1 (Sep 16, 2020)
+
+IMPROVEMENTS:
+
+* Support detecting changes to firewall policy sequence performed outside of terraform for fortios_firewall_security_policyseq #77
+* Improve the optional/required option of parameteres for all resources
+
+BUG FIXES:
+
+* Make fortios_system_admin password optional #83
+* Fix optional arguments problem for fortios_system_sdnconnector #85 and fortios_firewall_vip #84
+
+FEATURES:
+
+* Support ssl_max_proto_ver, ssl_min_proto_ver for fortios_vpnssl_settings #82
+
 
 ## 1.6.0 (Sep 7, 2020)
 
@@ -130,7 +146,7 @@ IMPROVEMENTS:
 
 BUG FIXES:
 
-*  Remove the required attribute of remote_gw in fortios_vpnipsec_phase1interfaceas #75
+* Remove the required attribute of remote_gw in fortios_vpnipsec_phase1interfaceas #75
 
 FEATURES:
 
