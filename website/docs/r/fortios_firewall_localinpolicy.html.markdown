@@ -40,11 +40,11 @@ The following arguments are supported:
 
 * `policyid` - User defined local in policy ID.
 * `ha_mgmt_intf_only` - Enable/disable dedicating the HA management interface only for local-in policy.
-* `intf` - (Required) Incoming interface name from available options.
+* `intf` - Incoming interface name from available options.
 * `srcaddr` - (Required) Source address object from available options.
 * `dstaddr` - (Required) Destination address object from available options.
 * `action` - Action performed on traffic matching the policy (default = deny).
-* `service` - (Required) Service object from available options.
+* `service` - Service object from available options.
 * `schedule` - (Required) Schedule object from available options.
 * `status` - Enable/disable this local-in policy.
 * `comments` - Comment.

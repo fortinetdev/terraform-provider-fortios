@@ -107,7 +107,8 @@ func resourceWebProxyExplicit() *schema.Resource {
 			"realm": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Required:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"sec_default_action": &schema.Schema{
 				Type:     schema.TypeString,
@@ -142,7 +143,8 @@ func resourceWebProxyExplicit() *schema.Resource {
 			"pac_file_name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Required:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"pac_file_data": &schema.Schema{
 				Type:     schema.TypeString,

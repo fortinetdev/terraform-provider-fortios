@@ -58,7 +58,7 @@ The following arguments are supported:
 * `interface` - (Required) DHCP server can assign IP configurations to clients connected to this interface.
 * `ip_range` - DHCP IP range configuration.
 * `timezone_option` - Options for the DHCP server to set the client's time zone.
-* `timezone` - (Required) Select the time zone to be assigned to DHCP clients.
+* `timezone` - Select the time zone to be assigned to DHCP clients.
 * `tftp_server` - One or more hostnames or IP addresses of the TFTP servers in quotes separated by spaces.
 * `filename` - Name of the boot file on the TFTP server.
 * `options` - DHCP options.

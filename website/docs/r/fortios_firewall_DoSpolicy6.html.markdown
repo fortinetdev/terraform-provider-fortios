@@ -19,7 +19,7 @@ The following arguments are supported:
 * `interface` - (Required) Incoming interface name from available interfaces.
 * `srcaddr` - (Required) Source address name from available addresses.
 * `dstaddr` - (Required) Destination address name from available addresses.
-* `service` - (Required) Service object from available options.
+* `service` - Service object from available options.
 * `anomaly` - Anomaly name.
 
 The `srcaddr` block supports:

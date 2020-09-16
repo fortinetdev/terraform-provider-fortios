@@ -36,10 +36,10 @@ The following arguments are supported:
 * `local_gw` - Local gateway.
 * `authentication` - (Required) Authentication algorithm. Must be the same for both ends of the tunnel.
 * `encryption` - (Required) Encryption algorithm. Must be the same for both ends of the tunnel.
-* `authkey` - (Required) Hexadecimal authentication key in 16-digit (8-byte) segments separated by hyphens.
-* `enckey` - (Required) Hexadecimal encryption key in 16-digit (8-byte) segments separated by hyphens.
-* `localspi` - (Required) Local SPI, a hexadecimal 8-digit (4-byte) tag. Discerns between two traffic streams with different encryption rules.
-* `remotespi` - (Required) Remote SPI, a hexadecimal 8-digit (4-byte) tag. Discerns between two traffic streams with different encryption rules.
+* `authkey` - Hexadecimal authentication key in 16-digit (8-byte) segments separated by hyphens.
+* `enckey` - Hexadecimal encryption key in 16-digit (8-byte) segments separated by hyphens.
+* `localspi` - Local SPI, a hexadecimal 8-digit (4-byte) tag. Discerns between two traffic streams with different encryption rules.
+* `remotespi` - Remote SPI, a hexadecimal 8-digit (4-byte) tag. Discerns between two traffic streams with different encryption rules.
 
 
 ## Attribute Reference

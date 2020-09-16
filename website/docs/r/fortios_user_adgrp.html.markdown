@@ -35,7 +35,7 @@ resource "fortios_user_adgrp" "trname" {
 The following arguments are supported:
 
 * `name` - (Required) Name.
-* `server_name` - (Required) FSSO agent name.
+* `server_name` - FSSO agent name.
 
 
 ## Attribute Reference

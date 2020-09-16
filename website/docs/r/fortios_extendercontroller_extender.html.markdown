@@ -44,7 +44,7 @@ The following arguments are supported:
 * `ifname` - FortiExtender interface name.
 * `vdom` - VDOM
 * `role` - (Required) FortiExtender work role(Primary, Secondary, None).
-* `mode` - (Required) FortiExtender mode.
+* `mode` - FortiExtender mode.
 * `dial_mode` - Dial mode (dial-on-demand or always-connect).
 * `redial` - Number of redials allowed based on failed attempts.
 * `redundant_intf` - Redundant interface.

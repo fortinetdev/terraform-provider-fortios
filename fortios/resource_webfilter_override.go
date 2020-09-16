@@ -46,7 +46,8 @@ func resourceWebfilterOverride() *schema.Resource {
 			},
 			"ip": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"user": &schema.Schema{
 				Type:         schema.TypeString,
@@ -71,7 +72,8 @@ func resourceWebfilterOverride() *schema.Resource {
 			},
 			"ip6": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"expires": &schema.Schema{
 				Type:     schema.TypeString,

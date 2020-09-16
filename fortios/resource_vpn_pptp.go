@@ -35,24 +35,29 @@ func resourceVpnPptp() *schema.Resource {
 			},
 			"ip_mode": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"eip": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"sip": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"local_ip": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"usrgrp": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}

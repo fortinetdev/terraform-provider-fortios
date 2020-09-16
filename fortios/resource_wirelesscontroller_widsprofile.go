@@ -88,11 +88,13 @@ func resourceWirelessControllerWidsProfile() *schema.Resource {
 			},
 			"ap_bgscan_disable_start": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"ap_bgscan_disable_end": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"ap_fgscan_report_intv": &schema.Schema{
 				Type:         schema.TypeInt,

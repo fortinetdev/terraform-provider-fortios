@@ -94,7 +94,8 @@ func resourceSystemLinkMonitor() *schema.Resource {
 			"http_get": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 1024),
-				Required:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"http_agent": &schema.Schema{
 				Type:         schema.TypeString,

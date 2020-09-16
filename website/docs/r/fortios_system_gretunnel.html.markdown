@@ -39,8 +39,8 @@ The following arguments are supported:
 * `name` - Tunnel name.
 * `interface` - Interface name.
 * `ip_version` - IP version to use for VPN interface.
-* `remote_gw6` - (Required) IPv6 address of the remote gateway.
-* `local_gw6` - (Required) IPv6 address of the local gateway.
+* `remote_gw6` - IPv6 address of the remote gateway.
+* `local_gw6` - IPv6 address of the local gateway.
 * `remote_gw` - (Required) IP address of the remote gateway.
 * `local_gw` - (Required) IP address of the local gateway.
 * `sequence_number_transmission` - Enable/disable including of sequence numbers in transmitted GRE packets.

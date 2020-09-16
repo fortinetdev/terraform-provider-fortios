@@ -53,7 +53,7 @@ The following arguments are supported:
 * `gateway_ip6` - Gateway IPv6 address used to probe the server.
 * `source_ip` - Source IP address used in packet to the server.
 * `source_ip6` - Source IPv6 address used in packet to the server.
-* `http_get` - (Required) If you are monitoring an HTML server you can send an HTTP-GET request with a custom string. Use this option to define the string.
+* `http_get` - If you are monitoring an HTML server you can send an HTTP-GET request with a custom string. Use this option to define the string.
 * `http_agent` - String in the http-agent field in the HTTP header.
 * `http_match` - String that you expect to see in the HTTP-GET requests of the traffic to be monitored.
 * `interval` - Detection interval (1 - 3600 sec, default = 5).

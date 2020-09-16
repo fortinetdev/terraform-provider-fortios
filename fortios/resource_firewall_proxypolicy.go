@@ -45,7 +45,7 @@ func resourceFirewallProxyPolicy() *schema.Resource {
 			},
 			"srcintf": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{

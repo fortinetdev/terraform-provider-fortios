@@ -31,8 +31,8 @@ The following arguments are supported:
 * `upstream_ip` - IP address of the FortiGate upstream from this FortiGate in the Security Fabric.
 * `upstream_port` - The port number to use to communicate with the FortiGate upstream from this FortiGate in the Security Fabric (default = 8013).
 * `group_name` - Security Fabric group name. All FortiGates in a Security Fabric must have the same group name.
-* `group_password` - (Required) Security Fabric group password. All FortiGates in a Security Fabric must have the same group password.
-* `configuration_sync` - (Required) Configuration sync mode.
+* `group_password` - Security Fabric group password. All FortiGates in a Security Fabric must have the same group password.
+* `configuration_sync` - Configuration sync mode.
 * `management_ip` - Management IP address of this FortiGate. Used to log into this FortiGate from another FortiGate in the Security Fabric.
 * `management_port` - Overriding port for management connection (Overrides admin port).
 * `fixed_key` - Auto-generated fixed key used when this device is the root. (Will automatically be generated if not set.)

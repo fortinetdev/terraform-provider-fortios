@@ -17,8 +17,8 @@ The following arguments are supported:
 * `status` - Enable or disable this policy.
 * `name` - Policy name.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
-* `srcintf` - (Required) Incoming (ingress) interface.
-* `dstintf` - (Required) Outgoing (egress) interface.
+* `srcintf` - Incoming (ingress) interface.
+* `dstintf` - Outgoing (egress) interface.
 * `srcaddr4` - Source IPv4 address name and address group names.
 * `dstaddr4` - Destination IPv4 address name and address group names.
 * `srcaddr6` - Source IPv6 address name and address group names.
@@ -62,7 +62,7 @@ The following arguments are supported:
 * `poolname6` - IPv6 pool names.
 * `session_ttl` - TTL in seconds for sessions accepted by this policy (0 means use the system default session TTL).
 * `comments` - Comment.
-* `vpntunnel` - (Required) Policy-based IPsec VPN: name of the IPsec VPN Phase 1.
+* `vpntunnel` - Policy-based IPsec VPN: name of the IPsec VPN Phase 1.
 * `inbound` - Policy-based IPsec VPN: only traffic from the remote network can initiate a VPN.
 * `outbound` - Policy-based IPsec VPN: only traffic from the internal network can initiate a VPN.
 * `application` - Application ID list.

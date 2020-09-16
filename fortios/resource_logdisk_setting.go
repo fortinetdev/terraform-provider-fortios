@@ -102,7 +102,8 @@ func resourceLogDiskSetting() *schema.Resource {
 			},
 			"uploadip": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"uploadport": &schema.Schema{
 				Type:         schema.TypeInt,

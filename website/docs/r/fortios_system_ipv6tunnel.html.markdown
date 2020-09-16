@@ -25,7 +25,7 @@ resource "fortios_system_ipv6tunnel" "trname" {
 The following arguments are supported:
 
 * `name` - IPv6 tunnel name.
-* `source` - (Required) Local IPv6 address of the tunnel.
+* `source` - Local IPv6 address of the tunnel.
 * `destination` - (Required) Remote IPv6 address of the tunnel.
 * `interface` - Interface name.
 

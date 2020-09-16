@@ -14,7 +14,7 @@ Configure DNS servers for a non-management VDOM.
 The following arguments are supported:
 
 * `vdom_dns` - Enable/disable configuring DNS servers for the current VDOM.
-* `primary` - (Required) Primary DNS server IP address for the VDOM.
+* `primary` - Primary DNS server IP address for the VDOM.
 * `secondary` - Secondary DNS server IP address for the VDOM.
 * `ip6_primary` - Primary IPv6 DNS server IP address for the VDOM.
 * `ip6_secondary` - Secondary IPv6 DNS server IP address for the VDOM.

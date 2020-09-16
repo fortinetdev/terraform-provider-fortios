@@ -27,7 +27,7 @@ The following arguments are supported:
 * `status` - (Required) Enable/disable scheduled updates.
 * `frequency` - (Required) Update frequency.
 * `time` - (Required) Update time.
-* `day` - (Required) Update day.
+* `day` - Update day.
 
 
 ## Attribute Reference

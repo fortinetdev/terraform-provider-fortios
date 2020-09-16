@@ -36,7 +36,7 @@ The following arguments are supported:
 * `fosid` - (Required) ID.
 * `name` - (Required) Name of table.
 * `comment` - Optional comments.
-* `entries` - (Required) Anti-spam black/white list entries.
+* `entries` - Anti-spam black/white list entries.
 
 The `entries` block supports:
 

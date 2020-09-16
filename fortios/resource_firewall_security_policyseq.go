@@ -28,6 +28,11 @@ func resourceFirewallSecurityPolicySeq() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"enable_state_checking": &schema.Schema{
+				Type:     schema.TypeBool,
+				Optional: true,
+				Default:  false,
+			},
 			"state_policy_srcdst_pos": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -105,8 +110,14 @@ func resourceFirewallSecurityPolicySeqDel(d *schema.ResourceData, m interface{})
 	return c.DelFirewallSecurityPolicySeq()
 }
 
-// Not suitable operation
 func resourceFirewallSecurityPolicySeqRead(d *schema.ResourceData, m interface{}) error {
+	enable_state_checking := d.Get("enable_state_checking").(bool)
+
+	if enable_state_checking == false {
+		d.Set("state_policy_list", nil)
+		return nil
+	}
+
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client

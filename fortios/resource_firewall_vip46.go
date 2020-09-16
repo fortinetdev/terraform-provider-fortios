@@ -95,7 +95,8 @@ func resourceFirewallVip46() *schema.Resource {
 			},
 			"extport": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"mappedport": &schema.Schema{
 				Type:     schema.TypeString,

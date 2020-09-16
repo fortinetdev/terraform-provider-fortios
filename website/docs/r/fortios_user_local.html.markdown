@@ -55,7 +55,7 @@ The following arguments are supported:
 * `status` - (Required) Enable/disable allowing the local user to authenticate with the FortiGate unit.
 * `type` - (Required) Authentication method.
 * `passwd` - User's password.
-* `ldap_server` - (Required) Name of LDAP server with which the user must authenticate.
+* `ldap_server` - Name of LDAP server with which the user must authenticate.
 * `radius_server` - Name of RADIUS server with which the user must authenticate.
 * `tacacs_server` - Name of TACACS+ server with which the user must authenticate.
 * `two_factor` - Enable/disable two-factor authentication.

@@ -174,7 +174,8 @@ func resourceSystemDhcpServer() *schema.Resource {
 			},
 			"timezone": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"tftp_server": &schema.Schema{
 				Type:     schema.TypeList,

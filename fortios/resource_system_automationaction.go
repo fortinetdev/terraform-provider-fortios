@@ -91,7 +91,8 @@ func resourceSystemAutomationAction() *schema.Resource {
 			"aws_domain": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Required:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"aws_api_stage": &schema.Schema{
 				Type:         schema.TypeString,
@@ -112,11 +113,13 @@ func resourceSystemAutomationAction() *schema.Resource {
 			},
 			"protocol": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"method": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"uri": &schema.Schema{
 				Type:         schema.TypeString,

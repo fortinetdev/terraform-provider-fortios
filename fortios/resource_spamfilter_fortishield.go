@@ -32,7 +32,8 @@ func resourceSpamfilterFortishield() *schema.Resource {
 			"spam_submit_srv": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Required:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"spam_submit_force": &schema.Schema{
 				Type:     schema.TypeString,

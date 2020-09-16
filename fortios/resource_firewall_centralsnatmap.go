@@ -120,7 +120,8 @@ func resourceFirewallCentralSnatMap() *schema.Resource {
 			},
 			"nat_port": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"nat": &schema.Schema{
 				Type:     schema.TypeString,

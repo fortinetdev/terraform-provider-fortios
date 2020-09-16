@@ -26,7 +26,7 @@ resource "fortios_system_sittunnel" "trname" {
 The following arguments are supported:
 
 * `name` - Tunnel name.
-* `source` - (Required) Source IP address of the tunnel.
+* `source` - Source IP address of the tunnel.
 * `destination` - (Required) Destination IP address of the tunnel.
 * `ip6` - IPv6 address of the tunnel.
 * `interface` - Interface name.

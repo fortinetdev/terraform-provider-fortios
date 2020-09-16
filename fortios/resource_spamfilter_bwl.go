@@ -45,7 +45,7 @@ func resourceSpamfilterBwl() *schema.Resource {
 			},
 			"entries": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"status": &schema.Schema{

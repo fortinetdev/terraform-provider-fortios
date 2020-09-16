@@ -81,7 +81,7 @@ The following arguments are supported:
 * `arp_reply` - Enable to respond to ARP requests for this virtual IP address. Enabled by default.
 * `portforward` - Enable port forwarding.
 * `protocol` - Protocol to use when forwarding packets.
-* `extport` - (Required) Incoming port number range that you want to map to a port number range on the destination network.
+* `extport` - Incoming port number range that you want to map to a port number range on the destination network.
 * `mappedport` - Port number range on the destination network to which the external port number range is mapped.
 * `color` - Color of icon on the GUI.
 * `ldb_method` - Method used to distribute sessions to real servers.

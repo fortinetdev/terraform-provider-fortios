@@ -94,7 +94,7 @@ func resourceSystemDnsDatabase() *schema.Resource {
 			},
 			"dns_entry": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"id": &schema.Schema{

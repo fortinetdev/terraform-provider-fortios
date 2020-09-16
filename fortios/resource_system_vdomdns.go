@@ -36,7 +36,8 @@ func resourceSystemVdomDns() *schema.Resource {
 			},
 			"primary": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"secondary": &schema.Schema{
 				Type:     schema.TypeString,

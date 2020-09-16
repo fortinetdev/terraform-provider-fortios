@@ -31,11 +31,13 @@ func resourceVpnL2Tp() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"eip": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"sip": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
@@ -44,11 +46,13 @@ func resourceVpnL2Tp() *schema.Resource {
 			"usrgrp": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"enforce_ipsec": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 		},
 	}

@@ -55,7 +55,8 @@ func resourceExtenderControllerExtender() *schema.Resource {
 			},
 			"mode": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"dial_mode": &schema.Schema{
 				Type:     schema.TypeString,

@@ -13,11 +13,11 @@ Configure L2TP.
 
 The following arguments are supported:
 
-* `eip` - (Required) End IP.
-* `sip` - (Required) Start IP.
+* `eip` - End IP.
+* `sip` - Start IP.
 * `status` - (Required) Enable/disable FortiGate as a L2TP gateway.
-* `usrgrp` - (Required) User group.
-* `enforce_ipsec` - (Required) Enable/disable IPsec enforcement.
+* `usrgrp` - User group.
+* `enforce_ipsec` - Enable/disable IPsec enforcement.
 
 
 ## Attribute Reference

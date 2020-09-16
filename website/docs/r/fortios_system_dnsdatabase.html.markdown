@@ -51,7 +51,7 @@ The following arguments are supported:
 * `authoritative` - (Required) Enable/disable authoritative zone.
 * `forwarder` - DNS zone forwarder IP address list.
 * `source_ip` - Source IP for forwarding to DNS server.
-* `dns_entry` - (Required) DNS entry.
+* `dns_entry` - DNS entry.
 
 The `dns_entry` block supports:
 

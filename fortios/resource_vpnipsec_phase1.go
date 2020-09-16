@@ -147,11 +147,13 @@ func resourceVpnIpsecPhase1() *schema.Resource {
 			},
 			"ipv4_start_ip": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"ipv4_end_ip": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"ipv4_netmask": &schema.Schema{
 				Type:     schema.TypeString,
@@ -231,11 +233,13 @@ func resourceVpnIpsecPhase1() *schema.Resource {
 			},
 			"ipv6_start_ip": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"ipv6_end_ip": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"ipv6_prefix": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -585,7 +589,8 @@ func resourceVpnIpsecPhase1() *schema.Resource {
 			},
 			"signature_hash_alg": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"rsa_signature_format": &schema.Schema{
 				Type:     schema.TypeString,

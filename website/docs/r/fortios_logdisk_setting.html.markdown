@@ -59,7 +59,7 @@ The following arguments are supported:
 * `maximum_log_age` - Delete log files older than (days).
 * `upload` - Enable/disable uploading log files when they are rolled.
 * `upload_destination` - The type of server to upload log files to. Only FTP is currently supported.
-* `uploadip` - (Required) IP address of the FTP server to upload log files to.
+* `uploadip` - IP address of the FTP server to upload log files to.
 * `uploadport` - TCP port to use for communicating with the FTP server (default = 21).
 * `source_ip` - Source IP address to use for uploading disk log files.
 * `uploaduser` - Username required to log into the FTP server to upload disk log files.

@@ -33,12 +33,12 @@ The following arguments are supported:
 * `fosid` - Override rule ID.
 * `status` - Enable/disable override rule.
 * `scope` - Override either the specific user, user group, IPv4 address, or IPv6 address.
-* `ip` - (Required) IPv4 address which the override applies.
+* `ip` - IPv4 address which the override applies.
 * `user` - (Required) Name of the user which the override applies.
 * `user_group` - Specify the user group for which the override applies.
 * `old_profile` - (Required) Name of the web filter profile which the override applies.
 * `new_profile` - (Required) Name of the new web filter profile used by the override.
-* `ip6` - (Required) IPv6 address which the override applies.
+* `ip6` - IPv6 address which the override applies.
 * `expires` - (Required) Override expiration date and time, from 5 minutes to 365 from now (format: yyyy/mm/dd hh:mm:ss).
 * `initiator` - Initiating user of override (read-only setting).
 

@@ -21,7 +21,7 @@ resource "fortios_spamfilter_options" "trname" {
 
 The following arguments are supported:
 
-* `dns_timeout` - (Required) DNS query time out (1 - 30 sec).
+* `dns_timeout` - DNS query time out (1 - 30 sec).
 
 
 ## Attribute Reference

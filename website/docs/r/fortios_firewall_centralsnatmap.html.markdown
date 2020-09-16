@@ -51,7 +51,7 @@ The following arguments are supported:
 * `nat_ippool` - Name of the IP pools to be used to translate addresses from available IP Pools.
 * `protocol` - (Required) Integer value for the protocol type (0 - 255).
 * `orig_port` - (Required) Original TCP port (0 to 65535).
-* `nat_port` - (Required) Translated port or port range (0 to 65535).
+* `nat_port` - Translated port or port range (0 to 65535).
 * `nat` - (Required) Enable/disable source NAT.
 * `comments` - Comment.
 

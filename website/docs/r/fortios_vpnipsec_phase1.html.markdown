@@ -112,8 +112,8 @@ The following arguments are supported:
 * `mode_cfg` - Enable/disable configuration method.
 * `assign_ip` - Enable/disable assignment of IP to IPsec interface via configuration method.
 * `assign_ip_from` - Method by which the IP address will be assigned.
-* `ipv4_start_ip` - (Required) Start of IPv4 range.
-* `ipv4_end_ip` - (Required) End of IPv4 range.
+* `ipv4_start_ip` - Start of IPv4 range.
+* `ipv4_end_ip` - End of IPv4 range.
 * `ipv4_netmask` - IPv4 Netmask.
 * `dns_mode` - DNS server mode.
 * `ipv4_dns_server1` - IPv4 DNS server 1.
@@ -125,8 +125,8 @@ The following arguments are supported:
 * `ipv4_split_include` - IPv4 split-include subnets.
 * `split_include_service` - Split-include services.
 * `ipv4_name` - IPv4 address name.
-* `ipv6_start_ip` - (Required) Start of IPv6 range.
-* `ipv6_end_ip` - (Required) End of IPv6 range.
+* `ipv6_start_ip` - Start of IPv6 range.
+* `ipv6_end_ip` - End of IPv6 range.
 * `ipv6_prefix` - IPv6 prefix.
 * `ipv6_dns_server1` - IPv6 DNS server 1.
 * `ipv6_dns_server2` - IPv6 DNS server 2.
@@ -188,7 +188,7 @@ The following arguments are supported:
 * `childless_ike` - Enable/disable childless IKEv2 initiation (RFC 6023).
 * `rekey` - Enable/disable phase1 rekey.
 * `digital_signature_auth` - Enable/disable IKEv2 Digital Signature Authentication (RFC 7427).
-* `signature_hash_alg` - (Required) Digital Signature Authentication hash algorithms.
+* `signature_hash_alg` - Digital Signature Authentication hash algorithms.
 * `rsa_signature_format` - Digital Signature Authentication RSA signature format.
 * `enforce_unique_id` - Enable/disable peer ID uniqueness check.
 * `cert_id_validation` - Enable/disable cross validation of peer ID and the identity in the peer's certificate as specified in RFC 4945.

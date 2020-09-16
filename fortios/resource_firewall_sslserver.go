@@ -57,7 +57,8 @@ func resourceFirewallSslServer() *schema.Resource {
 			"mapped_port": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
-				Required:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ssl_cert": &schema.Schema{
 				Type:         schema.TypeString,

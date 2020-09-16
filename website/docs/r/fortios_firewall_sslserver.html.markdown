@@ -39,7 +39,7 @@ The following arguments are supported:
 * `port` - (Required) Server service port (1 - 65535, default = 443).
 * `ssl_mode` - SSL/TLS mode for encryption and decryption of traffic.
 * `add_header_x_forwarded_proto` - Enable/disable adding an X-Forwarded-Proto header to forwarded requests.
-* `mapped_port` - (Required) Mapped server service port (1 - 65535, default = 80).
+* `mapped_port` - Mapped server service port (1 - 65535, default = 80).
 * `ssl_cert` - (Required) Name of certificate for SSL connections to this server (default = "Fortinet_CA_SSL").
 * `ssl_dh_bits` - Bit-size of Diffie-Hellman (DH) prime used in DHE-RSA negotiation (default = 2048).
 * `ssl_algorithm` - Relative strength of encryption algorithms accepted in negotiation.

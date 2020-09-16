@@ -69,12 +69,14 @@ func resourceFirewallSslSetting() *schema.Resource {
 			"kxp_queue_threshold": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 512),
-				Required:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ssl_queue_threshold": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 512),
-				Required:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"abbreviate_handshake": &schema.Schema{
 				Type:     schema.TypeString,

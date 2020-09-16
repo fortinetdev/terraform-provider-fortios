@@ -44,10 +44,10 @@ The following arguments are supported:
 * `local_gw6` - Local IPv6 address of VPN gateway.
 * `auth_alg` - (Required) Authentication algorithm. Must be the same for both ends of the tunnel.
 * `enc_alg` - (Required) Encryption algorithm. Must be the same for both ends of the tunnel.
-* `auth_key` - (Required) Hexadecimal authentication key in 16-digit (8-byte) segments separated by hyphens.
-* `enc_key` - (Required) Hexadecimal encryption key in 16-digit (8-byte) segments separated by hyphens.
-* `local_spi` - (Required) Local SPI, a hexadecimal 8-digit (4-byte) tag. Discerns between two traffic streams with different encryption rules.
-* `remote_spi` - (Required) Remote SPI, a hexadecimal 8-digit (4-byte) tag. Discerns between two traffic streams with different encryption rules.
+* `auth_key` - Hexadecimal authentication key in 16-digit (8-byte) segments separated by hyphens.
+* `enc_key` - Hexadecimal encryption key in 16-digit (8-byte) segments separated by hyphens.
+* `local_spi` - Local SPI, a hexadecimal 8-digit (4-byte) tag. Discerns between two traffic streams with different encryption rules.
+* `remote_spi` - Remote SPI, a hexadecimal 8-digit (4-byte) tag. Discerns between two traffic streams with different encryption rules.
 
 
 ## Attribute Reference

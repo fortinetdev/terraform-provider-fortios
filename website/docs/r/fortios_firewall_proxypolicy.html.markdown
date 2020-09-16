@@ -64,7 +64,7 @@ The following arguments are supported:
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `policyid` - Policy ID.
 * `proxy` - (Required) Type of explicit proxy.
-* `srcintf` - (Required) Source interface names.
+* `srcintf` - Source interface names.
 * `dstintf` - (Required) Destination interface names.
 * `srcaddr` - Source address objects.
 * `poolname` - Name of IP pool object.

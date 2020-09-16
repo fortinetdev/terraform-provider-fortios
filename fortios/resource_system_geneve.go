@@ -55,7 +55,8 @@ func resourceSystemGeneve() *schema.Resource {
 			},
 			"remote_ip6": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"dstport": &schema.Schema{
 				Type:         schema.TypeInt,

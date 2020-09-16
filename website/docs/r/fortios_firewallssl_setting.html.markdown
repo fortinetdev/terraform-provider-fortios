@@ -39,8 +39,8 @@ The following arguments are supported:
 * `cert_cache_timeout` - (Required) Time limit to keep certificate cache (1 - 120 min, default = 10).
 * `session_cache_capacity` - (Required) Capacity of the SSL session cache (--Obsolete--) (1 - 1000, default = 500).
 * `session_cache_timeout` - (Required) Time limit to keep SSL session state (1 - 60 min, default = 20).
-* `kxp_queue_threshold` - (Required) Maximum length of the CP KXP queue. When the queue becomes full, the proxy switches cipher functions to the main CPU (0 - 512, default = 16).
-* `ssl_queue_threshold` - (Required) Maximum length of the CP SSL queue. When the queue becomes full, the proxy switches cipher functions to the main CPU (0 - 512, default = 32).
+* `kxp_queue_threshold` - Maximum length of the CP KXP queue. When the queue becomes full, the proxy switches cipher functions to the main CPU (0 - 512, default = 16).
+* `ssl_queue_threshold` - Maximum length of the CP SSL queue. When the queue becomes full, the proxy switches cipher functions to the main CPU (0 - 512, default = 32).
 * `abbreviate_handshake` - Enable/disable use of SSL abbreviated handshake.
 
 

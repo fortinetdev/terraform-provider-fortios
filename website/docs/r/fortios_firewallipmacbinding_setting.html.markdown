@@ -25,7 +25,7 @@ The following arguments are supported:
 
 * `bindthroughfw` - Enable/disable use of IP/MAC binding to filter packets that would normally go through the firewall.
 * `bindtofw` - Enable/disable use of IP/MAC binding to filter packets that would normally go to the firewall.
-* `undefinedhost` - (Required) Select action to take on packets with IP/MAC addresses not in the binding list (default = block).
+* `undefinedhost` - Select action to take on packets with IP/MAC addresses not in the binding list (default = block).
 
 
 ## Attribute Reference

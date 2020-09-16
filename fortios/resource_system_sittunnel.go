@@ -37,7 +37,8 @@ func resourceSystemSitTunnel() *schema.Resource {
 			},
 			"source": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"destination": &schema.Schema{
 				Type:     schema.TypeString,

@@ -43,7 +43,8 @@ func resourceSystemAutoupdateSchedule() *schema.Resource {
 			},
 			"day": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 		},
 	}

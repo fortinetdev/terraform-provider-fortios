@@ -42,7 +42,8 @@ func resourceFirewallLocalInPolicy() *schema.Resource {
 			"intf": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"srcaddr": &schema.Schema{
 				Type:     schema.TypeList,
@@ -79,7 +80,7 @@ func resourceFirewallLocalInPolicy() *schema.Resource {
 			},
 			"service": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{

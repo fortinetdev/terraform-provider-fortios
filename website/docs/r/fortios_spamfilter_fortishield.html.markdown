@@ -23,7 +23,7 @@ resource "fortios_spamfilter_fortishield" "trname" {
 
 The following arguments are supported:
 
-* `spam_submit_srv` - (Required) Hostname of the spam submission server.
+* `spam_submit_srv` - Hostname of the spam submission server.
 * `spam_submit_force` - Enable/disable force insertion of a new mime entity for the submission text.
 * `spam_submit_txt2htm` - Enable/disable conversion of text email to HTML email.
 

@@ -32,7 +32,7 @@ The following arguments are supported:
 * `vni` - (Required) GENEVE network ID.
 * `ip_version` - (Required) IP version to use for the GENEVE interface and so for communication over the GENEVE. IPv4 or IPv6 unicast.
 * `remote_ip` - (Required) IPv4 address of the GENEVE interface on the device at the remote end of the GENEVE.
-* `remote_ip6` - (Required) IPv6 IP address of the GENEVE interface on the device at the remote end of the GENEVE.
+* `remote_ip6` - IPv6 IP address of the GENEVE interface on the device at the remote end of the GENEVE.
 * `dstport` - GENEVE destination port (1 - 65535, default = 6081).
 
 

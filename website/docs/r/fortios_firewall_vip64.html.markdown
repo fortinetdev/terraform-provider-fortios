@@ -43,7 +43,7 @@ The following arguments are supported:
 * `arp_reply` - Enable ARP reply.
 * `portforward` - Enable port forwarding.
 * `protocol` - Mapped port protocol.
-* `extport` - (Required) External service port.
+* `extport` - External service port.
 * `mappedport` - Mapped service port.
 * `color` - Color of icon on the GUI.
 * `ldb_method` - Load balance method.

@@ -41,7 +41,8 @@ func resourceFirewallIpmacbindingSetting() *schema.Resource {
 			},
 			"undefinedhost": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 		},
 	}

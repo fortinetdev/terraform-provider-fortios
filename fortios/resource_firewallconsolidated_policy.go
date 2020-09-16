@@ -52,7 +52,7 @@ func resourceFirewallConsolidatedPolicy() *schema.Resource {
 			},
 			"srcintf": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
@@ -66,7 +66,7 @@ func resourceFirewallConsolidatedPolicy() *schema.Resource {
 			},
 			"dstintf": &schema.Schema{
 				Type:     schema.TypeList,
-				Required: true,
+				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
@@ -398,7 +398,8 @@ func resourceFirewallConsolidatedPolicy() *schema.Resource {
 			"vpntunnel": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"inbound": &schema.Schema{
 				Type:     schema.TypeString,

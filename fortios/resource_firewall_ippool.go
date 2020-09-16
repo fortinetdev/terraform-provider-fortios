@@ -50,21 +50,25 @@ func resourceFirewallIppool() *schema.Resource {
 			},
 			"source_startip": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"source_endip": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"block_size": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(64, 4096),
-				Required:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"num_blocks_per_user": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 128),
-				Required:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"pba_timeout": &schema.Schema{
 				Type:         schema.TypeInt,

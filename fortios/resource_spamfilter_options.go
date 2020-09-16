@@ -32,7 +32,8 @@ func resourceSpamfilterOptions() *schema.Resource {
 			"dns_timeout": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 30),
-				Required:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}

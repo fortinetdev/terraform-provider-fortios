@@ -20,11 +20,11 @@ The following arguments are supported:
 * `color` - Color of icon on the GUI.
 * `security` - Security.
 * `auth` - Authentication.
-* `radius_server` - (Required) Authentication radius server.
-* `usergroup` - (Required) Authentication usergroup.
+* `radius_server` - Authentication radius server.
+* `usergroup` - Authentication usergroup.
 * `portal_message_override_group` - Specify captive portal replacement message override group.
 * `portal_message_overrides` - Individual message overrides.
-* `selected_usergroups` - (Required) Selected user group.
+* `selected_usergroups` - Selected user group.
 
 The `portal_message_overrides` block supports:
 

@@ -53,11 +53,12 @@ func resourceSystemCsf() *schema.Resource {
 			"group_password": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
-				Required:     true,
+				Optional:     true,
 			},
 			"configuration_sync": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"management_ip": &schema.Schema{
 				Type:     schema.TypeString,

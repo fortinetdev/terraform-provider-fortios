@@ -38,12 +38,12 @@ The following arguments are supported:
 * `required` - Required in action chain.
 * `aws_api_id` - AWS API Gateway ID.
 * `aws_region` - AWS region.
-* `aws_domain` - (Required) AWS domain.
+* `aws_domain` - AWS domain.
 * `aws_api_stage` - AWS API Gateway deployment stage name.
 * `aws_api_path` - AWS API Gateway path.
 * `aws_api_key` - AWS API Gateway API key.
-* `protocol` - (Required) Request protocol.
-* `method` - (Required) Request method (POST, PUT, GET, PATCH or DELETE).
+* `protocol` - Request protocol.
+* `method` - Request method (POST, PUT, GET, PATCH or DELETE).
 * `uri` - Request API URI.
 * `http_body` - Request body (if necessary). Should be serialized json string.
 * `port` - Protocol port.
