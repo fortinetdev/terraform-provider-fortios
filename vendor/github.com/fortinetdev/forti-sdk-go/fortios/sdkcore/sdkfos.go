@@ -754,6 +754,60 @@ func (c *FortiSDKClient) ReadSystemApiUser(mkey string) (mapTmp map[string]inter
 	return
 }
 
+// CreateSystemSsoAdmin API operation for FortiOS creates a new Sso Admin.
+// Returns the index value of the Sso Admin and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - sso-admin chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateSystemSsoAdmin(params *map[string]interface{}) (output map[string]interface{}, err error) {
+
+	HTTPMethod := "POST"
+	path := "/api/v2/cmdb/system/sso-admin"
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// UpdateSystemSsoAdmin API operation for FortiOS updates the specified Sso Admin.
+// Returns the index value of the Sso Admin and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - sso-admin chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateSystemSsoAdmin(params *map[string]interface{}, mkey string) (output map[string]interface{}, err error) {
+	HTTPMethod := "PUT"
+	path := "/api/v2/cmdb/system/sso-admin"
+	path += "/" + escapeURLString(mkey)
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// DeleteSystemSsoAdmin API operation for FortiOS deletes the specified Sso Admin.
+// Returns error for service API and SDK errors.
+// See the system - sso-admin chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteSystemSsoAdmin(mkey string) (err error) {
+	HTTPMethod := "DELETE"
+	path := "/api/v2/cmdb/system/sso-admin"
+	path += "/" + escapeURLString(mkey)
+
+	err = delete(c, HTTPMethod, path)
+	return
+}
+
+// ReadSystemSsoAdmin API operation for FortiOS gets the Sso Admin
+// with the specified index value.
+// Returns the requested Sso Admin value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - sso-admin chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadSystemSsoAdmin(mkey string) (mapTmp map[string]interface{}, err error) {
+	HTTPMethod := "GET"
+	path := "/api/v2/cmdb/system/sso-admin"
+	path += "/" + escapeURLString(mkey)
+
+	mapTmp, err = read(c, HTTPMethod, path, false)
+	return
+}
+
 
 // UpdateSystemSettings API operation for FortiOS updates the specified Settings.
 // Returns the index value of the Settings and execution result when the request executes successfully.

@@ -155,6 +155,7 @@ func Provider() terraform.ResourceProvider {
 			"fortios_system_customlanguage":                             resourceSystemCustomLanguage(),
 			"fortios_system_admin":                                      resourceSystemAdmin(),
 			"fortios_system_apiuser":                                    resourceSystemApiUser(),
+			"fortios_system_ssoadmin":                                   resourceSystemSsoAdmin(),
 			"fortios_system_settings":                                   resourceSystemSettings(),
 			"fortios_system_sittunnel":                                  resourceSystemSitTunnel(),
 			"fortios_system_fssopolling":                                resourceSystemFssoPolling(),
