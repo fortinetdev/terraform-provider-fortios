@@ -1,5 +1,15 @@
 ## 1.7.0 (Unreleased)
 
+## 1.6.2 (Sep 24, 2020)
+
+IMPROVEMENTS:
+
+* Mark password and key arguments as sensitive #86
+
+FEATURES:
+
+* **New Resource:** ` fortios_system_ssoadmin`
+
 ## 1.6.1 (Sep 16, 2020)
 
 IMPROVEMENTS:
@@ -15,7 +25,6 @@ BUG FIXES:
 FEATURES:
 
 * Support ssl_max_proto_ver, ssl_min_proto_ver for fortios_vpnssl_settings #82
-
 
 ## 1.6.0 (Sep 7, 2020)
 
