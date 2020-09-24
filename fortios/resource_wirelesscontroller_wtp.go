@@ -303,6 +303,7 @@ func resourceWirelessControllerWtp() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"radio_1": &schema.Schema{
 				Type:     schema.TypeList,
@@ -1600,12 +1601,6 @@ func refreshObjectWirelessControllerWtp(d *schema.ResourceData, o map[string]int
 	if err = d.Set("login_passwd_change", flattenWirelessControllerWtpLoginPasswdChange(o["login-passwd-change"], d, "login_passwd_change")); err != nil {
 		if !fortiAPIPatch(o["login-passwd-change"]) {
 			return fmt.Errorf("Error reading login_passwd_change: %v", err)
-		}
-	}
-
-	if err = d.Set("login_passwd", flattenWirelessControllerWtpLoginPasswd(o["login-passwd"], d, "login_passwd")); err != nil {
-		if !fortiAPIPatch(o["login-passwd"]) {
-			return fmt.Errorf("Error reading login_passwd: %v", err)
 		}
 	}
 

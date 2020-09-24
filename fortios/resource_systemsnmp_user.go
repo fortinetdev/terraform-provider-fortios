@@ -111,6 +111,7 @@ func resourceSystemSnmpUser() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"priv_proto": &schema.Schema{
 				Type:     schema.TypeString,
@@ -121,6 +122,7 @@ func resourceSystemSnmpUser() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 		},
 	}
@@ -380,21 +382,9 @@ func refreshObjectSystemSnmpUser(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if err = d.Set("auth_pwd", flattenSystemSnmpUserAuthPwd(o["auth-pwd"], d, "auth_pwd")); err != nil {
-		if !fortiAPIPatch(o["auth-pwd"]) {
-			return fmt.Errorf("Error reading auth_pwd: %v", err)
-		}
-	}
-
 	if err = d.Set("priv_proto", flattenSystemSnmpUserPrivProto(o["priv-proto"], d, "priv_proto")); err != nil {
 		if !fortiAPIPatch(o["priv-proto"]) {
 			return fmt.Errorf("Error reading priv_proto: %v", err)
-		}
-	}
-
-	if err = d.Set("priv_pwd", flattenSystemSnmpUserPrivPwd(o["priv-pwd"], d, "priv_pwd")); err != nil {
-		if !fortiAPIPatch(o["priv-pwd"]) {
-			return fmt.Errorf("Error reading priv_pwd: %v", err)
 		}
 	}
 

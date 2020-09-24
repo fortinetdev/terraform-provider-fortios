@@ -374,13 +374,14 @@ func resourceVpnIpsecPhase1() *schema.Resource {
 				Computed: true,
 			},
 			"psksecret": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Type:      schema.TypeString,
+				Required:  true,
+				Sensitive: true,
 			},
 			"psksecret_remote": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:      schema.TypeString,
+				Optional:  true,
+				Sensitive: true,
 			},
 			"keepalive": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -488,9 +489,9 @@ func resourceVpnIpsecPhase1() *schema.Resource {
 				Computed: true,
 			},
 			"ppk_secret": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:      schema.TypeString,
+				Optional:  true,
+				Sensitive: true,
 			},
 			"ppk_identity": &schema.Schema{
 				Type:         schema.TypeString,
@@ -523,6 +524,7 @@ func resourceVpnIpsecPhase1() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"group_authentication": &schema.Schema{
 				Type:     schema.TypeString,
@@ -530,9 +532,9 @@ func resourceVpnIpsecPhase1() *schema.Resource {
 				Computed: true,
 			},
 			"group_authentication_secret": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:      schema.TypeString,
+				Optional:  true,
+				Sensitive: true,
 			},
 			"authusrgrp": &schema.Schema{
 				Type:         schema.TypeString,
@@ -1637,12 +1639,6 @@ func refreshObjectVpnIpsecPhase1(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if err = d.Set("psksecret_remote", flattenVpnIpsecPhase1PsksecretRemote(o["psksecret-remote"], d, "psksecret_remote")); err != nil {
-		if !fortiAPIPatch(o["psksecret-remote"]) {
-			return fmt.Errorf("Error reading psksecret_remote: %v", err)
-		}
-	}
-
 	if err = d.Set("keepalive", flattenVpnIpsecPhase1Keepalive(o["keepalive"], d, "keepalive")); err != nil {
 		if !fortiAPIPatch(o["keepalive"]) {
 			return fmt.Errorf("Error reading keepalive: %v", err)
@@ -1763,12 +1759,6 @@ func refreshObjectVpnIpsecPhase1(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if err = d.Set("ppk_secret", flattenVpnIpsecPhase1PpkSecret(o["ppk-secret"], d, "ppk_secret")); err != nil {
-		if !fortiAPIPatch(o["ppk-secret"]) {
-			return fmt.Errorf("Error reading ppk_secret: %v", err)
-		}
-	}
-
 	if err = d.Set("ppk_identity", flattenVpnIpsecPhase1PpkIdentity(o["ppk-identity"], d, "ppk_identity")); err != nil {
 		if !fortiAPIPatch(o["ppk-identity"]) {
 			return fmt.Errorf("Error reading ppk_identity: %v", err)
@@ -1799,21 +1789,9 @@ func refreshObjectVpnIpsecPhase1(d *schema.ResourceData, o map[string]interface{
 		}
 	}
 
-	if err = d.Set("authpasswd", flattenVpnIpsecPhase1Authpasswd(o["authpasswd"], d, "authpasswd")); err != nil {
-		if !fortiAPIPatch(o["authpasswd"]) {
-			return fmt.Errorf("Error reading authpasswd: %v", err)
-		}
-	}
-
 	if err = d.Set("group_authentication", flattenVpnIpsecPhase1GroupAuthentication(o["group-authentication"], d, "group_authentication")); err != nil {
 		if !fortiAPIPatch(o["group-authentication"]) {
 			return fmt.Errorf("Error reading group_authentication: %v", err)
-		}
-	}
-
-	if err = d.Set("group_authentication_secret", flattenVpnIpsecPhase1GroupAuthenticationSecret(o["group-authentication-secret"], d, "group_authentication_secret")); err != nil {
-		if !fortiAPIPatch(o["group-authentication-secret"]) {
-			return fmt.Errorf("Error reading group_authentication_secret: %v", err)
 		}
 	}
 

@@ -70,6 +70,7 @@ func resourceFirewallSshHostKey() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 32768),
 				Optional:     true,
+				Sensitive:    true,
 			},
 		},
 	}
@@ -238,12 +239,6 @@ func refreshObjectFirewallSshHostKey(d *schema.ResourceData, o map[string]interf
 	if err = d.Set("hostname", flattenFirewallSshHostKeyHostname(o["hostname"], d, "hostname")); err != nil {
 		if !fortiAPIPatch(o["hostname"]) {
 			return fmt.Errorf("Error reading hostname: %v", err)
-		}
-	}
-
-	if err = d.Set("public_key", flattenFirewallSshHostKeyPublicKey(o["public-key"], d, "public_key")); err != nil {
-		if !fortiAPIPatch(o["public-key"]) {
-			return fmt.Errorf("Error reading public_key: %v", err)
 		}
 	}
 

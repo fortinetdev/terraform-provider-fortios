@@ -49,6 +49,7 @@ func resourceSystemFssoPolling() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 		},
 	}
@@ -153,12 +154,6 @@ func refreshObjectSystemFssoPolling(d *schema.ResourceData, o map[string]interfa
 	if err = d.Set("authentication", flattenSystemFssoPollingAuthentication(o["authentication"], d, "authentication")); err != nil {
 		if !fortiAPIPatch(o["authentication"]) {
 			return fmt.Errorf("Error reading authentication: %v", err)
-		}
-	}
-
-	if err = d.Set("auth_password", flattenSystemFssoPollingAuthPassword(o["auth-password"], d, "auth_password")); err != nil {
-		if !fortiAPIPatch(o["auth-password"]) {
-			return fmt.Errorf("Error reading auth_password: %v", err)
 		}
 	}
 

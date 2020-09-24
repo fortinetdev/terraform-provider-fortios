@@ -71,6 +71,7 @@ func resourceVpnCertificateCrl() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"http_url": &schema.Schema{
 				Type:         schema.TypeString,
@@ -296,12 +297,6 @@ func refreshObjectVpnCertificateCrl(d *schema.ResourceData, o map[string]interfa
 	if err = d.Set("ldap_username", flattenVpnCertificateCrlLdapUsername(o["ldap-username"], d, "ldap_username")); err != nil {
 		if !fortiAPIPatch(o["ldap-username"]) {
 			return fmt.Errorf("Error reading ldap_username: %v", err)
-		}
-	}
-
-	if err = d.Set("ldap_password", flattenVpnCertificateCrlLdapPassword(o["ldap-password"], d, "ldap_password")); err != nil {
-		if !fortiAPIPatch(o["ldap-password"]) {
-			return fmt.Errorf("Error reading ldap_password: %v", err)
 		}
 	}
 

@@ -49,6 +49,7 @@ func resourceUserKrbKeytab() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 2047),
 				Required:     true,
+				Sensitive:    true,
 			},
 		},
 	}
@@ -177,12 +178,6 @@ func refreshObjectUserKrbKeytab(d *schema.ResourceData, o map[string]interface{}
 	if err = d.Set("ldap_server", flattenUserKrbKeytabLdapServer(o["ldap-server"], d, "ldap_server")); err != nil {
 		if !fortiAPIPatch(o["ldap-server"]) {
 			return fmt.Errorf("Error reading ldap_server: %v", err)
-		}
-	}
-
-	if err = d.Set("keytab", flattenUserKrbKeytabKeytab(o["keytab"], d, "keytab")); err != nil {
-		if !fortiAPIPatch(o["keytab"]) {
-			return fmt.Errorf("Error reading keytab: %v", err)
 		}
 	}
 

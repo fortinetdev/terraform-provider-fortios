@@ -44,6 +44,7 @@ func resourceSwitchControllerSwitchProfile() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
 				Optional:     true,
+				Sensitive:    true,
 			},
 		},
 	}

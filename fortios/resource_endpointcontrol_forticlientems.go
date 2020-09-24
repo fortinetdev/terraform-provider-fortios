@@ -77,6 +77,7 @@ func resourceEndpointControlForticlientEms() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 68),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"admin_type": &schema.Schema{
 				Type:     schema.TypeString,
@@ -264,12 +265,6 @@ func refreshObjectEndpointControlForticlientEms(d *schema.ResourceData, o map[st
 	if err = d.Set("admin_username", flattenEndpointControlForticlientEmsAdminUsername(o["admin-username"], d, "admin_username")); err != nil {
 		if !fortiAPIPatch(o["admin-username"]) {
 			return fmt.Errorf("Error reading admin_username: %v", err)
-		}
-	}
-
-	if err = d.Set("admin_password", flattenEndpointControlForticlientEmsAdminPassword(o["admin-password"], d, "admin_password")); err != nil {
-		if !fortiAPIPatch(o["admin-password"]) {
-			return fmt.Errorf("Error reading admin_password: %v", err)
 		}
 	}
 

@@ -200,6 +200,7 @@ func resourceSystemInterface() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"idle_timeout": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -276,6 +277,7 @@ func resourceSystemInterface() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"pptp_server_ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -3663,12 +3665,6 @@ func refreshObjectSystemInterface(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-	if err = d.Set("password", flattenSystemInterfacePassword(o["password"], d, "password")); err != nil {
-		if !fortiAPIPatch(o["password"]) {
-			return fmt.Errorf("Error reading password: %v", err)
-		}
-	}
-
 	if err = d.Set("idle_timeout", flattenSystemInterfaceIdleTimeout(o["idle-timeout"], d, "idle_timeout")); err != nil {
 		if !fortiAPIPatch(o["idle-timeout"]) {
 			return fmt.Errorf("Error reading idle_timeout: %v", err)
@@ -3744,12 +3740,6 @@ func refreshObjectSystemInterface(d *schema.ResourceData, o map[string]interface
 	if err = d.Set("pptp_user", flattenSystemInterfacePptpUser(o["pptp-user"], d, "pptp_user")); err != nil {
 		if !fortiAPIPatch(o["pptp-user"]) {
 			return fmt.Errorf("Error reading pptp_user: %v", err)
-		}
-	}
-
-	if err = d.Set("pptp_password", flattenSystemInterfacePptpPassword(o["pptp-password"], d, "pptp_password")); err != nil {
-		if !fortiAPIPatch(o["pptp-password"]) {
-			return fmt.Errorf("Error reading pptp_password: %v", err)
 		}
 	}
 

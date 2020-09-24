@@ -58,14 +58,16 @@ func resourceVpnIpsecManualkey() *schema.Resource {
 				Required: true,
 			},
 			"authkey": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:      schema.TypeString,
+				Optional:  true,
+				Sensitive: true,
+				Computed:  true,
 			},
 			"enckey": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:      schema.TypeString,
+				Optional:  true,
+				Sensitive: true,
+				Computed:  true,
 			},
 			"localspi": &schema.Schema{
 				Type:     schema.TypeString,
@@ -246,12 +248,6 @@ func refreshObjectVpnIpsecManualkey(d *schema.ResourceData, o map[string]interfa
 	if err = d.Set("encryption", flattenVpnIpsecManualkeyEncryption(o["encryption"], d, "encryption")); err != nil {
 		if !fortiAPIPatch(o["encryption"]) {
 			return fmt.Errorf("Error reading encryption: %v", err)
-		}
-	}
-
-	if err = d.Set("enckey", flattenVpnIpsecManualkeyEnckey(o["enckey"], d, "enckey")); err != nil {
-		if !fortiAPIPatch(o["enckey"]) {
-			return fmt.Errorf("Error reading enckey: %v", err)
 		}
 	}
 

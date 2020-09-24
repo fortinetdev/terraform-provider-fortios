@@ -60,6 +60,7 @@ func resourceSystemExternalResource() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"comments": &schema.Schema{
 				Type:         schema.TypeString,
@@ -235,12 +236,6 @@ func refreshObjectSystemExternalResource(d *schema.ResourceData, o map[string]in
 	if err = d.Set("username", flattenSystemExternalResourceUsername(o["username"], d, "username")); err != nil {
 		if !fortiAPIPatch(o["username"]) {
 			return fmt.Errorf("Error reading username: %v", err)
-		}
-	}
-
-	if err = d.Set("password", flattenSystemExternalResourcePassword(o["password"], d, "password")); err != nil {
-		if !fortiAPIPatch(o["password"]) {
-			return fmt.Errorf("Error reading password: %v", err)
 		}
 	}
 

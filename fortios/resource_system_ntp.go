@@ -75,6 +75,7 @@ func resourceSystemNtp() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 59),
 							Optional:     true,
+							Sensitive:    true,
 						},
 						"key_id": &schema.Schema{
 							Type:     schema.TypeInt,
@@ -236,6 +237,10 @@ func flattenSystemNtpNtpserver(v interface{}, d *schema.ResourceData, pre string
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key"
 		if _, ok := i["key"]; ok {
 			tmp["key"] = flattenSystemNtpNtpserverKey(i["key"], d, pre_append)
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["key"] = c
+			}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_id"

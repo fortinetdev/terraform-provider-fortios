@@ -39,14 +39,17 @@ func resourceFirewallSshLocalKey() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"private_key": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Type:      schema.TypeString,
+				Required:  true,
+				Sensitive: true,
 			},
 			"public_key": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Type:      schema.TypeString,
+				Required:  true,
+				Sensitive: true,
 			},
 			"source": &schema.Schema{
 				Type:     schema.TypeString,
@@ -172,24 +175,6 @@ func refreshObjectFirewallSshLocalKey(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("name", flattenFirewallSshLocalKeyName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
-		}
-	}
-
-	if err = d.Set("password", flattenFirewallSshLocalKeyPassword(o["password"], d, "password")); err != nil {
-		if !fortiAPIPatch(o["password"]) {
-			return fmt.Errorf("Error reading password: %v", err)
-		}
-	}
-
-	if err = d.Set("private_key", flattenFirewallSshLocalKeyPrivateKey(o["private-key"], d, "private_key")); err != nil {
-		if !fortiAPIPatch(o["private-key"]) {
-			return fmt.Errorf("Error reading private_key: %v", err)
-		}
-	}
-
-	if err = d.Set("public_key", flattenFirewallSshLocalKeyPublicKey(o["public-key"], d, "public_key")); err != nil {
-		if !fortiAPIPatch(o["public-key"]) {
-			return fmt.Errorf("Error reading public_key: %v", err)
 		}
 	}
 

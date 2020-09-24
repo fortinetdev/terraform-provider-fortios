@@ -202,6 +202,7 @@ func resourceUserGroup() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 128),
 							Optional:     true,
+							Sensitive:    true,
 						},
 						"mobile_phone": &schema.Schema{
 							Type:         schema.TypeString,
@@ -539,6 +540,10 @@ func flattenUserGroupGuest(v interface{}, d *schema.ResourceData, pre string) []
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "password"
 		if _, ok := i["password"]; ok {
 			tmp["password"] = flattenUserGroupGuestPassword(i["password"], d, pre_append)
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["password"] = c
+			}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mobile_phone"

@@ -30,7 +30,7 @@ func TestAccFortiOSSystemSdnConnector_basic(t *testing.T) {
 					resource.TestCheckResourceAttr("fortios_system_sdnconnector.trname", "azure_region", "global"),
 					resource.TestCheckResourceAttr("fortios_system_sdnconnector.trname", "ha_status", "disable"),
 					resource.TestCheckResourceAttr("fortios_system_sdnconnector.trname", "name", rname),
-					resource.TestCheckResourceAttr("fortios_system_sdnconnector.trname", "password", "ENC -1N2ZPOCHEkvUA4pNeO78iotUQKN8="),
+					resource.TestCheckResourceAttr("fortios_system_sdnconnector.trname", "password", "deWdf321ds"),
 					resource.TestCheckResourceAttr("fortios_system_sdnconnector.trname", "server", "1.1.1.1"),
 					resource.TestCheckResourceAttr("fortios_system_sdnconnector.trname", "server_port", "3"),
 					resource.TestCheckResourceAttr("fortios_system_sdnconnector.trname", "status", "disable"),
@@ -101,7 +101,7 @@ resource "fortios_system_sdnconnector" "trname" {
   azure_region     = "global"
   ha_status        = "disable"
   name             = "%[1]s"
-  password         = "ENC -1N2ZPOCHEkvUA4pNeO78iotUQKN8="
+  password         = "deWdf321ds"
   server           = "1.1.1.1"
   server_port      = 3
   status           = "disable"

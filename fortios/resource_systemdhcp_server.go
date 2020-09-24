@@ -292,9 +292,10 @@ func resourceSystemDhcpServer() *schema.Resource {
 				Computed:     true,
 			},
 			"ddns_key": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:      schema.TypeString,
+				Optional:  true,
+				Sensitive: true,
+				Computed:  true,
 			},
 			"ddns_ttl": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -1268,12 +1269,6 @@ func refreshObjectSystemDhcpServer(d *schema.ResourceData, o map[string]interfac
 	if err = d.Set("ddns_keyname", flattenSystemDhcpServerDdnsKeyname(o["ddns-keyname"], d, "ddns_keyname")); err != nil {
 		if !fortiAPIPatch(o["ddns-keyname"]) {
 			return fmt.Errorf("Error reading ddns_keyname: %v", err)
-		}
-	}
-
-	if err = d.Set("ddns_key", flattenSystemDhcpServerDdnsKey(o["ddns-key"], d, "ddns_key")); err != nil {
-		if !fortiAPIPatch(o["ddns-key"]) {
-			return fmt.Errorf("Error reading ddns_key: %v", err)
 		}
 	}
 

@@ -38,6 +38,7 @@ func resourceEndpointControlSettings() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"forticlient_reg_timeout": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -238,12 +239,6 @@ func refreshObjectEndpointControlSettings(d *schema.ResourceData, o map[string]i
 	if err = d.Set("forticlient_reg_key_enforce", flattenEndpointControlSettingsForticlientRegKeyEnforce(o["forticlient-reg-key-enforce"], d, "forticlient_reg_key_enforce")); err != nil {
 		if !fortiAPIPatch(o["forticlient-reg-key-enforce"]) {
 			return fmt.Errorf("Error reading forticlient_reg_key_enforce: %v", err)
-		}
-	}
-
-	if err = d.Set("forticlient_reg_key", flattenEndpointControlSettingsForticlientRegKey(o["forticlient-reg-key"], d, "forticlient_reg_key")); err != nil {
-		if !fortiAPIPatch(o["forticlient-reg-key"]) {
-			return fmt.Errorf("Error reading forticlient_reg_key: %v", err)
 		}
 	}
 

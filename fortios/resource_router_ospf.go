@@ -269,11 +269,13 @@ func resourceRouterOspf() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 8),
 										Optional:     true,
+										Sensitive:    true,
 									},
 									"md5_key": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-										Computed: true,
+										Type:      schema.TypeString,
+										Optional:  true,
+										Sensitive: true,
+										Computed:  true,
 									},
 									"md5_keychain": &schema.Schema{
 										Type:         schema.TypeString,
@@ -371,11 +373,13 @@ func resourceRouterOspf() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 8),
 							Optional:     true,
+							Sensitive:    true,
 						},
 						"md5_key": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Type:      schema.TypeString,
+							Optional:  true,
+							Sensitive: true,
+							Computed:  true,
 						},
 						"md5_keychain": &schema.Schema{
 							Type:         schema.TypeString,
@@ -1057,11 +1061,19 @@ func flattenRouterOspfAreaVirtualLink(v interface{}, d *schema.ResourceData, pre
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "authentication_key"
 		if _, ok := i["authentication-key"]; ok {
 			tmp["authentication_key"] = flattenRouterOspfAreaVirtualLinkAuthenticationKey(i["authentication-key"], d, pre_append)
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["authentication_key"] = c
+			}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_key"
 		if _, ok := i["md5-key"]; ok {
 			tmp["md5_key"] = flattenRouterOspfAreaVirtualLinkMd5Key(i["md5-key"], d, pre_append)
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["md5_key"] = c
+			}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_keychain"
@@ -1238,11 +1250,19 @@ func flattenRouterOspfOspfInterface(v interface{}, d *schema.ResourceData, pre s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "authentication_key"
 		if _, ok := i["authentication-key"]; ok {
 			tmp["authentication_key"] = flattenRouterOspfOspfInterfaceAuthenticationKey(i["authentication-key"], d, pre_append)
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["authentication_key"] = c
+			}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_key"
 		if _, ok := i["md5-key"]; ok {
 			tmp["md5_key"] = flattenRouterOspfOspfInterfaceMd5Key(i["md5-key"], d, pre_append)
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["md5_key"] = c
+			}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_keychain"

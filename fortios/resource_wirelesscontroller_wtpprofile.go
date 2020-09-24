@@ -315,6 +315,7 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"lldp": &schema.Schema{
 				Type:     schema.TypeString,
@@ -911,6 +912,7 @@ func resourceWirelessControllerWtpProfile() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 123),
 							Optional:     true,
+							Sensitive:    true,
 						},
 						"fortipresence_project": &schema.Schema{
 							Type:         schema.TypeString,
@@ -2788,12 +2790,6 @@ func refreshObjectWirelessControllerWtpProfile(d *schema.ResourceData, o map[str
 	if err = d.Set("login_passwd_change", flattenWirelessControllerWtpProfileLoginPasswdChange(o["login-passwd-change"], d, "login_passwd_change")); err != nil {
 		if !fortiAPIPatch(o["login-passwd-change"]) {
 			return fmt.Errorf("Error reading login_passwd_change: %v", err)
-		}
-	}
-
-	if err = d.Set("login_passwd", flattenWirelessControllerWtpProfileLoginPasswd(o["login-passwd"], d, "login_passwd")); err != nil {
-		if !fortiAPIPatch(o["login-passwd"]) {
-			return fmt.Errorf("Error reading login_passwd: %v", err)
 		}
 	}
 

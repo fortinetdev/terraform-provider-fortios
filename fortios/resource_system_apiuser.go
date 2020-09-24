@@ -41,9 +41,10 @@ func resourceSystemApiUser() *schema.Resource {
 				Optional:     true,
 			},
 			"api_key": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 128),
+				Optional:     true,
+				Sensitive:    true,
 			},
 			"accprofile": &schema.Schema{
 				Type:         schema.TypeString,
@@ -358,12 +359,6 @@ func refreshObjectSystemApiUser(d *schema.ResourceData, o map[string]interface{}
 	if err = d.Set("comments", flattenSystemApiUserComments(o["comments"], d, "comments")); err != nil {
 		if !fortiAPIPatch(o["comments"]) {
 			return fmt.Errorf("Error reading comments: %v", err)
-		}
-	}
-
-	if err = d.Set("api_key", flattenSystemApiUserApiKey(o["api-key"], d, "api_key")); err != nil {
-		if !fortiAPIPatch(o["api-key"]) {
-			return fmt.Errorf("Error reading api_key: %v", err)
 		}
 	}
 

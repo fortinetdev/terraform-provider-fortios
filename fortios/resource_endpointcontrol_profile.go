@@ -424,6 +424,7 @@ func resourceEndpointControlProfile() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 128),
 										Optional:     true,
+										Sensitive:    true,
 									},
 								},
 							},
@@ -511,6 +512,7 @@ func resourceEndpointControlProfile() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 128),
 										Optional:     true,
+										Sensitive:    true,
 									},
 								},
 							},
@@ -1441,6 +1443,10 @@ func flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettin
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "preshared_key"
 		if _, ok := i["preshared-key"]; ok {
 			tmp["preshared_key"] = flattenEndpointControlProfileForticlientAndroidSettingsForticlientVpnSettingsPresharedKey(i["preshared-key"], d, pre_append)
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["preshared_key"] = c
+			}
 		}
 
 		result = append(result, tmp)
@@ -1610,6 +1616,10 @@ func flattenEndpointControlProfileForticlientIosSettingsClientVpnSettings(v inte
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "preshared_key"
 		if _, ok := i["preshared-key"]; ok {
 			tmp["preshared_key"] = flattenEndpointControlProfileForticlientIosSettingsClientVpnSettingsPresharedKey(i["preshared-key"], d, pre_append)
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["preshared_key"] = c
+			}
 		}
 
 		result = append(result, tmp)

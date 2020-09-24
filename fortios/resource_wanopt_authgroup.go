@@ -44,6 +44,7 @@ func resourceWanoptAuthGroup() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"cert": &schema.Schema{
 				Type:         schema.TypeString,
@@ -190,12 +191,6 @@ func refreshObjectWanoptAuthGroup(d *schema.ResourceData, o map[string]interface
 	if err = d.Set("auth_method", flattenWanoptAuthGroupAuthMethod(o["auth-method"], d, "auth_method")); err != nil {
 		if !fortiAPIPatch(o["auth-method"]) {
 			return fmt.Errorf("Error reading auth_method: %v", err)
-		}
-	}
-
-	if err = d.Set("psk", flattenWanoptAuthGroupPsk(o["psk"], d, "psk")); err != nil {
-		if !fortiAPIPatch(o["psk"]) {
-			return fmt.Errorf("Error reading psk: %v", err)
 		}
 	}
 

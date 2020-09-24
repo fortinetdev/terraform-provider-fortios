@@ -48,6 +48,7 @@ func resourceUserFsso() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"server2": &schema.Schema{
 				Type:         schema.TypeString,
@@ -65,6 +66,7 @@ func resourceUserFsso() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"server3": &schema.Schema{
 				Type:         schema.TypeString,
@@ -82,6 +84,7 @@ func resourceUserFsso() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"server4": &schema.Schema{
 				Type:         schema.TypeString,
@@ -99,6 +102,7 @@ func resourceUserFsso() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"server5": &schema.Schema{
 				Type:         schema.TypeString,
@@ -116,6 +120,7 @@ func resourceUserFsso() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"ldap_server": &schema.Schema{
 				Type:         schema.TypeString,
@@ -323,12 +328,6 @@ func refreshObjectUserFsso(d *schema.ResourceData, o map[string]interface{}) err
 		}
 	}
 
-	if err = d.Set("password", flattenUserFssoPassword(o["password"], d, "password")); err != nil {
-		if !fortiAPIPatch(o["password"]) {
-			return fmt.Errorf("Error reading password: %v", err)
-		}
-	}
-
 	if err = d.Set("server2", flattenUserFssoServer2(o["server2"], d, "server2")); err != nil {
 		if !fortiAPIPatch(o["server2"]) {
 			return fmt.Errorf("Error reading server2: %v", err)
@@ -338,12 +337,6 @@ func refreshObjectUserFsso(d *schema.ResourceData, o map[string]interface{}) err
 	if err = d.Set("port2", flattenUserFssoPort2(o["port2"], d, "port2")); err != nil {
 		if !fortiAPIPatch(o["port2"]) {
 			return fmt.Errorf("Error reading port2: %v", err)
-		}
-	}
-
-	if err = d.Set("password2", flattenUserFssoPassword2(o["password2"], d, "password2")); err != nil {
-		if !fortiAPIPatch(o["password2"]) {
-			return fmt.Errorf("Error reading password2: %v", err)
 		}
 	}
 
@@ -359,12 +352,6 @@ func refreshObjectUserFsso(d *schema.ResourceData, o map[string]interface{}) err
 		}
 	}
 
-	if err = d.Set("password3", flattenUserFssoPassword3(o["password3"], d, "password3")); err != nil {
-		if !fortiAPIPatch(o["password3"]) {
-			return fmt.Errorf("Error reading password3: %v", err)
-		}
-	}
-
 	if err = d.Set("server4", flattenUserFssoServer4(o["server4"], d, "server4")); err != nil {
 		if !fortiAPIPatch(o["server4"]) {
 			return fmt.Errorf("Error reading server4: %v", err)
@@ -377,12 +364,6 @@ func refreshObjectUserFsso(d *schema.ResourceData, o map[string]interface{}) err
 		}
 	}
 
-	if err = d.Set("password4", flattenUserFssoPassword4(o["password4"], d, "password4")); err != nil {
-		if !fortiAPIPatch(o["password4"]) {
-			return fmt.Errorf("Error reading password4: %v", err)
-		}
-	}
-
 	if err = d.Set("server5", flattenUserFssoServer5(o["server5"], d, "server5")); err != nil {
 		if !fortiAPIPatch(o["server5"]) {
 			return fmt.Errorf("Error reading server5: %v", err)
@@ -392,12 +373,6 @@ func refreshObjectUserFsso(d *schema.ResourceData, o map[string]interface{}) err
 	if err = d.Set("port5", flattenUserFssoPort5(o["port5"], d, "port5")); err != nil {
 		if !fortiAPIPatch(o["port5"]) {
 			return fmt.Errorf("Error reading port5: %v", err)
-		}
-	}
-
-	if err = d.Set("password5", flattenUserFssoPassword5(o["password5"], d, "password5")); err != nil {
-		if !fortiAPIPatch(o["password5"]) {
-			return fmt.Errorf("Error reading password5: %v", err)
 		}
 	}
 

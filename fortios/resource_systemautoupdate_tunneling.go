@@ -56,6 +56,7 @@ func resourceSystemAutoupdateTunneling() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 		},
 	}
@@ -170,12 +171,6 @@ func refreshObjectSystemAutoupdateTunneling(d *schema.ResourceData, o map[string
 	if err = d.Set("username", flattenSystemAutoupdateTunnelingUsername(o["username"], d, "username")); err != nil {
 		if !fortiAPIPatch(o["username"]) {
 			return fmt.Errorf("Error reading username: %v", err)
-		}
-	}
-
-	if err = d.Set("password", flattenSystemAutoupdateTunnelingPassword(o["password"], d, "password")); err != nil {
-		if !fortiAPIPatch(o["password"]) {
-			return fmt.Errorf("Error reading password: %v", err)
 		}
 	}
 

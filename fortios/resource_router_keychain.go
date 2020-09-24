@@ -58,6 +58,7 @@ func resourceRouterKeyChain() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 35),
 							Optional:     true,
+							Sensitive:    true,
 							Computed:     true,
 						},
 					},
@@ -197,6 +198,10 @@ func flattenRouterKeyChainKey(v interface{}, d *schema.ResourceData, pre string)
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_string"
 		if _, ok := i["key-string"]; ok {
 			tmp["key_string"] = flattenRouterKeyChainKeyKeyString(i["key-string"], d, pre_append)
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["key_string"] = c
+			}
 		}
 
 		result = append(result, tmp)

@@ -45,6 +45,7 @@ func resourceUserRadius() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"secondary_server": &schema.Schema{
 				Type:         schema.TypeString,
@@ -56,6 +57,7 @@ func resourceUserRadius() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"tertiary_server": &schema.Schema{
 				Type:         schema.TypeString,
@@ -67,6 +69,7 @@ func resourceUserRadius() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"timeout": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -181,6 +184,7 @@ func resourceUserRadius() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"rsso_endpoint_attribute": &schema.Schema{
 				Type:     schema.TypeString,
@@ -201,6 +205,7 @@ func resourceUserRadius() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
+				Sensitive:    true,
 				Computed:     true,
 			},
 			"sso_attribute_value_override": &schema.Schema{
@@ -258,6 +263,7 @@ func resourceUserRadius() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 128),
 							Optional:     true,
+							Sensitive:    true,
 						},
 						"port": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -584,6 +590,10 @@ func flattenUserRadiusAccountingServer(v interface{}, d *schema.ResourceData, pr
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "secret"
 		if _, ok := i["secret"]; ok {
 			tmp["secret"] = flattenUserRadiusAccountingServerSecret(i["secret"], d, pre_append)
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["secret"] = c
+			}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
@@ -649,21 +659,9 @@ func refreshObjectUserRadius(d *schema.ResourceData, o map[string]interface{}) e
 		}
 	}
 
-	if err = d.Set("secondary_secret", flattenUserRadiusSecondarySecret(o["secondary-secret"], d, "secondary_secret")); err != nil {
-		if !fortiAPIPatch(o["secondary-secret"]) {
-			return fmt.Errorf("Error reading secondary_secret: %v", err)
-		}
-	}
-
 	if err = d.Set("tertiary_server", flattenUserRadiusTertiaryServer(o["tertiary-server"], d, "tertiary_server")); err != nil {
 		if !fortiAPIPatch(o["tertiary-server"]) {
 			return fmt.Errorf("Error reading tertiary_server: %v", err)
-		}
-	}
-
-	if err = d.Set("tertiary_secret", flattenUserRadiusTertiarySecret(o["tertiary-secret"], d, "tertiary_secret")); err != nil {
-		if !fortiAPIPatch(o["tertiary-secret"]) {
-			return fmt.Errorf("Error reading tertiary_secret: %v", err)
 		}
 	}
 
@@ -791,12 +789,6 @@ func refreshObjectUserRadius(d *schema.ResourceData, o map[string]interface{}) e
 		}
 	}
 
-	if err = d.Set("rsso_secret", flattenUserRadiusRssoSecret(o["rsso-secret"], d, "rsso_secret")); err != nil {
-		if !fortiAPIPatch(o["rsso-secret"]) {
-			return fmt.Errorf("Error reading rsso_secret: %v", err)
-		}
-	}
-
 	if err = d.Set("rsso_endpoint_attribute", flattenUserRadiusRssoEndpointAttribute(o["rsso-endpoint-attribute"], d, "rsso_endpoint_attribute")); err != nil {
 		if !fortiAPIPatch(o["rsso-endpoint-attribute"]) {
 			return fmt.Errorf("Error reading rsso_endpoint_attribute: %v", err)
@@ -812,12 +804,6 @@ func refreshObjectUserRadius(d *schema.ResourceData, o map[string]interface{}) e
 	if err = d.Set("sso_attribute", flattenUserRadiusSsoAttribute(o["sso-attribute"], d, "sso_attribute")); err != nil {
 		if !fortiAPIPatch(o["sso-attribute"]) {
 			return fmt.Errorf("Error reading sso_attribute: %v", err)
-		}
-	}
-
-	if err = d.Set("sso_attribute_key", flattenUserRadiusSsoAttributeKey(o["sso-attribute-key"], d, "sso_attribute_key")); err != nil {
-		if !fortiAPIPatch(o["sso-attribute-key"]) {
-			return fmt.Errorf("Error reading sso_attribute_key: %v", err)
 		}
 	}
 

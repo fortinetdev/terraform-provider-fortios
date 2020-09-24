@@ -330,6 +330,7 @@ func resourceVpnSslWebPortal() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 128),
 										Optional:     true,
+										Sensitive:    true,
 									},
 									"sso": &schema.Schema{
 										Type:     schema.TypeString,
@@ -369,6 +370,7 @@ func resourceVpnSslWebPortal() *schema.Resource {
 										Type:         schema.TypeString,
 										ValidateFunc: validation.StringLenBetween(0, 128),
 										Optional:     true,
+										Sensitive:    true,
 									},
 									"sso_credential_sent_once": &schema.Schema{
 										Type:     schema.TypeString,
@@ -1107,6 +1109,10 @@ func flattenVpnSslWebPortalBookmarkGroupBookmarks(v interface{}, d *schema.Resou
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "logon_password"
 		if _, ok := i["logon-password"]; ok {
 			tmp["logon_password"] = flattenVpnSslWebPortalBookmarkGroupBookmarksLogonPassword(i["logon-password"], d, pre_append)
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["logon_password"] = c
+			}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sso"
@@ -1132,6 +1138,10 @@ func flattenVpnSslWebPortalBookmarkGroupBookmarks(v interface{}, d *schema.Resou
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sso_password"
 		if _, ok := i["sso-password"]; ok {
 			tmp["sso_password"] = flattenVpnSslWebPortalBookmarkGroupBookmarksSsoPassword(i["sso-password"], d, pre_append)
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["sso_password"] = c
+			}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sso_credential_sent_once"

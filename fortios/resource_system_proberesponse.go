@@ -60,6 +60,7 @@ func resourceSystemProbeResponse() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"timeout": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -194,12 +195,6 @@ func refreshObjectSystemProbeResponse(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("security_mode", flattenSystemProbeResponseSecurityMode(o["security-mode"], d, "security_mode")); err != nil {
 		if !fortiAPIPatch(o["security-mode"]) {
 			return fmt.Errorf("Error reading security_mode: %v", err)
-		}
-	}
-
-	if err = d.Set("password", flattenSystemProbeResponsePassword(o["password"], d, "password")); err != nil {
-		if !fortiAPIPatch(o["password"]) {
-			return fmt.Errorf("Error reading password: %v", err)
 		}
 	}
 

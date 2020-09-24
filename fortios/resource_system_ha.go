@@ -55,11 +55,13 @@ func resourceSystemHa() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"key": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 16),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"hbdev": &schema.Schema{
 				Type:     schema.TypeString,
@@ -973,18 +975,6 @@ func refreshObjectSystemHa(d *schema.ResourceData, o map[string]interface{}) err
 	if err = d.Set("sync_packet_balance", flattenSystemHaSyncPacketBalance(o["sync-packet-balance"], d, "sync_packet_balance")); err != nil {
 		if !fortiAPIPatch(o["sync-packet-balance"]) {
 			return fmt.Errorf("Error reading sync_packet_balance: %v", err)
-		}
-	}
-
-	if err = d.Set("password", flattenSystemHaPassword(o["password"], d, "password")); err != nil {
-		if !fortiAPIPatch(o["password"]) {
-			return fmt.Errorf("Error reading password: %v", err)
-		}
-	}
-
-	if err = d.Set("key", flattenSystemHaKey(o["key"], d, "key")); err != nil {
-		if !fortiAPIPatch(o["key"]) {
-			return fmt.Errorf("Error reading key: %v", err)
 		}
 	}
 

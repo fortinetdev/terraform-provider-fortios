@@ -110,6 +110,7 @@ func resourceSystemAutomationAction() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"protocol": &schema.Schema{
 				Type:     schema.TypeString,
@@ -526,12 +527,6 @@ func refreshObjectSystemAutomationAction(d *schema.ResourceData, o map[string]in
 	if err = d.Set("aws_api_path", flattenSystemAutomationActionAwsApiPath(o["aws-api-path"], d, "aws_api_path")); err != nil {
 		if !fortiAPIPatch(o["aws-api-path"]) {
 			return fmt.Errorf("Error reading aws_api_path: %v", err)
-		}
-	}
-
-	if err = d.Set("aws_api_key", flattenSystemAutomationActionAwsApiKey(o["aws-api-key"], d, "aws_api_key")); err != nil {
-		if !fortiAPIPatch(o["aws-api-key"]) {
-			return fmt.Errorf("Error reading aws_api_key: %v", err)
 		}
 	}
 

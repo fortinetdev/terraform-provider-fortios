@@ -284,6 +284,7 @@ func resourceRouterRip() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 16),
 							Optional:     true,
+							Sensitive:    true,
 						},
 						"receive_version": &schema.Schema{
 							Type:     schema.TypeString,
@@ -876,6 +877,10 @@ func flattenRouterRipInterface(v interface{}, d *schema.ResourceData, pre string
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_string"
 		if _, ok := i["auth-string"]; ok {
 			tmp["auth_string"] = flattenRouterRipInterfaceAuthString(i["auth-string"], d, pre_append)
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["auth_string"] = c
+			}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "receive_version"

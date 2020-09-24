@@ -16,7 +16,7 @@ resource "fortios_system_sdnconnector" "trname" {
   azure_region     = "global"
   ha_status        = "disable"
   name             = "1"
-  password         = "ENC -1N2ZPOCHEkvUA4pNeO78iotUQKN8="
+  password         = "deWdf321ds"
   server           = "1.1.1.1"
   server_port      = 3
   status           = "disable"
@@ -60,7 +60,7 @@ The following arguments are supported:
 * `oci_fingerprint` - OCI pubkey fingerprint.
 * `external_ip` - Configure GCP external IP.
 * `route` - Configure GCP route.
-* `use_metadata_iam` - (Required) Enable/disable using IAM role from metadata to call API.
+* `use_metadata_iam` - Enable/disable using IAM role from metadata to call API.
 * `gcp_project` - GCP project name.
 * `service_account` - GCP service account email.
 * `key_passwd` - Private key password.

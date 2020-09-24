@@ -802,6 +802,7 @@ func resourceRouterBgp() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 128),
 							Optional:     true,
+							Sensitive:    true,
 						},
 						"conditional_advertise": &schema.Schema{
 							Type:     schema.TypeList,
@@ -2357,6 +2358,10 @@ func flattenRouterBgpNeighbor(v interface{}, d *schema.ResourceData, pre string)
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "password"
 		if _, ok := i["password"]; ok {
 			tmp["password"] = flattenRouterBgpNeighborPassword(i["password"], d, pre_append)
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["password"] = c
+			}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "conditional_advertise"

@@ -52,6 +52,7 @@ func resourceUserLocal() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"ldap_server": &schema.Schema{
 				Type:         schema.TypeString,
@@ -140,9 +141,9 @@ func resourceUserLocal() *schema.Resource {
 				Computed:     true,
 			},
 			"ppk_secret": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:      schema.TypeString,
+				Optional:  true,
+				Sensitive: true,
 			},
 			"ppk_identity": &schema.Schema{
 				Type:         schema.TypeString,
@@ -358,12 +359,6 @@ func refreshObjectUserLocal(d *schema.ResourceData, o map[string]interface{}) er
 		}
 	}
 
-	if err = d.Set("passwd", flattenUserLocalPasswd(o["passwd"], d, "passwd")); err != nil {
-		if !fortiAPIPatch(o["passwd"]) {
-			return fmt.Errorf("Error reading passwd: %v", err)
-		}
-	}
-
 	if err = d.Set("ldap_server", flattenUserLocalLdapServer(o["ldap-server"], d, "ldap_server")); err != nil {
 		if !fortiAPIPatch(o["ldap-server"]) {
 			return fmt.Errorf("Error reading ldap_server: %v", err)
@@ -451,12 +446,6 @@ func refreshObjectUserLocal(d *schema.ResourceData, o map[string]interface{}) er
 	if err = d.Set("auth_concurrent_value", flattenUserLocalAuthConcurrentValue(o["auth-concurrent-value"], d, "auth_concurrent_value")); err != nil {
 		if !fortiAPIPatch(o["auth-concurrent-value"]) {
 			return fmt.Errorf("Error reading auth_concurrent_value: %v", err)
-		}
-	}
-
-	if err = d.Set("ppk_secret", flattenUserLocalPpkSecret(o["ppk-secret"], d, "ppk_secret")); err != nil {
-		if !fortiAPIPatch(o["ppk-secret"]) {
-			return fmt.Errorf("Error reading ppk_secret: %v", err)
 		}
 	}
 

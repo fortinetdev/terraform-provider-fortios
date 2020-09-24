@@ -38,6 +38,7 @@ func resourceVpnCertificateLocal() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"comments": &schema.Schema{
 				Type:         schema.TypeString,
@@ -46,8 +47,9 @@ func resourceVpnCertificateLocal() *schema.Resource {
 				Computed:     true,
 			},
 			"private_key": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Type:      schema.TypeString,
+				Required:  true,
+				Sensitive: true,
 			},
 			"certificate": &schema.Schema{
 				Type:     schema.TypeString,
@@ -94,6 +96,7 @@ func resourceVpnCertificateLocal() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"ca_identifier": &schema.Schema{
 				Type:         schema.TypeString,
@@ -353,21 +356,9 @@ func refreshObjectVpnCertificateLocal(d *schema.ResourceData, o map[string]inter
 		}
 	}
 
-	if err = d.Set("password", flattenVpnCertificateLocalPassword(o["password"], d, "password")); err != nil {
-		if !fortiAPIPatch(o["password"]) {
-			return fmt.Errorf("Error reading password: %v", err)
-		}
-	}
-
 	if err = d.Set("comments", flattenVpnCertificateLocalComments(o["comments"], d, "comments")); err != nil {
 		if !fortiAPIPatch(o["comments"]) {
 			return fmt.Errorf("Error reading comments: %v", err)
-		}
-	}
-
-	if err = d.Set("private_key", flattenVpnCertificateLocalPrivateKey(o["private-key"], d, "private_key")); err != nil {
-		if !fortiAPIPatch(o["private-key"]) {
-			return fmt.Errorf("Error reading private_key: %v", err)
 		}
 	}
 
@@ -416,12 +407,6 @@ func refreshObjectVpnCertificateLocal(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("auto_regenerate_days_warning", flattenVpnCertificateLocalAutoRegenerateDaysWarning(o["auto-regenerate-days-warning"], d, "auto_regenerate_days_warning")); err != nil {
 		if !fortiAPIPatch(o["auto-regenerate-days-warning"]) {
 			return fmt.Errorf("Error reading auto_regenerate_days_warning: %v", err)
-		}
-	}
-
-	if err = d.Set("scep_password", flattenVpnCertificateLocalScepPassword(o["scep-password"], d, "scep_password")); err != nil {
-		if !fortiAPIPatch(o["scep-password"]) {
-			return fmt.Errorf("Error reading scep_password: %v", err)
 		}
 	}
 

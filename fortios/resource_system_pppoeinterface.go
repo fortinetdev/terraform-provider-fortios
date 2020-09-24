@@ -60,6 +60,7 @@ func resourceSystemPppoeInterface() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"auth_type": &schema.Schema{
 				Type:     schema.TypeString,
@@ -300,12 +301,6 @@ func refreshObjectSystemPppoeInterface(d *schema.ResourceData, o map[string]inte
 	if err = d.Set("username", flattenSystemPppoeInterfaceUsername(o["username"], d, "username")); err != nil {
 		if !fortiAPIPatch(o["username"]) {
 			return fmt.Errorf("Error reading username: %v", err)
-		}
-	}
-
-	if err = d.Set("password", flattenSystemPppoeInterfacePassword(o["password"], d, "password")); err != nil {
-		if !fortiAPIPatch(o["password"]) {
-			return fmt.Errorf("Error reading password: %v", err)
 		}
 	}
 

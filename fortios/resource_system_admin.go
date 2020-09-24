@@ -52,9 +52,10 @@ func resourceSystemAdmin() *schema.Resource {
 				Computed:     true,
 			},
 			"password": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 128),
+				Optional:     true,
+				Sensitive:    true,
 			},
 			"peer_auth": &schema.Schema{
 				Type:     schema.TypeString,
@@ -204,19 +205,22 @@ func resourceSystemAdmin() *schema.Resource {
 				},
 			},
 			"ssh_public_key1": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:      schema.TypeString,
+				Optional:  true,
+				Sensitive: true,
+				Computed:  true,
 			},
 			"ssh_public_key2": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:      schema.TypeString,
+				Optional:  true,
+				Sensitive: true,
+				Computed:  true,
 			},
 			"ssh_public_key3": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:      schema.TypeString,
+				Optional:  true,
+				Sensitive: true,
+				Computed:  true,
 			},
 			"ssh_certificate": &schema.Schema{
 				Type:         schema.TypeString,
@@ -461,14 +465,16 @@ func resourceSystemAdmin() *schema.Resource {
 				Computed:     true,
 			},
 			"history0": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 128),
+				Optional:     true,
+				Sensitive:    true,
 			},
 			"history1": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 128),
+				Optional:     true,
+				Sensitive:    true,
 			},
 			"login_time": &schema.Schema{
 				Type:     schema.TypeList,
@@ -1630,24 +1636,6 @@ func refreshObjectSystemAdmin(d *schema.ResourceData, o map[string]interface{}) 
 		}
 	}
 
-	if err = d.Set("ssh_public_key1", flattenSystemAdminSshPublicKey1(o["ssh-public-key1"], d, "ssh_public_key1")); err != nil {
-		if !fortiAPIPatch(o["ssh-public-key1"]) {
-			return fmt.Errorf("Error reading ssh_public_key1: %v", err)
-		}
-	}
-
-	if err = d.Set("ssh_public_key2", flattenSystemAdminSshPublicKey2(o["ssh-public-key2"], d, "ssh_public_key2")); err != nil {
-		if !fortiAPIPatch(o["ssh-public-key2"]) {
-			return fmt.Errorf("Error reading ssh_public_key2: %v", err)
-		}
-	}
-
-	if err = d.Set("ssh_public_key3", flattenSystemAdminSshPublicKey3(o["ssh-public-key3"], d, "ssh_public_key3")); err != nil {
-		if !fortiAPIPatch(o["ssh-public-key3"]) {
-			return fmt.Errorf("Error reading ssh_public_key3: %v", err)
-		}
-	}
-
 	if err = d.Set("ssh_certificate", flattenSystemAdminSshCertificate(o["ssh-certificate"], d, "ssh_certificate")); err != nil {
 		if !fortiAPIPatch(o["ssh-certificate"]) {
 			return fmt.Errorf("Error reading ssh_certificate: %v", err)
@@ -1761,18 +1749,6 @@ func refreshObjectSystemAdmin(d *schema.ResourceData, o map[string]interface{}) 
 	if err = d.Set("guest_lang", flattenSystemAdminGuestLang(o["guest-lang"], d, "guest_lang")); err != nil {
 		if !fortiAPIPatch(o["guest-lang"]) {
 			return fmt.Errorf("Error reading guest_lang: %v", err)
-		}
-	}
-
-	if err = d.Set("history0", flattenSystemAdminHistory0(o["history0"], d, "history0")); err != nil {
-		if !fortiAPIPatch(o["history0"]) {
-			return fmt.Errorf("Error reading history0: %v", err)
-		}
-	}
-
-	if err = d.Set("history1", flattenSystemAdminHistory1(o["history1"], d, "history1")); err != nil {
-		if !fortiAPIPatch(o["history1"]) {
-			return fmt.Errorf("Error reading history1: %v", err)
 		}
 	}
 

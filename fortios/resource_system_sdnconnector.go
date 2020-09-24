@@ -67,20 +67,23 @@ func resourceSystemSdnConnector() *schema.Resource {
 				Computed:     true,
 			},
 			"password": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:      schema.TypeString,
+				Optional:  true,
+				Sensitive: true,
+				Computed:  true,
 			},
 			"access_key": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
 				Optional:     true,
+				Sensitive:    true,
 				Computed:     true,
 			},
 			"secret_key": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 59),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"region": &schema.Schema{
 				Type:         schema.TypeString,
@@ -128,6 +131,7 @@ func resourceSystemSdnConnector() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 59),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"resource_group": &schema.Schema{
 				Type:         schema.TypeString,
@@ -267,7 +271,8 @@ func resourceSystemSdnConnector() *schema.Resource {
 			},
 			"use_metadata_iam": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"gcp_project": &schema.Schema{
 				Type:         schema.TypeString,
@@ -285,16 +290,19 @@ func resourceSystemSdnConnector() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"private_key": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:      schema.TypeString,
+				Optional:  true,
+				Sensitive: true,
+				Computed:  true,
 			},
 			"secret_token": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:      schema.TypeString,
+				Optional:  true,
+				Sensitive: true,
+				Computed:  true,
 			},
 			"update_interval": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -812,18 +820,6 @@ func refreshObjectSystemSdnConnector(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
-	if err = d.Set("access_key", flattenSystemSdnConnectorAccessKey(o["access-key"], d, "access_key")); err != nil {
-		if !fortiAPIPatch(o["access-key"]) {
-			return fmt.Errorf("Error reading access_key: %v", err)
-		}
-	}
-
-	if err = d.Set("secret_key", flattenSystemSdnConnectorSecretKey(o["secret-key"], d, "secret_key")); err != nil {
-		if !fortiAPIPatch(o["secret-key"]) {
-			return fmt.Errorf("Error reading secret_key: %v", err)
-		}
-	}
-
 	if err = d.Set("region", flattenSystemSdnConnectorRegion(o["region"], d, "region")); err != nil {
 		if !fortiAPIPatch(o["region"]) {
 			return fmt.Errorf("Error reading region: %v", err)
@@ -863,12 +859,6 @@ func refreshObjectSystemSdnConnector(d *schema.ResourceData, o map[string]interf
 	if err = d.Set("client_id", flattenSystemSdnConnectorClientId(o["client-id"], d, "client_id")); err != nil {
 		if !fortiAPIPatch(o["client-id"]) {
 			return fmt.Errorf("Error reading client_id: %v", err)
-		}
-	}
-
-	if err = d.Set("client_secret", flattenSystemSdnConnectorClientSecret(o["client-secret"], d, "client_secret")); err != nil {
-		if !fortiAPIPatch(o["client-secret"]) {
-			return fmt.Errorf("Error reading client_secret: %v", err)
 		}
 	}
 
@@ -993,24 +983,6 @@ func refreshObjectSystemSdnConnector(d *schema.ResourceData, o map[string]interf
 	if err = d.Set("service_account", flattenSystemSdnConnectorServiceAccount(o["service-account"], d, "service_account")); err != nil {
 		if !fortiAPIPatch(o["service-account"]) {
 			return fmt.Errorf("Error reading service_account: %v", err)
-		}
-	}
-
-	if err = d.Set("key_passwd", flattenSystemSdnConnectorKeyPasswd(o["key-passwd"], d, "key_passwd")); err != nil {
-		if !fortiAPIPatch(o["key-passwd"]) {
-			return fmt.Errorf("Error reading key_passwd: %v", err)
-		}
-	}
-
-	if err = d.Set("private_key", flattenSystemSdnConnectorPrivateKey(o["private-key"], d, "private_key")); err != nil {
-		if !fortiAPIPatch(o["private-key"]) {
-			return fmt.Errorf("Error reading private_key: %v", err)
-		}
-	}
-
-	if err = d.Set("secret_token", flattenSystemSdnConnectorSecretToken(o["secret-token"], d, "secret_token")); err != nil {
-		if !fortiAPIPatch(o["secret-token"]) {
-			return fmt.Errorf("Error reading secret_token: %v", err)
 		}
 	}
 

@@ -118,6 +118,7 @@ func resourceExtenderControllerExtender() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 27),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"initiated_update": &schema.Schema{
 				Type:     schema.TypeString,
@@ -139,6 +140,7 @@ func resourceExtenderControllerExtender() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 27),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"ppp_auth_protocol": &schema.Schema{
 				Type:     schema.TypeString,
@@ -171,6 +173,7 @@ func resourceExtenderControllerExtender() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 27),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"access_point_name": &schema.Schema{
 				Type:         schema.TypeString,
@@ -198,11 +201,13 @@ func resourceExtenderControllerExtender() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 27),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"ha_shared_secret": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 27),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"primary_ha": &schema.Schema{
 				Type:         schema.TypeString,
@@ -568,12 +573,6 @@ func refreshObjectExtenderControllerExtender(d *schema.ResourceData, o map[strin
 		}
 	}
 
-	if err = d.Set("modem_passwd", flattenExtenderControllerExtenderModemPasswd(o["modem-passwd"], d, "modem_passwd")); err != nil {
-		if !fortiAPIPatch(o["modem-passwd"]) {
-			return fmt.Errorf("Error reading modem_passwd: %v", err)
-		}
-	}
-
 	if err = d.Set("initiated_update", flattenExtenderControllerExtenderInitiatedUpdate(o["initiated-update"], d, "initiated_update")); err != nil {
 		if !fortiAPIPatch(o["initiated-update"]) {
 			return fmt.Errorf("Error reading initiated_update: %v", err)
@@ -589,12 +588,6 @@ func refreshObjectExtenderControllerExtender(d *schema.ResourceData, o map[strin
 	if err = d.Set("ppp_username", flattenExtenderControllerExtenderPppUsername(o["ppp-username"], d, "ppp_username")); err != nil {
 		if !fortiAPIPatch(o["ppp-username"]) {
 			return fmt.Errorf("Error reading ppp_username: %v", err)
-		}
-	}
-
-	if err = d.Set("ppp_password", flattenExtenderControllerExtenderPppPassword(o["ppp-password"], d, "ppp_password")); err != nil {
-		if !fortiAPIPatch(o["ppp-password"]) {
-			return fmt.Errorf("Error reading ppp_password: %v", err)
 		}
 	}
 
@@ -628,12 +621,6 @@ func refreshObjectExtenderControllerExtender(d *schema.ResourceData, o map[strin
 		}
 	}
 
-	if err = d.Set("sim_pin", flattenExtenderControllerExtenderSimPin(o["sim-pin"], d, "sim_pin")); err != nil {
-		if !fortiAPIPatch(o["sim-pin"]) {
-			return fmt.Errorf("Error reading sim_pin: %v", err)
-		}
-	}
-
 	if err = d.Set("access_point_name", flattenExtenderControllerExtenderAccessPointName(o["access-point-name"], d, "access_point_name")); err != nil {
 		if !fortiAPIPatch(o["access-point-name"]) {
 			return fmt.Errorf("Error reading access_point_name: %v", err)
@@ -655,18 +642,6 @@ func refreshObjectExtenderControllerExtender(d *schema.ResourceData, o map[strin
 	if err = d.Set("cdma_nai", flattenExtenderControllerExtenderCdmaNai(o["cdma-nai"], d, "cdma_nai")); err != nil {
 		if !fortiAPIPatch(o["cdma-nai"]) {
 			return fmt.Errorf("Error reading cdma_nai: %v", err)
-		}
-	}
-
-	if err = d.Set("aaa_shared_secret", flattenExtenderControllerExtenderAaaSharedSecret(o["aaa-shared-secret"], d, "aaa_shared_secret")); err != nil {
-		if !fortiAPIPatch(o["aaa-shared-secret"]) {
-			return fmt.Errorf("Error reading aaa_shared_secret: %v", err)
-		}
-	}
-
-	if err = d.Set("ha_shared_secret", flattenExtenderControllerExtenderHaSharedSecret(o["ha-shared-secret"], d, "ha_shared_secret")); err != nil {
-		if !fortiAPIPatch(o["ha-shared-secret"]) {
-			return fmt.Errorf("Error reading ha_shared_secret: %v", err)
 		}
 	}
 

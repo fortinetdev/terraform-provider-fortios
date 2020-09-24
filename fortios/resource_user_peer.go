@@ -79,6 +79,7 @@ func resourceUserPeer() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"ldap_mode": &schema.Schema{
 				Type:     schema.TypeString,
@@ -100,6 +101,7 @@ func resourceUserPeer() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 		},
 	}
@@ -297,12 +299,6 @@ func refreshObjectUserPeer(d *schema.ResourceData, o map[string]interface{}) err
 		}
 	}
 
-	if err = d.Set("ldap_password", flattenUserPeerLdapPassword(o["ldap-password"], d, "ldap_password")); err != nil {
-		if !fortiAPIPatch(o["ldap-password"]) {
-			return fmt.Errorf("Error reading ldap_password: %v", err)
-		}
-	}
-
 	if err = d.Set("ldap_mode", flattenUserPeerLdapMode(o["ldap-mode"], d, "ldap_mode")); err != nil {
 		if !fortiAPIPatch(o["ldap-mode"]) {
 			return fmt.Errorf("Error reading ldap_mode: %v", err)
@@ -318,12 +314,6 @@ func refreshObjectUserPeer(d *schema.ResourceData, o map[string]interface{}) err
 	if err = d.Set("two_factor", flattenUserPeerTwoFactor(o["two-factor"], d, "two_factor")); err != nil {
 		if !fortiAPIPatch(o["two-factor"]) {
 			return fmt.Errorf("Error reading two_factor: %v", err)
-		}
-	}
-
-	if err = d.Set("passwd", flattenUserPeerPasswd(o["passwd"], d, "passwd")); err != nil {
-		if !fortiAPIPatch(o["passwd"]) {
-			return fmt.Errorf("Error reading passwd: %v", err)
 		}
 	}
 

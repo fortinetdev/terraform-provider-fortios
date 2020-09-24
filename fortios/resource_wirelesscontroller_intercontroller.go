@@ -38,6 +38,7 @@ func resourceWirelessControllerInterController() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"inter_controller_pri": &schema.Schema{
 				Type:     schema.TypeString,
@@ -243,12 +244,6 @@ func refreshObjectWirelessControllerInterController(d *schema.ResourceData, o ma
 	if err = d.Set("inter_controller_mode", flattenWirelessControllerInterControllerInterControllerMode(o["inter-controller-mode"], d, "inter_controller_mode")); err != nil {
 		if !fortiAPIPatch(o["inter-controller-mode"]) {
 			return fmt.Errorf("Error reading inter_controller_mode: %v", err)
-		}
-	}
-
-	if err = d.Set("inter_controller_key", flattenWirelessControllerInterControllerInterControllerKey(o["inter-controller-key"], d, "inter_controller_key")); err != nil {
-		if !fortiAPIPatch(o["inter-controller-key"]) {
-			return fmt.Errorf("Error reading inter_controller_key: %v", err)
 		}
 	}
 

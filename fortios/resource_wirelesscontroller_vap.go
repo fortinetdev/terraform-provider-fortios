@@ -207,11 +207,13 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"passphrase": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"radius_server": &schema.Schema{
 				Type:         schema.TypeString,
@@ -387,6 +389,7 @@ func resourceWirelessControllerVap() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 128),
 							Optional:     true,
+							Sensitive:    true,
 						},
 						"concurrent_clients": &schema.Schema{
 							Type:         schema.TypeString,
@@ -433,6 +436,7 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"captive_portal_macauth_radius_server": &schema.Schema{
 				Type:         schema.TypeString,
@@ -444,6 +448,7 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"captive_portal_ac_name": &schema.Schema{
 				Type:         schema.TypeString,
@@ -1148,6 +1153,10 @@ func flattenWirelessControllerVapMpskKey(v interface{}, d *schema.ResourceData, 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "passphrase"
 		if _, ok := i["passphrase"]; ok {
 			tmp["passphrase"] = flattenWirelessControllerVapMpskKeyPassphrase(i["passphrase"], d, pre_append)
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["passphrase"] = c
+			}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "concurrent_clients"
@@ -1650,18 +1659,6 @@ func refreshObjectWirelessControllerVap(d *schema.ResourceData, o map[string]int
 		}
 	}
 
-	if err = d.Set("key", flattenWirelessControllerVapKey(o["key"], d, "key")); err != nil {
-		if !fortiAPIPatch(o["key"]) {
-			return fmt.Errorf("Error reading key: %v", err)
-		}
-	}
-
-	if err = d.Set("passphrase", flattenWirelessControllerVapPassphrase(o["passphrase"], d, "passphrase")); err != nil {
-		if !fortiAPIPatch(o["passphrase"]) {
-			return fmt.Errorf("Error reading passphrase: %v", err)
-		}
-	}
-
 	if err = d.Set("radius_server", flattenWirelessControllerVapRadiusServer(o["radius-server"], d, "radius_server")); err != nil {
 		if !fortiAPIPatch(o["radius-server"]) {
 			return fmt.Errorf("Error reading radius_server: %v", err)
@@ -1864,21 +1861,9 @@ func refreshObjectWirelessControllerVap(d *schema.ResourceData, o map[string]int
 		}
 	}
 
-	if err = d.Set("captive_portal_radius_secret", flattenWirelessControllerVapCaptivePortalRadiusSecret(o["captive-portal-radius-secret"], d, "captive_portal_radius_secret")); err != nil {
-		if !fortiAPIPatch(o["captive-portal-radius-secret"]) {
-			return fmt.Errorf("Error reading captive_portal_radius_secret: %v", err)
-		}
-	}
-
 	if err = d.Set("captive_portal_macauth_radius_server", flattenWirelessControllerVapCaptivePortalMacauthRadiusServer(o["captive-portal-macauth-radius-server"], d, "captive_portal_macauth_radius_server")); err != nil {
 		if !fortiAPIPatch(o["captive-portal-macauth-radius-server"]) {
 			return fmt.Errorf("Error reading captive_portal_macauth_radius_server: %v", err)
-		}
-	}
-
-	if err = d.Set("captive_portal_macauth_radius_secret", flattenWirelessControllerVapCaptivePortalMacauthRadiusSecret(o["captive-portal-macauth-radius-secret"], d, "captive_portal_macauth_radius_secret")); err != nil {
-		if !fortiAPIPatch(o["captive-portal-macauth-radius-secret"]) {
-			return fmt.Errorf("Error reading captive_portal_macauth_radius_secret: %v", err)
 		}
 	}
 

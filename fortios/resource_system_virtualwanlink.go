@@ -189,6 +189,7 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 128),
 							Optional:     true,
+							Sensitive:    true,
 						},
 						"packet_size": &schema.Schema{
 							Type:         schema.TypeInt,
@@ -1044,6 +1045,10 @@ func flattenSystemVirtualWanLinkHealthCheck(v interface{}, d *schema.ResourceDat
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "password"
 		if _, ok := i["password"]; ok {
 			tmp["password"] = flattenSystemVirtualWanLinkHealthCheckPassword(i["password"], d, pre_append)
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["password"] = c
+			}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "packet_size"

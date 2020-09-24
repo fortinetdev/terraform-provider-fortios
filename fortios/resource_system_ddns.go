@@ -67,9 +67,10 @@ func resourceSystemDdns() *schema.Resource {
 				Computed:     true,
 			},
 			"ddns_key": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:      schema.TypeString,
+				Optional:  true,
+				Sensitive: true,
+				Computed:  true,
 			},
 			"ddns_domain": &schema.Schema{
 				Type:         schema.TypeString,
@@ -93,6 +94,7 @@ func resourceSystemDdns() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"use_public_ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -374,12 +376,6 @@ func refreshObjectSystemDdns(d *schema.ResourceData, o map[string]interface{}) e
 	if err = d.Set("ddns_keyname", flattenSystemDdnsDdnsKeyname(o["ddns-keyname"], d, "ddns_keyname")); err != nil {
 		if !fortiAPIPatch(o["ddns-keyname"]) {
 			return fmt.Errorf("Error reading ddns_keyname: %v", err)
-		}
-	}
-
-	if err = d.Set("ddns_key", flattenSystemDdnsDdnsKey(o["ddns-key"], d, "ddns_key")); err != nil {
-		if !fortiAPIPatch(o["ddns-key"]) {
-			return fmt.Errorf("Error reading ddns_key: %v", err)
 		}
 	}
 

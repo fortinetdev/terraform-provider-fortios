@@ -65,6 +65,7 @@ func resourceUserFssoPolling() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"ldap_server": &schema.Schema{
 				Type:         schema.TypeString,
@@ -320,12 +321,6 @@ func refreshObjectUserFssoPolling(d *schema.ResourceData, o map[string]interface
 	if err = d.Set("user", flattenUserFssoPollingUser(o["user"], d, "user")); err != nil {
 		if !fortiAPIPatch(o["user"]) {
 			return fmt.Errorf("Error reading user: %v", err)
-		}
-	}
-
-	if err = d.Set("password", flattenUserFssoPollingPassword(o["password"], d, "password")); err != nil {
-		if !fortiAPIPatch(o["password"]) {
-			return fmt.Errorf("Error reading password: %v", err)
 		}
 	}
 

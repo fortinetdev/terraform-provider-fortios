@@ -58,11 +58,13 @@ func resourceRouterIsis() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"auth_password_l2": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"auth_keychain_l1": &schema.Schema{
 				Type:         schema.TypeString,
@@ -344,11 +346,13 @@ func resourceRouterIsis() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 128),
 							Optional:     true,
+							Sensitive:    true,
 						},
 						"auth_password_l2": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 128),
 							Optional:     true,
+							Sensitive:    true,
 						},
 						"auth_keychain_l1": &schema.Schema{
 							Type:         schema.TypeString,
@@ -899,11 +903,19 @@ func flattenRouterIsisIsisInterface(v interface{}, d *schema.ResourceData, pre s
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_password_l1"
 		if _, ok := i["auth-password-l1"]; ok {
 			tmp["auth_password_l1"] = flattenRouterIsisIsisInterfaceAuthPasswordL1(i["auth-password-l1"], d, pre_append)
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["auth_password_l1"] = c
+			}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_password_l2"
 		if _, ok := i["auth-password-l2"]; ok {
 			tmp["auth_password_l2"] = flattenRouterIsisIsisInterfaceAuthPasswordL2(i["auth-password-l2"], d, pre_append)
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["auth_password_l2"] = c
+			}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_keychain_l1"
@@ -1391,18 +1403,6 @@ func refreshObjectRouterIsis(d *schema.ResourceData, o map[string]interface{}) e
 	if err = d.Set("auth_mode_l2", flattenRouterIsisAuthModeL2(o["auth-mode-l2"], d, "auth_mode_l2")); err != nil {
 		if !fortiAPIPatch(o["auth-mode-l2"]) {
 			return fmt.Errorf("Error reading auth_mode_l2: %v", err)
-		}
-	}
-
-	if err = d.Set("auth_password_l1", flattenRouterIsisAuthPasswordL1(o["auth-password-l1"], d, "auth_password_l1")); err != nil {
-		if !fortiAPIPatch(o["auth-password-l1"]) {
-			return fmt.Errorf("Error reading auth_password_l1: %v", err)
-		}
-	}
-
-	if err = d.Set("auth_password_l2", flattenRouterIsisAuthPasswordL2(o["auth-password-l2"], d, "auth_password_l2")); err != nil {
-		if !fortiAPIPatch(o["auth-password-l2"]) {
-			return fmt.Errorf("Error reading auth_password_l2: %v", err)
 		}
 	}
 

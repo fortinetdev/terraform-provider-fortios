@@ -84,6 +84,7 @@ func resourceSystemWccp() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"forward_method": &schema.Schema{
 				Type:     schema.TypeString,
@@ -393,12 +394,6 @@ func refreshObjectSystemWccp(d *schema.ResourceData, o map[string]interface{}) e
 	if err = d.Set("authentication", flattenSystemWccpAuthentication(o["authentication"], d, "authentication")); err != nil {
 		if !fortiAPIPatch(o["authentication"]) {
 			return fmt.Errorf("Error reading authentication: %v", err)
-		}
-	}
-
-	if err = d.Set("password", flattenSystemWccpPassword(o["password"], d, "password")); err != nil {
-		if !fortiAPIPatch(o["password"]) {
-			return fmt.Errorf("Error reading password: %v", err)
 		}
 	}
 

@@ -54,6 +54,7 @@ func resourceSystemCsf() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"configuration_sync": &schema.Schema{
 				Type:     schema.TypeString,
@@ -75,6 +76,7 @@ func resourceSystemCsf() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"trusted_list": &schema.Schema{
 				Type:     schema.TypeList,
@@ -137,6 +139,7 @@ func resourceSystemCsf() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 128),
 							Optional:     true,
+							Sensitive:    true,
 						},
 					},
 				},
@@ -351,6 +354,10 @@ func flattenSystemCsfFabricDevice(v interface{}, d *schema.ResourceData, pre str
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "password"
 		if _, ok := i["password"]; ok {
 			tmp["password"] = flattenSystemCsfFabricDevicePassword(i["password"], d, pre_append)
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["password"] = c
+			}
 		}
 
 		result = append(result, tmp)

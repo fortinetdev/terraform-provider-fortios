@@ -83,9 +83,10 @@ func resourceSystemMobileTunnel() *schema.Resource {
 				Required: true,
 			},
 			"n_mhae_key": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:      schema.TypeString,
+				Optional:  true,
+				Sensitive: true,
+				Computed:  true,
 			},
 			"hash_algorithm": &schema.Schema{
 				Type:     schema.TypeString,

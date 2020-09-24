@@ -126,6 +126,7 @@ func resourceLogDiskSetting() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 128),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"uploaddir": &schema.Schema{
 				Type:         schema.TypeString,
@@ -465,12 +466,6 @@ func refreshObjectLogDiskSetting(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("uploaduser", flattenLogDiskSettingUploaduser(o["uploaduser"], d, "uploaduser")); err != nil {
 		if !fortiAPIPatch(o["uploaduser"]) {
 			return fmt.Errorf("Error reading uploaduser: %v", err)
-		}
-	}
-
-	if err = d.Set("uploadpass", flattenLogDiskSettingUploadpass(o["uploadpass"], d, "uploadpass")); err != nil {
-		if !fortiAPIPatch(o["uploadpass"]) {
-			return fmt.Errorf("Error reading uploadpass: %v", err)
 		}
 	}
 
