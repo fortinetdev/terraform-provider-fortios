@@ -86,6 +86,10 @@ The following arguments are supported:
 * `tos_negate` - Enable negated TOS match.
 * `tcp_session_without_syn` - Enable/disable creation of TCP session without SYN flag.
 * `utm_status` - Enable to add one or more security profiles (AV, IPS, etc.) to the firewall policy.
+* `inspection_mode` - Policy inspection mode (Flow/proxy). Default is Flow mode.
+* `http_policy_redirect` - Redirect HTTP(S) traffic to matching transparent web proxy policy.
+* `ssh_policy_redirect` - Redirect SSH traffic to matching transparent proxy policy.
+* `webproxy_profile` - Webproxy profile name.
 * `profile_type` - Determine whether the firewall policy allows security profile groups or single profiles only.
 * `profile_group` - Name of profile group.
 * `av_profile` - Name of an existing Antivirus profile.

@@ -325,6 +325,27 @@ func resourceFirewallPolicy() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"inspection_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"http_policy_redirect": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"ssh_policy_redirect": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"webproxy_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
+			},
 			"profile_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -1592,6 +1613,22 @@ func flattenFirewallPolicyUtmStatus(v interface{}, d *schema.ResourceData, pre s
 	return v
 }
 
+func flattenFirewallPolicyInspectionMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicyHttpPolicyRedirect(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicySshPolicyRedirect(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicyWebproxyProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func flattenFirewallPolicyProfileType(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -2663,6 +2700,30 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 	if err = d.Set("utm_status", flattenFirewallPolicyUtmStatus(o["utm-status"], d, "utm_status")); err != nil {
 		if !fortiAPIPatch(o["utm-status"]) {
 			return fmt.Errorf("Error reading utm_status: %v", err)
+		}
+	}
+
+	if err = d.Set("inspection_mode", flattenFirewallPolicyInspectionMode(o["inspection-mode"], d, "inspection_mode")); err != nil {
+		if !fortiAPIPatch(o["inspection-mode"]) {
+			return fmt.Errorf("Error reading inspection_mode: %v", err)
+		}
+	}
+
+	if err = d.Set("http_policy_redirect", flattenFirewallPolicyHttpPolicyRedirect(o["http-policy-redirect"], d, "http_policy_redirect")); err != nil {
+		if !fortiAPIPatch(o["http-policy-redirect"]) {
+			return fmt.Errorf("Error reading http_policy_redirect: %v", err)
+		}
+	}
+
+	if err = d.Set("ssh_policy_redirect", flattenFirewallPolicySshPolicyRedirect(o["ssh-policy-redirect"], d, "ssh_policy_redirect")); err != nil {
+		if !fortiAPIPatch(o["ssh-policy-redirect"]) {
+			return fmt.Errorf("Error reading ssh_policy_redirect: %v", err)
+		}
+	}
+
+	if err = d.Set("webproxy_profile", flattenFirewallPolicyWebproxyProfile(o["webproxy-profile"], d, "webproxy_profile")); err != nil {
+		if !fortiAPIPatch(o["webproxy-profile"]) {
+			return fmt.Errorf("Error reading webproxy_profile: %v", err)
 		}
 	}
 
@@ -3851,6 +3912,22 @@ func expandFirewallPolicyUtmStatus(d *schema.ResourceData, v interface{}, pre st
 	return v, nil
 }
 
+func expandFirewallPolicyInspectionMode(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicyHttpPolicyRedirect(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicySshPolicyRedirect(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicyWebproxyProfile(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallPolicyProfileType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
 }
@@ -4822,6 +4899,42 @@ func getObjectFirewallPolicy(d *schema.ResourceData) (*map[string]interface{}, e
 			return &obj, err
 		} else if t != nil {
 			obj["utm-status"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("inspection_mode"); ok {
+		t, err := expandFirewallPolicyInspectionMode(d, v, "inspection_mode")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["inspection-mode"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("http_policy_redirect"); ok {
+		t, err := expandFirewallPolicyHttpPolicyRedirect(d, v, "http_policy_redirect")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["http-policy-redirect"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ssh_policy_redirect"); ok {
+		t, err := expandFirewallPolicySshPolicyRedirect(d, v, "ssh_policy_redirect")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ssh-policy-redirect"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("webproxy_profile"); ok {
+		t, err := expandFirewallPolicyWebproxyProfile(d, v, "webproxy_profile")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["webproxy-profile"] = t
 		}
 	}
 
