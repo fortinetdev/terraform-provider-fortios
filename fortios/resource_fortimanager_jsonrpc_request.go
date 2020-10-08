@@ -26,6 +26,10 @@ func resourceFortimanagerJSONRPCRequest() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"comment": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 		},
 	}
 }
@@ -41,11 +45,15 @@ func handleFMGJSONRPCRequest(d *schema.ResourceData, m interface{}) error {
 
 	data, err := c.HandleJSONRPCRequest(input)
 	if err != nil {
-		return fmt.Errorf("Error handling JSON RPC Request : %s", err)
+		res_data := ""
+		if data != nil {
+			res_data = string(data)
+		}
+		return fmt.Errorf("Error handling JSON RPC Request : %s\n%s", err, res_data)
 	}
 
 	d.SetId("JSONRPC-Requst-" + uuid.New().String())
-	d.Set("response", "FDS"+string(data))
+	d.Set("response", string(data))
 
 	return nil
 }

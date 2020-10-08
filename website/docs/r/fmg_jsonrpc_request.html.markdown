@@ -81,6 +81,7 @@ JSON
 The following arguments are supported:
 
 * `json_content` - (required) JSON RPC request, which should contain 'method' and 'params' parameters.
+* `comment` - Comment.
 
 ## Attributes Reference
 The following attributes are exported:
