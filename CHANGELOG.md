@@ -1,5 +1,15 @@
 ## 1.7.0 (Unreleased)
 
+## 1.6.3 (Oct 8, 2020)
+
+IMPROVEMENTS:
+
+* Improve FMG jsonrpc resource
+
+FEATURES:
+
+* Support inspection_mode, http_policy_redirect, ssh_policy_redirect, webproxy_profile for fortios_firewall_policy #92
+
 ## 1.6.2 (Sep 24, 2020)
 
 IMPROVEMENTS:
