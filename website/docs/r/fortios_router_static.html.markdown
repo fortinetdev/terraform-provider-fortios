@@ -44,7 +44,7 @@ The following arguments are supported:
 * `distance` - Administrative distance (1 - 255).
 * `weight` - Administrative weight (0 - 255).
 * `priority` - Administrative priority (0 - 4294967295).
-* `device` - (Required) Gateway out interface or tunnel.
+* `device` - Gateway out interface or tunnel.
 * `comment` - Optional comments.
 * `blackhole` - Enable/disable black hole.
 * `dynamic_gateway` - Enable use of dynamic gateway retrieved from a DHCP or PPP server.

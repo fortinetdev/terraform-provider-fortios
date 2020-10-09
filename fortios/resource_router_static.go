@@ -73,7 +73,8 @@ func resourceRouterStatic() *schema.Resource {
 			"device": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"comment": &schema.Schema{
 				Type:         schema.TypeString,
