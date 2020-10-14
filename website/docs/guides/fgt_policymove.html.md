@@ -1,7 +1,7 @@
 ---
 subcategory: ""
 layout: "fortios"
-page_title: "To move the policy"
+page_title: "To move a policy"
 description: |-
   Methods used to move the position of a policy, relative to another policy, in the sequence order of how policies are applied.
 ---
@@ -346,5 +346,5 @@ Methods used to move the position of a policy, relative to another policy, in th
     ```
     We can find that policy 4 has been moved to after 7.
 
-## Last words
-If you need to move a policy urgently, option II is the better choice. If you want to be consistent with Terraform, then option I is the better choice. Option III just provides an another additional method. You can choose one of these methods to move a policy according to your needs.
+## Conclusion
+If a policy needs to be moved urgently, option II is the better choice. If the configuration needs to be consistent with terraform, then option I is the better choice. Option III just provides an another additional method. Choose one of these methods to move a policy as needed.
