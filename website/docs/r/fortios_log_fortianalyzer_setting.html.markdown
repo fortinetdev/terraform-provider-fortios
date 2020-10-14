@@ -10,7 +10,7 @@ description: |-
 # fortios_log_fortianalyzer_setting
 Provides a resource to configure configure logging to FortiAnalyzer log management devices.
 
-~> **Warning:** The resource will be deprecated and replaced by `fortios_logfortianalyzer_setting`.
+!> **Warning:** The resource will be deprecated and replaced by new resource `fortios_logfortianalyzer_setting`, we recommend that you use the new resource.
 
 ## Example Usage
 ```hcl

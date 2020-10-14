@@ -10,7 +10,7 @@ description: |-
 # fortios_networking_route_static
 Provides a resource to configure static route of FortiOS.
 
-~> **Warning:** The resource will be deprecated and replaced by `fortios_router_static`.
+!> **Warning:** The resource will be deprecated and replaced by new resource `fortios_router_static`, we recommend that you use the new resource.
 
 ## Example Usage
 ```hcl

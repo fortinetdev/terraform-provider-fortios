@@ -10,7 +10,7 @@ description: |-
 # fortios_log_syslog_setting
 Provides a resource to configure logging to remote Syslog logging servers.
 
-~> **Warning:** The resource will be deprecated and replaced by `fortios_logsyslogd_setting`.
+!> **Warning:** The resource will be deprecated and replaced by new resource `fortios_logsyslogd_setting`, we recommend that you use the new resource.
 
 ## Example Usage
 ```hcl

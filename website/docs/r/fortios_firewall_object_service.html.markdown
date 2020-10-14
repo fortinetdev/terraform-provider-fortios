@@ -10,7 +10,7 @@ description: |-
 # fortios_firewall_object_service
 Provides a resource to configure firewall service of FortiOS.
 
-~> **Warning:** The resource will be deprecated and replaced by `fortios_firewallservice_custom`.
+!> **Warning:** The resource will be deprecated and replaced by new resource `fortios_firewallservice_custom`, we recommend that you use the new resource.
 
 ## Example Usage for Fqdn Service
 ```hcl

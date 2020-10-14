@@ -11,7 +11,7 @@ description: |-
 
 Provides a resource to use phase2-interface to add or edit a phase 2 configuration on a route-based (interface mode) IPsec tunnel.
 
-~> **Warning:** The resource will be deprecated and replaced by `fortios_vpnipsec_phase2interface`.
+!> **Warning:** The resource will be deprecated and replaced by new resource `fortios_vpnipsec_phase2interface`, we recommend that you use the new resource.
 
 ## Example Usage for Site to Site/Pre-shared Key
 

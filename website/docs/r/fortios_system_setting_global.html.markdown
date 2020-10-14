@@ -11,7 +11,7 @@ description: |-
 
 Provides a resource to configure options related to the overall operation of FortiOS.
 
-~> **Warning:** The resource will be deprecated and replaced by `fortios_system_global`.
+!> **Warning:** The resource will be deprecated and replaced by new resource `fortios_system_global`, we recommend that you use the new resource.
 
 ## Example Usage
 

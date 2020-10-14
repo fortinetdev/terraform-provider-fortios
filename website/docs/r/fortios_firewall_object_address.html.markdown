@@ -10,7 +10,7 @@ description: |-
 # fortios_firewall_object_address
 Provides a resource to configure firewall addresses used in firewall policies of FortiOS.
 
-~> **Warning:** The resource will be deprecated and replaced by `fortios_firewall_address`.
+!> **Warning:** The resource will be deprecated and replaced by new resource `fortios_firewall_address`, we recommend that you use the new resource.
 
 ## Example Usage for Iprange Address
 ```hcl

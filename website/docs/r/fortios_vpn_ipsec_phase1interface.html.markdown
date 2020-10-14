@@ -11,7 +11,7 @@ description: |-
 
 Provides a resource to use phase1-interface to define a phase 1 definition for a route-based (interface mode) IPsec VPN tunnel that generates authentication and encryption keys automatically.
 
-~> **Warning:** The resource will be deprecated and replaced by `fortios_vpnipsec_phase1interface`.
+!> **Warning:** The resource will be deprecated and replaced by new resource `fortios_vpnipsec_phase1interface`, we recommend that you use the new resource.
 
 ## Example Usage
 fortios_vpn_ipsec_phase1interface needs to be set with fortios_vpn_ipsec_phase2interface. See section fortios_vpn_ipsec_phase2interface.

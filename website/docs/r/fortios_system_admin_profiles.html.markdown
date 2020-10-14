@@ -10,7 +10,7 @@ description: |-
 # fortios_system_admin_profiles
 Provides a resource to configure access profiles of FortiOS.
 
-~> **Warning:** The resource will be deprecated and replaced by `fortios_system_accprofile`.
+!> **Warning:** The resource will be deprecated and replaced by new resource `fortios_system_accprofile`, we recommend that you use the new resource.
 
 ## Example Usage
 ```hcl

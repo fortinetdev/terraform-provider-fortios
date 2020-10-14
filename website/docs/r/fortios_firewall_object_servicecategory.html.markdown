@@ -10,7 +10,7 @@ description: |-
 # fortios_firewall_object_servicecategory
 Provides a resource to configure firewall service category of FortiOS.
 
-~> **Warning:** The resource will be deprecated and replaced by `fortios_firewallservice_category`.
+!> **Warning:** The resource will be deprecated and replaced by new resource `fortios_firewallservice_category`, we recommend that you use the new resource.
 
 ## Example Usage
 ```hcl

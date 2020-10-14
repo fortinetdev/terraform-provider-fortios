@@ -10,7 +10,7 @@ description: |-
 # fortios_system_apiuser_setting
 Provides a resource to configure API users of FortiOS. The API user of the token for this feature should have a super admin profile, It can be set in CLI while GUI does not allow.
 
-~> **Warning:** The resource will be deprecated and replaced by `fortios_system_apiuser`.
+!> **Warning:** The resource will be deprecated and replaced by new resource `fortios_system_apiuser`, we recommend that you use the new resource.
 
 ## Example Usage
 ```hcl

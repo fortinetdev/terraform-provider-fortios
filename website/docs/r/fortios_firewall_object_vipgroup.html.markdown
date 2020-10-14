@@ -10,7 +10,7 @@ description: |-
 # fortios_firewall_object_vipgroup
 Provides a resource to configure virtual IP groups of FortiOS.
 
-~> **Warning:** The resource will be deprecated and replaced by `fortios_firewall_vipgrp`.
+!> **Warning:** The resource will be deprecated and replaced by new resource `fortios_firewall_vipgrp`, we recommend that you use the new resource.
 
 ## Example Usage
 ```hcl

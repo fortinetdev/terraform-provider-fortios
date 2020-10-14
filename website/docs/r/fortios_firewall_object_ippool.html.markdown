@@ -10,7 +10,7 @@ description: |-
 # fortios_firewall_object_ippool
 Provides a resource to configure IPv4 IP address pools of FortiOS.
 
-~> **Warning:** The resource will be deprecated and replaced by `fortios_firewall_ippool`.
+!> **Warning:** The resource will be deprecated and replaced by new resource `fortios_firewall_ippool`, we recommend that you use the new resource.
 
 ## Example Usage for Overload Ippool
 ```hcl

@@ -10,7 +10,7 @@ description: |-
 # fortios_firewall_object_addressgroup
 Provides a resource to configure firewall address group used in firewall policies of FortiOS.
 
-~> **Warning:** The resource will be deprecated and replaced by `fortios_firewall_addrgrp`.
+!> **Warning:** The resource will be deprecated and replaced by new resource `fortios_firewall_addrgrp`, we recommend that you use the new resource.
 
 ## Example Usage
 ```hcl

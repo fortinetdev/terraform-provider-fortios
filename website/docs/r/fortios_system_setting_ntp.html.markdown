@@ -10,7 +10,7 @@ description: |-
 # fortios_system_setting_ntp
 Provides a resource to configure Network Time Protocol (NTP) servers of FortiOS.
 
-~> **Warning:** The resource will be deprecated and replaced by `fortios_system_ntp`.
+!> **Warning:** The resource will be deprecated and replaced by new resource `fortios_system_ntp`, we recommend that you use the new resource.
 
 ## Example Usage
 ```hcl

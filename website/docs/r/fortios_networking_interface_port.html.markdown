@@ -10,7 +10,7 @@ description: |-
 # fortios_networking_interface_port
 Provides a resource to configure interface settings of FortiOS.
 
-~> **Warning:** The resource will be deprecated and replaced by `fortios_system_interface`.
+!> **Warning:** The resource will be deprecated and replaced by new resource `fortios_system_interface`, we recommend that you use the new resource.
 
 ## Example Usage for Loopback Interface
 ```hcl

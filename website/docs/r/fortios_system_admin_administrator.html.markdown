@@ -10,7 +10,7 @@ description: |-
 # fortios_system_admin_administrator
 Provides a resource to configure administrator accounts of FortiOS.
 
-~> **Warning:** The resource will be deprecated and replaced by `fortios_system_admin`.
+!> **Warning:** The resource will be deprecated and replaced by new resource `fortios_system_admin`, we recommend that you use the new resource.
 
 ## Example Usage
 ```hcl

@@ -10,7 +10,7 @@ description: |-
 # fortios_firewall_object_servicegroup
 Provides a resource to configure firewall service group of FortiOS.
 
-~> **Warning:** The resource will be deprecated and replaced by `fortios_firewallservice_group`.
+!> **Warning:** The resource will be deprecated and replaced by new resource `fortios_firewallservice_group`, we recommend that you use the new resource.
 
 ## Example Usage
 ```hcl

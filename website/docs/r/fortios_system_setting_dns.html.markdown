@@ -10,7 +10,7 @@ description: |-
 # fortios_system_setting_dns
 Provides a resource to configure DNS of FortiOS.
 
-~> **Warning:** The resource will be deprecated and replaced by `fortios_system_dns`.
+!> **Warning:** The resource will be deprecated and replaced by new resource `fortios_system_dns`, we recommend that you use the new resource.
 
 ## Example Usage
 ```hcl
