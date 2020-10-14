@@ -1,5 +1,11 @@
 ## 1.7.0 (Unreleased)
 
+## 1.6.5 (Oct 15, 2020)
+
+BUG FIXES:
+
+* Fix the errors in the document descriptions of 'To move a policy' and 'fortios_firewall_security_policyseq'
+
 ## 1.6.4 (Oct 14, 2020)
 
 IMPROVEMENTS:
