@@ -1,5 +1,19 @@
 ## 1.7.0 (Unreleased)
 
+## 1.6.4 (Oct 14, 2020)
+
+IMPROVEMENTS:
+
+* Improve the documentation description for the resources that will be deprecated
+
+FEATURES:
+
+* Add documentation for moving a policy
+
+BUG FIXES:
+
+* Make fortios_router_static device optional #93
+
 ## 1.6.3 (Oct 8, 2020)
 
 IMPROVEMENTS:
