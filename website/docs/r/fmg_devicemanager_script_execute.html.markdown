@@ -23,7 +23,8 @@ resource "fortios_fmg_devicemanager_script_execute" "test3" {
 The following arguments are supported:
 
 * `script_name` - (Required) Script name.
-* `target_devname` - (Required) Target device name, which the script will be installed.
+* `target_devname` - Target device name, which the script will be installed.
+* `package` - Policy package.
 * `timeout` - Timeout(minute) for executing the script, default is 3 minutes.
 * `adom` - Source ADOM name. default is 'root'
 * `vdom` - Vdom of managed device. default is 'root'
@@ -34,6 +35,7 @@ The following attributes are exported:
 * `id` - The resource id.
 * `script_name` - Script name.
 * `target_devname` - Target device name, which the script should be installed.
+* `package` - Policy package.
 * `timeout` - Timeout(minute) for executing the script, default is 3 minutes.
 * `adom` - Source ADOM name.
 * `vdom` - Vdom of managed device.

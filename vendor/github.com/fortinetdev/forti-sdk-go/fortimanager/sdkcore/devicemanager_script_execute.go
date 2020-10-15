@@ -8,6 +8,7 @@ import (
 type JSONDVMScriptExecute struct {
 	ScriptName    string `json:"script"`
 	TargetDevName string `json:"name"`
+	Package       string `json:"package"`
 	Vdom          string `json:"vdom"`
 	Timeout       int
 }
@@ -28,6 +29,7 @@ func (c *FmgSDKClient) ExecuteDVMScript(adom string, params *JSONDVMScriptExecut
 			"vdom": params.Vdom,
 		},
 		"script": params.ScriptName,
+		"package": params.Package,
 	}
 
 	p := map[string]interface{}{

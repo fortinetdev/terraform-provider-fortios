@@ -101,7 +101,7 @@ Methods used to move the position of a policy, relative to another policy, in th
 
 3. List existing policies again to check the result
     ```sh
-    curl -k "https://192.168.52.177/api/v2/cmdb/firewall/polic?access_token=rGqsgj9Qmh3dwfQdc8hd3t3G6xG3N5&format=policyid|name|action"
+    curl "https://192.168.52.177/api/v2/cmdb/firewall/polic?access_token=rGqsgj9Qmh3dwfQdc8hd3t3G6xG3N5&format=policyid|name|action"
     ```
 
     It will return:

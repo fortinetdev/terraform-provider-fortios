@@ -22,7 +22,11 @@ func resourceFortimanagerDVMScriptExecute() *schema.Resource {
 			},
 			"target_devname": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+			},
+			"package": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 			"timeout": &schema.Schema{
 				Type:     schema.TypeInt,
@@ -53,6 +57,7 @@ func createUpdateFMGDVMScriptExecute(d *schema.ResourceData, m interface{}) erro
 	i := &fmgclient.JSONDVMScriptExecute{
 		ScriptName:    d.Get("script_name").(string),
 		TargetDevName: d.Get("target_devname").(string),
+		Package:       d.Get("package").(string),
 		Vdom:          d.Get("vdom").(string),
 		Timeout:       d.Get("timeout").(int),
 	}
