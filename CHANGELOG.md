@@ -1,5 +1,15 @@
 ## 1.7.0 (Unreleased)
 
+## 1.6.6 (Oct 16, 2020)
+
+IMPROVEMENTS:
+
+* Improve documentation of 'Generate an API token for FortiOS'
+
+BUG FIXES:
+
+* Support package for fortios_fmg_devicemanager_script_execute #95
+
 ## 1.6.5 (Oct 15, 2020)
 
 BUG FIXES:
