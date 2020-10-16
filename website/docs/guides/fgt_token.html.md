@@ -36,7 +36,7 @@ FortiOS Provider requires an API token to be authenticated. An API token is gene
 
 	The Trusted Host must be specified to ensure that your local host can reach the FortiGate. For example, to restrict requests as coming from only 10.20.100.99, enter 10.20.100.99/32. The Trusted Host is created from the Source Address obtained in `Step 1: Determine your Source Address`.
 
-	In Administrator Profile field, select profile from Step2. *Note: If you want to configure VDOM, you need to set the field with the System predefined Administrator Profile `super_admin` by CLI.*
+	In Administrator Profile field, select profile from Step2. *Note: If you want to configure VDOM or resources related to administrator user permissions, you need to set the field with the System predefined Administrator Profile `super_admin` by CLI.*
 
 	Click OK and an API token will be generated.
 
