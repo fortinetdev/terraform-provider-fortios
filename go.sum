@@ -40,8 +40,8 @@ github.com/envoyproxy/go-control-plane v0.9.1-0.20191026205805-5f8ba28d4473/go.m
 github.com/envoyproxy/protoc-gen-validate v0.1.0/go.mod h1:iSmxcyjqTsJpI2R4NaDN7+kN2VEUnK/pcBlmesArF7c=
 github.com/fatih/color v1.7.0 h1:DkWD4oS2D8LGGgTQ6IvwJJXSL5Vp2ffcQg58nFV38Ys=
 github.com/fatih/color v1.7.0/go.mod h1:Zm6kSWBoL9eyXnKyktHP6abPY2pDugNf5KwzbycvMj4=
-github.com/fortinetdev/forti-sdk-go v1.1.10 h1:x0ZDem2g12eTUVbo6XeLZ6ymUnzbiQwwxFp2415g/tI=
-github.com/fortinetdev/forti-sdk-go v1.1.10/go.mod h1:7ZX6yVsDHI9cnWK4m4zVboM38MQpiPTTe0mcGAHXqQM=
+github.com/fortinetdev/forti-sdk-go v1.1.11 h1:kR3mvmVDHUPruiCa+/fpMQxTEUSh18cVTFPx7mVeHaw=
+github.com/fortinetdev/forti-sdk-go v1.1.11/go.mod h1:7ZX6yVsDHI9cnWK4m4zVboM38MQpiPTTe0mcGAHXqQM=
 github.com/go-test/deep v1.0.3 h1:ZrJSEWsXzPOxaZnFteGEfooLba+ju3FYIbOrS+rQd68=
 github.com/go-test/deep v1.0.3/go.mod h1:wGDj63lr65AM2AQyKZd/NYHGb0R+1RLqB8NKt3aSFNA=
 github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b h1:VKtxabqXZkF25pY9ekfRL6a582T4P37/31XEstQ5p58=
