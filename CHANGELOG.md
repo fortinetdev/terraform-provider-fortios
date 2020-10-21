@@ -1,5 +1,15 @@
 ## 1.7.0 (Unreleased)
 
+## 1.6.7 (Oct 21, 2020)
+
+IMPROVEMENTS:
+
+* Support the configuration of the interfaces automatically created by FGT #97
+
+BUG FIXES:
+
+* Make fortios_vpnipsec_phase1interface net_device optional #101
+
 ## 1.6.6 (Oct 16, 2020)
 
 IMPROVEMENTS:
