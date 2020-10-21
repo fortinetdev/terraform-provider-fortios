@@ -144,7 +144,7 @@ The following arguments are supported:
 * `monitor_hold_down_delay` - Time to wait in seconds before recovery once primary re-establishes.
 * `monitor_hold_down_weekday` - Day of the week to recover once primary re-establishes.
 * `monitor_hold_down_time` - Time of day at which to fail back to primary after it re-establishes.
-* `net_device` - (Required) Enable/disable kernel device creation.
+* `net_device` - Enable/disable kernel device creation.
 * `tunnel_search` - Tunnel search method for when the interface is shared.
 * `passive_mode` - Enable/disable IPsec passive mode for static tunnels.
 * `exchange_interface_ip` - Enable/disable exchange of IPsec interface IP address.

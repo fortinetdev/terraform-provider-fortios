@@ -184,7 +184,8 @@ func resourceVpnIpsecPhase1Interface() *schema.Resource {
 			},
 			"net_device": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"tunnel_search": &schema.Schema{
 				Type:     schema.TypeString,
