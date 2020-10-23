@@ -101,6 +101,7 @@ func Provider() terraform.ResourceProvider {
 			"fortios_firewall_object_ippool":                  resourceFirewallObjectIPPool(),
 			"fortios_firewall_security_policy":                resourceFirewallSecurityPolicy(),
 			"fortios_firewall_security_policyseq":             resourceFirewallSecurityPolicySeq(),
+			"fortios_firewall_security_policysort":            resourceFirewallSecurityPolicySort(),
 			"fortios_system_setting_global":                   resourceSystemSettingGlobal(),
 			"fortios_system_setting_dns":                      resourceSystemSettingDNS(),
 			"fortios_system_setting_ntp":                      resourceSystemSettingNTP(),
