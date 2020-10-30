@@ -34,9 +34,6 @@ func fortiAPIPatch(t interface{}) bool {
 	return false
 }
 
-// FirewallAddress6 obj_id
-// RouterPolicy6 input_device
-
 func isImportTable() bool {
 	itable := os.Getenv("FORTIOS_IMPORT_TABLE")
 	if itable == "true" {

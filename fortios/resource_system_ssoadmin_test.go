@@ -90,12 +90,12 @@ func testAccCheckSystemSsoAdminDestroy(s *terraform.State) error {
 func testAccFortiOSSystemSsoAdminConfig(name string) string {
 	return fmt.Sprintf(`
 resource "fortios_system_ssoadmin" "trname" {
-    accprofile = "super_admin"
-    name       = "admin1"
+  accprofile = "super_admin"
+  name       = "%[1]s"
 
-    vdom {
-        name = "root"
-    }
+  vdom {
+    name = "root"
+  }
 }
-`)
+`, name)
 }

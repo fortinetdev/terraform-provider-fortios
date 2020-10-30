@@ -8422,6 +8422,60 @@ func (c *FortiSDKClient) ReadExtenderControllerExtender(mkey string) (mapTmp map
 	return
 }
 
+// CreateExtenderControllerExtender1 API operation for FortiOS creates a new Extender1.
+// Returns the index value of the Extender1 and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the extender-controller - extender chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateExtenderControllerExtender1(params *map[string]interface{}) (output map[string]interface{}, err error) {
+
+	HTTPMethod := "POST"
+	path := "/api/v2/cmdb/extender-controller/extender"
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// UpdateExtenderControllerExtender1 API operation for FortiOS updates the specified Extender1.
+// Returns the index value of the Extender1 and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the extender-controller - extender chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateExtenderControllerExtender1(params *map[string]interface{}, mkey string) (output map[string]interface{}, err error) {
+	HTTPMethod := "PUT"
+	path := "/api/v2/cmdb/extender-controller/extender"
+	path += "/" + escapeURLString(mkey)
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// DeleteExtenderControllerExtender1 API operation for FortiOS deletes the specified Extender1.
+// Returns error for service API and SDK errors.
+// See the extender-controller - extender chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteExtenderControllerExtender1(mkey string) (err error) {
+	HTTPMethod := "DELETE"
+	path := "/api/v2/cmdb/extender-controller/extender"
+	path += "/" + escapeURLString(mkey)
+
+	err = delete(c, HTTPMethod, path)
+	return
+}
+
+// ReadExtenderControllerExtender1 API operation for FortiOS gets the Extender1
+// with the specified index value.
+// Returns the requested Extender1 value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the extender-controller - extender chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadExtenderControllerExtender1(mkey string) (mapTmp map[string]interface{}, err error) {
+	HTTPMethod := "GET"
+	path := "/api/v2/cmdb/extender-controller/extender"
+	path += "/" + escapeURLString(mkey)
+
+	mapTmp, err = read(c, HTTPMethod, path, false)
+	return
+}
+
 // CreateFirewallAddress API operation for FortiOS creates a new Address.
 // Returns the index value of the Address and execution result when the request executes successfully.
 // Returns error for service API and SDK errors.

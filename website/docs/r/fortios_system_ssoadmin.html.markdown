@@ -13,12 +13,12 @@ Configure SSO admin users.
 
 ```hcl
 resource "fortios_system_ssoadmin" "trname" {
-    accprofile = "super_admin"
-    name       = "admin1"
+  accprofile = "super_admin"
+  name       = "admin1"
 
-    vdom {
-        name = "root"
-    }
+  vdom {
+    name = "root"
+  }
 }
 ```
 

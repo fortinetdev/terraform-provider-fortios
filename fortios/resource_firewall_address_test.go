@@ -28,17 +28,14 @@ func TestAccFortiOSFirewallAddress_basic(t *testing.T) {
 				Check: resource.ComposeTestCheckFunc(
 					testAccCheckFortiOSFirewallAddressExists("fortios_firewall_address.trname"),
 					resource.TestCheckResourceAttr("fortios_firewall_address.trname", "allow_routing", "disable"),
-					resource.TestCheckResourceAttr("fortios_firewall_address.trname", "cache_ttl", "0"),
-					resource.TestCheckResourceAttr("fortios_firewall_address.trname", "color", "0"),
-					resource.TestCheckResourceAttr("fortios_firewall_address.trname", "end_ip", "0.0.0.0"),
-					resource.TestCheckResourceAttr("fortios_firewall_address.trname", "fqdn", "www.ms.com"),
+					resource.TestCheckResourceAttr("fortios_firewall_address.trname", "associated_interface", "port2"),
+					resource.TestCheckResourceAttr("fortios_firewall_address.trname", "color", "3"),
+					resource.TestCheckResourceAttr("fortios_firewall_address.trname", "end_ip", "255.255.255.0"),
 					resource.TestCheckResourceAttr("fortios_firewall_address.trname", "name", rname),
-					resource.TestCheckResourceAttr("fortios_firewall_address.trname", "start_ip", "0.0.0.0"),
-					resource.TestCheckResourceAttr("fortios_firewall_address.trname", "subnet", "0.0.0.0 0.0.0.0"),
-					resource.TestCheckResourceAttr("fortios_firewall_address.trname", "type", "fqdn"),
+					resource.TestCheckResourceAttr("fortios_firewall_address.trname", "start_ip", "22.1.1.0"),
+					resource.TestCheckResourceAttr("fortios_firewall_address.trname", "subnet", "22.1.1.0 255.255.255.0"),
+					resource.TestCheckResourceAttr("fortios_firewall_address.trname", "type", "ipmask"),
 					resource.TestCheckResourceAttr("fortios_firewall_address.trname", "visibility", "enable"),
-					resource.TestCheckResourceAttr("fortios_firewall_address.trname", "wildcard", "0.0.0.0 0.0.0.0"),
-					resource.TestCheckResourceAttr("fortios_firewall_address.trname", "wildcard_fqdn", "www.ms.com"),
 				),
 			},
 		},
@@ -99,18 +96,15 @@ func testAccCheckFirewallAddressDestroy(s *terraform.State) error {
 func testAccFortiOSFirewallAddressConfig(name string) string {
 	return fmt.Sprintf(`
 resource "fortios_firewall_address" "trname" {
-  allow_routing = "disable"
-  cache_ttl     = 0
-  color         = 0
-  end_ip        = "0.0.0.0"
-  fqdn          = "www.ms.com"
-  name          = "%[1]s"
-  start_ip      = "0.0.0.0"
-  subnet        = "0.0.0.0 0.0.0.0"
-  type          = "fqdn"
-  visibility    = "enable"
-  wildcard      = "0.0.0.0 0.0.0.0"
-  wildcard_fqdn = "www.ms.com"
+  allow_routing        = "disable"
+  associated_interface = "port2"
+  color                = 3
+  end_ip               = "255.255.255.0"
+  name                 = "%[1]s"
+  start_ip             = "22.1.1.0"
+  subnet               = "22.1.1.0 255.255.255.0"
+  type                 = "ipmask"
+  visibility           = "enable"
 }
 `, name)
 }

@@ -316,6 +316,7 @@ func Provider() terraform.ResourceProvider {
 			"fortios_switchcontroller_quarantine":                       resourceSwitchControllerQuarantine(),
 			"fortios_switchcontroller_networkmonitorsettings":           resourceSwitchControllerNetworkMonitorSettings(),
 			"fortios_extendercontroller_extender":                       resourceExtenderControllerExtender(),
+			"fortios_extendercontroller_extender1":                      resourceExtenderControllerExtender1(),
 			"fortios_firewall_address":                                  resourceFirewallAddress(),
 			"fortios_firewall_multicastaddress":                         resourceFirewallMulticastAddress(),
 			"fortios_firewall_address6template":                         resourceFirewallAddress6Template(),

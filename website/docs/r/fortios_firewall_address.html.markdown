@@ -13,18 +13,15 @@ Configure IPv4 addresses.
 
 ```hcl
 resource "fortios_firewall_address" "trname" {
-  allow_routing = "disable"
-  cache_ttl     = 0
-  color         = 0
-  end_ip        = "0.0.0.0"
-  fqdn          = "www.ms.com"
-  name          = "faddress01"
-  start_ip      = "0.0.0.0"
-  subnet        = "0.0.0.0 0.0.0.0"
-  type          = "fqdn"
-  visibility    = "enable"
-  wildcard      = "0.0.0.0 0.0.0.0"
-  wildcard_fqdn = "www.ms.com"
+  allow_routing        = "disable"
+  associated_interface = "port2"
+  color                = 3
+  end_ip               = "255.255.255.0"
+  name                 = "testaddress"
+  start_ip             = "22.1.1.0"
+  subnet               = "22.1.1.0 255.255.255.0"
+  type                 = "ipmask"
+  visibility           = "enable"
 }
 ```
 
