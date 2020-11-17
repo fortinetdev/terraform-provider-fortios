@@ -9,6 +9,65 @@ description: |-
 # fortios_extendercontroller_extender1
 Extender controller configuration.(For FortiOS 6.4.2 and 6.4.2+)
 
+## Example Usage
+
+```hcl
+resource "fortios_extendercontroller_extender1" "trname" {
+  authorized = "disable"
+  ext_name   = "2932"
+  fosid      = "FX201E5919004031"
+  name       = "2111"
+  vdom       = 0
+
+  controller_report {
+    interval         = 300
+    signal_threshold = 10
+    status           = "disable"
+  }
+
+  modem1 {
+    conn_status    = 0
+    default_sim    = "sim2"
+    gps            = "enable"
+    redundant_intf = "s1"
+    redundant_mode = "enable"
+    sim1_pin       = "disable"
+    sim1_pin_code  = "testpincode"
+    sim2_pin       = "disable"
+
+    auto_switch {
+      dataplan             = "disable"
+      disconnect           = "disable"
+      disconnect_period    = 600
+      disconnect_threshold = 3
+      signal               = "disable"
+      switch_back          = "timer"
+      switch_back_time     = "00:01"
+      switch_back_timer    = 86400
+    }
+  }
+
+  modem2 {
+    conn_status    = 0
+    default_sim    = "sim1"
+    gps            = "enable"
+    redundant_mode = "disable"
+    sim1_pin       = "disable"
+    sim2_pin       = "disable"
+
+    auto_switch {
+      dataplan             = "disable"
+      disconnect           = "disable"
+      disconnect_period    = 600
+      disconnect_threshold = 3
+      signal               = "disable"
+      switch_back_time     = "00:01"
+      switch_back_timer    = 86400
+    }
+  }
+}
+```
+
 ## Argument Reference
 
 The following arguments are supported:

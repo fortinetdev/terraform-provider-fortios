@@ -2465,6 +2465,10 @@ func flattenWirelessControllerWtpProfileLbs(v interface{}, d *schema.ResourceDat
 	pre_append = pre + ".0." + "fortipresence_secret"
 	if _, ok := i["fortipresence-secret"]; ok {
 		result["fortipresence_secret"] = flattenWirelessControllerWtpProfileLbsFortipresenceSecret(i["fortipresence-secret"], d, pre_append)
+		c := d.Get(pre_append).(string)
+		if c != "" {
+			result["fortipresence_secret"] = c
+		}
 	}
 
 	pre_append = pre + ".0." + "fortipresence_project"

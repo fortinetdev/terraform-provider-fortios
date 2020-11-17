@@ -65,6 +65,7 @@ func resourceExtenderControllerExtender1() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 27),
 				Optional:     true,
+				Sensitive:    true,
 			},
 			"controller_report": &schema.Schema{
 				Type:     schema.TypeList,
@@ -142,11 +143,13 @@ func resourceExtenderControllerExtender1() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 27),
 							Optional:     true,
+							Sensitive:    true,
 						},
 						"sim2_pin_code": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 27),
 							Optional:     true,
+							Sensitive:    true,
 						},
 						"preferred_carrier": &schema.Schema{
 							Type:         schema.TypeString,
@@ -260,11 +263,13 @@ func resourceExtenderControllerExtender1() *schema.Resource {
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 27),
 							Optional:     true,
+							Sensitive:    true,
 						},
 						"sim2_pin_code": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 27),
 							Optional:     true,
+							Sensitive:    true,
 						},
 						"preferred_carrier": &schema.Schema{
 							Type:         schema.TypeString,
@@ -539,11 +544,19 @@ func flattenExtenderControllerExtender1Modem1(v interface{}, d *schema.ResourceD
 	pre_append = pre + ".0." + "sim1_pin_code"
 	if _, ok := i["sim1-pin-code"]; ok {
 		result["sim1_pin_code"] = flattenExtenderControllerExtender1Modem1Sim1PinCode(i["sim1-pin-code"], d, pre_append)
+		c := d.Get(pre_append).(string)
+		if c != "" {
+			result["sim1_pin_code"] = c
+		}
 	}
 
 	pre_append = pre + ".0." + "sim2_pin_code"
 	if _, ok := i["sim2-pin-code"]; ok {
 		result["sim2_pin_code"] = flattenExtenderControllerExtender1Modem1Sim2PinCode(i["sim2-pin-code"], d, pre_append)
+		c := d.Get(pre_append).(string)
+		if c != "" {
+			result["sim2_pin_code"] = c
+		}
 	}
 
 	pre_append = pre + ".0." + "preferred_carrier"
@@ -741,11 +754,19 @@ func flattenExtenderControllerExtender1Modem2(v interface{}, d *schema.ResourceD
 	pre_append = pre + ".0." + "sim1_pin_code"
 	if _, ok := i["sim1-pin-code"]; ok {
 		result["sim1_pin_code"] = flattenExtenderControllerExtender1Modem2Sim1PinCode(i["sim1-pin-code"], d, pre_append)
+		c := d.Get(pre_append).(string)
+		if c != "" {
+			result["sim1_pin_code"] = c
+		}
 	}
 
 	pre_append = pre + ".0." + "sim2_pin_code"
 	if _, ok := i["sim2-pin-code"]; ok {
 		result["sim2_pin_code"] = flattenExtenderControllerExtender1Modem2Sim2PinCode(i["sim2-pin-code"], d, pre_append)
+		c := d.Get(pre_append).(string)
+		if c != "" {
+			result["sim2_pin_code"] = c
+		}
 	}
 
 	pre_append = pre + ".0." + "preferred_carrier"
@@ -927,12 +948,6 @@ func refreshObjectExtenderControllerExtender1(d *schema.ResourceData, o map[stri
 	if err = d.Set("vdom", flattenExtenderControllerExtender1Vdom(o["vdom"], d, "vdom")); err != nil {
 		if !fortiAPIPatch(o["vdom"]) {
 			return fmt.Errorf("Error reading vdom: %v", err)
-		}
-	}
-
-	if err = d.Set("login_password", flattenExtenderControllerExtender1LoginPassword(o["login-password"], d, "login_password")); err != nil {
-		if !fortiAPIPatch(o["login-password"]) {
-			return fmt.Errorf("Error reading login_password: %v", err)
 		}
 	}
 
