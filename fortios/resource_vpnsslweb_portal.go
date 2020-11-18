@@ -437,7 +437,7 @@ func resourceVpnSslWebPortal() *schema.Resource {
 			},
 			"host_check_interval": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(120, 259200),
+				ValidateFunc: intBetweenWithZero(120, 259200),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -3370,7 +3370,7 @@ func getObjectVpnSslWebPortal(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("host_check_interval"); ok {
+	if v, ok := d.GetOkExists("host_check_interval"); ok {
 		t, err := expandVpnSslWebPortalHostCheckInterval(d, v, "host_check_interval")
 		if err != nil {
 			return &obj, err

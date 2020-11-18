@@ -361,7 +361,7 @@ func resourceFirewallPolicy6() *schema.Resource {
 			},
 			"session_ttl": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(300, 604800),
+				ValidateFunc: intBetweenWithZero(300, 604800),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -3159,7 +3159,7 @@ func getObjectFirewallPolicy6(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("session_ttl"); ok {
+	if v, ok := d.GetOkExists("session_ttl"); ok {
 		t, err := expandFirewallPolicy6SessionTtl(d, v, "session_ttl")
 		if err != nil {
 			return &obj, err

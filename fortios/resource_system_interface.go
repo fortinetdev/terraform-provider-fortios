@@ -181,7 +181,7 @@ func resourceSystemInterface() *schema.Resource {
 			},
 			"dhcp_renew_time": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(300, 604800),
+				ValidateFunc: intBetweenWithZero(300, 604800),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -6592,7 +6592,7 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("dhcp_renew_time"); ok {
+	if v, ok := d.GetOkExists("dhcp_renew_time"); ok {
 		t, err := expandSystemInterfaceDhcpRenewTime(d, v, "dhcp_renew_time")
 		if err != nil {
 			return &obj, err

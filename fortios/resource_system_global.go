@@ -165,7 +165,7 @@ func resourceSystemGlobal() *schema.Resource {
 			},
 			"remoteauthtimeout": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(1, 300),
+				ValidateFunc: intBetweenWithZero(1, 300),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -3947,7 +3947,7 @@ func getObjectSystemGlobal(d *schema.ResourceData) (*map[string]interface{}, err
 		}
 	}
 
-	if v, ok := d.GetOk("remoteauthtimeout"); ok {
+	if v, ok := d.GetOkExists("remoteauthtimeout"); ok {
 		t, err := expandSystemGlobalRemoteauthtimeout(d, v, "remoteauthtimeout")
 		if err != nil {
 			return &obj, err

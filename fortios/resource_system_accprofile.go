@@ -281,7 +281,7 @@ func resourceSystemAccprofile() *schema.Resource {
 			},
 			"admintimeout": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(1, 480),
+				ValidateFunc: intBetweenWithZero(1, 480),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -1454,7 +1454,7 @@ func getObjectSystemAccprofile(d *schema.ResourceData) (*map[string]interface{},
 		}
 	}
 
-	if v, ok := d.GetOk("admintimeout"); ok {
+	if v, ok := d.GetOkExists("admintimeout"); ok {
 		t, err := expandSystemAccprofileAdmintimeout(d, v, "admintimeout")
 		if err != nil {
 			return &obj, err
