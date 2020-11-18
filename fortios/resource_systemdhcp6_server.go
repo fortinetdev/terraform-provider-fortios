@@ -45,7 +45,7 @@ func resourceSystemDhcp6Server() *schema.Resource {
 			},
 			"lease_time": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(300, 8640000),
+				ValidateFunc: intBetweenWithZero(300, 8640000),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -796,7 +796,7 @@ func getObjectSystemDhcp6Server(d *schema.ResourceData) (*map[string]interface{}
 		}
 	}
 
-	if v, ok := d.GetOk("lease_time"); ok {
+	if v, ok := d.GetOkExists("lease_time"); ok {
 		t, err := expandSystemDhcp6ServerLeaseTime(d, v, "lease_time")
 		if err != nil {
 			return &obj, err

@@ -1,10 +1,13 @@
 package fortios
 
 import (
+	"fmt"
 	"net"
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
 func validateConvIPMask2CIDR(oNewIP, oOldIP string) string {
@@ -50,4 +53,22 @@ func convintflist2i(v interface{}) interface{} {
 		return t[0]
 	}
 	return v
+}
+
+func intBetweenWithZero(min, max int) schema.SchemaValidateFunc {
+	return func(i interface{}, k string) (warnings []string, errors []error) {
+		v, ok := i.(int)
+		if !ok {
+			errors = append(errors, fmt.Errorf("expected type of %s to be integer", k))
+			return warnings, errors
+		}
+
+		if (v >= min && v <= max) || (v == 0) {
+			return warnings, errors
+		}
+
+		errors = append(errors, fmt.Errorf("expected %s to be in the range (%d - %d) or equal to 0, got %d", k, min, max, v))
+
+		return warnings, errors
+	}
 }
