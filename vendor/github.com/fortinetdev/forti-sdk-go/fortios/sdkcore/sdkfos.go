@@ -18286,6 +18286,60 @@ func (c *FortiSDKClient) ReadUserPop3(mkey string) (mapTmp map[string]interface{
 	return
 }
 
+// CreateUserSaml API operation for FortiOS creates a new Saml.
+// Returns the index value of the Saml and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the user - saml chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateUserSaml(params *map[string]interface{}) (output map[string]interface{}, err error) {
+
+	HTTPMethod := "POST"
+	path := "/api/v2/cmdb/user/saml"
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// UpdateUserSaml API operation for FortiOS updates the specified Saml.
+// Returns the index value of the Saml and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the user - saml chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateUserSaml(params *map[string]interface{}, mkey string) (output map[string]interface{}, err error) {
+	HTTPMethod := "PUT"
+	path := "/api/v2/cmdb/user/saml"
+	path += "/" + escapeURLString(mkey)
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// DeleteUserSaml API operation for FortiOS deletes the specified Saml.
+// Returns error for service API and SDK errors.
+// See the user - saml chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteUserSaml(mkey string) (err error) {
+	HTTPMethod := "DELETE"
+	path := "/api/v2/cmdb/user/saml"
+	path += "/" + escapeURLString(mkey)
+
+	err = delete(c, HTTPMethod, path)
+	return
+}
+
+// ReadUserSaml API operation for FortiOS gets the Saml
+// with the specified index value.
+// Returns the requested Saml value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the user - saml chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadUserSaml(mkey string) (mapTmp map[string]interface{}, err error) {
+	HTTPMethod := "GET"
+	path := "/api/v2/cmdb/user/saml"
+	path += "/" + escapeURLString(mkey)
+
+	mapTmp, err = read(c, HTTPMethod, path, false)
+	return
+}
+
 // CreateUserFsso API operation for FortiOS creates a new Fsso.
 // Returns the index value of the Fsso and execution result when the request executes successfully.
 // Returns error for service API and SDK errors.

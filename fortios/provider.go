@@ -522,6 +522,7 @@ func Provider() terraform.ResourceProvider {
 			"fortios_user_krbkeytab":                                    resourceUserKrbKeytab(),
 			"fortios_user_domaincontroller":                             resourceUserDomainController(),
 			"fortios_user_pop3":                                         resourceUserPop3(),
+			"fortios_user_saml":                                         resourceUserSaml(),
 			"fortios_user_fsso":                                         resourceUserFsso(),
 			"fortios_user_adgrp":                                        resourceUserAdgrp(),
 			"fortios_user_fssopolling":                                  resourceUserFssoPolling(),
