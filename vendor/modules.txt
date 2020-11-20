@@ -60,7 +60,7 @@ github.com/bgentry/speakeasy
 github.com/davecgh/go-spew/spew
 # github.com/fatih/color v1.7.0
 github.com/fatih/color
-# github.com/fortinetdev/forti-sdk-go v1.1.12
+# github.com/fortinetdev/forti-sdk-go v1.1.13
 github.com/fortinetdev/forti-sdk-go/fortimanager/sdkcore
 github.com/fortinetdev/forti-sdk-go/fortimanager/util
 github.com/fortinetdev/forti-sdk-go/fortios/auth

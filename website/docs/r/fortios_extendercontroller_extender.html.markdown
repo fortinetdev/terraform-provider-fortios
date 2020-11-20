@@ -3,11 +3,14 @@ subcategory: "FortiGate Extender-Controller"
 layout: "fortios"
 page_title: "FortiOS: fortios_extendercontroller_extender"
 description: |-
-  Extender controller configuration.(For FortiOS 6.4.2 and 6.4.2+, please use fortios_extendercontroller_extender1)
+  Extender controller configuration.
 ---
 
 # fortios_extendercontroller_extender
-Extender controller configuration.(For FortiOS 6.4.2 and 6.4.2+, please use fortios_extendercontroller_extender1)
+Extender controller configuration.
+
+-> The resource applies to FortiOS Version < 6.4.2. For FortiOS Version >= 6.4.2, see `fortios_extendercontroller_extender1`.
+
 
 ## Example Usage
 

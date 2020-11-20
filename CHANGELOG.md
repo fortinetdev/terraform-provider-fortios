@@ -1,5 +1,19 @@
 ## 1.7.0 (Unreleased)
 
+## 1.6.9 (Nov 18, 2020)
+
+IMPROVEMENTS:
+
+* Improve the documentation of fortios_system_interface
+
+BUG FIXES:
+
+* Fix systemdhcp_server lease_time can not be 0 #112
+
+FEATURES:
+
+* **New Resource:** `fortios_extendercontroller_extender1` (for FortiOS Version >= 6.4.2)
+
 ## 1.6.8 (Oct 23, 2020)
 
 IMPROVEMENTS:
@@ -204,7 +218,7 @@ FEATURES:
 
 BUG FIXES:
 
-*  Fix fortios_vpnipsec_phase1interfaceas bugs
+* Fix fortios_vpnipsec_phase1interfaceas bugs
 
 ## 1.5.2 (Sep 2, 2020)
 

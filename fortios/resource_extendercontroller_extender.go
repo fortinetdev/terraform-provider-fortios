@@ -4,7 +4,7 @@
 // Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu),
 // Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
 
-// Description: Extender controller configuration.(For FortiOS 6.4.2 and 6.4.2+, please use fortios_extendercontroller_extender1)
+// Description: Extender controller configuration.
 
 package fortios
 
