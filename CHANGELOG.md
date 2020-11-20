@@ -1,6 +1,6 @@
 ## 1.7.0 (Unreleased)
 
-## 1.6.9 (Nov 18, 2020)
+## 1.6.9 (Nov 19, 2020)
 
 IMPROVEMENTS:
 
@@ -13,6 +13,7 @@ BUG FIXES:
 FEATURES:
 
 * **New Resource:** `fortios_extendercontroller_extender1` (for FortiOS Version >= 6.4.2)
+* **New Resource:** `fortios_user_saml`
 
 ## 1.6.8 (Oct 23, 2020)
 
