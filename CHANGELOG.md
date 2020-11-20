@@ -1,5 +1,11 @@
 ## 1.7.0 (Unreleased)
 
+## 1.6.10 (Nov 19, 2020)
+
+BUG FIXES:
+
+* Resync
+
 ## 1.6.9 (Nov 19, 2020)
 
 IMPROVEMENTS:
