@@ -1,5 +1,15 @@
 ## 1.7.0 (Unreleased)
 
+## 1.6.11 (Nov 26, 2020)
+
+IMPROVEMENTS:
+
+* Improve documentation for block #116
+
+BUG FIXES:
+
+* Support range for firewall policy
+
 ## 1.6.10 (Nov 19, 2020)
 
 BUG FIXES:
