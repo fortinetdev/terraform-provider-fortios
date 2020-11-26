@@ -47,8 +47,8 @@ The following arguments are supported:
 * `login_block_time` - Time for which a user is blocked from logging in after too many failed login attempts (0 - 86400 sec, default = 60).
 * `login_timeout` - SSLVPN maximum login timeout (10 - 180 sec, default = 30).
 * `dtls_hello_timeout` - SSLVPN maximum DTLS hello timeout (10 - 60 sec, default = 10).
-* `tunnel_ip_pools` - Names of the IPv4 IP Pool firewall objects that define the IP addresses reserved for remote clients.
-* `tunnel_ipv6_pools` - Names of the IPv6 IP Pool firewall objects that define the IP addresses reserved for remote clients.
+* `tunnel_ip_pools` - Names of the IPv4 IP Pool firewall objects that define the IP addresses reserved for remote clients. The structure of `tunnel_ip_pools` block is documented below.
+* `tunnel_ipv6_pools` - Names of the IPv6 IP Pool firewall objects that define the IP addresses reserved for remote clients. The structure of `tunnel_ipv6_pools` block is documented below.
 * `dns_suffix` - DNS suffix used for SSL-VPN clients.
 * `dns_server1` - DNS server 1.
 * `dns_server2` - DNS server 2.
@@ -68,13 +68,13 @@ The following arguments are supported:
 * `port_precedence` - Enable means that if SSL-VPN connections are allowed on an interface admin GUI connections are blocked on that interface.
 * `auto_tunnel_static_route` - Enable to auto-create static routes for the SSL-VPN tunnel IP addresses.
 * `header_x_forwarded_for` - Forward the same, add, or remove HTTP header.
-* `source_interface` - SSL VPN source interface of incoming traffic.
-* `source_address` - Source address of incoming traffic.
+* `source_interface` - SSL VPN source interface of incoming traffic. The structure of `source_interface` block is documented below.
+* `source_address` - Source address of incoming traffic. The structure of `source_address` block is documented below.
 * `source_address_negate` - Enable/disable negated source address match.
-* `source_address6` - IPv6 source address of incoming traffic.
+* `source_address6` - IPv6 source address of incoming traffic. The structure of `source_address6` block is documented below.
 * `source_address6_negate` - Enable/disable negated source IPv6 address match.
 * `default_portal` - Default SSL VPN portal.
-* `authentication_rule` - Authentication rule for SSL VPN.
+* `authentication_rule` - Authentication rule for SSL VPN. The structure of `authentication_rule` block is documented below.
 * `dtls_tunnel` - Enable DTLS to prevent eavesdropping, tampering, or message forgery.
 * `check_referer` - Enable/disable verification of referer field in HTTP request header.
 * `http_request_header_timeout` - SSL-VPN session is disconnected if an HTTP request header is not received within this time (1 - 60 sec, default = 20).
@@ -106,13 +106,13 @@ The `source_address6` block supports:
 The `authentication_rule` block supports:
 
 * `id` - ID (0 - 4294967295).
-* `source_interface` - SSL VPN source interface of incoming traffic.
-* `source_address` - Source address of incoming traffic.
+* `source_interface` - SSL VPN source interface of incoming traffic. The structure of `source_interface` block is documented below.
+* `source_address` - Source address of incoming traffic. The structure of `source_address` block is documented below.
 * `source_address_negate` - Enable/disable negated source address match.
-* `source_address6` - IPv6 source address of incoming traffic.
+* `source_address6` - IPv6 source address of incoming traffic. The structure of `source_address6` block is documented below.
 * `source_address6_negate` - Enable/disable negated source IPv6 address match.
-* `users` - User name.
-* `groups` - User groups.
+* `users` - User name. The structure of `users` block is documented below.
+* `groups` - User groups. The structure of `groups` block is documented below.
 * `portal` - SSL VPN portal.
 * `realm` - SSL VPN realm.
 * `client_cert` - Enable/disable SSL VPN client certificate restrictive.

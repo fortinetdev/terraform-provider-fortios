@@ -114,7 +114,7 @@ The following arguments are supported:
 * `additional_path6` - Enable/disable selection of BGP IPv6 additional paths.
 * `cluster_id` - Route reflector cluster ID.
 * `confederation_identifier` - Confederation identifier.
-* `confederation_peers` - Confederation peers.
+* `confederation_peers` - Confederation peers. The structure of `confederation_peers` block is documented below.
 * `dampening_route_map` - Criteria for dampening.
 * `dampening_reachability_half_life` - Reachability half-life time for penalty (min).
 * `dampening_reuse` - Threshold to reuse routes.
@@ -134,17 +134,17 @@ The following arguments are supported:
 * `graceful_end_on_timer` - Enable/disable to exit graceful restart on timer only.
 * `additional_path_select` - Number of additional paths to be selected for each IPv4 NLRI.
 * `additional_path_select6` - Number of additional paths to be selected for each IPv6 NLRI.
-* `aggregate_address` - BGP aggregate address table.
-* `aggregate_address6` - BGP IPv6 aggregate address table.
-* `neighbor` - BGP neighbor table.
-* `neighbor_group` - BGP neighbor group table.
-* `neighbor_range` - BGP neighbor range table.
-* `neighbor_range6` - BGP IPv6 neighbor range table.
-* `network` - BGP network table.
-* `network6` - BGP IPv6 network table.
-* `redistribute` - BGP IPv4 redistribute table.
-* `redistribute6` - BGP IPv6 redistribute table.
-* `admin_distance` - Administrative distance modifications.
+* `aggregate_address` - BGP aggregate address table. The structure of `aggregate_address` block is documented below.
+* `aggregate_address6` - BGP IPv6 aggregate address table. The structure of `aggregate_address6` block is documented below.
+* `neighbor` - BGP neighbor table. The structure of `neighbor` block is documented below.
+* `neighbor_group` - BGP neighbor group table. The structure of `neighbor_group` block is documented below.
+* `neighbor_range` - BGP neighbor range table. The structure of `neighbor_range` block is documented below.
+* `neighbor_range6` - BGP IPv6 neighbor range table. The structure of `neighbor_range6` block is documented below.
+* `network` - BGP network table. The structure of `network` block is documented below.
+* `network6` - BGP IPv6 network table. The structure of `network6` block is documented below.
+* `redistribute` - BGP IPv4 redistribute table. The structure of `redistribute` block is documented below.
+* `redistribute6` - BGP IPv6 redistribute table. The structure of `redistribute6` block is documented below.
+* `admin_distance` - Administrative distance modifications. The structure of `admin_distance` block is documented below.
 
 The `confederation_peers` block supports:
 
@@ -252,7 +252,7 @@ The `neighbor` block supports:
 * `adv_additional_path` - Number of IPv4 additional paths that can be advertised to this neighbor.
 * `adv_additional_path6` - Number of IPv6 additional paths that can be advertised to this neighbor.
 * `password` - Password used in MD5 authentication.
-* `conditional_advertise` - Conditional advertisement.
+* `conditional_advertise` - Conditional advertisement. The structure of `conditional_advertise` block is documented below.
 
 The `conditional_advertise` block supports:
 

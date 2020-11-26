@@ -30,7 +30,7 @@ The following arguments are supported:
 
 * `name` - (Required) Dscp map name.
 * `description` - Description of the ip-dscp map name.
-* `map` - Maps between IP-DSCP value to COS queue.
+* `map` - Maps between IP-DSCP value to COS queue. The structure of `map` block is documented below.
 
 The `map` block supports:
 

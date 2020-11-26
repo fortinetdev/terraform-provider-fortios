@@ -28,7 +28,7 @@ The following arguments are supported:
 * `object` - (Required) Name of the configuration object that can be configured independently for all VDOMs.
 * `oid` - Object ID.
 * `scope` - Determine whether the configuration object can be configured separately for all VDOMs or if some VDOMs share the same configuration.
-* `vdom` - Names of the VDOMs.
+* `vdom` - Names of the VDOMs. The structure of `vdom` block is documented below.
 
 The `vdom` block supports:
 

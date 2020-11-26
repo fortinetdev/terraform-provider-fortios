@@ -25,7 +25,7 @@ resource "fortios_firewall_authportal" "trname" {
 
 The following arguments are supported:
 
-* `groups` - Firewall user groups permitted to authenticate through this portal. Separate group names with spaces.
+* `groups` - Firewall user groups permitted to authenticate through this portal. Separate group names with spaces. The structure of `groups` block is documented below.
 * `portal_addr` - Address (or FQDN) of the authentication portal.
 * `portal_addr6` - IPv6 address (or FQDN) of authentication portal.
 * `identity_based_route` - Name of the identity-based route that applies to this portal.

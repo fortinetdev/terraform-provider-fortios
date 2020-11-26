@@ -28,7 +28,7 @@ The following arguments are supported:
 * `type` - Type.
 * `version` - Version.
 * `guid` - Globally unique ID.
-* `check_item_list` - Check item list.
+* `check_item_list` - Check item list. The structure of `check_item_list` block is documented below.
 
 The `check_item_list` block supports:
 
@@ -37,7 +37,7 @@ The `check_item_list` block supports:
 * `type` - Type.
 * `target` - Target.
 * `version` - Version.
-* `md5s` - MD5 checksum.
+* `md5s` - MD5 checksum. The structure of `md5s` block is documented below.
 
 The `md5s` block supports:
 

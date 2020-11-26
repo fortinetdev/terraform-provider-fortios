@@ -24,7 +24,7 @@ The following arguments are supported:
 
 * `name` - (Required) Device access list name.
 * `default_action` - Accept or deny unknown/unspecified devices.
-* `device_list` - Device list.
+* `device_list` - Device list. The structure of `device_list` block is documented below.
 
 The `device_list` block supports:
 

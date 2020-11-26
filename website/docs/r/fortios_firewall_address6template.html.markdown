@@ -39,7 +39,7 @@ The following arguments are supported:
 * `name` - (Required) IPv6 address template name.
 * `ip6` - (Required) IPv6 address prefix.
 * `subnet_segment_count` - (Required) Number of IPv6 subnet segments.
-* `subnet_segment` - IPv6 subnet segments.
+* `subnet_segment` - IPv6 subnet segments. The structure of `subnet_segment` block is documented below.
 
 The `subnet_segment` block supports:
 
@@ -47,7 +47,7 @@ The `subnet_segment` block supports:
 * `name` - Subnet segment name.
 * `bits` - Number of bits.
 * `exclusive` - Enable/disable exclusive value.
-* `values` - Subnet segment values.
+* `values` - Subnet segment values. The structure of `values` block is documented below.
 
 The `values` block supports:
 

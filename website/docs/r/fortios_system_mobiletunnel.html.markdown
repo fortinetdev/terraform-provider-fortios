@@ -48,7 +48,7 @@ The following arguments are supported:
 * `n_mhae_key` - NEMO authentication key.
 * `hash_algorithm` - (Required) Hash Algorithm (Keyed MD5).
 * `tunnel_mode` - (Required) NEMO tunnnel mode (GRE tunnel).
-* `network` - NEMO network configuration.
+* `network` - NEMO network configuration. The structure of `network` block is documented below.
 
 The `network` block supports:
 

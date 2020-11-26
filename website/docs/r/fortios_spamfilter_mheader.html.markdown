@@ -35,7 +35,7 @@ The following arguments are supported:
 * `fosid` - (Required) ID.
 * `name` - (Required) Name of table.
 * `comment` - Optional comments.
-* `entries` - Spam filter mime header content.
+* `entries` - Spam filter mime header content. The structure of `entries` block is documented below.
 
 The `entries` block supports:
 

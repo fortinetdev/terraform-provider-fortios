@@ -82,11 +82,11 @@ The following arguments are supported:
 * `transparent` - Enable/disable transparent mode.
 * `comments` - Comment.
 * `auth_group` - Optionally add an authentication group to restrict access to the WAN Optimization tunnel to peers in the authentication group.
-* `http` - Enable/disable HTTP WAN Optimization and configure HTTP WAN Optimization features.
-* `cifs` - Enable/disable CIFS (Windows sharing) WAN Optimization and configure CIFS WAN Optimization features.
-* `mapi` - Enable/disable MAPI email WAN Optimization and configure MAPI WAN Optimization features.
-* `ftp` - Enable/disable FTP WAN Optimization and configure FTP WAN Optimization features.
-* `tcp` - Enable/disable TCP WAN Optimization and configure TCP WAN Optimization features.
+* `http` - Enable/disable HTTP WAN Optimization and configure HTTP WAN Optimization features. The structure of `http` block is documented below.
+* `cifs` - Enable/disable CIFS (Windows sharing) WAN Optimization and configure CIFS WAN Optimization features. The structure of `cifs` block is documented below.
+* `mapi` - Enable/disable MAPI email WAN Optimization and configure MAPI WAN Optimization features. The structure of `mapi` block is documented below.
+* `ftp` - Enable/disable FTP WAN Optimization and configure FTP WAN Optimization features. The structure of `ftp` block is documented below.
+* `tcp` - Enable/disable TCP WAN Optimization and configure TCP WAN Optimization features. The structure of `tcp` block is documented below.
 
 The `http` block supports:
 

@@ -157,7 +157,7 @@ resource "fortios_system_ipsecaggregate" "trname" {
 The following arguments are supported:
 
 * `name` - IPsec aggregate name.
-* `member` - (Required) Member tunnels of the aggregate.
+* `member` - (Required) Member tunnels of the aggregate. The structure of `member` block is documented below.
 * `algorithm` - Frame distribution algorithm.
 
 The `member` block supports:

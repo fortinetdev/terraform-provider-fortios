@@ -47,7 +47,7 @@ The following arguments are supported:
 * `response_path` - Path component of the ICAP URI that identifies the HTTP response processing service.
 * `methods` - The allowed HTTP methods that will be sent to ICAP server for further processing.
 * `response_req_hdr` - Enable/disable addition of req-hdr for ICAP response modification (respmod) processing.
-* `icap_headers` - Configure ICAP forwarded request headers.
+* `icap_headers` - Configure ICAP forwarded request headers. The structure of `icap_headers` block is documented below.
 
 The `icap_headers` block supports:
 

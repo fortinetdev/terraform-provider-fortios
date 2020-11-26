@@ -100,13 +100,13 @@ The following arguments are supported:
 * `https_replacemsg` - Enable replacement messages for HTTPS.
 * `ovrd_perm` - Permitted override types.
 * `post_action` - Action taken for HTTP POST traffic.
-* `override` - Web Filter override settings.
-* `web` - Web content filtering settings.
+* `override` - Web Filter override settings. The structure of `override` block is documented below.
+* `web` - Web content filtering settings. The structure of `web` block is documented below.
 * `youtube_channel_status` - YouTube channel filter status.
-* `youtube_channel_filter` - YouTube channel filter.
-* `ftgd_wf` - FortiGuard Web Filter settings.
+* `youtube_channel_filter` - YouTube channel filter. The structure of `youtube_channel_filter` block is documented below.
+* `ftgd_wf` - FortiGuard Web Filter settings. The structure of `ftgd_wf` block is documented below.
 * `wisp` - Enable/disable web proxy WISP.
-* `wisp_servers` - WISP servers.
+* `wisp_servers` - WISP servers. The structure of `wisp_servers` block is documented below.
 * `wisp_algorithm` - WISP server selection algorithm.
 * `log_all_url` - Enable/disable logging all URLs visited.
 * `web_content_log` - Enable/disable logging logging blocked web content.
@@ -135,8 +135,8 @@ The `override` block supports:
 * `ovrd_dur_mode` - Override duration mode.
 * `ovrd_dur` - Override duration.
 * `profile_attribute` - Profile attribute to retrieve from the RADIUS server.
-* `ovrd_user_group` - User groups with permission to use the override.
-* `profile` - Web filter profile with permission to create overrides.
+* `ovrd_user_group` - User groups with permission to use the override. The structure of `ovrd_user_group` block is documented below.
+* `profile` - Web filter profile with permission to create overrides. The structure of `profile` block is documented below.
 
 The `ovrd_user_group` block supports:
 
@@ -157,7 +157,7 @@ The `web` block supports:
 * `safe_search` - Safe search type.
 * `youtube_restrict` - YouTube EDU filter level.
 * `log_search` - Enable/disable logging all search phrases.
-* `keyword_match` - Search keywords to log when match is found.
+* `keyword_match` - Search keywords to log when match is found. The structure of `keyword_match` block is documented below.
 
 The `keyword_match` block supports:
 
@@ -174,8 +174,8 @@ The `ftgd_wf` block supports:
 * `options` - Options for FortiGuard Web Filter.
 * `exempt_quota` - Do not stop quota for these categories.
 * `ovrd` - Allow web filter profile overrides.
-* `filters` - FortiGuard filters.
-* `quota` - FortiGuard traffic quota settings.
+* `filters` - FortiGuard filters. The structure of `filters` block is documented below.
+* `quota` - FortiGuard traffic quota settings. The structure of `quota` block is documented below.
 * `max_quota_timeout` - Maximum FortiGuard quota used by single page view in seconds (excludes streams).
 * `rate_image_urls` - Enable/disable rating images by URL.
 * `rate_javascript_urls` - Enable/disable rating JavaScript by URL.
@@ -188,7 +188,7 @@ The `filters` block supports:
 * `category` - Categories and groups the filter examines.
 * `action` - Action to take for matches.
 * `warn_duration` - Duration of warnings.
-* `auth_usr_grp` - Groups with permission to authenticate.
+* `auth_usr_grp` - Groups with permission to authenticate. The structure of `auth_usr_grp` block is documented below.
 * `log` - Enable/disable logging.
 * `override_replacemsg` - Override replacement message.
 * `warning_prompt` - Warning prompts in each category or each domain.

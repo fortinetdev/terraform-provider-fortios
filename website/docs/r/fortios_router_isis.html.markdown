@@ -81,12 +81,12 @@ The following arguments are supported:
 * `redistribute6_l1_list` - Access-list for IPv6 route redistribution from l1 to l2.
 * `redistribute6_l2` - Enable/disable redistribution of level 2 IPv6 routes into level 1.
 * `redistribute6_l2_list` - Access-list for IPv6 route redistribution from l2 to l1.
-* `isis_net` - IS-IS net configuration.
-* `isis_interface` - IS-IS interface configuration.
-* `summary_address` - IS-IS summary addresses.
-* `summary_address6` - IS-IS IPv6 summary address.
-* `redistribute` - IS-IS redistribute protocols.
-* `redistribute6` - IS-IS IPv6 redistribution for routing protocols.
+* `isis_net` - IS-IS net configuration. The structure of `isis_net` block is documented below.
+* `isis_interface` - IS-IS interface configuration. The structure of `isis_interface` block is documented below.
+* `summary_address` - IS-IS summary addresses. The structure of `summary_address` block is documented below.
+* `summary_address6` - IS-IS IPv6 summary address. The structure of `summary_address6` block is documented below.
+* `redistribute` - IS-IS redistribute protocols. The structure of `redistribute` block is documented below.
+* `redistribute6` - IS-IS IPv6 redistribution for routing protocols. The structure of `redistribute6` block is documented below.
 
 The `isis_net` block supports:
 

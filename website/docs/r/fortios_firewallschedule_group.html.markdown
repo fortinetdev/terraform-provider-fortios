@@ -35,7 +35,7 @@ resource "fortios_firewallschedule_group" "trname" {
 The following arguments are supported:
 
 * `name` - (Required) Schedule group name.
-* `member` - (Required) Schedules added to the schedule group.
+* `member` - (Required) Schedules added to the schedule group. The structure of `member` block is documented below.
 * `color` - Color of icon on the GUI.
 
 The `member` block supports:

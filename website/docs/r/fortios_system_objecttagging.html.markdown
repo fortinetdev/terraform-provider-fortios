@@ -32,7 +32,7 @@ The following arguments are supported:
 * `interface` - Interface.
 * `multiple` - Allow multiple tag selection.
 * `color` - Color of icon on the GUI.
-* `tags` - Tags.
+* `tags` - Tags. The structure of `tags` block is documented below.
 
 The `tags` block supports:
 

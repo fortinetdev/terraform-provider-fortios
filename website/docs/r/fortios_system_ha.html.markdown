@@ -89,7 +89,7 @@ The following arguments are supported:
 * `uninterruptible_upgrade` - Enable to upgrade a cluster without blocking network traffic.
 * `standalone_mgmt_vdom` - Enable/disable standalone management VDOM.
 * `ha_mgmt_status` - Enable to reserve interfaces to manage individual cluster units.
-* `ha_mgmt_interfaces` - Reserve interfaces to manage individual cluster units.
+* `ha_mgmt_interfaces` - Reserve interfaces to manage individual cluster units. The structure of `ha_mgmt_interfaces` block is documented below.
 * `ha_eth_type` - HA heartbeat packet Ethertype (4-digit hex).
 * `hc_eth_type` - Transparent mode HA heartbeat packet Ethertype (4-digit hex).
 * `l2ep_eth_type` - Telnet session HA heartbeat packet Ethertype (4-digit hex).
@@ -116,7 +116,7 @@ The following arguments are supported:
 * `pingserver_slave_force_reset` - Enable to force the cluster to negotiate after a remote IP monitoring failover.
 * `pingserver_flip_timeout` - Time to wait in minutes before renegotiating after a remote IP monitoring failover.
 * `vdom` - VDOMs in virtual cluster 1.
-* `secondary_vcluster` - Configure virtual cluster 2.
+* `secondary_vcluster` - Configure virtual cluster 2. The structure of `secondary_vcluster` block is documented below.
 * `ha_direct` - Enable/disable using ha-mgmt interface for syslog, SNMP, remote authentication (RADIUS), FortiAnalyzer, and FortiSandbox.
 * `memory_compatible_mode` - Enable/disable memory compatible mode.
 * `inter_cluster_session_sync` - Enable/disable synchronization of sessions among HA clusters.

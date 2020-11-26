@@ -20,7 +20,7 @@ The following arguments are supported:
 * `fake_ap_log` - Time between recording logs about fake APs if periodic fake AP logging is configured (0 - 1440 min, default = 1).
 * `darrp_optimize` - Time for running Dynamic Automatic Radio Resource Provisioning (DARRP) optimizations (0 - 86400 sec, default = 1800).
 * `darrp_day` - Weekday on which to run DARRP optimization.
-* `darrp_time` - Time at which DARRP optimizations run (you can add up to 8 times).
+* `darrp_time` - Time at which DARRP optimizations run (you can add up to 8 times). The structure of `darrp_time` block is documented below.
 * `sta_stats_interval` - Time between running client (station) reports (1 - 255 sec, default = 1).
 * `vap_stats_interval` - Time between running Virtual Access Point (VAP) reports (1 - 255 sec, default = 15).
 * `radio_stats_interval` - Time between running radio reports (1 - 255 sec, default = 15).

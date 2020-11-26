@@ -13,7 +13,7 @@ Configure BFD.
 
 The following arguments are supported:
 
-* `neighbor` - neighbor
+* `neighbor` - neighbor The structure of `neighbor` block is documented below.
 
 The `neighbor` block supports:
 

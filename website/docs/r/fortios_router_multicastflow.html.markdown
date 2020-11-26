@@ -28,7 +28,7 @@ The following arguments are supported:
 
 * `name` - (Required) Name.
 * `comments` - Comment.
-* `flows` - Multicast-flow entries.
+* `flows` - Multicast-flow entries. The structure of `flows` block is documented below.
 
 The `flows` block supports:
 

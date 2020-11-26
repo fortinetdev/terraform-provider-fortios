@@ -26,8 +26,8 @@ The following arguments are supported:
 * `name` - (Required) Name.
 * `policy` - Used by monitor policy.
 * `query` - SQL query statement.
-* `field` - Fields.
-* `parameters` - Parameters.
+* `field` - Fields. The structure of `field` block is documented below.
+* `parameters` - Parameters. The structure of `parameters` block is documented below.
 
 The `field` block supports:
 

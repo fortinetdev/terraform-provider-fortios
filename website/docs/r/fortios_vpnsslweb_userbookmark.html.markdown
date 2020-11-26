@@ -24,7 +24,7 @@ The following arguments are supported:
 
 * `name` - User and group name.
 * `custom_lang` - Personal language.
-* `bookmarks` - Bookmark table.
+* `bookmarks` - Bookmark table. The structure of `bookmarks` block is documented below.
 
 The `bookmarks` block supports:
 
@@ -47,7 +47,7 @@ The `bookmarks` block supports:
 * `logon_user` - Logon user.
 * `logon_password` - Logon password.
 * `sso` - Single Sign-On.
-* `form_data` - Form data.
+* `form_data` - Form data. The structure of `form_data` block is documented below.
 * `sso_credential` - Single sign-on credentials.
 * `sso_username` - SSO user name.
 * `sso_password` - SSO password.

@@ -47,8 +47,8 @@ The following arguments are supported:
 * `route_threshold` - Generate warnings when the number of multicast routes exceeds this number, must not be greater than route-limit.
 * `route_limit` - Maximum number of multicast routes.
 * `multicast_routing` - Enable/disable IP multicast routing.
-* `pim_sm_global` - PIM sparse-mode global settings.
-* `interface` - PIM interfaces.
+* `pim_sm_global` - PIM sparse-mode global settings. The structure of `pim_sm_global` block is documented below.
+* `interface` - PIM interfaces. The structure of `interface` block is documented below.
 
 The `pim_sm_global` block supports:
 
@@ -77,7 +77,7 @@ The `pim_sm_global` block supports:
 * `ssm` - Enable/disable source specific multicast.
 * `ssm_range` - Groups allowed to source specific multicast.
 * `register_rate_limit` - Limit of packets/sec per source registered through this RP (0 - 65535, default = 0 which means unlimited).
-* `rp_address` - Statically configure RP addresses.
+* `rp_address` - Statically configure RP addresses. The structure of `rp_address` block is documented below.
 
 The `rp_address` block supports:
 
@@ -105,8 +105,8 @@ The `interface` block supports:
 * `rp_candidate_interval` - RP candidate advertisement interval (1 - 16383 sec, default = 60).
 * `multicast_flow` - Acceptable source for multicast group.
 * `static_group` - Statically set multicast groups to forward out.
-* `join_group` - Join multicast groups.
-* `igmp` - IGMP configuration options.
+* `join_group` - Join multicast groups. The structure of `join_group` block is documented below.
+* `igmp` - IGMP configuration options. The structure of `igmp` block is documented below.
 
 The `join_group` block supports:
 

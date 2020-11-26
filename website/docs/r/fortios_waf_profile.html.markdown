@@ -26,20 +26,20 @@ The following arguments are supported:
 * `name` - WAF Profile name.
 * `external` - Disable/Enable external HTTP Inspection.
 * `extended_log` - Enable/disable extended logging.
-* `signature` - WAF signatures.
-* `constraint` - WAF HTTP protocol restrictions.
-* `method` - Method restriction.
-* `address_list` - Black address list and white address list.
-* `url_access` - URL access list
+* `signature` - WAF signatures. The structure of `signature` block is documented below.
+* `constraint` - WAF HTTP protocol restrictions. The structure of `constraint` block is documented below.
+* `method` - Method restriction. The structure of `method` block is documented below.
+* `address_list` - Black address list and white address list. The structure of `address_list` block is documented below.
+* `url_access` - URL access list The structure of `url_access` block is documented below.
 * `comment` - Comment.
 
 The `signature` block supports:
 
-* `main_class` - Main signature class.
-* `disabled_sub_class` - Disabled signature subclasses.
-* `disabled_signature` - Disabled signatures
+* `main_class` - Main signature class. The structure of `main_class` block is documented below.
+* `disabled_sub_class` - Disabled signature subclasses. The structure of `disabled_sub_class` block is documented below.
+* `disabled_signature` - Disabled signatures The structure of `disabled_signature` block is documented below.
 * `credit_card_detection_threshold` - The minimum number of Credit cards to detect violation.
-* `custom_signature` - Custom signature.
+* `custom_signature` - Custom signature. The structure of `custom_signature` block is documented below.
 
 The `main_class` block supports:
 
@@ -71,20 +71,20 @@ The `custom_signature` block supports:
 
 The `constraint` block supports:
 
-* `header_length` - HTTP header length in request.
-* `content_length` - HTTP content length in request.
-* `param_length` - Maximum length of parameter in URL, HTTP POST request or HTTP body.
-* `line_length` - HTTP line length in request.
-* `url_param_length` - Maximum length of parameter in URL.
-* `version` - Enable/disable HTTP version check.
-* `method` - Enable/disable HTTP method check.
-* `hostname` - Enable/disable hostname check.
-* `malformed` - Enable/disable malformed HTTP request check.
-* `max_cookie` - Maximum number of cookies in HTTP request.
-* `max_header_line` - Maximum number of HTTP header line.
-* `max_url_param` - Maximum number of parameters in URL.
-* `max_range_segment` - Maximum number of range segments in HTTP range line.
-* `exception` - HTTP constraint exception.
+* `header_length` - HTTP header length in request. The structure of `header_length` block is documented below.
+* `content_length` - HTTP content length in request. The structure of `content_length` block is documented below.
+* `param_length` - Maximum length of parameter in URL, HTTP POST request or HTTP body. The structure of `param_length` block is documented below.
+* `line_length` - HTTP line length in request. The structure of `line_length` block is documented below.
+* `url_param_length` - Maximum length of parameter in URL. The structure of `url_param_length` block is documented below.
+* `version` - Enable/disable HTTP version check. The structure of `version` block is documented below.
+* `method` - Enable/disable HTTP method check. The structure of `method` block is documented below.
+* `hostname` - Enable/disable hostname check. The structure of `hostname` block is documented below.
+* `malformed` - Enable/disable malformed HTTP request check. The structure of `malformed` block is documented below.
+* `max_cookie` - Maximum number of cookies in HTTP request. The structure of `max_cookie` block is documented below.
+* `max_header_line` - Maximum number of HTTP header line. The structure of `max_header_line` block is documented below.
+* `max_url_param` - Maximum number of parameters in URL. The structure of `max_url_param` block is documented below.
+* `max_range_segment` - Maximum number of range segments in HTTP range line. The structure of `max_range_segment` block is documented below.
+* `exception` - HTTP constraint exception. The structure of `exception` block is documented below.
 
 The `header_length` block supports:
 
@@ -212,7 +212,7 @@ The `method` block supports:
 * `log` - Enable/disable logging.
 * `severity` - Severity.
 * `default_allowed_methods` - Methods.
-* `method_policy` - HTTP method policy.
+* `method_policy` - HTTP method policy. The structure of `method_policy` block is documented below.
 
 The `method_policy` block supports:
 
@@ -227,8 +227,8 @@ The `address_list` block supports:
 * `status` - Status.
 * `blocked_log` - Enable/disable logging on blocked addresses.
 * `severity` - Severity.
-* `trusted_address` - Trusted address.
-* `blocked_address` - Blocked address.
+* `trusted_address` - Trusted address. The structure of `trusted_address` block is documented below.
+* `blocked_address` - Blocked address. The structure of `blocked_address` block is documented below.
 
 The `trusted_address` block supports:
 
@@ -245,7 +245,7 @@ The `url_access` block supports:
 * `action` - Action.
 * `log` - Enable/disable logging.
 * `severity` - Severity.
-* `access_pattern` - URL access pattern.
+* `access_pattern` - URL access pattern. The structure of `access_pattern` block is documented below.
 
 The `access_pattern` block supports:
 

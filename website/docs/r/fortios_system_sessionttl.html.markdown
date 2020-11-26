@@ -22,7 +22,7 @@ resource "fortios_system_sessionttl" "trname" {
 The following arguments are supported:
 
 * `default` - Default timeout.
-* `port` - Session TTL port.
+* `port` - Session TTL port. The structure of `port` block is documented below.
 
 The `port` block supports:
 

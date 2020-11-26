@@ -64,12 +64,12 @@ The following arguments are supported:
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `srcintf` - (Required) Source interface name.
 * `dstintf` - (Required) Destination interface name.
-* `srcaddr` - (Required) Source address objects.
-* `dstaddr` - (Required) Destination address objects.
+* `srcaddr` - (Required) Source address objects. The structure of `srcaddr` block is documented below.
+* `dstaddr` - (Required) Destination address objects. The structure of `dstaddr` block is documented below.
 * `action` - Accept or deny traffic matching the policy.
 * `status` - Enable/disable this policy.
 * `schedule` - (Required) Schedule name.
-* `service` - Service name.
+* `service` - Service name. The structure of `service` block is documented below.
 * `logtraffic` - Enable/disable traffic logging for this policy.
 * `traffic_shaper` - Traffic shaper.
 * `traffic_shaper_reverse` - Reverse traffic shaper.
@@ -79,7 +79,7 @@ The following arguments are supported:
 * `tcp_mss_receiver` - TCP Maximum Segment Size value of receiver (0 - 65535, default = 0)
 * `comments` - Comment.
 * `ippool` - Enable/disable use of IP Pools for source NAT.
-* `poolname` - IP Pool names.
+* `poolname` - IP Pool names. The structure of `poolname` block is documented below.
 
 The `srcaddr` block supports:
 

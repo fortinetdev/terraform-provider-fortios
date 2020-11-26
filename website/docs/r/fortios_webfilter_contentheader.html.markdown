@@ -25,7 +25,7 @@ The following arguments are supported:
 * `fosid` - (Required) ID.
 * `name` - (Required) Name of table.
 * `comment` - Optional comments.
-* `entries` - Configure content types used by web filter.
+* `entries` - Configure content types used by web filter. The structure of `entries` block is documented below.
 
 The `entries` block supports:
 

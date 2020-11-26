@@ -22,7 +22,7 @@ resource "fortios_system_ndproxy" "trname" {
 The following arguments are supported:
 
 * `status` - Enable/disable neighbor discovery proxy.
-* `member` - Interfaces using the neighbor discovery proxy.
+* `member` - Interfaces using the neighbor discovery proxy. The structure of `member` block is documented below.
 
 The `member` block supports:
 

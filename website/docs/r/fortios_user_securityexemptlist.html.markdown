@@ -15,15 +15,15 @@ The following arguments are supported:
 
 * `name` - Name of the exempt list.
 * `description` - Description.
-* `rule` - Configure rules for exempting users from captive portal authentication.
+* `rule` - Configure rules for exempting users from captive portal authentication. The structure of `rule` block is documented below.
 
 The `rule` block supports:
 
 * `id` - ID.
-* `srcaddr` - Source addresses or address groups.
-* `devices` - Devices or device groups.
-* `dstaddr` - Destination addresses or address groups.
-* `service` - Destination services.
+* `srcaddr` - Source addresses or address groups. The structure of `srcaddr` block is documented below.
+* `devices` - Devices or device groups. The structure of `devices` block is documented below.
+* `dstaddr` - Destination addresses or address groups. The structure of `dstaddr` block is documented below.
+* `service` - Destination services. The structure of `service` block is documented below.
 
 The `srcaddr` block supports:
 

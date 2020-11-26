@@ -34,8 +34,8 @@ The following arguments are supported:
 * `auto_isl_hello_timer` - Auto inter-switch LAG hello timer duration (1 - 30 sec, default = 3).
 * `auto_isl_receive_timeout` - Auto inter-switch LAG timeout if no response is received (3 - 90 sec, default = 9).
 * `auto_isl_port_group` - Auto inter-switch LAG port group ID (0 - 9).
-* `med_network_policy` - Configuration method to edit Media Endpoint Discovery (MED) network policy type-length-value (TLV) categories.
-* `custom_tlvs` - Configuration method to edit custom TLV entries.
+* `med_network_policy` - Configuration method to edit Media Endpoint Discovery (MED) network policy type-length-value (TLV) categories. The structure of `med_network_policy` block is documented below.
+* `custom_tlvs` - Configuration method to edit custom TLV entries. The structure of `custom_tlvs` block is documented below.
 
 The `med_network_policy` block supports:
 

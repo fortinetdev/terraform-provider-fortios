@@ -26,24 +26,24 @@ The following arguments are supported:
 * `name` - Group name.
 * `comment` - Comment.
 * `group_type` - (Required) Group type.
-* `mail` - Replacement message table entries.
-* `http` - Replacement message table entries.
-* `webproxy` - Replacement message table entries.
-* `ftp` - Replacement message table entries.
-* `nntp` - Replacement message table entries.
-* `fortiguard_wf` - Replacement message table entries.
-* `spam` - Replacement message table entries.
-* `alertmail` - Replacement message table entries.
-* `admin` - Replacement message table entries.
-* `auth` - Replacement message table entries.
-* `sslvpn` - Replacement message table entries.
-* `ec` - Replacement message table entries.
-* `device_detection_portal` - Replacement message table entries.
-* `nac_quar` - Replacement message table entries.
-* `traffic_quota` - Replacement message table entries.
-* `utm` - Replacement message table entries.
-* `custom_message` - Replacement message table entries.
-* `icap` - Replacement message table entries.
+* `mail` - Replacement message table entries. The structure of `mail` block is documented below.
+* `http` - Replacement message table entries. The structure of `http` block is documented below.
+* `webproxy` - Replacement message table entries. The structure of `webproxy` block is documented below.
+* `ftp` - Replacement message table entries. The structure of `ftp` block is documented below.
+* `nntp` - Replacement message table entries. The structure of `nntp` block is documented below.
+* `fortiguard_wf` - Replacement message table entries. The structure of `fortiguard_wf` block is documented below.
+* `spam` - Replacement message table entries. The structure of `spam` block is documented below.
+* `alertmail` - Replacement message table entries. The structure of `alertmail` block is documented below.
+* `admin` - Replacement message table entries. The structure of `admin` block is documented below.
+* `auth` - Replacement message table entries. The structure of `auth` block is documented below.
+* `sslvpn` - Replacement message table entries. The structure of `sslvpn` block is documented below.
+* `ec` - Replacement message table entries. The structure of `ec` block is documented below.
+* `device_detection_portal` - Replacement message table entries. The structure of `device_detection_portal` block is documented below.
+* `nac_quar` - Replacement message table entries. The structure of `nac_quar` block is documented below.
+* `traffic_quota` - Replacement message table entries. The structure of `traffic_quota` block is documented below.
+* `utm` - Replacement message table entries. The structure of `utm` block is documented below.
+* `custom_message` - Replacement message table entries. The structure of `custom_message` block is documented below.
+* `icap` - Replacement message table entries. The structure of `icap` block is documented below.
 
 The `mail` block supports:
 

@@ -25,7 +25,7 @@ The following arguments are supported:
 * `fosid` - (Required) ID.
 * `name` - (Required) Name of table containing the file pattern list.
 * `comment` - Optional comments.
-* `entries` - Configure file patterns used by DLP blocking.
+* `entries` - Configure file patterns used by DLP blocking. The structure of `entries` block is documented below.
 
 The `entries` block supports:
 

@@ -78,22 +78,22 @@ The following arguments are supported:
 * `auto_connect` - Enable/disable automatic connect by client when system is up.
 * `keep_alive` - Enable/disable automatic reconnect for FortiClient connections.
 * `save_password` - Enable/disable FortiClient saving the user's password.
-* `ip_pools` - IPv4 firewall source address objects reserved for SSL-VPN tunnel mode clients.
+* `ip_pools` - IPv4 firewall source address objects reserved for SSL-VPN tunnel mode clients. The structure of `ip_pools` block is documented below.
 * `exclusive_routing` - Enable/disable all traffic go through tunnel only.
 * `service_restriction` - Enable/disable tunnel service restriction.
 * `split_tunneling` - Enable/disable IPv4 split tunneling.
-* `split_tunneling_routing_address` - IPv4 SSL-VPN tunnel mode firewall address objects that override firewall policy destination addresses to control split-tunneling access.
+* `split_tunneling_routing_address` - IPv4 SSL-VPN tunnel mode firewall address objects that override firewall policy destination addresses to control split-tunneling access. The structure of `split_tunneling_routing_address` block is documented below.
 * `dns_server1` - IPv4 DNS server 1.
 * `dns_server2` - IPv4 DNS server 2.
 * `dns_suffix` - DNS suffix.
 * `wins_server1` - IPv4 WINS server 1.
 * `wins_server2` - IPv4 WINS server 1.
 * `ipv6_tunnel_mode` - Enable/disable IPv6 SSL-VPN tunnel mode.
-* `ipv6_pools` - IPv4 firewall source address objects reserved for SSL-VPN tunnel mode clients.
+* `ipv6_pools` - IPv4 firewall source address objects reserved for SSL-VPN tunnel mode clients. The structure of `ipv6_pools` block is documented below.
 * `ipv6_exclusive_routing` - Enable/disable all IPv6 traffic go through tunnel only.
 * `ipv6_service_restriction` - Enable/disable IPv6 tunnel service restriction.
 * `ipv6_split_tunneling` - Enable/disable IPv6 split tunneling.
-* `ipv6_split_tunneling_routing_address` - IPv6 SSL-VPN tunnel mode firewall address objects that override firewall policy destination addresses to control split-tunneling access.
+* `ipv6_split_tunneling_routing_address` - IPv6 SSL-VPN tunnel mode firewall address objects that override firewall policy destination addresses to control split-tunneling access. The structure of `ipv6_split_tunneling_routing_address` block is documented below.
 * `ipv6_dns_server1` - IPv6 DNS server 1.
 * `ipv6_dns_server2` - IPv6 DNS server 2.
 * `ipv6_wins_server1` - IPv6 WINS server 1.
@@ -103,7 +103,7 @@ The following arguments are supported:
 * `user_bookmark` - Enable to allow web portal users to create their own bookmarks.
 * `allow_user_access` - Allow user access to SSL-VPN applications.
 * `user_group_bookmark` - Enable to allow web portal users to create bookmarks for all users in the same user group.
-* `bookmark_group` - Portal bookmark group.
+* `bookmark_group` - Portal bookmark group. The structure of `bookmark_group` block is documented below.
 * `display_connection_tools` - Enable to display the web portal connection tools widget.
 * `display_history` - Enable to display the web portal user login history widget.
 * `display_status` - Enable to display the web portal status widget.
@@ -115,13 +115,13 @@ The following arguments are supported:
 * `smbv1` - Enable/disable support of SMBv1 for Samba.
 * `host_check` - Type of host checking performed on endpoints.
 * `host_check_interval` - Periodic host check interval. Value of 0 means disabled and host checking only happens when the endpoint connects.
-* `host_check_policy` - One or more policies to require the endpoint to have specific security software.
+* `host_check_policy` - One or more policies to require the endpoint to have specific security software. The structure of `host_check_policy` block is documented below.
 * `limit_user_logins` - Enable to limit each user to one SSL-VPN session at a time.
 * `mac_addr_check` - Enable/disable MAC address host checking.
 * `mac_addr_action` - Client MAC address action.
-* `mac_addr_check_rule` - Client MAC address check rule.
+* `mac_addr_check_rule` - Client MAC address check rule. The structure of `mac_addr_check_rule` block is documented below.
 * `os_check` - Enable to let the FortiGate decide action based on client OS.
-* `os_check_list` - SSL VPN OS checks.
+* `os_check_list` - SSL VPN OS checks. The structure of `os_check_list` block is documented below.
 * `forticlient_download` - Enable/disable download option for FortiClient.
 * `forticlient_download_method` - FortiClient download method.
 * `customize_forticlient_download_url` - Enable support of customized download URL for FortiClient.
@@ -130,7 +130,7 @@ The following arguments are supported:
 * `skip_check_for_unsupported_os` - Enable to skip host check if client OS does not support it.
 * `skip_check_for_browser` - Enable to skip host check for browser support.
 * `hide_sso_credential` - Enable to prevent SSO credential being sent to client.
-* `split_dns` - Split DNS for SSL VPN.
+* `split_dns` - Split DNS for SSL VPN. The structure of `split_dns` block is documented below.
 
 The `ip_pools` block supports:
 
@@ -151,7 +151,7 @@ The `ipv6_split_tunneling_routing_address` block supports:
 The `bookmark_group` block supports:
 
 * `name` - Bookmark group name.
-* `bookmarks` - Bookmark table.
+* `bookmarks` - Bookmark table. The structure of `bookmarks` block is documented below.
 
 The `bookmarks` block supports:
 
@@ -174,7 +174,7 @@ The `bookmarks` block supports:
 * `logon_user` - Logon user.
 * `logon_password` - Logon password.
 * `sso` - Single Sign-On.
-* `form_data` - Form data.
+* `form_data` - Form data. The structure of `form_data` block is documented below.
 * `sso_credential` - Single sign-on credentials.
 * `sso_username` - SSO user name.
 * `sso_password` - SSO password.
@@ -193,7 +193,7 @@ The `mac_addr_check_rule` block supports:
 
 * `name` - Client MAC address check rule name.
 * `mac_addr_mask` - Client MAC address mask.
-* `mac_addr_list` - Client MAC address list.
+* `mac_addr_list` - Client MAC address list. The structure of `mac_addr_list` block is documented below.
 
 The `mac_addr_list` block supports:
 

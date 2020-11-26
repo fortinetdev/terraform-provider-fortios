@@ -42,8 +42,8 @@ The following arguments are supported:
 * `logtraffic` - Enable/disable logging traffic accepted by this policy.
 * `srcintf` - (Required) IPv6 source interface name.
 * `dstintf` - (Required) IPv6 destination interface name.
-* `srcaddr` - (Required) IPv6 source address name.
-* `dstaddr` - (Required) IPv6 destination address name.
+* `srcaddr` - (Required) IPv6 source address name. The structure of `srcaddr` block is documented below.
+* `dstaddr` - (Required) IPv6 destination address name. The structure of `dstaddr` block is documented below.
 * `action` - Accept or deny traffic matching the policy.
 * `protocol` - Integer value for the protocol type as defined by IANA (0 - 255, default = 0).
 * `start_port` - Integer value for starting TCP/UDP/SCTP destination port in range (1 - 65535, default = 1).

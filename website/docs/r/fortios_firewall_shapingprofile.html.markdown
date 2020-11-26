@@ -33,7 +33,7 @@ The following arguments are supported:
 * `profile_name` - (Required) Shaping profile name.
 * `comment` - Comment.
 * `default_class_id` - (Required) Default class ID to handle unclassified packets (including all local traffic).
-* `shaping_entries` - Define shaping entries of this shaping profile.
+* `shaping_entries` - Define shaping entries of this shaping profile. The structure of `shaping_entries` block is documented below.
 
 The `shaping_entries` block supports:
 

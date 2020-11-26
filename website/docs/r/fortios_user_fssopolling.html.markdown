@@ -23,7 +23,7 @@ The following arguments are supported:
 * `ldap_server` - (Required) LDAP server name used in LDAP connection strings.
 * `logon_history` - Number of hours of logon history to keep, 0 means keep all history.
 * `polling_frequency` - Polling frequency (every 1 to 30 seconds).
-* `adgrp` - LDAP Group Info.
+* `adgrp` - LDAP Group Info. The structure of `adgrp` block is documented below.
 * `smbv1` - Enable/disable support of SMBv1 for Samba.
 * `smb_ntlmv1_auth` - Enable/disable support of NTLMv1 for Samba authentication.
 

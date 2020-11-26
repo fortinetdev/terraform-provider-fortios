@@ -15,7 +15,7 @@ The following arguments are supported:
 
 * `name` - WTP group name.
 * `platform_type` - FortiAP models to define the WTP group platform type.
-* `wtps` - WTP list.
+* `wtps` - WTP list. The structure of `wtps` block is documented below.
 
 The `wtps` block supports:
 

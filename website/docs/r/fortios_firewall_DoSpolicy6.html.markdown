@@ -17,10 +17,10 @@ The following arguments are supported:
 * `status` - Enable/disable this policy.
 * `comments` - Comment.
 * `interface` - (Required) Incoming interface name from available interfaces.
-* `srcaddr` - (Required) Source address name from available addresses.
-* `dstaddr` - (Required) Destination address name from available addresses.
-* `service` - Service object from available options.
-* `anomaly` - Anomaly name.
+* `srcaddr` - (Required) Source address name from available addresses. The structure of `srcaddr` block is documented below.
+* `dstaddr` - (Required) Destination address name from available addresses. The structure of `dstaddr` block is documented below.
+* `service` - Service object from available options. The structure of `service` block is documented below.
+* `anomaly` - Anomaly name. The structure of `anomaly` block is documented below.
 
 The `srcaddr` block supports:
 

@@ -39,12 +39,12 @@ resource "fortios_router_policy" "trname" {
 The following arguments are supported:
 
 * `seq_num` - Sequence number.
-* `input_device` - Incoming interface name.
-* `src` - Source IP and mask (x.x.x.x/x).
-* `srcaddr` - Source address name.
+* `input_device` - Incoming interface name. The structure of `input_device` block is documented below.
+* `src` - Source IP and mask (x.x.x.x/x). The structure of `src` block is documented below.
+* `srcaddr` - Source address name. The structure of `srcaddr` block is documented below.
 * `src_negate` - Enable/disable negating source address match.
-* `dst` - Destination IP and mask (x.x.x.x/x).
-* `dstaddr` - Destination address name.
+* `dst` - Destination IP and mask (x.x.x.x/x). The structure of `dst` block is documented below.
+* `dstaddr` - Destination address name. The structure of `dstaddr` block is documented below.
 * `dst_negate` - Enable/disable negating destination address match.
 * `action` - Action of the policy route.
 * `protocol` - Protocol number (0 - 255).

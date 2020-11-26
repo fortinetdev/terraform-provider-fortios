@@ -65,7 +65,7 @@ The following arguments are supported:
 * `auth_type` - Authentication methods/protocols permitted for this RADIUS server.
 * `source_ip` - Source IP address for communications to the RADIUS server.
 * `username_case_sensitive` - Enable/disable case sensitive user names.
-* `class` - Class attribute name(s).
+* `class` - Class attribute name(s). The structure of `class` block is documented below.
 * `password_renewal` - Enable/disable password renewal.
 * `password_encoding` - Password encoding.
 * `acct_all_servers` - Enable/disable sending of accounting messages to all configured servers (default = disable).
@@ -84,7 +84,7 @@ The following arguments are supported:
 * `rsso_log_flags` - Events to log.
 * `rsso_flush_ip_session` - Enable/disable flushing user IP sessions on RADIUS accounting Stop messages.
 * `rsso_ep_one_ip_only` - Enable/disable the replacement of old IP addresses with new ones for the same endpoint on RADIUS accounting Start messages.
-* `accounting_server` - Additional accounting servers.
+* `accounting_server` - Additional accounting servers. The structure of `accounting_server` block is documented below.
 
 The `class` block supports:
 

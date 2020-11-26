@@ -82,13 +82,13 @@ The following arguments are supported:
 * `spam_filtering` - Enable/disable spam filtering.
 * `external` - Enable/disable external Email inspection.
 * `options` - Options.
-* `imap` - IMAP.
-* `pop3` - POP3.
-* `smtp` - SMTP.
-* `mapi` - MAPI.
-* `msn_hotmail` - MSN Hotmail.
-* `yahoo_mail` - Yahoo! Mail.
-* `gmail` - Gmail.
+* `imap` - IMAP. The structure of `imap` block is documented below.
+* `pop3` - POP3. The structure of `pop3` block is documented below.
+* `smtp` - SMTP. The structure of `smtp` block is documented below.
+* `mapi` - MAPI. The structure of `mapi` block is documented below.
+* `msn_hotmail` - MSN Hotmail. The structure of `msn_hotmail` block is documented below.
+* `yahoo_mail` - Yahoo! Mail. The structure of `yahoo_mail` block is documented below.
+* `gmail` - Gmail. The structure of `gmail` block is documented below.
 * `spam_bword_threshold` - Spam banned word threshold.
 * `spam_bword_table` - Anti-spam banned word table ID.
 * `spam_bwl_table` - Anti-spam black/white list table ID.

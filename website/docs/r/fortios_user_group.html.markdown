@@ -41,8 +41,8 @@ The following arguments are supported:
 * `auth_concurrent_value` - Maximum number of concurrent authenticated connections per user (0 - 100).
 * `http_digest_realm` - Realm attribute for MD5-digest authentication.
 * `sso_attribute_value` - Name of the RADIUS user group that this local user group represents.
-* `member` - Names of users, peers, LDAP severs, or RADIUS servers to add to the user group.
-* `match` - Group matches.
+* `member` - Names of users, peers, LDAP severs, or RADIUS servers to add to the user group. The structure of `member` block is documented below.
+* `match` - Group matches. The structure of `match` block is documented below.
 * `user_id` - Guest user ID type.
 * `password` - Guest user password type.
 * `user_name` - Enable/disable the guest user name entry.
@@ -56,7 +56,7 @@ The following arguments are supported:
 * `expire` - Time in seconds before guest user accounts expire. (1 - 31536000 sec)
 * `max_accounts` - Maximum number of guest accounts that can be created for this group (0 means unlimited).
 * `multiple_guest_add` - Enable/disable addition of multiple guests.
-* `guest` - Guest User.
+* `guest` - Guest User. The structure of `guest` block is documented below.
 
 The `member` block supports:
 

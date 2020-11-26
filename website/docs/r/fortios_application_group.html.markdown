@@ -29,8 +29,8 @@ The following arguments are supported:
 * `name` - Application group name.
 * `comment` - Comment
 * `type` - Application group type.
-* `application` - Application ID list.
-* `category` - Application category ID list.
+* `application` - Application ID list. The structure of `application` block is documented below.
+* `category` - Application category ID list. The structure of `category` block is documented below.
 
 The `application` block supports:
 

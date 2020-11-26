@@ -89,11 +89,11 @@ The following arguments are supported:
 * `utmgrp` - Administrator access to Security Profiles.
 * `wanoptgrp` - Administrator access to WAN Opt & Cache.
 * `wifi` - Administrator access to the WiFi controller and Switch controller.
-* `netgrp_permission` - Custom network permission.
-* `sysgrp_permission` - Custom system permission.
-* `fwgrp_permission` - Custom firewall permission.
-* `loggrp_permission` - Custom Log & Report permission.
-* `utmgrp_permission` - Custom Security Profile permissions.
+* `netgrp_permission` - Custom network permission. The structure of `netgrp_permission` block is documented below.
+* `sysgrp_permission` - Custom system permission. The structure of `sysgrp_permission` block is documented below.
+* `fwgrp_permission` - Custom firewall permission. The structure of `fwgrp_permission` block is documented below.
+* `loggrp_permission` - Custom Log & Report permission. The structure of `loggrp_permission` block is documented below.
+* `utmgrp_permission` - Custom Security Profile permissions. The structure of `utmgrp_permission` block is documented below.
 * `admintimeout_override` - Enable/disable overriding the global administrator idle timeout.
 * `admintimeout` - Administrator timeout for this access profile (0 - 480 min, default = 10, 0 means never timeout).
 

@@ -33,7 +33,7 @@ The following arguments are supported:
 * `fosid` - (Required) ID.
 * `name` - (Required) Name of table.
 * `comment` - Optional comments.
-* `entries` - DNS domain filter entries.
+* `entries` - DNS domain filter entries. The structure of `entries` block is documented below.
 
 The `entries` block supports:
 

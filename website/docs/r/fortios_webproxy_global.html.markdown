@@ -48,8 +48,8 @@ The following arguments are supported:
 * `webproxy_profile` - Name of the web proxy profile to apply when explicit proxy traffic is allowed by default and traffic is accepted that does not match an explicit proxy policy.
 * `learn_client_ip` - Enable/disable learning the client's IP address from headers.
 * `learn_client_ip_from_header` - Learn client IP address from the specified headers.
-* `learn_client_ip_srcaddr` - Source address name (srcaddr or srcaddr6 must be set).
-* `learn_client_ip_srcaddr6` - IPv6 Source address name (srcaddr or srcaddr6 must be set).
+* `learn_client_ip_srcaddr` - Source address name (srcaddr or srcaddr6 must be set). The structure of `learn_client_ip_srcaddr` block is documented below.
+* `learn_client_ip_srcaddr6` - IPv6 Source address name (srcaddr or srcaddr6 must be set). The structure of `learn_client_ip_srcaddr6` block is documented below.
 
 The `learn_client_ip_srcaddr` block supports:
 

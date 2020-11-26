@@ -15,7 +15,7 @@ The following arguments are supported:
 
 * `status` - Enable/disable alarm.
 * `audible` - Enable/disable audible alarm.
-* `groups` - Alarm groups.
+* `groups` - Alarm groups. The structure of `groups` block is documented below.
 
 The `groups` block supports:
 
@@ -30,7 +30,7 @@ The `groups` block supports:
 * `log_full_warning_threshold` - Log full warning threshold.
 * `encryption_failure_threshold` - Encryption failure threshold.
 * `decryption_failure_threshold` - Decryption failure threshold.
-* `fw_policy_violations` - Firewall policy violations.
+* `fw_policy_violations` - Firewall policy violations. The structure of `fw_policy_violations` block is documented below.
 * `fw_policy_id` - Firewall policy ID.
 * `fw_policy_id_threshold` - Firewall policy ID threshold.
 

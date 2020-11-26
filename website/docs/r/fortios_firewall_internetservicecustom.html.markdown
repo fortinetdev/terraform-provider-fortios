@@ -16,14 +16,14 @@ The following arguments are supported:
 * `name` - Internet Service name.
 * `reputation` - Reputation level of the custom Internet Service.
 * `comment` - Comment.
-* `entry` - Entries added to the Internet Service database and custom database.
+* `entry` - Entries added to the Internet Service database and custom database. The structure of `entry` block is documented below.
 
 The `entry` block supports:
 
 * `id` - Entry ID(1-255).
 * `protocol` - Integer value for the protocol type as defined by IANA (0 - 255).
-* `port_range` - Port ranges in the custom entry.
-* `dst` - Destination address or address group name.
+* `port_range` - Port ranges in the custom entry. The structure of `port_range` block is documented below.
+* `dst` - Destination address or address group name. The structure of `dst` block is documented below.
 
 The `port_range` block supports:
 

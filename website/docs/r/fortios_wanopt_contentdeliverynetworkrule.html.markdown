@@ -35,14 +35,14 @@ The following arguments are supported:
 * `name` - Name of table.
 * `comment` - Comment about this CDN-rule.
 * `status` - Enable/disable WAN optimization content delivery network rules.
-* `host_domain_name_suffix` - Suffix portion of the fully qualified domain name (eg. fortinet.com in "www.fortinet.com").
+* `host_domain_name_suffix` - Suffix portion of the fully qualified domain name (eg. fortinet.com in "www.fortinet.com"). The structure of `host_domain_name_suffix` block is documented below.
 * `category` - Content delivery network rule category.
 * `request_cache_control` - Enable/disable HTTP request cache control.
 * `response_cache_control` - Enable/disable HTTP response cache control.
 * `response_expires` - Enable/disable HTTP response cache expires.
 * `text_response_vcache` - Enable/disable caching of text responses.
 * `updateserver` - Enable/disable update server.
-* `rules` - WAN optimization content delivery network rule entries.
+* `rules` - WAN optimization content delivery network rule entries. The structure of `rules` block is documented below.
 
 The `host_domain_name_suffix` block supports:
 
@@ -53,15 +53,15 @@ The `rules` block supports:
 * `name` - WAN optimization content delivery network rule name.
 * `match_mode` - Match criteria for collecting content ID.
 * `skip_rule_mode` - Skip mode when evaluating skip-rules.
-* `match_entries` - List of entries to match.
-* `skip_entries` - List of entries to skip.
-* `content_id` - Content ID settings.
+* `match_entries` - List of entries to match. The structure of `match_entries` block is documented below.
+* `skip_entries` - List of entries to skip. The structure of `skip_entries` block is documented below.
+* `content_id` - Content ID settings. The structure of `content_id` block is documented below.
 
 The `match_entries` block supports:
 
 * `id` - Rule ID.
 * `target` - Option in HTTP header or URL parameter to match.
-* `pattern` - Pattern string for matching target (Referrer or URL pattern, eg. "a", "a*c", "*a*", "a*c*e", and "*").
+* `pattern` - Pattern string for matching target (Referrer or URL pattern, eg. "a", "a*c", "*a*", "a*c*e", and "*"). The structure of `pattern` block is documented below.
 
 The `pattern` block supports:
 
@@ -71,7 +71,7 @@ The `skip_entries` block supports:
 
 * `id` - Rule ID.
 * `target` - Option in HTTP header or URL parameter to match.
-* `pattern` - Pattern string for matching target (Referrer or URL pattern, eg. "a", "a*c", "*a*", "a*c*e", and "*").
+* `pattern` - Pattern string for matching target (Referrer or URL pattern, eg. "a", "a*c", "*a*", "a*c*e", and "*"). The structure of `pattern` block is documented below.
 
 The `pattern` block supports:
 

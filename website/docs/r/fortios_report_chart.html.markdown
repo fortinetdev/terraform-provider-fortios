@@ -38,7 +38,7 @@ The following arguments are supported:
 * `policy` - Used by monitor policy.
 * `type` - Chart type.
 * `period` - Time period.
-* `drill_down_charts` - Drill down charts.
+* `drill_down_charts` - Drill down charts. The structure of `drill_down_charts` block is documented below.
 * `comments` - (Required) Comment.
 * `dataset` - (Required) Bind dataset to chart.
 * `category` - Category.
@@ -46,17 +46,17 @@ The following arguments are supported:
 * `graph_type` - Graph type.
 * `style` - Style.
 * `dimension` - Dimension.
-* `x_series` - X-series of chart.
-* `y_series` - Y-series of chart.
-* `category_series` - Category series of pie chart.
-* `value_series` - Value series of pie chart.
+* `x_series` - X-series of chart. The structure of `x_series` block is documented below.
+* `y_series` - Y-series of chart. The structure of `y_series` block is documented below.
+* `category_series` - Category series of pie chart. The structure of `category_series` block is documented below.
+* `value_series` - Value series of pie chart. The structure of `value_series` block is documented below.
 * `title` - Chart title.
 * `title_font_size` - Font size of chart title.
 * `background` - Chart background.
 * `color_palette` - Color palette (system will pick color automatically by default).
 * `legend` - Enable/Disable Legend area.
 * `legend_font_size` - Font size of legend area.
-* `column` - Table column definition.
+* `column` - Table column definition. The structure of `column` block is documented below.
 
 The `drill_down_charts` block supports:
 
@@ -109,7 +109,7 @@ The `column` block supports:
 * `footer_value` - Footer value of column.
 * `detail_unit` - Detail unit of column.
 * `footer_unit` - Footer unit of column.
-* `mapping` - Show detail in certain display value for certain condition.
+* `mapping` - Show detail in certain display value for certain condition. The structure of `mapping` block is documented below.
 
 The `mapping` block supports:
 

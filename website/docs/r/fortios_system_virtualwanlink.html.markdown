@@ -26,10 +26,10 @@ The following arguments are supported:
 * `status` - Enable/disable SD-WAN.
 * `load_balance_mode` - Algorithm or mode to use for load balancing Internet traffic to SD-WAN members.
 * `fail_detect` - Enable/disable SD-WAN Internet connection status checking (failure detection).
-* `fail_alert_interfaces` - Physical interfaces that will be alerted.
-* `members` - Physical FortiGate interfaces added to the virtual-wan-link.
-* `health_check` - SD-WAN status checking or health checking. Identify a server on the Internet and determine how SD-WAN verifies that the FortiGate can communicate with it.
-* `service` - Create SD-WAN rules or priority rules (also called services) to control how sessions are distributed to physical interfaces in the SD-WAN.
+* `fail_alert_interfaces` - Physical interfaces that will be alerted. The structure of `fail_alert_interfaces` block is documented below.
+* `members` - Physical FortiGate interfaces added to the virtual-wan-link. The structure of `members` block is documented below.
+* `health_check` - SD-WAN status checking or health checking. Identify a server on the Internet and determine how SD-WAN verifies that the FortiGate can communicate with it. The structure of `health_check` block is documented below.
+* `service` - Create SD-WAN rules or priority rules (also called services) to control how sessions are distributed to physical interfaces in the SD-WAN. The structure of `service` block is documented below.
 
 The `fail_alert_interfaces` block supports:
 
@@ -79,8 +79,8 @@ The `health_check` block supports:
 * `threshold_alert_latency` - Alert threshold for latency (ms, default = 0).
 * `threshold_warning_jitter` - Warning threshold for jitter (ms, default = 0).
 * `threshold_alert_jitter` - Alert threshold for jitter (ms, default = 0).
-* `members` - Member sequence number list.
-* `sla` - Service level agreement (SLA).
+* `members` - Member sequence number list. The structure of `members` block is documented below.
+* `sla` - Service level agreement (SLA). The structure of `sla` block is documented below.
 
 The `members` block supports:
 
@@ -99,7 +99,7 @@ The `service` block supports:
 * `id` - Priority rule ID (1 - 4000).
 * `name` - Priority rule name.
 * `addr_mode` - Address mode (IPv4 or IPv6).
-* `input_device` - Source interface name.
+* `input_device` - Source interface name. The structure of `input_device` block is documented below.
 * `mode` - Control how the priority rule sets the priority of interfaces in the SD-WAN.
 * `quality_link` - Quality grade.
 * `member` - Member sequence number.
@@ -109,21 +109,21 @@ The `service` block supports:
 * `start_port` - Start destination port number.
 * `end_port` - End destination port number.
 * `route_tag` - IPv4 route map route-tag.
-* `dst` - Destination address name.
+* `dst` - Destination address name. The structure of `dst` block is documented below.
 * `dst_negate` - Enable/disable negation of destination address match.
-* `src` - Source address name.
-* `dst6` - Destination address6 name.
-* `src6` - Source address6 name.
+* `src` - Source address name. The structure of `src` block is documented below.
+* `dst6` - Destination address6 name. The structure of `dst6` block is documented below.
+* `src6` - Source address6 name. The structure of `src6` block is documented below.
 * `src_negate` - Enable/disable negation of source address match.
-* `users` - User name.
-* `groups` - User groups.
+* `users` - User name. The structure of `users` block is documented below.
+* `groups` - User groups. The structure of `groups` block is documented below.
 * `internet_service` - Enable/disable use of Internet service for application-based load balancing.
-* `internet_service_custom` - Custom Internet service name list.
-* `internet_service_custom_group` - Custom Internet Service group list.
-* `internet_service_id` - Internet service ID list.
-* `internet_service_group` - Internet Service group list.
-* `internet_service_ctrl` - Control-based Internet Service ID list.
-* `internet_service_ctrl_group` - Control-based Internet Service group list.
+* `internet_service_custom` - Custom Internet service name list. The structure of `internet_service_custom` block is documented below.
+* `internet_service_custom_group` - Custom Internet Service group list. The structure of `internet_service_custom_group` block is documented below.
+* `internet_service_id` - Internet service ID list. The structure of `internet_service_id` block is documented below.
+* `internet_service_group` - Internet Service group list. The structure of `internet_service_group` block is documented below.
+* `internet_service_ctrl` - Control-based Internet Service ID list. The structure of `internet_service_ctrl` block is documented below.
+* `internet_service_ctrl_group` - Control-based Internet Service group list. The structure of `internet_service_ctrl_group` block is documented below.
 * `health_check` - Health check.
 * `link_cost_factor` - Link cost factor.
 * `packet_loss_weight` - Coefficient of packet-loss in the formula of custom-profile-1.
@@ -136,8 +136,8 @@ The `service` block supports:
 * `dscp_reverse` - Enable/disable reverse traffic DSCP tag.
 * `dscp_forward_tag` - Forward traffic DSCP tag.
 * `dscp_reverse_tag` - Reverse traffic DSCP tag.
-* `sla` - Service level agreement (SLA).
-* `priority_members` - Member sequence number list.
+* `sla` - Service level agreement (SLA). The structure of `sla` block is documented below.
+* `priority_members` - Member sequence number list. The structure of `priority_members` block is documented below.
 * `status` - Enable/disable SD-WAN service.
 * `gateway` - Enable/disable SD-WAN service gateway.
 

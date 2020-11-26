@@ -44,11 +44,11 @@ The following arguments are supported:
 
 * `policyid` - Policy ID.
 * `status` - Enable/disable the active status of this policy.
-* `orig_addr` - (Required) Original address.
-* `srcintf` - (Required) Source interface name from available interfaces.
-* `dst_addr` - (Required) Destination address name from available addresses.
-* `dstintf` - (Required) Destination interface name from available interfaces.
-* `nat_ippool` - Name of the IP pools to be used to translate addresses from available IP Pools.
+* `orig_addr` - (Required) Original address. The structure of `orig_addr` block is documented below.
+* `srcintf` - (Required) Source interface name from available interfaces. The structure of `srcintf` block is documented below.
+* `dst_addr` - (Required) Destination address name from available addresses. The structure of `dst_addr` block is documented below.
+* `dstintf` - (Required) Destination interface name from available interfaces. The structure of `dstintf` block is documented below.
+* `nat_ippool` - Name of the IP pools to be used to translate addresses from available IP Pools. The structure of `nat_ippool` block is documented below.
 * `protocol` - (Required) Integer value for the protocol type (0 - 255).
 * `orig_port` - (Required) Original TCP port (0 to 65535).
 * `nat_port` - Translated port or port range (0 to 65535).

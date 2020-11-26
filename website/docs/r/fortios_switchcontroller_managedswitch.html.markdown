@@ -33,16 +33,16 @@ The following arguments are supported:
 * `owner_vdom` - VDOM which owner of port belongs to.
 * `staged_image_version` - Staged image version for FortiSwitch.
 * `delayed_restart_trigger` - Delayed restart triggered for this FortiSwitch.
-* `ports` - Managed-switch port list.
-* `stp_settings` - Configuration method to edit Spanning Tree Protocol (STP) settings used to prevent bridge loops.
-* `switch_stp_settings` - Configure spanning tree protocol (STP).
-* `switch_log` - Configuration method to edit FortiSwitch logging settings (logs are transferred to and inserted into the FortiGate event log).
-* `storm_control` - Configuration method to edit FortiSwitch storm control for measuring traffic activity using data rates to prevent traffic disruption.
-* `mirror` - Configuration method to edit FortiSwitch packet mirror.
-* `static_mac` - Configuration method to edit FortiSwitch Static and Sticky MAC.
-* `custom_command` - Configuration method to edit FortiSwitch commands to be pushed to this FortiSwitch device upon rebooting the FortiGate switch controller or the FortiSwitch.
-* `igmp_snooping` - Configure FortiSwitch IGMP snooping global settings.
-* `n802_1X_settings` - Configuration method to edit FortiSwitch 802.1X global settings.
+* `ports` - Managed-switch port list. The structure of `ports` block is documented below.
+* `stp_settings` - Configuration method to edit Spanning Tree Protocol (STP) settings used to prevent bridge loops. The structure of `stp_settings` block is documented below.
+* `switch_stp_settings` - Configure spanning tree protocol (STP). The structure of `switch_stp_settings` block is documented below.
+* `switch_log` - Configuration method to edit FortiSwitch logging settings (logs are transferred to and inserted into the FortiGate event log). The structure of `switch_log` block is documented below.
+* `storm_control` - Configuration method to edit FortiSwitch storm control for measuring traffic activity using data rates to prevent traffic disruption. The structure of `storm_control` block is documented below.
+* `mirror` - Configuration method to edit FortiSwitch packet mirror. The structure of `mirror` block is documented below.
+* `static_mac` - Configuration method to edit FortiSwitch Static and Sticky MAC. The structure of `static_mac` block is documented below.
+* `custom_command` - Configuration method to edit FortiSwitch commands to be pushed to this FortiSwitch device upon rebooting the FortiGate switch controller or the FortiSwitch. The structure of `custom_command` block is documented below.
+* `igmp_snooping` - Configure FortiSwitch IGMP snooping global settings. The structure of `igmp_snooping` block is documented below.
+* `n802_1X_settings` - Configuration method to edit FortiSwitch 802.1X global settings. The structure of `n802_1X_settings` block is documented below.
 
 The `ports` block supports:
 
@@ -69,8 +69,8 @@ The `ports` block supports:
 * `fgt_peer_device_name` - FGT peer device name.
 * `vlan` - Assign switch ports to a VLAN.
 * `allowed_vlans_all` - Enable/disable all defined vlans on this port.
-* `allowed_vlans` - Configure switch port tagged vlans
-* `untagged_vlans` - Configure switch port untagged vlans
+* `allowed_vlans` - Configure switch port tagged vlans The structure of `allowed_vlans` block is documented below.
+* `untagged_vlans` - Configure switch port untagged vlans The structure of `untagged_vlans` block is documented below.
 * `type` - Interface type: physical or trunk port.
 * `dhcp_snooping` - Trusted or untrusted DHCP-snooping interface.
 * `dhcp_snoop_option82_trust` - Enable/disable allowance of DHCP with option-82 on untrusted interface.
@@ -93,7 +93,7 @@ The `ports` block supports:
 * `qos_policy` - Switch controller QoS policy from available options.
 * `port_security_policy` - Switch controller authentication policy to apply to this managed switch from available options.
 * `export_to_pool` - Switch controller export port to pool-list.
-* `export_tags` - Switch controller export tag name.
+* `export_tags` - Switch controller export tag name. The structure of `export_tags` block is documented below.
 * `export_to_pool_flag` - Switch controller export port to pool-list.
 * `learning_limit` - Limit the number of dynamic MAC addresses on this Port (1 - 128, 0 = no limit, default).
 * `sticky_mac` - Enable or disable sticky-mac on the interface.
@@ -109,7 +109,7 @@ The `ports` block supports:
 * `mclag` - Enable/disable multi-chassis link aggregation (MCLAG).
 * `min_bundle` - Minimum size of LAG bundle (1 - 24, default = 1)
 * `max_bundle` - Maximum size of LAG bundle (1 - 24, default = 24)
-* `members` - Aggregated LAG bundle interfaces.
+* `members` - Aggregated LAG bundle interfaces. The structure of `members` block is documented below.
 
 The `allowed_vlans` block supports:
 
@@ -163,8 +163,8 @@ The `mirror` block supports:
 * `status` - Active/inactive mirror configuration.
 * `switching_packet` - Enable/disable switching functionality when mirroring.
 * `dst` - Destination port.
-* `src_ingress` - Source ingress interfaces.
-* `src_egress` - Source egress interfaces.
+* `src_ingress` - Source ingress interfaces. The structure of `src_ingress` block is documented below.
+* `src_egress` - Source egress interfaces. The structure of `src_egress` block is documented below.
 
 The `src_ingress` block supports:
 

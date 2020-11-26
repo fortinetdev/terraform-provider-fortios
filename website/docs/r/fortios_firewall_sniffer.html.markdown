@@ -60,7 +60,7 @@ The following arguments are supported:
 * `dlp_sensor_status` - Enable/disable DLP sensor.
 * `dlp_sensor` - Name of an existing DLP sensor.
 * `ips_dos_status` - Enable/disable IPS DoS anomaly detection.
-* `anomaly` - Configuration method to edit Denial of Service (DoS) anomaly settings.
+* `anomaly` - Configuration method to edit Denial of Service (DoS) anomaly settings. The structure of `anomaly` block is documented below.
 * `scan_botnet_connections` - Enable/disable scanning of connections to Botnet servers.
 * `max_packet_count` - Maximum packet count (1 - 1000000, default = 10000).
 

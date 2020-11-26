@@ -84,11 +84,11 @@ The following arguments are supported:
 * `type` - Configure a static NAT, load balance, server load balance, DNS translation, or FQDN VIP.
 * `dns_mapping_ttl` - DNS mapping TTL (Set to zero to use TTL in DNS response, default = 0).
 * `ldb_method` - Method used to distribute sessions to real servers.
-* `src_filter` - Source address filter. Each address must be either an IP/subnet (x.x.x.x/n) or a range (x.x.x.x-y.y.y.y). Separate addresses with spaces.
-* `service` - Service name.
+* `src_filter` - Source address filter. Each address must be either an IP/subnet (x.x.x.x/n) or a range (x.x.x.x-y.y.y.y). Separate addresses with spaces. The structure of `src_filter` block is documented below.
+* `service` - Service name. The structure of `service` block is documented below.
 * `extip` - IP address or address range on the external interface that you want to map to an address or address range on the destination network.
-* `extaddr` - External FQDN address name.
-* `mappedip` - IP address or address range on the destination network to which the external IP address is mapped.
+* `extaddr` - External FQDN address name. The structure of `extaddr` block is documented below.
+* `mappedip` - IP address or address range on the destination network to which the external IP address is mapped. The structure of `mappedip` block is documented below.
 * `mapped_addr` - Mapped FQDN address name.
 * `extintf` - Interface connected to the source network that receives the packets that will be forwarded to the destination network.
 * `arp_reply` - Enable to respond to ARP requests for this virtual IP address. Enabled by default.
@@ -100,9 +100,9 @@ The following arguments are supported:
 * `extport` - Incoming port number range that you want to map to a port number range on the destination network.
 * `mappedport` - Port number range on the destination network to which the external port number range is mapped.
 * `gratuitous_arp_interval` - Enable to have the VIP send gratuitous ARPs. 0=disabled. Set from 5 up to 8640000 seconds to enable.
-* `srcintf_filter` - Interfaces to which the VIP applies. Separate the names with spaces.
+* `srcintf_filter` - Interfaces to which the VIP applies. Separate the names with spaces. The structure of `srcintf_filter` block is documented below.
 * `portmapping_type` - Port mapping type.
-* `realservers` - Select the real servers that this server load balancing VIP will distribute traffic to.
+* `realservers` - Select the real servers that this server load balancing VIP will distribute traffic to. The structure of `realservers` block is documented below.
 * `http_cookie_domain_from_host` - Enable/disable use of HTTP cookie domain from host field in HTTP.
 * `http_cookie_domain` - Domain that HTTP cookie persistence should apply to.
 * `http_cookie_path` - Limit HTTP cookie persistence to the specified path.
@@ -120,9 +120,9 @@ The following arguments are supported:
 * `ssl_certificate` - The name of the SSL certificate to use for SSL acceleration.
 * `ssl_dh_bits` - Number of bits to use in the Diffie-Hellman exchange for RSA encryption of SSL sessions.
 * `ssl_algorithm` - Permitted encryption algorithms for SSL sessions according to encryption strength.
-* `ssl_cipher_suites` - SSL/TLS cipher suites acceptable from a client, ordered by priority.
+* `ssl_cipher_suites` - SSL/TLS cipher suites acceptable from a client, ordered by priority. The structure of `ssl_cipher_suites` block is documented below.
 * `ssl_server_algorithm` - Permitted encryption algorithms for the server side of SSL full mode sessions according to encryption strength.
-* `ssl_server_cipher_suites` - SSL/TLS cipher suites to offer to a server, ordered by priority.
+* `ssl_server_cipher_suites` - SSL/TLS cipher suites to offer to a server, ordered by priority. The structure of `ssl_server_cipher_suites` block is documented below.
 * `ssl_pfs` - Select the cipher suites that can be used for SSL perfect forward secrecy (PFS). Applies to both client and server sessions.
 * `ssl_min_version` - Lowest SSL/TLS version acceptable from a client.
 * `ssl_max_version` - Highest SSL/TLS version acceptable from a client.
@@ -148,7 +148,7 @@ The following arguments are supported:
 * `ssl_hsts` - Enable/disable including HSTS header in response.
 * `ssl_hsts_age` - Number of seconds the client should honour the HSTS setting.
 * `ssl_hsts_include_subdomains` - Indicate that HSTS header applies to all subdomains.
-* `monitor` - Name of the health check monitor to use when polling to determine a virtual server's connectivity status.
+* `monitor` - Name of the health check monitor to use when polling to determine a virtual server's connectivity status. The structure of `monitor` block is documented below.
 * `max_embryonic_connections` - Maximum number of incomplete connections.
 * `color` - Color of icon on the GUI.
 

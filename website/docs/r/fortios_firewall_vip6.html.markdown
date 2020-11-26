@@ -75,7 +75,7 @@ The following arguments are supported:
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `comment` - Comment.
 * `type` - Configure a static NAT or server load balance VIP.
-* `src_filter` - Source IP6 filter (x:x:x:x:x:x:x:x/x). Separate addresses with spaces.
+* `src_filter` - Source IP6 filter (x:x:x:x:x:x:x:x/x). Separate addresses with spaces. The structure of `src_filter` block is documented below.
 * `extip` - (Required) IP address or address range on the external interface that you want to map to an address or address range on the destination network.
 * `mappedip` - (Required) Mapped IP address range in the format startIP-endIP.
 * `arp_reply` - Enable to respond to ARP requests for this virtual IP address. Enabled by default.
@@ -87,7 +87,7 @@ The following arguments are supported:
 * `ldb_method` - Method used to distribute sessions to real servers.
 * `server_type` - Protocol to be load balanced by the virtual server (also called the server load balance virtual IP).
 * `persistence` - Configure how to make sure that clients connect to the same server every time they make a request that is part of the same session.
-* `realservers` - Select the real servers that this server load balancing VIP will distribute traffic to.
+* `realservers` - Select the real servers that this server load balancing VIP will distribute traffic to. The structure of `realservers` block is documented below.
 * `http_cookie_domain_from_host` - Enable/disable use of HTTP cookie domain from host field in HTTP.
 * `http_cookie_domain` - Domain that HTTP cookie persistence should apply to.
 * `http_cookie_path` - Limit HTTP cookie persistence to the specified path.
@@ -105,9 +105,9 @@ The following arguments are supported:
 * `ssl_certificate` - The name of the SSL certificate to use for SSL acceleration.
 * `ssl_dh_bits` - Number of bits to use in the Diffie-Hellman exchange for RSA encryption of SSL sessions.
 * `ssl_algorithm` - Permitted encryption algorithms for SSL sessions according to encryption strength.
-* `ssl_cipher_suites` - SSL/TLS cipher suites acceptable from a client, ordered by priority.
+* `ssl_cipher_suites` - SSL/TLS cipher suites acceptable from a client, ordered by priority. The structure of `ssl_cipher_suites` block is documented below.
 * `ssl_server_algorithm` - Permitted encryption algorithms for the server side of SSL full mode sessions according to encryption strength.
-* `ssl_server_cipher_suites` - SSL/TLS cipher suites to offer to a server, ordered by priority.
+* `ssl_server_cipher_suites` - SSL/TLS cipher suites to offer to a server, ordered by priority. The structure of `ssl_server_cipher_suites` block is documented below.
 * `ssl_pfs` - Select the cipher suites that can be used for SSL perfect forward secrecy (PFS). Applies to both client and server sessions.
 * `ssl_min_version` - Lowest SSL/TLS version acceptable from a client.
 * `ssl_max_version` - Highest SSL/TLS version acceptable from a client.
@@ -133,7 +133,7 @@ The following arguments are supported:
 * `ssl_hsts` - Enable/disable including HSTS header in response.
 * `ssl_hsts_age` - Number of seconds the client should honour the HSTS setting.
 * `ssl_hsts_include_subdomains` - Indicate that HSTS header applies to all subdomains.
-* `monitor` - Name of the health check monitor to use when polling to determine a virtual server's connectivity status.
+* `monitor` - Name of the health check monitor to use when polling to determine a virtual server's connectivity status. The structure of `monitor` block is documented below.
 * `max_embryonic_connections` - Maximum number of incomplete connections.
 
 The `src_filter` block supports:

@@ -13,7 +13,7 @@ Configure IPv6 BFD.
 
 The following arguments are supported:
 
-* `neighbor` - Configure neighbor of IPv6 BFD.
+* `neighbor` - Configure neighbor of IPv6 BFD. The structure of `neighbor` block is documented below.
 
 The `neighbor` block supports:
 

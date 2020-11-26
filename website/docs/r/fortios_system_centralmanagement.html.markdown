@@ -46,7 +46,7 @@ The following arguments are supported:
 * `fmg_source_ip` - IPv4 source address that this FortiGate uses when communicating with FortiManager.
 * `fmg_source_ip6` - IPv6 source address that this FortiGate uses when communicating with FortiManager.
 * `vdom` - Virtual domain (VDOM) name to use when communicating with FortiManager.
-* `server_list` - Additional severs that the FortiGate can use for updates (for AV, IPS, updates) and ratings (for web filter and antispam ratings) servers.
+* `server_list` - Additional severs that the FortiGate can use for updates (for AV, IPS, updates) and ratings (for web filter and antispam ratings) servers. The structure of `server_list` block is documented below.
 * `include_default_servers` - Enable/disable inclusion of public FortiGuard servers in the override server list.
 * `enc_algorithm` - Encryption strength for communications between the FortiGate and central management.
 

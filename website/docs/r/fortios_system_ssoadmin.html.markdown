@@ -28,7 +28,7 @@ The following arguments are supported:
 
 * `name` - SSO admin name.
 * `accprofile` - (Required) SSO admin user access profile.
-* `vdom` - Virtual domain(s) that the administrator can access.
+* `vdom` - Virtual domain(s) that the administrator can access. The structure of `vdom` block is documented below.
 
 The `vdom` block supports:
 

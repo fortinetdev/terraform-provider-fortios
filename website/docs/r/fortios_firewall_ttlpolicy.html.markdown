@@ -38,8 +38,8 @@ The following arguments are supported:
 * `status` - Enable/disable this TTL policy.
 * `action` - Action to be performed on traffic matching this policy (default = deny).
 * `srcintf` - (Required) Source interface name from available interfaces.
-* `srcaddr` - (Required) Source address object(s) from available options. Separate multiple names with a space.
-* `service` - (Required) Service object(s) from available options. Separate multiple names with a space.
+* `srcaddr` - (Required) Source address object(s) from available options. Separate multiple names with a space. The structure of `srcaddr` block is documented below.
+* `service` - (Required) Service object(s) from available options. Separate multiple names with a space. The structure of `service` block is documented below.
 * `schedule` - (Required) Schedule object from available options.
 * `ttl` - (Required) Value/range to match against the packet's Time to Live value (format: ttl[ - ttl_high], 1 - 255).
 

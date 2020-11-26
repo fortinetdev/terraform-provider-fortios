@@ -23,7 +23,7 @@ The following arguments are supported:
 
 * `name` - (Required) Name.
 * `comments` - Comment.
-* `rule` - IPv4 prefix list rule.
+* `rule` - IPv4 prefix list rule. The structure of `rule` block is documented below.
 
 The `rule` block supports:
 

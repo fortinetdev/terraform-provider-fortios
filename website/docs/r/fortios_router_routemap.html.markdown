@@ -55,7 +55,7 @@ The following arguments are supported:
 
 * `name` - (Required) Name.
 * `comments` - Optional comments.
-* `rule` - Rule.
+* `rule` - Rule. The structure of `rule` block is documented below.
 
 The `rule` block supports:
 
@@ -76,18 +76,18 @@ The `rule` block supports:
 * `set_aggregator_as` - BGP aggregator AS.
 * `set_aggregator_ip` - BGP aggregator IP.
 * `set_aspath_action` - Specify preferred action of set-aspath.
-* `set_aspath` - Prepend BGP AS path attribute.
+* `set_aspath` - Prepend BGP AS path attribute. The structure of `set_aspath` block is documented below.
 * `set_atomic_aggregate` - Enable/disable BGP atomic aggregate attribute.
 * `set_community_delete` - Delete communities matching community list.
-* `set_community` - BGP community attribute.
+* `set_community` - BGP community attribute. The structure of `set_community` block is documented below.
 * `set_community_additive` - Enable/disable adding set-community to existing community.
 * `set_dampening_reachability_half_life` - Reachability half-life time for the penalty (1 - 45 min, 0 = unset).
 * `set_dampening_reuse` - Value to start reusing a route (1 - 20000, 0 = unset).
 * `set_dampening_suppress` - Value to start suppressing a route (1 - 20000, 0 = unset).
 * `set_dampening_max_suppress` - Maximum duration to suppress a route (1 - 255 min, 0 = unset).
 * `set_dampening_unreachability_half_life` - Unreachability Half-life time for the penalty (1 - 45 min, 0 = unset)
-* `set_extcommunity_rt` - Route Target extended community.
-* `set_extcommunity_soo` - Site-of-Origin extended community.
+* `set_extcommunity_rt` - Route Target extended community. The structure of `set_extcommunity_rt` block is documented below.
+* `set_extcommunity_soo` - Site-of-Origin extended community. The structure of `set_extcommunity_soo` block is documented below.
 * `set_ip_nexthop` - IP address of next hop.
 * `set_ip6_nexthop` - IPv6 global address of next hop.
 * `set_ip6_nexthop_local` - IPv6 local address of next hop.

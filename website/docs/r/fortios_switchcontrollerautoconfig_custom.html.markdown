@@ -14,7 +14,7 @@ Configure FortiSwitch Auto-Config custom QoS policy.
 The following arguments are supported:
 
 * `name` - (Required) Auto-Config FortiLink or ISL/ICL interface name.
-* `switch_binding` - Switch binding list.
+* `switch_binding` - Switch binding list. The structure of `switch_binding` block is documented below.
 
 The `switch_binding` block supports:
 

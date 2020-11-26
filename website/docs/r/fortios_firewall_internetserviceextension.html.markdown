@@ -24,15 +24,15 @@ The following arguments are supported:
 
 * `fosid` - Internet Service ID in the Internet Service database.
 * `comment` - Comment.
-* `entry` - Entries added to the Internet Service extension database.
-* `disable_entry` - Disable entries in the Internet Service database.
+* `entry` - Entries added to the Internet Service extension database. The structure of `entry` block is documented below.
+* `disable_entry` - Disable entries in the Internet Service database. The structure of `disable_entry` block is documented below.
 
 The `entry` block supports:
 
 * `id` - Entry ID(1-255).
 * `protocol` - Integer value for the protocol type as defined by IANA (0 - 255).
-* `port_range` - Port ranges in the custom entry.
-* `dst` - Destination address or address group name.
+* `port_range` - Port ranges in the custom entry. The structure of `port_range` block is documented below.
+* `dst` - Destination address or address group name. The structure of `dst` block is documented below.
 
 The `port_range` block supports:
 
@@ -49,7 +49,7 @@ The `disable_entry` block supports:
 * `id` - Disable entry ID.
 * `protocol` - Integer value for the protocol type as defined by IANA (0 - 255).
 * `port` - Integer value for the TCP/IP port (0 - 65535).
-* `ip_range` - IP ranges in the disable entry.
+* `ip_range` - IP ranges in the disable entry. The structure of `ip_range` block is documented below.
 
 The `ip_range` block supports:
 

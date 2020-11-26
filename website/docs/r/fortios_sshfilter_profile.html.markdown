@@ -28,7 +28,7 @@ The following arguments are supported:
 * `block` - SSH blocking options.
 * `log` - SSH logging options.
 * `default_command_log` - Enable/disable logging unmatched shell commands.
-* `shell_commands` - SSH command filter.
+* `shell_commands` - SSH command filter. The structure of `shell_commands` block is documented below.
 
 The `shell_commands` block supports:
 

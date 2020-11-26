@@ -15,36 +15,36 @@ The following arguments are supported:
 
 * `name` - WTP (or FortiAP or AP) profile name.
 * `comment` - Comment.
-* `platform` - WTP, FortiAP, or AP platform.
+* `platform` - WTP, FortiAP, or AP platform. The structure of `platform` block is documented below.
 * `control_message_offload` - Enable/disable CAPWAP control message data channel offload.
 * `ble_profile` - Bluetooth Low Energy profile name.
 * `wan_port_mode` - Enable/disable using a WAN port as a LAN port.
-* `lan` - WTP LAN port mapping.
+* `lan` - WTP LAN port mapping. The structure of `lan` block is documented below.
 * `energy_efficient_ethernet` - Enable/disable use of energy efficient Ethernet on WTP.
 * `led_state` - Enable/disable use of LEDs on WTP (default = disable).
-* `led_schedules` - Recurring firewall schedules for illuminating LEDs on the FortiAP. If led-state is enabled, LEDs will be visible when at least one of the schedules is valid. Separate multiple schedule names with a space.
+* `led_schedules` - Recurring firewall schedules for illuminating LEDs on the FortiAP. If led-state is enabled, LEDs will be visible when at least one of the schedules is valid. Separate multiple schedule names with a space. The structure of `led_schedules` block is documented below.
 * `dtls_policy` - WTP data channel DTLS policy (default = clear-text).
 * `dtls_in_kernel` - Enable/disable data channel DTLS in kernel.
 * `max_clients` - Maximum number of stations (STAs) supported by the WTP (default = 0, meaning no client limitation).
 * `handoff_rssi` - Minimum received signal strength indicator (RSSI) value for handoff (20 - 30, default = 25).
 * `handoff_sta_thresh` - Threshold value for AP handoff.
 * `handoff_roaming` - Enable/disable client load balancing during roaming to avoid roaming delay (default = disable).
-* `deny_mac_list` - List of MAC addresses that are denied access to this WTP, FortiAP, or AP.
+* `deny_mac_list` - List of MAC addresses that are denied access to this WTP, FortiAP, or AP. The structure of `deny_mac_list` block is documented below.
 * `ap_country` - Country in which this WTP, FortiAP or AP will operate (default = NA, automatically use the country configured for the current VDOM).
 * `ip_fragment_preventing` - Select how to prevent IP fragmentation for CAPWAP tunneled control and data packets (default = tcp-mss-adjust).
 * `tun_mtu_uplink` - Uplink CAPWAP tunnel MTU (0, 576, or 1500 bytes, default = 0).
 * `tun_mtu_downlink` - Downlink CAPWAP tunnel MTU (0, 576, or 1500 bytes, default = 0).
 * `split_tunneling_acl_path` - Split tunneling ACL path is local/tunnel.
 * `split_tunneling_acl_local_ap_subnet` - Enable/disable automatically adding local subnetwork of FortiAP to split-tunneling ACL (default = disable).
-* `split_tunneling_acl` - Split tunneling ACL filter list.
+* `split_tunneling_acl` - Split tunneling ACL filter list. The structure of `split_tunneling_acl` block is documented below.
 * `allowaccess` - Control management access to the managed WTP, FortiAP, or AP. Separate entries with a space.
 * `login_passwd_change` - Change or reset the administrator password of a managed WTP, FortiAP or AP (yes, default, or no, default = no).
 * `login_passwd` - Set the managed WTP, FortiAP, or AP's administrator password.
 * `lldp` - Enable/disable Link Layer Discovery Protocol (LLDP) for the WTP, FortiAP, or AP (default = disable).
 * `poe_mode` - Set the WTP, FortiAP, or AP's PoE mode.
-* `radio_1` - Configuration options for radio 1.
-* `radio_2` - Configuration options for radio 2.
-* `lbs` - Set various location based service (LBS) options.
+* `radio_1` - Configuration options for radio 1. The structure of `radio_1` block is documented below.
+* `radio_2` - Configuration options for radio 2. The structure of `radio_2` block is documented below.
+* `lbs` - Set various location based service (LBS) options. The structure of `lbs` block is documented below.
 * `ext_info_enable` - Enable/disable station/VAP/radio extension information.
 
 The `platform` block supports:
@@ -124,8 +124,8 @@ The `radio_1` block supports:
 * `frequency_handoff` - Enable/disable frequency handoff of clients to other channels (default = disable).
 * `ap_handoff` - Enable/disable AP handoff of clients to other APs (default = disable).
 * `vap_all` - Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable).
-* `vaps` - Manually selected list of Virtual Access Points (VAPs).
-* `channel` - Selected list of wireless radio channels.
+* `vaps` - Manually selected list of Virtual Access Points (VAPs). The structure of `vaps` block is documented below.
+* `channel` - Selected list of wireless radio channels. The structure of `channel` block is documented below.
 * `call_admission_control` - Enable/disable WiFi multimedia (WMM) call admission control to optimize WiFi bandwidth use for VoIP calls. New VoIP calls are only accepted if there is enough bandwidth available to support them.
 * `call_capacity` - Maximum number of Voice over WLAN (VoWLAN) phones supported by the radio (0 - 60, default = 10).
 * `bandwidth_admission_control` - Enable/disable WiFi multimedia (WMM) bandwidth admission control to optimize WiFi bandwidth use. A request to join the wireless network is only allowed if the access point has enough bandwidth to support it.
@@ -177,8 +177,8 @@ The `radio_2` block supports:
 * `frequency_handoff` - Enable/disable frequency handoff of clients to other channels (default = disable).
 * `ap_handoff` - Enable/disable AP handoff of clients to other APs (default = disable).
 * `vap_all` - Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable).
-* `vaps` - Manually selected list of Virtual Access Points (VAPs).
-* `channel` - Selected list of wireless radio channels.
+* `vaps` - Manually selected list of Virtual Access Points (VAPs). The structure of `vaps` block is documented below.
+* `channel` - Selected list of wireless radio channels. The structure of `channel` block is documented below.
 * `call_admission_control` - Enable/disable WiFi multimedia (WMM) call admission control to optimize WiFi bandwidth use for VoIP calls. New VoIP calls are only accepted if there is enough bandwidth available to support them.
 * `call_capacity` - Maximum number of Voice over WLAN (VoWLAN) phones supported by the radio (0 - 60, default = 10).
 * `bandwidth_admission_control` - Enable/disable WiFi multimedia (WMM) bandwidth admission control to optimize WiFi bandwidth use. A request to join the wireless network is only allowed if the access point has enough bandwidth to support it.

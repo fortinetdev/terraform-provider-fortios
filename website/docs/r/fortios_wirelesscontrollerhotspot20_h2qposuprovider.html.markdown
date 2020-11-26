@@ -14,11 +14,11 @@ Configure online sign up (OSU) provider list.
 The following arguments are supported:
 
 * `name` - OSU provider ID.
-* `friendly_name` - OSU provider friendly name.
+* `friendly_name` - OSU provider friendly name. The structure of `friendly_name` block is documented below.
 * `server_uri` - Server URI.
 * `osu_method` - OSU method list.
 * `osu_nai` - OSU NAI.
-* `service_description` - OSU service name.
+* `service_description` - OSU service name. The structure of `service_description` block is documented below.
 * `icon` - OSU provider icon.
 
 The `friendly_name` block supports:

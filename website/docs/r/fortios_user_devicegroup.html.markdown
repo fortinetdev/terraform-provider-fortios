@@ -33,8 +33,8 @@ resource "fortios_user_devicegroup" "trname" {
 The following arguments are supported:
 
 * `name` - (Required) Device group name.
-* `member` - Device group member.
-* `tagging` - Config object tagging.
+* `member` - Device group member. The structure of `member` block is documented below.
+* `tagging` - Config object tagging. The structure of `tagging` block is documented below.
 * `comment` - Comment.
 
 The `member` block supports:
@@ -45,7 +45,7 @@ The `tagging` block supports:
 
 * `name` - Tagging entry name.
 * `category` - Tag category.
-* `tags` - Tags.
+* `tags` - Tags. The structure of `tags` block is documented below.
 
 The `tags` block supports:
 

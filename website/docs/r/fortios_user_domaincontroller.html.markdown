@@ -48,7 +48,7 @@ The following arguments are supported:
 * `name` - Domain controller entry name.
 * `ip_address` - (Required) Domain controller IP address.
 * `port` - Port to be used for communication with the domain controller (default = 445).
-* `extra_server` - extra servers.
+* `extra_server` - extra servers. The structure of `extra_server` block is documented below.
 * `domain_name` - Domain DNS name.
 * `ldap_server` - (Required) LDAP server name.
 

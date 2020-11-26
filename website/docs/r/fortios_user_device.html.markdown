@@ -30,7 +30,7 @@ The following arguments are supported:
 * `master_device` - Master device (optional).
 * `comment` - Comment.
 * `avatar` - Image file for avatar (maximum 4K base64 encoded).
-* `tagging` - Config object tagging.
+* `tagging` - Config object tagging. The structure of `tagging` block is documented below.
 * `type` - Device type.
 * `category` - Device category.
 
@@ -38,7 +38,7 @@ The `tagging` block supports:
 
 * `name` - Tagging entry name.
 * `category` - Tag category.
-* `tags` - Tags.
+* `tags` - Tags. The structure of `tags` block is documented below.
 
 The `tags` block supports:
 

@@ -27,7 +27,7 @@ resource "fortios_router_aspathlist" "trname" {
 The following arguments are supported:
 
 * `name` - (Required) AS path list name.
-* `rule` - AS path list rule.
+* `rule` - AS path list rule. The structure of `rule` block is documented below.
 
 The `rule` block supports:
 

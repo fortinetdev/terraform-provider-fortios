@@ -127,15 +127,15 @@ The following arguments are supported:
 * `replacemsg_group` - Name of the replacement message group to be used
 * `oversize_log` - Enable/disable logging for antivirus oversize file blocking.
 * `switching_protocols_log` - Enable/disable logging for HTTP/HTTPS switching protocols.
-* `http` - Configure HTTP protocol options.
-* `ftp` - Configure FTP protocol options.
-* `imap` - Configure IMAP protocol options.
-* `mapi` - Configure MAPI protocol options.
-* `pop3` - Configure POP3 protocol options.
-* `smtp` - Configure SMTP protocol options.
-* `nntp` - Configure NNTP protocol options.
-* `dns` - Configure DNS protocol options.
-* `mail_signature` - Configure Mail signature.
+* `http` - Configure HTTP protocol options. The structure of `http` block is documented below.
+* `ftp` - Configure FTP protocol options. The structure of `ftp` block is documented below.
+* `imap` - Configure IMAP protocol options. The structure of `imap` block is documented below.
+* `mapi` - Configure MAPI protocol options. The structure of `mapi` block is documented below.
+* `pop3` - Configure POP3 protocol options. The structure of `pop3` block is documented below.
+* `smtp` - Configure SMTP protocol options. The structure of `smtp` block is documented below.
+* `nntp` - Configure NNTP protocol options. The structure of `nntp` block is documented below.
+* `dns` - Configure DNS protocol options. The structure of `dns` block is documented below.
+* `mail_signature` - Configure Mail signature. The structure of `mail_signature` block is documented below.
 * `rpc_over_http` - Enable/disable inspection of RPC over HTTP.
 
 The `http` block supports:

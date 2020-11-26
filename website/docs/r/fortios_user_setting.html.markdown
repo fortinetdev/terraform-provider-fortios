@@ -51,7 +51,7 @@ The following arguments are supported:
 * `auth_invalid_max` - Maximum number of failed authentication attempts before the user is blocked.
 * `auth_lockout_threshold` - Maximum number of failed login attempts before login lockout is triggered.
 * `auth_lockout_duration` - Lockout period in seconds after too many login failures.
-* `auth_ports` - Set up non-standard ports for authentication with HTTP, HTTPS, FTP, and TELNET.
+* `auth_ports` - Set up non-standard ports for authentication with HTTP, HTTPS, FTP, and TELNET. The structure of `auth_ports` block is documented below.
 
 The `auth_ports` block supports:
 

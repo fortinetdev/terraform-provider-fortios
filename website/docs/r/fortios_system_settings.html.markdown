@@ -59,7 +59,7 @@ The following arguments are supported:
 * `dhcp_server_ip` - DHCP Server IPv4 address.
 * `dhcp6_server_ip` - DHCPv6 server IPv6 address.
 * `central_nat` - Enable/disable central NAT.
-* `gui_default_policy_columns` - Default columns to display for policy lists on GUI.
+* `gui_default_policy_columns` - Default columns to display for policy lists on GUI. The structure of `gui_default_policy_columns` block is documented below.
 * `lldp_reception` - Enable/disable Link Layer Discovery Protocol (LLDP) reception for this VDOM or apply global settings to this VDOM.
 * `lldp_transmission` - Enable/disable Link Layer Discovery Protocol (LLDP) transmission for this VDOM or apply global settings to this VDOM.
 * `link_down_access` - Enable/disable link down access traffic.

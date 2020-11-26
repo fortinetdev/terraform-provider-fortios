@@ -29,12 +29,12 @@ The following arguments are supported:
 * `mac_aging_interval` - Time after which an inactive MAC is aged out (10 - 1000000 sec, default = 300, 0 = disable).
 * `allow_multiple_interfaces` - Enable/disable multiple FortiLink interfaces for redundant connections between a managed FortiSwitch and FortiGate.
 * `https_image_push` - Enable/disable image push to FortiSwitch using HTTPS.
-* `disable_discovery` - Prevent this FortiSwitch from discovering.
+* `disable_discovery` - Prevent this FortiSwitch from discovering. The structure of `disable_discovery` block is documented below.
 * `mac_retention_period` - Time in hours after which an inactive MAC is removed from client DB.
 * `default_virtual_switch_vlan` - Default VLAN for ports when added to the virtual-switch.
 * `log_mac_limit_violations` - Enable/disable logs for Learning Limit Violations.
 * `mac_violation_timer` - Set timeout for Learning Limit Violations (0 = disabled).
-* `custom_command` - List of custom commands to be pushed to all FortiSwitches in the VDOM.
+* `custom_command` - List of custom commands to be pushed to all FortiSwitches in the VDOM. The structure of `custom_command` block is documented below.
 
 The `disable_discovery` block supports:
 

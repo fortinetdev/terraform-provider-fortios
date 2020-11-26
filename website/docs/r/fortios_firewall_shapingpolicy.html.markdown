@@ -55,29 +55,29 @@ The following arguments are supported:
 * `comment` - Comments.
 * `status` - Enable/disable this traffic shaping policy.
 * `ip_version` - Apply this traffic shaping policy to IPv4 or IPv6 traffic.
-* `srcaddr` - (Required) IPv4 source address and address group names.
-* `dstaddr` - (Required) IPv4 destination address and address group names.
-* `srcaddr6` - IPv6 source address and address group names.
-* `dstaddr6` - IPv6 destination address and address group names.
+* `srcaddr` - (Required) IPv4 source address and address group names. The structure of `srcaddr` block is documented below.
+* `dstaddr` - (Required) IPv4 destination address and address group names. The structure of `dstaddr` block is documented below.
+* `srcaddr6` - IPv6 source address and address group names. The structure of `srcaddr6` block is documented below.
+* `dstaddr6` - IPv6 destination address and address group names. The structure of `dstaddr6` block is documented below.
 * `internet_service` - Enable/disable use of Internet Services for this policy. If enabled, destination address and service are not used. 
-* `internet_service_id` - Internet Service ID.
-* `internet_service_group` - Internet Service group name.
-* `internet_service_custom` - Custom Internet Service name.
-* `internet_service_custom_group` - Custom Internet Service group name.
+* `internet_service_id` - Internet Service ID. The structure of `internet_service_id` block is documented below.
+* `internet_service_group` - Internet Service group name. The structure of `internet_service_group` block is documented below.
+* `internet_service_custom` - Custom Internet Service name. The structure of `internet_service_custom` block is documented below.
+* `internet_service_custom_group` - Custom Internet Service group name. The structure of `internet_service_custom_group` block is documented below.
 * `internet_service_src` - Enable/disable use of Internet Services in source for this policy. If enabled, source address is not used. 
-* `internet_service_src_id` - Internet Service source ID.
-* `internet_service_src_group` - Internet Service source group name.
-* `internet_service_src_custom` - Custom Internet Service source name.
-* `internet_service_src_custom_group` - Custom Internet Service source group name.
-* `service` - (Required) Service and service group names.
+* `internet_service_src_id` - Internet Service source ID. The structure of `internet_service_src_id` block is documented below.
+* `internet_service_src_group` - Internet Service source group name. The structure of `internet_service_src_group` block is documented below.
+* `internet_service_src_custom` - Custom Internet Service source name. The structure of `internet_service_src_custom` block is documented below.
+* `internet_service_src_custom_group` - Custom Internet Service source group name. The structure of `internet_service_src_custom_group` block is documented below.
+* `service` - (Required) Service and service group names. The structure of `service` block is documented below.
 * `schedule` - Schedule name.
-* `users` - Apply this traffic shaping policy to individual users that have authenticated with the FortiGate.
-* `groups` - Apply this traffic shaping policy to user groups that have authenticated with the FortiGate.
-* `application` - IDs of one or more applications that this shaper applies application control traffic shaping to.
-* `app_category` - IDs of one or more application categories that this shaper applies application control traffic shaping to.
-* `app_group` - One or more application group names.
-* `url_category` - IDs of one or more FortiGuard Web Filtering categories that this shaper applies traffic shaping to.
-* `dstintf` - (Required) One or more outgoing (egress) interfaces.
+* `users` - Apply this traffic shaping policy to individual users that have authenticated with the FortiGate. The structure of `users` block is documented below.
+* `groups` - Apply this traffic shaping policy to user groups that have authenticated with the FortiGate. The structure of `groups` block is documented below.
+* `application` - IDs of one or more applications that this shaper applies application control traffic shaping to. The structure of `application` block is documented below.
+* `app_category` - IDs of one or more application categories that this shaper applies application control traffic shaping to. The structure of `app_category` block is documented below.
+* `app_group` - One or more application group names. The structure of `app_group` block is documented below.
+* `url_category` - IDs of one or more FortiGuard Web Filtering categories that this shaper applies traffic shaping to. The structure of `url_category` block is documented below.
+* `dstintf` - (Required) One or more outgoing (egress) interfaces. The structure of `dstintf` block is documented below.
 * `tos` - ToS (Type of Service) value used for comparison.
 * `tos_mask` - Non-zero bit positions are used for comparison while zero bit positions are ignored.
 * `tos_negate` - Enable negated TOS match.

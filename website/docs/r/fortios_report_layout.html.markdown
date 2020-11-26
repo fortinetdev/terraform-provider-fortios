@@ -47,8 +47,8 @@ The following arguments are supported:
 * `email_send` - Enable/disable sending emails after reports are generated.
 * `email_recipients` - Email recipients for generated reports.
 * `max_pdf_report` - Maximum number of PDF reports to keep at one time (oldest report is overwritten).
-* `page` - Configure report page.
-* `body_item` - Configure report body item.
+* `page` - Configure report page. The structure of `page` block is documented below.
+* `body_item` - Configure report body item. The structure of `body_item` block is documented below.
 
 The `page` block supports:
 
@@ -56,13 +56,13 @@ The `page` block supports:
 * `column_break_before` - Report page auto column break before heading.
 * `page_break_before` - Report page auto page break before heading.
 * `options` - Report page options.
-* `header` - Configure report page header.
-* `footer` - Configure report page footer.
+* `header` - Configure report page header. The structure of `header` block is documented below.
+* `footer` - Configure report page footer. The structure of `footer` block is documented below.
 
 The `header` block supports:
 
 * `style` - Report header style.
-* `header_item` - Configure report header item.
+* `header_item` - Configure report header item. The structure of `header_item` block is documented below.
 
 The `header_item` block supports:
 
@@ -76,7 +76,7 @@ The `header_item` block supports:
 The `footer` block supports:
 
 * `style` - Report footer style.
-* `footer_item` - Configure report footer item.
+* `footer_item` - Configure report footer item. The structure of `footer_item` block is documented below.
 
 The `footer_item` block supports:
 
@@ -95,12 +95,12 @@ The `body_item` block supports:
 * `style` - Report item style.
 * `top_n` - Value of top.
 * `hide` - Enable/disable hide item in report.
-* `parameters` - Parameters.
+* `parameters` - Parameters. The structure of `parameters` block is documented below.
 * `text_component` - Report item text component.
 * `content` - Report item text content.
 * `img_src` - Report item image file name.
 * `list_component` - Report item list component.
-* `list` - Configure report list item.
+* `list` - Configure report list item. The structure of `list` block is documented below.
 * `chart` - Report item chart name.
 * `chart_options` - Report chart options.
 * `drill_down_items` - Control how drill down charts are shown.

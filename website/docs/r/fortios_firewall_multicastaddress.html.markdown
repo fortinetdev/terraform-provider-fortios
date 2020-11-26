@@ -36,13 +36,13 @@ The following arguments are supported:
 * `visibility` - Enable/disable visibility of the multicast address on the GUI.
 * `associated_interface` - Interface associated with the address object. When setting up a policy, only addresses associated with this interface are available.
 * `color` - Integer value to determine the color of the icon in the GUI (1 - 32, default = 0, which sets value to 1).
-* `tagging` - Config object tagging.
+* `tagging` - Config object tagging. The structure of `tagging` block is documented below.
 
 The `tagging` block supports:
 
 * `name` - Tagging entry name.
 * `category` - Tag category.
-* `tags` - Tags.
+* `tags` - Tags. The structure of `tags` block is documented below.
 
 The `tags` block supports:
 

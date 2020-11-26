@@ -76,15 +76,15 @@ resource "fortios_endpointcontrol_profile" "trname" {
 The following arguments are supported:
 
 * `profile_name` - Profile name.
-* `forticlient_winmac_settings` - FortiClient settings for Windows/Mac platform.
-* `forticlient_android_settings` - FortiClient settings for Android platform.
-* `forticlient_ios_settings` - FortiClient settings for iOS platform.
+* `forticlient_winmac_settings` - FortiClient settings for Windows/Mac platform. The structure of `forticlient_winmac_settings` block is documented below.
+* `forticlient_android_settings` - FortiClient settings for Android platform. The structure of `forticlient_android_settings` block is documented below.
+* `forticlient_ios_settings` - FortiClient settings for iOS platform. The structure of `forticlient_ios_settings` block is documented below.
 * `description` - Description.
-* `src_addr` - Source addresses.
-* `device_groups` - Device groups.
-* `users` - Users.
-* `user_groups` - User groups.
-* `on_net_addr` - Addresses for on-net detection.
+* `src_addr` - Source addresses. The structure of `src_addr` block is documented below.
+* `device_groups` - Device groups. The structure of `device_groups` block is documented below.
+* `users` - Users. The structure of `users` block is documented below.
+* `user_groups` - User groups. The structure of `user_groups` block is documented below.
+* `on_net_addr` - Addresses for on-net detection. The structure of `on_net_addr` block is documented below.
 * `replacemsg_override_group` - Select an endpoint control replacement message override group from available options.
 
 The `forticlient_winmac_settings` block supports:
@@ -92,7 +92,7 @@ The `forticlient_winmac_settings` block supports:
 * `forticlient_registration_compliance_action` - FortiClient registration compliance action.
 * `forticlient_ems_compliance` - Enable/disable FortiClient Enterprise Management Server (EMS) compliance.
 * `forticlient_ems_compliance_action` - FortiClient EMS compliance action.
-* `forticlient_ems_entries` - FortiClient EMS entries.
+* `forticlient_ems_entries` - FortiClient EMS entries. The structure of `forticlient_ems_entries` block is documented below.
 * `forticlient_security_posture` - Enable/disable FortiClient security posture check options.
 * `forticlient_security_posture_compliance_action` - FortiClient security posture compliance action.
 * `forticlient_av` - Enable/disable FortiClient AntiVirus scanning.
@@ -111,10 +111,10 @@ The `forticlient_winmac_settings` block supports:
 * `forticlient_win_ver` - Minimum FortiClient Windows version.
 * `forticlient_mac_ver` - Minimum FortiClient Mac OS version.
 * `forticlient_linux_ver` - Minimum FortiClient Linux version.
-* `forticlient_operating_system` - FortiClient operating system.
-* `forticlient_running_app` - Use FortiClient to verify if the listed applications are running on the client.
-* `forticlient_registry_entry` - FortiClient registry entry.
-* `forticlient_own_file` - Checking the path and filename of the FortiClient application.
+* `forticlient_operating_system` - FortiClient operating system. The structure of `forticlient_operating_system` block is documented below.
+* `forticlient_running_app` - Use FortiClient to verify if the listed applications are running on the client. The structure of `forticlient_running_app` block is documented below.
+* `forticlient_registry_entry` - FortiClient registry entry. The structure of `forticlient_registry_entry` block is documented below.
+* `forticlient_own_file` - Checking the path and filename of the FortiClient application. The structure of `forticlient_own_file` block is documented below.
 * `forticlient_log_upload` - Enable/disable uploading FortiClient logs.
 * `forticlient_log_upload_level` - Select the FortiClient logs to upload.
 * `forticlient_log_upload_server` - IP address or FQDN of the server to which to upload FortiClient logs.
@@ -166,7 +166,7 @@ The `forticlient_android_settings` block supports:
 * `forticlient_vpn_provisioning` - Enable/disable FortiClient VPN provisioning.
 * `forticlient_advanced_vpn` - Enable/disable advanced FortiClient VPN configuration.
 * `forticlient_advanced_vpn_buffer` - Advanced FortiClient VPN configuration.
-* `forticlient_vpn_settings` - FortiClient VPN settings.
+* `forticlient_vpn_settings` - FortiClient VPN settings. The structure of `forticlient_vpn_settings` block is documented below.
 
 The `forticlient_vpn_settings` block supports:
 
@@ -184,7 +184,7 @@ The `forticlient_ios_settings` block supports:
 * `forticlient_wf_profile` - The FortiClient web filter profile to apply.
 * `disable_wf_when_protected` - Enable/disable FortiClient web category filtering when protected by FortiGate.
 * `client_vpn_provisioning` - FortiClient VPN provisioning.
-* `client_vpn_settings` - FortiClient VPN settings.
+* `client_vpn_settings` - FortiClient VPN settings. The structure of `client_vpn_settings` block is documented below.
 * `distribute_configuration_profile` - Enable/disable configuration profile (.mobileconfig file) distribution.
 * `configuration_name` - Name of configuration profile.
 * `configuration_content` - Content of configuration profile.

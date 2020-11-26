@@ -51,9 +51,9 @@ The following arguments are supported:
 * `logtraffic` - Logging type to be used in this policy (Options: all | utm | disable, Default: utm).
 * `address_type` - Policy address type (IPv4 or IPv6).
 * `interface` - (Required) Monitored interface name from available interfaces.
-* `srcaddr6` - (Required) IPv6 address object to limit traffic monitoring to network traffic sent from the specified address or range.
-* `dstaddr6` - (Required) IPv6 address object to limit traffic monitoring to network traffic sent to the specified address or range.
-* `service6` - Service name.
+* `srcaddr6` - (Required) IPv6 address object to limit traffic monitoring to network traffic sent from the specified address or range. The structure of `srcaddr6` block is documented below.
+* `dstaddr6` - (Required) IPv6 address object to limit traffic monitoring to network traffic sent to the specified address or range. The structure of `dstaddr6` block is documented below.
+* `service6` - Service name. The structure of `service6` block is documented below.
 * `application_list_status` - Enable/disable application control.
 * `application_list` - Application list name.
 * `ips_sensor_status` - Enable/disable IPS.

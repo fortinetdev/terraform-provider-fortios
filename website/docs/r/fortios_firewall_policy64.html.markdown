@@ -48,12 +48,12 @@ The following arguments are supported:
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `srcintf` - (Required) Source interface name.
 * `dstintf` - (Required) Destination interface name.
-* `srcaddr` - (Required) Source address name.
-* `dstaddr` - (Required) Destination address name.
+* `srcaddr` - (Required) Source address name. The structure of `srcaddr` block is documented below.
+* `dstaddr` - (Required) Destination address name. The structure of `dstaddr` block is documented below.
 * `action` - Policy action.
 * `status` - Enable/disable policy status.
 * `schedule` - (Required) Schedule name.
-* `service` - Service name.
+* `service` - Service name. The structure of `service` block is documented below.
 * `logtraffic` - Enable/disable policy log traffic.
 * `permit_any_host` - Enable/disable permit any host in.
 * `traffic_shaper` - Traffic shaper.
@@ -61,7 +61,7 @@ The following arguments are supported:
 * `per_ip_shaper` - Per-IP traffic shaper.
 * `fixedport` - Enable/disable policy fixed port.
 * `ippool` - Enable/disable policy64 IP pool.
-* `poolname` - Policy IP pool names.
+* `poolname` - Policy IP pool names. The structure of `poolname` block is documented below.
 * `tcp_mss_sender` - TCP MSS value of sender.
 * `tcp_mss_receiver` - TCP MSS value of receiver.
 * `comments` - Comment.

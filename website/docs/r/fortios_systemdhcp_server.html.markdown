@@ -56,12 +56,12 @@ The following arguments are supported:
 * `next_server` - IP address of a server (for example, a TFTP sever) that DHCP clients can download a boot file from.
 * `netmask` - (Required) Netmask assigned by the DHCP server.
 * `interface` - (Required) DHCP server can assign IP configurations to clients connected to this interface.
-* `ip_range` - DHCP IP range configuration.
+* `ip_range` - DHCP IP range configuration. The structure of `ip_range` block is documented below.
 * `timezone_option` - Options for the DHCP server to set the client's time zone.
 * `timezone` - Select the time zone to be assigned to DHCP clients.
-* `tftp_server` - One or more hostnames or IP addresses of the TFTP servers in quotes separated by spaces.
+* `tftp_server` - One or more hostnames or IP addresses of the TFTP servers in quotes separated by spaces. The structure of `tftp_server` block is documented below.
 * `filename` - Name of the boot file on the TFTP server.
-* `options` - DHCP options.
+* `options` - DHCP options. The structure of `options` block is documented below.
 * `server_type` - DHCP server can be a normal DHCP server or an IPsec DHCP server.
 * `ip_mode` - Method used to assign client IP.
 * `conflicted_ip_timeout` - Time in seconds to wait after a conflicted IP address is removed from the DHCP range before it can be reused.
@@ -76,9 +76,9 @@ The following arguments are supported:
 * `ddns_key` - DDNS update key (base 64 encoding).
 * `ddns_ttl` - TTL.
 * `vci_match` - Enable/disable vendor class identifier (VCI) matching. When enabled only DHCP requests with a matching VCI are served.
-* `vci_string` - One or more VCI strings in quotes separated by spaces.
-* `exclude_range` - Exclude one or more ranges of IP addresses from being assigned to clients.
-* `reserved_address` - Options for the DHCP server to assign IP settings to specific MAC addresses.
+* `vci_string` - One or more VCI strings in quotes separated by spaces. The structure of `vci_string` block is documented below.
+* `exclude_range` - Exclude one or more ranges of IP addresses from being assigned to clients. The structure of `exclude_range` block is documented below.
+* `reserved_address` - Options for the DHCP server to assign IP settings to specific MAC addresses. The structure of `reserved_address` block is documented below.
 
 The `ip_range` block supports:
 

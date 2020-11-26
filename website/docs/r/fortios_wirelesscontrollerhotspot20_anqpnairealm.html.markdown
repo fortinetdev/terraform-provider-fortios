@@ -14,20 +14,20 @@ Configure network access identifier (NAI) realm.
 The following arguments are supported:
 
 * `name` - NAI realm list name.
-* `nai_list` - NAI list.
+* `nai_list` - NAI list. The structure of `nai_list` block is documented below.
 
 The `nai_list` block supports:
 
 * `name` - NAI realm name.
 * `encoding` - Enable/disable format in accordance with IETF RFC 4282.
 * `nai_realm` - Configure NAI realms (delimited by a semi-colon character).
-* `eap_method` - EAP Methods.
+* `eap_method` - EAP Methods. The structure of `eap_method` block is documented below.
 
 The `eap_method` block supports:
 
 * `index` - EAP method index.
 * `method` - EAP method type.
-* `auth_param` - EAP auth param.
+* `auth_param` - EAP auth param. The structure of `auth_param` block is documented below.
 
 The `auth_param` block supports:
 

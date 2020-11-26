@@ -29,7 +29,7 @@ The following arguments are supported:
 * `status` - Enable/disable NAT64 (default = disable).
 * `nat64_prefix` - (Required) NAT64 prefix must be ::/96 (default = 64:ff9b::/96).
 * `secondary_prefix_status` - Enable/disable secondary NAT64 prefix.
-* `secondary_prefix` - Secondary NAT64 prefix.
+* `secondary_prefix` - Secondary NAT64 prefix. The structure of `secondary_prefix` block is documented below.
 * `always_synthesize_aaaa_record` - Enable/disable AAAA record synthesis (default = enable).
 * `generate_ipv6_fragment_header` - Enable/disable IPv6 fragment header generation.
 * `nat46_force_ipv4_packet_forwarding` - Enable/disable mandatory IPv4 packet forwarding in nat46.

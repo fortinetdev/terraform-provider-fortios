@@ -15,7 +15,7 @@ The following arguments are supported:
 
 * `name` - Switch group name.
 * `description` - Optional switch group description.
-* `members` - FortiSwitch members belonging to this switch group.
+* `members` - FortiSwitch members belonging to this switch group. The structure of `members` block is documented below.
 
 The `members` block supports:
 

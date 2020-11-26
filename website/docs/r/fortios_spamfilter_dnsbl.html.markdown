@@ -32,7 +32,7 @@ The following arguments are supported:
 * `fosid` - (Required) ID.
 * `name` - (Required) Name of table.
 * `comment` - Optional comments.
-* `entries` - Spam filter DNSBL and ORBL server.
+* `entries` - Spam filter DNSBL and ORBL server. The structure of `entries` block is documented below.
 
 The `entries` block supports:
 

@@ -53,7 +53,7 @@ The following arguments are supported:
 * `clear_text` - Enable/disable use of clear text connections.
 * `ssl_certificate` - Name of local certificate for SSL connections.
 * `bound_ip` - Bound IP address.
-* `monitor_interface` - (Required) Monitored interface.
+* `monitor_interface` - (Required) Monitored interface. The structure of `monitor_interface` block is documented below.
 
 The `monitor_interface` block supports:
 

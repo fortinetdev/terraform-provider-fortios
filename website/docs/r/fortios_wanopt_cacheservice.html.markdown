@@ -28,8 +28,8 @@ The following arguments are supported:
 * `collaboration` - Enable/disable cache-collaboration between cache-service clusters.
 * `device_id` - Set identifier for this cache device.
 * `acceptable_connections` - Set strategy when accepting cache collaboration connection.
-* `dst_peer` - Modify cache-service destination peer list.
-* `src_peer` - Modify cache-service source peer list.
+* `dst_peer` - Modify cache-service destination peer list. The structure of `dst_peer` block is documented below.
+* `src_peer` - Modify cache-service source peer list. The structure of `src_peer` block is documented below.
 
 The `dst_peer` block supports:
 

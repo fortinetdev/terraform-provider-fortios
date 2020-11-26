@@ -23,8 +23,8 @@ The following arguments are supported:
 * `radius_server` - Authentication radius server.
 * `usergroup` - Authentication usergroup.
 * `portal_message_override_group` - Specify captive portal replacement message override group.
-* `portal_message_overrides` - Individual message overrides.
-* `selected_usergroups` - Selected user group.
+* `portal_message_overrides` - Individual message overrides. The structure of `portal_message_overrides` block is documented below.
+* `selected_usergroups` - Selected user group. The structure of `selected_usergroups` block is documented below.
 
 The `portal_message_overrides` block supports:
 

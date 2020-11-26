@@ -37,8 +37,8 @@ The following arguments are supported:
 * `fosid` - (Required) Community ID.
 * `name` - (Required) Community name.
 * `status` - Enable/disable this SNMP community.
-* `hosts` - Configure IPv4 SNMP managers (hosts).
-* `hosts6` - Configure IPv6 SNMP managers.
+* `hosts` - Configure IPv4 SNMP managers (hosts). The structure of `hosts` block is documented below.
+* `hosts6` - Configure IPv6 SNMP managers. The structure of `hosts6` block is documented below.
 * `query_v1_status` - Enable/disable SNMP v1 queries.
 * `query_v1_port` - SNMP v1 query port (default = 161).
 * `query_v2c_status` - Enable/disable SNMP v2c queries.

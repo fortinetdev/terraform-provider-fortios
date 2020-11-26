@@ -39,10 +39,10 @@ The following arguments are supported:
 
 * `policyid` - User defined local in policy ID.
 * `intf` - (Required) Incoming interface name from available options.
-* `srcaddr` - (Required) Source address object from available options.
-* `dstaddr` - (Required) Destination address object from available options.
+* `srcaddr` - (Required) Source address object from available options. The structure of `srcaddr` block is documented below.
+* `dstaddr` - (Required) Destination address object from available options. The structure of `dstaddr` block is documented below.
 * `action` - Action performed on traffic matching the policy (default = deny).
-* `service` - (Required) Service object from available options. Separate names with a space.
+* `service` - (Required) Service object from available options. Separate names with a space. The structure of `service` block is documented below.
 * `schedule` - (Required) Schedule object from available options.
 * `status` - Enable/disable this local-in policy.
 * `comments` - Comment.

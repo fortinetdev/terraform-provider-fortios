@@ -53,8 +53,8 @@ The following arguments are supported:
 * `color` - Color of icon on the GUI.
 * `filter` - Match criteria filter.
 * `obj_id` - Object ID for NSX.
-* `list` - IP address list.
-* `tagging` - Config object tagging.
+* `list` - IP address list. The structure of `list` block is documented below.
+* `tagging` - Config object tagging. The structure of `tagging` block is documented below.
 * `allow_routing` - Enable/disable use of this address in the static route configuration.
 
 The `list` block supports:
@@ -65,7 +65,7 @@ The `tagging` block supports:
 
 * `name` - Tagging entry name.
 * `category` - Tag category.
-* `tags` - Tags.
+* `tags` - Tags. The structure of `tags` block is documented below.
 
 The `tags` block supports:
 

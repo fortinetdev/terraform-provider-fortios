@@ -34,15 +34,15 @@ The following arguments are supported:
 * `path` - URL path as a regular expression.
 * `query` - Match the query part of the URL as a regular expression.
 * `referrer` - Enable/disable use of referrer field in the HTTP header to match the address.
-* `category` - FortiGuard category ID.
+* `category` - FortiGuard category ID. The structure of `category` block is documented below.
 * `method` - HTTP request methods to be used.
 * `ua` - Names of browsers to be used as user agent.
 * `header_name` - Name of HTTP header.
 * `header` - HTTP header name as a regular expression.
 * `case_sensitivity` - Enable to make the pattern case sensitive.
-* `header_group` - HTTP header group.
+* `header_group` - HTTP header group. The structure of `header_group` block is documented below.
 * `color` - Integer value to determine the color of the icon in the GUI (1 - 32, default = 0, which sets value to 1).
-* `tagging` - Config object tagging.
+* `tagging` - Config object tagging. The structure of `tagging` block is documented below.
 * `comment` - Optional comments.
 * `visibility` - Enable/disable visibility of the object in the GUI.
 
@@ -61,7 +61,7 @@ The `tagging` block supports:
 
 * `name` - Tagging entry name.
 * `category` - Tag category.
-* `tags` - Tags.
+* `tags` - Tags. The structure of `tags` block is documented below.
 
 The `tags` block supports:
 

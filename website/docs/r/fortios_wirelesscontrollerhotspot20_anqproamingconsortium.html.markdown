@@ -22,7 +22,7 @@ resource "fortios_wirelesscontrollerhotspot20_anqproamingconsortium" "trname" {
 The following arguments are supported:
 
 * `name` - Roaming consortium name.
-* `oi_list` - Organization identifier list.
+* `oi_list` - Organization identifier list. The structure of `oi_list` block is documented below.
 
 The `oi_list` block supports:
 

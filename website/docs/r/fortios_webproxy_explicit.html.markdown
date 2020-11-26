@@ -37,7 +37,7 @@ The following arguments are supported:
 * `pac_file_server_port` - Port number that PAC traffic from client web browsers uses to connect to the explicit web proxy (0 - 65535, default = 0; use the same as HTTP).
 * `pac_file_name` - Pac file name.
 * `pac_file_data` - PAC file contents enclosed in quotes (maximum of 256K bytes).
-* `pac_policy` - PAC policies.
+* `pac_policy` - PAC policies. The structure of `pac_policy` block is documented below.
 * `ssl_algorithm` - Relative strength of encryption algorithms accepted in HTTPS deep scan: high, medium, or low.
 * `trace_auth_no_rsp` - Enable/disable logging timed-out authentication requests.
 
@@ -45,9 +45,9 @@ The `pac_policy` block supports:
 
 * `policyid` - Policy ID.
 * `status` - Enable/disable policy.
-* `srcaddr` - Source address objects.
-* `srcaddr6` - Source address6 objects.
-* `dstaddr` - Destination address objects.
+* `srcaddr` - Source address objects. The structure of `srcaddr` block is documented below.
+* `srcaddr6` - Source address6 objects. The structure of `srcaddr6` block is documented below.
+* `dstaddr` - Destination address objects. The structure of `dstaddr` block is documented below.
 * `pac_file_name` - Pac file name.
 * `pac_file_data` - PAC file contents enclosed in quotes (maximum of 256K bytes).
 * `comments` - Optional comments.

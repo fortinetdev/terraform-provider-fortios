@@ -102,12 +102,12 @@ The following arguments are supported:
 * `comments` - Comment.
 * `api_key` - Admin user password.
 * `accprofile` - (Required) Admin user access profile.
-* `vdom` - Virtual domains.
+* `vdom` - Virtual domains. The structure of `vdom` block is documented below.
 * `schedule` - Schedule name.
 * `cors_allow_origin` - Value for Access-Control-Allow-Origin on API responses. Avoid using '*' if possible.
 * `peer_auth` - Enable/disable peer authentication.
 * `peer_group` - Peer group name.
-* `trusthost` - Trusthost.
+* `trusthost` - Trusthost. The structure of `trusthost` block is documented below.
 
 The `vdom` block supports:
 

@@ -31,7 +31,7 @@ The following arguments are supported:
 
 * `name` - Name.
 * `action_type` - Action type.
-* `email_to` - Email addresses.
+* `email_to` - Email addresses. The structure of `email_to` block is documented below.
 * `email_subject` - Email subject.
 * `minimum_interval` - Limit execution to no more than once in this interval (in seconds).
 * `delay` - Delay before execution (in seconds).
@@ -47,9 +47,9 @@ The following arguments are supported:
 * `uri` - Request API URI.
 * `http_body` - Request body (if necessary). Should be serialized json string.
 * `port` - Protocol port.
-* `headers` - Request headers.
+* `headers` - Request headers. The structure of `headers` block is documented below.
 * `security_tag` - NSX security tag.
-* `sdn_connector` - NSX SDN connector names.
+* `sdn_connector` - NSX SDN connector names. The structure of `sdn_connector` block is documented below.
 
 The `email_to` block supports:
 

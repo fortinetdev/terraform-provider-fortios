@@ -40,7 +40,7 @@ The following arguments are supported:
 * `mac_auth_bypass` - Enable/disable MAC authentication bypass.
 * `radius_mac_auth` - Enable/disable RADIUS-based MAC authentication of clients (default = disable).
 * `radius_mac_auth_server` - RADIUS-based MAC authentication server.
-* `radius_mac_auth_usergroups` - Selective user groups that are permitted for RADIUS mac authentication.
+* `radius_mac_auth_usergroups` - Selective user groups that are permitted for RADIUS mac authentication. The structure of `radius_mac_auth_usergroups` block is documented below.
 * `auth` - Authentication protocol.
 * `encrypt` - Encryption protocol to use (only available when security is set to a WPA type).
 * `keyindex` - WEP key index (1 - 4).
@@ -55,11 +55,11 @@ The following arguments are supported:
 * `local_bridging` - Enable/disable bridging of wireless and Ethernet interfaces on the FortiAP (default = disable).
 * `local_lan` - Allow/deny traffic destined for a Class A, B, or C private IP address (default = allow).
 * `local_authentication` - Enable/disable AP local authentication.
-* `usergroup` - Firewall user group to be used to authenticate WiFi users.
+* `usergroup` - Firewall user group to be used to authenticate WiFi users. The structure of `usergroup` block is documented below.
 * `portal_message_override_group` - Replacement message group for this VAP (only available when security is set to a captive portal type).
-* `portal_message_overrides` - Individual message overrides.
+* `portal_message_overrides` - Individual message overrides. The structure of `portal_message_overrides` block is documented below.
 * `portal_type` - Captive portal functionality. Configure how the captive portal authenticates users and whether it includes a disclaimer.
-* `selected_usergroups` - Selective user groups that are permitted to authenticate.
+* `selected_usergroups` - Selective user groups that are permitted to authenticate. The structure of `selected_usergroups` block is documented below.
 * `security_exempt_list` - Optional security exempt list for captive portal authentication.
 * `security_redirect_url` - Optional URL for redirecting users after they pass captive portal authentication.
 * `intra_vap_privacy` - Enable/disable blocking communication between clients on the same SSID (called intra-SSID privacy) (default = disable).
@@ -67,7 +67,7 @@ The following arguments are supported:
 * `ldpc` - VAP low-density parity-check (LDPC) coding configuration.
 * `mpsk` - Enable/disable multiple pre-shared keys (PSKs.)
 * `mpsk_concurrent_clients` - Number of pre-shared keys (PSKs) to allow if multiple pre-shared keys are enabled.
-* `mpsk_key` - Pre-shared keys that can be used to connect to this virtual access point.
+* `mpsk_key` - Pre-shared keys that can be used to connect to this virtual access point. The structure of `mpsk_key` block is documented below.
 * `split_tunneling` - Enable/disable split tunneling (default = disable).
 * `vlanid` - Optional VLAN ID.
 * `vlan_auto` - Enable/disable automatic management of SSID VLAN interface.
@@ -90,7 +90,7 @@ The following arguments are supported:
 * `radio_5g_threshold` - Minimum signal level/threshold in dBm required for the AP response to receive a packet in 5G band(-95 to -20, default = -76).
 * `radio_2g_threshold` - Minimum signal level/threshold in dBm required for the AP response to receive a packet in 2.4G band (-95 to -20, default = -79).
 * `vlan_pooling` - Enable/disable VLAN pooling, to allow grouping of multiple wireless controller VLANs into VLAN pools (default = disable). When set to wtp-group, VLAN pooling occurs with VLAN assignment by wtp-group.
-* `vlan_pool` - VLAN pool.
+* `vlan_pool` - VLAN pool. The structure of `vlan_pool` block is documented below.
 * `dhcp_option82_insertion` - Enable/disable DHCP option 82 insert (default = disable).
 * `dhcp_option82_circuit_id_insertion` - Enable/disable DHCP option 82 circuit-id insert (default = disable).
 * `dhcp_option82_remote_id_insertion` - Enable/disable DHCP option 82 remote-id insert (default = disable).
@@ -111,7 +111,7 @@ The following arguments are supported:
 * `utm_profile` - UTM profile name.
 * `mac_filter` - Enable/disable MAC filtering to block wireless clients by mac address.
 * `mac_filter_policy_other` - Allow or block clients with MAC addresses that are not in the filter list.
-* `mac_filter_list` - Create a list of MAC addresses for MAC address filtering.
+* `mac_filter_list` - Create a list of MAC addresses for MAC address filtering. The structure of `mac_filter_list` block is documented below.
 
 The `radius_mac_auth_usergroups` block supports:
 

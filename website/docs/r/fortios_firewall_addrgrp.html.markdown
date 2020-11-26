@@ -44,13 +44,13 @@ The following arguments are supported:
 
 * `name` - (Required) Address group name.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
-* `member` - (Required) Address objects contained within the group.
+* `member` - (Required) Address objects contained within the group. The structure of `member` block is documented below.
 * `comment` - Comment.
 * `exclude` - Enable/disable address exclusion.
-* `exclude_member` - Address exclusion member.
+* `exclude_member` - Address exclusion member. The structure of `exclude_member` block is documented below.
 * `visibility` - Enable/disable address visibility in the GUI.
 * `color` - Color of icon on the GUI.
-* `tagging` - Config object tagging.
+* `tagging` - Config object tagging. The structure of `tagging` block is documented below.
 * `allow_routing` - Enable/disable use of this group in the static route configuration.
 
 The `member` block supports:
@@ -65,7 +65,7 @@ The `tagging` block supports:
 
 * `name` - Tagging entry name.
 * `category` - Tag category.
-* `tags` - Tags.
+* `tags` - Tags. The structure of `tags` block is documented below.
 
 The `tags` block supports:
 

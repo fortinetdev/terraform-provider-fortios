@@ -62,8 +62,8 @@ The following arguments are supported:
 
 * `name` - (Required) Profile name.
 * `comment` - Comment.
-* `domain_filter` - Domain filter settings.
-* `ftgd_dns` - FortiGuard DNS Filter settings.
+* `domain_filter` - Domain filter settings. The structure of `domain_filter` block is documented below.
+* `ftgd_dns` - FortiGuard DNS Filter settings. The structure of `ftgd_dns` block is documented below.
 * `log_all_domain` - Enable/disable logging of all domains visited (detailed DNS logging).
 * `sdns_ftgd_err_log` - Enable/disable FortiGuard SDNS rating error logging.
 * `sdns_domain_log` - Enable/disable domain filtering and botnet domain logging.
@@ -72,7 +72,7 @@ The following arguments are supported:
 * `block_botnet` - Enable/disable blocking botnet C&C DNS lookups.
 * `safe_search` - Enable/disable Google, Bing, and YouTube safe search.
 * `youtube_restrict` - Set safe search for YouTube restriction level.
-* `external_ip_blocklist` - One or more external IP block lists.
+* `external_ip_blocklist` - One or more external IP block lists. The structure of `external_ip_blocklist` block is documented below.
 
 The `domain_filter` block supports:
 
@@ -81,7 +81,7 @@ The `domain_filter` block supports:
 The `ftgd_dns` block supports:
 
 * `options` - FortiGuard DNS filter options.
-* `filters` - FortiGuard DNS domain filters.
+* `filters` - FortiGuard DNS domain filters. The structure of `filters` block is documented below.
 
 The `filters` block supports:
 

@@ -32,7 +32,7 @@ The following arguments are supported:
 
 * `primary` - (Required) Primary DNS server IP address.
 * `secondary` - Secondary DNS server IP address.
-* `domain` - Search suffix list for hostname lookup.
+* `domain` - Search suffix list for hostname lookup. The structure of `domain` block is documented below.
 * `ip6_primary` - Primary DNS server IPv6 address.
 * `ip6_secondary` - Secondary DNS server IPv6 address.
 * `timeout` - DNS query timeout interval in seconds (1 - 10).

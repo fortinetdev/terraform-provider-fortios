@@ -55,18 +55,18 @@ The following arguments are supported:
 * `default_information_originate` - Enable/disable generation of default route.
 * `default_metric` - Default metric.
 * `max_out_metric` - Maximum metric allowed to output(0 means 'not set').
-* `distance` - distance
-* `distribute_list` - Distribute list.
-* `neighbor` - neighbor
-* `network` - Network.
-* `aggregate_address` - Aggregate address.
-* `offset_list` - Offset list.
-* `passive_interface` - Passive interface configuration.
-* `redistribute` - Redistribute configuration.
+* `distance` - distance The structure of `distance` block is documented below.
+* `distribute_list` - Distribute list. The structure of `distribute_list` block is documented below.
+* `neighbor` - neighbor The structure of `neighbor` block is documented below.
+* `network` - Network. The structure of `network` block is documented below.
+* `aggregate_address` - Aggregate address. The structure of `aggregate_address` block is documented below.
+* `offset_list` - Offset list. The structure of `offset_list` block is documented below.
+* `passive_interface` - Passive interface configuration. The structure of `passive_interface` block is documented below.
+* `redistribute` - Redistribute configuration. The structure of `redistribute` block is documented below.
 * `update_timer` - Update timer.
 * `timeout_timer` - Timeout timer.
 * `garbage_timer` - Garbage timer.
-* `interface` - RIPng interface configuration.
+* `interface` - RIPng interface configuration. The structure of `interface` block is documented below.
 
 The `distance` block supports:
 

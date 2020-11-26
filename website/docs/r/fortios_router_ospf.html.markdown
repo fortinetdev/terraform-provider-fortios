@@ -99,14 +99,14 @@ The following arguments are supported:
 * `distribute_route_map_in` - Filter incoming external routes by route-map.
 * `restart_mode` - OSPF restart mode (graceful or LLS).
 * `restart_period` - Graceful restart period.
-* `area` - OSPF area configuration.
-* `ospf_interface` - OSPF interface configuration.
-* `network` - OSPF network configuration.
-* `neighbor` - OSPF neighbor configuration are used when OSPF runs on non-broadcast media
-* `passive_interface` - Passive interface configuration.
-* `summary_address` - IP address summary configuration.
-* `distribute_list` - Distribute list configuration.
-* `redistribute` - Redistribute configuration.
+* `area` - OSPF area configuration. The structure of `area` block is documented below.
+* `ospf_interface` - OSPF interface configuration. The structure of `ospf_interface` block is documented below.
+* `network` - OSPF network configuration. The structure of `network` block is documented below.
+* `neighbor` - OSPF neighbor configuration are used when OSPF runs on non-broadcast media The structure of `neighbor` block is documented below.
+* `passive_interface` - Passive interface configuration. The structure of `passive_interface` block is documented below.
+* `summary_address` - IP address summary configuration. The structure of `summary_address` block is documented below.
+* `distribute_list` - Distribute list configuration. The structure of `distribute_list` block is documented below.
+* `redistribute` - Redistribute configuration. The structure of `redistribute` block is documented below.
 
 The `area` block supports:
 
@@ -121,9 +121,9 @@ The `area` block supports:
 * `nssa_default_information_originate_metric` - OSPF default metric.
 * `nssa_default_information_originate_metric_type` - OSPF metric type for default routes.
 * `nssa_redistribution` - Enable/disable redistribute into NSSA area.
-* `range` - OSPF area range configuration.
-* `virtual_link` - OSPF virtual link configuration.
-* `filter_list` - OSPF area filter-list configuration.
+* `range` - OSPF area range configuration. The structure of `range` block is documented below.
+* `virtual_link` - OSPF virtual link configuration. The structure of `virtual_link` block is documented below.
+* `filter_list` - OSPF area filter-list configuration. The structure of `filter_list` block is documented below.
 
 The `range` block supports:
 

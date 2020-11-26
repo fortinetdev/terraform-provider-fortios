@@ -46,7 +46,7 @@ The following arguments are supported:
 * `name` - Link monitor name.
 * `addr_mode` - Address mode (IPv4 or IPv6).
 * `srcintf` - Interface that receives the traffic to be monitored.
-* `server` - (Required) IP address of the server(s) to be monitored.
+* `server` - (Required) IP address of the server(s) to be monitored. The structure of `server` block is documented below.
 * `protocol` - Protocols used to monitor the server.
 * `port` - Port number of the traffic to be used to monitor the server.
 * `gateway_ip` - Gateway IP address used to probe the server.

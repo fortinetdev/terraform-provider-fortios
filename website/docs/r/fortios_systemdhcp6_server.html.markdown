@@ -43,8 +43,8 @@ The following arguments are supported:
 * `option3` - Option 3.
 * `upstream_interface` - Interface name from where delegated information is provided.
 * `ip_mode` - Method used to assign client IP.
-* `prefix_range` - DHCP prefix configuration.
-* `ip_range` - DHCP IP range configuration.
+* `prefix_range` - DHCP prefix configuration. The structure of `prefix_range` block is documented below.
+* `ip_range` - DHCP IP range configuration. The structure of `ip_range` block is documented below.
 
 The `prefix_range` block supports:
 

@@ -55,24 +55,24 @@ The following arguments are supported:
 * `policyid` - Policy ID.
 * `name` - Policy name.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
-* `srcintf` - (Required) Incoming (ingress) interface.
-* `dstintf` - (Required) Outgoing (egress) interface.
-* `srcaddr` - Source address and address group names.
-* `dstaddr` - Destination address and address group names.
+* `srcintf` - (Required) Incoming (ingress) interface. The structure of `srcintf` block is documented below.
+* `dstintf` - (Required) Outgoing (egress) interface. The structure of `dstintf` block is documented below.
+* `srcaddr` - Source address and address group names. The structure of `srcaddr` block is documented below.
+* `dstaddr` - Destination address and address group names. The structure of `dstaddr` block is documented below.
 * `internet_service` - Enable/disable use of Internet Services for this policy. If enabled, destination address and service are not used. 
-* `internet_service_id` - Internet Service ID.
-* `internet_service_group` - Internet Service group name.
-* `internet_service_custom` - Custom Internet Service name.
-* `internet_service_custom_group` - Custom Internet Service group name.
+* `internet_service_id` - Internet Service ID. The structure of `internet_service_id` block is documented below.
+* `internet_service_group` - Internet Service group name. The structure of `internet_service_group` block is documented below.
+* `internet_service_custom` - Custom Internet Service name. The structure of `internet_service_custom` block is documented below.
+* `internet_service_custom_group` - Custom Internet Service group name. The structure of `internet_service_custom_group` block is documented below.
 * `internet_service_src` - Enable/disable use of Internet Services in source for this policy. If enabled, source address is not used. 
-* `internet_service_src_id` - Internet Service source ID.
-* `internet_service_src_group` - Internet Service source group name.
-* `internet_service_src_custom` - Custom Internet Service source name.
-* `internet_service_src_custom_group` - Custom Internet Service source group name.
+* `internet_service_src_id` - Internet Service source ID. The structure of `internet_service_src_id` block is documented below.
+* `internet_service_src_group` - Internet Service source group name. The structure of `internet_service_src_group` block is documented below.
+* `internet_service_src_custom` - Custom Internet Service source name. The structure of `internet_service_src_custom` block is documented below.
+* `internet_service_src_custom_group` - Custom Internet Service source group name. The structure of `internet_service_src_custom_group` block is documented below.
 * `reputation_minimum` - Minimum Reputation to take action.
 * `reputation_direction` - Direction of the initial traffic for reputation to take effect.
 * `rtp_nat` - Enable Real Time Protocol (RTP) NAT.
-* `rtp_addr` - Address names if this is an RTP NAT policy.
+* `rtp_addr` - Address names if this is an RTP NAT policy. The structure of `rtp_addr` block is documented below.
 * `learning_mode` - Enable to allow everything, but log all of the meaningful data for security information gathering. A learning report will be generated.
 * `action` - Policy action (allow/deny/ipsec).
 * `send_deny_packet` - Enable to send a reply when a session is denied or blocked by a firewall policy.
@@ -80,7 +80,7 @@ The following arguments are supported:
 * `status` - Enable or disable this policy.
 * `schedule` - Schedule name.
 * `schedule_timeout` - Enable to force current sessions to end when the schedule object times out. Disable allows them to end from inactivity.
-* `service` - Service and service group names.
+* `service` - Service and service group names. The structure of `service` block is documented below.
 * `tos` - ToS (Type of Service) value used for comparison.
 * `tos_mask` - Non-zero bit positions are used for comparison while zero bit positions are ignored.
 * `tos_negate` - Enable negated TOS match.
@@ -119,16 +119,16 @@ The following arguments are supported:
 * `traffic_shaper` - Traffic shaper.
 * `traffic_shaper_reverse` - Reverse traffic shaper.
 * `per_ip_shaper` - Per-IP traffic shaper.
-* `application` - Application ID list.
-* `app_category` - Application category ID list.
-* `url_category` - URL category ID list.
-* `app_group` - Application group names.
+* `application` - Application ID list. The structure of `application` block is documented below.
+* `app_category` - Application category ID list. The structure of `app_category` block is documented below.
+* `url_category` - URL category ID list. The structure of `url_category` block is documented below.
+* `app_group` - Application group names. The structure of `app_group` block is documented below.
 * `nat` - Enable/disable source NAT.
 * `permit_any_host` - Accept UDP packets from any host.
 * `permit_stun_host` - Accept UDP packets from any Session Traversal Utilities for NAT (STUN) host.
 * `fixedport` - Enable to prevent source NAT from changing a session's source port.
 * `ippool` - Enable to use IP Pools for source NAT.
-* `poolname` - IP Pool names.
+* `poolname` - IP Pool names. The structure of `poolname` block is documented below.
 * `session_ttl` - TTL in seconds for sessions accepted by this policy (0 means use the system default session TTL).
 * `vlan_cos_fwd` - VLAN forward direction user priority: 255 passthrough, 0 lowest, 7 highest.
 * `vlan_cos_rev` - VLAN reverse direction user priority: 255 passthrough, 0 lowest, 7 highest.
@@ -139,14 +139,14 @@ The following arguments are supported:
 * `wccp` - Enable/disable forwarding traffic matching this policy to a configured WCCP server.
 * `ntlm` - Enable/disable NTLM authentication.
 * `ntlm_guest` - Enable/disable NTLM guest user access.
-* `ntlm_enabled_browsers` - HTTP-User-Agent value of supported browsers.
+* `ntlm_enabled_browsers` - HTTP-User-Agent value of supported browsers. The structure of `ntlm_enabled_browsers` block is documented below.
 * `fsso` - Enable/disable Fortinet Single Sign-On.
 * `wsso` - Enable/disable WiFi Single Sign On (WSSO).
 * `rsso` - Enable/disable RADIUS single sign-on (RSSO).
 * `fsso_agent_for_ntlm` - FSSO agent to use for NTLM authentication.
-* `groups` - Names of user groups that can authenticate with this policy.
-* `users` - Names of individual users that can authenticate with this policy.
-* `devices` - Names of devices or device groups that can be matched by the policy.
+* `groups` - Names of user groups that can authenticate with this policy. The structure of `groups` block is documented below.
+* `users` - Names of individual users that can authenticate with this policy. The structure of `users` block is documented below.
+* `devices` - Names of devices or device groups that can be matched by the policy. The structure of `devices` block is documented below.
 * `auth_path` - Enable/disable authentication-based routing.
 * `disclaimer` - Enable/disable user authentication disclaimer.
 * `vpntunnel` - Policy-based IPsec VPN: name of the IPsec VPN Phase 1.
@@ -166,7 +166,7 @@ The following arguments are supported:
 * `redirect_url` - URL users are directed to after seeing and accepting the disclaimer or authenticating.
 * `identity_based_route` - Name of identity-based routing rule.
 * `block_notification` - Enable/disable block notification.
-* `custom_log_fields` - Custom fields to append to log messages for this policy.
+* `custom_log_fields` - Custom fields to append to log messages for this policy. The structure of `custom_log_fields` block is documented below.
 * `replacemsg_override_group` - Override the default replacement message group for this policy.
 * `srcaddr_negate` - When enabled srcaddr specifies what the source address must NOT be.
 * `dstaddr_negate` - When enabled dstaddr specifies what the destination address must NOT be.
@@ -176,7 +176,7 @@ The following arguments are supported:
 * `timeout_send_rst` - Enable/disable sending RST packets when TCP sessions expire.
 * `captive_portal_exempt` - Enable to exempt some users from the captive portal.
 * `ssl_mirror` - Enable to copy decrypted SSL traffic to a FortiGate interface (called SSL mirroring).
-* `ssl_mirror_intf` - SSL mirror interface name.
+* `ssl_mirror_intf` - SSL mirror interface name. The structure of `ssl_mirror_intf` block is documented below.
 * `scan_botnet_connections` - Block or monitor connections to Botnet servers or disable Botnet scanning.
 * `dsri` - Enable DSRI to ignore HTTP server responses.
 * `radius_mac_auth_bypass` - Enable MAC authentication bypass. The bypassed MAC address must be received from RADIUS server.

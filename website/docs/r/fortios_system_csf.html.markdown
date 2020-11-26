@@ -36,8 +36,8 @@ The following arguments are supported:
 * `management_ip` - Management IP address of this FortiGate. Used to log into this FortiGate from another FortiGate in the Security Fabric.
 * `management_port` - Overriding port for management connection (Overrides admin port).
 * `fixed_key` - Auto-generated fixed key used when this device is the root. (Will automatically be generated if not set.)
-* `trusted_list` - Pre-authorized and blocked security fabric nodes.
-* `fabric_device` - Fabric device configuration.
+* `trusted_list` - Pre-authorized and blocked security fabric nodes. The structure of `trusted_list` block is documented below.
+* `fabric_device` - Fabric device configuration. The structure of `fabric_device` block is documented below.
 
 The `trusted_list` block supports:
 

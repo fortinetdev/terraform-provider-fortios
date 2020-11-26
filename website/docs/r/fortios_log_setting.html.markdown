@@ -58,7 +58,7 @@ The following arguments are supported:
 * `log_policy_name` - Enable/disable inserting policy name into traffic logs.
 * `faz_override` - Enable/disable override FortiAnalyzer settings.
 * `syslog_override` - Enable/disable override Syslog settings.
-* `custom_log_fields` - Custom fields to append to all log messages.
+* `custom_log_fields` - Custom fields to append to all log messages. The structure of `custom_log_fields` block is documented below.
 
 The `custom_log_fields` block supports:
 

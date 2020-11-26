@@ -47,7 +47,7 @@ resource "fortios_firewallservice_group" "trname" {
 The following arguments are supported:
 
 * `name` - (Required) Address group name.
-* `member` - Service objects contained within the group.
+* `member` - Service objects contained within the group. The structure of `member` block is documented below.
 * `proxy` - Enable/disable web proxy service group.
 * `comment` - Comment.
 * `color` - Color of icon on the GUI.

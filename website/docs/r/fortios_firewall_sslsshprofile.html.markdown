@@ -15,21 +15,21 @@ The following arguments are supported:
 
 * `name` - (Required) Name.
 * `comment` - Optional comments.
-* `ssl` - Configure SSL options.
-* `https` - Configure HTTPS options.
-* `ftps` - Configure FTPS options.
-* `imaps` - Configure IMAPS options.
-* `pop3s` - Configure POP3S options.
-* `smtps` - Configure SMTPS options.
-* `ssh` - Configure SSH options.
+* `ssl` - Configure SSL options. The structure of `ssl` block is documented below.
+* `https` - Configure HTTPS options. The structure of `https` block is documented below.
+* `ftps` - Configure FTPS options. The structure of `ftps` block is documented below.
+* `imaps` - Configure IMAPS options. The structure of `imaps` block is documented below.
+* `pop3s` - Configure POP3S options. The structure of `pop3s` block is documented below.
+* `smtps` - Configure SMTPS options. The structure of `smtps` block is documented below.
+* `ssh` - Configure SSH options. The structure of `ssh` block is documented below.
 * `whitelist` - Enable/disable exempting servers by FortiGuard whitelist.
-* `ssl_exempt` - Servers to exempt from SSL inspection.
+* `ssl_exempt` - Servers to exempt from SSL inspection. The structure of `ssl_exempt` block is documented below.
 * `server_cert_mode` - Re-sign or replace the server's certificate.
 * `use_ssl_server` - Enable/disable the use of SSL server table for SSL offloading.
 * `caname` - CA certificate used by SSL Inspection.
 * `untrusted_caname` - Untrusted CA certificate used by SSL Inspection.
 * `server_cert` - Certificate used by SSL Inspection to replace server certificate.
-* `ssl_server` - SSL servers.
+* `ssl_server` - SSL servers. The structure of `ssl_server` block is documented below.
 * `ssl_anomalies_log` - Enable/disable logging SSL anomalies.
 * `ssl_exemptions_log` - Enable/disable logging SSL exemptions.
 * `rpc_over_https` - Enable/disable inspection of RPC over HTTPS.

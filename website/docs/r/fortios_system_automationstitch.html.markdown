@@ -16,8 +16,8 @@ The following arguments are supported:
 * `name` - Name.
 * `status` - (Required) Enable/disable this stitch.
 * `trigger` - (Required) Trigger name.
-* `action` - Action names.
-* `destination` - Serial number/HA group-name of destination devices.
+* `action` - Action names. The structure of `action` block is documented below.
+* `destination` - Serial number/HA group-name of destination devices. The structure of `destination` block is documented below.
 
 The `action` block supports:
 

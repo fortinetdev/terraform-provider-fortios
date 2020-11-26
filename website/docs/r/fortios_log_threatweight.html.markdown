@@ -136,15 +136,15 @@ resource "fortios_log_threatweight" "trname" {
 The following arguments are supported:
 
 * `status` - Enable/disable the threat weight feature.
-* `level` - Score mapping for threat weight levels.
+* `level` - Score mapping for threat weight levels. The structure of `level` block is documented below.
 * `blocked_connection` - Threat weight score for blocked connections.
 * `failed_connection` - Threat weight score for failed connections.
 * `url_block_detected` - Threat weight score for URL blocking.
-* `malware` - Anti-virus malware threat weight settings.
-* `ips` - IPS threat weight settings.
-* `web` - Web filtering threat weight settings.
-* `geolocation` - Geolocation-based threat weight settings.
-* `application` - Application-control threat weight settings.
+* `malware` - Anti-virus malware threat weight settings. The structure of `malware` block is documented below.
+* `ips` - IPS threat weight settings. The structure of `ips` block is documented below.
+* `web` - Web filtering threat weight settings. The structure of `web` block is documented below.
+* `geolocation` - Geolocation-based threat weight settings. The structure of `geolocation` block is documented below.
+* `application` - Application-control threat weight settings. The structure of `application` block is documented below.
 
 The `level` block supports:
 

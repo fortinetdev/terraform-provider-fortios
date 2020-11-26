@@ -24,7 +24,7 @@ The following arguments are supported:
 * `enc_algorithm` - Enable/disable reliable syslogging with TLS encryption.
 * `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting).
 * `certificate` - Certificate used to communicate with Syslog server.
-* `custom_field_name` - Custom field name for CEF format logging.
+* `custom_field_name` - Custom field name for CEF format logging. The structure of `custom_field_name` block is documented below.
 * `syslog_type` - Hidden setting index of Syslog.
 
 The `custom_field_name` block supports:

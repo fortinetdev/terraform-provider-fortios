@@ -14,14 +14,14 @@ Configure FortiSwitch quarantine support.
 The following arguments are supported:
 
 * `quarantine` - Enable/disable quarantine.
-* `targets` - Quarantine MACs.
+* `targets` - Quarantine MACs. The structure of `targets` block is documented below.
 
 The `targets` block supports:
 
 * `mac` - Quarantine MAC.
 * `entry_id` - FSW entry id for the quarantine MAC.
 * `description` - Description for the quarantine MAC.
-* `tag` - Tags for the quarantine MAC.
+* `tag` - Tags for the quarantine MAC. The structure of `tag` block is documented below.
 
 The `tag` block supports:
 

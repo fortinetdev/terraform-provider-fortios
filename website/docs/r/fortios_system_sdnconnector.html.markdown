@@ -51,15 +51,15 @@ The following arguments are supported:
 * `client_secret` - Azure client secret (application key).
 * `resource_group` - Azure resource group.
 * `azure_region` - Azure server region.
-* `nic` - Configure Azure network interface.
-* `route_table` - Configure Azure route table.
+* `nic` - Configure Azure network interface. The structure of `nic` block is documented below.
+* `route_table` - Configure Azure route table. The structure of `route_table` block is documented below.
 * `user_id` - User ID.
 * `compartment_id` - Compartment ID.
 * `oci_region` - OCI server region.
 * `oci_cert` - OCI certificate.
 * `oci_fingerprint` - OCI pubkey fingerprint.
-* `external_ip` - Configure GCP external IP.
-* `route` - Configure GCP route.
+* `external_ip` - Configure GCP external IP. The structure of `external_ip` block is documented below.
+* `route` - Configure GCP route. The structure of `route` block is documented below.
 * `use_metadata_iam` - Enable/disable using IAM role from metadata to call API.
 * `gcp_project` - GCP project name.
 * `service_account` - GCP service account email.
@@ -71,7 +71,7 @@ The following arguments are supported:
 The `nic` block supports:
 
 * `name` - Network interface name.
-* `ip` - Configure IP configuration.
+* `ip` - Configure IP configuration. The structure of `ip` block is documented below.
 
 The `ip` block supports:
 
@@ -81,7 +81,7 @@ The `ip` block supports:
 The `route_table` block supports:
 
 * `name` - Route table name.
-* `route` - Configure Azure route.
+* `route` - Configure Azure route. The structure of `route` block is documented below.
 
 The `route` block supports:
 

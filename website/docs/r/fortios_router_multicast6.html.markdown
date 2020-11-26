@@ -28,8 +28,8 @@ The following arguments are supported:
 
 * `multicast_routing` - Enable/disable IPv6 multicast routing.
 * `multicast_pmtu` - Enable/disable PMTU for IPv6 multicast.
-* `interface` - Protocol Independent Multicast (PIM) interfaces.
-* `pim_sm_global` - PIM sparse-mode global settings.
+* `interface` - Protocol Independent Multicast (PIM) interfaces. The structure of `interface` block is documented below.
+* `pim_sm_global` - PIM sparse-mode global settings. The structure of `pim_sm_global` block is documented below.
 
 The `interface` block supports:
 
@@ -40,7 +40,7 @@ The `interface` block supports:
 The `pim_sm_global` block supports:
 
 * `register_rate_limit` - Limit of packets/sec per source registered through this RP (0 means unlimited).
-* `rp_address` - Statically configured RP addresses.
+* `rp_address` - Statically configured RP addresses. The structure of `rp_address` block is documented below.
 
 The `rp_address` block supports:
 

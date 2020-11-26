@@ -46,7 +46,7 @@ The following arguments are supported:
 * `fsso_agent_for_ntlm` - FSSO agent to use for NTLM authentication.
 * `require_tfa` - Enable/disable two-factor authentication (default = disable).
 * `fsso_guest` - Enable/disable user fsso-guest authentication (default = disable).
-* `user_database` - Authentication server to contain user information; "local" (default) or "123" (for LDAP).
+* `user_database` - Authentication server to contain user information; "local" (default) or "123" (for LDAP). The structure of `user_database` block is documented below.
 * `ssh_ca` - SSH CA name.
 
 The `user_database` block supports:

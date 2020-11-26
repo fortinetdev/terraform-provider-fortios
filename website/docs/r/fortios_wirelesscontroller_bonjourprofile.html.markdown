@@ -15,7 +15,7 @@ The following arguments are supported:
 
 * `name` - Bonjour profile name.
 * `comment` - Comment.
-* `policy_list` - Bonjour policy list.
+* `policy_list` - Bonjour policy list. The structure of `policy_list` block is documented below.
 
 The `policy_list` block supports:
 

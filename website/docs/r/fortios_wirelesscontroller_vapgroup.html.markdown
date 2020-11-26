@@ -15,7 +15,7 @@ The following arguments are supported:
 
 * `name` - (Required) Group Name
 * `comment` - Comment.
-* `vaps` - List of SSIDs to be included in the VAP group.
+* `vaps` - List of SSIDs to be included in the VAP group. The structure of `vaps` block is documented below.
 
 The `vaps` block supports:
 

@@ -37,7 +37,7 @@ The following arguments are supported:
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `comment` - Comment.
 * `type` - VIP type: static NAT or server load balance.
-* `src_filter` - Source IP filter (x.x.x.x/x).
+* `src_filter` - Source IP filter (x.x.x.x/x). The structure of `src_filter` block is documented below.
 * `extip` - (Required) Start-external-IP [-end-external-IP].
 * `mappedip` - (Required) Start-mapped-IP [-end mapped-IP].
 * `arp_reply` - Enable ARP reply.
@@ -48,8 +48,8 @@ The following arguments are supported:
 * `color` - Color of icon on the GUI.
 * `ldb_method` - Load balance method.
 * `server_type` - Server type.
-* `realservers` - Real servers.
-* `monitor` - Health monitors.
+* `realservers` - Real servers. The structure of `realservers` block is documented below.
+* `monitor` - Health monitors. The structure of `monitor` block is documented below.
 
 The `src_filter` block supports:
 

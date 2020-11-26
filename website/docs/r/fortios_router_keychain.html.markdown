@@ -28,7 +28,7 @@ resource "fortios_router_keychain" "trname" {
 The following arguments are supported:
 
 * `name` - (Required) Key-chain name.
-* `key` - Configuration method to edit key settings.
+* `key` - Configuration method to edit key settings. The structure of `key` block is documented below.
 
 The `key` block supports:
 

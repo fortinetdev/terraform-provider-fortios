@@ -59,8 +59,8 @@ The following arguments are supported:
 * `color` - Color of icon on the GUI.
 * `visibility` - Enable/disable the visibility of the service on the GUI.
 * `app_service_type` - Application service type.
-* `app_category` - Application category ID.
-* `application` - Application ID.
+* `app_category` - Application category ID. The structure of `app_category` block is documented below.
+* `application` - Application ID. The structure of `application` block is documented below.
 
 The `app_category` block supports:
 

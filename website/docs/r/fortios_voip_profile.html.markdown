@@ -82,8 +82,8 @@ The following arguments are supported:
 
 * `name` - (Required) Profile name.
 * `comment` - Comment.
-* `sip` - SIP.
-* `sccp` - SCCP.
+* `sip` - SIP. The structure of `sip` block is documented below.
+* `sccp` - SCCP. The structure of `sccp` block is documented below.
 
 The `sip` block supports:
 

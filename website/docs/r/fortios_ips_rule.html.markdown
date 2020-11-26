@@ -49,7 +49,7 @@ The following arguments are supported:
 * `rule_id` - Rule ID.
 * `rev` - Revision.
 * `date` - Date.
-* `metadata` - Meta data.
+* `metadata` - Meta data. The structure of `metadata` block is documented below.
 
 The `metadata` block supports:
 

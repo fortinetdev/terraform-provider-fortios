@@ -38,7 +38,7 @@ The following arguments are supported:
 
 * `name` - Policy name.
 * `security_mode` - Port or MAC based 802.1X security mode.
-* `user_group` - Name of user-group to assign to this MAC Authentication Bypass (MAB) policy.
+* `user_group` - Name of user-group to assign to this MAC Authentication Bypass (MAB) policy. The structure of `user_group` block is documented below.
 * `mac_auth_bypass` - Enable/disable MAB for this policy.
 * `open_auth` - Enable/disable open authentication for this policy.
 * `eap_passthru` - Enable/disable EAP pass-through mode, allowing protocols (such as LLDP) to pass through ports for more flexible authentication.

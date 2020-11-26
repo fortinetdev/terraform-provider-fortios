@@ -72,11 +72,11 @@ The following arguments are supported:
 * `router_id` - (Required) A.B.C.D, in IPv4 address format.
 * `spf_timers` - SPF calculation frequency.
 * `bfd` - Enable/disable Bidirectional Forwarding Detection (BFD).
-* `area` - OSPF6 area configuration.
-* `ospf6_interface` - OSPF6 interface configuration.
-* `redistribute` - Redistribute configuration.
-* `passive_interface` - Passive interface configuration.
-* `summary_address` - IPv6 address summary configuration.
+* `area` - OSPF6 area configuration. The structure of `area` block is documented below.
+* `ospf6_interface` - OSPF6 interface configuration. The structure of `ospf6_interface` block is documented below.
+* `redistribute` - Redistribute configuration. The structure of `redistribute` block is documented below.
+* `passive_interface` - Passive interface configuration. The structure of `passive_interface` block is documented below.
+* `summary_address` - IPv6 address summary configuration. The structure of `summary_address` block is documented below.
 
 The `area` block supports:
 
@@ -89,8 +89,8 @@ The `area` block supports:
 * `nssa_default_information_originate_metric` - OSPFv3 default metric.
 * `nssa_default_information_originate_metric_type` - OSPFv3 metric type for default routes.
 * `nssa_redistribution` - Enable/disable redistribute into NSSA area.
-* `range` - OSPF6 area range configuration.
-* `virtual_link` - OSPF6 virtual link configuration.
+* `range` - OSPF6 area range configuration. The structure of `range` block is documented below.
+* `virtual_link` - OSPF6 virtual link configuration. The structure of `virtual_link` block is documented below.
 
 The `range` block supports:
 
@@ -123,7 +123,7 @@ The `ospf6_interface` block supports:
 * `bfd` - Enable/disable Bidirectional Forwarding Detection (BFD).
 * `mtu` - MTU for OSPFv3 packets.
 * `mtu_ignore` - Enable/disable ignoring MTU field in DBD packets.
-* `neighbor` - OSPFv3 neighbors are used when OSPFv3 runs on non-broadcast media
+* `neighbor` - OSPFv3 neighbors are used when OSPFv3 runs on non-broadcast media The structure of `neighbor` block is documented below.
 
 The `neighbor` block supports:
 

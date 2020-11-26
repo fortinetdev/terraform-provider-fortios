@@ -79,17 +79,17 @@ The following arguments are supported:
 * `policyid` - Policy ID.
 * `name` - Policy name.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
-* `srcintf` - (Required) Incoming (ingress) interface.
-* `dstintf` - (Required) Outgoing (egress) interface.
-* `srcaddr` - (Required) Source address and address group names.
-* `dstaddr` - (Required) Destination address and address group names.
+* `srcintf` - (Required) Incoming (ingress) interface. The structure of `srcintf` block is documented below.
+* `dstintf` - (Required) Outgoing (egress) interface. The structure of `dstintf` block is documented below.
+* `srcaddr` - (Required) Source address and address group names. The structure of `srcaddr` block is documented below.
+* `dstaddr` - (Required) Destination address and address group names. The structure of `dstaddr` block is documented below.
 * `action` - Policy action (allow/deny/ipsec).
 * `firewall_session_dirty` - How to handle sessions if the configuration of this firewall policy changes.
 * `status` - Enable or disable this policy.
 * `vlan_cos_fwd` - VLAN forward direction user priority: 255 passthrough, 0 lowest, 7 highest
 * `vlan_cos_rev` - VLAN reverse direction user priority: 255 passthrough, 0 lowest, 7 highest
 * `schedule` - (Required) Schedule name.
-* `service` - Service and service group names.
+* `service` - Service and service group names. The structure of `service` block is documented below.
 * `tos` - ToS (Type of Service) value used for comparison.
 * `tos_mask` - Non-zero bit positions are used for comparison while zero bit positions are ignored.
 * `tos_negate` - Enable negated TOS match.
@@ -113,14 +113,14 @@ The following arguments are supported:
 * `traffic_shaper` - Reverse traffic shaper.
 * `traffic_shaper_reverse` - Reverse traffic shaper.
 * `per_ip_shaper` - Per-IP traffic shaper.
-* `application` - Application ID list.
-* `app_category` - Application category ID list.
-* `url_category` - URL category ID list.
-* `app_group` - Application group names.
+* `application` - Application ID list. The structure of `application` block is documented below.
+* `app_category` - Application category ID list. The structure of `app_category` block is documented below.
+* `url_category` - URL category ID list. The structure of `url_category` block is documented below.
+* `app_group` - Application group names. The structure of `app_group` block is documented below.
 * `nat` - Enable/disable source NAT.
 * `fixedport` - Enable to prevent source NAT from changing a session's source port.
 * `ippool` - Enable to use IP Pools for source NAT.
-* `poolname` - IP Pool names.
+* `poolname` - IP Pool names. The structure of `poolname` block is documented below.
 * `session_ttl` - Session TTL in seconds for sessions accepted by this policy. 0 means use the system default session TTL.
 * `inbound` - Policy-based IPsec VPN: only traffic from the remote network can initiate a VPN.
 * `outbound` - Policy-based IPsec VPN: only traffic from the internal network can initiate a VPN.
@@ -138,17 +138,17 @@ The following arguments are supported:
 * `label` - Label for the policy that appears when the GUI is in Section View mode.
 * `global_label` - Label for the policy that appears when the GUI is in Global View mode.
 * `rsso` - Enable/disable RADIUS single sign-on (RSSO).
-* `custom_log_fields` - Log field index numbers to append custom log fields to log messages for this policy.
+* `custom_log_fields` - Log field index numbers to append custom log fields to log messages for this policy. The structure of `custom_log_fields` block is documented below.
 * `replacemsg_override_group` - Override the default replacement message group for this policy.
 * `srcaddr_negate` - When enabled srcaddr specifies what the source address must NOT be.
 * `dstaddr_negate` - When enabled dstaddr specifies what the destination address must NOT be.
 * `service_negate` - When enabled service specifies what the service must NOT be.
-* `groups` - Names of user groups that can authenticate with this policy.
-* `users` - Names of individual users that can authenticate with this policy.
-* `devices` - Names of devices or device groups that can be matched by the policy.
+* `groups` - Names of user groups that can authenticate with this policy. The structure of `groups` block is documented below.
+* `users` - Names of individual users that can authenticate with this policy. The structure of `users` block is documented below.
+* `devices` - Names of devices or device groups that can be matched by the policy. The structure of `devices` block is documented below.
 * `timeout_send_rst` - Enable/disable sending RST packets when TCP sessions expire.
 * `ssl_mirror` - Enable to copy decrypted SSL traffic to a FortiGate interface (called SSL mirroring).
-* `ssl_mirror_intf` - SSL mirror interface name.
+* `ssl_mirror_intf` - SSL mirror interface name. The structure of `ssl_mirror_intf` block is documented below.
 * `dsri` - Enable DSRI to ignore HTTP server responses.
 * `vlan_filter` - Set VLAN filters.
 

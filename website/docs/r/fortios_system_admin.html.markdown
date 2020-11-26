@@ -68,7 +68,7 @@ The following arguments are supported:
 * `allow_remove_admin_session` - Enable/disable allow admin session to be removed by privileged admin users.
 * `comments` - Comment.
 * `hidden` - Admin user hidden attribute.
-* `vdom` - Virtual domain(s) that the administrator can access.
+* `vdom` - Virtual domain(s) that the administrator can access. The structure of `vdom` block is documented below.
 * `ssh_public_key1` - Public key of an SSH client. The client is authenticated without being asked for credentials. Create the public-private key pair in the SSH client application.
 * `ssh_public_key2` - Public key of an SSH client. The client is authenticated without being asked for credentials. Create the public-private key pair in the SSH client application.
 * `ssh_public_key3` - Public key of an SSH client. The client is authenticated without being asked for credentials. Create the public-private key pair in the SSH client application.
@@ -78,7 +78,7 @@ The following arguments are supported:
 * `radius_vdom_override` - Enable to use the names of VDOMs provided by the remote authentication server to control the VDOMs that this administrator can access.
 * `password_expire` - Password expire time.
 * `force_password_change` - Enable/disable force password change on next login.
-* `gui_dashboard` - GUI dashboards.
+* `gui_dashboard` - GUI dashboards. The structure of `gui_dashboard` block is documented below.
 * `two_factor` - Enable/disable two-factor authentication.
 * `fortitoken` - This administrator's FortiToken serial number.
 * `email_to` - This administrator's email address.
@@ -86,14 +86,14 @@ The following arguments are supported:
 * `sms_custom_server` - Custom SMS server to send SMS messages to.
 * `sms_phone` - Phone number on which the administrator receives SMS messages.
 * `guest_auth` - Enable/disable guest authentication.
-* `guest_usergroups` - Select guest user groups.
+* `guest_usergroups` - Select guest user groups. The structure of `guest_usergroups` block is documented below.
 * `guest_lang` - Guest management portal language.
 * `history0` - history0
 * `history1` - history1
-* `login_time` - Record user login time.
-* `gui_global_menu_favorites` - Favorite GUI menu IDs for the global VDOM.
-* `gui_vdom_menu_favorites` - Favorite GUI menu IDs for VDOMs.
-* `gui_new_feature_acknowledge` - Acknowledgement of new features.
+* `login_time` - Record user login time. The structure of `login_time` block is documented below.
+* `gui_global_menu_favorites` - Favorite GUI menu IDs for the global VDOM. The structure of `gui_global_menu_favorites` block is documented below.
+* `gui_vdom_menu_favorites` - Favorite GUI menu IDs for VDOMs. The structure of `gui_vdom_menu_favorites` block is documented below.
+* `gui_new_feature_acknowledge` - Acknowledgement of new features. The structure of `gui_new_feature_acknowledge` block is documented below.
 
 The `vdom` block supports:
 
@@ -106,7 +106,7 @@ The `gui_dashboard` block supports:
 * `scope` - Dashboard scope.
 * `layout_type` - Layout type.
 * `columns` - Number of columns.
-* `widget` - Dashboard widgets.
+* `widget` - Dashboard widgets. The structure of `widget` block is documented below.
 
 The `widget` block supports:
 
@@ -125,7 +125,7 @@ The `widget` block supports:
 * `timeframe` - Timeframe period of reported data.
 * `sort_by` - Field to sort the data by.
 * `visualization` - Visualization to use.
-* `filters` - FortiView filters.
+* `filters` - FortiView filters. The structure of `filters` block is documented below.
 
 The `filters` block supports:
 

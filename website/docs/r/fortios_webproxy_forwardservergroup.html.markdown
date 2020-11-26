@@ -43,7 +43,7 @@ The following arguments are supported:
 * `affinity` - Enable/disable affinity, attaching a source-ip's traffic to the assigned forwarding server until the forward-server-affinity-timeout is reached (under web-proxy global).
 * `ldb_method` - Load balance method: weighted or least-session.
 * `group_down_option` - Action to take when all of the servers in the forward server group are down: block sessions until at least one server is back up or pass sessions to their destination.
-* `server_list` - Add web forward servers to a list to form a server group. Optionally assign weights to each server.
+* `server_list` - Add web forward servers to a list to form a server group. Optionally assign weights to each server. The structure of `server_list` block is documented below.
 
 The `server_list` block supports:
 

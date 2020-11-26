@@ -26,7 +26,7 @@ The following arguments are supported:
 * `name` - (Required) QoS policy name
 * `schedule` - (Required) COS queue scheduling.
 * `rate_by` - (Required) COS queue rate by kbps or percent.
-* `cos_queue` - COS queue configuration.
+* `cos_queue` - COS queue configuration. The structure of `cos_queue` block is documented below.
 
 The `cos_queue` block supports:
 

@@ -35,16 +35,16 @@ The following arguments are supported:
 * `override_split_tunnel` - Enable/disable overriding the WTP profile split tunneling setting.
 * `split_tunneling_acl_path` - Split tunneling ACL path is local/tunnel.
 * `split_tunneling_acl_local_ap_subnet` - Enable/disable automatically adding local subnetwork of FortiAP to split-tunneling ACL (default = disable).
-* `split_tunneling_acl` - Split tunneling ACL filter list.
+* `split_tunneling_acl` - Split tunneling ACL filter list. The structure of `split_tunneling_acl` block is documented below.
 * `override_lan` - Enable to override the WTP profile LAN port setting.
-* `lan` - WTP LAN port mapping.
+* `lan` - WTP LAN port mapping. The structure of `lan` block is documented below.
 * `override_allowaccess` - Enable to override the WTP profile management access configuration.
 * `allowaccess` - Control management access to the managed WTP, FortiAP, or AP. Separate entries with a space.
 * `override_login_passwd_change` - Enable to override the WTP profile login-password (administrator password) setting.
 * `login_passwd_change` - Change or reset the administrator password of a managed WTP, FortiAP or AP (yes, default, or no, default = no).
 * `login_passwd` - Set the managed WTP, FortiAP, or AP's administrator password.
-* `radio_1` - Configuration options for radio 1.
-* `radio_2` - Configuration options for radio 2.
+* `radio_1` - Configuration options for radio 1. The structure of `radio_1` block is documented below.
+* `radio_2` - Configuration options for radio 2. The structure of `radio_2` block is documented below.
 * `image_download` - Enable/disable WTP image download.
 * `mesh_bridge_enable` - Enable/disable mesh Ethernet bridge when WTP is configured as a mesh branch/leaf AP.
 * `coordinate_latitude` - WTP latitude coordinate.
@@ -90,9 +90,9 @@ The `radio_1` block supports:
 * `power_level` - Radio power level as a percentage of the maximum transmit power (0 - 100, default = 100).
 * `override_vaps` - Enable to override WTP profile Virtual Access Point (VAP) settings.
 * `vap_all` - Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable).
-* `vaps` - Manually selected list of Virtual Access Points (VAPs).
+* `vaps` - Manually selected list of Virtual Access Points (VAPs). The structure of `vaps` block is documented below.
 * `override_channel` - Enable to override WTP profile channel settings.
-* `channel` - Selected list of wireless radio channels.
+* `channel` - Selected list of wireless radio channels. The structure of `channel` block is documented below.
 
 The `vaps` block supports:
 
@@ -116,9 +116,9 @@ The `radio_2` block supports:
 * `power_level` - Radio power level as a percentage of the maximum transmit power (0 - 100, default = 100).
 * `override_vaps` - Enable to override WTP profile Virtual Access Point (VAP) settings.
 * `vap_all` - Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable).
-* `vaps` - Manually selected list of Virtual Access Points (VAPs).
+* `vaps` - Manually selected list of Virtual Access Points (VAPs). The structure of `vaps` block is documented below.
 * `override_channel` - Enable to override WTP profile channel settings.
-* `channel` - Selected list of wireless radio channels.
+* `channel` - Selected list of wireless radio channels. The structure of `channel` block is documented below.
 
 The `vaps` block supports:
 

@@ -24,14 +24,14 @@ The following arguments are supported:
 
 * `name` - (Required) LLDP network policy name.
 * `comment` - Comment.
-* `voice` - Voice.
-* `voice_signaling` - Voice signaling.
-* `guest` - Guest.
-* `guest_voice_signaling` - Guest Voice Signaling.
-* `softphone` - Softphone.
-* `video_conferencing` - Video Conferencing.
-* `streaming_video` - Streaming Video.
-* `video_signaling` - Video Signaling.
+* `voice` - Voice. The structure of `voice` block is documented below.
+* `voice_signaling` - Voice signaling. The structure of `voice_signaling` block is documented below.
+* `guest` - Guest. The structure of `guest` block is documented below.
+* `guest_voice_signaling` - Guest Voice Signaling. The structure of `guest_voice_signaling` block is documented below.
+* `softphone` - Softphone. The structure of `softphone` block is documented below.
+* `video_conferencing` - Video Conferencing. The structure of `video_conferencing` block is documented below.
+* `streaming_video` - Streaming Video. The structure of `streaming_video` block is documented below.
+* `video_signaling` - Video Signaling. The structure of `video_signaling` block is documented below.
 
 The `voice` block supports:
 

@@ -82,9 +82,9 @@ The following arguments are supported:
 * `description` - Description.
 * `vdom` - VDOM
 * `login_password` - FortiExtender login password.
-* `controller_report` - FortiExtender controller report configuration.
-* `modem1` - Configuration options for modem 1.
-* `modem2` - Configuration options for modem 2.
+* `controller_report` - FortiExtender controller report configuration. The structure of `controller_report` block is documented below.
+* `modem1` - Configuration options for modem 1. The structure of `modem1` block is documented below.
+* `modem2` - Configuration options for modem 2. The structure of `modem2` block is documented below.
 
 The `controller_report` block supports:
 
@@ -105,7 +105,7 @@ The `modem1` block supports:
 * `sim1_pin_code` - SIM #1 PIN password.
 * `sim2_pin_code` - SIM #2 PIN password.
 * `preferred_carrier` - Preferred carrier.
-* `auto_switch` - FortiExtender auto switch configuration.
+* `auto_switch` - FortiExtender auto switch configuration. The structure of `auto_switch` block is documented below.
 
 The `auto_switch` block supports:
 
@@ -131,7 +131,7 @@ The `modem2` block supports:
 * `sim1_pin_code` - SIM #1 PIN password.
 * `sim2_pin_code` - SIM #2 PIN password.
 * `preferred_carrier` - Preferred carrier.
-* `auto_switch` - FortiExtender auto switch configuration.
+* `auto_switch` - FortiExtender auto switch configuration. The structure of `auto_switch` block is documented below.
 
 The `auto_switch` block supports:
 

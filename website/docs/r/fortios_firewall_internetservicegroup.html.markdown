@@ -47,7 +47,7 @@ The following arguments are supported:
 * `name` - Internet Service group name.
 * `comment` - Comment.
 * `direction` - How this service may be used (source, destination or both).
-* `member` - Internet Service group member.
+* `member` - Internet Service group member. The structure of `member` block is documented below.
 
 The `member` block supports:
 

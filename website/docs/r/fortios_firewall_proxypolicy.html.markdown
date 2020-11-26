@@ -64,16 +64,16 @@ The following arguments are supported:
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `policyid` - Policy ID.
 * `proxy` - (Required) Type of explicit proxy.
-* `srcintf` - Source interface names.
-* `dstintf` - (Required) Destination interface names.
-* `srcaddr` - Source address objects.
-* `poolname` - Name of IP pool object.
-* `dstaddr` - Destination address objects.
+* `srcintf` - Source interface names. The structure of `srcintf` block is documented below.
+* `dstintf` - (Required) Destination interface names. The structure of `dstintf` block is documented below.
+* `srcaddr` - Source address objects. The structure of `srcaddr` block is documented below.
+* `poolname` - Name of IP pool object. The structure of `poolname` block is documented below.
+* `dstaddr` - Destination address objects. The structure of `dstaddr` block is documented below.
 * `internet_service` - Enable/disable use of Internet Services for this policy. If enabled, destination address and service are not used.
 * `internet_service_negate` - When enabled, Internet Services match against any internet service EXCEPT the selected Internet Service.
-* `internet_service_id` - Internet Service ID.
-* `internet_service_custom` - Custom Internet Service name.
-* `service` - Name of service objects.
+* `internet_service_id` - Internet Service ID. The structure of `internet_service_id` block is documented below.
+* `internet_service_custom` - Custom Internet Service name. The structure of `internet_service_custom` block is documented below.
+* `service` - Name of service objects. The structure of `service` block is documented below.
 * `srcaddr_negate` - When enabled, source addresses match against any address EXCEPT the specified source addresses.
 * `dstaddr_negate` - When enabled, destination addresses match against any address EXCEPT the specified destination addresses.
 * `service_negate` - When enabled, services match against any service EXCEPT the specified destination services.
@@ -82,10 +82,10 @@ The following arguments are supported:
 * `schedule` - (Required) Name of schedule object.
 * `logtraffic` - Enable/disable logging traffic through the policy.
 * `session_ttl` - TTL in seconds for sessions accepted by this policy (0 means use the system default session TTL).
-* `srcaddr6` - IPv6 source address objects.
-* `dstaddr6` - IPv6 destination address objects.
-* `groups` - Names of group objects.
-* `users` - Names of user objects.
+* `srcaddr6` - IPv6 source address objects. The structure of `srcaddr6` block is documented below.
+* `dstaddr6` - IPv6 destination address objects. The structure of `dstaddr6` block is documented below.
+* `groups` - Names of group objects. The structure of `groups` block is documented below.
+* `users` - Names of user objects. The structure of `users` block is documented below.
 * `http_tunnel_auth` - Enable/disable HTTP tunnel authentication.
 * `webproxy_forward_server` - Web proxy forward server name.
 * `webproxy_profile` - Name of web proxy profile.

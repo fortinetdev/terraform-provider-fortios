@@ -40,7 +40,7 @@ The following arguments are supported:
 * `header_x_authenticated_groups` - Action to take on the HTTP x-authenticated-groups header in forwarded requests: forwards (pass), adds, or removes the HTTP header.
 * `strip_encoding` - Enable/disable stripping unsupported encoding from the request header.
 * `log_header_change` - Enable/disable logging HTTP header changes.
-* `headers` - Configure HTTP forwarded requests headers.
+* `headers` - Configure HTTP forwarded requests headers. The structure of `headers` block is documented below.
 
 The `headers` block supports:
 

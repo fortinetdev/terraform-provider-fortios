@@ -29,11 +29,11 @@ The following arguments are supported:
 * `ntpsync` - Enable/disable setting the FortiGate system time by synchronizing with an NTP Server.
 * `type` - Use the FortiGuard NTP server or any other available NTP Server.
 * `syncinterval` - NTP synchronization interval (1 - 1440 min).
-* `ntpserver` - Configure the FortiGate to connect to any available third-party NTP server.
+* `ntpserver` - Configure the FortiGate to connect to any available third-party NTP server. The structure of `ntpserver` block is documented below.
 * `source_ip` - Source IP address for communication to the NTP server.
 * `source_ip6` - Source IPv6 address for communication to the NTP server.
 * `server_mode` - Enable/disable FortiGate NTP Server Mode. Your FortiGate becomes an NTP server for other devices on your network. The FortiGate relays NTP requests to its configured NTP server.
-* `interface` - FortiGate interface(s) with NTP server mode enabled. Devices on your network can contact these interfaces for NTP services.
+* `interface` - FortiGate interface(s) with NTP server mode enabled. Devices on your network can contact these interfaces for NTP services. The structure of `interface` block is documented below.
 
 The `ntpserver` block supports:
 

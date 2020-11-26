@@ -29,7 +29,7 @@ The following arguments are supported:
 * `comment` - Optional comments.
 * `one_arm_ips_urlfilter` - Enable/disable DNS resolver for one-arm IPS URL filter operation.
 * `ip_addr_block` - Enable/disable blocking URLs when the hostname appears as an IP address.
-* `entries` - URL filter entries.
+* `entries` - URL filter entries. The structure of `entries` block is documented below.
 
 The `entries` block supports:
 

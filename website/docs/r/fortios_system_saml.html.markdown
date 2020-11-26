@@ -42,7 +42,7 @@ The following arguments are supported:
 * `server_address` - Server address.
 * `tolerance` - Tolerance to the range of time when the assertion is valid (in minutes).
 * `life` - Length of the range of time when the assertion is valid (in minutes).
-* `service_providers` - Authorized service providers.
+* `service_providers` - Authorized service providers. The structure of `service_providers` block is documented below.
 
 The `service_providers` block supports:
 
@@ -56,7 +56,7 @@ The `service_providers` block supports:
 * `idp_entity_id` - IDP entity ID.
 * `idp_single_sign_on_url` - IDP single sign-on URL.
 * `idp_single_logout_url` - IDP single logout URL.
-* `assertion_attributes` - Customized SAML attributes to send along with assertion.
+* `assertion_attributes` - Customized SAML attributes to send along with assertion. The structure of `assertion_attributes` block is documented below.
 
 The `assertion_attributes` block supports:
 

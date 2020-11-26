@@ -29,7 +29,7 @@ The following arguments are supported:
 * `name` - (Required) Name of the DLP sensor.
 * `comment` - Comment.
 * `replacemsg_group` - Replacement message group used by this DLP sensor.
-* `filter` - Set up DLP filters for this sensor.
+* `filter` - Set up DLP filters for this sensor. The structure of `filter` block is documented below.
 * `dlp_log` - Enable/disable DLP logging.
 * `extended_log` - Enable/disable extended logging for data leak prevention.
 * `nac_quar_log` - Enable/disable NAC quarantine logging.
@@ -48,7 +48,7 @@ The `filter` block supports:
 * `filter_by` - Select the type of content to match.
 * `file_size` - Match files this size or larger (0 - 4294967295 kbytes).
 * `company_identifier` - Enter a company identifier watermark to match. Only watermarks that your company has placed on the files are matched.
-* `fp_sensitivity` - Select a DLP file pattern sensitivity to match.
+* `fp_sensitivity` - Select a DLP file pattern sensitivity to match. The structure of `fp_sensitivity` block is documented below.
 * `match_percentage` - Percentage of fingerprints in the fingerprint databases designated with the selected fp-sensitivity to match.
 * `file_type` - Select the number of a DLP file pattern table to match.
 * `regexp` - Enter a regular expression to match (max. 255 characters).

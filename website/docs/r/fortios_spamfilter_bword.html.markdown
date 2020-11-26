@@ -36,7 +36,7 @@ The following arguments are supported:
 * `fosid` - (Required) ID.
 * `name` - (Required) Name of table.
 * `comment` - Optional comments.
-* `entries` - Spam filter banned word.
+* `entries` - Spam filter banned word. The structure of `entries` block is documented below.
 
 The `entries` block supports:
 

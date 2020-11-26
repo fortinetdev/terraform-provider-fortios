@@ -25,7 +25,7 @@ The following arguments are supported:
 * `name` - (Required) Location name.
 * `description` - Description.
 * `country_id` - Two character Country ID code.
-* `ip_range` - Table of IP ranges assigned to country.
+* `ip_range` - Table of IP ranges assigned to country. The structure of `ip_range` block is documented below.
 
 The `ip_range` block supports:
 

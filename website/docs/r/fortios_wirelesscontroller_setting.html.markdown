@@ -19,7 +19,7 @@ The following arguments are supported:
 * `fapc_compatibility` - Enable/disable FAP-C series compatibility.
 * `phishing_ssid_detect` - Enable/disable phishing SSID detection.
 * `fake_ssid_action` - Actions taken for detected fake SSID.
-* `offending_ssid` - Configure offending SSID.
+* `offending_ssid` - Configure offending SSID. The structure of `offending_ssid` block is documented below.
 
 The `offending_ssid` block supports:
 

@@ -42,11 +42,11 @@ The following arguments are supported:
 * `visibility` - Enable/disable the visibility of the object in the GUI.
 * `color` - Integer value to determine the color of the icon in the GUI (range 1 to 32, default = 0, which sets the value to 1).
 * `obj_id` - Object ID for NSX.
-* `list` - IP address list.
-* `tagging` - Config object tagging
+* `list` - IP address list. The structure of `list` block is documented below.
+* `tagging` - Config object tagging The structure of `tagging` block is documented below.
 * `comment` - Comment.
 * `template` - IPv6 address template.
-* `subnet_segment` - IPv6 subnet segments.
+* `subnet_segment` - IPv6 subnet segments. The structure of `subnet_segment` block is documented below.
 * `host_type` - Host type.
 * `host` - Host Address.
 
@@ -58,7 +58,7 @@ The `tagging` block supports:
 
 * `name` - Tagging entry name.
 * `category` - Tag category.
-* `tags` - Tags.
+* `tags` - Tags. The structure of `tags` block is documented below.
 
 The `tags` block supports:
 

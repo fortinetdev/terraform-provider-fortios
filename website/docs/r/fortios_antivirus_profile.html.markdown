@@ -42,17 +42,17 @@ The following arguments are supported:
 * `analytics_bl_filetype` - Only submit files matching this DLP file-pattern to FortiSandbox.
 * `analytics_db` - Enable/disable using the FortiSandbox signature database to supplement the AV signature databases.
 * `mobile_malware_db` - Enable/disable using the mobile malware signature database.
-* `http` - Configure HTTP AntiVirus options.
-* `ftp` - Configure FTP AntiVirus options.
-* `imap` - Configure IMAP AntiVirus options.
-* `pop3` - Configure POP3 AntiVirus options.
-* `smtp` - Configure SMTP AntiVirus options.
-* `mapi` - Configure MAPI AntiVirus options.
-* `nntp` - Configure NNTP AntiVirus options.
-* `smb` - Configure SMB AntiVirus options.
-* `nac_quar` - Configure AntiVirus quarantine settings.
-* `outbreak_prevention` - Configure Virus Outbreak Prevention settings.
-* `content_disarm` - AV Content Disarm and Reconstruction settings.
+* `http` - Configure HTTP AntiVirus options. The structure of `http` block is documented below.
+* `ftp` - Configure FTP AntiVirus options. The structure of `ftp` block is documented below.
+* `imap` - Configure IMAP AntiVirus options. The structure of `imap` block is documented below.
+* `pop3` - Configure POP3 AntiVirus options. The structure of `pop3` block is documented below.
+* `smtp` - Configure SMTP AntiVirus options. The structure of `smtp` block is documented below.
+* `mapi` - Configure MAPI AntiVirus options. The structure of `mapi` block is documented below.
+* `nntp` - Configure NNTP AntiVirus options. The structure of `nntp` block is documented below.
+* `smb` - Configure SMB AntiVirus options. The structure of `smb` block is documented below.
+* `nac_quar` - Configure AntiVirus quarantine settings. The structure of `nac_quar` block is documented below.
+* `outbreak_prevention` - Configure Virus Outbreak Prevention settings. The structure of `outbreak_prevention` block is documented below.
+* `content_disarm` - AV Content Disarm and Reconstruction settings. The structure of `content_disarm` block is documented below.
 * `av_virus_log` - Enable/disable AntiVirus logging.
 * `av_block_log` - Enable/disable logging for AntiVirus file blocking.
 * `extended_log` - Enable/disable extended logging for antivirus.

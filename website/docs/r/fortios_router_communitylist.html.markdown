@@ -30,7 +30,7 @@ The following arguments are supported:
 
 * `name` - (Required) Community list name.
 * `type` - (Required) Community list type (standard or expanded).
-* `rule` - Community list rule.
+* `rule` - Community list rule. The structure of `rule` block is documented below.
 
 The `rule` block supports:
 

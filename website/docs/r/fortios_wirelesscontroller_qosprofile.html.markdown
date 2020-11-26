@@ -27,10 +27,10 @@ The following arguments are supported:
 * `bandwidth_admission_control` - Enable/disable WMM bandwidth admission control.
 * `bandwidth_capacity` - Maximum bandwidth capacity allowed (1 - 600000 Kbps, default = 2000).
 * `dscp_wmm_mapping` - Enable/disable Differentiated Services Code Point (DSCP) mapping.
-* `dscp_wmm_vo` - DSCP mapping for voice access (default = 48 56).
-* `dscp_wmm_vi` - DSCP mapping for video access (default = 32 40).
-* `dscp_wmm_be` - DSCP mapping for best effort access (default = 0 24).
-* `dscp_wmm_bk` - DSCP mapping for background access (default = 8 16).
+* `dscp_wmm_vo` - DSCP mapping for voice access (default = 48 56). The structure of `dscp_wmm_vo` block is documented below.
+* `dscp_wmm_vi` - DSCP mapping for video access (default = 32 40). The structure of `dscp_wmm_vi` block is documented below.
+* `dscp_wmm_be` - DSCP mapping for best effort access (default = 0 24). The structure of `dscp_wmm_be` block is documented below.
+* `dscp_wmm_bk` - DSCP mapping for background access (default = 8 16). The structure of `dscp_wmm_bk` block is documented below.
 
 The `dscp_wmm_vo` block supports:
 

@@ -38,7 +38,7 @@ The following arguments are supported:
 * `roaming_consortium` - Roaming consortium list name.
 * `nai_realm` - NAI realm list name.
 * `oper_friendly_name` - Operator friendly name.
-* `osu_provider` - Manually selected list of OSU provider(s).
+* `osu_provider` - Manually selected list of OSU provider(s). The structure of `osu_provider` block is documented below.
 * `wan_metrics` - WAN metric name.
 * `network_auth` - Network authentication name.
 * `n3gpp_plmn` - 3GPP PLMN name.

@@ -25,7 +25,7 @@ The following arguments are supported:
 
 * `name` - Name.
 * `type` - Destination type.
-* `destination` - Destinations.
+* `destination` - Destinations. The structure of `destination` block is documented below.
 * `ha_group_id` - Cluster group ID set for this destination (default = 0).
 
 The `destination` block supports:

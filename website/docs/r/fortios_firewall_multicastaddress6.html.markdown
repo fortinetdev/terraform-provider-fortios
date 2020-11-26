@@ -29,13 +29,13 @@ The following arguments are supported:
 * `comment` - Comment.
 * `visibility` - Enable/disable visibility of the IPv6 multicast address on the GUI.
 * `color` - Color of icon on the GUI.
-* `tagging` - Config object tagging.
+* `tagging` - Config object tagging. The structure of `tagging` block is documented below.
 
 The `tagging` block supports:
 
 * `name` - Tagging entry name.
 * `category` - Tag category.
-* `tags` - Tags.
+* `tags` - Tags. The structure of `tags` block is documented below.
 
 The `tags` block supports:
 

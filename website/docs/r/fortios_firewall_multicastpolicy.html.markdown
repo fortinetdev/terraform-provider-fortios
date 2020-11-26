@@ -45,8 +45,8 @@ The following arguments are supported:
 * `logtraffic` - Enable/disable logging traffic accepted by this policy.
 * `srcintf` - (Required) Source interface name.
 * `dstintf` - (Required) Destination interface name.
-* `srcaddr` - (Required) Source address objects.
-* `dstaddr` - (Required) Destination address objects.
+* `srcaddr` - (Required) Source address objects. The structure of `srcaddr` block is documented below.
+* `dstaddr` - (Required) Destination address objects. The structure of `dstaddr` block is documented below.
 * `snat` - Enable/disable substitution of the outgoing interface IP address for the original source IP address (called source NAT or SNAT).
 * `snat_ip` - IPv4 address to be used as the source address for NATed traffic.
 * `dnat` - IPv4 DNAT address used for multicast destination addresses.

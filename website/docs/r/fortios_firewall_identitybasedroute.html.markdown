@@ -24,14 +24,14 @@ The following arguments are supported:
 
 * `name` - (Required) Name.
 * `comments` - Comments.
-* `rule` - Rule.
+* `rule` - Rule. The structure of `rule` block is documented below.
 
 The `rule` block supports:
 
 * `id` - Rule ID.
 * `gateway` - IPv4 address of the gateway (Format: xxx.xxx.xxx.xxx , Default: 0.0.0.0).
 * `device` - Outgoing interface for the rule.
-* `groups` - Select one or more group(s) from available groups that are allowed to use this route. Separate group names with a space.
+* `groups` - Select one or more group(s) from available groups that are allowed to use this route. Separate group names with a space. The structure of `groups` block is documented below.
 
 The `groups` block supports:
 

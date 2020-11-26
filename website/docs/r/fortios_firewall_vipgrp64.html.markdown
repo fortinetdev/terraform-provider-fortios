@@ -45,7 +45,7 @@ The following arguments are supported:
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `color` - Integer value to determine the color of the icon in the GUI (range 1 to 32, default = 0, which sets the value to 1).
 * `comments` - Comment.
-* `member` - (Required) Member VIP objects of the group (Separate multiple objects with a space).
+* `member` - (Required) Member VIP objects of the group (Separate multiple objects with a space). The structure of `member` block is documented below.
 
 The `member` block supports:
 

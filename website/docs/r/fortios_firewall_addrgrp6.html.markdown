@@ -45,8 +45,8 @@ The following arguments are supported:
 * `visibility` - Enable/disable address group6 visibility in the GUI.
 * `color` - Integer value to determine the color of the icon in the GUI (1 - 32, default = 0, which sets the value to 1).
 * `comment` - Comment.
-* `member` - (Required) Address objects contained within the group.
-* `tagging` - Config object tagging.
+* `member` - (Required) Address objects contained within the group. The structure of `member` block is documented below.
+* `tagging` - Config object tagging. The structure of `tagging` block is documented below.
 
 The `member` block supports:
 
@@ -56,7 +56,7 @@ The `tagging` block supports:
 
 * `name` - Tagging entry name.
 * `category` - Tag category.
-* `tags` - Tags.
+* `tags` - Tags. The structure of `tags` block is documented below.
 
 The `tags` block supports:
 

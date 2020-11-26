@@ -25,7 +25,7 @@ The following arguments are supported:
 * `behavior` - Application behavior.
 * `vendor` - Application vendor.
 * `parameter` - Application parameter name.
-* `metadata` - Meta data.
+* `metadata` - Meta data. The structure of `metadata` block is documented below.
 
 The `metadata` block supports:
 

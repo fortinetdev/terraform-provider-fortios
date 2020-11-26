@@ -23,13 +23,13 @@ The following arguments are supported:
 
 * `quarantine` - Enable/disable quarantine.
 * `traffic_policy` - Traffic policy for quarantined MACs.
-* `targets` - Quarantine entry to hold multiple MACs.
+* `targets` - Quarantine entry to hold multiple MACs. The structure of `targets` block is documented below.
 
 The `targets` block supports:
 
 * `entry` - Quarantine entry name.
 * `description` - Description for the quarantine entry.
-* `macs` - Quarantine MACs.
+* `macs` - Quarantine MACs. The structure of `macs` block is documented below.
 
 The `macs` block supports:
 

@@ -100,7 +100,7 @@ The following arguments are supported:
 * `local_gw` - Local VPN gateway.
 * `remotegw_ddns` - Domain name of remote gateway (eg. name.DDNS.com).
 * `keylife` - Time to wait in seconds before phase 1 encryption key expires.
-* `certificate` - Names of up to 4 signed personal certificates.
+* `certificate` - Names of up to 4 signed personal certificates. The structure of `certificate` block is documented below.
 * `authmethod` - Authentication method.
 * `authmethod_remote` - Authentication method (remote side).
 * `mode` - ID protection mode used to establish a secure channel.
@@ -121,7 +121,7 @@ The following arguments are supported:
 * `ipv4_dns_server3` - IPv4 DNS server 3.
 * `ipv4_wins_server1` - WINS server 1.
 * `ipv4_wins_server2` - WINS server 2.
-* `ipv4_exclude_range` - Configuration Method IPv4 exclude ranges.
+* `ipv4_exclude_range` - Configuration Method IPv4 exclude ranges. The structure of `ipv4_exclude_range` block is documented below.
 * `ipv4_split_include` - IPv4 split-include subnets.
 * `split_include_service` - Split-include services.
 * `ipv4_name` - IPv4 address name.
@@ -131,7 +131,7 @@ The following arguments are supported:
 * `ipv6_dns_server1` - IPv6 DNS server 1.
 * `ipv6_dns_server2` - IPv6 DNS server 2.
 * `ipv6_dns_server3` - IPv6 DNS server 3.
-* `ipv6_exclude_range` - Configuration method IPv6 exclude ranges.
+* `ipv6_exclude_range` - Configuration method IPv6 exclude ranges. The structure of `ipv6_exclude_range` block is documented below.
 * `ipv6_split_include` - IPv6 split-include subnets.
 * `ipv6_name` - IPv6 address name.
 * `unity_support` - Enable/disable support for Cisco UNITY Configuration Method extensions.
@@ -143,7 +143,7 @@ The following arguments are supported:
 * `save_password` - Enable/disable saving XAuth username and password on VPN clients.
 * `client_auto_negotiate` - Enable/disable allowing the VPN client to bring up the tunnel when there is no traffic.
 * `client_keep_alive` - Enable/disable allowing the VPN client to keep the tunnel up when there is no traffic.
-* `backup_gateway` - Instruct unity clients about the backup gateway address(es).
+* `backup_gateway` - Instruct unity clients about the backup gateway address(es). The structure of `backup_gateway` block is documented below.
 * `proposal` - (Required) Phase1 proposal.
 * `add_route` - Enable/disable control addition of a route to peer destination selector.
 * `add_gw_route` - Enable/disable automatically add a route to the remote gateway.

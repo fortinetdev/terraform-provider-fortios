@@ -43,21 +43,21 @@ The following arguments are supported:
 * `p2p_black_list` - P2P applications to be black listed.
 * `deep_app_inspection` - Enable/disable deep application inspection.
 * `options` - Basic application protocol signatures allowed by default.
-* `entries` - Application list entries.
+* `entries` - Application list entries. The structure of `entries` block is documented below.
 
 The `entries` block supports:
 
 * `id` - Entry ID.
-* `risk` - Risk, or impact, of allowing traffic from this application to occur (1 - 5; Low, Elevated, Medium, High, and Critical).
-* `category` - Category ID list.
-* `sub_category` - Application Sub-category ID list.
-* `application` - ID of allowed applications.
+* `risk` - Risk, or impact, of allowing traffic from this application to occur (1 - 5; Low, Elevated, Medium, High, and Critical). The structure of `risk` block is documented below.
+* `category` - Category ID list. The structure of `category` block is documented below.
+* `sub_category` - Application Sub-category ID list. The structure of `sub_category` block is documented below.
+* `application` - ID of allowed applications. The structure of `application` block is documented below.
 * `protocols` - Application protocol filter.
 * `vendor` - Application vendor filter.
 * `technology` - Application technology filter.
 * `behavior` - Application behavior filter.
 * `popularity` - Application popularity filter (1 - 5, from least to most popular).
-* `parameters` - Application parameters.
+* `parameters` - Application parameters. The structure of `parameters` block is documented below.
 * `action` - Pass or block traffic, or reset connection for traffic from this application.
 * `log` - Enable/disable logging for this application list.
 * `log_packet` - Enable/disable packet logging.
