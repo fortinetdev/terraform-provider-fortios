@@ -53,7 +53,7 @@ $ unset "FORTIOS_IMPORT_TABLE"
 
 
 ## Note
-Due to current FortiAPI limitations, the feature can only be correctly supported when FortiOS Version >= 6.2.4, for FortiOS Version < 6.2.4, please use the following resource configuration as an alternative:
+Due to current FortiOS API limitations, the feature can only be correctly supported when FortiOS Version >= 6.2.4, for FortiOS Version < 6.2.4, please use the following resource configuration as an alternative.
 
 ### Example
 ```
@@ -76,4 +76,5 @@ EOF
   start       = "auto"
 }
 ```
+
 

@@ -9,7 +9,7 @@ description: |-
 # fortios_system_ha
 Configure HA.
 
-Due to current FortiAPI limitations, the feature is temporarily unavailable. Please use the following resource configuration as an alternative::
+Due to current FortiOS API limitations, the feature is temporarily unavailable. Please use the following resource configuration as an alternative.
 
 ## Example1
 
@@ -79,4 +79,6 @@ EOF
   start       = "auto"
 }
 ```
+
 -> FortiOS has a limit of 255 characters for system autoscript->script, if the configuration content exceeds 255 characters, it can be implemented in multiple stages. In the first stage, configure the necessary parameters. In the subsequent stages, configure other optional parameters. Whenever possible, delete spaces and tabs at the beginning of each line. The goal is to try to reach the 255 limit. The dependencies between several stages need to be ensured.
+

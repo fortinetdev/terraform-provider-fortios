@@ -9,7 +9,7 @@ description: |-
 # fortios_certificate_local
 Local keys and certificates.
 
-Due to current FortiAPI limitations, the feature is temporarily unavailable. Please use the following resource configuration as an alternative.
+Due to current FortiOS API limitations, the feature is temporarily unavailable. Please use the following resource configuration as an alternative.
 
 ## Example
 
@@ -144,3 +144,4 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 **Step5: Check the results**
 
 ![111](https://user-images.githubusercontent.com/49291382/99555680-86cc5400-29fb-11eb-8ae8-2c437f13595e.png)
+

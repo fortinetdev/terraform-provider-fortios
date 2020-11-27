@@ -1,5 +1,11 @@
 ## 1.7.0 (Unreleased)
 
+## 1.6.12 (Nov 27, 2020)
+
+IMPROVEMENTS:
+
+* Improve/fix documentation for fortios_router_accesslist, fortios_certificate_local, fortios_system_fortimanager and fortios_system_ha
+
 ## 1.6.11 (Nov 26, 2020)
 
 IMPROVEMENTS:
