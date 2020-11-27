@@ -9,6 +9,7 @@ description: |-
 # fortios_router_accesslist
 Configure access lists.
 
+
 ## Example Usage
 
 ```hcl
@@ -49,3 +50,30 @@ $ export "FORTIOS_IMPORT_TABLE"="true"
 $ terraform import fortios_router_accesslist.labelname {{name}}
 $ unset "FORTIOS_IMPORT_TABLE"
 ```
+
+
+## Note
+Due to current FortiAPI limitations, the feature can only be correctly supported when FortiOS Version >= 6.2.4, for FortiOS Version < 6.2.4, please use the following resource configuration as an alternative:
+
+### Example
+```
+resource "fortios_system_autoscript" "trname1" {
+  interval    = 1
+  name        = "1"
+  output_size = 10
+  repeat      = 1
+  script      = <<EOF
+config router access-list
+edit "static-redistribution"
+config rule
+edit 10
+set prefix 10.0.0.0 255.255.255.0
+set action permit
+set exact-match enable
+end
+end
+EOF
+  start       = "auto"
+}
+```
+
