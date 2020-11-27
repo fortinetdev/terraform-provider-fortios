@@ -14,6 +14,9 @@ Due to the limitations of the current FortiOS API, the feature is temporarily un
 ## Example
 
 **Step1: Prepare certificate**
+
+The following key is a randomly generated key for testing. In actual use, please replace it with your own key.
+
 ```
 # cat xxx.key
 -----BEGIN RSA PRIVATE KEY-----
