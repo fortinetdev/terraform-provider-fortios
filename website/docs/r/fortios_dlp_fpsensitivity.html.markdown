@@ -21,7 +21,7 @@ resource "fortios_dlp_fpsensitivity" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) DLP Sensitivity Levels.
+* `name` - DLP Sensitivity Levels.
 
 
 ## Attribute Reference
