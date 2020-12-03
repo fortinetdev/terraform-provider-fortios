@@ -2445,7 +2445,7 @@ func getObjectVpnSslSettings(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("idle_timeout"); ok {
+	if v, ok := d.GetOkExists("idle_timeout"); ok {
 		t, err := expandVpnSslSettingsIdleTimeout(d, v, "idle_timeout")
 		if err != nil {
 			return &obj, err
@@ -2454,7 +2454,7 @@ func getObjectVpnSslSettings(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("auth_timeout"); ok {
+	if v, ok := d.GetOkExists("auth_timeout"); ok {
 		t, err := expandVpnSslSettingsAuthTimeout(d, v, "auth_timeout")
 		if err != nil {
 			return &obj, err
@@ -2463,7 +2463,7 @@ func getObjectVpnSslSettings(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("login_attempt_limit"); ok {
+	if v, ok := d.GetOkExists("login_attempt_limit"); ok {
 		t, err := expandVpnSslSettingsLoginAttemptLimit(d, v, "login_attempt_limit")
 		if err != nil {
 			return &obj, err
@@ -2472,7 +2472,7 @@ func getObjectVpnSslSettings(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("login_block_time"); ok {
+	if v, ok := d.GetOkExists("login_block_time"); ok {
 		t, err := expandVpnSslSettingsLoginBlockTime(d, v, "login_block_time")
 		if err != nil {
 			return &obj, err
@@ -2634,7 +2634,7 @@ func getObjectVpnSslSettings(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("deflate_compression_level"); ok {
+	if v, ok := d.GetOkExists("deflate_compression_level"); ok {
 		t, err := expandVpnSslSettingsDeflateCompressionLevel(d, v, "deflate_compression_level")
 		if err != nil {
 			return &obj, err
@@ -2769,7 +2769,7 @@ func getObjectVpnSslSettings(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("http_request_header_timeout"); ok {
+	if v, ok := d.GetOkExists("http_request_header_timeout"); ok {
 		t, err := expandVpnSslSettingsHttpRequestHeaderTimeout(d, v, "http_request_header_timeout")
 		if err != nil {
 			return &obj, err
@@ -2778,7 +2778,7 @@ func getObjectVpnSslSettings(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("http_request_body_timeout"); ok {
+	if v, ok := d.GetOkExists("http_request_body_timeout"); ok {
 		t, err := expandVpnSslSettingsHttpRequestBodyTimeout(d, v, "http_request_body_timeout")
 		if err != nil {
 			return &obj, err
