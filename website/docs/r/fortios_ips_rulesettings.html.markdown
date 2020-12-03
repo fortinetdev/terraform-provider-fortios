@@ -13,7 +13,7 @@ Configure IPS rule setting.
 
 The following arguments are supported:
 
-* `fosid` - (Required) Rule ID.
+* `fosid` - Rule ID.
 
 
 ## Attribute Reference
