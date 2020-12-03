@@ -148,7 +148,7 @@ resource "fortios_vpnipsec_phase2interface" "trname2" {
 
 The following arguments are supported:
 
-* `name` - IPsec tunnel name.
+* `name` - (Required) IPsec tunnel name.
 * `phase1name` - (Required) Phase 1 determines the options required for phase 2.
 * `dhcp_ipsec` - Enable/disable DHCP-IPsec.
 * `proposal` - (Required) Phase2 proposal.

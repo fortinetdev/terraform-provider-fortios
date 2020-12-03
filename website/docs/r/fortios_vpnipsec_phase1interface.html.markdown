@@ -117,7 +117,7 @@ resource "fortios_vpnipsec_phase1interface" "trname2" {
 
 The following arguments are supported:
 
-* `name` - IPsec remote gateway name.
+* `name` - (Required) IPsec remote gateway name.
 * `type` - Remote gateway type.
 * `interface` - (Required) Local physical, aggregate, or VLAN outgoing interface.
 * `ip_version` - IP version to use for VPN interface.
