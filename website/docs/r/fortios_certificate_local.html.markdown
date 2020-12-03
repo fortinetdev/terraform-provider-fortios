@@ -12,10 +12,11 @@ Local keys and certificates.
 Due to the limitations of the current FortiOS API, the feature is temporarily unavailable. Please use the following resource configuration as an alternative.
 
 ## Example
+### Import
 
 **Step1: Prepare certificate**
 
-The following key is a randomly generated key for testing. In actual use, please replace it with your own key.
+The following key is a randomly generated example key for testing. In actual use, please replace it with your own key.
 
 ```
 # cat xxx.key
@@ -147,4 +148,20 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 **Step5: Check the results**
 
 ![111](https://user-images.githubusercontent.com/49291382/99555680-86cc5400-29fb-11eb-8ae8-2c437f13595e.png)
+
+### Delete
+```
+resource "fortios_system_autoscript" "trname1" {
+  interval    = 1
+  name        = "delcerttest"
+  output_size = 10
+  repeat      = 1
+  script      = <<EOF
+config vpn certificate local
+delete testcer
+end
+EOF
+  start       = "auto"
+}
+```
 
