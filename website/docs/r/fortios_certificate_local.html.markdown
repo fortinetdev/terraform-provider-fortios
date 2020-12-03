@@ -12,7 +12,7 @@ Local keys and certificates.
 Due to the limitations of the current FortiOS API, the feature is temporarily unavailable. Please use the following resource configuration as an alternative.
 
 ## Example
-### Import
+### Import Certificate:
 
 **Step1: Prepare certificate**
 
@@ -149,7 +149,7 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 
 ![111](https://user-images.githubusercontent.com/49291382/99555680-86cc5400-29fb-11eb-8ae8-2c437f13595e.png)
 
-### Delete
+### Delete Certificate:
 ```
 resource "fortios_system_autoscript" "trname1" {
   interval    = 1

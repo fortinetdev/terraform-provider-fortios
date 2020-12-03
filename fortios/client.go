@@ -161,6 +161,8 @@ func createFortiOSClient(fClient *FortiClient, c *Config) error {
 	return nil
 }
 
+// Will Support FortiGate REST API access using PKI group
+
 func createFortiManagerClient(fClient *FortiClient, c *Config) error {
 	if c.FMG_Hostname == "" {
 		c.FMG_Hostname = os.Getenv("FORTIOS_FMG_HOSTNAME")
