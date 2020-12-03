@@ -13,7 +13,7 @@ Configure application rule settings.
 
 The following arguments are supported:
 
-* `fosid` - (Required) Rule ID.
+* `fosid` - Rule ID.
 
 
 ## Attribute Reference
