@@ -24,6 +24,7 @@ resource "fortios_system_dnsdatabase" "trname" {
   ttl           = 86400
   type          = "master"
   view          = "shadow"
+  forwarder     = "\"9.9.9.9\" \"3.3.3.3\" "
   dns_entry {
     type     = "MX"
     ttl      = 3
