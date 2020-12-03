@@ -36,7 +36,7 @@ resource "fortios_firewall_sniffer" "trname" {
 
 The following arguments are supported:
 
-* `fosid` - Sniffer ID.
+* `fosid` - (Required) Sniffer ID.
 * `status` - Enable/disable the active status of the sniffer.
 * `logtraffic` - Either log all sessions, only sessions that have a security profile applied, or disable all logging for this policy.
 * `ipv6` - Enable/disable sniffing IPv6 packets.

@@ -32,6 +32,7 @@ func resourceSystemAffinityInterrupt() *schema.Resource {
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				Required: true,
+				ForceNew: true,
 			},
 			"interrupt": &schema.Schema{
 				Type:         schema.TypeString,

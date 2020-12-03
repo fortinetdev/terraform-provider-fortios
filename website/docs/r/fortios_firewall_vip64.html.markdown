@@ -32,7 +32,7 @@ resource "fortios_firewall_vip64" "trname" {
 
 The following arguments are supported:
 
-* `name` - VIP64 name.
+* `name` - (Required) VIP64 name.
 * `fosid` - Custom defined id.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `comment` - Comment.

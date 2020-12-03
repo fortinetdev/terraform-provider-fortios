@@ -26,7 +26,7 @@ resource "fortios_system_clustersync" "trname" {
 
 The following arguments are supported:
 
-* `sync_id` - Sync ID.
+* `sync_id` - (Required) Sync ID.
 * `peervd` - VDOM that contains the session synchronization link interface on the peer unit. Usually both peers would have the same peervd.
 * `peerip` - IP address of the interface on the peer unit that is used for the session synchronization link.
 * `syncvd` - Sessions from these VDOMs are synchronized using this session synchronization configuration. The structure of `syncvd` block is documented below.

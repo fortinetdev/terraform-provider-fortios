@@ -13,7 +13,7 @@ Configure access point status (rogue | accepted | suppressed).
 
 The following arguments are supported:
 
-* `fosid` - AP ID.
+* `fosid` - (Required) AP ID.
 * `bssid` - Access Point's (AP's) BSSID.
 * `ssid` - Access Point's (AP's) SSID.
 * `status` - Access Point's (AP's) status: rogue, accepted, or supressed.

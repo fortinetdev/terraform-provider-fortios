@@ -30,7 +30,7 @@ resource "fortios_webfilter_override" "trname" {
 
 The following arguments are supported:
 
-* `fosid` - Override rule ID.
+* `fosid` - (Required) Override rule ID.
 * `status` - Enable/disable override rule.
 * `scope` - Override either the specific user, user group, IPv4 address, or IPv6 address.
 * `ip` - IPv4 address which the override applies.

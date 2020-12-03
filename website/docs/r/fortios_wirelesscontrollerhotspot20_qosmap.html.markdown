@@ -13,7 +13,7 @@ Configure QoS map set.
 
 The following arguments are supported:
 
-* `name` - QOS-MAP name.
+* `name` - (Required) QOS-MAP name.
 * `dscp_except` - Differentiated Services Code Point (DSCP) exceptions. The structure of `dscp_except` block is documented below.
 * `dscp_range` - Differentiated Services Code Point (DSCP) ranges. The structure of `dscp_range` block is documented below.
 

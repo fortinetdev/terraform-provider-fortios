@@ -13,7 +13,7 @@ Configure security exemption list.
 
 The following arguments are supported:
 
-* `name` - Name of the exempt list.
+* `name` - (Required) Name of the exempt list.
 * `description` - Description.
 * `rule` - Configure rules for exempting users from captive portal authentication. The structure of `rule` block is documented below.
 

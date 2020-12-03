@@ -36,7 +36,7 @@ resource "fortios_switchcontrollersecuritypolicy_8021X" "trname" {
 
 The following arguments are supported:
 
-* `name` - Policy name.
+* `name` - (Required) Policy name.
 * `security_mode` - Port or MAC based 802.1X security mode.
 * `user_group` - Name of user-group to assign to this MAC Authentication Bypass (MAB) policy. The structure of `user_group` block is documented below.
 * `mac_auth_bypass` - Enable/disable MAB for this policy.

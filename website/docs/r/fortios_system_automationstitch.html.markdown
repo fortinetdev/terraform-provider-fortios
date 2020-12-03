@@ -13,7 +13,7 @@ Automation stitches.
 
 The following arguments are supported:
 
-* `name` - Name.
+* `name` - (Required) Name.
 * `status` - (Required) Enable/disable this stitch.
 * `trigger` - (Required) Trigger name.
 * `action` - Action names. The structure of `action` block is documented below.

@@ -33,6 +33,7 @@ func resourceUserAdgrp() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 511),
 				Required:     true,
+				ForceNew:     true,
 			},
 			"server_name": &schema.Schema{
 				Type:         schema.TypeString,

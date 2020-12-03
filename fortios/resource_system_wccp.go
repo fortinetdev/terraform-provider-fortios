@@ -32,8 +32,8 @@ func resourceSystemWccp() *schema.Resource {
 			"service_id": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 3),
-				Optional:     true,
-				Computed:     true,
+				Required:     true,
+				ForceNew:     true,
 			},
 			"router_id": &schema.Schema{
 				Type:     schema.TypeString,

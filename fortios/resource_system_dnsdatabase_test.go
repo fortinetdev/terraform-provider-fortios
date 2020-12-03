@@ -38,6 +38,7 @@ func TestAccFortiOSSystemDnsDatabase_basic(t *testing.T) {
 					resource.TestCheckResourceAttr("fortios_system_dnsdatabase.trname", "ttl", "86400"),
 					resource.TestCheckResourceAttr("fortios_system_dnsdatabase.trname", "type", "master"),
 					resource.TestCheckResourceAttr("fortios_system_dnsdatabase.trname", "view", "shadow"),
+					resource.TestCheckResourceAttr("fortios_system_dnsdatabase.trname", "forwarder", "\"9.9.9.9\" \"3.3.3.3\" "),
 					resource.TestCheckResourceAttr("fortios_system_dnsdatabase.trname", "dns_entry.0.type", "MX"),
 					resource.TestCheckResourceAttr("fortios_system_dnsdatabase.trname", "dns_entry.0.ttl", "3"),
 					resource.TestCheckResourceAttr("fortios_system_dnsdatabase.trname", "dns_entry.0.hostname", "sghsgh.com"),
@@ -112,6 +113,7 @@ resource "fortios_system_dnsdatabase" "trname" {
   ttl           = 86400
   type          = "master"
   view          = "shadow"
+  forwarder     = "\"9.9.9.9\" \"3.3.3.3\" "
   dns_entry {
     type     = "MX"
     ttl      = 3

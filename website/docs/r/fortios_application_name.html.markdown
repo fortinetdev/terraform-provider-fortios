@@ -13,7 +13,7 @@ Configure application signatures.
 
 The following arguments are supported:
 
-* `name` - Application name.
+* `name` - (Required) Application name.
 * `fosid` - Application ID.
 * `category` - (Required) Application category ID.
 * `sub_category` - Application sub-category ID.

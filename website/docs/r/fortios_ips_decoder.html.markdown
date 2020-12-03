@@ -13,7 +13,7 @@ Configure IPS decoder.
 
 The following arguments are supported:
 
-* `name` - Decoder name.
+* `name` - (Required) Decoder name.
 * `parameter` - IPS group parameters. The structure of `parameter` block is documented below.
 
 The `parameter` block supports:

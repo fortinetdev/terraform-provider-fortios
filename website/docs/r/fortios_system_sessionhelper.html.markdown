@@ -24,7 +24,7 @@ resource "fortios_system_sessionhelper" "trname" {
 
 The following arguments are supported:
 
-* `fosid` - Session helper ID.
+* `fosid` - (Required) Session helper ID.
 * `name` - (Required) Helper name.
 * `protocol` - (Required) Protocol number.
 * `port` - (Required) Protocol port.

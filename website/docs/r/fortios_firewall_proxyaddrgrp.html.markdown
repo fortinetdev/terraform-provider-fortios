@@ -13,7 +13,7 @@ Web proxy address group configuration.
 
 The following arguments are supported:
 
-* `name` - Address group name.
+* `name` - (Required) Address group name.
 * `type` - Source or destination address group type.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `member` - (Required) Members of address group. The structure of `member` block is documented below.

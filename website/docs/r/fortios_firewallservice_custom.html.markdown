@@ -36,7 +36,7 @@ resource "fortios_firewallservice_custom" "trname" {
 
 The following arguments are supported:
 
-* `name` - Custom service name.
+* `name` - (Required) Custom service name.
 * `proxy` - Enable/disable web proxy service.
 * `category` - Service category.
 * `protocol` - Protocol type based on IANA numbers.

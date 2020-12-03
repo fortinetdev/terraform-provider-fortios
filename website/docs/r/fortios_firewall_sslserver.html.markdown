@@ -34,7 +34,7 @@ resource "fortios_firewall_sslserver" "trname" {
 
 The following arguments are supported:
 
-* `name` - Server name.
+* `name` - (Required) Server name.
 * `ip` - (Required) IPv4 address of the SSL server.
 * `port` - (Required) Server service port (1 - 65535, default = 443).
 * `ssl_mode` - SSL/TLS mode for encryption and decryption of traffic.

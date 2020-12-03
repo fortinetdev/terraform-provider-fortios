@@ -23,7 +23,7 @@ resource "fortios_system_replacemsggroup" "trname" {
 
 The following arguments are supported:
 
-* `name` - Group name.
+* `name` - (Required) Group name.
 * `comment` - Comment.
 * `group_type` - (Required) Group type.
 * `mail` - Replacement message table entries. The structure of `mail` block is documented below.

@@ -32,8 +32,8 @@ func resourceEndpointControlRegisteredForticlient() *schema.Resource {
 			"uid": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 32),
-				Optional:     true,
-				Computed:     true,
+				Required:     true,
+				ForceNew:     true,
 			},
 			"vdom": &schema.Schema{
 				Type:         schema.TypeString,

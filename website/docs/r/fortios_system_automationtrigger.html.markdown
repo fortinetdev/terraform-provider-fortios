@@ -28,7 +28,7 @@ resource "fortios_system_automationtrigger" "trname" {
 
 The following arguments are supported:
 
-* `name` - Name.
+* `name` - (Required) Name.
 * `trigger_type` - Trigger type.
 * `event_type` - Event type.
 * `license_type` - License type.

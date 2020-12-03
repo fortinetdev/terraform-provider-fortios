@@ -31,8 +31,8 @@ func resourceEndpointControlClient() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
-				Optional: true,
-				Computed: true,
+				Required: true,
+				ForceNew: true,
 			},
 			"ftcl_uid": &schema.Schema{
 				Type:         schema.TypeString,

@@ -23,7 +23,7 @@ resource "fortios_wirelesscontrollerhotspot20_anqpipaddresstype" "trname" {
 
 The following arguments are supported:
 
-* `name` - IP type name.
+* `name` - (Required) IP type name.
 * `ipv6_address_type` - IPv6 address type.
 * `ipv4_address_type` - IPv4 address type.
 

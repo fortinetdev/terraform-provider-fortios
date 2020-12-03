@@ -33,6 +33,7 @@ func resourceFirewallScheduleRecurring() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
 				Required:     true,
+				ForceNew:     true,
 			},
 			"start": &schema.Schema{
 				Type:     schema.TypeString,

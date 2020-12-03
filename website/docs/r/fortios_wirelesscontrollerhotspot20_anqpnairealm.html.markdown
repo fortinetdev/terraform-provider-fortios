@@ -13,7 +13,7 @@ Configure network access identifier (NAI) realm.
 
 The following arguments are supported:
 
-* `name` - NAI realm list name.
+* `name` - (Required) NAI realm list name.
 * `nai_list` - NAI list. The structure of `nai_list` block is documented below.
 
 The `nai_list` block supports:

@@ -78,7 +78,7 @@ resource "fortios_wanopt_profile" "trname" {
 
 The following arguments are supported:
 
-* `name` - Profile name.
+* `name` - (Required) Profile name.
 * `transparent` - Enable/disable transparent mode.
 * `comments` - Comment.
 * `auth_group` - Optionally add an authentication group to restrict access to the WAN Optimization tunnel to peers in the authentication group.

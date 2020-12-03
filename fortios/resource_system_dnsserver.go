@@ -32,8 +32,8 @@ func resourceSystemDnsServer() *schema.Resource {
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
-				Optional:     true,
-				Computed:     true,
+				Required:     true,
+				ForceNew:     true,
 			},
 			"mode": &schema.Schema{
 				Type:     schema.TypeString,

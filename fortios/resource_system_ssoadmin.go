@@ -32,8 +32,8 @@ func resourceSystemSsoAdmin() *schema.Resource {
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
-				Optional:     true,
-				Computed:     true,
+				Required:     true,
+				ForceNew:     true,
 			},
 			"accprofile": &schema.Schema{
 				Type:         schema.TypeString,

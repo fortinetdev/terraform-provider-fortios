@@ -32,8 +32,8 @@ func resourceFirewallPolicy() *schema.Resource {
 			"policyid": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 2147482999),
-				Optional:     true,
-				Computed:     true,
+				Required:     true,
+				ForceNew:     true,
 			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,

@@ -32,8 +32,8 @@ func resourceWirelessControllerHotspot20H2QpWanMetric() *schema.Resource {
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional:     true,
-				Computed:     true,
+				Required:     true,
+				ForceNew:     true,
 			},
 			"link_status": &schema.Schema{
 				Type:     schema.TypeString,

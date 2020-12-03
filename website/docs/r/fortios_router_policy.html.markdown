@@ -38,7 +38,7 @@ resource "fortios_router_policy" "trname" {
 
 The following arguments are supported:
 
-* `seq_num` - Sequence number.
+* `seq_num` - (Required) Sequence number.
 * `input_device` - Incoming interface name. The structure of `input_device` block is documented below.
 * `src` - Source IP and mask (x.x.x.x/x). The structure of `src` block is documented below.
 * `srcaddr` - Source address name. The structure of `srcaddr` block is documented below.

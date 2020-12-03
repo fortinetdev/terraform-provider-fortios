@@ -34,7 +34,7 @@ resource "fortios_vpnipsec_manualkeyinterface" "trname" {
 
 The following arguments are supported:
 
-* `name` - IPsec tunnel name.
+* `name` - (Required) IPsec tunnel name.
 * `interface` - (Required) Name of the physical, aggregate, or VLAN interface.
 * `ip_version` - IP version to use for VPN interface.
 * `addr_type` - IP version to use for IP packets.

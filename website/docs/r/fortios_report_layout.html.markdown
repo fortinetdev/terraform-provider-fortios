@@ -32,7 +32,7 @@ resource "fortios_report_layout" "trname" {
 
 The following arguments are supported:
 
-* `name` - Report layout name.
+* `name` - (Required) Report layout name.
 * `title` - Report title.
 * `subtitle` - Report subtitle.
 * `description` - Description.

@@ -34,7 +34,7 @@ resource "fortios_user_peergrp" "trname" {
 
 The following arguments are supported:
 
-* `name` - Peer group name.
+* `name` - (Required) Peer group name.
 * `member` - Peer group members. The structure of `member` block is documented below.
 
 The `member` block supports:

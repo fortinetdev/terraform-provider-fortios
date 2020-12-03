@@ -47,7 +47,7 @@ resource "fortios_user_radius" "trname" {
 
 The following arguments are supported:
 
-* `name` - RADIUS server entry name.
+* `name` - (Required) RADIUS server entry name.
 * `server` - Primary RADIUS server CN domain name or IP address.
 * `secret` - Pre-shared secret key used to access the primary RADIUS server.
 * `secondary_server` - {<name_str|ip_str>} secondary RADIUS CN domain name or IP.

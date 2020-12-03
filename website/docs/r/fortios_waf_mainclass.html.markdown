@@ -14,7 +14,7 @@ Hidden table for datasource.
 The following arguments are supported:
 
 * `name` - Main signature class name.
-* `fosid` - Main signature class ID.
+* `fosid` - (Required) Main signature class ID.
 
 
 ## Attribute Reference

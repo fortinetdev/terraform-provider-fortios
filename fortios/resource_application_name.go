@@ -32,8 +32,8 @@ func resourceApplicationName() *schema.Resource {
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional:     true,
-				Computed:     true,
+				Required:     true,
+				ForceNew:     true,
 			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,

@@ -21,7 +21,7 @@ resource "fortios_wirelesscontrollerhotspot20_anqp3gppcellular" "trname" {
 
 The following arguments are supported:
 
-* `name` - 3GPP PLMN name.
+* `name` - (Required) 3GPP PLMN name.
 * `mcc_mnc_list` - Mobile Country Code and Mobile Network Code configuration. The structure of `mcc_mnc_list` block is documented below.
 
 The `mcc_mnc_list` block supports:

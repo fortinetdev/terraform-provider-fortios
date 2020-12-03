@@ -13,7 +13,7 @@ Configure custom application signatures.
 
 The following arguments are supported:
 
-* `tag` - Signature tag.
+* `tag` - (Required) Signature tag.
 * `name` - Name of this custom application signature.
 * `fosid` - Custom application category ID (use ? to view available options).
 * `comment` - Comment.

@@ -13,7 +13,7 @@ Configure custom Internet Services.
 
 The following arguments are supported:
 
-* `name` - Internet Service name.
+* `name` - (Required) Internet Service name.
 * `reputation` - Reputation level of the custom Internet Service.
 * `comment` - Comment.
 * `entry` - Entries added to the Internet Service database and custom database. The structure of `entry` block is documented below.

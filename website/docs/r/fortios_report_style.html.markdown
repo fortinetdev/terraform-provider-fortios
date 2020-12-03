@@ -29,7 +29,7 @@ resource "fortios_report_style" "trname" {
 
 The following arguments are supported:
 
-* `name` - Report style name.
+* `name` - (Required) Report style name.
 * `options` - Report style options.
 * `font_family` - Font family.
 * `font_style` - Font style.

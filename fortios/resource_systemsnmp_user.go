@@ -33,6 +33,7 @@ func resourceSystemSnmpUser() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 32),
 				Required:     true,
+				ForceNew:     true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,

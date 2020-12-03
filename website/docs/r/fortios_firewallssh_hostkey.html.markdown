@@ -26,7 +26,7 @@ resource "fortios_firewallssh_hostkey" "trname" {
 
 The following arguments are supported:
 
-* `name` - SSH public key name.
+* `name` - (Required) SSH public key name.
 * `status` - Set the trust status of the public key.
 * `type` - Set the type of the public key.
 * `nid` - Set the nid of the ECDSA key.

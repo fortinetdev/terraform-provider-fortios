@@ -22,7 +22,7 @@ resource "fortios_vpnsslweb_userbookmark" "trname" {
 
 The following arguments are supported:
 
-* `name` - User and group name.
+* `name` - (Required) User and group name.
 * `custom_lang` - Personal language.
 * `bookmarks` - Bookmark table. The structure of `bookmarks` block is documented below.
 

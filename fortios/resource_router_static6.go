@@ -31,8 +31,8 @@ func resourceRouterStatic6() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"seq_num": &schema.Schema{
 				Type:     schema.TypeInt,
-				Optional: true,
-				Computed: true,
+				Required: true,
+				ForceNew: true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,

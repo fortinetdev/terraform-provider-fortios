@@ -21,7 +21,7 @@ resource "fortios_wirelesscontrollerhotspot20_h2qpoperatorname" "trname" {
 
 The following arguments are supported:
 
-* `name` - Friendly name ID.
+* `name` - (Required) Friendly name ID.
 * `value_list` - Name list. The structure of `value_list` block is documented below.
 
 The `value_list` block supports:

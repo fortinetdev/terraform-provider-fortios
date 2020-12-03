@@ -13,7 +13,7 @@ Configure endpoint control client lists.
 
 The following arguments are supported:
 
-* `fosid` - Endpoint client ID.
+* `fosid` - (Required) Endpoint client ID.
 * `ftcl_uid` - Endpoint FortiClient UID.
 * `src_ip` - Endpoint client IP address.
 * `src_mac` - Endpoint client MAC address.

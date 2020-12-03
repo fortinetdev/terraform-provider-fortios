@@ -13,7 +13,7 @@ Configure hotspot profile.
 
 The following arguments are supported:
 
-* `name` - Hotspot profile name.
+* `name` - (Required) Hotspot profile name.
 * `access_network_type` - Access network type.
 * `access_network_internet` - Enable/disable connectivity to the Internet.
 * `access_network_asra` - Enable/disable additional step required for access (ASRA).

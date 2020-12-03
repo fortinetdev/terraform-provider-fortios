@@ -32,8 +32,8 @@ func resourceWanoptPeer() *schema.Resource {
 			"peer_host_id": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional:     true,
-				Computed:     true,
+				Required:     true,
+				ForceNew:     true,
 			},
 			"ip": &schema.Schema{
 				Type:     schema.TypeString,

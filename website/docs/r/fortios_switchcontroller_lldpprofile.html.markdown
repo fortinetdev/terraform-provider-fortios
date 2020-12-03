@@ -26,7 +26,7 @@ resource "fortios_switchcontroller_lldpprofile" "trname" {
 
 The following arguments are supported:
 
-* `name` - Profile name.
+* `name` - (Required) Profile name.
 * `med_tlvs` - Transmitted LLDP-MED TLVs (type-length-value descriptions): inventory management TLV and/or network policy TLV.
 * `n8021_tlvs` - Transmitted IEEE 802.1 TLVs.
 * `n8023_tlvs` - Transmitted IEEE 802.3 TLVs.

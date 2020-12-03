@@ -24,7 +24,7 @@ resource "fortios_user_device" "trname" {
 
 The following arguments are supported:
 
-* `alias` - Device alias.
+* `alias` - (Required) Device alias.
 * `mac` - Device MAC address.
 * `user` - User name.
 * `master_device` - Master device (optional).

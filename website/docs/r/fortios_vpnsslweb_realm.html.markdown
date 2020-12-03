@@ -24,7 +24,7 @@ resource "fortios_vpnsslweb_realm" "trname" {
 
 The following arguments are supported:
 
-* `url_path` - URL path to access SSL-VPN login page.
+* `url_path` - (Required) URL path to access SSL-VPN login page.
 * `max_concurrent_user` - Maximum concurrent users (0 - 65535, 0 means unlimited).
 * `login_page` - Replacement HTML for SSL-VPN login page.
 * `virtual_host` - Virtual host name for realm.

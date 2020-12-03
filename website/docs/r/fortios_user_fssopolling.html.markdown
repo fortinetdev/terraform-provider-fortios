@@ -13,7 +13,7 @@ Configure FSSO active directory servers for polling mode.
 
 The following arguments are supported:
 
-* `fosid` - Active Directory server ID.
+* `fosid` - (Required) Active Directory server ID.
 * `status` - Enable/disable polling for the status of this Active Directory server.
 * `server` - (Required) Host name or IP address of the Active Directory server.
 * `default_domain` - Default domain managed by this Active Directory server.

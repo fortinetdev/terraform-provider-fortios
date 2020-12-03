@@ -13,7 +13,7 @@ Configure virtual wire pairs.
 
 The following arguments are supported:
 
-* `name` - Virtual-wire-pair name. Must be a unique interface name.
+* `name` - (Required) Virtual-wire-pair name. Must be a unique interface name.
 * `member` - (Required) Interfaces belong to the virtual-wire-pair. The structure of `member` block is documented below.
 * `wildcard_vlan` - Enable/disable wildcard VLAN.
 * `vlan_filter` - Set VLAN filters.

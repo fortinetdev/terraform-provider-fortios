@@ -26,7 +26,7 @@ resource "fortios_system_autoscript" "trname" {
 
 The following arguments are supported:
 
-* `name` - Auto script name.
+* `name` - (Required) Auto script name.
 * `interval` - Repeat interval in seconds.
 * `repeat` - Number of times to repeat this script (0 = infinite).
 * `start` - Script starting mode.

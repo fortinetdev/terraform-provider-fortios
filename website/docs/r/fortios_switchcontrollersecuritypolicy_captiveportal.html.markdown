@@ -13,7 +13,7 @@ Names of VLANs that use captive portal authentication.
 
 The following arguments are supported:
 
-* `name` - Policy name.
+* `name` - (Required) Policy name.
 * `vlan` - Names of VLANs that use captive portal authentication.
 * `policy_type` - Policy type.
 

@@ -133,7 +133,7 @@ resource "fortios_vpnipsec_phase2" "trname" {
 
 The following arguments are supported:
 
-* `name` - IPsec tunnel name.
+* `name` - (Required) IPsec tunnel name.
 * `phase1name` - (Required) Phase 1 determines the options required for phase 2.
 * `dhcp_ipsec` - Enable/disable DHCP-IPsec.
 * `use_natip` - Enable to use the FortiGate public IP as the source selector when outbound NAT is used.

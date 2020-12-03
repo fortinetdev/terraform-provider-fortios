@@ -33,6 +33,7 @@ func resourceSystemReplacemsgEc() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 28),
 				Required:     true,
+				ForceNew:     true,
 			},
 			"buffer": &schema.Schema{
 				Type:         schema.TypeString,

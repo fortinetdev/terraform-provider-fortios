@@ -13,7 +13,7 @@ Configure logical storage.
 
 The following arguments are supported:
 
-* `name` - Storage name.
+* `name` - (Required) Storage name.
 * `status` - Enable/disable storage.
 * `media_status` - The physical status of current media.
 * `order` - Set storage order.

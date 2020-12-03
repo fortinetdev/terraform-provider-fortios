@@ -28,7 +28,7 @@ resource "fortios_system_vxlan" "trname" {
 
 The following arguments are supported:
 
-* `name` - VXLAN device or interface name. Must be a unique interface name.
+* `name` - (Required) VXLAN device or interface name. Must be a unique interface name.
 * `interface` - (Required) Outgoing interface for VXLAN encapsulated traffic.
 * `vni` - (Required) VXLAN network ID.
 * `ip_version` - (Required) IP version to use for the VXLAN interface and so for communication over the VXLAN. IPv4 or IPv6 unicast or multicast.

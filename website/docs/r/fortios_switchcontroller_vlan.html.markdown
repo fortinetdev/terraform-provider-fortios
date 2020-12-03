@@ -13,7 +13,7 @@ Configure VLANs for switch controller.
 
 The following arguments are supported:
 
-* `name` - Switch VLAN name.
+* `name` - (Required) Switch VLAN name.
 * `vdom` - Virtual domain,
 * `vlanid` - VLAN ID.
 * `comments` - Comment.

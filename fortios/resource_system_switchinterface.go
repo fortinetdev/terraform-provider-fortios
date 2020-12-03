@@ -33,6 +33,7 @@ func resourceSystemSwitchInterface() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Required:     true,
+				ForceNew:     true,
 			},
 			"vdom": &schema.Schema{
 				Type:         schema.TypeString,

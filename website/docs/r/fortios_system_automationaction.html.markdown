@@ -29,7 +29,7 @@ resource "fortios_system_automationaction" "trname" {
 
 The following arguments are supported:
 
-* `name` - Name.
+* `name` - (Required) Name.
 * `action_type` - Action type.
 * `email_to` - Email addresses. The structure of `email_to` block is documented below.
 * `email_subject` - Email subject.

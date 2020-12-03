@@ -13,7 +13,7 @@ Configure Bonjour profiles. Bonjour is Apple's zero configuration networking pro
 
 The following arguments are supported:
 
-* `name` - Bonjour profile name.
+* `name` - (Required) Bonjour profile name.
 * `comment` - Comment.
 * `policy_list` - Bonjour policy list. The structure of `policy_list` block is documented below.
 

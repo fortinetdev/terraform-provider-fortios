@@ -31,8 +31,8 @@ func resourceFirewallIpmacbindingTable() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"seq_num": &schema.Schema{
 				Type:     schema.TypeInt,
-				Optional: true,
-				Computed: true,
+				Required: true,
+				ForceNew: true,
 			},
 			"ip": &schema.Schema{
 				Type:     schema.TypeString,

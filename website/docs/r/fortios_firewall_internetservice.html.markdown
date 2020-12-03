@@ -13,7 +13,7 @@ Show Internet Service application.
 
 The following arguments are supported:
 
-* `fosid` - Internet Service ID.
+* `fosid` - (Required) Internet Service ID.
 * `name` - Internet Service name.
 * `reputation` - Reputation level of the Internet Service.
 * `icon_id` - Icon ID of Internet Service.

@@ -33,6 +33,7 @@ func resourceRouterAuthPath() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Required:     true,
+				ForceNew:     true,
 			},
 			"device": &schema.Schema{
 				Type:         schema.TypeString,

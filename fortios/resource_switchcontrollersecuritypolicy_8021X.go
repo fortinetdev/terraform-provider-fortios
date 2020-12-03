@@ -32,8 +32,8 @@ func resourceSwitchControllerSecurityPolicy8021X() *schema.Resource {
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
-				Optional:     true,
-				Computed:     true,
+				Required:     true,
+				ForceNew:     true,
 			},
 			"security_mode": &schema.Schema{
 				Type:     schema.TypeString,

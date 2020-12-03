@@ -50,7 +50,7 @@ resource "fortios_user_local" "trname" {
 
 The following arguments are supported:
 
-* `name` - User name.
+* `name` - (Required) User name.
 * `fosid` - User ID.
 * `status` - (Required) Enable/disable allowing the local user to authenticate with the FortiGate unit.
 * `type` - (Required) Authentication method.

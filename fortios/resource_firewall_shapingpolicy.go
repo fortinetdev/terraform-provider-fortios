@@ -31,8 +31,8 @@ func resourceFirewallShapingPolicy() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
-				Optional: true,
-				Computed: true,
+				Required: true,
+				ForceNew: true,
 			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,

@@ -33,6 +33,7 @@ func resourceRouterAspathList() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Required:     true,
+				ForceNew:     true,
 			},
 			"rule": &schema.Schema{
 				Type:     schema.TypeList,

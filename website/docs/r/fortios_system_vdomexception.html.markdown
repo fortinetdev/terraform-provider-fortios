@@ -24,7 +24,7 @@ resource "fortios_system_vdomexception" "trname" {
 
 The following arguments are supported:
 
-* `fosid` - Index <1-4096>.
+* `fosid` - (Required) Index <1-4096>.
 * `object` - (Required) Name of the configuration object that can be configured independently for all VDOMs.
 * `oid` - Object ID.
 * `scope` - Determine whether the configuration object can be configured separately for all VDOMs or if some VDOMs share the same configuration.

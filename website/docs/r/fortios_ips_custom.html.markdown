@@ -13,7 +13,7 @@ Configure IPS custom signature.
 
 The following arguments are supported:
 
-* `tag` - Signature tag.
+* `tag` - (Required) Signature tag.
 * `signature` - Custom signature enclosed in single quotes.
 * `sig_name` - Signature name.
 * `rule_id` - Signature ID.

@@ -29,7 +29,7 @@ resource "fortios_firewall_address" "trname" {
 
 The following arguments are supported:
 
-* `name` - Address name.
+* `name` - (Required) Address name.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `subnet` - IP address and subnet mask of address.
 * `type` - Type of address.

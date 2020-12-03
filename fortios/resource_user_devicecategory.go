@@ -33,6 +33,7 @@ func resourceUserDeviceCategory() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Required:     true,
+				ForceNew:     true,
 			},
 			"desc": &schema.Schema{
 				Type:         schema.TypeString,

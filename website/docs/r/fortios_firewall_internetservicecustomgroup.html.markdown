@@ -13,7 +13,7 @@ Configure custom Internet Service group.
 
 The following arguments are supported:
 
-* `name` - Custom Internet Service group name.
+* `name` - (Required) Custom Internet Service group name.
 * `comment` - Comment.
 * `member` - Custom Internet Service group members. The structure of `member` block is documented below.
 

@@ -32,8 +32,8 @@ func resourceSystemReplacemsgImage() *schema.Resource {
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 23),
-				Optional:     true,
-				Computed:     true,
+				Required:     true,
+				ForceNew:     true,
 			},
 			"image_type": &schema.Schema{
 				Type:     schema.TypeString,

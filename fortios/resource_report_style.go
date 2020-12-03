@@ -32,8 +32,8 @@ func resourceReportStyle() *schema.Resource {
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 71),
-				Optional:     true,
-				Computed:     true,
+				Required:     true,
+				ForceNew:     true,
 			},
 			"options": &schema.Schema{
 				Type:     schema.TypeString,

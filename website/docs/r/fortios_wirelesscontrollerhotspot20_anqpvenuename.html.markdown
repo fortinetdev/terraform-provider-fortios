@@ -26,7 +26,7 @@ resource "fortios_wirelesscontrollerhotspot20_anqpvenuename" "trname" {
 
 The following arguments are supported:
 
-* `name` - Name of venue name duple.
+* `name` - (Required) Name of venue name duple.
 * `value_list` - Name list. The structure of `value_list` block is documented below.
 
 The `value_list` block supports:

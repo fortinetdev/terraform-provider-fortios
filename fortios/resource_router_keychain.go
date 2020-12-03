@@ -33,6 +33,7 @@ func resourceRouterKeyChain() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Required:     true,
+				ForceNew:     true,
 			},
 			"key": &schema.Schema{
 				Type:     schema.TypeList,

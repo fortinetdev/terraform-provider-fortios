@@ -33,6 +33,7 @@ func resourceFirewallScheduleGroup() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
 				Required:     true,
+				ForceNew:     true,
 			},
 			"member": &schema.Schema{
 				Type:     schema.TypeList,

@@ -24,7 +24,7 @@ resource "fortios_system_ipiptunnel" "trname" {
 
 The following arguments are supported:
 
-* `name` - IPIP Tunnel name.
+* `name` - (Required) IPIP Tunnel name.
 * `interface` - (Required) Interface name that is associated with the incoming traffic from available options.
 * `remote_gw` - (Required) IPv4 address for the remote gateway.
 * `local_gw` - (Required) IPv4 address for the local gateway.

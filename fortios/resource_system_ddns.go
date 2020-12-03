@@ -31,8 +31,8 @@ func resourceSystemDdns() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"ddnsid": &schema.Schema{
 				Type:     schema.TypeInt,
-				Optional: true,
-				Computed: true,
+				Required: true,
+				ForceNew: true,
 			},
 			"ddns_server": &schema.Schema{
 				Type:     schema.TypeString,

@@ -36,7 +36,7 @@ resource "fortios_system_ddns" "trname" {
 
 The following arguments are supported:
 
-* `ddnsid` - DDNS ID.
+* `ddnsid` - (Required) DDNS ID.
 * `ddns_server` - (Required) Select a DDNS service provider.
 * `ddns_server_ip` - Generic DDNS server IP.
 * `ddns_zone` - Zone of your domain name (for example, DDNS.com).

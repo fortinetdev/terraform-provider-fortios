@@ -33,6 +33,7 @@ func resourceSwitchControllerQosQosPolicy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Required:     true,
+				ForceNew:     true,
 			},
 			"default_cos": &schema.Schema{
 				Type:         schema.TypeInt,

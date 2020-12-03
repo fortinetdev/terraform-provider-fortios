@@ -23,7 +23,7 @@ resource "fortios_system_automationdestination" "trname" {
 
 The following arguments are supported:
 
-* `name` - Name.
+* `name` - (Required) Name.
 * `type` - Destination type.
 * `destination` - Destinations. The structure of `destination` block is documented below.
 * `ha_group_id` - Cluster group ID set for this destination (default = 0).

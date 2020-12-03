@@ -26,7 +26,7 @@ resource "fortios_user_peer" "trname1" {
 
 The following arguments are supported:
 
-* `name` - Peer name.
+* `name` - (Required) Peer name.
 * `mandatory_ca_verify` - Determine what happens to the peer if the CA certificate is not installed. Disable to automatically consider the peer certificate as valid.
 * `ca` - Name of the CA certificate as returned by the execute vpn certificate ca list command.
 * `subject` - Peer certificate name constraints.

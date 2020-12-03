@@ -23,7 +23,7 @@ resource "fortios_log_customfield" "trname" {
 
 The following arguments are supported:
 
-* `fosid` - field ID <string>.
+* `fosid` - (Required) field ID <string>.
 * `name` - (Required) Field name (max: 15 characters).
 * `value` - (Required) Field value (max: 15 characters).
 

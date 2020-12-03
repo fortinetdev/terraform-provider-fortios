@@ -26,7 +26,7 @@ resource "fortios_authentication_rule" "trname" {
 
 The following arguments are supported:
 
-* `name` - Authentication rule name.
+* `name` - (Required) Authentication rule name.
 * `status` - Enable/disable this authentication rule.
 * `protocol` - Select the protocol to use for authentication (default = http). Users connect to the FortiGate using this protocol and are asked to authenticate.
 * `srcaddr` - Select an IPv4 source address from available options. Required for web proxy authentication. The structure of `srcaddr` block is documented below.

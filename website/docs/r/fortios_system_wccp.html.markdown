@@ -39,7 +39,7 @@ resource "fortios_system_wccp" "trname" {
 
 The following arguments are supported:
 
-* `service_id` - Service ID.
+* `service_id` - (Required) Service ID.
 * `router_id` - IP address known to all cache engines. If all cache engines connect to the same FortiGate interface, use the default 0.0.0.0.
 * `cache_id` - IP address known to all routers. If the addresses are the same, use the default 0.0.0.0.
 * `group_address` - IP multicast address used by the cache routers. For the FortiGate to ignore multicast WCCP traffic, use the default 0.0.0.0.

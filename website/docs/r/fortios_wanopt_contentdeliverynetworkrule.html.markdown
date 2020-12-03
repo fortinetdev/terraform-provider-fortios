@@ -32,7 +32,7 @@ resource "fortios_wanopt_contentdeliverynetworkrule" "trname" {
 
 The following arguments are supported:
 
-* `name` - Name of table.
+* `name` - (Required) Name of table.
 * `comment` - Comment about this CDN-rule.
 * `status` - Enable/disable WAN optimization content delivery network rules.
 * `host_domain_name_suffix` - Suffix portion of the fully qualified domain name (eg. fortinet.com in "www.fortinet.com"). The structure of `host_domain_name_suffix` block is documented below.

@@ -33,6 +33,7 @@ func resourceWirelessControllerVap() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
 				Required:     true,
+				ForceNew:     true,
 			},
 			"fast_roaming": &schema.Schema{
 				Type:     schema.TypeString,

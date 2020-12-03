@@ -24,7 +24,7 @@ resource "fortios_report_theme" "trname" {
 
 The following arguments are supported:
 
-* `name` - Report theme name.
+* `name` - (Required) Report theme name.
 * `page_orient` - Report page orientation.
 * `column_count` - Report page column count.
 * `default_html_style` - Default HTML report style.

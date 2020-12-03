@@ -33,6 +33,7 @@ func resourceWebfilterSearchEngine() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Required:     true,
+				ForceNew:     true,
 			},
 			"hostname": &schema.Schema{
 				Type:         schema.TypeString,

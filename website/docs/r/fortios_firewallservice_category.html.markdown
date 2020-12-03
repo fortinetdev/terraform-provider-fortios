@@ -21,7 +21,7 @@ resource "fortios_firewallservice_category" "trname" {
 
 The following arguments are supported:
 
-* `name` - Service category name.
+* `name` - (Required) Service category name.
 * `comment` - Comment.
 
 

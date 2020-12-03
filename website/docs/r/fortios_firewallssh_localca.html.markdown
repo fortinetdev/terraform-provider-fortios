@@ -13,7 +13,7 @@ SSH proxy local CA.
 
 The following arguments are supported:
 
-* `name` - SSH proxy local CA name.
+* `name` - (Required) SSH proxy local CA name.
 * `password` - Password for SSH private key.
 * `private_key` - (Required) SSH proxy private key, encrypted with a password.
 * `public_key` - (Required) SSH proxy public key.

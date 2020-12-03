@@ -50,7 +50,7 @@ resource "fortios_firewall_shapingpolicy" "trname" {
 
 The following arguments are supported:
 
-* `fosid` - Shaping policy ID.
+* `fosid` - (Required) Shaping policy ID.
 * `name` - Shaping policy name.
 * `comment` - Comments.
 * `status` - Enable/disable this traffic shaping policy.

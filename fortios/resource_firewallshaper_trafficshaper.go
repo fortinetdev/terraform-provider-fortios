@@ -32,8 +32,8 @@ func resourceFirewallShaperTrafficShaper() *schema.Resource {
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional:     true,
-				Computed:     true,
+				Required:     true,
+				ForceNew:     true,
 			},
 			"guaranteed_bandwidth": &schema.Schema{
 				Type:         schema.TypeInt,

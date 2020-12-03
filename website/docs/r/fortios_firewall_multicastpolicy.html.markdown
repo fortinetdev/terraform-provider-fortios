@@ -40,7 +40,7 @@ resource "fortios_firewall_multicastpolicy" "trname" {
 
 The following arguments are supported:
 
-* `fosid` - Policy ID.
+* `fosid` - (Required) Policy ID.
 * `status` - Enable/disable this policy.
 * `logtraffic` - Enable/disable logging traffic accepted by this policy.
 * `srcintf` - (Required) Source interface name.

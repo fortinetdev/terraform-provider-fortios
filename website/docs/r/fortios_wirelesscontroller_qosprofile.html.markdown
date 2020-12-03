@@ -13,7 +13,7 @@ Configure WiFi quality of service (QoS) profiles.
 
 The following arguments are supported:
 
-* `name` - WiFi QoS profile name.
+* `name` - (Required) WiFi QoS profile name.
 * `comment` - Comment.
 * `uplink` - Maximum uplink bandwidth for Virtual Access Points (VAPs) (0 - 2097152 Kbps, default = 0, 0 means no limit).
 * `downlink` - Maximum downlink bandwidth for Virtual Access Points (VAPs) (0 - 2097152 Kbps, default = 0, 0 means no limit).

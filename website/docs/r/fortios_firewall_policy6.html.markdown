@@ -76,7 +76,7 @@ resource "fortios_firewall_policy6" "trname" {
 
 The following arguments are supported:
 
-* `policyid` - Policy ID.
+* `policyid` - (Required) Policy ID.
 * `name` - Policy name.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `srcintf` - (Required) Incoming (ingress) interface. The structure of `srcintf` block is documented below.

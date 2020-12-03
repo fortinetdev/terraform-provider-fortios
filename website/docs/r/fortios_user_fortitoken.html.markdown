@@ -13,7 +13,7 @@ Configure FortiToken.
 
 The following arguments are supported:
 
-* `serial_number` - Serial number.
+* `serial_number` - (Required) Serial number.
 * `status` - Status
 * `seed` - Token seed.
 * `comments` - Comment.

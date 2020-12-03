@@ -13,7 +13,7 @@ Configure UTM (Unified Threat Management) profile.
 
 The following arguments are supported:
 
-* `name` - UTM profile name.
+* `name` - (Required) UTM profile name.
 * `comment` - Comment.
 * `utm_log` - Enable/disable UTM logging.
 * `ips_sensor` - IPS sensor name.

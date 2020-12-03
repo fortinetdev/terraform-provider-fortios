@@ -22,7 +22,7 @@ resource "fortios_endpointcontrol_forticlientregistrationsync" "trname" {
 
 The following arguments are supported:
 
-* `peer_name` - Peer name.
+* `peer_name` - (Required) Peer name.
 * `peer_ip` - (Required) IP address of the peer FortiGate for endpoint license synchronization.
 
 

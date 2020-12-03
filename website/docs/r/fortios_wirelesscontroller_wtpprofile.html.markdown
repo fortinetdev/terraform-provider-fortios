@@ -13,7 +13,7 @@ Configure WTP profiles or FortiAP profiles that define radio settings for manage
 
 The following arguments are supported:
 
-* `name` - WTP (or FortiAP or AP) profile name.
+* `name` - (Required) WTP (or FortiAP or AP) profile name.
 * `comment` - Comment.
 * `platform` - WTP, FortiAP, or AP platform. The structure of `platform` block is documented below.
 * `control_message_offload` - Enable/disable CAPWAP control message data channel offload.

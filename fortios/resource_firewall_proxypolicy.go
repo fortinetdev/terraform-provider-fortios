@@ -36,8 +36,8 @@ func resourceFirewallProxyPolicy() *schema.Resource {
 			},
 			"policyid": &schema.Schema{
 				Type:     schema.TypeInt,
-				Optional: true,
-				Computed: true,
+				Required: true,
+				ForceNew: true,
 			},
 			"proxy": &schema.Schema{
 				Type:     schema.TypeString,

@@ -32,8 +32,8 @@ func resourceSystemPppoeInterface() *schema.Resource {
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
-				Optional:     true,
-				Computed:     true,
+				Required:     true,
+				ForceNew:     true,
 			},
 			"dial_on_demand": &schema.Schema{
 				Type:     schema.TypeString,

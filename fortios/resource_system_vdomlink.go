@@ -32,8 +32,8 @@ func resourceSystemVdomLink() *schema.Resource {
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 11),
-				Optional:     true,
-				Computed:     true,
+				Required:     true,
+				ForceNew:     true,
 			},
 			"vcluster": &schema.Schema{
 				Type:     schema.TypeString,

@@ -13,7 +13,7 @@ Internet Service definition.
 
 The following arguments are supported:
 
-* `fosid` - Internet Service application list ID.
+* `fosid` - (Required) Internet Service application list ID.
 * `entry` - Protocol and port information in an Internet Service entry. The structure of `entry` block is documented below.
 
 The `entry` block supports:

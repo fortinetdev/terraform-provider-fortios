@@ -27,7 +27,7 @@ resource "fortios_webproxy_forwardserver" "trname" {
 
 The following arguments are supported:
 
-* `name` - Server name.
+* `name` - (Required) Server name.
 * `addr_type` - Address type of the forwarding proxy server: IP or FQDN.
 * `ip` - Forward proxy server IP address.
 * `fqdn` - Forward server Fully Qualified Domain Name (FQDN).

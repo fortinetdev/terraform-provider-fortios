@@ -13,7 +13,7 @@ Configure IPv4 DoS policies.
 
 The following arguments are supported:
 
-* `policyid` - Policy ID.
+* `policyid` - (Required) Policy ID.
 * `status` - Enable/disable this policy.
 * `comments` - Comment.
 * `interface` - (Required) Incoming interface name from available interfaces.

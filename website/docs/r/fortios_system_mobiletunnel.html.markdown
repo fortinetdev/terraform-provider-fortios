@@ -34,7 +34,7 @@ resource "fortios_system_mobiletunnel" "trname" {
 
 The following arguments are supported:
 
-* `name` - Tunnel name.
+* `name` - (Required) Tunnel name.
 * `status` - Enable/disable this mobile tunnel.
 * `roaming_interface` - (Required) Select the associated interface name from available options.
 * `home_agent` - (Required) IPv4 address of the NEMO HA (Format: xxx.xxx.xxx.xxx).

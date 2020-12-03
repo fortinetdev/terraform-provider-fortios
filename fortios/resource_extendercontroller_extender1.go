@@ -33,6 +33,7 @@ func resourceExtenderControllerExtender1() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 19),
 				Required:     true,
+				ForceNew:     true,
 			},
 			"fosid": &schema.Schema{
 				Type:         schema.TypeString,

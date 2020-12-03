@@ -25,7 +25,7 @@ resource "fortios_user_tacacs" "trname" {
 
 The following arguments are supported:
 
-* `name` - TACACS+ server entry name.
+* `name` - (Required) TACACS+ server entry name.
 * `server` - Primary TACACS+ server CN domain name or IP address.
 * `secondary_server` - Secondary TACACS+ server CN domain name or IP address.
 * `tertiary_server` - Tertiary TACACS+ server CN domain name or IP address.

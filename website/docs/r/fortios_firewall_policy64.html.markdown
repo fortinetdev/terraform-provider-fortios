@@ -44,7 +44,7 @@ resource "fortios_firewall_policy64" "trname" {
 
 The following arguments are supported:
 
-* `policyid` - Policy ID.
+* `policyid` - (Required) Policy ID.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `srcintf` - (Required) Source interface name.
 * `dstintf` - (Required) Destination interface name.

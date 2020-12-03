@@ -32,8 +32,8 @@ func resourceSystemObjectTagging() *schema.Resource {
 			"category": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional:     true,
-				Computed:     true,
+				Required:     true,
+				ForceNew:     true,
 			},
 			"address": &schema.Schema{
 				Type:     schema.TypeString,

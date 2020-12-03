@@ -33,6 +33,7 @@ func resourceVpnCertificateCa() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
 				Required:     true,
+				ForceNew:     true,
 			},
 			"ca": &schema.Schema{
 				Type:     schema.TypeString,

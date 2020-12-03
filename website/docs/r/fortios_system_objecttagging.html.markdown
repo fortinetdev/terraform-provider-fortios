@@ -26,7 +26,7 @@ resource "fortios_system_objecttagging" "trname" {
 
 The following arguments are supported:
 
-* `category` - Tag Category.
+* `category` - (Required) Tag Category.
 * `address` - Address.
 * `device` - Device.
 * `interface` - Interface.

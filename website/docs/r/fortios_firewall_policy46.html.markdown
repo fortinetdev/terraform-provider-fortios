@@ -60,7 +60,7 @@ resource "fortios_firewall_policy46" "trname" {
 The following arguments are supported:
 
 * `permit_any_host` - Enable/disable allowing any host.
-* `policyid` - Policy ID.
+* `policyid` - (Required) Policy ID.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `srcintf` - (Required) Source interface name.
 * `dstintf` - (Required) Destination interface name.

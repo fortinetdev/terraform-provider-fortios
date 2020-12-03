@@ -32,8 +32,8 @@ func resourceWebProxyForwardServer() *schema.Resource {
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Optional:     true,
-				Computed:     true,
+				Required:     true,
+				ForceNew:     true,
 			},
 			"addr_type": &schema.Schema{
 				Type:     schema.TypeString,

@@ -35,7 +35,7 @@ resource "fortios_webproxy_urlmatch" "trname" {
 
 The following arguments are supported:
 
-* `name` - Configure a name for the URL to be exempted.
+* `name` - (Required) Configure a name for the URL to be exempted.
 * `status` - Enable/disable exempting the URLs matching the URL pattern from web proxy forwarding and caching.
 * `url_pattern` - (Required) URL pattern to be exempted from web proxy forwarding and caching.
 * `forward_server` - Forward server name.

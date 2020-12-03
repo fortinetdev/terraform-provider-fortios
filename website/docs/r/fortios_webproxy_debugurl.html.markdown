@@ -24,7 +24,7 @@ resource "fortios_webproxy_debugurl" "trname" {
 
 The following arguments are supported:
 
-* `name` - Debug URL name.
+* `name` - (Required) Debug URL name.
 * `url_pattern` - (Required) URL exemption pattern.
 * `status` - Enable/disable this URL exemption.
 * `exact` - Enable/disable matching the exact path.

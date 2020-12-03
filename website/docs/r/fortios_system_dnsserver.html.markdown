@@ -23,7 +23,7 @@ resource "fortios_system_dnsserver" "trname" {
 
 The following arguments are supported:
 
-* `name` - DNS server name.
+* `name` - (Required) DNS server name.
 * `mode` - DNS server mode.
 * `dnsfilter_profile` - DNS filter profile.
 

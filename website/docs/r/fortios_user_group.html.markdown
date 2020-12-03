@@ -33,7 +33,7 @@ resource "fortios_user_group" "trname" {
 
 The following arguments are supported:
 
-* `name` - Group name.
+* `name` - (Required) Group name.
 * `fosid` - Group ID.
 * `group_type` - Set the group to be for firewall authentication, FSSO, RSSO, or guest users.
 * `authtimeout` - Authentication timeout in minutes for this user group. 0 to use the global user setting auth-timeout.

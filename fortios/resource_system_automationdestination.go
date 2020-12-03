@@ -32,8 +32,8 @@ func resourceSystemAutomationDestination() *schema.Resource {
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Optional:     true,
-				Computed:     true,
+				Required:     true,
+				ForceNew:     true,
 			},
 			"type": &schema.Schema{
 				Type:     schema.TypeString,

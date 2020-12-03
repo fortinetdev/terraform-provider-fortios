@@ -30,7 +30,7 @@ resource "fortios_vpnipsec_manualkey" "trname" {
 
 The following arguments are supported:
 
-* `name` - IPsec tunnel name.
+* `name` - (Required) IPsec tunnel name.
 * `interface` - (Required) Name of the physical, aggregate, or VLAN interface.
 * `remote_gw` - (Required) Peer gateway.
 * `local_gw` - Local gateway.

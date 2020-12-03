@@ -13,7 +13,7 @@ Configure FortiSwitch switch groups.
 
 The following arguments are supported:
 
-* `name` - Switch group name.
+* `name` - (Required) Switch group name.
 * `description` - Optional switch group description.
 * `members` - FortiSwitch members belonging to this switch group. The structure of `members` block is documented below.
 

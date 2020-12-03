@@ -13,7 +13,7 @@ Configure Wireless Termination Points (WTPs), that is, FortiAPs or APs to be man
 
 The following arguments are supported:
 
-* `wtp_id` - WTP ID.
+* `wtp_id` - (Required) WTP ID.
 * `index` - Index (0 - 4294967295).
 * `admin` - Configure how the FortiGate operating as a wireless controller discovers and manages this WTP, AP or FortiAP.
 * `name` - WTP, AP or FortiAP configuration name.

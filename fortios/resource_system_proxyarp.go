@@ -32,6 +32,7 @@ func resourceSystemProxyArp() *schema.Resource {
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				Required: true,
+				ForceNew: true,
 			},
 			"interface": &schema.Schema{
 				Type:         schema.TypeString,
