@@ -948,7 +948,7 @@ func getObjectWirelessControllerHotspot20HsProfile(d *schema.ResourceData) (*map
 		}
 	}
 
-	if v, ok := d.GetOk("anqp_domain_id"); ok {
+	if v, ok := d.GetOkExists("anqp_domain_id"); ok {
 		t, err := expandWirelessControllerHotspot20HsProfileAnqpDomainId(d, v, "anqp_domain_id")
 		if err != nil {
 			return &obj, err

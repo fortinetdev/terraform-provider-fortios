@@ -179,7 +179,7 @@ func getObjectSystemSflow(d *schema.ResourceData) (*map[string]interface{}, erro
 		}
 	}
 
-	if v, ok := d.GetOk("collector_port"); ok {
+	if v, ok := d.GetOkExists("collector_port"); ok {
 		t, err := expandSystemSflowCollectorPort(d, v, "collector_port")
 		if err != nil {
 			return &obj, err

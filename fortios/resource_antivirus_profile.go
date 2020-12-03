@@ -2550,7 +2550,7 @@ func getObjectAntivirusProfile(d *schema.ResourceData) (*map[string]interface{},
 		}
 	}
 
-	if v, ok := d.GetOk("analytics_wl_filetype"); ok {
+	if v, ok := d.GetOkExists("analytics_wl_filetype"); ok {
 		t, err := expandAntivirusProfileAnalyticsWlFiletype(d, v, "analytics_wl_filetype")
 		if err != nil {
 			return &obj, err
@@ -2559,7 +2559,7 @@ func getObjectAntivirusProfile(d *schema.ResourceData) (*map[string]interface{},
 		}
 	}
 
-	if v, ok := d.GetOk("analytics_bl_filetype"); ok {
+	if v, ok := d.GetOkExists("analytics_bl_filetype"); ok {
 		t, err := expandAntivirusProfileAnalyticsBlFiletype(d, v, "analytics_bl_filetype")
 		if err != nil {
 			return &obj, err

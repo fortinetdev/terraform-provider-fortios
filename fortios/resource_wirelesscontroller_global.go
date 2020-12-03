@@ -470,7 +470,7 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData) (*map[string]inte
 		}
 	}
 
-	if v, ok := d.GetOk("max_retransmit"); ok {
+	if v, ok := d.GetOkExists("max_retransmit"); ok {
 		t, err := expandWirelessControllerGlobalMaxRetransmit(d, v, "max_retransmit")
 		if err != nil {
 			return &obj, err
@@ -506,7 +506,7 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData) (*map[string]inte
 		}
 	}
 
-	if v, ok := d.GetOk("mesh_eth_type"); ok {
+	if v, ok := d.GetOkExists("mesh_eth_type"); ok {
 		t, err := expandWirelessControllerGlobalMeshEthType(d, v, "mesh_eth_type")
 		if err != nil {
 			return &obj, err
@@ -515,7 +515,7 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData) (*map[string]inte
 		}
 	}
 
-	if v, ok := d.GetOk("fiapp_eth_type"); ok {
+	if v, ok := d.GetOkExists("fiapp_eth_type"); ok {
 		t, err := expandWirelessControllerGlobalFiappEthType(d, v, "fiapp_eth_type")
 		if err != nil {
 			return &obj, err
@@ -533,7 +533,7 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData) (*map[string]inte
 		}
 	}
 
-	if v, ok := d.GetOk("max_clients"); ok {
+	if v, ok := d.GetOkExists("max_clients"); ok {
 		t, err := expandWirelessControllerGlobalMaxClients(d, v, "max_clients")
 		if err != nil {
 			return &obj, err
@@ -542,7 +542,7 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData) (*map[string]inte
 		}
 	}
 
-	if v, ok := d.GetOk("rogue_scan_mac_adjacency"); ok {
+	if v, ok := d.GetOkExists("rogue_scan_mac_adjacency"); ok {
 		t, err := expandWirelessControllerGlobalRogueScanMacAdjacency(d, v, "rogue_scan_mac_adjacency")
 		if err != nil {
 			return &obj, err
@@ -587,7 +587,7 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData) (*map[string]inte
 		}
 	}
 
-	if v, ok := d.GetOk("ap_log_server_port"); ok {
+	if v, ok := d.GetOkExists("ap_log_server_port"); ok {
 		t, err := expandWirelessControllerGlobalApLogServerPort(d, v, "ap_log_server_port")
 		if err != nil {
 			return &obj, err

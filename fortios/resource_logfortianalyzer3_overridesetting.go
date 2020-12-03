@@ -628,7 +628,7 @@ func getObjectLogFortianalyzer3OverrideSetting(d *schema.ResourceData) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("faz_type"); ok {
+	if v, ok := d.GetOkExists("faz_type"); ok {
 		t, err := expandLogFortianalyzer3OverrideSettingFazType(d, v, "faz_type")
 		if err != nil {
 			return &obj, err
@@ -655,7 +655,7 @@ func getObjectLogFortianalyzer3OverrideSetting(d *schema.ResourceData) (*map[str
 		}
 	}
 
-	if v, ok := d.GetOk("__change_ip"); ok {
+	if v, ok := d.GetOkExists("__change_ip"); ok {
 		t, err := expandLogFortianalyzer3OverrideSetting__Change_Ip(d, v, "__change_ip")
 		if err != nil {
 			return &obj, err

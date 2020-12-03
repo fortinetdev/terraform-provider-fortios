@@ -1395,7 +1395,7 @@ func getObjectSystemSdnConnector(d *schema.ResourceData) (*map[string]interface{
 		}
 	}
 
-	if v, ok := d.GetOk("server_port"); ok {
+	if v, ok := d.GetOkExists("server_port"); ok {
 		t, err := expandSystemSdnConnectorServerPort(d, v, "server_port")
 		if err != nil {
 			return &obj, err
@@ -1665,7 +1665,7 @@ func getObjectSystemSdnConnector(d *schema.ResourceData) (*map[string]interface{
 		}
 	}
 
-	if v, ok := d.GetOk("update_interval"); ok {
+	if v, ok := d.GetOkExists("update_interval"); ok {
 		t, err := expandSystemSdnConnectorUpdateInterval(d, v, "update_interval")
 		if err != nil {
 			return &obj, err

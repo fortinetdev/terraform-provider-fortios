@@ -817,7 +817,7 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData) (*map[string]
 		}
 	}
 
-	if v, ok := d.GetOk("uplink"); ok {
+	if v, ok := d.GetOkExists("uplink"); ok {
 		t, err := expandWirelessControllerQosProfileUplink(d, v, "uplink")
 		if err != nil {
 			return &obj, err
@@ -826,7 +826,7 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData) (*map[string]
 		}
 	}
 
-	if v, ok := d.GetOk("downlink"); ok {
+	if v, ok := d.GetOkExists("downlink"); ok {
 		t, err := expandWirelessControllerQosProfileDownlink(d, v, "downlink")
 		if err != nil {
 			return &obj, err
@@ -835,7 +835,7 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData) (*map[string]
 		}
 	}
 
-	if v, ok := d.GetOk("uplink_sta"); ok {
+	if v, ok := d.GetOkExists("uplink_sta"); ok {
 		t, err := expandWirelessControllerQosProfileUplinkSta(d, v, "uplink_sta")
 		if err != nil {
 			return &obj, err
@@ -844,7 +844,7 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData) (*map[string]
 		}
 	}
 
-	if v, ok := d.GetOk("downlink_sta"); ok {
+	if v, ok := d.GetOkExists("downlink_sta"); ok {
 		t, err := expandWirelessControllerQosProfileDownlinkSta(d, v, "downlink_sta")
 		if err != nil {
 			return &obj, err
@@ -889,7 +889,7 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData) (*map[string]
 		}
 	}
 
-	if v, ok := d.GetOk("call_capacity"); ok {
+	if v, ok := d.GetOkExists("call_capacity"); ok {
 		t, err := expandWirelessControllerQosProfileCallCapacity(d, v, "call_capacity")
 		if err != nil {
 			return &obj, err

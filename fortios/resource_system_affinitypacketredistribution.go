@@ -213,7 +213,7 @@ func expandSystemAffinityPacketRedistributionAffinityCpumask(d *schema.ResourceD
 func getObjectSystemAffinityPacketRedistribution(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("fosid"); ok {
+	if v, ok := d.GetOkExists("fosid"); ok {
 		t, err := expandSystemAffinityPacketRedistributionId(d, v, "fosid")
 		if err != nil {
 			return &obj, err
@@ -231,7 +231,7 @@ func getObjectSystemAffinityPacketRedistribution(d *schema.ResourceData) (*map[s
 		}
 	}
 
-	if v, ok := d.GetOk("rxqid"); ok {
+	if v, ok := d.GetOkExists("rxqid"); ok {
 		t, err := expandSystemAffinityPacketRedistributionRxqid(d, v, "rxqid")
 		if err != nil {
 			return &obj, err

@@ -521,7 +521,7 @@ func getObjectSystemPppoeInterface(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("idle_timeout"); ok {
+	if v, ok := d.GetOkExists("idle_timeout"); ok {
 		t, err := expandSystemPppoeInterfaceIdleTimeout(d, v, "idle_timeout")
 		if err != nil {
 			return &obj, err
@@ -530,7 +530,7 @@ func getObjectSystemPppoeInterface(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("disc_retry_timeout"); ok {
+	if v, ok := d.GetOkExists("disc_retry_timeout"); ok {
 		t, err := expandSystemPppoeInterfaceDiscRetryTimeout(d, v, "disc_retry_timeout")
 		if err != nil {
 			return &obj, err
@@ -539,7 +539,7 @@ func getObjectSystemPppoeInterface(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("padt_retry_timeout"); ok {
+	if v, ok := d.GetOkExists("padt_retry_timeout"); ok {
 		t, err := expandSystemPppoeInterfacePadtRetryTimeout(d, v, "padt_retry_timeout")
 		if err != nil {
 			return &obj, err
@@ -566,7 +566,7 @@ func getObjectSystemPppoeInterface(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("lcp_echo_interval"); ok {
+	if v, ok := d.GetOkExists("lcp_echo_interval"); ok {
 		t, err := expandSystemPppoeInterfaceLcpEchoInterval(d, v, "lcp_echo_interval")
 		if err != nil {
 			return &obj, err
@@ -575,7 +575,7 @@ func getObjectSystemPppoeInterface(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("lcp_max_echo_fails"); ok {
+	if v, ok := d.GetOkExists("lcp_max_echo_fails"); ok {
 		t, err := expandSystemPppoeInterfaceLcpMaxEchoFails(d, v, "lcp_max_echo_fails")
 		if err != nil {
 			return &obj, err

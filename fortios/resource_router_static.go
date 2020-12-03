@@ -517,7 +517,7 @@ func expandRouterStaticBfd(d *schema.ResourceData, v interface{}, pre string) (i
 func getObjectRouterStatic(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("seq_num"); ok {
+	if v, ok := d.GetOkExists("seq_num"); ok {
 		t, err := expandRouterStaticSeqNum(d, v, "seq_num")
 		if err != nil {
 			return &obj, err
@@ -571,7 +571,7 @@ func getObjectRouterStatic(d *schema.ResourceData) (*map[string]interface{}, err
 		}
 	}
 
-	if v, ok := d.GetOk("weight"); ok {
+	if v, ok := d.GetOkExists("weight"); ok {
 		t, err := expandRouterStaticWeight(d, v, "weight")
 		if err != nil {
 			return &obj, err
@@ -580,7 +580,7 @@ func getObjectRouterStatic(d *schema.ResourceData) (*map[string]interface{}, err
 		}
 	}
 
-	if v, ok := d.GetOk("priority"); ok {
+	if v, ok := d.GetOkExists("priority"); ok {
 		t, err := expandRouterStaticPriority(d, v, "priority")
 		if err != nil {
 			return &obj, err
@@ -643,7 +643,7 @@ func getObjectRouterStatic(d *schema.ResourceData) (*map[string]interface{}, err
 		}
 	}
 
-	if v, ok := d.GetOk("internet_service"); ok {
+	if v, ok := d.GetOkExists("internet_service"); ok {
 		t, err := expandRouterStaticInternetService(d, v, "internet_service")
 		if err != nil {
 			return &obj, err
@@ -670,7 +670,7 @@ func getObjectRouterStatic(d *schema.ResourceData) (*map[string]interface{}, err
 		}
 	}
 
-	if v, ok := d.GetOk("vrf"); ok {
+	if v, ok := d.GetOkExists("vrf"); ok {
 		t, err := expandRouterStaticVrf(d, v, "vrf")
 		if err != nil {
 			return &obj, err

@@ -339,7 +339,7 @@ func getObjectSwitchControllerTrafficPolicy(d *schema.ResourceData) (*map[string
 		}
 	}
 
-	if v, ok := d.GetOk("guaranteed_bandwidth"); ok {
+	if v, ok := d.GetOkExists("guaranteed_bandwidth"); ok {
 		t, err := expandSwitchControllerTrafficPolicyGuaranteedBandwidth(d, v, "guaranteed_bandwidth")
 		if err != nil {
 			return &obj, err
@@ -348,7 +348,7 @@ func getObjectSwitchControllerTrafficPolicy(d *schema.ResourceData) (*map[string
 		}
 	}
 
-	if v, ok := d.GetOk("guaranteed_burst"); ok {
+	if v, ok := d.GetOkExists("guaranteed_burst"); ok {
 		t, err := expandSwitchControllerTrafficPolicyGuaranteedBurst(d, v, "guaranteed_burst")
 		if err != nil {
 			return &obj, err
@@ -357,7 +357,7 @@ func getObjectSwitchControllerTrafficPolicy(d *schema.ResourceData) (*map[string
 		}
 	}
 
-	if v, ok := d.GetOk("maximum_burst"); ok {
+	if v, ok := d.GetOkExists("maximum_burst"); ok {
 		t, err := expandSwitchControllerTrafficPolicyMaximumBurst(d, v, "maximum_burst")
 		if err != nil {
 			return &obj, err
@@ -375,7 +375,7 @@ func getObjectSwitchControllerTrafficPolicy(d *schema.ResourceData) (*map[string
 		}
 	}
 
-	if v, ok := d.GetOk("cos"); ok {
+	if v, ok := d.GetOkExists("cos"); ok {
 		t, err := expandSwitchControllerTrafficPolicyCos(d, v, "cos")
 		if err != nil {
 			return &obj, err
@@ -384,7 +384,7 @@ func getObjectSwitchControllerTrafficPolicy(d *schema.ResourceData) (*map[string
 		}
 	}
 
-	if v, ok := d.GetOk("fosid"); ok {
+	if v, ok := d.GetOkExists("fosid"); ok {
 		t, err := expandSwitchControllerTrafficPolicyId(d, v, "fosid")
 		if err != nil {
 			return &obj, err

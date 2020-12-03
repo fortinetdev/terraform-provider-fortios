@@ -264,7 +264,7 @@ func getObjectSystemAutoScript(d *schema.ResourceData) (*map[string]interface{},
 		}
 	}
 
-	if v, ok := d.GetOk("interval"); ok {
+	if v, ok := d.GetOkExists("interval"); ok {
 		t, err := expandSystemAutoScriptInterval(d, v, "interval")
 		if err != nil {
 			return &obj, err
@@ -273,7 +273,7 @@ func getObjectSystemAutoScript(d *schema.ResourceData) (*map[string]interface{},
 		}
 	}
 
-	if v, ok := d.GetOk("repeat"); ok {
+	if v, ok := d.GetOkExists("repeat"); ok {
 		t, err := expandSystemAutoScriptRepeat(d, v, "repeat")
 		if err != nil {
 			return &obj, err

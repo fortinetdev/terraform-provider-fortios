@@ -238,7 +238,7 @@ func getObjectSwitchControllerLldpSettings(d *schema.ResourceData) (*map[string]
 		}
 	}
 
-	if v, ok := d.GetOk("fast_start_interval"); ok {
+	if v, ok := d.GetOkExists("fast_start_interval"); ok {
 		t, err := expandSwitchControllerLldpSettingsFastStartInterval(d, v, "fast_start_interval")
 		if err != nil {
 			return &obj, err

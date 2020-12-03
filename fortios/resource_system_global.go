@@ -3821,7 +3821,7 @@ func getObjectSystemGlobal(d *schema.ResourceData) (*map[string]interface{}, err
 		}
 	}
 
-	if v, ok := d.GetOk("ssd_trim_hour"); ok {
+	if v, ok := d.GetOkExists("ssd_trim_hour"); ok {
 		t, err := expandSystemGlobalSsdTrimHour(d, v, "ssd_trim_hour")
 		if err != nil {
 			return &obj, err
@@ -3830,7 +3830,7 @@ func getObjectSystemGlobal(d *schema.ResourceData) (*map[string]interface{}, err
 		}
 	}
 
-	if v, ok := d.GetOk("ssd_trim_min"); ok {
+	if v, ok := d.GetOkExists("ssd_trim_min"); ok {
 		t, err := expandSystemGlobalSsdTrimMin(d, v, "ssd_trim_min")
 		if err != nil {
 			return &obj, err
@@ -3884,7 +3884,7 @@ func getObjectSystemGlobal(d *schema.ResourceData) (*map[string]interface{}, err
 		}
 	}
 
-	if v, ok := d.GetOk("refresh"); ok {
+	if v, ok := d.GetOkExists("refresh"); ok {
 		t, err := expandSystemGlobalRefresh(d, v, "refresh")
 		if err != nil {
 			return &obj, err
@@ -3893,7 +3893,7 @@ func getObjectSystemGlobal(d *schema.ResourceData) (*map[string]interface{}, err
 		}
 	}
 
-	if v, ok := d.GetOk("interval"); ok {
+	if v, ok := d.GetOkExists("interval"); ok {
 		t, err := expandSystemGlobalInterval(d, v, "interval")
 		if err != nil {
 			return &obj, err
@@ -3902,7 +3902,7 @@ func getObjectSystemGlobal(d *schema.ResourceData) (*map[string]interface{}, err
 		}
 	}
 
-	if v, ok := d.GetOk("failtime"); ok {
+	if v, ok := d.GetOkExists("failtime"); ok {
 		t, err := expandSystemGlobalFailtime(d, v, "failtime")
 		if err != nil {
 			return &obj, err
@@ -4298,7 +4298,7 @@ func getObjectSystemGlobal(d *schema.ResourceData) (*map[string]interface{}, err
 		}
 	}
 
-	if v, ok := d.GetOk("sys_perf_log_interval"); ok {
+	if v, ok := d.GetOkExists("sys_perf_log_interval"); ok {
 		t, err := expandSystemGlobalSysPerfLogInterval(d, v, "sys_perf_log_interval")
 		if err != nil {
 			return &obj, err
@@ -4370,7 +4370,7 @@ func getObjectSystemGlobal(d *schema.ResourceData) (*map[string]interface{}, err
 		}
 	}
 
-	if v, ok := d.GetOk("tcp_timewait_timer"); ok {
+	if v, ok := d.GetOkExists("tcp_timewait_timer"); ok {
 		t, err := expandSystemGlobalTcpTimewaitTimer(d, v, "tcp_timewait_timer")
 		if err != nil {
 			return &obj, err
@@ -4541,7 +4541,7 @@ func getObjectSystemGlobal(d *schema.ResourceData) (*map[string]interface{}, err
 		}
 	}
 
-	if v, ok := d.GetOk("admin_hsts_max_age"); ok {
+	if v, ok := d.GetOkExists("admin_hsts_max_age"); ok {
 		t, err := expandSystemGlobalAdminHstsMaxAge(d, v, "admin_hsts_max_age")
 		if err != nil {
 			return &obj, err
@@ -4703,7 +4703,7 @@ func getObjectSystemGlobal(d *schema.ResourceData) (*map[string]interface{}, err
 		}
 	}
 
-	if v, ok := d.GetOk("policy_auth_concurrent"); ok {
+	if v, ok := d.GetOkExists("policy_auth_concurrent"); ok {
 		t, err := expandSystemGlobalPolicyAuthConcurrent(d, v, "policy_auth_concurrent")
 		if err != nil {
 			return &obj, err
@@ -4901,7 +4901,7 @@ func getObjectSystemGlobal(d *schema.ResourceData) (*map[string]interface{}, err
 		}
 	}
 
-	if v, ok := d.GetOk("proxy_worker_count"); ok {
+	if v, ok := d.GetOkExists("proxy_worker_count"); ok {
 		t, err := expandSystemGlobalProxyWorkerCount(d, v, "proxy_worker_count")
 		if err != nil {
 			return &obj, err
@@ -4910,7 +4910,7 @@ func getObjectSystemGlobal(d *schema.ResourceData) (*map[string]interface{}, err
 		}
 	}
 
-	if v, ok := d.GetOk("scanunit_count"); ok {
+	if v, ok := d.GetOkExists("scanunit_count"); ok {
 		t, err := expandSystemGlobalScanunitCount(d, v, "scanunit_count")
 		if err != nil {
 			return &obj, err
@@ -4955,7 +4955,7 @@ func getObjectSystemGlobal(d *schema.ResourceData) (*map[string]interface{}, err
 		}
 	}
 
-	if v, ok := d.GetOk("ipv6_accept_dad"); ok {
+	if v, ok := d.GetOkExists("ipv6_accept_dad"); ok {
 		t, err := expandSystemGlobalIpv6AcceptDad(d, v, "ipv6_accept_dad")
 		if err != nil {
 			return &obj, err
@@ -5000,7 +5000,7 @@ func getObjectSystemGlobal(d *schema.ResourceData) (*map[string]interface{}, err
 		}
 	}
 
-	if v, ok := d.GetOk("sslvpn_max_worker_count"); ok {
+	if v, ok := d.GetOkExists("sslvpn_max_worker_count"); ok {
 		t, err := expandSystemGlobalSslvpnMaxWorkerCount(d, v, "sslvpn_max_worker_count")
 		if err != nil {
 			return &obj, err
@@ -5090,7 +5090,7 @@ func getObjectSystemGlobal(d *schema.ResourceData) (*map[string]interface{}, err
 		}
 	}
 
-	if v, ok := d.GetOk("virtual_server_count"); ok {
+	if v, ok := d.GetOkExists("virtual_server_count"); ok {
 		t, err := expandSystemGlobalVirtualServerCount(d, v, "virtual_server_count")
 		if err != nil {
 			return &obj, err
@@ -5108,7 +5108,7 @@ func getObjectSystemGlobal(d *schema.ResourceData) (*map[string]interface{}, err
 		}
 	}
 
-	if v, ok := d.GetOk("wad_worker_count"); ok {
+	if v, ok := d.GetOkExists("wad_worker_count"); ok {
 		t, err := expandSystemGlobalWadWorkerCount(d, v, "wad_worker_count")
 		if err != nil {
 			return &obj, err
@@ -5126,7 +5126,7 @@ func getObjectSystemGlobal(d *schema.ResourceData) (*map[string]interface{}, err
 		}
 	}
 
-	if v, ok := d.GetOk("wad_csvc_db_count"); ok {
+	if v, ok := d.GetOkExists("wad_csvc_db_count"); ok {
 		t, err := expandSystemGlobalWadCsvcDbCount(d, v, "wad_csvc_db_count")
 		if err != nil {
 			return &obj, err
@@ -5153,7 +5153,7 @@ func getObjectSystemGlobal(d *schema.ResourceData) (*map[string]interface{}, err
 		}
 	}
 
-	if v, ok := d.GetOk("miglogd_children"); ok {
+	if v, ok := d.GetOkExists("miglogd_children"); ok {
 		t, err := expandSystemGlobalMiglogdChildren(d, v, "miglogd_children")
 		if err != nil {
 			return &obj, err
@@ -5261,7 +5261,7 @@ func getObjectSystemGlobal(d *schema.ResourceData) (*map[string]interface{}, err
 		}
 	}
 
-	if v, ok := d.GetOk("max_route_cache_size"); ok {
+	if v, ok := d.GetOkExists("max_route_cache_size"); ok {
 		t, err := expandSystemGlobalMaxRouteCacheSize(d, v, "max_route_cache_size")
 		if err != nil {
 			return &obj, err

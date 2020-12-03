@@ -785,7 +785,7 @@ func expandSystemSnmpCommunityEvents(d *schema.ResourceData, v interface{}, pre 
 func getObjectSystemSnmpCommunity(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("fosid"); ok {
+	if v, ok := d.GetOkExists("fosid"); ok {
 		t, err := expandSystemSnmpCommunityId(d, v, "fosid")
 		if err != nil {
 			return &obj, err
@@ -857,7 +857,7 @@ func getObjectSystemSnmpCommunity(d *schema.ResourceData) (*map[string]interface
 		}
 	}
 
-	if v, ok := d.GetOk("query_v2c_port"); ok {
+	if v, ok := d.GetOkExists("query_v2c_port"); ok {
 		t, err := expandSystemSnmpCommunityQueryV2CPort(d, v, "query_v2c_port")
 		if err != nil {
 			return &obj, err

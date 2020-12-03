@@ -2789,7 +2789,7 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 		}
 	}
 
-	if v, ok := d.GetOk("hidden"); ok {
+	if v, ok := d.GetOkExists("hidden"); ok {
 		t, err := expandSystemAdminHidden(d, v, "hidden")
 		if err != nil {
 			return &obj, err

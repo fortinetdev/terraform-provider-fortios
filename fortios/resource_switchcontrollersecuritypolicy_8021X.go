@@ -588,7 +588,7 @@ func getObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData) (*map[
 		}
 	}
 
-	if v, ok := d.GetOk("guest_vlanid"); ok {
+	if v, ok := d.GetOkExists("guest_vlanid"); ok {
 		t, err := expandSwitchControllerSecurityPolicy8021XGuestVlanid(d, v, "guest_vlanid")
 		if err != nil {
 			return &obj, err
@@ -624,7 +624,7 @@ func getObjectSwitchControllerSecurityPolicy8021X(d *schema.ResourceData) (*map[
 		}
 	}
 
-	if v, ok := d.GetOk("auth_fail_vlanid"); ok {
+	if v, ok := d.GetOkExists("auth_fail_vlanid"); ok {
 		t, err := expandSwitchControllerSecurityPolicy8021XAuthFailVlanid(d, v, "auth_fail_vlanid")
 		if err != nil {
 			return &obj, err

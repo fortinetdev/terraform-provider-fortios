@@ -368,7 +368,7 @@ func getObjectUserFortitoken(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("activation_expire"); ok {
+	if v, ok := d.GetOkExists("activation_expire"); ok {
 		t, err := expandUserFortitokenActivationExpire(d, v, "activation_expire")
 		if err != nil {
 			return &obj, err

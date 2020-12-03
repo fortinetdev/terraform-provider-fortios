@@ -301,7 +301,7 @@ func getObjectFirewallShaperTrafficShaper(d *schema.ResourceData) (*map[string]i
 		}
 	}
 
-	if v, ok := d.GetOk("guaranteed_bandwidth"); ok {
+	if v, ok := d.GetOkExists("guaranteed_bandwidth"); ok {
 		t, err := expandFirewallShaperTrafficShaperGuaranteedBandwidth(d, v, "guaranteed_bandwidth")
 		if err != nil {
 			return &obj, err
@@ -310,7 +310,7 @@ func getObjectFirewallShaperTrafficShaper(d *schema.ResourceData) (*map[string]i
 		}
 	}
 
-	if v, ok := d.GetOk("maximum_bandwidth"); ok {
+	if v, ok := d.GetOkExists("maximum_bandwidth"); ok {
 		t, err := expandFirewallShaperTrafficShaperMaximumBandwidth(d, v, "maximum_bandwidth")
 		if err != nil {
 			return &obj, err

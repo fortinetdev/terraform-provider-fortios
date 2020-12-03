@@ -190,7 +190,7 @@ func getObjectSwitchController8021XSettings(d *schema.ResourceData) (*map[string
 		}
 	}
 
-	if v, ok := d.GetOk("max_reauth_attempt"); ok {
+	if v, ok := d.GetOkExists("max_reauth_attempt"); ok {
 		t, err := expandSwitchController8021XSettingsMaxReauthAttempt(d, v, "max_reauth_attempt")
 		if err != nil {
 			return &obj, err

@@ -214,7 +214,7 @@ func expandWirelessControllerApStatusStatus(d *schema.ResourceData, v interface{
 func getObjectWirelessControllerApStatus(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("fosid"); ok {
+	if v, ok := d.GetOkExists("fosid"); ok {
 		t, err := expandWirelessControllerApStatusId(d, v, "fosid")
 		if err != nil {
 			return &obj, err

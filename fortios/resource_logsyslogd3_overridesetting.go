@@ -526,7 +526,7 @@ func getObjectLogSyslogd3OverrideSetting(d *schema.ResourceData) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("port"); ok {
+	if v, ok := d.GetOkExists("port"); ok {
 		t, err := expandLogSyslogd3OverrideSettingPort(d, v, "port")
 		if err != nil {
 			return &obj, err
@@ -598,7 +598,7 @@ func getObjectLogSyslogd3OverrideSetting(d *schema.ResourceData) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("syslog_type"); ok {
+	if v, ok := d.GetOkExists("syslog_type"); ok {
 		t, err := expandLogSyslogd3OverrideSettingSyslogType(d, v, "syslog_type")
 		if err != nil {
 			return &obj, err

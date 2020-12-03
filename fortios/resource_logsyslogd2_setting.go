@@ -498,7 +498,7 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData) (*map[string]interface{
 		}
 	}
 
-	if v, ok := d.GetOk("port"); ok {
+	if v, ok := d.GetOkExists("port"); ok {
 		t, err := expandLogSyslogd2SettingPort(d, v, "port")
 		if err != nil {
 			return &obj, err
@@ -570,7 +570,7 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData) (*map[string]interface{
 		}
 	}
 
-	if v, ok := d.GetOk("syslog_type"); ok {
+	if v, ok := d.GetOkExists("syslog_type"); ok {
 		t, err := expandLogSyslogd2SettingSyslogType(d, v, "syslog_type")
 		if err != nil {
 			return &obj, err

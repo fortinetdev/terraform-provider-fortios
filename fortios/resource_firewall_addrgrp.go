@@ -743,7 +743,7 @@ func getObjectFirewallAddrgrp(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("color"); ok {
+	if v, ok := d.GetOkExists("color"); ok {
 		t, err := expandFirewallAddrgrpColor(d, v, "color")
 		if err != nil {
 			return &obj, err

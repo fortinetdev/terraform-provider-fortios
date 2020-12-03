@@ -606,7 +606,7 @@ func getObjectDlpFpDocSource(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("tod_hour"); ok {
+	if v, ok := d.GetOkExists("tod_hour"); ok {
 		t, err := expandDlpFpDocSourceTodHour(d, v, "tod_hour")
 		if err != nil {
 			return &obj, err
@@ -615,7 +615,7 @@ func getObjectDlpFpDocSource(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("tod_min"); ok {
+	if v, ok := d.GetOkExists("tod_min"); ok {
 		t, err := expandDlpFpDocSourceTodMin(d, v, "tod_min")
 		if err != nil {
 			return &obj, err

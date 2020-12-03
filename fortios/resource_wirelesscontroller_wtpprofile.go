@@ -4372,7 +4372,7 @@ func getObjectWirelessControllerWtpProfile(d *schema.ResourceData) (*map[string]
 		}
 	}
 
-	if v, ok := d.GetOk("max_clients"); ok {
+	if v, ok := d.GetOkExists("max_clients"); ok {
 		t, err := expandWirelessControllerWtpProfileMaxClients(d, v, "max_clients")
 		if err != nil {
 			return &obj, err
@@ -4390,7 +4390,7 @@ func getObjectWirelessControllerWtpProfile(d *schema.ResourceData) (*map[string]
 		}
 	}
 
-	if v, ok := d.GetOk("handoff_sta_thresh"); ok {
+	if v, ok := d.GetOkExists("handoff_sta_thresh"); ok {
 		t, err := expandWirelessControllerWtpProfileHandoffStaThresh(d, v, "handoff_sta_thresh")
 		if err != nil {
 			return &obj, err

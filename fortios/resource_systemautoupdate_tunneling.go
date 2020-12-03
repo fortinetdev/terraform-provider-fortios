@@ -224,7 +224,7 @@ func getObjectSystemAutoupdateTunneling(d *schema.ResourceData) (*map[string]int
 		}
 	}
 
-	if v, ok := d.GetOk("port"); ok {
+	if v, ok := d.GetOkExists("port"); ok {
 		t, err := expandSystemAutoupdateTunnelingPort(d, v, "port")
 		if err != nil {
 			return &obj, err

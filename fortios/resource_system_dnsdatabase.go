@@ -747,7 +747,7 @@ func getObjectSystemDnsDatabase(d *schema.ResourceData) (*map[string]interface{}
 		}
 	}
 
-	if v, ok := d.GetOk("ttl"); ok {
+	if v, ok := d.GetOkExists("ttl"); ok {
 		t, err := expandSystemDnsDatabaseTtl(d, v, "ttl")
 		if err != nil {
 			return &obj, err

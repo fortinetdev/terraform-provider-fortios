@@ -355,7 +355,7 @@ func getObjectSystemPasswordPolicy(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("min_lower_case_letter"); ok {
+	if v, ok := d.GetOkExists("min_lower_case_letter"); ok {
 		t, err := expandSystemPasswordPolicyMinLowerCaseLetter(d, v, "min_lower_case_letter")
 		if err != nil {
 			return &obj, err
@@ -364,7 +364,7 @@ func getObjectSystemPasswordPolicy(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("min_upper_case_letter"); ok {
+	if v, ok := d.GetOkExists("min_upper_case_letter"); ok {
 		t, err := expandSystemPasswordPolicyMinUpperCaseLetter(d, v, "min_upper_case_letter")
 		if err != nil {
 			return &obj, err
@@ -373,7 +373,7 @@ func getObjectSystemPasswordPolicy(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("min_non_alphanumeric"); ok {
+	if v, ok := d.GetOkExists("min_non_alphanumeric"); ok {
 		t, err := expandSystemPasswordPolicyMinNonAlphanumeric(d, v, "min_non_alphanumeric")
 		if err != nil {
 			return &obj, err
@@ -382,7 +382,7 @@ func getObjectSystemPasswordPolicy(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("min_number"); ok {
+	if v, ok := d.GetOkExists("min_number"); ok {
 		t, err := expandSystemPasswordPolicyMinNumber(d, v, "min_number")
 		if err != nil {
 			return &obj, err

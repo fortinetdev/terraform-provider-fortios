@@ -542,7 +542,7 @@ func getObjectSystemGreTunnel(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("key_outbound"); ok {
+	if v, ok := d.GetOkExists("key_outbound"); ok {
 		t, err := expandSystemGreTunnelKeyOutbound(d, v, "key_outbound")
 		if err != nil {
 			return &obj, err
@@ -551,7 +551,7 @@ func getObjectSystemGreTunnel(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("key_inbound"); ok {
+	if v, ok := d.GetOkExists("key_inbound"); ok {
 		t, err := expandSystemGreTunnelKeyInbound(d, v, "key_inbound")
 		if err != nil {
 			return &obj, err
@@ -569,7 +569,7 @@ func getObjectSystemGreTunnel(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("keepalive_interval"); ok {
+	if v, ok := d.GetOkExists("keepalive_interval"); ok {
 		t, err := expandSystemGreTunnelKeepaliveInterval(d, v, "keepalive_interval")
 		if err != nil {
 			return &obj, err

@@ -2391,7 +2391,7 @@ func expandFirewallConsolidatedPolicyAppGroupName(d *schema.ResourceData, v inte
 func getObjectFirewallConsolidatedPolicy(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("policyid"); ok {
+	if v, ok := d.GetOkExists("policyid"); ok {
 		t, err := expandFirewallConsolidatedPolicyPolicyid(d, v, "policyid")
 		if err != nil {
 			return &obj, err
@@ -2724,7 +2724,7 @@ func getObjectFirewallConsolidatedPolicy(d *schema.ResourceData) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("tcp_mss_sender"); ok {
+	if v, ok := d.GetOkExists("tcp_mss_sender"); ok {
 		t, err := expandFirewallConsolidatedPolicyTcpMssSender(d, v, "tcp_mss_sender")
 		if err != nil {
 			return &obj, err
@@ -2733,7 +2733,7 @@ func getObjectFirewallConsolidatedPolicy(d *schema.ResourceData) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("tcp_mss_receiver"); ok {
+	if v, ok := d.GetOkExists("tcp_mss_receiver"); ok {
 		t, err := expandFirewallConsolidatedPolicyTcpMssReceiver(d, v, "tcp_mss_receiver")
 		if err != nil {
 			return &obj, err

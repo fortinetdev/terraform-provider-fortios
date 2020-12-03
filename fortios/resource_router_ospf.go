@@ -3162,7 +3162,7 @@ func getObjectRouterOspf(d *schema.ResourceData) (*map[string]interface{}, error
 		}
 	}
 
-	if v, ok := d.GetOk("database_overflow_max_lsas"); ok {
+	if v, ok := d.GetOkExists("database_overflow_max_lsas"); ok {
 		t, err := expandRouterOspfDatabaseOverflowMaxLsas(d, v, "database_overflow_max_lsas")
 		if err != nil {
 			return &obj, err
@@ -3171,7 +3171,7 @@ func getObjectRouterOspf(d *schema.ResourceData) (*map[string]interface{}, error
 		}
 	}
 
-	if v, ok := d.GetOk("database_overflow_time_to_recover"); ok {
+	if v, ok := d.GetOkExists("database_overflow_time_to_recover"); ok {
 		t, err := expandRouterOspfDatabaseOverflowTimeToRecover(d, v, "database_overflow_time_to_recover")
 		if err != nil {
 			return &obj, err

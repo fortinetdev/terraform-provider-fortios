@@ -320,7 +320,7 @@ func getObjectSystemAutomationDestination(d *schema.ResourceData) (*map[string]i
 		}
 	}
 
-	if v, ok := d.GetOk("ha_group_id"); ok {
+	if v, ok := d.GetOkExists("ha_group_id"); ok {
 		t, err := expandSystemAutomationDestinationHaGroupId(d, v, "ha_group_id")
 		if err != nil {
 			return &obj, err

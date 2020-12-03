@@ -542,7 +542,7 @@ func expandFirewallLocalInPolicy6Comments(d *schema.ResourceData, v interface{},
 func getObjectFirewallLocalInPolicy6(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("policyid"); ok {
+	if v, ok := d.GetOkExists("policyid"); ok {
 		t, err := expandFirewallLocalInPolicy6Policyid(d, v, "policyid")
 		if err != nil {
 			return &obj, err

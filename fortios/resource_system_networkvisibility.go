@@ -265,7 +265,7 @@ func getObjectSystemNetworkVisibility(d *schema.ResourceData) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("hostname_limit"); ok {
+	if v, ok := d.GetOkExists("hostname_limit"); ok {
 		t, err := expandSystemNetworkVisibilityHostnameLimit(d, v, "hostname_limit")
 		if err != nil {
 			return &obj, err

@@ -786,7 +786,7 @@ func expandSystemClusterSyncSessionSyncFilterCustomServiceDstPortRange(d *schema
 func getObjectSystemClusterSync(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("sync_id"); ok {
+	if v, ok := d.GetOkExists("sync_id"); ok {
 		t, err := expandSystemClusterSyncSyncId(d, v, "sync_id")
 		if err != nil {
 			return &obj, err

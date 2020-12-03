@@ -416,7 +416,7 @@ func getObjectIpsGlobal(d *schema.ResourceData) (*map[string]interface{}, error)
 		}
 	}
 
-	if v, ok := d.GetOk("socket_size"); ok {
+	if v, ok := d.GetOkExists("socket_size"); ok {
 		t, err := expandIpsGlobalSocketSize(d, v, "socket_size")
 		if err != nil {
 			return &obj, err
@@ -425,7 +425,7 @@ func getObjectIpsGlobal(d *schema.ResourceData) (*map[string]interface{}, error)
 		}
 	}
 
-	if v, ok := d.GetOk("engine_count"); ok {
+	if v, ok := d.GetOkExists("engine_count"); ok {
 		t, err := expandIpsGlobalEngineCount(d, v, "engine_count")
 		if err != nil {
 			return &obj, err
@@ -452,7 +452,7 @@ func getObjectIpsGlobal(d *schema.ResourceData) (*map[string]interface{}, error)
 		}
 	}
 
-	if v, ok := d.GetOk("deep_app_insp_timeout"); ok {
+	if v, ok := d.GetOkExists("deep_app_insp_timeout"); ok {
 		t, err := expandIpsGlobalDeepAppInspTimeout(d, v, "deep_app_insp_timeout")
 		if err != nil {
 			return &obj, err
@@ -461,7 +461,7 @@ func getObjectIpsGlobal(d *schema.ResourceData) (*map[string]interface{}, error)
 		}
 	}
 
-	if v, ok := d.GetOk("deep_app_insp_db_limit"); ok {
+	if v, ok := d.GetOkExists("deep_app_insp_db_limit"); ok {
 		t, err := expandIpsGlobalDeepAppInspDbLimit(d, v, "deep_app_insp_db_limit")
 		if err != nil {
 			return &obj, err

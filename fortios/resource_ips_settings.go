@@ -201,7 +201,7 @@ func getObjectIpsSettings(d *schema.ResourceData) (*map[string]interface{}, erro
 		}
 	}
 
-	if v, ok := d.GetOk("packet_log_post_attack"); ok {
+	if v, ok := d.GetOkExists("packet_log_post_attack"); ok {
 		t, err := expandIpsSettingsPacketLogPostAttack(d, v, "packet_log_post_attack")
 		if err != nil {
 			return &obj, err
@@ -219,7 +219,7 @@ func getObjectIpsSettings(d *schema.ResourceData) (*map[string]interface{}, erro
 		}
 	}
 
-	if v, ok := d.GetOk("ips_packet_quota"); ok {
+	if v, ok := d.GetOkExists("ips_packet_quota"); ok {
 		t, err := expandIpsSettingsIpsPacketQuota(d, v, "ips_packet_quota")
 		if err != nil {
 			return &obj, err

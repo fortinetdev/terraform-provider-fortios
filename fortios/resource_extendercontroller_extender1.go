@@ -1495,7 +1495,7 @@ func getObjectExtenderControllerExtender1(d *schema.ResourceData) (*map[string]i
 		}
 	}
 
-	if v, ok := d.GetOk("vdom"); ok {
+	if v, ok := d.GetOkExists("vdom"); ok {
 		t, err := expandExtenderControllerExtender1Vdom(d, v, "vdom")
 		if err != nil {
 			return &obj, err

@@ -933,7 +933,7 @@ func getObjectFirewallVip64(d *schema.ResourceData) (*map[string]interface{}, er
 		}
 	}
 
-	if v, ok := d.GetOk("fosid"); ok {
+	if v, ok := d.GetOkExists("fosid"); ok {
 		t, err := expandFirewallVip64Id(d, v, "fosid")
 		if err != nil {
 			return &obj, err
@@ -1041,7 +1041,7 @@ func getObjectFirewallVip64(d *schema.ResourceData) (*map[string]interface{}, er
 		}
 	}
 
-	if v, ok := d.GetOk("color"); ok {
+	if v, ok := d.GetOkExists("color"); ok {
 		t, err := expandFirewallVip64Color(d, v, "color")
 		if err != nil {
 			return &obj, err

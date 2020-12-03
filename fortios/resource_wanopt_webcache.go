@@ -450,7 +450,7 @@ func getObjectWanoptWebcache(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("neg_resp_time"); ok {
+	if v, ok := d.GetOkExists("neg_resp_time"); ok {
 		t, err := expandWanoptWebcacheNegRespTime(d, v, "neg_resp_time")
 		if err != nil {
 			return &obj, err

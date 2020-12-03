@@ -430,7 +430,7 @@ func getObjectWirelessControllerBleProfile(d *schema.ResourceData) (*map[string]
 		}
 	}
 
-	if v, ok := d.GetOk("major_id"); ok {
+	if v, ok := d.GetOkExists("major_id"); ok {
 		t, err := expandWirelessControllerBleProfileMajorId(d, v, "major_id")
 		if err != nil {
 			return &obj, err
@@ -439,7 +439,7 @@ func getObjectWirelessControllerBleProfile(d *schema.ResourceData) (*map[string]
 		}
 	}
 
-	if v, ok := d.GetOk("minor_id"); ok {
+	if v, ok := d.GetOkExists("minor_id"); ok {
 		t, err := expandWirelessControllerBleProfileMinorId(d, v, "minor_id")
 		if err != nil {
 			return &obj, err

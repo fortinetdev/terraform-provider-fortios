@@ -2966,7 +2966,7 @@ func getObjectVpnIpsecPhase1(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("priority"); ok {
+	if v, ok := d.GetOkExists("priority"); ok {
 		t, err := expandVpnIpsecPhase1Priority(d, v, "priority")
 		if err != nil {
 			return &obj, err
@@ -3029,7 +3029,7 @@ func getObjectVpnIpsecPhase1(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("dpd_retrycount"); ok {
+	if v, ok := d.GetOkExists("dpd_retrycount"); ok {
 		t, err := expandVpnIpsecPhase1DpdRetrycount(d, v, "dpd_retrycount")
 		if err != nil {
 			return &obj, err

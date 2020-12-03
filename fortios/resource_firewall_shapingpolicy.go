@@ -2439,7 +2439,7 @@ func expandFirewallShapingPolicyDiffservcodeRev(d *schema.ResourceData, v interf
 func getObjectFirewallShapingPolicy(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("fosid"); ok {
+	if v, ok := d.GetOkExists("fosid"); ok {
 		t, err := expandFirewallShapingPolicyId(d, v, "fosid")
 		if err != nil {
 			return &obj, err
@@ -2745,7 +2745,7 @@ func getObjectFirewallShapingPolicy(d *schema.ResourceData) (*map[string]interfa
 		}
 	}
 
-	if v, ok := d.GetOk("class_id"); ok {
+	if v, ok := d.GetOkExists("class_id"); ok {
 		t, err := expandFirewallShapingPolicyClassId(d, v, "class_id")
 		if err != nil {
 			return &obj, err

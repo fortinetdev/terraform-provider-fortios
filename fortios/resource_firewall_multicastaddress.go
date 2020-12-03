@@ -602,7 +602,7 @@ func getObjectFirewallMulticastAddress(d *schema.ResourceData) (*map[string]inte
 		}
 	}
 
-	if v, ok := d.GetOk("color"); ok {
+	if v, ok := d.GetOkExists("color"); ok {
 		t, err := expandFirewallMulticastAddressColor(d, v, "color")
 		if err != nil {
 			return &obj, err

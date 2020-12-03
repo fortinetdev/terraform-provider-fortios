@@ -1826,7 +1826,7 @@ func expandSystemDhcpServerReservedAddressDescription(d *schema.ResourceData, v 
 func getObjectSystemDhcpServer(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("fosid"); ok {
+	if v, ok := d.GetOkExists("fosid"); ok {
 		t, err := expandSystemDhcpServerId(d, v, "fosid")
 		if err != nil {
 			return &obj, err
@@ -2114,7 +2114,7 @@ func getObjectSystemDhcpServer(d *schema.ResourceData) (*map[string]interface{},
 		}
 	}
 
-	if v, ok := d.GetOk("ipsec_lease_hold"); ok {
+	if v, ok := d.GetOkExists("ipsec_lease_hold"); ok {
 		t, err := expandSystemDhcpServerIpsecLeaseHold(d, v, "ipsec_lease_hold")
 		if err != nil {
 			return &obj, err

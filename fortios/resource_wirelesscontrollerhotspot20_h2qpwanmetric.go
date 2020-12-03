@@ -348,7 +348,7 @@ func getObjectWirelessControllerHotspot20H2QpWanMetric(d *schema.ResourceData) (
 		}
 	}
 
-	if v, ok := d.GetOk("uplink_speed"); ok {
+	if v, ok := d.GetOkExists("uplink_speed"); ok {
 		t, err := expandWirelessControllerHotspot20H2QpWanMetricUplinkSpeed(d, v, "uplink_speed")
 		if err != nil {
 			return &obj, err
@@ -357,7 +357,7 @@ func getObjectWirelessControllerHotspot20H2QpWanMetric(d *schema.ResourceData) (
 		}
 	}
 
-	if v, ok := d.GetOk("downlink_speed"); ok {
+	if v, ok := d.GetOkExists("downlink_speed"); ok {
 		t, err := expandWirelessControllerHotspot20H2QpWanMetricDownlinkSpeed(d, v, "downlink_speed")
 		if err != nil {
 			return &obj, err
@@ -366,7 +366,7 @@ func getObjectWirelessControllerHotspot20H2QpWanMetric(d *schema.ResourceData) (
 		}
 	}
 
-	if v, ok := d.GetOk("uplink_load"); ok {
+	if v, ok := d.GetOkExists("uplink_load"); ok {
 		t, err := expandWirelessControllerHotspot20H2QpWanMetricUplinkLoad(d, v, "uplink_load")
 		if err != nil {
 			return &obj, err
@@ -375,7 +375,7 @@ func getObjectWirelessControllerHotspot20H2QpWanMetric(d *schema.ResourceData) (
 		}
 	}
 
-	if v, ok := d.GetOk("downlink_load"); ok {
+	if v, ok := d.GetOkExists("downlink_load"); ok {
 		t, err := expandWirelessControllerHotspot20H2QpWanMetricDownlinkLoad(d, v, "downlink_load")
 		if err != nil {
 			return &obj, err
@@ -384,7 +384,7 @@ func getObjectWirelessControllerHotspot20H2QpWanMetric(d *schema.ResourceData) (
 		}
 	}
 
-	if v, ok := d.GetOk("load_measurement_duration"); ok {
+	if v, ok := d.GetOkExists("load_measurement_duration"); ok {
 		t, err := expandWirelessControllerHotspot20H2QpWanMetricLoadMeasurementDuration(d, v, "load_measurement_duration")
 		if err != nil {
 			return &obj, err

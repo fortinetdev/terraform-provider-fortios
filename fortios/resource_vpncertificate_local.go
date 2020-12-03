@@ -675,7 +675,7 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData) (*map[string]interface
 		}
 	}
 
-	if v, ok := d.GetOk("auto_regenerate_days"); ok {
+	if v, ok := d.GetOkExists("auto_regenerate_days"); ok {
 		t, err := expandVpnCertificateLocalAutoRegenerateDays(d, v, "auto_regenerate_days")
 		if err != nil {
 			return &obj, err
@@ -684,7 +684,7 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData) (*map[string]interface
 		}
 	}
 
-	if v, ok := d.GetOk("auto_regenerate_days_warning"); ok {
+	if v, ok := d.GetOkExists("auto_regenerate_days_warning"); ok {
 		t, err := expandVpnCertificateLocalAutoRegenerateDaysWarning(d, v, "auto_regenerate_days_warning")
 		if err != nil {
 			return &obj, err
@@ -747,7 +747,7 @@ func getObjectVpnCertificateLocal(d *schema.ResourceData) (*map[string]interface
 		}
 	}
 
-	if v, ok := d.GetOk("last_updated"); ok {
+	if v, ok := d.GetOkExists("last_updated"); ok {
 		t, err := expandVpnCertificateLocalLastUpdated(d, v, "last_updated")
 		if err != nil {
 			return &obj, err

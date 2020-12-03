@@ -504,7 +504,7 @@ func getObjectVpnCertificateCrl(d *schema.ResourceData) (*map[string]interface{}
 		}
 	}
 
-	if v, ok := d.GetOk("update_interval"); ok {
+	if v, ok := d.GetOkExists("update_interval"); ok {
 		t, err := expandVpnCertificateCrlUpdateInterval(d, v, "update_interval")
 		if err != nil {
 			return &obj, err
@@ -522,7 +522,7 @@ func getObjectVpnCertificateCrl(d *schema.ResourceData) (*map[string]interface{}
 		}
 	}
 
-	if v, ok := d.GetOk("last_updated"); ok {
+	if v, ok := d.GetOkExists("last_updated"); ok {
 		t, err := expandVpnCertificateCrlLastUpdated(d, v, "last_updated")
 		if err != nil {
 			return &obj, err

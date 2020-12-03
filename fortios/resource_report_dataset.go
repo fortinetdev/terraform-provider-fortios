@@ -539,7 +539,7 @@ func getObjectReportDataset(d *schema.ResourceData) (*map[string]interface{}, er
 		}
 	}
 
-	if v, ok := d.GetOk("policy"); ok {
+	if v, ok := d.GetOkExists("policy"); ok {
 		t, err := expandReportDatasetPolicy(d, v, "policy")
 		if err != nil {
 			return &obj, err

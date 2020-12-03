@@ -208,7 +208,7 @@ func getObjectSystemVdomNetflow(d *schema.ResourceData) (*map[string]interface{}
 		}
 	}
 
-	if v, ok := d.GetOk("collector_port"); ok {
+	if v, ok := d.GetOkExists("collector_port"); ok {
 		t, err := expandSystemVdomNetflowCollectorPort(d, v, "collector_port")
 		if err != nil {
 			return &obj, err

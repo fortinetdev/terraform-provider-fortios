@@ -268,7 +268,7 @@ func getObjectFirewallScheduleRecurring(d *schema.ResourceData) (*map[string]int
 		}
 	}
 
-	if v, ok := d.GetOk("color"); ok {
+	if v, ok := d.GetOkExists("color"); ok {
 		t, err := expandFirewallScheduleRecurringColor(d, v, "color")
 		if err != nil {
 			return &obj, err

@@ -4028,7 +4028,7 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData) (*map[string
 		}
 	}
 
-	if v, ok := d.GetOk("directly_connected"); ok {
+	if v, ok := d.GetOkExists("directly_connected"); ok {
 		t, err := expandSwitchControllerManagedSwitchDirectlyConnected(d, v, "directly_connected")
 		if err != nil {
 			return &obj, err
@@ -4037,7 +4037,7 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData) (*map[string
 		}
 	}
 
-	if v, ok := d.GetOk("version"); ok {
+	if v, ok := d.GetOkExists("version"); ok {
 		t, err := expandSwitchControllerManagedSwitchVersion(d, v, "version")
 		if err != nil {
 			return &obj, err
@@ -4046,7 +4046,7 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData) (*map[string
 		}
 	}
 
-	if v, ok := d.GetOk("max_allowed_trunk_members"); ok {
+	if v, ok := d.GetOkExists("max_allowed_trunk_members"); ok {
 		t, err := expandSwitchControllerManagedSwitchMaxAllowedTrunkMembers(d, v, "max_allowed_trunk_members")
 		if err != nil {
 			return &obj, err
@@ -4055,7 +4055,7 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData) (*map[string
 		}
 	}
 
-	if v, ok := d.GetOk("pre_provisioned"); ok {
+	if v, ok := d.GetOkExists("pre_provisioned"); ok {
 		t, err := expandSwitchControllerManagedSwitchPreProvisioned(d, v, "pre_provisioned")
 		if err != nil {
 			return &obj, err
@@ -4064,7 +4064,7 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData) (*map[string
 		}
 	}
 
-	if v, ok := d.GetOk("dynamic_capability"); ok {
+	if v, ok := d.GetOkExists("dynamic_capability"); ok {
 		t, err := expandSwitchControllerManagedSwitchDynamicCapability(d, v, "dynamic_capability")
 		if err != nil {
 			return &obj, err
@@ -4082,7 +4082,7 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData) (*map[string
 		}
 	}
 
-	if v, ok := d.GetOk("dynamically_discovered"); ok {
+	if v, ok := d.GetOkExists("dynamically_discovered"); ok {
 		t, err := expandSwitchControllerManagedSwitchDynamicallyDiscovered(d, v, "dynamically_discovered")
 		if err != nil {
 			return &obj, err
@@ -4118,7 +4118,7 @@ func getObjectSwitchControllerManagedSwitch(d *schema.ResourceData) (*map[string
 		}
 	}
 
-	if v, ok := d.GetOk("delayed_restart_trigger"); ok {
+	if v, ok := d.GetOkExists("delayed_restart_trigger"); ok {
 		t, err := expandSwitchControllerManagedSwitchDelayedRestartTrigger(d, v, "delayed_restart_trigger")
 		if err != nil {
 			return &obj, err

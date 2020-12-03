@@ -347,7 +347,7 @@ func expandWebfilterOverrideInitiator(d *schema.ResourceData, v interface{}, pre
 func getObjectWebfilterOverride(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("fosid"); ok {
+	if v, ok := d.GetOkExists("fosid"); ok {
 		t, err := expandWebfilterOverrideId(d, v, "fosid")
 		if err != nil {
 			return &obj, err

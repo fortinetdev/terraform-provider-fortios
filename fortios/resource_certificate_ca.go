@@ -382,7 +382,7 @@ func getObjectCertificateCa(d *schema.ResourceData) (*map[string]interface{}, er
 		}
 	}
 
-	if v, ok := d.GetOk("auto_update_days"); ok {
+	if v, ok := d.GetOkExists("auto_update_days"); ok {
 		t, err := expandCertificateCaAutoUpdateDays(d, v, "auto_update_days")
 		if err != nil {
 			return &obj, err
@@ -391,7 +391,7 @@ func getObjectCertificateCa(d *schema.ResourceData) (*map[string]interface{}, er
 		}
 	}
 
-	if v, ok := d.GetOk("auto_update_days_warning"); ok {
+	if v, ok := d.GetOkExists("auto_update_days_warning"); ok {
 		t, err := expandCertificateCaAutoUpdateDaysWarning(d, v, "auto_update_days_warning")
 		if err != nil {
 			return &obj, err
@@ -409,7 +409,7 @@ func getObjectCertificateCa(d *schema.ResourceData) (*map[string]interface{}, er
 		}
 	}
 
-	if v, ok := d.GetOk("last_updated"); ok {
+	if v, ok := d.GetOkExists("last_updated"); ok {
 		t, err := expandCertificateCaLastUpdated(d, v, "last_updated")
 		if err != nil {
 			return &obj, err

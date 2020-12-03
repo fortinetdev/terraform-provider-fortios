@@ -357,7 +357,7 @@ func getObjectFirewallSslSetting(d *schema.ResourceData) (*map[string]interface{
 		}
 	}
 
-	if v, ok := d.GetOk("cert_cache_capacity"); ok {
+	if v, ok := d.GetOkExists("cert_cache_capacity"); ok {
 		t, err := expandFirewallSslSettingCertCacheCapacity(d, v, "cert_cache_capacity")
 		if err != nil {
 			return &obj, err
@@ -375,7 +375,7 @@ func getObjectFirewallSslSetting(d *schema.ResourceData) (*map[string]interface{
 		}
 	}
 
-	if v, ok := d.GetOk("session_cache_capacity"); ok {
+	if v, ok := d.GetOkExists("session_cache_capacity"); ok {
 		t, err := expandFirewallSslSettingSessionCacheCapacity(d, v, "session_cache_capacity")
 		if err != nil {
 			return &obj, err
@@ -393,7 +393,7 @@ func getObjectFirewallSslSetting(d *schema.ResourceData) (*map[string]interface{
 		}
 	}
 
-	if v, ok := d.GetOk("kxp_queue_threshold"); ok {
+	if v, ok := d.GetOkExists("kxp_queue_threshold"); ok {
 		t, err := expandFirewallSslSettingKxpQueueThreshold(d, v, "kxp_queue_threshold")
 		if err != nil {
 			return &obj, err
@@ -402,7 +402,7 @@ func getObjectFirewallSslSetting(d *schema.ResourceData) (*map[string]interface{
 		}
 	}
 
-	if v, ok := d.GetOk("ssl_queue_threshold"); ok {
+	if v, ok := d.GetOkExists("ssl_queue_threshold"); ok {
 		t, err := expandFirewallSslSettingSslQueueThreshold(d, v, "ssl_queue_threshold")
 		if err != nil {
 			return &obj, err

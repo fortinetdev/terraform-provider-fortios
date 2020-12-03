@@ -862,7 +862,7 @@ func getObjectFirewallPolicy46(d *schema.ResourceData) (*map[string]interface{},
 		}
 	}
 
-	if v, ok := d.GetOk("policyid"); ok {
+	if v, ok := d.GetOkExists("policyid"); ok {
 		t, err := expandFirewallPolicy46Policyid(d, v, "policyid")
 		if err != nil {
 			return &obj, err
@@ -997,7 +997,7 @@ func getObjectFirewallPolicy46(d *schema.ResourceData) (*map[string]interface{},
 		}
 	}
 
-	if v, ok := d.GetOk("tcp_mss_sender"); ok {
+	if v, ok := d.GetOkExists("tcp_mss_sender"); ok {
 		t, err := expandFirewallPolicy46TcpMssSender(d, v, "tcp_mss_sender")
 		if err != nil {
 			return &obj, err
@@ -1006,7 +1006,7 @@ func getObjectFirewallPolicy46(d *schema.ResourceData) (*map[string]interface{},
 		}
 	}
 
-	if v, ok := d.GetOk("tcp_mss_receiver"); ok {
+	if v, ok := d.GetOkExists("tcp_mss_receiver"); ok {
 		t, err := expandFirewallPolicy46TcpMssReceiver(d, v, "tcp_mss_receiver")
 		if err != nil {
 			return &obj, err

@@ -285,7 +285,7 @@ func getObjectFirewallIpv6EhFilter(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("hdopt_type"); ok {
+	if v, ok := d.GetOkExists("hdopt_type"); ok {
 		t, err := expandFirewallIpv6EhFilterHdoptType(d, v, "hdopt_type")
 		if err != nil {
 			return &obj, err
@@ -303,7 +303,7 @@ func getObjectFirewallIpv6EhFilter(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("routing_type"); ok {
+	if v, ok := d.GetOkExists("routing_type"); ok {
 		t, err := expandFirewallIpv6EhFilterRoutingType(d, v, "routing_type")
 		if err != nil {
 			return &obj, err

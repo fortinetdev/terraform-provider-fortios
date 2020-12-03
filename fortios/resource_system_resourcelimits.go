@@ -455,7 +455,7 @@ func expandSystemResourceLimitsLogDiskQuota(d *schema.ResourceData, v interface{
 func getObjectSystemResourceLimits(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("session"); ok {
+	if v, ok := d.GetOkExists("session"); ok {
 		t, err := expandSystemResourceLimitsSession(d, v, "session")
 		if err != nil {
 			return &obj, err
@@ -464,7 +464,7 @@ func getObjectSystemResourceLimits(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("ipsec_phase1"); ok {
+	if v, ok := d.GetOkExists("ipsec_phase1"); ok {
 		t, err := expandSystemResourceLimitsIpsecPhase1(d, v, "ipsec_phase1")
 		if err != nil {
 			return &obj, err
@@ -473,7 +473,7 @@ func getObjectSystemResourceLimits(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("ipsec_phase2"); ok {
+	if v, ok := d.GetOkExists("ipsec_phase2"); ok {
 		t, err := expandSystemResourceLimitsIpsecPhase2(d, v, "ipsec_phase2")
 		if err != nil {
 			return &obj, err
@@ -482,7 +482,7 @@ func getObjectSystemResourceLimits(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("ipsec_phase1_interface"); ok {
+	if v, ok := d.GetOkExists("ipsec_phase1_interface"); ok {
 		t, err := expandSystemResourceLimitsIpsecPhase1Interface(d, v, "ipsec_phase1_interface")
 		if err != nil {
 			return &obj, err
@@ -491,7 +491,7 @@ func getObjectSystemResourceLimits(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("ipsec_phase2_interface"); ok {
+	if v, ok := d.GetOkExists("ipsec_phase2_interface"); ok {
 		t, err := expandSystemResourceLimitsIpsecPhase2Interface(d, v, "ipsec_phase2_interface")
 		if err != nil {
 			return &obj, err
@@ -500,7 +500,7 @@ func getObjectSystemResourceLimits(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("dialup_tunnel"); ok {
+	if v, ok := d.GetOkExists("dialup_tunnel"); ok {
 		t, err := expandSystemResourceLimitsDialupTunnel(d, v, "dialup_tunnel")
 		if err != nil {
 			return &obj, err
@@ -509,7 +509,7 @@ func getObjectSystemResourceLimits(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("firewall_policy"); ok {
+	if v, ok := d.GetOkExists("firewall_policy"); ok {
 		t, err := expandSystemResourceLimitsFirewallPolicy(d, v, "firewall_policy")
 		if err != nil {
 			return &obj, err
@@ -518,7 +518,7 @@ func getObjectSystemResourceLimits(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("firewall_address"); ok {
+	if v, ok := d.GetOkExists("firewall_address"); ok {
 		t, err := expandSystemResourceLimitsFirewallAddress(d, v, "firewall_address")
 		if err != nil {
 			return &obj, err
@@ -527,7 +527,7 @@ func getObjectSystemResourceLimits(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("firewall_addrgrp"); ok {
+	if v, ok := d.GetOkExists("firewall_addrgrp"); ok {
 		t, err := expandSystemResourceLimitsFirewallAddrgrp(d, v, "firewall_addrgrp")
 		if err != nil {
 			return &obj, err
@@ -536,7 +536,7 @@ func getObjectSystemResourceLimits(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("custom_service"); ok {
+	if v, ok := d.GetOkExists("custom_service"); ok {
 		t, err := expandSystemResourceLimitsCustomService(d, v, "custom_service")
 		if err != nil {
 			return &obj, err
@@ -545,7 +545,7 @@ func getObjectSystemResourceLimits(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("service_group"); ok {
+	if v, ok := d.GetOkExists("service_group"); ok {
 		t, err := expandSystemResourceLimitsServiceGroup(d, v, "service_group")
 		if err != nil {
 			return &obj, err
@@ -554,7 +554,7 @@ func getObjectSystemResourceLimits(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("onetime_schedule"); ok {
+	if v, ok := d.GetOkExists("onetime_schedule"); ok {
 		t, err := expandSystemResourceLimitsOnetimeSchedule(d, v, "onetime_schedule")
 		if err != nil {
 			return &obj, err
@@ -563,7 +563,7 @@ func getObjectSystemResourceLimits(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("recurring_schedule"); ok {
+	if v, ok := d.GetOkExists("recurring_schedule"); ok {
 		t, err := expandSystemResourceLimitsRecurringSchedule(d, v, "recurring_schedule")
 		if err != nil {
 			return &obj, err
@@ -572,7 +572,7 @@ func getObjectSystemResourceLimits(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("user"); ok {
+	if v, ok := d.GetOkExists("user"); ok {
 		t, err := expandSystemResourceLimitsUser(d, v, "user")
 		if err != nil {
 			return &obj, err
@@ -581,7 +581,7 @@ func getObjectSystemResourceLimits(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("user_group"); ok {
+	if v, ok := d.GetOkExists("user_group"); ok {
 		t, err := expandSystemResourceLimitsUserGroup(d, v, "user_group")
 		if err != nil {
 			return &obj, err
@@ -590,7 +590,7 @@ func getObjectSystemResourceLimits(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("sslvpn"); ok {
+	if v, ok := d.GetOkExists("sslvpn"); ok {
 		t, err := expandSystemResourceLimitsSslvpn(d, v, "sslvpn")
 		if err != nil {
 			return &obj, err
@@ -599,7 +599,7 @@ func getObjectSystemResourceLimits(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("proxy"); ok {
+	if v, ok := d.GetOkExists("proxy"); ok {
 		t, err := expandSystemResourceLimitsProxy(d, v, "proxy")
 		if err != nil {
 			return &obj, err
@@ -608,7 +608,7 @@ func getObjectSystemResourceLimits(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("log_disk_quota"); ok {
+	if v, ok := d.GetOkExists("log_disk_quota"); ok {
 		t, err := expandSystemResourceLimitsLogDiskQuota(d, v, "log_disk_quota")
 		if err != nil {
 			return &obj, err

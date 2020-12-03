@@ -786,7 +786,7 @@ func expandFirewallDosPolicy6AnomalyThresholdDefault(d *schema.ResourceData, v i
 func getObjectFirewallDosPolicy6(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("policyid"); ok {
+	if v, ok := d.GetOkExists("policyid"); ok {
 		t, err := expandFirewallDosPolicy6Policyid(d, v, "policyid")
 		if err != nil {
 			return &obj, err

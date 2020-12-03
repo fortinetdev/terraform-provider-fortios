@@ -389,7 +389,7 @@ func expandSpamfilterIptrustEntriesIp6Subnet(d *schema.ResourceData, v interface
 func getObjectSpamfilterIptrust(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("fosid"); ok {
+	if v, ok := d.GetOkExists("fosid"); ok {
 		t, err := expandSpamfilterIptrustId(d, v, "fosid")
 		if err != nil {
 			return &obj, err

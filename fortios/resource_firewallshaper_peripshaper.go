@@ -301,7 +301,7 @@ func getObjectFirewallShaperPerIpShaper(d *schema.ResourceData) (*map[string]int
 		}
 	}
 
-	if v, ok := d.GetOk("max_bandwidth"); ok {
+	if v, ok := d.GetOkExists("max_bandwidth"); ok {
 		t, err := expandFirewallShaperPerIpShaperMaxBandwidth(d, v, "max_bandwidth")
 		if err != nil {
 			return &obj, err
@@ -319,7 +319,7 @@ func getObjectFirewallShaperPerIpShaper(d *schema.ResourceData) (*map[string]int
 		}
 	}
 
-	if v, ok := d.GetOk("max_concurrent_session"); ok {
+	if v, ok := d.GetOkExists("max_concurrent_session"); ok {
 		t, err := expandFirewallShaperPerIpShaperMaxConcurrentSession(d, v, "max_concurrent_session")
 		if err != nil {
 			return &obj, err

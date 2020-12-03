@@ -708,7 +708,7 @@ func getObjectSystemWccp(d *schema.ResourceData) (*map[string]interface{}, error
 		}
 	}
 
-	if v, ok := d.GetOk("priority"); ok {
+	if v, ok := d.GetOkExists("priority"); ok {
 		t, err := expandSystemWccpPriority(d, v, "priority")
 		if err != nil {
 			return &obj, err
@@ -717,7 +717,7 @@ func getObjectSystemWccp(d *schema.ResourceData) (*map[string]interface{}, error
 		}
 	}
 
-	if v, ok := d.GetOk("protocol"); ok {
+	if v, ok := d.GetOkExists("protocol"); ok {
 		t, err := expandSystemWccpProtocol(d, v, "protocol")
 		if err != nil {
 			return &obj, err
@@ -726,7 +726,7 @@ func getObjectSystemWccp(d *schema.ResourceData) (*map[string]interface{}, error
 		}
 	}
 
-	if v, ok := d.GetOk("assignment_weight"); ok {
+	if v, ok := d.GetOkExists("assignment_weight"); ok {
 		t, err := expandSystemWccpAssignmentWeight(d, v, "assignment_weight")
 		if err != nil {
 			return &obj, err

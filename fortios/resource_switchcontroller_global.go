@@ -530,7 +530,7 @@ func getObjectSwitchControllerGlobal(d *schema.ResourceData) (*map[string]interf
 		}
 	}
 
-	if v, ok := d.GetOk("mac_violation_timer"); ok {
+	if v, ok := d.GetOkExists("mac_violation_timer"); ok {
 		t, err := expandSwitchControllerGlobalMacViolationTimer(d, v, "mac_violation_timer")
 		if err != nil {
 			return &obj, err

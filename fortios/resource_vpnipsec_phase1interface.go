@@ -3113,7 +3113,7 @@ func getObjectVpnIpsecPhase1Interface(d *schema.ResourceData) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("default_gw_priority"); ok {
+	if v, ok := d.GetOkExists("default_gw_priority"); ok {
 		t, err := expandVpnIpsecPhase1InterfaceDefaultGwPriority(d, v, "default_gw_priority")
 		if err != nil {
 			return &obj, err
@@ -3167,7 +3167,7 @@ func getObjectVpnIpsecPhase1Interface(d *schema.ResourceData) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("monitor_hold_down_delay"); ok {
+	if v, ok := d.GetOkExists("monitor_hold_down_delay"); ok {
 		t, err := expandVpnIpsecPhase1InterfaceMonitorHoldDownDelay(d, v, "monitor_hold_down_delay")
 		if err != nil {
 			return &obj, err
@@ -3626,7 +3626,7 @@ func getObjectVpnIpsecPhase1Interface(d *schema.ResourceData) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("priority"); ok {
+	if v, ok := d.GetOkExists("priority"); ok {
 		t, err := expandVpnIpsecPhase1InterfacePriority(d, v, "priority")
 		if err != nil {
 			return &obj, err
@@ -3689,7 +3689,7 @@ func getObjectVpnIpsecPhase1Interface(d *schema.ResourceData) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("dpd_retrycount"); ok {
+	if v, ok := d.GetOkExists("dpd_retrycount"); ok {
 		t, err := expandVpnIpsecPhase1InterfaceDpdRetrycount(d, v, "dpd_retrycount")
 		if err != nil {
 			return &obj, err

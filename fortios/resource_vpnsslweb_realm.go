@@ -224,7 +224,7 @@ func getObjectVpnSslWebRealm(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("max_concurrent_user"); ok {
+	if v, ok := d.GetOkExists("max_concurrent_user"); ok {
 		t, err := expandVpnSslWebRealmMaxConcurrentUser(d, v, "max_concurrent_user")
 		if err != nil {
 			return &obj, err

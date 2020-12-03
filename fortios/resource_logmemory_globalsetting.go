@@ -192,7 +192,7 @@ func expandLogMemoryGlobalSettingFullFinalWarningThreshold(d *schema.ResourceDat
 func getObjectLogMemoryGlobalSetting(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("max_size"); ok {
+	if v, ok := d.GetOkExists("max_size"); ok {
 		t, err := expandLogMemoryGlobalSettingMaxSize(d, v, "max_size")
 		if err != nil {
 			return &obj, err

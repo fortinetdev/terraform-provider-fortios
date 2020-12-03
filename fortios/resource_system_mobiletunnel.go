@@ -625,7 +625,7 @@ func getObjectSystemMobileTunnel(d *schema.ResourceData) (*map[string]interface{
 		}
 	}
 
-	if v, ok := d.GetOk("n_mhae_spi"); ok {
+	if v, ok := d.GetOkExists("n_mhae_spi"); ok {
 		t, err := expandSystemMobileTunnelNMhaeSpi(d, v, "n_mhae_spi")
 		if err != nil {
 			return &obj, err

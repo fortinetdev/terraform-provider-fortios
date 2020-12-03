@@ -1769,7 +1769,7 @@ func expandSystemHaInterClusterSessionSync(d *schema.ResourceData, v interface{}
 func getObjectSystemHa(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("group_id"); ok {
+	if v, ok := d.GetOkExists("group_id"); ok {
 		t, err := expandSystemHaGroupId(d, v, "group_id")
 		if err != nil {
 			return &obj, err
@@ -1877,7 +1877,7 @@ func getObjectSystemHa(d *schema.ResourceData) (*map[string]interface{}, error) 
 		}
 	}
 
-	if v, ok := d.GetOk("route_wait"); ok {
+	if v, ok := d.GetOkExists("route_wait"); ok {
 		t, err := expandSystemHaRouteWait(d, v, "route_wait")
 		if err != nil {
 			return &obj, err
@@ -1886,7 +1886,7 @@ func getObjectSystemHa(d *schema.ResourceData) (*map[string]interface{}, error) 
 		}
 	}
 
-	if v, ok := d.GetOk("route_hold"); ok {
+	if v, ok := d.GetOkExists("route_hold"); ok {
 		t, err := expandSystemHaRouteHold(d, v, "route_hold")
 		if err != nil {
 			return &obj, err
@@ -2138,7 +2138,7 @@ func getObjectSystemHa(d *schema.ResourceData) (*map[string]interface{}, error) 
 		}
 	}
 
-	if v, ok := d.GetOk("vcluster_id"); ok {
+	if v, ok := d.GetOkExists("vcluster_id"); ok {
 		t, err := expandSystemHaVclusterId(d, v, "vcluster_id")
 		if err != nil {
 			return &obj, err
@@ -2156,7 +2156,7 @@ func getObjectSystemHa(d *schema.ResourceData) (*map[string]interface{}, error) 
 		}
 	}
 
-	if v, ok := d.GetOk("priority"); ok {
+	if v, ok := d.GetOkExists("priority"); ok {
 		t, err := expandSystemHaPriority(d, v, "priority")
 		if err != nil {
 			return &obj, err
@@ -2165,7 +2165,7 @@ func getObjectSystemHa(d *schema.ResourceData) (*map[string]interface{}, error) 
 		}
 	}
 
-	if v, ok := d.GetOk("override_wait_time"); ok {
+	if v, ok := d.GetOkExists("override_wait_time"); ok {
 		t, err := expandSystemHaOverrideWaitTime(d, v, "override_wait_time")
 		if err != nil {
 			return &obj, err
@@ -2282,7 +2282,7 @@ func getObjectSystemHa(d *schema.ResourceData) (*map[string]interface{}, error) 
 		}
 	}
 
-	if v, ok := d.GetOk("pingserver_failover_threshold"); ok {
+	if v, ok := d.GetOkExists("pingserver_failover_threshold"); ok {
 		t, err := expandSystemHaPingserverFailoverThreshold(d, v, "pingserver_failover_threshold")
 		if err != nil {
 			return &obj, err

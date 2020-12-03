@@ -245,7 +245,7 @@ func getObjectSwitchControllerQosQosPolicy(d *schema.ResourceData) (*map[string]
 		}
 	}
 
-	if v, ok := d.GetOk("default_cos"); ok {
+	if v, ok := d.GetOkExists("default_cos"); ok {
 		t, err := expandSwitchControllerQosQosPolicyDefaultCos(d, v, "default_cos")
 		if err != nil {
 			return &obj, err

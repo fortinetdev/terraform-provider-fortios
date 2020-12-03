@@ -396,7 +396,7 @@ func getObjectUserDomainController(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
-	if v, ok := d.GetOk("port"); ok {
+	if v, ok := d.GetOkExists("port"); ok {
 		t, err := expandUserDomainControllerPort(d, v, "port")
 		if err != nil {
 			return &obj, err

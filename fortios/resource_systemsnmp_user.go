@@ -500,7 +500,7 @@ func getObjectSystemSnmpUser(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("trap_lport"); ok {
+	if v, ok := d.GetOkExists("trap_lport"); ok {
 		t, err := expandSystemSnmpUserTrapLport(d, v, "trap_lport")
 		if err != nil {
 			return &obj, err
@@ -509,7 +509,7 @@ func getObjectSystemSnmpUser(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("trap_rport"); ok {
+	if v, ok := d.GetOkExists("trap_rport"); ok {
 		t, err := expandSystemSnmpUserTrapRport(d, v, "trap_rport")
 		if err != nil {
 			return &obj, err
@@ -527,7 +527,7 @@ func getObjectSystemSnmpUser(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("query_port"); ok {
+	if v, ok := d.GetOkExists("query_port"); ok {
 		t, err := expandSystemSnmpUserQueryPort(d, v, "query_port")
 		if err != nil {
 			return &obj, err

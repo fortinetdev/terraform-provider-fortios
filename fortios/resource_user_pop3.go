@@ -252,7 +252,7 @@ func getObjectUserPop3(d *schema.ResourceData) (*map[string]interface{}, error) 
 		}
 	}
 
-	if v, ok := d.GetOk("port"); ok {
+	if v, ok := d.GetOkExists("port"); ok {
 		t, err := expandUserPop3Port(d, v, "port")
 		if err != nil {
 			return &obj, err

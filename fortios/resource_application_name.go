@@ -521,7 +521,7 @@ func getObjectApplicationName(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("fosid"); ok {
+	if v, ok := d.GetOkExists("fosid"); ok {
 		t, err := expandApplicationNameId(d, v, "fosid")
 		if err != nil {
 			return &obj, err
@@ -530,7 +530,7 @@ func getObjectApplicationName(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("category"); ok {
+	if v, ok := d.GetOkExists("category"); ok {
 		t, err := expandApplicationNameCategory(d, v, "category")
 		if err != nil {
 			return &obj, err
@@ -539,7 +539,7 @@ func getObjectApplicationName(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("sub_category"); ok {
+	if v, ok := d.GetOkExists("sub_category"); ok {
 		t, err := expandApplicationNameSubCategory(d, v, "sub_category")
 		if err != nil {
 			return &obj, err
@@ -548,7 +548,7 @@ func getObjectApplicationName(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("popularity"); ok {
+	if v, ok := d.GetOkExists("popularity"); ok {
 		t, err := expandApplicationNamePopularity(d, v, "popularity")
 		if err != nil {
 			return &obj, err
@@ -557,7 +557,7 @@ func getObjectApplicationName(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("risk"); ok {
+	if v, ok := d.GetOkExists("risk"); ok {
 		t, err := expandApplicationNameRisk(d, v, "risk")
 		if err != nil {
 			return &obj, err
@@ -566,7 +566,7 @@ func getObjectApplicationName(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("weight"); ok {
+	if v, ok := d.GetOkExists("weight"); ok {
 		t, err := expandApplicationNameWeight(d, v, "weight")
 		if err != nil {
 			return &obj, err

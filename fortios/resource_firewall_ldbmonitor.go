@@ -360,7 +360,7 @@ func getObjectFirewallLdbMonitor(d *schema.ResourceData) (*map[string]interface{
 		}
 	}
 
-	if v, ok := d.GetOk("port"); ok {
+	if v, ok := d.GetOkExists("port"); ok {
 		t, err := expandFirewallLdbMonitorPort(d, v, "port")
 		if err != nil {
 			return &obj, err
@@ -387,7 +387,7 @@ func getObjectFirewallLdbMonitor(d *schema.ResourceData) (*map[string]interface{
 		}
 	}
 
-	if v, ok := d.GetOk("http_max_redirects"); ok {
+	if v, ok := d.GetOkExists("http_max_redirects"); ok {
 		t, err := expandFirewallLdbMonitorHttpMaxRedirects(d, v, "http_max_redirects")
 		if err != nil {
 			return &obj, err

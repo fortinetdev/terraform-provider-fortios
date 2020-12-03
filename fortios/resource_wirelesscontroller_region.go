@@ -271,7 +271,7 @@ func getObjectWirelessControllerRegion(d *schema.ResourceData) (*map[string]inte
 		}
 	}
 
-	if v, ok := d.GetOk("opacity"); ok {
+	if v, ok := d.GetOkExists("opacity"); ok {
 		t, err := expandWirelessControllerRegionOpacity(d, v, "opacity")
 		if err != nil {
 			return &obj, err

@@ -2806,7 +2806,7 @@ func getObjectWirelessControllerVap(d *schema.ResourceData) (*map[string]interfa
 		}
 	}
 
-	if v, ok := d.GetOk("atf_weight"); ok {
+	if v, ok := d.GetOkExists("atf_weight"); ok {
 		t, err := expandWirelessControllerVapAtfWeight(d, v, "atf_weight")
 		if err != nil {
 			return &obj, err
@@ -2815,7 +2815,7 @@ func getObjectWirelessControllerVap(d *schema.ResourceData) (*map[string]interfa
 		}
 	}
 
-	if v, ok := d.GetOk("max_clients"); ok {
+	if v, ok := d.GetOkExists("max_clients"); ok {
 		t, err := expandWirelessControllerVapMaxClients(d, v, "max_clients")
 		if err != nil {
 			return &obj, err
@@ -2824,7 +2824,7 @@ func getObjectWirelessControllerVap(d *schema.ResourceData) (*map[string]interfa
 		}
 	}
 
-	if v, ok := d.GetOk("max_clients_ap"); ok {
+	if v, ok := d.GetOkExists("max_clients_ap"); ok {
 		t, err := expandWirelessControllerVapMaxClientsAp(d, v, "max_clients_ap")
 		if err != nil {
 			return &obj, err
@@ -3247,7 +3247,7 @@ func getObjectWirelessControllerVap(d *schema.ResourceData) (*map[string]interfa
 		}
 	}
 
-	if v, ok := d.GetOk("mpsk_concurrent_clients"); ok {
+	if v, ok := d.GetOkExists("mpsk_concurrent_clients"); ok {
 		t, err := expandWirelessControllerVapMpskConcurrentClients(d, v, "mpsk_concurrent_clients")
 		if err != nil {
 			return &obj, err
@@ -3274,7 +3274,7 @@ func getObjectWirelessControllerVap(d *schema.ResourceData) (*map[string]interfa
 		}
 	}
 
-	if v, ok := d.GetOk("vlanid"); ok {
+	if v, ok := d.GetOkExists("vlanid"); ok {
 		t, err := expandWirelessControllerVapVlanid(d, v, "vlanid")
 		if err != nil {
 			return &obj, err
@@ -3346,7 +3346,7 @@ func getObjectWirelessControllerVap(d *schema.ResourceData) (*map[string]interfa
 		}
 	}
 
-	if v, ok := d.GetOk("captive_portal_session_timeout_interval"); ok {
+	if v, ok := d.GetOkExists("captive_portal_session_timeout_interval"); ok {
 		t, err := expandWirelessControllerVapCaptivePortalSessionTimeoutInterval(d, v, "captive_portal_session_timeout_interval")
 		if err != nil {
 			return &obj, err

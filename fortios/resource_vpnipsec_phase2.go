@@ -1118,7 +1118,7 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("protocol"); ok {
+	if v, ok := d.GetOkExists("protocol"); ok {
 		t, err := expandVpnIpsecPhase2Protocol(d, v, "protocol")
 		if err != nil {
 			return &obj, err
@@ -1208,7 +1208,7 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("src_port"); ok {
+	if v, ok := d.GetOkExists("src_port"); ok {
 		t, err := expandVpnIpsecPhase2SrcPort(d, v, "src_port")
 		if err != nil {
 			return &obj, err
@@ -1298,7 +1298,7 @@ func getObjectVpnIpsecPhase2(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("dst_port"); ok {
+	if v, ok := d.GetOkExists("dst_port"); ok {
 		t, err := expandVpnIpsecPhase2DstPort(d, v, "dst_port")
 		if err != nil {
 			return &obj, err

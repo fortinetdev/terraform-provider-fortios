@@ -434,7 +434,7 @@ func getObjectIpsCustom(d *schema.ResourceData) (*map[string]interface{}, error)
 		}
 	}
 
-	if v, ok := d.GetOk("rule_id"); ok {
+	if v, ok := d.GetOkExists("rule_id"); ok {
 		t, err := expandIpsCustomRuleId(d, v, "rule_id")
 		if err != nil {
 			return &obj, err

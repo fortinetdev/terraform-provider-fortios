@@ -375,7 +375,7 @@ func getObjectWebfilterFortiguard(d *schema.ResourceData) (*map[string]interface
 		}
 	}
 
-	if v, ok := d.GetOk("ovrd_auth_port_http"); ok {
+	if v, ok := d.GetOkExists("ovrd_auth_port_http"); ok {
 		t, err := expandWebfilterFortiguardOvrdAuthPortHttp(d, v, "ovrd_auth_port_http")
 		if err != nil {
 			return &obj, err
@@ -384,7 +384,7 @@ func getObjectWebfilterFortiguard(d *schema.ResourceData) (*map[string]interface
 		}
 	}
 
-	if v, ok := d.GetOk("ovrd_auth_port_https"); ok {
+	if v, ok := d.GetOkExists("ovrd_auth_port_https"); ok {
 		t, err := expandWebfilterFortiguardOvrdAuthPortHttps(d, v, "ovrd_auth_port_https")
 		if err != nil {
 			return &obj, err
@@ -393,7 +393,7 @@ func getObjectWebfilterFortiguard(d *schema.ResourceData) (*map[string]interface
 		}
 	}
 
-	if v, ok := d.GetOk("ovrd_auth_port_https_flow"); ok {
+	if v, ok := d.GetOkExists("ovrd_auth_port_https_flow"); ok {
 		t, err := expandWebfilterFortiguardOvrdAuthPortHttpsFlow(d, v, "ovrd_auth_port_https_flow")
 		if err != nil {
 			return &obj, err
@@ -402,7 +402,7 @@ func getObjectWebfilterFortiguard(d *schema.ResourceData) (*map[string]interface
 		}
 	}
 
-	if v, ok := d.GetOk("ovrd_auth_port_warning"); ok {
+	if v, ok := d.GetOkExists("ovrd_auth_port_warning"); ok {
 		t, err := expandWebfilterFortiguardOvrdAuthPortWarning(d, v, "ovrd_auth_port_warning")
 		if err != nil {
 			return &obj, err
@@ -447,7 +447,7 @@ func getObjectWebfilterFortiguard(d *schema.ResourceData) (*map[string]interface
 		}
 	}
 
-	if v, ok := d.GetOk("ovrd_auth_port"); ok {
+	if v, ok := d.GetOkExists("ovrd_auth_port"); ok {
 		t, err := expandWebfilterFortiguardOvrdAuthPort(d, v, "ovrd_auth_port")
 		if err != nil {
 			return &obj, err

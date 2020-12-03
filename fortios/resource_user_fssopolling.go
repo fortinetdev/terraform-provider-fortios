@@ -461,7 +461,7 @@ func expandUserFssoPollingSmbNtlmv1Auth(d *schema.ResourceData, v interface{}, p
 func getObjectUserFssoPolling(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("fosid"); ok {
+	if v, ok := d.GetOkExists("fosid"); ok {
 		t, err := expandUserFssoPollingId(d, v, "fosid")
 		if err != nil {
 			return &obj, err
@@ -497,7 +497,7 @@ func getObjectUserFssoPolling(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("port"); ok {
+	if v, ok := d.GetOkExists("port"); ok {
 		t, err := expandUserFssoPollingPort(d, v, "port")
 		if err != nil {
 			return &obj, err
@@ -533,7 +533,7 @@ func getObjectUserFssoPolling(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("logon_history"); ok {
+	if v, ok := d.GetOkExists("logon_history"); ok {
 		t, err := expandUserFssoPollingLogonHistory(d, v, "logon_history")
 		if err != nil {
 			return &obj, err

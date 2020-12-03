@@ -456,7 +456,7 @@ func getObjectSystemDns(d *schema.ResourceData) (*map[string]interface{}, error)
 		}
 	}
 
-	if v, ok := d.GetOk("retry"); ok {
+	if v, ok := d.GetOkExists("retry"); ok {
 		t, err := expandSystemDnsRetry(d, v, "retry")
 		if err != nil {
 			return &obj, err
@@ -465,7 +465,7 @@ func getObjectSystemDns(d *schema.ResourceData) (*map[string]interface{}, error)
 		}
 	}
 
-	if v, ok := d.GetOk("dns_cache_limit"); ok {
+	if v, ok := d.GetOkExists("dns_cache_limit"); ok {
 		t, err := expandSystemDnsDnsCacheLimit(d, v, "dns_cache_limit")
 		if err != nil {
 			return &obj, err

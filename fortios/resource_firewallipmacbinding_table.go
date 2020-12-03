@@ -232,7 +232,7 @@ func expandFirewallIpmacbindingTableStatus(d *schema.ResourceData, v interface{}
 func getObjectFirewallIpmacbindingTable(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("seq_num"); ok {
+	if v, ok := d.GetOkExists("seq_num"); ok {
 		t, err := expandFirewallIpmacbindingTableSeqNum(d, v, "seq_num")
 		if err != nil {
 			return &obj, err

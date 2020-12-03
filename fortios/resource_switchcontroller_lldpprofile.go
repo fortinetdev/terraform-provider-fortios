@@ -706,7 +706,7 @@ func getObjectSwitchControllerLldpProfile(d *schema.ResourceData) (*map[string]i
 		}
 	}
 
-	if v, ok := d.GetOk("auto_isl_receive_timeout"); ok {
+	if v, ok := d.GetOkExists("auto_isl_receive_timeout"); ok {
 		t, err := expandSwitchControllerLldpProfileAutoIslReceiveTimeout(d, v, "auto_isl_receive_timeout")
 		if err != nil {
 			return &obj, err
@@ -715,7 +715,7 @@ func getObjectSwitchControllerLldpProfile(d *schema.ResourceData) (*map[string]i
 		}
 	}
 
-	if v, ok := d.GetOk("auto_isl_port_group"); ok {
+	if v, ok := d.GetOkExists("auto_isl_port_group"); ok {
 		t, err := expandSwitchControllerLldpProfileAutoIslPortGroup(d, v, "auto_isl_port_group")
 		if err != nil {
 			return &obj, err

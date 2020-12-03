@@ -160,7 +160,7 @@ func getObjectSwitchControllerSflow(d *schema.ResourceData) (*map[string]interfa
 		}
 	}
 
-	if v, ok := d.GetOk("collector_port"); ok {
+	if v, ok := d.GetOkExists("collector_port"); ok {
 		t, err := expandSwitchControllerSflowCollectorPort(d, v, "collector_port")
 		if err != nil {
 			return &obj, err

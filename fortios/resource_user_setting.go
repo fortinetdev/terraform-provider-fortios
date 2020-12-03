@@ -675,7 +675,7 @@ func getObjectUserSetting(d *schema.ResourceData) (*map[string]interface{}, erro
 		}
 	}
 
-	if v, ok := d.GetOk("auth_blackout_time"); ok {
+	if v, ok := d.GetOkExists("auth_blackout_time"); ok {
 		t, err := expandUserSettingAuthBlackoutTime(d, v, "auth_blackout_time")
 		if err != nil {
 			return &obj, err
@@ -702,7 +702,7 @@ func getObjectUserSetting(d *schema.ResourceData) (*map[string]interface{}, erro
 		}
 	}
 
-	if v, ok := d.GetOk("auth_lockout_duration"); ok {
+	if v, ok := d.GetOkExists("auth_lockout_duration"); ok {
 		t, err := expandUserSettingAuthLockoutDuration(d, v, "auth_lockout_duration")
 		if err != nil {
 			return &obj, err

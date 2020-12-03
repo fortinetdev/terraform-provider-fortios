@@ -834,7 +834,7 @@ func expandFirewallInterfacePolicyLabel(d *schema.ResourceData, v interface{}, p
 func getObjectFirewallInterfacePolicy(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("policyid"); ok {
+	if v, ok := d.GetOkExists("policyid"); ok {
 		t, err := expandFirewallInterfacePolicyPolicyid(d, v, "policyid")
 		if err != nil {
 			return &obj, err

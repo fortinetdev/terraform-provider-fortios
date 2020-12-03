@@ -4597,7 +4597,7 @@ func expandFirewallPolicyVlanFilter(d *schema.ResourceData, v interface{}, pre s
 func getObjectFirewallPolicy(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("policyid"); ok {
+	if v, ok := d.GetOkExists("policyid"); ok {
 		t, err := expandFirewallPolicyPolicyid(d, v, "policyid")
 		if err != nil {
 			return &obj, err
@@ -4750,7 +4750,7 @@ func getObjectFirewallPolicy(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("reputation_minimum"); ok {
+	if v, ok := d.GetOkExists("reputation_minimum"); ok {
 		t, err := expandFirewallPolicyReputationMinimum(d, v, "reputation_minimum")
 		if err != nil {
 			return &obj, err
@@ -5299,7 +5299,7 @@ func getObjectFirewallPolicy(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("vlan_cos_fwd"); ok {
+	if v, ok := d.GetOkExists("vlan_cos_fwd"); ok {
 		t, err := expandFirewallPolicyVlanCosFwd(d, v, "vlan_cos_fwd")
 		if err != nil {
 			return &obj, err
@@ -5308,7 +5308,7 @@ func getObjectFirewallPolicy(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("vlan_cos_rev"); ok {
+	if v, ok := d.GetOkExists("vlan_cos_rev"); ok {
 		t, err := expandFirewallPolicyVlanCosRev(d, v, "vlan_cos_rev")
 		if err != nil {
 			return &obj, err
@@ -5533,7 +5533,7 @@ func getObjectFirewallPolicy(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("tcp_mss_sender"); ok {
+	if v, ok := d.GetOkExists("tcp_mss_sender"); ok {
 		t, err := expandFirewallPolicyTcpMssSender(d, v, "tcp_mss_sender")
 		if err != nil {
 			return &obj, err
@@ -5542,7 +5542,7 @@ func getObjectFirewallPolicy(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("tcp_mss_receiver"); ok {
+	if v, ok := d.GetOkExists("tcp_mss_receiver"); ok {
 		t, err := expandFirewallPolicyTcpMssReceiver(d, v, "tcp_mss_receiver")
 		if err != nil {
 			return &obj, err

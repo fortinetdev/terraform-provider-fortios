@@ -260,7 +260,7 @@ func getObjectSystemNetflow(d *schema.ResourceData) (*map[string]interface{}, er
 		}
 	}
 
-	if v, ok := d.GetOk("collector_port"); ok {
+	if v, ok := d.GetOkExists("collector_port"); ok {
 		t, err := expandSystemNetflowCollectorPort(d, v, "collector_port")
 		if err != nil {
 			return &obj, err

@@ -857,7 +857,7 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("vdom"); ok {
+	if v, ok := d.GetOkExists("vdom"); ok {
 		t, err := expandExtenderControllerExtenderVdom(d, v, "vdom")
 		if err != nil {
 			return &obj, err
@@ -911,7 +911,7 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("dial_status"); ok {
+	if v, ok := d.GetOkExists("dial_status"); ok {
 		t, err := expandExtenderControllerExtenderDialStatus(d, v, "dial_status")
 		if err != nil {
 			return &obj, err
@@ -920,7 +920,7 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("conn_status"); ok {
+	if v, ok := d.GetOkExists("conn_status"); ok {
 		t, err := expandExtenderControllerExtenderConnStatus(d, v, "conn_status")
 		if err != nil {
 			return &obj, err
@@ -947,7 +947,7 @@ func getObjectExtenderControllerExtender(d *schema.ResourceData) (*map[string]in
 		}
 	}
 
-	if v, ok := d.GetOk("quota_limit_mb"); ok {
+	if v, ok := d.GetOkExists("quota_limit_mb"); ok {
 		t, err := expandExtenderControllerExtenderQuotaLimitMb(d, v, "quota_limit_mb")
 		if err != nil {
 			return &obj, err

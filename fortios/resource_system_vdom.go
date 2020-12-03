@@ -233,7 +233,7 @@ func getObjectSystemVdom(d *schema.ResourceData) (*map[string]interface{}, error
 		}
 	}
 
-	if v, ok := d.GetOk("vcluster_id"); ok {
+	if v, ok := d.GetOkExists("vcluster_id"); ok {
 		t, err := expandSystemVdomVclusterId(d, v, "vcluster_id")
 		if err != nil {
 			return &obj, err
@@ -242,7 +242,7 @@ func getObjectSystemVdom(d *schema.ResourceData) (*map[string]interface{}, error
 		}
 	}
 
-	if v, ok := d.GetOk("temporary"); ok {
+	if v, ok := d.GetOkExists("temporary"); ok {
 		t, err := expandSystemVdomTemporary(d, v, "temporary")
 		if err != nil {
 			return &obj, err

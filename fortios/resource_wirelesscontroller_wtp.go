@@ -2391,7 +2391,7 @@ func getObjectWirelessControllerWtp(d *schema.ResourceData) (*map[string]interfa
 		}
 	}
 
-	if v, ok := d.GetOk("index"); ok {
+	if v, ok := d.GetOkExists("index"); ok {
 		t, err := expandWirelessControllerWtpIndex(d, v, "index")
 		if err != nil {
 			return &obj, err

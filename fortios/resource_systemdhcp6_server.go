@@ -770,7 +770,7 @@ func expandSystemDhcp6ServerIpRangeEndIp(d *schema.ResourceData, v interface{}, 
 func getObjectSystemDhcp6Server(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("fosid"); ok {
+	if v, ok := d.GetOkExists("fosid"); ok {
 		t, err := expandSystemDhcp6ServerId(d, v, "fosid")
 		if err != nil {
 			return &obj, err

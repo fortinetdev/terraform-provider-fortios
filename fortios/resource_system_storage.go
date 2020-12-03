@@ -339,7 +339,7 @@ func getObjectSystemStorage(d *schema.ResourceData) (*map[string]interface{}, er
 		}
 	}
 
-	if v, ok := d.GetOk("order"); ok {
+	if v, ok := d.GetOkExists("order"); ok {
 		t, err := expandSystemStorageOrder(d, v, "order")
 		if err != nil {
 			return &obj, err
@@ -366,7 +366,7 @@ func getObjectSystemStorage(d *schema.ResourceData) (*map[string]interface{}, er
 		}
 	}
 
-	if v, ok := d.GetOk("size"); ok {
+	if v, ok := d.GetOkExists("size"); ok {
 		t, err := expandSystemStorageSize(d, v, "size")
 		if err != nil {
 			return &obj, err

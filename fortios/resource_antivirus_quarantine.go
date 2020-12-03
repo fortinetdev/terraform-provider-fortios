@@ -324,7 +324,7 @@ func expandAntivirusQuarantineDestination(d *schema.ResourceData, v interface{},
 func getObjectAntivirusQuarantine(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("agelimit"); ok {
+	if v, ok := d.GetOkExists("agelimit"); ok {
 		t, err := expandAntivirusQuarantineAgelimit(d, v, "agelimit")
 		if err != nil {
 			return &obj, err
@@ -333,7 +333,7 @@ func getObjectAntivirusQuarantine(d *schema.ResourceData) (*map[string]interface
 		}
 	}
 
-	if v, ok := d.GetOk("maxfilesize"); ok {
+	if v, ok := d.GetOkExists("maxfilesize"); ok {
 		t, err := expandAntivirusQuarantineMaxfilesize(d, v, "maxfilesize")
 		if err != nil {
 			return &obj, err
@@ -342,7 +342,7 @@ func getObjectAntivirusQuarantine(d *schema.ResourceData) (*map[string]interface
 		}
 	}
 
-	if v, ok := d.GetOk("quarantine_quota"); ok {
+	if v, ok := d.GetOkExists("quarantine_quota"); ok {
 		t, err := expandAntivirusQuarantineQuarantineQuota(d, v, "quarantine_quota")
 		if err != nil {
 			return &obj, err

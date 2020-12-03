@@ -982,7 +982,7 @@ func getObjectSystemSaml(d *schema.ResourceData) (*map[string]interface{}, error
 		}
 	}
 
-	if v, ok := d.GetOk("tolerance"); ok {
+	if v, ok := d.GetOkExists("tolerance"); ok {
 		t, err := expandSystemSamlTolerance(d, v, "tolerance")
 		if err != nil {
 			return &obj, err
@@ -991,7 +991,7 @@ func getObjectSystemSaml(d *schema.ResourceData) (*map[string]interface{}, error
 		}
 	}
 
-	if v, ok := d.GetOk("life"); ok {
+	if v, ok := d.GetOkExists("life"); ok {
 		t, err := expandSystemSamlLife(d, v, "life")
 		if err != nil {
 			return &obj, err

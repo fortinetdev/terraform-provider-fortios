@@ -432,7 +432,7 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("trigger_hour"); ok {
+	if v, ok := d.GetOkExists("trigger_hour"); ok {
 		t, err := expandSystemAutomationTriggerTriggerHour(d, v, "trigger_hour")
 		if err != nil {
 			return &obj, err
@@ -441,7 +441,7 @@ func getObjectSystemAutomationTrigger(d *schema.ResourceData) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("trigger_minute"); ok {
+	if v, ok := d.GetOkExists("trigger_minute"); ok {
 		t, err := expandSystemAutomationTriggerTriggerMinute(d, v, "trigger_minute")
 		if err != nil {
 			return &obj, err

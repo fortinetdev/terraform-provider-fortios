@@ -358,7 +358,7 @@ func getObjectFirewallVipgrp(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("color"); ok {
+	if v, ok := d.GetOkExists("color"); ok {
 		t, err := expandFirewallVipgrpColor(d, v, "color")
 		if err != nil {
 			return &obj, err

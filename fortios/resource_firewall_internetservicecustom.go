@@ -558,7 +558,7 @@ func getObjectFirewallInternetServiceCustom(d *schema.ResourceData) (*map[string
 		}
 	}
 
-	if v, ok := d.GetOk("reputation"); ok {
+	if v, ok := d.GetOkExists("reputation"); ok {
 		t, err := expandFirewallInternetServiceCustomReputation(d, v, "reputation")
 		if err != nil {
 			return &obj, err

@@ -1239,7 +1239,7 @@ func getObjectUserRadius(d *schema.ResourceData) (*map[string]interface{}, error
 		}
 	}
 
-	if v, ok := d.GetOk("radius_port"); ok {
+	if v, ok := d.GetOkExists("radius_port"); ok {
 		t, err := expandUserRadiusRadiusPort(d, v, "radius_port")
 		if err != nil {
 			return &obj, err
@@ -1329,7 +1329,7 @@ func getObjectUserRadius(d *schema.ResourceData) (*map[string]interface{}, error
 		}
 	}
 
-	if v, ok := d.GetOk("rsso_radius_server_port"); ok {
+	if v, ok := d.GetOkExists("rsso_radius_server_port"); ok {
 		t, err := expandUserRadiusRssoRadiusServerPort(d, v, "rsso_radius_server_port")
 		if err != nil {
 			return &obj, err
@@ -1410,7 +1410,7 @@ func getObjectUserRadius(d *schema.ResourceData) (*map[string]interface{}, error
 		}
 	}
 
-	if v, ok := d.GetOk("rsso_context_timeout"); ok {
+	if v, ok := d.GetOkExists("rsso_context_timeout"); ok {
 		t, err := expandUserRadiusRssoContextTimeout(d, v, "rsso_context_timeout")
 		if err != nil {
 			return &obj, err
@@ -1419,7 +1419,7 @@ func getObjectUserRadius(d *schema.ResourceData) (*map[string]interface{}, error
 		}
 	}
 
-	if v, ok := d.GetOk("rsso_log_period"); ok {
+	if v, ok := d.GetOkExists("rsso_log_period"); ok {
 		t, err := expandUserRadiusRssoLogPeriod(d, v, "rsso_log_period")
 		if err != nil {
 			return &obj, err

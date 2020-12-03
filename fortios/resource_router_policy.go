@@ -995,7 +995,7 @@ func getObjectRouterPolicy(d *schema.ResourceData) (*map[string]interface{}, err
 		}
 	}
 
-	if v, ok := d.GetOk("protocol"); ok {
+	if v, ok := d.GetOkExists("protocol"); ok {
 		t, err := expandRouterPolicyProtocol(d, v, "protocol")
 		if err != nil {
 			return &obj, err
@@ -1004,7 +1004,7 @@ func getObjectRouterPolicy(d *schema.ResourceData) (*map[string]interface{}, err
 		}
 	}
 
-	if v, ok := d.GetOk("start_port"); ok {
+	if v, ok := d.GetOkExists("start_port"); ok {
 		t, err := expandRouterPolicyStartPort(d, v, "start_port")
 		if err != nil {
 			return &obj, err
@@ -1013,7 +1013,7 @@ func getObjectRouterPolicy(d *schema.ResourceData) (*map[string]interface{}, err
 		}
 	}
 
-	if v, ok := d.GetOk("end_port"); ok {
+	if v, ok := d.GetOkExists("end_port"); ok {
 		t, err := expandRouterPolicyEndPort(d, v, "end_port")
 		if err != nil {
 			return &obj, err
@@ -1022,7 +1022,7 @@ func getObjectRouterPolicy(d *schema.ResourceData) (*map[string]interface{}, err
 		}
 	}
 
-	if v, ok := d.GetOk("start_source_port"); ok {
+	if v, ok := d.GetOkExists("start_source_port"); ok {
 		t, err := expandRouterPolicyStartSourcePort(d, v, "start_source_port")
 		if err != nil {
 			return &obj, err
@@ -1031,7 +1031,7 @@ func getObjectRouterPolicy(d *schema.ResourceData) (*map[string]interface{}, err
 		}
 	}
 
-	if v, ok := d.GetOk("end_source_port"); ok {
+	if v, ok := d.GetOkExists("end_source_port"); ok {
 		t, err := expandRouterPolicyEndSourcePort(d, v, "end_source_port")
 		if err != nil {
 			return &obj, err

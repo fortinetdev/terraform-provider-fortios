@@ -2585,7 +2585,7 @@ func getObjectSystemSettings(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("vpn_stats_period"); ok {
+	if v, ok := d.GetOkExists("vpn_stats_period"); ok {
 		t, err := expandSystemSettingsVpnStatsPeriod(d, v, "vpn_stats_period")
 		if err != nil {
 			return &obj, err
@@ -2828,7 +2828,7 @@ func getObjectSystemSettings(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("sip_ssl_port"); ok {
+	if v, ok := d.GetOkExists("sip_ssl_port"); ok {
 		t, err := expandSystemSettingsSipSslPort(d, v, "sip_ssl_port")
 		if err != nil {
 			return &obj, err
@@ -2837,7 +2837,7 @@ func getObjectSystemSettings(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("sccp_port"); ok {
+	if v, ok := d.GetOkExists("sccp_port"); ok {
 		t, err := expandSystemSettingsSccpPort(d, v, "sccp_port")
 		if err != nil {
 			return &obj, err

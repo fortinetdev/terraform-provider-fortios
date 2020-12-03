@@ -1684,7 +1684,7 @@ func getObjectRouterRip(d *schema.ResourceData) (*map[string]interface{}, error)
 		}
 	}
 
-	if v, ok := d.GetOk("max_out_metric"); ok {
+	if v, ok := d.GetOkExists("max_out_metric"); ok {
 		t, err := expandRouterRipMaxOutMetric(d, v, "max_out_metric")
 		if err != nil {
 			return &obj, err

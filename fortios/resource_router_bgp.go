@@ -6822,7 +6822,7 @@ func expandRouterBgpAdminDistanceDistance(d *schema.ResourceData, v interface{},
 func getObjectRouterBgp(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("as"); ok {
+	if v, ok := d.GetOkExists("as"); ok {
 		t, err := expandRouterBgpAs(d, v, "as")
 		if err != nil {
 			return &obj, err
@@ -6840,7 +6840,7 @@ func getObjectRouterBgp(d *schema.ResourceData) (*map[string]interface{}, error)
 		}
 	}
 
-	if v, ok := d.GetOk("keepalive_timer"); ok {
+	if v, ok := d.GetOkExists("keepalive_timer"); ok {
 		t, err := expandRouterBgpKeepaliveTimer(d, v, "keepalive_timer")
 		if err != nil {
 			return &obj, err
@@ -7101,7 +7101,7 @@ func getObjectRouterBgp(d *schema.ResourceData) (*map[string]interface{}, error)
 		}
 	}
 
-	if v, ok := d.GetOk("default_local_preference"); ok {
+	if v, ok := d.GetOkExists("default_local_preference"); ok {
 		t, err := expandRouterBgpDefaultLocalPreference(d, v, "default_local_preference")
 		if err != nil {
 			return &obj, err

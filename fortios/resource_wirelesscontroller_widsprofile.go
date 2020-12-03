@@ -1157,7 +1157,7 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData) (*map[string
 		}
 	}
 
-	if v, ok := d.GetOk("ap_bgscan_idle"); ok {
+	if v, ok := d.GetOkExists("ap_bgscan_idle"); ok {
 		t, err := expandWirelessControllerWidsProfileApBgscanIdle(d, v, "ap_bgscan_idle")
 		if err != nil {
 			return &obj, err
@@ -1526,7 +1526,7 @@ func getObjectWirelessControllerWidsProfile(d *schema.ResourceData) (*map[string
 		}
 	}
 
-	if v, ok := d.GetOk("deauth_unknown_src_thresh"); ok {
+	if v, ok := d.GetOkExists("deauth_unknown_src_thresh"); ok {
 		t, err := expandWirelessControllerWidsProfileDeauthUnknownSrcThresh(d, v, "deauth_unknown_src_thresh")
 		if err != nil {
 			return &obj, err

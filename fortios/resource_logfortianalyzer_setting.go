@@ -572,7 +572,7 @@ func getObjectLogFortianalyzerSetting(d *schema.ResourceData) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("faz_type"); ok {
+	if v, ok := d.GetOkExists("faz_type"); ok {
 		t, err := expandLogFortianalyzerSettingFazType(d, v, "faz_type")
 		if err != nil {
 			return &obj, err
@@ -599,7 +599,7 @@ func getObjectLogFortianalyzerSetting(d *schema.ResourceData) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("__change_ip"); ok {
+	if v, ok := d.GetOkExists("__change_ip"); ok {
 		t, err := expandLogFortianalyzerSetting__Change_Ip(d, v, "__change_ip")
 		if err != nil {
 			return &obj, err

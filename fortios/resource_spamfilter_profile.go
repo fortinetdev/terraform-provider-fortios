@@ -1353,7 +1353,7 @@ func getObjectSpamfilterProfile(d *schema.ResourceData) (*map[string]interface{}
 		}
 	}
 
-	if v, ok := d.GetOk("spam_bword_threshold"); ok {
+	if v, ok := d.GetOkExists("spam_bword_threshold"); ok {
 		t, err := expandSpamfilterProfileSpamBwordThreshold(d, v, "spam_bword_threshold")
 		if err != nil {
 			return &obj, err
@@ -1362,7 +1362,7 @@ func getObjectSpamfilterProfile(d *schema.ResourceData) (*map[string]interface{}
 		}
 	}
 
-	if v, ok := d.GetOk("spam_bword_table"); ok {
+	if v, ok := d.GetOkExists("spam_bword_table"); ok {
 		t, err := expandSpamfilterProfileSpamBwordTable(d, v, "spam_bword_table")
 		if err != nil {
 			return &obj, err
@@ -1371,7 +1371,7 @@ func getObjectSpamfilterProfile(d *schema.ResourceData) (*map[string]interface{}
 		}
 	}
 
-	if v, ok := d.GetOk("spam_bwl_table"); ok {
+	if v, ok := d.GetOkExists("spam_bwl_table"); ok {
 		t, err := expandSpamfilterProfileSpamBwlTable(d, v, "spam_bwl_table")
 		if err != nil {
 			return &obj, err
@@ -1380,7 +1380,7 @@ func getObjectSpamfilterProfile(d *schema.ResourceData) (*map[string]interface{}
 		}
 	}
 
-	if v, ok := d.GetOk("spam_mheader_table"); ok {
+	if v, ok := d.GetOkExists("spam_mheader_table"); ok {
 		t, err := expandSpamfilterProfileSpamMheaderTable(d, v, "spam_mheader_table")
 		if err != nil {
 			return &obj, err
@@ -1389,7 +1389,7 @@ func getObjectSpamfilterProfile(d *schema.ResourceData) (*map[string]interface{}
 		}
 	}
 
-	if v, ok := d.GetOk("spam_rbl_table"); ok {
+	if v, ok := d.GetOkExists("spam_rbl_table"); ok {
 		t, err := expandSpamfilterProfileSpamRblTable(d, v, "spam_rbl_table")
 		if err != nil {
 			return &obj, err
@@ -1398,7 +1398,7 @@ func getObjectSpamfilterProfile(d *schema.ResourceData) (*map[string]interface{}
 		}
 	}
 
-	if v, ok := d.GetOk("spam_iptrust_table"); ok {
+	if v, ok := d.GetOkExists("spam_iptrust_table"); ok {
 		t, err := expandSpamfilterProfileSpamIptrustTable(d, v, "spam_iptrust_table")
 		if err != nil {
 			return &obj, err

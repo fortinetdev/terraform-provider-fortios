@@ -444,7 +444,7 @@ func expandFirewallTtlPolicyTtl(d *schema.ResourceData, v interface{}, pre strin
 func getObjectFirewallTtlPolicy(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("fosid"); ok {
+	if v, ok := d.GetOkExists("fosid"); ok {
 		t, err := expandFirewallTtlPolicyId(d, v, "fosid")
 		if err != nil {
 			return &obj, err

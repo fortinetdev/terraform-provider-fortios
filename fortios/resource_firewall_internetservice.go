@@ -349,7 +349,7 @@ func expandFirewallInternetServiceObsolete(d *schema.ResourceData, v interface{}
 func getObjectFirewallInternetService(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("fosid"); ok {
+	if v, ok := d.GetOkExists("fosid"); ok {
 		t, err := expandFirewallInternetServiceId(d, v, "fosid")
 		if err != nil {
 			return &obj, err
@@ -367,7 +367,7 @@ func getObjectFirewallInternetService(d *schema.ResourceData) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("reputation"); ok {
+	if v, ok := d.GetOkExists("reputation"); ok {
 		t, err := expandFirewallInternetServiceReputation(d, v, "reputation")
 		if err != nil {
 			return &obj, err
@@ -376,7 +376,7 @@ func getObjectFirewallInternetService(d *schema.ResourceData) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("icon_id"); ok {
+	if v, ok := d.GetOkExists("icon_id"); ok {
 		t, err := expandFirewallInternetServiceIconId(d, v, "icon_id")
 		if err != nil {
 			return &obj, err
@@ -385,7 +385,7 @@ func getObjectFirewallInternetService(d *schema.ResourceData) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("sld_id"); ok {
+	if v, ok := d.GetOkExists("sld_id"); ok {
 		t, err := expandFirewallInternetServiceSldId(d, v, "sld_id")
 		if err != nil {
 			return &obj, err
@@ -412,7 +412,7 @@ func getObjectFirewallInternetService(d *schema.ResourceData) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("ip_range_number"); ok {
+	if v, ok := d.GetOkExists("ip_range_number"); ok {
 		t, err := expandFirewallInternetServiceIpRangeNumber(d, v, "ip_range_number")
 		if err != nil {
 			return &obj, err
@@ -421,7 +421,7 @@ func getObjectFirewallInternetService(d *schema.ResourceData) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("ip_number"); ok {
+	if v, ok := d.GetOkExists("ip_number"); ok {
 		t, err := expandFirewallInternetServiceIpNumber(d, v, "ip_number")
 		if err != nil {
 			return &obj, err
@@ -430,7 +430,7 @@ func getObjectFirewallInternetService(d *schema.ResourceData) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("singularity"); ok {
+	if v, ok := d.GetOkExists("singularity"); ok {
 		t, err := expandFirewallInternetServiceSingularity(d, v, "singularity")
 		if err != nil {
 			return &obj, err
@@ -439,7 +439,7 @@ func getObjectFirewallInternetService(d *schema.ResourceData) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("obsolete"); ok {
+	if v, ok := d.GetOkExists("obsolete"); ok {
 		t, err := expandFirewallInternetServiceObsolete(d, v, "obsolete")
 		if err != nil {
 			return &obj, err

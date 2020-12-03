@@ -821,7 +821,7 @@ func getObjectSystemFortiguard(d *schema.ResourceData) (*map[string]interface{},
 		}
 	}
 
-	if v, ok := d.GetOk("antispam_license"); ok {
+	if v, ok := d.GetOkExists("antispam_license"); ok {
 		t, err := expandSystemFortiguardAntispamLicense(d, v, "antispam_license")
 		if err != nil {
 			return &obj, err
@@ -830,7 +830,7 @@ func getObjectSystemFortiguard(d *schema.ResourceData) (*map[string]interface{},
 		}
 	}
 
-	if v, ok := d.GetOk("antispam_expiration"); ok {
+	if v, ok := d.GetOkExists("antispam_expiration"); ok {
 		t, err := expandSystemFortiguardAntispamExpiration(d, v, "antispam_expiration")
 		if err != nil {
 			return &obj, err
@@ -884,7 +884,7 @@ func getObjectSystemFortiguard(d *schema.ResourceData) (*map[string]interface{},
 		}
 	}
 
-	if v, ok := d.GetOk("outbreak_prevention_license"); ok {
+	if v, ok := d.GetOkExists("outbreak_prevention_license"); ok {
 		t, err := expandSystemFortiguardOutbreakPreventionLicense(d, v, "outbreak_prevention_license")
 		if err != nil {
 			return &obj, err
@@ -893,7 +893,7 @@ func getObjectSystemFortiguard(d *schema.ResourceData) (*map[string]interface{},
 		}
 	}
 
-	if v, ok := d.GetOk("outbreak_prevention_expiration"); ok {
+	if v, ok := d.GetOkExists("outbreak_prevention_expiration"); ok {
 		t, err := expandSystemFortiguardOutbreakPreventionExpiration(d, v, "outbreak_prevention_expiration")
 		if err != nil {
 			return &obj, err
@@ -938,7 +938,7 @@ func getObjectSystemFortiguard(d *schema.ResourceData) (*map[string]interface{},
 		}
 	}
 
-	if v, ok := d.GetOk("webfilter_license"); ok {
+	if v, ok := d.GetOkExists("webfilter_license"); ok {
 		t, err := expandSystemFortiguardWebfilterLicense(d, v, "webfilter_license")
 		if err != nil {
 			return &obj, err
@@ -947,7 +947,7 @@ func getObjectSystemFortiguard(d *schema.ResourceData) (*map[string]interface{},
 		}
 	}
 
-	if v, ok := d.GetOk("webfilter_expiration"); ok {
+	if v, ok := d.GetOkExists("webfilter_expiration"); ok {
 		t, err := expandSystemFortiguardWebfilterExpiration(d, v, "webfilter_expiration")
 		if err != nil {
 			return &obj, err

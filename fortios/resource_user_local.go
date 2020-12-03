@@ -564,7 +564,7 @@ func getObjectUserLocal(d *schema.ResourceData) (*map[string]interface{}, error)
 		}
 	}
 
-	if v, ok := d.GetOk("fosid"); ok {
+	if v, ok := d.GetOkExists("fosid"); ok {
 		t, err := expandUserLocalId(d, v, "fosid")
 		if err != nil {
 			return &obj, err
@@ -699,7 +699,7 @@ func getObjectUserLocal(d *schema.ResourceData) (*map[string]interface{}, error)
 		}
 	}
 
-	if v, ok := d.GetOk("authtimeout"); ok {
+	if v, ok := d.GetOkExists("authtimeout"); ok {
 		t, err := expandUserLocalAuthtimeout(d, v, "authtimeout")
 		if err != nil {
 			return &obj, err
@@ -726,7 +726,7 @@ func getObjectUserLocal(d *schema.ResourceData) (*map[string]interface{}, error)
 		}
 	}
 
-	if v, ok := d.GetOk("auth_concurrent_value"); ok {
+	if v, ok := d.GetOkExists("auth_concurrent_value"); ok {
 		t, err := expandUserLocalAuthConcurrentValue(d, v, "auth_concurrent_value")
 		if err != nil {
 			return &obj, err

@@ -2599,7 +2599,7 @@ func getObjectFirewallVip(d *schema.ResourceData) (*map[string]interface{}, erro
 		}
 	}
 
-	if v, ok := d.GetOk("fosid"); ok {
+	if v, ok := d.GetOkExists("fosid"); ok {
 		t, err := expandFirewallVipId(d, v, "fosid")
 		if err != nil {
 			return &obj, err
@@ -2635,7 +2635,7 @@ func getObjectFirewallVip(d *schema.ResourceData) (*map[string]interface{}, erro
 		}
 	}
 
-	if v, ok := d.GetOk("dns_mapping_ttl"); ok {
+	if v, ok := d.GetOkExists("dns_mapping_ttl"); ok {
 		t, err := expandFirewallVipDnsMappingTtl(d, v, "dns_mapping_ttl")
 		if err != nil {
 			return &obj, err
@@ -2851,7 +2851,7 @@ func getObjectFirewallVip(d *schema.ResourceData) (*map[string]interface{}, erro
 		}
 	}
 
-	if v, ok := d.GetOk("http_cookie_generation"); ok {
+	if v, ok := d.GetOkExists("http_cookie_generation"); ok {
 		t, err := expandFirewallVipHttpCookieGeneration(d, v, "http_cookie_generation")
 		if err != nil {
 			return &obj, err
@@ -2860,7 +2860,7 @@ func getObjectFirewallVip(d *schema.ResourceData) (*map[string]interface{}, erro
 		}
 	}
 
-	if v, ok := d.GetOk("http_cookie_age"); ok {
+	if v, ok := d.GetOkExists("http_cookie_age"); ok {
 		t, err := expandFirewallVipHttpCookieAge(d, v, "http_cookie_age")
 		if err != nil {
 			return &obj, err
@@ -3238,7 +3238,7 @@ func getObjectFirewallVip(d *schema.ResourceData) (*map[string]interface{}, erro
 		}
 	}
 
-	if v, ok := d.GetOk("max_embryonic_connections"); ok {
+	if v, ok := d.GetOkExists("max_embryonic_connections"); ok {
 		t, err := expandFirewallVipMaxEmbryonicConnections(d, v, "max_embryonic_connections")
 		if err != nil {
 			return &obj, err
@@ -3247,7 +3247,7 @@ func getObjectFirewallVip(d *schema.ResourceData) (*map[string]interface{}, erro
 		}
 	}
 
-	if v, ok := d.GetOk("color"); ok {
+	if v, ok := d.GetOkExists("color"); ok {
 		t, err := expandFirewallVipColor(d, v, "color")
 		if err != nil {
 			return &obj, err

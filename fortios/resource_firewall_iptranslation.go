@@ -229,7 +229,7 @@ func expandFirewallIpTranslationMapStartip(d *schema.ResourceData, v interface{}
 func getObjectFirewallIpTranslation(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("transid"); ok {
+	if v, ok := d.GetOkExists("transid"); ok {
 		t, err := expandFirewallIpTranslationTransid(d, v, "transid")
 		if err != nil {
 			return &obj, err

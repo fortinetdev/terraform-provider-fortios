@@ -288,7 +288,7 @@ func getObjectSystemGeneve(d *schema.ResourceData) (*map[string]interface{}, err
 		}
 	}
 
-	if v, ok := d.GetOk("vni"); ok {
+	if v, ok := d.GetOkExists("vni"); ok {
 		t, err := expandSystemGeneveVni(d, v, "vni")
 		if err != nil {
 			return &obj, err

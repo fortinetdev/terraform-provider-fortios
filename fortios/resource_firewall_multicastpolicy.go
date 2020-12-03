@@ -562,7 +562,7 @@ func expandFirewallMulticastPolicyEndPort(d *schema.ResourceData, v interface{},
 func getObjectFirewallMulticastPolicy(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("fosid"); ok {
+	if v, ok := d.GetOkExists("fosid"); ok {
 		t, err := expandFirewallMulticastPolicyId(d, v, "fosid")
 		if err != nil {
 			return &obj, err
@@ -661,7 +661,7 @@ func getObjectFirewallMulticastPolicy(d *schema.ResourceData) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("protocol"); ok {
+	if v, ok := d.GetOkExists("protocol"); ok {
 		t, err := expandFirewallMulticastPolicyProtocol(d, v, "protocol")
 		if err != nil {
 			return &obj, err
@@ -670,7 +670,7 @@ func getObjectFirewallMulticastPolicy(d *schema.ResourceData) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("start_port"); ok {
+	if v, ok := d.GetOkExists("start_port"); ok {
 		t, err := expandFirewallMulticastPolicyStartPort(d, v, "start_port")
 		if err != nil {
 			return &obj, err
@@ -679,7 +679,7 @@ func getObjectFirewallMulticastPolicy(d *schema.ResourceData) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("end_port"); ok {
+	if v, ok := d.GetOkExists("end_port"); ok {
 		t, err := expandFirewallMulticastPolicyEndPort(d, v, "end_port")
 		if err != nil {
 			return &obj, err

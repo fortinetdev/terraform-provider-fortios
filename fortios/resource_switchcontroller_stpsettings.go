@@ -290,7 +290,7 @@ func getObjectSwitchControllerStpSettings(d *schema.ResourceData) (*map[string]i
 		}
 	}
 
-	if v, ok := d.GetOk("revision"); ok {
+	if v, ok := d.GetOkExists("revision"); ok {
 		t, err := expandSwitchControllerStpSettingsRevision(d, v, "revision")
 		if err != nil {
 			return &obj, err

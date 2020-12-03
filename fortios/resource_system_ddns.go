@@ -554,7 +554,7 @@ func expandSystemDdnsMonitorInterfaceInterfaceName(d *schema.ResourceData, v int
 func getObjectSystemDdns(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("ddnsid"); ok {
+	if v, ok := d.GetOkExists("ddnsid"); ok {
 		t, err := expandSystemDdnsDdnsid(d, v, "ddnsid")
 		if err != nil {
 			return &obj, err

@@ -185,7 +185,7 @@ func getObjectWafMainClass(d *schema.ResourceData) (*map[string]interface{}, err
 		}
 	}
 
-	if v, ok := d.GetOk("fosid"); ok {
+	if v, ok := d.GetOkExists("fosid"); ok {
 		t, err := expandWafMainClassId(d, v, "fosid")
 		if err != nil {
 			return &obj, err

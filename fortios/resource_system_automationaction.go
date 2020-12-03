@@ -811,7 +811,7 @@ func getObjectSystemAutomationAction(d *schema.ResourceData) (*map[string]interf
 		}
 	}
 
-	if v, ok := d.GetOk("minimum_interval"); ok {
+	if v, ok := d.GetOkExists("minimum_interval"); ok {
 		t, err := expandSystemAutomationActionMinimumInterval(d, v, "minimum_interval")
 		if err != nil {
 			return &obj, err
@@ -820,7 +820,7 @@ func getObjectSystemAutomationAction(d *schema.ResourceData) (*map[string]interf
 		}
 	}
 
-	if v, ok := d.GetOk("delay"); ok {
+	if v, ok := d.GetOkExists("delay"); ok {
 		t, err := expandSystemAutomationActionDelay(d, v, "delay")
 		if err != nil {
 			return &obj, err

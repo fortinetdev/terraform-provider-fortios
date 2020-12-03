@@ -556,7 +556,7 @@ func getObjectSystemVdomProperty(d *schema.ResourceData) (*map[string]interface{
 		}
 	}
 
-	if v, ok := d.GetOk("snmp_index"); ok {
+	if v, ok := d.GetOkExists("snmp_index"); ok {
 		t, err := expandSystemVdomPropertySnmpIndex(d, v, "snmp_index")
 		if err != nil {
 			return &obj, err

@@ -674,7 +674,7 @@ func getObjectLogDiskSetting(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("max_policy_packet_capture_size"); ok {
+	if v, ok := d.GetOkExists("max_policy_packet_capture_size"); ok {
 		t, err := expandLogDiskSettingMaxPolicyPacketCaptureSize(d, v, "max_policy_packet_capture_size")
 		if err != nil {
 			return &obj, err
@@ -719,7 +719,7 @@ func getObjectLogDiskSetting(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("log_quota"); ok {
+	if v, ok := d.GetOkExists("log_quota"); ok {
 		t, err := expandLogDiskSettingLogQuota(d, v, "log_quota")
 		if err != nil {
 			return &obj, err
@@ -728,7 +728,7 @@ func getObjectLogDiskSetting(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("dlp_archive_quota"); ok {
+	if v, ok := d.GetOkExists("dlp_archive_quota"); ok {
 		t, err := expandLogDiskSettingDlpArchiveQuota(d, v, "dlp_archive_quota")
 		if err != nil {
 			return &obj, err
@@ -737,7 +737,7 @@ func getObjectLogDiskSetting(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("report_quota"); ok {
+	if v, ok := d.GetOkExists("report_quota"); ok {
 		t, err := expandLogDiskSettingReportQuota(d, v, "report_quota")
 		if err != nil {
 			return &obj, err
@@ -746,7 +746,7 @@ func getObjectLogDiskSetting(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("maximum_log_age"); ok {
+	if v, ok := d.GetOkExists("maximum_log_age"); ok {
 		t, err := expandLogDiskSettingMaximumLogAge(d, v, "maximum_log_age")
 		if err != nil {
 			return &obj, err
@@ -782,7 +782,7 @@ func getObjectLogDiskSetting(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("uploadport"); ok {
+	if v, ok := d.GetOkExists("uploadport"); ok {
 		t, err := expandLogDiskSettingUploadport(d, v, "uploadport")
 		if err != nil {
 			return &obj, err

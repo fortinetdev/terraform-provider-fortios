@@ -310,7 +310,7 @@ func expandSystemVdomExceptionVdomName(d *schema.ResourceData, v interface{}, pr
 func getObjectSystemVdomException(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("fosid"); ok {
+	if v, ok := d.GetOkExists("fosid"); ok {
 		t, err := expandSystemVdomExceptionId(d, v, "fosid")
 		if err != nil {
 			return &obj, err
@@ -328,7 +328,7 @@ func getObjectSystemVdomException(d *schema.ResourceData) (*map[string]interface
 		}
 	}
 
-	if v, ok := d.GetOk("oid"); ok {
+	if v, ok := d.GetOkExists("oid"); ok {
 		t, err := expandSystemVdomExceptionOid(d, v, "oid")
 		if err != nil {
 			return &obj, err

@@ -1032,7 +1032,7 @@ func getObjectFirewallAddress(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("cache_ttl"); ok {
+	if v, ok := d.GetOkExists("cache_ttl"); ok {
 		t, err := expandFirewallAddressCacheTtl(d, v, "cache_ttl")
 		if err != nil {
 			return &obj, err
@@ -1140,7 +1140,7 @@ func getObjectFirewallAddress(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("color"); ok {
+	if v, ok := d.GetOkExists("color"); ok {
 		t, err := expandFirewallAddressColor(d, v, "color")
 		if err != nil {
 			return &obj, err

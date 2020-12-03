@@ -1818,7 +1818,7 @@ func getObjectReportChart(d *schema.ResourceData) (*map[string]interface{}, erro
 		}
 	}
 
-	if v, ok := d.GetOk("policy"); ok {
+	if v, ok := d.GetOkExists("policy"); ok {
 		t, err := expandReportChartPolicy(d, v, "policy")
 		if err != nil {
 			return &obj, err
@@ -1962,7 +1962,7 @@ func getObjectReportChart(d *schema.ResourceData) (*map[string]interface{}, erro
 		}
 	}
 
-	if v, ok := d.GetOk("title_font_size"); ok {
+	if v, ok := d.GetOkExists("title_font_size"); ok {
 		t, err := expandReportChartTitleFontSize(d, v, "title_font_size")
 		if err != nil {
 			return &obj, err
@@ -1998,7 +1998,7 @@ func getObjectReportChart(d *schema.ResourceData) (*map[string]interface{}, erro
 		}
 	}
 
-	if v, ok := d.GetOk("legend_font_size"); ok {
+	if v, ok := d.GetOkExists("legend_font_size"); ok {
 		t, err := expandReportChartLegendFontSize(d, v, "legend_font_size")
 		if err != nil {
 			return &obj, err

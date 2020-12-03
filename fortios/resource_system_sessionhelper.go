@@ -212,7 +212,7 @@ func expandSystemSessionHelperPort(d *schema.ResourceData, v interface{}, pre st
 func getObjectSystemSessionHelper(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("fosid"); ok {
+	if v, ok := d.GetOkExists("fosid"); ok {
 		t, err := expandSystemSessionHelperId(d, v, "fosid")
 		if err != nil {
 			return &obj, err
@@ -230,7 +230,7 @@ func getObjectSystemSessionHelper(d *schema.ResourceData) (*map[string]interface
 		}
 	}
 
-	if v, ok := d.GetOk("protocol"); ok {
+	if v, ok := d.GetOkExists("protocol"); ok {
 		t, err := expandSystemSessionHelperProtocol(d, v, "protocol")
 		if err != nil {
 			return &obj, err

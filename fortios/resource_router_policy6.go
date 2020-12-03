@@ -388,7 +388,7 @@ func expandRouterPolicy6Comments(d *schema.ResourceData, v interface{}, pre stri
 func getObjectRouterPolicy6(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("seq_num"); ok {
+	if v, ok := d.GetOkExists("seq_num"); ok {
 		t, err := expandRouterPolicy6SeqNum(d, v, "seq_num")
 		if err != nil {
 			return &obj, err
@@ -424,7 +424,7 @@ func getObjectRouterPolicy6(d *schema.ResourceData) (*map[string]interface{}, er
 		}
 	}
 
-	if v, ok := d.GetOk("protocol"); ok {
+	if v, ok := d.GetOkExists("protocol"); ok {
 		t, err := expandRouterPolicy6Protocol(d, v, "protocol")
 		if err != nil {
 			return &obj, err

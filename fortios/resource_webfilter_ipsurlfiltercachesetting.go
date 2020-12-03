@@ -153,7 +153,7 @@ func expandWebfilterIpsUrlfilterCacheSettingExtendedTtl(d *schema.ResourceData, 
 func getObjectWebfilterIpsUrlfilterCacheSetting(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("dns_retry_interval"); ok {
+	if v, ok := d.GetOkExists("dns_retry_interval"); ok {
 		t, err := expandWebfilterIpsUrlfilterCacheSettingDnsRetryInterval(d, v, "dns_retry_interval")
 		if err != nil {
 			return &obj, err
@@ -162,7 +162,7 @@ func getObjectWebfilterIpsUrlfilterCacheSetting(d *schema.ResourceData) (*map[st
 		}
 	}
 
-	if v, ok := d.GetOk("extended_ttl"); ok {
+	if v, ok := d.GetOkExists("extended_ttl"); ok {
 		t, err := expandWebfilterIpsUrlfilterCacheSettingExtendedTtl(d, v, "extended_ttl")
 		if err != nil {
 			return &obj, err

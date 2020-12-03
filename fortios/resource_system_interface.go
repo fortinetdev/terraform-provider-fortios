@@ -6376,7 +6376,7 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("vrf"); ok {
+	if v, ok := d.GetOkExists("vrf"); ok {
 		t, err := expandSystemInterfaceVrf(d, v, "vrf")
 		if err != nil {
 			return &obj, err
@@ -6385,7 +6385,7 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("cli_conn_status"); ok {
+	if v, ok := d.GetOkExists("cli_conn_status"); ok {
 		t, err := expandSystemInterfaceCliConnStatus(d, v, "cli_conn_status")
 		if err != nil {
 			return &obj, err
@@ -6421,7 +6421,7 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("priority"); ok {
+	if v, ok := d.GetOkExists("priority"); ok {
 		t, err := expandSystemInterfacePriority(d, v, "priority")
 		if err != nil {
 			return &obj, err
@@ -6502,7 +6502,7 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("ping_serv_status"); ok {
+	if v, ok := d.GetOkExists("ping_serv_status"); ok {
 		t, err := expandSystemInterfacePingServStatus(d, v, "ping_serv_status")
 		if err != nil {
 			return &obj, err
@@ -6637,7 +6637,7 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("idle_timeout"); ok {
+	if v, ok := d.GetOkExists("idle_timeout"); ok {
 		t, err := expandSystemInterfaceIdleTimeout(d, v, "idle_timeout")
 		if err != nil {
 			return &obj, err
@@ -6646,7 +6646,7 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("detected_peer_mtu"); ok {
+	if v, ok := d.GetOkExists("detected_peer_mtu"); ok {
 		t, err := expandSystemInterfaceDetectedPeerMtu(d, v, "detected_peer_mtu")
 		if err != nil {
 			return &obj, err
@@ -6655,7 +6655,7 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("disc_retry_timeout"); ok {
+	if v, ok := d.GetOkExists("disc_retry_timeout"); ok {
 		t, err := expandSystemInterfaceDiscRetryTimeout(d, v, "disc_retry_timeout")
 		if err != nil {
 			return &obj, err
@@ -6664,7 +6664,7 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("padt_retry_timeout"); ok {
+	if v, ok := d.GetOkExists("padt_retry_timeout"); ok {
 		t, err := expandSystemInterfacePadtRetryTimeout(d, v, "padt_retry_timeout")
 		if err != nil {
 			return &obj, err
@@ -6691,7 +6691,7 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("lcp_echo_interval"); ok {
+	if v, ok := d.GetOkExists("lcp_echo_interval"); ok {
 		t, err := expandSystemInterfaceLcpEchoInterval(d, v, "lcp_echo_interval")
 		if err != nil {
 			return &obj, err
@@ -6700,7 +6700,7 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("lcp_max_echo_fails"); ok {
+	if v, ok := d.GetOkExists("lcp_max_echo_fails"); ok {
 		t, err := expandSystemInterfaceLcpMaxEchoFails(d, v, "lcp_max_echo_fails")
 		if err != nil {
 			return &obj, err
@@ -6781,7 +6781,7 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("pptp_timeout"); ok {
+	if v, ok := d.GetOkExists("pptp_timeout"); ok {
 		t, err := expandSystemInterfacePptpTimeout(d, v, "pptp_timeout")
 		if err != nil {
 			return &obj, err
@@ -7078,7 +7078,7 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("mtu"); ok {
+	if v, ok := d.GetOkExists("mtu"); ok {
 		t, err := expandSystemInterfaceMtu(d, v, "mtu")
 		if err != nil {
 			return &obj, err
@@ -7204,7 +7204,7 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("tcp_mss"); ok {
+	if v, ok := d.GetOkExists("tcp_mss"); ok {
 		t, err := expandSystemInterfaceTcpMss(d, v, "tcp_mss")
 		if err != nil {
 			return &obj, err
@@ -7213,7 +7213,7 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("inbandwidth"); ok {
+	if v, ok := d.GetOkExists("inbandwidth"); ok {
 		t, err := expandSystemInterfaceInbandwidth(d, v, "inbandwidth")
 		if err != nil {
 			return &obj, err
@@ -7222,7 +7222,7 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("outbandwidth"); ok {
+	if v, ok := d.GetOkExists("outbandwidth"); ok {
 		t, err := expandSystemInterfaceOutbandwidth(d, v, "outbandwidth")
 		if err != nil {
 			return &obj, err
@@ -7240,7 +7240,7 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("disconnect_threshold"); ok {
+	if v, ok := d.GetOkExists("disconnect_threshold"); ok {
 		t, err := expandSystemInterfaceDisconnectThreshold(d, v, "disconnect_threshold")
 		if err != nil {
 			return &obj, err
@@ -7249,7 +7249,7 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("spillover_threshold"); ok {
+	if v, ok := d.GetOkExists("spillover_threshold"); ok {
 		t, err := expandSystemInterfaceSpilloverThreshold(d, v, "spillover_threshold")
 		if err != nil {
 			return &obj, err
@@ -7258,7 +7258,7 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("ingress_spillover_threshold"); ok {
+	if v, ok := d.GetOkExists("ingress_spillover_threshold"); ok {
 		t, err := expandSystemInterfaceIngressSpilloverThreshold(d, v, "ingress_spillover_threshold")
 		if err != nil {
 			return &obj, err
@@ -7267,7 +7267,7 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("weight"); ok {
+	if v, ok := d.GetOkExists("weight"); ok {
 		t, err := expandSystemInterfaceWeight(d, v, "weight")
 		if err != nil {
 			return &obj, err
@@ -7303,7 +7303,7 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("forward_domain"); ok {
+	if v, ok := d.GetOkExists("forward_domain"); ok {
 		t, err := expandSystemInterfaceForwardDomain(d, v, "forward_domain")
 		if err != nil {
 			return &obj, err
@@ -7429,7 +7429,7 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("devindex"); ok {
+	if v, ok := d.GetOkExists("devindex"); ok {
 		t, err := expandSystemInterfaceDevindex(d, v, "devindex")
 		if err != nil {
 			return &obj, err
@@ -7438,7 +7438,7 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("vindex"); ok {
+	if v, ok := d.GetOkExists("vindex"); ok {
 		t, err := expandSystemInterfaceVindex(d, v, "vindex")
 		if err != nil {
 			return &obj, err
@@ -7483,7 +7483,7 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("captive_portal"); ok {
+	if v, ok := d.GetOkExists("captive_portal"); ok {
 		t, err := expandSystemInterfaceCaptivePortal(d, v, "captive_portal")
 		if err != nil {
 			return &obj, err
@@ -7654,7 +7654,7 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("estimated_upstream_bandwidth"); ok {
+	if v, ok := d.GetOkExists("estimated_upstream_bandwidth"); ok {
 		t, err := expandSystemInterfaceEstimatedUpstreamBandwidth(d, v, "estimated_upstream_bandwidth")
 		if err != nil {
 			return &obj, err
@@ -7663,7 +7663,7 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("estimated_downstream_bandwidth"); ok {
+	if v, ok := d.GetOkExists("estimated_downstream_bandwidth"); ok {
 		t, err := expandSystemInterfaceEstimatedDownstreamBandwidth(d, v, "estimated_downstream_bandwidth")
 		if err != nil {
 			return &obj, err
@@ -7699,7 +7699,7 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("snmp_index"); ok {
+	if v, ok := d.GetOkExists("snmp_index"); ok {
 		t, err := expandSystemInterfaceSnmpIndex(d, v, "snmp_index")
 		if err != nil {
 			return &obj, err
@@ -7771,7 +7771,7 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("internal"); ok {
+	if v, ok := d.GetOkExists("internal"); ok {
 		t, err := expandSystemInterfaceInternal(d, v, "internal")
 		if err != nil {
 			return &obj, err
@@ -7780,7 +7780,7 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("fortilink_backup_link"); ok {
+	if v, ok := d.GetOkExists("fortilink_backup_link"); ok {
 		t, err := expandSystemInterfaceFortilinkBackupLink(d, v, "fortilink_backup_link")
 		if err != nil {
 			return &obj, err
@@ -7852,7 +7852,7 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("switch_controller_learning_limit"); ok {
+	if v, ok := d.GetOkExists("switch_controller_learning_limit"); ok {
 		t, err := expandSystemInterfaceSwitchControllerLearningLimit(d, v, "switch_controller_learning_limit")
 		if err != nil {
 			return &obj, err
@@ -7861,7 +7861,7 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("color"); ok {
+	if v, ok := d.GetOkExists("color"); ok {
 		t, err := expandSystemInterfaceColor(d, v, "color")
 		if err != nil {
 			return &obj, err

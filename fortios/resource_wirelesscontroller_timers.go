@@ -516,7 +516,7 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData) (*map[string]inte
 		}
 	}
 
-	if v, ok := d.GetOk("rogue_ap_log"); ok {
+	if v, ok := d.GetOkExists("rogue_ap_log"); ok {
 		t, err := expandWirelessControllerTimersRogueApLog(d, v, "rogue_ap_log")
 		if err != nil {
 			return &obj, err
@@ -534,7 +534,7 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData) (*map[string]inte
 		}
 	}
 
-	if v, ok := d.GetOk("darrp_optimize"); ok {
+	if v, ok := d.GetOkExists("darrp_optimize"); ok {
 		t, err := expandWirelessControllerTimersDarrpOptimize(d, v, "darrp_optimize")
 		if err != nil {
 			return &obj, err
@@ -597,7 +597,7 @@ func getObjectWirelessControllerTimers(d *schema.ResourceData) (*map[string]inte
 		}
 	}
 
-	if v, ok := d.GetOk("sta_locate_timer"); ok {
+	if v, ok := d.GetOkExists("sta_locate_timer"); ok {
 		t, err := expandWirelessControllerTimersStaLocateTimer(d, v, "sta_locate_timer")
 		if err != nil {
 			return &obj, err

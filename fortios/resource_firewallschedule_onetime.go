@@ -260,7 +260,7 @@ func getObjectFirewallScheduleOnetime(d *schema.ResourceData) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("color"); ok {
+	if v, ok := d.GetOkExists("color"); ok {
 		t, err := expandFirewallScheduleOnetimeColor(d, v, "color")
 		if err != nil {
 			return &obj, err
@@ -269,7 +269,7 @@ func getObjectFirewallScheduleOnetime(d *schema.ResourceData) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("expiration_days"); ok {
+	if v, ok := d.GetOkExists("expiration_days"); ok {
 		t, err := expandFirewallScheduleOnetimeExpirationDays(d, v, "expiration_days")
 		if err != nil {
 			return &obj, err

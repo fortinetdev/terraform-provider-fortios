@@ -311,7 +311,7 @@ func getObjectEndpointControlRegisteredForticlient(d *schema.ResourceData) (*map
 		}
 	}
 
-	if v, ok := d.GetOk("status"); ok {
+	if v, ok := d.GetOkExists("status"); ok {
 		t, err := expandEndpointControlRegisteredForticlientStatus(d, v, "status")
 		if err != nil {
 			return &obj, err
@@ -320,7 +320,7 @@ func getObjectEndpointControlRegisteredForticlient(d *schema.ResourceData) (*map
 		}
 	}
 
-	if v, ok := d.GetOk("flag"); ok {
+	if v, ok := d.GetOkExists("flag"); ok {
 		t, err := expandEndpointControlRegisteredForticlientFlag(d, v, "flag")
 		if err != nil {
 			return &obj, err

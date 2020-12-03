@@ -840,7 +840,7 @@ func getObjectFirewallServiceCustom(d *schema.ResourceData) (*map[string]interfa
 		}
 	}
 
-	if v, ok := d.GetOk("protocol_number"); ok {
+	if v, ok := d.GetOkExists("protocol_number"); ok {
 		t, err := expandFirewallServiceCustomProtocolNumber(d, v, "protocol_number")
 		if err != nil {
 			return &obj, err
@@ -849,7 +849,7 @@ func getObjectFirewallServiceCustom(d *schema.ResourceData) (*map[string]interfa
 		}
 	}
 
-	if v, ok := d.GetOk("icmptype"); ok {
+	if v, ok := d.GetOkExists("icmptype"); ok {
 		t, err := expandFirewallServiceCustomIcmptype(d, v, "icmptype")
 		if err != nil {
 			return &obj, err
@@ -858,7 +858,7 @@ func getObjectFirewallServiceCustom(d *schema.ResourceData) (*map[string]interfa
 		}
 	}
 
-	if v, ok := d.GetOk("icmpcode"); ok {
+	if v, ok := d.GetOkExists("icmpcode"); ok {
 		t, err := expandFirewallServiceCustomIcmpcode(d, v, "icmpcode")
 		if err != nil {
 			return &obj, err
@@ -894,7 +894,7 @@ func getObjectFirewallServiceCustom(d *schema.ResourceData) (*map[string]interfa
 		}
 	}
 
-	if v, ok := d.GetOk("tcp_halfclose_timer"); ok {
+	if v, ok := d.GetOkExists("tcp_halfclose_timer"); ok {
 		t, err := expandFirewallServiceCustomTcpHalfcloseTimer(d, v, "tcp_halfclose_timer")
 		if err != nil {
 			return &obj, err
@@ -903,7 +903,7 @@ func getObjectFirewallServiceCustom(d *schema.ResourceData) (*map[string]interfa
 		}
 	}
 
-	if v, ok := d.GetOk("tcp_halfopen_timer"); ok {
+	if v, ok := d.GetOkExists("tcp_halfopen_timer"); ok {
 		t, err := expandFirewallServiceCustomTcpHalfopenTimer(d, v, "tcp_halfopen_timer")
 		if err != nil {
 			return &obj, err
@@ -912,7 +912,7 @@ func getObjectFirewallServiceCustom(d *schema.ResourceData) (*map[string]interfa
 		}
 	}
 
-	if v, ok := d.GetOk("tcp_timewait_timer"); ok {
+	if v, ok := d.GetOkExists("tcp_timewait_timer"); ok {
 		t, err := expandFirewallServiceCustomTcpTimewaitTimer(d, v, "tcp_timewait_timer")
 		if err != nil {
 			return &obj, err
@@ -921,7 +921,7 @@ func getObjectFirewallServiceCustom(d *schema.ResourceData) (*map[string]interfa
 		}
 	}
 
-	if v, ok := d.GetOk("udp_idle_timer"); ok {
+	if v, ok := d.GetOkExists("udp_idle_timer"); ok {
 		t, err := expandFirewallServiceCustomUdpIdleTimer(d, v, "udp_idle_timer")
 		if err != nil {
 			return &obj, err
@@ -957,7 +957,7 @@ func getObjectFirewallServiceCustom(d *schema.ResourceData) (*map[string]interfa
 		}
 	}
 
-	if v, ok := d.GetOk("color"); ok {
+	if v, ok := d.GetOkExists("color"); ok {
 		t, err := expandFirewallServiceCustomColor(d, v, "color")
 		if err != nil {
 			return &obj, err

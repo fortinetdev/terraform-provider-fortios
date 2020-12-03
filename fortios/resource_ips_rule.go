@@ -646,7 +646,7 @@ func getObjectIpsRule(d *schema.ResourceData) (*map[string]interface{}, error) {
 		}
 	}
 
-	if v, ok := d.GetOk("rule_id"); ok {
+	if v, ok := d.GetOkExists("rule_id"); ok {
 		t, err := expandIpsRuleRuleId(d, v, "rule_id")
 		if err != nil {
 			return &obj, err
@@ -655,7 +655,7 @@ func getObjectIpsRule(d *schema.ResourceData) (*map[string]interface{}, error) {
 		}
 	}
 
-	if v, ok := d.GetOk("rev"); ok {
+	if v, ok := d.GetOkExists("rev"); ok {
 		t, err := expandIpsRuleRev(d, v, "rev")
 		if err != nil {
 			return &obj, err
@@ -664,7 +664,7 @@ func getObjectIpsRule(d *schema.ResourceData) (*map[string]interface{}, error) {
 		}
 	}
 
-	if v, ok := d.GetOk("date"); ok {
+	if v, ok := d.GetOkExists("date"); ok {
 		t, err := expandIpsRuleDate(d, v, "date")
 		if err != nil {
 			return &obj, err

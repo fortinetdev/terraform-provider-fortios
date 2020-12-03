@@ -400,7 +400,7 @@ func getObjectEndpointControlSettings(d *schema.ResourceData) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("forticlient_reg_timeout"); ok {
+	if v, ok := d.GetOkExists("forticlient_reg_timeout"); ok {
 		t, err := expandEndpointControlSettingsForticlientRegTimeout(d, v, "forticlient_reg_timeout")
 		if err != nil {
 			return &obj, err
@@ -463,7 +463,7 @@ func getObjectEndpointControlSettings(d *schema.ResourceData) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("forticlient_avdb_update_interval"); ok {
+	if v, ok := d.GetOkExists("forticlient_avdb_update_interval"); ok {
 		t, err := expandEndpointControlSettingsForticlientAvdbUpdateInterval(d, v, "forticlient_avdb_update_interval")
 		if err != nil {
 			return &obj, err
@@ -472,7 +472,7 @@ func getObjectEndpointControlSettings(d *schema.ResourceData) (*map[string]inter
 		}
 	}
 
-	if v, ok := d.GetOk("forticlient_warning_interval"); ok {
+	if v, ok := d.GetOkExists("forticlient_warning_interval"); ok {
 		t, err := expandEndpointControlSettingsForticlientWarningInterval(d, v, "forticlient_warning_interval")
 		if err != nil {
 			return &obj, err

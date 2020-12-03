@@ -365,7 +365,7 @@ func expandRouterStatic6Bfd(d *schema.ResourceData, v interface{}, pre string) (
 func getObjectRouterStatic6(d *schema.ResourceData) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("seq_num"); ok {
+	if v, ok := d.GetOkExists("seq_num"); ok {
 		t, err := expandRouterStatic6SeqNum(d, v, "seq_num")
 		if err != nil {
 			return &obj, err
@@ -410,7 +410,7 @@ func getObjectRouterStatic6(d *schema.ResourceData) (*map[string]interface{}, er
 		}
 	}
 
-	if v, ok := d.GetOk("devindex"); ok {
+	if v, ok := d.GetOkExists("devindex"); ok {
 		t, err := expandRouterStatic6Devindex(d, v, "devindex")
 		if err != nil {
 			return &obj, err
@@ -428,7 +428,7 @@ func getObjectRouterStatic6(d *schema.ResourceData) (*map[string]interface{}, er
 		}
 	}
 
-	if v, ok := d.GetOk("priority"); ok {
+	if v, ok := d.GetOkExists("priority"); ok {
 		t, err := expandRouterStatic6Priority(d, v, "priority")
 		if err != nil {
 			return &obj, err
