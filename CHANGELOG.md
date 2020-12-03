@@ -1,5 +1,19 @@
 ## 1.7.0 (Unreleased)
 
+## 1.6.15 (Dec 2, 2020)
+
+IMPROVEMENTS:
+
+* Improve fortios_system_dnsdatabase.html.markdown #119
+* Improve fortios_certificate_local.html.markdown #118
+
+BUG FIXES:
+
+* Fix terraform omit 0 value problem
+* Fix fortios_vpnssl_settings auth_timeout cannot be set to 0 #120
+* Make mkey of all table resources as ForceNew and Required #105
+* Fix unable to change interface name on VpnIpsecPhase1Interface #105
+
 ## 1.6.13 (Nov 27, 2020)
 
 BUG FIXES:
