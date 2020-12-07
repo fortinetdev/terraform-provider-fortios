@@ -147,6 +147,14 @@ The following arguments are supported:
 * `groups` - Names of user groups that can authenticate with this policy. The structure of `groups` block is documented below.
 * `users` - Names of individual users that can authenticate with this policy. The structure of `users` block is documented below.
 * `devices` - Names of devices or device groups that can be matched by the policy. The structure of `devices` block is documented below.
+* `anti_replay` - Enable/disable anti-replay check.
+* `geoip_anycast` - Enable/disable recognition of anycast IP addresses using the geography IP database.
+* `emailfilter_profile` - Name of an existing email filter profile.
+* `cifs_profile` - Name of an existing CIFS profile.
+* `auto_asic_offload` - Enable/disable policy traffic ASIC offloading.
+* `fsso_groups` - Names of FSSO groups. The structure of `fsso_groups` block is documented below.
+* `email_collect` - Enable/disable email collection.
+* `match_vip_only` - Enable/disable matching of only those packets that have had their destination addresses changed by a VIP.
 * `auth_path` - Enable/disable authentication-based routing.
 * `disclaimer` - Enable/disable user authentication disclaimer.
 * `vpntunnel` - Policy-based IPsec VPN: name of the IPsec VPN Phase 1.
@@ -274,6 +282,10 @@ The `users` block supports:
 The `devices` block supports:
 
 * `name` - Device or group name.
+
+The `fsso_groups` block supports:
+
+* `name` - Names of FSSO groups.
 
 The `custom_log_fields` block supports:
 

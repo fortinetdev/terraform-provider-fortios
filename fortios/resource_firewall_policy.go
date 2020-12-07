@@ -734,6 +734,57 @@ func resourceFirewallPolicy() *schema.Resource {
 					},
 				},
 			},
+			"anti_replay": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"geoip_anycast": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"emailfilter_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
+			"cifs_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
+			"auto_asic_offload": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"fsso_groups": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 511),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
+			"email_collect": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"match_vip_only": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"auth_path": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -2146,6 +2197,70 @@ func flattenFirewallPolicyDevicesName(v interface{}, d *schema.ResourceData, pre
 	return v
 }
 
+func flattenFirewallPolicyAntiReplay(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicyGeoipAnycast(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicyEmailfilterProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicyCifsProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicyAutoAsicOffload(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicyFssoGroups(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallPolicyFssoGroupsName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func flattenFirewallPolicyFssoGroupsName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicyEmailCollect(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicyMatchVipOnly(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func flattenFirewallPolicyAuthPath(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -3157,6 +3272,64 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 					return fmt.Errorf("Error reading devices: %v", err)
 				}
 			}
+		}
+	}
+
+	if err = d.Set("anti_replay", flattenFirewallPolicyAntiReplay(o["anti-replay"], d, "anti_replay")); err != nil {
+		if !fortiAPIPatch(o["anti-replay"]) {
+			return fmt.Errorf("Error reading anti_replay: %v", err)
+		}
+	}
+
+	if err = d.Set("geoip_anycast", flattenFirewallPolicyGeoipAnycast(o["geoip-anycast"], d, "geoip_anycast")); err != nil {
+		if !fortiAPIPatch(o["geoip-anycast"]) {
+			return fmt.Errorf("Error reading geoip_anycast: %v", err)
+		}
+	}
+
+	if err = d.Set("emailfilter_profile", flattenFirewallPolicyEmailfilterProfile(o["emailfilter-profile"], d, "emailfilter_profile")); err != nil {
+		if !fortiAPIPatch(o["emailfilter-profile"]) {
+			return fmt.Errorf("Error reading emailfilter_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("cifs_profile", flattenFirewallPolicyCifsProfile(o["cifs-profile"], d, "cifs_profile")); err != nil {
+		if !fortiAPIPatch(o["cifs-profile"]) {
+			return fmt.Errorf("Error reading cifs_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("auto_asic_offload", flattenFirewallPolicyAutoAsicOffload(o["auto-asic-offload"], d, "auto_asic_offload")); err != nil {
+		if !fortiAPIPatch(o["auto-asic-offload"]) {
+			return fmt.Errorf("Error reading auto_asic_offload: %v", err)
+		}
+	}
+
+	if isImportTable() {
+		if err = d.Set("fsso_groups", flattenFirewallPolicyFssoGroups(o["fsso-groups"], d, "fsso_groups")); err != nil {
+			if !fortiAPIPatch(o["fsso-groups"]) {
+				return fmt.Errorf("Error reading fsso_groups: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("fsso_groups"); ok {
+			if err = d.Set("fsso_groups", flattenFirewallPolicyFssoGroups(o["fsso-groups"], d, "fsso_groups")); err != nil {
+				if !fortiAPIPatch(o["fsso-groups"]) {
+					return fmt.Errorf("Error reading fsso_groups: %v", err)
+				}
+			}
+		}
+	}
+
+	if err = d.Set("email_collect", flattenFirewallPolicyEmailCollect(o["email-collect"], d, "email_collect")); err != nil {
+		if !fortiAPIPatch(o["email-collect"]) {
+			return fmt.Errorf("Error reading email_collect: %v", err)
+		}
+	}
+
+	if err = d.Set("match_vip_only", flattenFirewallPolicyMatchVipOnly(o["match-vip-only"], d, "match_vip_only")); err != nil {
+		if !fortiAPIPatch(o["match-vip-only"]) {
+			return fmt.Errorf("Error reading match_vip_only: %v", err)
 		}
 	}
 
@@ -4400,6 +4573,65 @@ func expandFirewallPolicyDevicesName(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
+func expandFirewallPolicyAntiReplay(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicyGeoipAnycast(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicyEmailfilterProfile(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicyCifsProfile(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicyAutoAsicOffload(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicyFssoGroups(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["name"], _ = expandFirewallPolicyFssoGroupsName(d, i["name"], pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallPolicyFssoGroupsName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicyEmailCollect(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicyMatchVipOnly(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
 func expandFirewallPolicyAuthPath(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
 }
@@ -5449,6 +5681,78 @@ func getObjectFirewallPolicy(d *schema.ResourceData) (*map[string]interface{}, e
 			return &obj, err
 		} else if t != nil {
 			obj["devices"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("anti_replay"); ok {
+		t, err := expandFirewallPolicyAntiReplay(d, v, "anti_replay")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["anti-replay"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("geoip_anycast"); ok {
+		t, err := expandFirewallPolicyGeoipAnycast(d, v, "geoip_anycast")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["geoip-anycast"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("emailfilter_profile"); ok {
+		t, err := expandFirewallPolicyEmailfilterProfile(d, v, "emailfilter_profile")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["emailfilter-profile"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("cifs_profile"); ok {
+		t, err := expandFirewallPolicyCifsProfile(d, v, "cifs_profile")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["cifs-profile"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("auto_asic_offload"); ok {
+		t, err := expandFirewallPolicyAutoAsicOffload(d, v, "auto_asic_offload")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["auto-asic-offload"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("fsso_groups"); ok {
+		t, err := expandFirewallPolicyFssoGroups(d, v, "fsso_groups")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fsso-groups"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("email_collect"); ok {
+		t, err := expandFirewallPolicyEmailCollect(d, v, "email_collect")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["email-collect"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("match_vip_only"); ok {
+		t, err := expandFirewallPolicyMatchVipOnly(d, v, "match_vip_only")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["match-vip-only"] = t
 		}
 	}
 
