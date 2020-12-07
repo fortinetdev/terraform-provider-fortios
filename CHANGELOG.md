@@ -1,5 +1,11 @@
 ## 1.7.0 (Unreleased)
 
+## 1.6.16 (Dec 6, 2020)
+
+IMPROVEMENTS:
+
+* Support anti-replay, geoip-anycast, emailfilter-profile, cifs-profile, auto-asic-offload, fsso-groups, email-collect, match-vip-only for firewall policy
+
 ## 1.6.15 (Dec 2, 2020)
 
 IMPROVEMENTS:
