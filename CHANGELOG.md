@@ -1,5 +1,12 @@
 ## 1.7.0 (Unreleased)
 
+
+## 1.6.17 (Dec 16, 2020)
+
+BUG FIXES:
+
+* Remove ForceNew of firewall objects that don't include policy objects
+
 ## 1.6.16 (Dec 6, 2020)
 
 IMPROVEMENTS:
