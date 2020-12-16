@@ -23,7 +23,7 @@ resource "fortios_system_dscpbasedpriority" "trname" {
 
 The following arguments are supported:
 
-* `fosid` - (Required) Item ID.
+* `fosid` - Item ID.
 * `ds` - DSCP(DiffServ) DS value (0 - 63).
 * `priority` - DSCP based priority level.
 

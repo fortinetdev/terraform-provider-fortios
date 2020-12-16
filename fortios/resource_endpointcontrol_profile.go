@@ -32,8 +32,9 @@ func resourceEndpointControlProfile() *schema.Resource {
 			"profile_name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required:     true,
 				ForceNew:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"forticlient_winmac_settings": &schema.Schema{
 				Type:     schema.TypeList,

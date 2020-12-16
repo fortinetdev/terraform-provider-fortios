@@ -13,7 +13,7 @@ Configure Bluetooth Low Energy profile.
 
 The following arguments are supported:
 
-* `name` - (Required) Bluetooth Low Energy profile name.
+* `name` - Bluetooth Low Energy profile name.
 * `comment` - Comment.
 * `advertising` - Advertising type.
 * `ibeacon_uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).

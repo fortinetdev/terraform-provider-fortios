@@ -32,8 +32,8 @@ func resourceFirewallVip64() *schema.Resource {
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Required:     true,
-				ForceNew:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"fosid": &schema.Schema{
 				Type:         schema.TypeInt,

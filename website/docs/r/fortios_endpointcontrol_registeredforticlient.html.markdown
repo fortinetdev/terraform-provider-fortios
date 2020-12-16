@@ -13,7 +13,7 @@ Registered FortiClient list.
 
 The following arguments are supported:
 
-* `uid` - (Required) FortiClient UID.
+* `uid` - FortiClient UID.
 * `vdom` - Registering vdom.
 * `ip` - Endpoint IP address.
 * `mac` - Endpoint MAC address.

@@ -32,8 +32,9 @@ func resourceVpnIpsecPhase1Interface() *schema.Resource {
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
-				Required:     true,
 				ForceNew:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"type": &schema.Schema{
 				Type:     schema.TypeString,

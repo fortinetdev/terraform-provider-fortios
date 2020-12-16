@@ -24,7 +24,7 @@ resource "fortios_firewallwildcardfqdn_custom" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) Address name.
+* `name` - Address name.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `wildcard_fqdn` - Wildcard FQDN.
 * `color` - GUI icon color.

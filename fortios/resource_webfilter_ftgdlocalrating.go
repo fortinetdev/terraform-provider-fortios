@@ -32,8 +32,9 @@ func resourceWebfilterFtgdLocalRating() *schema.Resource {
 			"url": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 511),
-				Required:     true,
 				ForceNew:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,

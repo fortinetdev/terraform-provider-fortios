@@ -33,7 +33,6 @@ func resourceFirewallAddrgrp() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Required:     true,
-				ForceNew:     true,
 			},
 			"uuid": &schema.Schema{
 				Type:     schema.TypeString,

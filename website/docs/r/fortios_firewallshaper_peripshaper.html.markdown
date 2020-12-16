@@ -28,7 +28,7 @@ resource "fortios_firewallshaper_peripshaper" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) Traffic shaper name.
+* `name` - Traffic shaper name.
 * `max_bandwidth` - Upper bandwidth limit enforced by this shaper (0 - 16776000). 0 means no limit. Units depend on the bandwidth-unit setting.
 * `bandwidth_unit` - Unit of measurement for maximum bandwidth for this shaper (Kbps, Mbps or Gbps).
 * `max_concurrent_session` - Maximum number of concurrent sessions allowed by this shaper (0 - 2097000). 0 means no limit.

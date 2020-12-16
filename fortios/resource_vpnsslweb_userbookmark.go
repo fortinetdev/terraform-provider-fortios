@@ -32,8 +32,9 @@ func resourceVpnSslWebUserBookmark() *schema.Resource {
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 101),
-				Required:     true,
 				ForceNew:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"custom_lang": &schema.Schema{
 				Type:         schema.TypeString,

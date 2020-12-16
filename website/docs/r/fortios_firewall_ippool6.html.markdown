@@ -23,7 +23,7 @@ resource "fortios_firewall_ippool6" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) IPv6 IP pool name.
+* `name` - IPv6 IP pool name.
 * `startip` - (Required) First IPv6 address (inclusive) in the range for the address pool (format xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx, Default: ::).
 * `endip` - (Required) Final IPv6 address (inclusive) in the range for the address pool (format xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx, Default: ::).
 * `comments` - Comment.

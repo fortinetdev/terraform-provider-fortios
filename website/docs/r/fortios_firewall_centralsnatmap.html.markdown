@@ -42,7 +42,7 @@ resource "fortios_firewall_centralsnatmap" "trname" {
 
 The following arguments are supported:
 
-* `policyid` - (Required) Policy ID.
+* `policyid` - Policy ID.
 * `status` - Enable/disable the active status of this policy.
 * `orig_addr` - (Required) Original address. The structure of `orig_addr` block is documented below.
 * `srcintf` - (Required) Source interface name from available interfaces. The structure of `srcintf` block is documented below.

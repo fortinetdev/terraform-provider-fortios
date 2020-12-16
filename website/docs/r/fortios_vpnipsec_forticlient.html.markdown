@@ -168,7 +168,7 @@ resource "fortios_vpnipsec_forticlient" "trname" {
 
 The following arguments are supported:
 
-* `realm` - (Required) FortiClient realm name.
+* `realm` - FortiClient realm name.
 * `usergroupname` - (Required) User group name for FortiClient users.
 * `phase2name` - (Required) Phase 2 tunnel name that you defined in the FortiClient dialup configuration.
 * `status` - Enable/disable this FortiClient configuration.

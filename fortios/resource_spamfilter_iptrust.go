@@ -31,8 +31,8 @@ func resourceSpamfilterIptrust() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
-				Required: true,
 				ForceNew: true,
+				Required: true,
 			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,

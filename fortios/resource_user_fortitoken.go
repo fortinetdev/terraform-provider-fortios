@@ -32,8 +32,9 @@ func resourceUserFortitoken() *schema.Resource {
 			"serial_number": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 16),
-				Required:     true,
 				ForceNew:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,

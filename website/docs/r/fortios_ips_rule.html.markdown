@@ -35,7 +35,7 @@ resource "fortios_ips_rule" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) Rule name.
+* `name` - Rule name.
 * `status` - Enable/disable status.
 * `log` - Enable/disable logging.
 * `log_packet` - Enable/disable packet logging.

@@ -98,7 +98,7 @@ resource "fortios_system_apiuser" "test2" {
 
 The following arguments are supported:
 
-* `name` - (Required) User name.
+* `name` - User name.
 * `comments` - Comment.
 * `api_key` - Admin user password.
 * `accprofile` - (Required) Admin user access profile.

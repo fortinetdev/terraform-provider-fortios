@@ -26,7 +26,7 @@ resource "fortios_application_group" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) Application group name.
+* `name` - Application group name.
 * `comment` - Comment
 * `type` - Application group type.
 * `application` - Application ID list. The structure of `application` block is documented below.

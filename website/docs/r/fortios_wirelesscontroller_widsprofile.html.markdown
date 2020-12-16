@@ -13,7 +13,7 @@ Configure wireless intrusion detection system (WIDS) profiles.
 
 The following arguments are supported:
 
-* `name` - (Required) WIDS profile name.
+* `name` - WIDS profile name.
 * `comment` - Comment.
 * `sensor_mode` - Scan WiFi nearby stations (default = disable).
 * `ap_scan` - Enable/disable rogue AP detection.

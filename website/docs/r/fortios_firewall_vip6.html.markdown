@@ -70,7 +70,7 @@ resource "fortios_firewall_vip6" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) Virtual ip6 name.
+* `name` - Virtual ip6 name.
 * `fosid` - Custom defined ID.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `comment` - Comment.

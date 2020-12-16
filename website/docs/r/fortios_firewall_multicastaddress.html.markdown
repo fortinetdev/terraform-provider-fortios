@@ -27,7 +27,7 @@ resource "fortios_firewall_multicastaddress" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) Multicast address name.
+* `name` - Multicast address name.
 * `type` - Type of address object: multicast IP address range or broadcast IP/mask to be treated as a multicast address.
 * `subnet` - Broadcast address and subnet.
 * `start_ip` - (Required) First IPv4 address (inclusive) in the range for the address.

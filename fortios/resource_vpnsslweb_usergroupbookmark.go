@@ -32,8 +32,9 @@ func resourceVpnSslWebUserGroupBookmark() *schema.Resource {
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
-				Required:     true,
 				ForceNew:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"bookmarks": &schema.Schema{
 				Type:     schema.TypeList,

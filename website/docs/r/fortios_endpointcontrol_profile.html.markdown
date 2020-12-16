@@ -75,7 +75,7 @@ resource "fortios_endpointcontrol_profile" "trname" {
 
 The following arguments are supported:
 
-* `profile_name` - (Required) Profile name.
+* `profile_name` - Profile name.
 * `forticlient_winmac_settings` - FortiClient settings for Windows/Mac platform. The structure of `forticlient_winmac_settings` block is documented below.
 * `forticlient_android_settings` - FortiClient settings for Android platform. The structure of `forticlient_android_settings` block is documented below.
 * `forticlient_ios_settings` - FortiClient settings for iOS platform. The structure of `forticlient_ios_settings` block is documented below.

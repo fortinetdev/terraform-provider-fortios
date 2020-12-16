@@ -31,8 +31,9 @@ func resourceFirewallLocalInPolicy() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"policyid": &schema.Schema{
 				Type:     schema.TypeInt,
-				Required: true,
 				ForceNew: true,
+				Optional: true,
+				Computed: true,
 			},
 			"ha_mgmt_intf_only": &schema.Schema{
 				Type:     schema.TypeString,

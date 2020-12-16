@@ -25,7 +25,7 @@ resource "fortios_firewallipmacbinding_table" "trname" {
 
 The following arguments are supported:
 
-* `seq_num` - (Required) Entry number.
+* `seq_num` - Entry number.
 * `ip` - (Required) IPv4 address portion of the pair (format: xxx.xxx.xxx.xxx).
 * `mac` - MAC address portion of the pair (format: xx:xx:xx:xx:xx:xx in hexidecimal).
 * `name` - Name of the pair (optional, default = no name).

@@ -27,7 +27,7 @@ resource "fortios_firewall_ldbmonitor" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) Monitor name.
+* `name` - Monitor name.
 * `type` - (Required) Select the Monitor type used by the health check monitor to check the health of the server (PING | TCP | HTTP).
 * `interval` - Time between health checks (5 - 65635 sec, default = 10).
 * `timeout` - Time to wait to receive response to a health check from a server. Reaching the timeout means the health check failed (1 - 255 sec, default = 2).

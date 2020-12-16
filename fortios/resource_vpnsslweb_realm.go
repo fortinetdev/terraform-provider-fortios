@@ -32,8 +32,9 @@ func resourceVpnSslWebRealm() *schema.Resource {
 			"url_path": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required:     true,
 				ForceNew:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"max_concurrent_user": &schema.Schema{
 				Type:         schema.TypeInt,

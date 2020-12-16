@@ -32,7 +32,7 @@ resource "fortios_wirelesscontrollerhotspot20_h2qpconncapability" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) Connection capability name.
+* `name` - Connection capability name.
 * `icmp_port` - Set ICMP port service status.
 * `ftp_port` - Set FTP port service status.
 * `ssh_port` - Set SSH port service status.

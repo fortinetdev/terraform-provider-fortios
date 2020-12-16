@@ -31,8 +31,8 @@ func resourceFirewallInternetServiceDefinition() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
-				Required: true,
-				ForceNew: true,
+				Optional: true,
+				Computed: true,
 			},
 			"entry": &schema.Schema{
 				Type:     schema.TypeList,

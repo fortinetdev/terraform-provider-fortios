@@ -32,8 +32,9 @@ func resourceSwitchControllerLldpProfile() *schema.Resource {
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Required:     true,
 				ForceNew:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"med_tlvs": &schema.Schema{
 				Type:     schema.TypeString,

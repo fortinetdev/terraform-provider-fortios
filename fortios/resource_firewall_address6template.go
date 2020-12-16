@@ -33,7 +33,6 @@ func resourceFirewallAddress6Template() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
 				Required:     true,
-				ForceNew:     true,
 			},
 			"ip6": &schema.Schema{
 				Type:     schema.TypeString,

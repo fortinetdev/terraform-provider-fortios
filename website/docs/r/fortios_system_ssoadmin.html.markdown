@@ -26,7 +26,7 @@ resource "fortios_system_ssoadmin" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) SSO admin name.
+* `name` - SSO admin name.
 * `accprofile` - (Required) SSO admin user access profile.
 * `vdom` - Virtual domain(s) that the administrator can access. The structure of `vdom` block is documented below.
 

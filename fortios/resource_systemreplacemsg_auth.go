@@ -32,8 +32,8 @@ func resourceSystemReplacemsgAuth() *schema.Resource {
 			"msg_type": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 28),
-				Required:     true,
 				ForceNew:     true,
+				Required:     true,
 			},
 			"buffer": &schema.Schema{
 				Type:         schema.TypeString,

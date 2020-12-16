@@ -43,7 +43,7 @@ resource "fortios_system_linkmonitor" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) Link monitor name.
+* `name` - Link monitor name.
 * `addr_mode` - Address mode (IPv4 or IPv6).
 * `srcintf` - Interface that receives the traffic to be monitored.
 * `server` - (Required) IP address of the server(s) to be monitored. The structure of `server` block is documented below.

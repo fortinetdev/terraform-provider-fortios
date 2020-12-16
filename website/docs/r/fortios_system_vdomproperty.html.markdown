@@ -13,7 +13,7 @@ Configure VDOM property.
 
 The following arguments are supported:
 
-* `name` - (Required) VDOM name.
+* `name` - VDOM name.
 * `description` - Description.
 * `snmp_index` - Permanent SNMP Index of the virtual domain (0 - 4294967295).
 * `session` - Maximum guaranteed number of sessions.

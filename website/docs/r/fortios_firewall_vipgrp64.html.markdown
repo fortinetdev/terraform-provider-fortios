@@ -41,7 +41,7 @@ resource "fortios_firewall_vipgrp64" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) VIP64 group name.
+* `name` - VIP64 group name.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `color` - Integer value to determine the color of the icon in the GUI (range 1 to 32, default = 0, which sets the value to 1).
 * `comments` - Comment.

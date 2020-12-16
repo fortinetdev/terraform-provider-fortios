@@ -37,8 +37,9 @@ func resourceWafSubClass() *schema.Resource {
 			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
-				Required: true,
 				ForceNew: true,
+				Optional: true,
+				Computed: true,
 			},
 		},
 	}

@@ -24,7 +24,7 @@ resource "fortios_wanopt_authgroup" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) Auth-group name.
+* `name` - Auth-group name.
 * `auth_method` - Select certificate or pre-shared key authentication for this authentication group.
 * `psk` - Pre-shared key used by the peers in this authentication group.
 * `cert` - (Required) Name of certificate to identify this peer.

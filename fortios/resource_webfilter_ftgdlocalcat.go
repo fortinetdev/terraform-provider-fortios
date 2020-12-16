@@ -43,8 +43,9 @@ func resourceWebfilterFtgdLocalCat() *schema.Resource {
 			"desc": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
-				Required:     true,
 				ForceNew:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}

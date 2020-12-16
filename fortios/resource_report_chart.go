@@ -32,8 +32,8 @@ func resourceReportChart() *schema.Resource {
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 71),
-				Required:     true,
 				ForceNew:     true,
+				Required:     true,
 			},
 			"policy": &schema.Schema{
 				Type:     schema.TypeInt,

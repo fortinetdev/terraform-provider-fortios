@@ -24,7 +24,7 @@ resource "fortios_firewall_multicastaddress6" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) IPv6 multicast address name.
+* `name` - IPv6 multicast address name.
 * `ip6` - (Required) IPv6 address prefix (format: xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx/xxx).
 * `comment` - Comment.
 * `visibility` - Enable/disable visibility of the IPv6 multicast address on the GUI.

@@ -21,7 +21,7 @@ resource "fortios_wirelesscontrollerhotspot20_icon" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) Icon list ID.
+* `name` - Icon list ID.
 * `icon_list` - Icon list. The structure of `icon_list` block is documented below.
 
 The `icon_list` block supports:

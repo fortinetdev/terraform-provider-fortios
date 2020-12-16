@@ -37,7 +37,7 @@ resource "fortios_system_admin" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) User name.
+* `name` - User name.
 * `wildcard` - Enable/disable wildcard RADIUS authentication.
 * `remote_auth` - Enable/disable authentication using a remote RADIUS, LDAP, or TACACS+ server.
 * `remote_group` - User group name used for remote auth.

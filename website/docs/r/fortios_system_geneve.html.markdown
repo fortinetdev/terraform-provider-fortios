@@ -27,7 +27,7 @@ resource "fortios_system_geneve" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) GENEVE device or interface name. Must be an unique interface name.
+* `name` - GENEVE device or interface name. Must be an unique interface name.
 * `interface` - (Required) Outgoing interface for GENEVE encapsulated traffic.
 * `vni` - (Required) GENEVE network ID.
 * `ip_version` - (Required) IP version to use for the GENEVE interface and so for communication over the GENEVE. IPv4 or IPv6 unicast.

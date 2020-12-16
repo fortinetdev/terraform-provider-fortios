@@ -31,8 +31,8 @@ func resourceSystemMacAddressTable() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"mac": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
 				ForceNew: true,
+				Required: true,
 			},
 			"interface": &schema.Schema{
 				Type:         schema.TypeString,

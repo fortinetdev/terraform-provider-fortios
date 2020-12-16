@@ -36,8 +36,9 @@ func resourceFirewallPolicy46() *schema.Resource {
 			},
 			"policyid": &schema.Schema{
 				Type:     schema.TypeInt,
-				Required: true,
 				ForceNew: true,
+				Optional: true,
+				Computed: true,
 			},
 			"uuid": &schema.Schema{
 				Type:     schema.TypeString,

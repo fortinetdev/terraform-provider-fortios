@@ -31,7 +31,7 @@ resource "fortios_firewall_ippool" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) IP pool name.
+* `name` - IP pool name.
 * `type` - IP pool type (overload, one-to-one, fixed port range, or port block allocation).
 * `startip` - (Required) First IPv4 address (inclusive) in the range for the address pool (format xxx.xxx.xxx.xxx, Default: 0.0.0.0).
 * `endip` - (Required) Final IPv4 address (inclusive) in the range for the address pool (format xxx.xxx.xxx.xxx, Default: 0.0.0.0).

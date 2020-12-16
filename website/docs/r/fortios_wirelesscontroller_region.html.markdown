@@ -13,7 +13,7 @@ Configure FortiAP regions (for floor plans and maps).
 
 The following arguments are supported:
 
-* `name` - (Required) FortiAP region name.
+* `name` - FortiAP region name.
 * `image_type` - FortiAP region image type (png|jpeg|gif).
 * `comments` - Comments.
 * `grayscale` - Region image grayscale.

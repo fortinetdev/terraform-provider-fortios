@@ -30,7 +30,7 @@ resource "fortios_user_saml" "tr3" {
 
 The following arguments are supported:
 
-* `name` - (Required) SAML server entry name.
+* `name` - SAML server entry name.
 * `cert` - Certificate to sign SAML messages.
 * `entity_id` - (Required) SP entity ID.
 * `single_sign_on_url` - (Required) SP single sign-on URL.

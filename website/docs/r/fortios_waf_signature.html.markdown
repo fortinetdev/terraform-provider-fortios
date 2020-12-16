@@ -14,7 +14,7 @@ Hidden table for datasource.
 The following arguments are supported:
 
 * `desc` - Signature description.
-* `fosid` - (Required) Signature ID.
+* `fosid` - Signature ID.
 
 
 ## Attribute Reference

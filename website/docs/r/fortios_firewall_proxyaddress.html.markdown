@@ -26,7 +26,7 @@ resource "fortios_firewall_proxyaddress" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) Address name.
+* `name` - Address name.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `type` - Proxy address type.
 * `host` - Address object for the host.

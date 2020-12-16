@@ -25,7 +25,7 @@ resource "fortios_user_pop3" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) POP3 server entry name.
+* `name` - POP3 server entry name.
 * `server` - (Required) {<name_str|ip_str>} server domain name or IP.
 * `port` - POP3 service port number.
 * `secure` - SSL connection.

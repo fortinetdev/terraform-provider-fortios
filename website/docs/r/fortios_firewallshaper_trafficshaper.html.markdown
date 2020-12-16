@@ -28,7 +28,7 @@ resource "fortios_firewallshaper_trafficshaper" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) Traffic shaper name.
+* `name` - Traffic shaper name.
 * `guaranteed_bandwidth` - Amount of bandwidth guaranteed for this shaper (0 - 16776000). Units depend on the bandwidth-unit setting.
 * `maximum_bandwidth` - Upper bandwidth limit enforced by this shaper (0 - 16776000). 0 means no limit. Units depend on the bandwidth-unit setting.
 * `bandwidth_unit` - Unit of measurement for guaranteed and maximum bandwidth for this shaper (Kbps, Mbps or Gbps).

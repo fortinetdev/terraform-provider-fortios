@@ -22,7 +22,7 @@ resource "fortios_switchcontroller_customcommand" "trname" {
 
 The following arguments are supported:
 
-* `command_name` - (Required) Command name called by the FortiGate switch controller in the execute command.
+* `command_name` - Command name called by the FortiGate switch controller in the execute command.
 * `description` - Description.
 * `command` - (Required) String of commands to send to FortiSwitch devices (For example (%0a = return key): config switch trunk %0a edit myTrunk %0a set members port1 port2 %0a end %0a).
 

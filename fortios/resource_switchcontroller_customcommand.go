@@ -32,8 +32,9 @@ func resourceSwitchControllerCustomCommand() *schema.Resource {
 			"command_name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required:     true,
 				ForceNew:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"description": &schema.Schema{
 				Type:         schema.TypeString,

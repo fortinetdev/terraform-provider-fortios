@@ -37,7 +37,7 @@ resource "fortios_user_ldap" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) LDAP server entry name.
+* `name` - LDAP server entry name.
 * `server` - (Required) LDAP server CN domain name or IP.
 * `secondary_server` - Secondary LDAP server CN domain name or IP.
 * `tertiary_server` - Tertiary LDAP server CN domain name or IP.

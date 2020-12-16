@@ -32,8 +32,9 @@ func resourceSystemMobileTunnel() *schema.Resource {
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
-				Required:     true,
 				ForceNew:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,

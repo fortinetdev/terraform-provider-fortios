@@ -32,8 +32,9 @@ func resourceWirelessControllerHotspot20HsProfile() *schema.Resource {
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required:     true,
 				ForceNew:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"access_network_type": &schema.Schema{
 				Type:     schema.TypeString,

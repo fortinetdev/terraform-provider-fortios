@@ -26,7 +26,7 @@ resource "fortios_icap_server" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) Server name.
+* `name` - Server name.
 * `ip_version` - IP version.
 * `ip_address` - IPv4 address of the ICAP server.
 * `ip6_address` - IPv6 address of the ICAP server.

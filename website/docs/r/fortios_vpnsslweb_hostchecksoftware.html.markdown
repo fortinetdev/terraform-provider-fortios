@@ -23,7 +23,7 @@ resource "fortios_vpnsslweb_hostchecksoftware" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) Name.
+* `name` - Name.
 * `os_type` - OS type.
 * `type` - Type.
 * `version` - Version.

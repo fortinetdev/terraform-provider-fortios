@@ -32,8 +32,9 @@ func resourceWebProxyProfile() *schema.Resource {
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
-				Required:     true,
 				ForceNew:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"header_client_ip": &schema.Schema{
 				Type:     schema.TypeString,

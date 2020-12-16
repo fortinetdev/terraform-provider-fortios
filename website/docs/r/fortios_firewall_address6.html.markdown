@@ -30,7 +30,7 @@ resource "fortios_firewall_address6" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) Address name.
+* `name` - Address name.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `type` - Type of IPv6 address object (default = ipprefix).
 * `sdn` - SDN.

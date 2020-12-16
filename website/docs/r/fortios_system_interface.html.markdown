@@ -35,7 +35,7 @@ resource "fortios_system_interface" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) Name.
+* `name` - Name.
 * `vdom` - (Required) Interface is in this virtual domain (VDOM).
 * `vrf` - Virtual Routing Forwarding ID.
 * `cli_conn_status` - CLI connection status.

@@ -34,7 +34,7 @@ resource "fortios_firewallwildcardfqdn_group" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) Address group name.
+* `name` - Address group name.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `member` - (Required) Address group members. The structure of `member` block is documented below.
 * `color` - GUI icon color.

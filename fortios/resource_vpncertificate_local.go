@@ -32,8 +32,8 @@ func resourceVpnCertificateLocal() *schema.Resource {
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required:     true,
 				ForceNew:     true,
+				Required:     true,
 			},
 			"password": &schema.Schema{
 				Type:         schema.TypeString,

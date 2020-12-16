@@ -37,7 +37,7 @@ resource "fortios_firewall_localinpolicy6" "trname" {
 
 The following arguments are supported:
 
-* `policyid` - (Required) User defined local in policy ID.
+* `policyid` - User defined local in policy ID.
 * `intf` - (Required) Incoming interface name from available options.
 * `srcaddr` - (Required) Source address object from available options. The structure of `srcaddr` block is documented below.
 * `dstaddr` - (Required) Destination address object from available options. The structure of `dstaddr` block is documented below.

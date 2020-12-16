@@ -32,8 +32,9 @@ func resourceSystemVxlan() *schema.Resource {
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
-				Required:     true,
 				ForceNew:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"interface": &schema.Schema{
 				Type:         schema.TypeString,

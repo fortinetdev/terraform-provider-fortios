@@ -62,7 +62,7 @@ resource "fortios_firewall_proxypolicy" "trname" {
 The following arguments are supported:
 
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
-* `policyid` - (Required) Policy ID.
+* `policyid` - Policy ID.
 * `proxy` - (Required) Type of explicit proxy.
 * `srcintf` - Source interface names. The structure of `srcintf` block is documented below.
 * `dstintf` - (Required) Destination interface names. The structure of `dstintf` block is documented below.

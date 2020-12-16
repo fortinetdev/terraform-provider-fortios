@@ -37,7 +37,7 @@ resource "fortios_firewall_vipgrp" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) VIP group name.
+* `name` - VIP group name.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `interface` - (Required) interface
 * `color` - Integer value to determine the color of the icon in the GUI (range 1 to 32, default = 0, which sets the value to 1).

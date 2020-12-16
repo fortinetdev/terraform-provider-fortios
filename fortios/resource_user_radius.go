@@ -32,8 +32,9 @@ func resourceUserRadius() *schema.Resource {
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
-				Required:     true,
 				ForceNew:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"server": &schema.Schema{
 				Type:         schema.TypeString,

@@ -22,7 +22,7 @@ resource "fortios_system_smsserver" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) Name of SMS server.
+* `name` - Name of SMS server.
 * `mail_server` - (Required) Email-to-SMS server domain name.
 
 

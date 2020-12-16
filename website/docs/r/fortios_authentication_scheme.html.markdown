@@ -38,7 +38,7 @@ resource "fortios_authentication_scheme" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) Authentication scheme name.
+* `name` - Authentication scheme name.
 * `method` - (Required) Authentication methods (default = basic).
 * `negotiate_ntlm` - Enable/disable negotiate authentication for NTLM (default = disable).
 * `kerberos_keytab` - Kerberos keytab setting.

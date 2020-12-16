@@ -32,7 +32,7 @@ resource "fortios_system_pppoeinterface" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) Name of the PPPoE interface.
+* `name` - Name of the PPPoE interface.
 * `dial_on_demand` - Enable/disable dial on demand to dial the PPPoE interface when packets are routed to the PPPoE interface.
 * `ipv6` - Enable/disable IPv6 Control Protocol (IPv6CP).
 * `device` - (Required) Name for the physical interface.

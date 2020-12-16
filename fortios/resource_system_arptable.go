@@ -31,8 +31,8 @@ func resourceSystemArpTable() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
-				Required: true,
 				ForceNew: true,
+				Required: true,
 			},
 			"interface": &schema.Schema{
 				Type:         schema.TypeString,

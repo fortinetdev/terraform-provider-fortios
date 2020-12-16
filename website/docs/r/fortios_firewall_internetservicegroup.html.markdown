@@ -44,7 +44,7 @@ resource "fortios_firewall_internetservicegroup" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) Internet Service group name.
+* `name` - Internet Service group name.
 * `comment` - Comment.
 * `direction` - How this service may be used (source, destination or both).
 * `member` - Internet Service group member. The structure of `member` block is documented below.

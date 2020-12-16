@@ -23,7 +23,7 @@ resource "fortios_system_replacemsgimage" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) Image name.
+* `name` - Image name.
 * `image_type` - Image type.
 * `image_base64` - Image data.
 

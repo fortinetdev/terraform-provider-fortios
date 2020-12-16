@@ -23,7 +23,7 @@ resource "fortios_waf_profile" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) WAF Profile name.
+* `name` - WAF Profile name.
 * `external` - Disable/Enable external HTTP Inspection.
 * `extended_log` - Enable/disable extended logging.
 * `signature` - WAF signatures. The structure of `signature` block is documented below.

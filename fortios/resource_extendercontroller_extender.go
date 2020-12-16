@@ -32,8 +32,8 @@ func resourceExtenderControllerExtender() *schema.Resource {
 			"fosid": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 19),
-				Required:     true,
 				ForceNew:     true,
+				Required:     true,
 			},
 			"admin": &schema.Schema{
 				Type:     schema.TypeString,

@@ -77,7 +77,7 @@ resource "fortios_firewall_vip" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) Virtual IP name.
+* `name` - Virtual IP name.
 * `fosid` - Custom defined ID.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `comment` - Comment.

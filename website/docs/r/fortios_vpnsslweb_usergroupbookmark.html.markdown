@@ -36,7 +36,7 @@ resource "fortios_vpnsslweb_usergroupbookmark" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) Group name.
+* `name` - Group name.
 * `bookmarks` - Bookmark table. The structure of `bookmarks` block is documented below.
 
 The `bookmarks` block supports:

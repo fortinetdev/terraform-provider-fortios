@@ -36,7 +36,7 @@ resource "fortios_system_gretunnel" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) Tunnel name.
+* `name` - Tunnel name.
 * `interface` - Interface name.
 * `ip_version` - IP version to use for VPN interface.
 * `remote_gw6` - IPv6 address of the remote gateway.

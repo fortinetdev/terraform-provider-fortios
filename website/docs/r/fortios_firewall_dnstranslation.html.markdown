@@ -24,7 +24,7 @@ resource "fortios_firewall_dnstranslation" "trname" {
 
 The following arguments are supported:
 
-* `fosid` - (Required) ID.
+* `fosid` - ID.
 * `src` - IPv4 address or subnet on the internal network to compare with the resolved address in DNS query replies. If the resolved address matches, the resolved address is substituted with dst.
 * `dst` - IPv4 address or subnet on the external network to substitute for the resolved address in DNS query replies. Can be single IP address or subnet on the external network, but number of addresses must equal number of mapped IP addresses in src.
 * `netmask` - If src and dst are subnets rather than single IP addresses, enter the netmask for both src and dst.

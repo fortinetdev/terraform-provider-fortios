@@ -25,7 +25,7 @@ The following arguments are supported:
 
 * `status` - Enable/disable the local category.
 * `fosid` - Local category ID.
-* `desc` - (Required) Local category description.
+* `desc` - Local category description.
 
 
 ## Attribute Reference

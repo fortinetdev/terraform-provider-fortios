@@ -31,7 +31,7 @@ resource "fortios_router_static6" "trname" {
 
 The following arguments are supported:
 
-* `seq_num` - (Required) Sequence number.
+* `seq_num` - Sequence number.
 * `status` - Enable/disable this static route.
 * `dst` - (Required) Destination IPv6 prefix.
 * `gateway` - IPv6 address of the gateway.

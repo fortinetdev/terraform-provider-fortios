@@ -36,7 +36,7 @@ resource "fortios_dlp_fpdocsource" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) Name of the DLP fingerprint database.
+* `name` - Name of the DLP fingerprint database.
 * `server_type` - (Required) Protocol used to communicate with the file server. Currently only Samba (SMB) servers are supported.
 * `server` - (Required) IPv4 or IPv6 address of the server.
 * `period` - Frequency for which the FortiGate checks the server for new or changed files.

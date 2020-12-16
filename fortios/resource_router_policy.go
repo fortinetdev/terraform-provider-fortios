@@ -32,8 +32,9 @@ func resourceRouterPolicy() *schema.Resource {
 			"seq_num": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
-				Required:     true,
 				ForceNew:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"input_device": &schema.Schema{
 				Type:     schema.TypeList,

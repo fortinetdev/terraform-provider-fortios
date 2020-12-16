@@ -35,7 +35,7 @@ resource "fortios_icap_profile" "trname" {
 The following arguments are supported:
 
 * `replacemsg_group` - Replacement message group.
-* `name` - (Required) ICAP profile name.
+* `name` - ICAP profile name.
 * `request` - Enable/disable whether an HTTP request is passed to an ICAP server.
 * `response` - Enable/disable whether an HTTP response is passed to an ICAP server.
 * `streaming_content_bypass` - Enable/disable bypassing of ICAP server for streaming content.

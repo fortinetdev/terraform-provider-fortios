@@ -22,7 +22,7 @@ resource "fortios_firewall_internetserviceextension" "trname" {
 
 The following arguments are supported:
 
-* `fosid` - (Required) Internet Service ID in the Internet Service database.
+* `fosid` - Internet Service ID in the Internet Service database.
 * `comment` - Comment.
 * `entry` - Entries added to the Internet Service extension database. The structure of `entry` block is documented below.
 * `disable_entry` - Disable entries in the Internet Service database. The structure of `disable_entry` block is documented below.

@@ -30,7 +30,7 @@ resource "fortios_webproxy_profile" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) Profile name.
+* `name` - Profile name.
 * `header_client_ip` - Action to take on the HTTP client-IP header in forwarded requests: forwards (pass), adds, or removes the HTTP header.
 * `header_via_request` - Action to take on the HTTP via header in forwarded requests: forwards (pass), adds, or removes the HTTP header.
 * `header_via_response` - Action to take on the HTTP via header in forwarded responses: forwards (pass), adds, or removes the HTTP header.

@@ -23,7 +23,7 @@ resource "fortios_user_passwordpolicy" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) Password policy name.
+* `name` - Password policy name.
 * `expire_days` - Time in days before the user's password expires.
 * `warn_days` - Time in days before a password expiration warning message is displayed to the user upon login.
 

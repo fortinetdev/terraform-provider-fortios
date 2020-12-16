@@ -32,8 +32,9 @@ func resourceSystemClusterSync() *schema.Resource {
 			"sync_id": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
-				Required:     true,
 				ForceNew:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"peervd": &schema.Schema{
 				Type:         schema.TypeString,

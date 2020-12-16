@@ -13,7 +13,7 @@ Configure FortiClient Enterprise Management Server (EMS) entries.
 
 The following arguments are supported:
 
-* `name` - (Required) FortiClient Enterprise Management Server (EMS) name.
+* `name` - FortiClient Enterprise Management Server (EMS) name.
 * `address` - (Required) Firewall address name.
 * `serial_number` - (Required) FortiClient EMS Serial Number.
 * `listen_port` - FortiClient EMS telemetry listen port number. (1 - 65535, default: 8013).

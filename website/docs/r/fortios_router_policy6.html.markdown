@@ -32,7 +32,7 @@ resource "fortios_router_policy6" "trname" {
 
 The following arguments are supported:
 
-* `seq_num` - (Required) Sequence number.
+* `seq_num` - Sequence number.
 * `input_device` - (Required) Incoming interface name.
 * `src` - Source IPv6 prefix.
 * `dst` - Destination IPv6 prefix.

@@ -32,8 +32,8 @@ func resourceSwitchControllerAutoConfigCustom() *schema.Resource {
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
-				Required:     true,
 				ForceNew:     true,
+				Required:     true,
 			},
 			"switch_binding": &schema.Schema{
 				Type:     schema.TypeList,

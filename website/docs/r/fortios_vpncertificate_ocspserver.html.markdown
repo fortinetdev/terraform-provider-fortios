@@ -25,7 +25,7 @@ resource "fortios_vpncertificate_ocspserver" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) OCSP server entry name.
+* `name` - OCSP server entry name.
 * `url` - OCSP server URL.
 * `cert` - OCSP server certificate.
 * `secondary_url` - Secondary OCSP server URL.

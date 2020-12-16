@@ -72,7 +72,7 @@ resource "fortios_vpnsslweb_portal" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) Portal name.
+* `name` - Portal name.
 * `tunnel_mode` - Enable/disable IPv4 SSL-VPN tunnel mode.
 * `ip_mode` - Method by which users of this SSL-VPN tunnel obtain IP addresses.
 * `auto_connect` - Enable/disable automatic connect by client when system is up.

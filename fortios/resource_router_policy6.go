@@ -31,8 +31,9 @@ func resourceRouterPolicy6() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"seq_num": &schema.Schema{
 				Type:     schema.TypeInt,
-				Required: true,
 				ForceNew: true,
+				Optional: true,
+				Computed: true,
 			},
 			"input_device": &schema.Schema{
 				Type:         schema.TypeString,

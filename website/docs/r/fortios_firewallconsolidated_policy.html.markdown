@@ -13,7 +13,7 @@ Configure consolidated IPv4/IPv6 policies.
 
 The following arguments are supported:
 
-* `policyid` - (Required) Policy ID.
+* `policyid` - Policy ID.
 * `status` - Enable or disable this policy.
 * `name` - Policy name.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).

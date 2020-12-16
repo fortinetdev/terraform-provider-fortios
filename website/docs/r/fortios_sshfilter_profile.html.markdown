@@ -24,7 +24,7 @@ resource "fortios_sshfilter_profile" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) SSH filter profile name.
+* `name` - SSH filter profile name.
 * `block` - SSH blocking options.
 * `log` - SSH logging options.
 * `default_command_log` - Enable/disable logging unmatched shell commands.

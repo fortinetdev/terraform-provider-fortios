@@ -31,8 +31,9 @@ func resourceSystemTosBasedPriority() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
-				Required: true,
 				ForceNew: true,
+				Optional: true,
+				Computed: true,
 			},
 			"tos": &schema.Schema{
 				Type:         schema.TypeInt,

@@ -21,7 +21,7 @@ resource "fortios_system_alias" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) Alias command name.
+* `name` - Alias command name.
 * `command` - Command list to execute.
 
 

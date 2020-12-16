@@ -92,7 +92,7 @@ resource "fortios_vpnipsec_phase1" "trnamex1" {
 
 The following arguments are supported:
 
-* `name` - (Required) IPsec remote gateway name.
+* `name` - IPsec remote gateway name.
 * `type` - Remote gateway type.
 * `interface` - (Required) Local physical, aggregate, or VLAN outgoing interface.
 * `ike_version` - IKE protocol version.

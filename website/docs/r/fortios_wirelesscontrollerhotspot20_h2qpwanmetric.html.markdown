@@ -29,7 +29,7 @@ resource "fortios_wirelesscontrollerhotspot20_h2qpwanmetric" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) WAN metric name.
+* `name` - WAN metric name.
 * `link_status` - Link status.
 * `symmetric_wan_link` - WAN link symmetry.
 * `link_at_capacity` - Link at capacity.

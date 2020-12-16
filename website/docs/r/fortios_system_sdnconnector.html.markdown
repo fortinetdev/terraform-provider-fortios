@@ -31,7 +31,7 @@ resource "fortios_system_sdnconnector" "trname" {
 
 The following arguments are supported:
 
-* `name` - (Required) SDN connector name.
+* `name` - SDN connector name.
 * `status` - (Required) Enable/disable connection to the remote SDN connector.
 * `type` - (Required) Type of SDN connector.
 * `ha_status` - Enable/disable use for FortiGate HA service.
