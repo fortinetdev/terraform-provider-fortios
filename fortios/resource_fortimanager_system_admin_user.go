@@ -33,6 +33,10 @@ func resourceFortimanagerSystemAdminUser() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
+			"radius_server": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+			},
 			"user_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -79,15 +83,16 @@ func createFMGSystemAdminUser(d *schema.ResourceData, m interface{}) error {
 
 	//Build input data by sdk
 	i := &fmgclient.JSONSysAdminUser{
-		UserId:      d.Get("userid").(string),
-		Passwd:      d.Get("password").(string),
-		Description: d.Get("description").(string),
-		UserType:    d.Get("user_type").(string),
-		ProfileId:   d.Get("profileid").(string),
-		RpcPermit:   d.Get("rpc_permit").(string),
-		Trusthost1:  d.Get("trusthost1").(string),
-		Trusthost2:  d.Get("trusthost2").(string),
-		Trusthost3:  d.Get("trusthost3").(string),
+		UserId:       d.Get("userid").(string),
+		Passwd:       d.Get("password").(string),
+		Description:  d.Get("description").(string),
+		RadiusServer: d.Get("radius_server").(string),
+		UserType:     d.Get("user_type").(string),
+		ProfileId:    d.Get("profileid").(string),
+		RpcPermit:    d.Get("rpc_permit").(string),
+		Trusthost1:   d.Get("trusthost1").(string),
+		Trusthost2:   d.Get("trusthost2").(string),
+		Trusthost3:   d.Get("trusthost3").(string),
 	}
 
 	err := c.CreateUpdateSystemAdminUser(i, "add")
@@ -118,6 +123,7 @@ func readFMGSystemAdminUser(d *schema.ResourceData, m interface{}) error {
 
 	d.Set("userid", o.UserId)
 	d.Set("description", o.Description)
+	d.Set("radius_server", o.RadiusServer)
 	d.Set("user_type", o.UserType)
 	d.Set("profileid", o.ProfileId)
 	d.Set("rpc_permit", o.RpcPermit)
@@ -138,15 +144,16 @@ func updateFMGSystemAdminUser(d *schema.ResourceData, m interface{}) error {
 
 	//Build input data by sdk
 	i := &fmgclient.JSONSysAdminUser{
-		UserId:      d.Get("userid").(string),
-		Passwd:      d.Get("password").(string),
-		Description: d.Get("description").(string),
-		UserType:    d.Get("user_type").(string),
-		ProfileId:   d.Get("profileid").(string),
-		RpcPermit:   d.Get("rpc_permit").(string),
-		Trusthost1:  d.Get("trusthost1").(string),
-		Trusthost2:  d.Get("trusthost2").(string),
-		Trusthost3:  d.Get("trusthost3").(string),
+		UserId:       d.Get("userid").(string),
+		Passwd:       d.Get("password").(string),
+		Description:  d.Get("description").(string),
+		RadiusServer: d.Get("radius_server").(string),
+		UserType:     d.Get("user_type").(string),
+		ProfileId:    d.Get("profileid").(string),
+		RpcPermit:    d.Get("rpc_permit").(string),
+		Trusthost1:   d.Get("trusthost1").(string),
+		Trusthost2:   d.Get("trusthost2").(string),
+		Trusthost3:   d.Get("trusthost3").(string),
 	}
 
 	err := c.CreateUpdateSystemAdminUser(i, "update")

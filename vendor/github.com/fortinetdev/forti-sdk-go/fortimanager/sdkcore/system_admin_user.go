@@ -11,6 +11,7 @@ type JSONSysAdminUser struct {
 	UserId      string `json:"userid"`
 	Passwd      string `json:"password"`
 	Description string `json:"description"`
+	RadiusServer    string `json:"radius_server"`
 	UserType    string `json:"user_type"`
 	ProfileId   string `json:"profileid"`
 	RpcPermit   string `json:"rpc-permit"`
@@ -74,6 +75,9 @@ func (c *FmgSDKClient) ReadSystemAdminUser(id string) (out *JSONSysAdminUser, er
 	}
 	if data["description"] != nil {
 		out.Description = data["description"].(string)
+	}
+	if data["radius_server"] != nil {
+		out.RadiusServer = data["radius_server"].(string)
 	}
 	if data["user_type"] != nil {
 		out.UserType = util.UserType2Str(int(data["user_type"].(float64)))
