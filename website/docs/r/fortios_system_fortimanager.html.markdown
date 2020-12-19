@@ -19,7 +19,7 @@ resource "fortios_system_centralmanagement" "trname" {
   allow_push_firmware           = "enable"
   allow_remote_firmware_upgrade = "enable"
   enc_algorithm                 = "high"
-  fmg                           = ""192.168.52.177""
+  fmg                           = "\"192.168.52.177\""
   include_default_servers       = "enable"
   mode                          = "normal"
   type                          = "fortimanager"

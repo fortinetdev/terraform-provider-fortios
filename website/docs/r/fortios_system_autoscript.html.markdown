@@ -12,13 +12,20 @@ Configure auto script.
 ## Example Usage
 
 ```hcl
-resource "fortios_system_autoscript" "trname" {
-  interval    = 3
-  name        = "1"
+resource "fortios_system_autoscript" "auto2" {
+  interval    = 1
+  name        = "myscript12"
   output_size = 10
-  repeat      = 2
-  script      = "action"
-  start       = "manual"
+  repeat      = 1
+  script      = <<EOF
+config firewall address
+    edit "111"
+        set color 3
+        set subnet 1.1.1.1 255.255.255.255
+    next
+end
+EOF
+  start       = "auto"
 }
 ```
 
