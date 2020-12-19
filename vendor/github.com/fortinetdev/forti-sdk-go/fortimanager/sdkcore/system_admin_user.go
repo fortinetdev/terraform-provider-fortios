@@ -8,16 +8,16 @@ import (
 
 // JSONSysAdminUser contains the params for creating system admin user
 type JSONSysAdminUser struct {
-	UserId      string `json:"userid"`
-	Passwd      string `json:"password"`
-	Description string `json:"description"`
-	RadiusServer    string `json:"radius_server"`
-	UserType    string `json:"user_type"`
-	ProfileId   string `json:"profileid"`
-	RpcPermit   string `json:"rpc-permit"`
-	Trusthost1  string `json:"trusthost1"`
-	Trusthost2  string `json:"trusthost2"`
-	Trusthost3  string `json:"trusthost3"`
+	UserId       string `json:"userid"`
+	Passwd       string `json:"password"`
+	Description  string `json:"description"`
+	RadiusServer string `json:"radius_server"`
+	UserType     string `json:"user_type"`
+	ProfileId    string `json:"profileid"`
+	RpcPermit    string `json:"rpc-permit"`
+	Trusthost1   string `json:"trusthost1"`
+	Trusthost2   string `json:"trusthost2"`
+	Trusthost3   string `json:"trusthost3"`
 }
 
 // CreateUpdateSystemAdminUser is for creating or updating the system admin user

@@ -38,6 +38,7 @@ The following arguments are supported:
 * `userid` - (Required) User name.
 * `password` - Password.
 * `description` - Description.
+* `radius_server` - RADIUS server name.
 * `user_type` - User type, Enum: ["local", "radius", "ldap", "tacacs-plus", "pki-auth", "group"]
 * `profileid` - Profile id.
 * `rpc_permit` - Rpc permit, Enum: ["read-write", "none", "read"]
@@ -52,6 +53,7 @@ The following attributes are exported:
 * `userid` - User name.
 * `password` - Password.
 * `description` - Description.
+* `radius_server` - RADIUS server name.
 * `user_type` - User type, Enum: ["local", "radius", "ldap", "tacacs-plus", "pki-auth", "group"]
 * `profileid` - Profile id.
 * `rpc_permit` - Rpc permit, Enum: ["read-write", "none", "read"]
