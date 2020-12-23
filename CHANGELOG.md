@@ -1,6 +1,14 @@
 ## 1.7.0 (Unreleased)
 
 
+## 1.6.18 (Dec 23, 2020)
+
+IMPROVEMENTS:
+
+* Support sort security policies by policy name
+* Update documentation for fortios_system_autoscript
+* Support radius server for fortios_fmg_system_admin_user #125
+
 ## 1.6.17 (Dec 16, 2020)
 
 BUG FIXES:
