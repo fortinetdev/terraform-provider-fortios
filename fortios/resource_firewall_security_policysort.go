@@ -52,6 +52,11 @@ func resourceFirewallSecurityPolicySort() *schema.Resource {
 					},
 				},
 			},
+			"force_recreate": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"comment": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -72,7 +77,7 @@ func resourceFirewallSecurityPolicySortCreateUpdate(d *schema.ResourceData, m in
 	sortby := d.Get("sortby").(string)
 	sortdirection := d.Get("sortdirection").(string)
 
-	if sortby != "policyid" {
+	if sortby != "policyid" && sortby != "name" {
 		return fmt.Errorf("Unsupported sort type: " + sortby)
 	}
 
@@ -104,7 +109,7 @@ func resourceFirewallSecurityPolicySortRead(d *schema.ResourceData, m interface{
 	sortby := d.Get("sortby").(string)
 	sortdirection := d.Get("sortdirection").(string)
 
-	if sortby != "policyid" {
+	if sortby != "policyid" && sortby != "name" {
 		return fmt.Errorf("Unsupported sort type: " + sortby)
 	}
 
