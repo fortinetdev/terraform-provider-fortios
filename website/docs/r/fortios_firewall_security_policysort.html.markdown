@@ -61,8 +61,8 @@ resource "fortios_firewall_policy" "trname" {
 }
 
 resource "fortios_firewall_security_policysort" "test" {
-  sortby        = "name"
-  sortdirection = "ascending"
+  sortby         = "name"
+  sortdirection  = "ascending"
   force_recreate = join(" ", var.name)
 
   depends_on = [
