@@ -8,7 +8,7 @@ description: |-
 ---
 
 # fortios_firewall_security_policysort
-Resource to sort firewall security policies by policyid, in ascending or descending order.
+Resource to sort firewall security policies by policyid or policy name, in ascending or descending order.
 
 ## Example Usage
 
