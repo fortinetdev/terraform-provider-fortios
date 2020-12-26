@@ -86,6 +86,10 @@ func Provider() terraform.ResourceProvider {
 			},
 		},
 
+		DataSourcesMap: map[string]*schema.Resource{
+			"fortios_router_bgp": dataSourceRouterBgp(),
+		},
+
 		ResourcesMap: map[string]*schema.Resource{
 			"fortios_networking_route_static":                 resourceNetworkingRouteStatic(),
 			"fortios_networking_interface_port":               resourceNetworkingInterfacePort(),

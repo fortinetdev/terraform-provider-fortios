@@ -33,6 +33,11 @@ func resourceRouterBgp() *schema.Resource {
 				Type:     schema.TypeInt,
 				Required: true,
 			},
+			"force_destroy": &schema.Schema{
+				Type:     schema.TypeBool,
+				Optional: true,
+				Default:  false,
+			},
 			"router_id": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -1563,7 +1568,31 @@ func resourceRouterBgpRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectRouterBgp(d, o)
+	err = refreshObjectRouterBgp(d, o, false)
+	if err != nil {
+		return fmt.Errorf("Error reading RouterBgp resource from API: %v", err)
+	}
+	return nil
+}
+
+func resourceRouterBgpRead2(d *schema.ResourceData, m interface{}) error {
+	mkey := d.Id()
+
+	c := m.(*FortiClient).Client
+	c.Retries = 1
+
+	o, err := c.ReadRouterBgp(mkey)
+	if err != nil {
+		return fmt.Errorf("Error reading RouterBgp resource: %v", err)
+	}
+
+	if o == nil {
+		log.Printf("[WARN] resource (%s) not found, removing from state", d.Id())
+		d.SetId("")
+		return nil
+	}
+
+	err = refreshObjectRouterBgp(d, o, true)
 	if err != nil {
 		return fmt.Errorf("Error reading RouterBgp resource from API: %v", err)
 	}
@@ -4011,7 +4040,7 @@ func flattenRouterBgpAdminDistanceDistance(v interface{}, d *schema.ResourceData
 	return v
 }
 
-func refreshObjectRouterBgp(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectRouterBgp(d *schema.ResourceData, o map[string]interface{}, bit bool) error {
 	var err error
 
 	if err = d.Set("as", flattenRouterBgpAs(o["as"], d, "as")); err != nil {
@@ -4158,7 +4187,7 @@ func refreshObjectRouterBgp(d *schema.ResourceData, o map[string]interface{}) er
 		}
 	}
 
-	if isImportTable() {
+	if isImportTable() || bit {
 		if err = d.Set("confederation_peers", flattenRouterBgpConfederationPeers(o["confederation-peers"], d, "confederation_peers")); err != nil {
 			if !fortiAPIPatch(o["confederation-peers"]) {
 				return fmt.Errorf("Error reading confederation_peers: %v", err)
@@ -4288,7 +4317,7 @@ func refreshObjectRouterBgp(d *schema.ResourceData, o map[string]interface{}) er
 		}
 	}
 
-	if isImportTable() {
+	if isImportTable() || bit {
 		if err = d.Set("aggregate_address", flattenRouterBgpAggregateAddress(o["aggregate-address"], d, "aggregate_address")); err != nil {
 			if !fortiAPIPatch(o["aggregate-address"]) {
 				return fmt.Errorf("Error reading aggregate_address: %v", err)
@@ -4304,7 +4333,7 @@ func refreshObjectRouterBgp(d *schema.ResourceData, o map[string]interface{}) er
 		}
 	}
 
-	if isImportTable() {
+	if isImportTable() || bit {
 		if err = d.Set("aggregate_address6", flattenRouterBgpAggregateAddress6(o["aggregate-address6"], d, "aggregate_address6")); err != nil {
 			if !fortiAPIPatch(o["aggregate-address6"]) {
 				return fmt.Errorf("Error reading aggregate_address6: %v", err)
@@ -4320,7 +4349,7 @@ func refreshObjectRouterBgp(d *schema.ResourceData, o map[string]interface{}) er
 		}
 	}
 
-	if isImportTable() {
+	if isImportTable() || bit {
 		if err = d.Set("neighbor", flattenRouterBgpNeighbor(o["neighbor"], d, "neighbor")); err != nil {
 			if !fortiAPIPatch(o["neighbor"]) {
 				return fmt.Errorf("Error reading neighbor: %v", err)
@@ -4336,7 +4365,7 @@ func refreshObjectRouterBgp(d *schema.ResourceData, o map[string]interface{}) er
 		}
 	}
 
-	if isImportTable() {
+	if isImportTable() || bit {
 		if err = d.Set("neighbor_group", flattenRouterBgpNeighborGroup(o["neighbor-group"], d, "neighbor_group")); err != nil {
 			if !fortiAPIPatch(o["neighbor-group"]) {
 				return fmt.Errorf("Error reading neighbor_group: %v", err)
@@ -4352,7 +4381,7 @@ func refreshObjectRouterBgp(d *schema.ResourceData, o map[string]interface{}) er
 		}
 	}
 
-	if isImportTable() {
+	if isImportTable() || bit {
 		if err = d.Set("neighbor_range", flattenRouterBgpNeighborRange(o["neighbor-range"], d, "neighbor_range")); err != nil {
 			if !fortiAPIPatch(o["neighbor-range"]) {
 				return fmt.Errorf("Error reading neighbor_range: %v", err)
@@ -4368,7 +4397,7 @@ func refreshObjectRouterBgp(d *schema.ResourceData, o map[string]interface{}) er
 		}
 	}
 
-	if isImportTable() {
+	if isImportTable() || bit {
 		if err = d.Set("neighbor_range6", flattenRouterBgpNeighborRange6(o["neighbor-range6"], d, "neighbor_range6")); err != nil {
 			if !fortiAPIPatch(o["neighbor-range6"]) {
 				return fmt.Errorf("Error reading neighbor_range6: %v", err)
@@ -4384,7 +4413,7 @@ func refreshObjectRouterBgp(d *schema.ResourceData, o map[string]interface{}) er
 		}
 	}
 
-	if isImportTable() {
+	if isImportTable() || bit {
 		if err = d.Set("network", flattenRouterBgpNetwork(o["network"], d, "network")); err != nil {
 			if !fortiAPIPatch(o["network"]) {
 				return fmt.Errorf("Error reading network: %v", err)
@@ -4400,7 +4429,7 @@ func refreshObjectRouterBgp(d *schema.ResourceData, o map[string]interface{}) er
 		}
 	}
 
-	if isImportTable() {
+	if isImportTable() || bit {
 		if err = d.Set("network6", flattenRouterBgpNetwork6(o["network6"], d, "network6")); err != nil {
 			if !fortiAPIPatch(o["network6"]) {
 				return fmt.Errorf("Error reading network6: %v", err)
@@ -4416,7 +4445,7 @@ func refreshObjectRouterBgp(d *schema.ResourceData, o map[string]interface{}) er
 		}
 	}
 
-	if isImportTable() {
+	if isImportTable() || bit {
 		if err = d.Set("redistribute", flattenRouterBgpRedistribute(o["redistribute"], d, "redistribute")); err != nil {
 			if !fortiAPIPatch(o["redistribute"]) {
 				return fmt.Errorf("Error reading redistribute: %v", err)
@@ -4432,7 +4461,7 @@ func refreshObjectRouterBgp(d *schema.ResourceData, o map[string]interface{}) er
 		}
 	}
 
-	if isImportTable() {
+	if isImportTable() || bit {
 		if err = d.Set("redistribute6", flattenRouterBgpRedistribute6(o["redistribute6"], d, "redistribute6")); err != nil {
 			if !fortiAPIPatch(o["redistribute6"]) {
 				return fmt.Errorf("Error reading redistribute6: %v", err)
@@ -4448,7 +4477,7 @@ func refreshObjectRouterBgp(d *schema.ResourceData, o map[string]interface{}) er
 		}
 	}
 
-	if isImportTable() {
+	if isImportTable() || bit {
 		if err = d.Set("admin_distance", flattenRouterBgpAdminDistance(o["admin-distance"], d, "admin_distance")); err != nil {
 			if !fortiAPIPatch(o["admin-distance"]) {
 				return fmt.Errorf("Error reading admin_distance: %v", err)
@@ -7045,6 +7074,10 @@ func getObjectRouterBgp(d *schema.ResourceData) (*map[string]interface{}, error)
 		} else if t != nil {
 			obj["confederation-peers"] = t
 		}
+	} else {
+		if d.Get("force_destroy").(bool) {
+			obj["confederation-peers"] = make([]struct{}, 0)
+		}
 	}
 
 	if v, ok := d.GetOk("dampening_route_map"); ok {
@@ -7225,6 +7258,10 @@ func getObjectRouterBgp(d *schema.ResourceData) (*map[string]interface{}, error)
 		} else if t != nil {
 			obj["aggregate-address"] = t
 		}
+	} else {
+		if d.Get("force_destroy").(bool) {
+			obj["aggregate-address"] = make([]struct{}, 0)
+		}
 	}
 
 	if v, ok := d.GetOk("aggregate_address6"); ok {
@@ -7233,6 +7270,10 @@ func getObjectRouterBgp(d *schema.ResourceData) (*map[string]interface{}, error)
 			return &obj, err
 		} else if t != nil {
 			obj["aggregate-address6"] = t
+		}
+	} else {
+		if d.Get("force_destroy").(bool) {
+			obj["aggregate-address6"] = make([]struct{}, 0)
 		}
 	}
 
@@ -7243,6 +7284,10 @@ func getObjectRouterBgp(d *schema.ResourceData) (*map[string]interface{}, error)
 		} else if t != nil {
 			obj["neighbor"] = t
 		}
+	} else {
+		if d.Get("force_destroy").(bool) {
+			obj["neighbor"] = make([]struct{}, 0)
+		}
 	}
 
 	if v, ok := d.GetOk("neighbor_group"); ok {
@@ -7251,6 +7296,10 @@ func getObjectRouterBgp(d *schema.ResourceData) (*map[string]interface{}, error)
 			return &obj, err
 		} else if t != nil {
 			obj["neighbor-group"] = t
+		}
+	} else {
+		if d.Get("force_destroy").(bool) {
+			obj["neighbor-group"] = make([]struct{}, 0)
 		}
 	}
 
@@ -7261,6 +7310,10 @@ func getObjectRouterBgp(d *schema.ResourceData) (*map[string]interface{}, error)
 		} else if t != nil {
 			obj["neighbor-range"] = t
 		}
+	} else {
+		if d.Get("force_destroy").(bool) {
+			obj["neighbor-range"] = make([]struct{}, 0)
+		}
 	}
 
 	if v, ok := d.GetOk("neighbor_range6"); ok {
@@ -7270,14 +7323,25 @@ func getObjectRouterBgp(d *schema.ResourceData) (*map[string]interface{}, error)
 		} else if t != nil {
 			obj["neighbor-range6"] = t
 		}
+	} else {
+		if d.Get("force_destroy").(bool) {
+			obj["neighbor-range6"] = make([]struct{}, 0)
+		}
 	}
 
 	if v, ok := d.GetOk("network"); ok {
+		log.Printf("shengh:1111111111111111111\n")
 		t, err := expandRouterBgpNetwork(d, v, "network")
 		if err != nil {
+			log.Printf("shengh:3333333333333333333\n")
 			return &obj, err
 		} else if t != nil {
 			obj["network"] = t
+		}
+	} else {
+		log.Printf("shengh:222222222222222\n")
+		if d.Get("force_destroy").(bool) {
+			obj["network"] = make([]struct{}, 0)
 		}
 	}
 
@@ -7288,6 +7352,10 @@ func getObjectRouterBgp(d *schema.ResourceData) (*map[string]interface{}, error)
 		} else if t != nil {
 			obj["network6"] = t
 		}
+	} else {
+		if d.Get("force_destroy").(bool) {
+			obj["network6"] = make([]struct{}, 0)
+		}
 	}
 
 	if v, ok := d.GetOk("redistribute"); ok {
@@ -7296,6 +7364,10 @@ func getObjectRouterBgp(d *schema.ResourceData) (*map[string]interface{}, error)
 			return &obj, err
 		} else if t != nil {
 			obj["redistribute"] = t
+		}
+	} else {
+		if d.Get("force_destroy").(bool) {
+			obj["redistribute"] = make([]struct{}, 0)
 		}
 	}
 
@@ -7306,6 +7378,10 @@ func getObjectRouterBgp(d *schema.ResourceData) (*map[string]interface{}, error)
 		} else if t != nil {
 			obj["redistribute6"] = t
 		}
+	} else {
+		if d.Get("force_destroy").(bool) {
+			obj["redistribute6"] = make([]struct{}, 0)
+		}
 	}
 
 	if v, ok := d.GetOk("admin_distance"); ok {
@@ -7314,6 +7390,10 @@ func getObjectRouterBgp(d *schema.ResourceData) (*map[string]interface{}, error)
 			return &obj, err
 		} else if t != nil {
 			obj["admin-distance"] = t
+		}
+	} else {
+		if d.Get("force_destroy").(bool) {
+			obj["admin-distance"] = make([]struct{}, 0)
 		}
 	}
 
