@@ -582,6 +582,7 @@ func Provider() terraform.ResourceProvider {
 			"fortios_router_static6":                                    resourceRouterStatic6(),
 			"fortios_router_ospf":                                       resourceRouterOspf(),
 			"fortios_router_ospf6":                                      resourceRouterOspf6(),
+			"fortios_routerbgp_neighbor":                                resourceRouterbgpNeighbor(),
 			"fortios_router_bgp":                                        resourceRouterBgp(),
 			"fortios_router_isis":                                       resourceRouterIsis(),
 			"fortios_router_multicastflow":                              resourceRouterMulticastFlow(),
