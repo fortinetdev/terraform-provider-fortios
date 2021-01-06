@@ -650,7 +650,7 @@ func resourceRouterOspfUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectRouterOspf(d)
+	obj, err := getObjectRouterOspf(d, false)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterOspf resource while getting object: %v", err)
 	}
@@ -672,13 +672,18 @@ func resourceRouterOspfUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceRouterOspfDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteRouterOspf(mkey)
+	obj, err := getObjectRouterOspf(d, true)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting RouterOspf resource: %v", err)
+		return fmt.Errorf("Error updating RouterOspf resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateRouterOspf(obj, mkey)
+	if err != nil {
+		return fmt.Errorf("Error clearing RouterOspf resource: %v", err)
 	}
 
 	d.SetId("")
@@ -3105,7 +3110,7 @@ func expandRouterOspfRedistributeTag(d *schema.ResourceData, v interface{}, pre 
 	return v, nil
 }
 
-func getObjectRouterOspf(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectRouterOspf(d *schema.ResourceData, bemptysontable bool) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("abr_type"); ok {
@@ -3315,75 +3320,107 @@ func getObjectRouterOspf(d *schema.ResourceData) (*map[string]interface{}, error
 		}
 	}
 
-	if v, ok := d.GetOk("area"); ok {
-		t, err := expandRouterOspfArea(d, v, "area")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["area"] = t
+	if bemptysontable {
+		obj["area"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("area"); ok {
+			t, err := expandRouterOspfArea(d, v, "area")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["area"] = t
+			}
 		}
 	}
 
-	if v, ok := d.GetOk("ospf_interface"); ok {
-		t, err := expandRouterOspfOspfInterface(d, v, "ospf_interface")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["ospf-interface"] = t
+	if bemptysontable {
+		obj["ospf-interface"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("ospf_interface"); ok {
+			t, err := expandRouterOspfOspfInterface(d, v, "ospf_interface")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["ospf-interface"] = t
+			}
 		}
 	}
 
-	if v, ok := d.GetOk("network"); ok {
-		t, err := expandRouterOspfNetwork(d, v, "network")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["network"] = t
+	if bemptysontable {
+		obj["network"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("network"); ok {
+			t, err := expandRouterOspfNetwork(d, v, "network")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["network"] = t
+			}
 		}
 	}
 
-	if v, ok := d.GetOk("neighbor"); ok {
-		t, err := expandRouterOspfNeighbor(d, v, "neighbor")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["neighbor"] = t
+	if bemptysontable {
+		obj["neighbor"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("neighbor"); ok {
+			t, err := expandRouterOspfNeighbor(d, v, "neighbor")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["neighbor"] = t
+			}
 		}
 	}
 
-	if v, ok := d.GetOk("passive_interface"); ok {
-		t, err := expandRouterOspfPassiveInterface(d, v, "passive_interface")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["passive-interface"] = t
+	if bemptysontable {
+		obj["passive-interface"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("passive_interface"); ok {
+			t, err := expandRouterOspfPassiveInterface(d, v, "passive_interface")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["passive-interface"] = t
+			}
 		}
 	}
 
-	if v, ok := d.GetOk("summary_address"); ok {
-		t, err := expandRouterOspfSummaryAddress(d, v, "summary_address")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["summary-address"] = t
+	if bemptysontable {
+		obj["summary-address"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("summary_address"); ok {
+			t, err := expandRouterOspfSummaryAddress(d, v, "summary_address")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["summary-address"] = t
+			}
 		}
 	}
 
-	if v, ok := d.GetOk("distribute_list"); ok {
-		t, err := expandRouterOspfDistributeList(d, v, "distribute_list")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["distribute-list"] = t
+	if bemptysontable {
+		obj["distribute-list"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("distribute_list"); ok {
+			t, err := expandRouterOspfDistributeList(d, v, "distribute_list")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["distribute-list"] = t
+			}
 		}
 	}
 
-	if v, ok := d.GetOk("redistribute"); ok {
-		t, err := expandRouterOspfRedistribute(d, v, "redistribute")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["redistribute"] = t
+	if bemptysontable {
+		obj["redistribute"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("redistribute"); ok {
+			t, err := expandRouterOspfRedistribute(d, v, "redistribute")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["redistribute"] = t
+			}
 		}
 	}
 
