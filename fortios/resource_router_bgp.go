@@ -1510,7 +1510,7 @@ func resourceRouterBgpUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectRouterBgp(d)
+	obj, err := getObjectRouterBgp(d, false)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterBgp resource while getting object: %v", err)
 	}
@@ -1532,13 +1532,18 @@ func resourceRouterBgpUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceRouterBgpDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteRouterBgp(mkey)
+	obj, err := getObjectRouterBgp(d, true)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting RouterBgp resource: %v", err)
+		return fmt.Errorf("Error updating RouterBgp resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateRouterBgp(obj, mkey)
+	if err != nil {
+		return fmt.Errorf("Error clearing RouterBgp resource: %v", err)
 	}
 
 	d.SetId("")
@@ -6819,7 +6824,7 @@ func expandRouterBgpAdminDistanceDistance(d *schema.ResourceData, v interface{},
 	return v, nil
 }
 
-func getObjectRouterBgp(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectRouterBgp(d *schema.ResourceData, bemptysontable bool) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("as"); ok {
@@ -7038,12 +7043,16 @@ func getObjectRouterBgp(d *schema.ResourceData) (*map[string]interface{}, error)
 		}
 	}
 
-	if v, ok := d.GetOk("confederation_peers"); ok {
-		t, err := expandRouterBgpConfederationPeers(d, v, "confederation_peers")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["confederation-peers"] = t
+	if bemptysontable {
+		obj["confederation-peers"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("confederation_peers"); ok {
+			t, err := expandRouterBgpConfederationPeers(d, v, "confederation_peers")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["confederation-peers"] = t
+			}
 		}
 	}
 
@@ -7218,102 +7227,146 @@ func getObjectRouterBgp(d *schema.ResourceData) (*map[string]interface{}, error)
 		}
 	}
 
-	if v, ok := d.GetOk("aggregate_address"); ok {
-		t, err := expandRouterBgpAggregateAddress(d, v, "aggregate_address")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["aggregate-address"] = t
+	if bemptysontable {
+		obj["aggregate-address"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("aggregate_address"); ok {
+			t, err := expandRouterBgpAggregateAddress(d, v, "aggregate_address")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["aggregate-address"] = t
+			}
 		}
 	}
 
-	if v, ok := d.GetOk("aggregate_address6"); ok {
-		t, err := expandRouterBgpAggregateAddress6(d, v, "aggregate_address6")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["aggregate-address6"] = t
+	if bemptysontable {
+		obj["aggregate-address6"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("aggregate_address6"); ok {
+			t, err := expandRouterBgpAggregateAddress6(d, v, "aggregate_address6")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["aggregate-address6"] = t
+			}
 		}
 	}
 
-	if v, ok := d.GetOk("neighbor"); ok {
-		t, err := expandRouterBgpNeighbor(d, v, "neighbor")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["neighbor"] = t
+	if bemptysontable {
+		obj["neighbor"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("neighbor"); ok {
+			t, err := expandRouterBgpNeighbor(d, v, "neighbor")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["neighbor"] = t
+			}
 		}
 	}
 
-	if v, ok := d.GetOk("neighbor_group"); ok {
-		t, err := expandRouterBgpNeighborGroup(d, v, "neighbor_group")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["neighbor-group"] = t
+	if bemptysontable {
+		obj["neighbor-group"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("neighbor_group"); ok {
+			t, err := expandRouterBgpNeighborGroup(d, v, "neighbor_group")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["neighbor-group"] = t
+			}
 		}
 	}
 
-	if v, ok := d.GetOk("neighbor_range"); ok {
-		t, err := expandRouterBgpNeighborRange(d, v, "neighbor_range")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["neighbor-range"] = t
+	if bemptysontable {
+		obj["neighbor-range"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("neighbor_range"); ok {
+			t, err := expandRouterBgpNeighborRange(d, v, "neighbor_range")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["neighbor-range"] = t
+			}
 		}
 	}
 
-	if v, ok := d.GetOk("neighbor_range6"); ok {
-		t, err := expandRouterBgpNeighborRange6(d, v, "neighbor_range6")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["neighbor-range6"] = t
+	if bemptysontable {
+		obj["neighbor-range6"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("neighbor_range6"); ok {
+			t, err := expandRouterBgpNeighborRange6(d, v, "neighbor_range6")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["neighbor-range6"] = t
+			}
 		}
 	}
 
-	if v, ok := d.GetOk("network"); ok {
-		t, err := expandRouterBgpNetwork(d, v, "network")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["network"] = t
+	if bemptysontable {
+		obj["network"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("network"); ok {
+			t, err := expandRouterBgpNetwork(d, v, "network")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["network"] = t
+			}
 		}
 	}
 
-	if v, ok := d.GetOk("network6"); ok {
-		t, err := expandRouterBgpNetwork6(d, v, "network6")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["network6"] = t
+	if bemptysontable {
+		obj["network6"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("network6"); ok {
+			t, err := expandRouterBgpNetwork6(d, v, "network6")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["network6"] = t
+			}
 		}
 	}
 
-	if v, ok := d.GetOk("redistribute"); ok {
-		t, err := expandRouterBgpRedistribute(d, v, "redistribute")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["redistribute"] = t
+	if bemptysontable {
+		obj["redistribute"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("redistribute"); ok {
+			t, err := expandRouterBgpRedistribute(d, v, "redistribute")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["redistribute"] = t
+			}
 		}
 	}
 
-	if v, ok := d.GetOk("redistribute6"); ok {
-		t, err := expandRouterBgpRedistribute6(d, v, "redistribute6")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["redistribute6"] = t
+	if bemptysontable {
+		obj["redistribute6"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("redistribute6"); ok {
+			t, err := expandRouterBgpRedistribute6(d, v, "redistribute6")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["redistribute6"] = t
+			}
 		}
 	}
 
-	if v, ok := d.GetOk("admin_distance"); ok {
-		t, err := expandRouterBgpAdminDistance(d, v, "admin_distance")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["admin-distance"] = t
+	if bemptysontable {
+		obj["admin-distance"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("admin_distance"); ok {
+			t, err := expandRouterBgpAdminDistance(d, v, "admin_distance")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["admin-distance"] = t
+			}
 		}
 	}
 
