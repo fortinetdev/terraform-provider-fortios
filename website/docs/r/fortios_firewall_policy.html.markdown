@@ -46,6 +46,44 @@ resource "fortios_firewall_policy" "trname" {
     name = "port3"
   }
 }
+
+resource "fortios_firewall_policy" "myrule" {
+  action                      = "accept"
+  anti_replay                 = "enable"
+  auth_path                   = "disable"
+  auto_asic_offload           = "enable"
+  av_profile                  = "wifi-default"
+  inspection_mode             = "flow"
+  internet_service            = "enable"
+  ips_sensor                  = "protect_email_server"
+  logtraffic                  = "utm"
+  name                        = "rule1"
+  policyid                    = 2
+  schedule                    = "always"
+  ssl_ssh_profile             = "certificate-inspection"
+  status                      = "enable"
+  utm_status                  = "enable"
+
+  dstintf {
+      name = "port1"
+  }
+
+  internet_service_name {
+      name = "Amazon-AWS"
+  }
+
+  internet_service_name {
+      name = "GitHub-GitHub"
+  }
+
+  srcaddr {
+      name = "FABRIC_DEVICE"
+  }
+
+  srcintf {
+      name = "port2"
+  }
+}
 ```
 
 ## Argument Reference
@@ -61,6 +99,7 @@ The following arguments are supported:
 * `dstaddr` - Destination address and address group names. The structure of `dstaddr` block is documented below.
 * `internet_service` - Enable/disable use of Internet Services for this policy. If enabled, destination address and service are not used. 
 * `internet_service_id` - Internet Service ID. The structure of `internet_service_id` block is documented below.
+* `internet_service_name` - Internet Service name. The structure of `internet_service_name` block is documented below.
 * `internet_service_group` - Internet Service group name. The structure of `internet_service_group` block is documented below.
 * `internet_service_custom` - Custom Internet Service name. The structure of `internet_service_custom` block is documented below.
 * `internet_service_custom_group` - Custom Internet Service group name. The structure of `internet_service_custom_group` block is documented below.
@@ -210,6 +249,10 @@ The `dstaddr` block supports:
 The `internet_service_id` block supports:
 
 * `id` - Internet Service ID.
+
+The `internet_service_name` block supports:
+
+* `name` - Internet Service name.
 
 The `internet_service_group` block supports:
 

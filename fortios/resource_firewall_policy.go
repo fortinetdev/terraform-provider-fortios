@@ -121,6 +121,20 @@ func resourceFirewallPolicy() *schema.Resource {
 					},
 				},
 			},
+			"internet_service_name": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
 			"internet_service_group": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -1275,6 +1289,42 @@ func flattenFirewallPolicyInternetServiceId(v interface{}, d *schema.ResourceDat
 }
 
 func flattenFirewallPolicyInternetServiceIdId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func flattenFirewallPolicyInternetServiceName(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = flattenFirewallPolicyInternetServiceNameName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func flattenFirewallPolicyInternetServiceNameName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -2581,6 +2631,22 @@ func refreshObjectFirewallPolicy(d *schema.ResourceData, o map[string]interface{
 	}
 
 	if isImportTable() {
+		if err = d.Set("internet_service_name", flattenFirewallPolicyInternetServiceName(o["internet-service-name"], d, "internet_service_name")); err != nil {
+			if !fortiAPIPatch(o["internet-service-name"]) {
+				return fmt.Errorf("Error reading internet_service_name: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("internet_service_name"); ok {
+			if err = d.Set("internet_service_name", flattenFirewallPolicyInternetServiceName(o["internet-service-name"], d, "internet_service_name")); err != nil {
+				if !fortiAPIPatch(o["internet-service-name"]) {
+					return fmt.Errorf("Error reading internet_service_name: %v", err)
+				}
+			}
+		}
+	}
+
+	if isImportTable() {
 		if err = d.Set("internet_service_group", flattenFirewallPolicyInternetServiceGroup(o["internet-service-group"], d, "internet_service_group")); err != nil {
 			if !fortiAPIPatch(o["internet-service-group"]) {
 				return fmt.Errorf("Error reading internet_service_group: %v", err)
@@ -3741,6 +3807,37 @@ func expandFirewallPolicyInternetServiceId(d *schema.ResourceData, v interface{}
 }
 
 func expandFirewallPolicyInternetServiceIdId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallPolicyInternetServiceName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+			tmp["name"], _ = expandFirewallPolicyInternetServiceNameName(d, i["name"], pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandFirewallPolicyInternetServiceNameName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4908,6 +5005,15 @@ func getObjectFirewallPolicy(d *schema.ResourceData) (*map[string]interface{}, e
 			return &obj, err
 		} else if t != nil {
 			obj["internet-service-id"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("internet_service_name"); ok {
+		t, err := expandFirewallPolicyInternetServiceName(d, v, "internet_service_name")
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["internet-service-name"] = t
 		}
 	}
 
