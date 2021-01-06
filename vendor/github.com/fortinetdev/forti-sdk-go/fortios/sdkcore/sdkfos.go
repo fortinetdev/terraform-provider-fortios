@@ -21651,3 +21651,57 @@ func (c *FortiSDKClient) ReadRouterBfd6(mkey string) (mapTmp map[string]interfac
 	mapTmp, err = read(c, HTTPMethod, path, true)
 	return
 }
+
+// CreateRouterbgpNeighbor API operation for FortiOS creates a new Neighbor.
+// Returns the index value of the Neighbor and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router/bgp - neighbor chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateRouterbgpNeighbor(params *map[string]interface{}) (output map[string]interface{}, err error) {
+
+	HTTPMethod := "POST"
+	path := "/api/v2/cmdb/router/bgp/neighbor"
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// UpdateRouterbgpNeighbor API operation for FortiOS updates the specified Neighbor.
+// Returns the index value of the Neighbor and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router/bgp - neighbor chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateRouterbgpNeighbor(params *map[string]interface{}, mkey string) (output map[string]interface{}, err error) {
+	HTTPMethod := "PUT"
+	path := "/api/v2/cmdb/router/bgp/neighbor"
+	path += "/" + escapeURLString(mkey)
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// DeleteRouterbgpNeighbor API operation for FortiOS deletes the specified Neighbor.
+// Returns error for service API and SDK errors.
+// See the router/bgp - neighbor chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteRouterbgpNeighbor(mkey string) (err error) {
+	HTTPMethod := "DELETE"
+	path := "/api/v2/cmdb/router/bgp/neighbor"
+	path += "/" + escapeURLString(mkey)
+
+	err = delete(c, HTTPMethod, path)
+	return
+}
+
+// ReadRouterbgpNeighbor API operation for FortiOS gets the Neighbor
+// with the specified index value.
+// Returns the requested Neighbor value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router/bgp - neighbor chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadRouterbgpNeighbor(mkey string) (mapTmp map[string]interface{}, err error) {
+	HTTPMethod := "GET"
+	path := "/api/v2/cmdb/router/bgp/neighbor"
+	path += "/" + escapeURLString(mkey)
+
+	mapTmp, err = read(c, HTTPMethod, path, false)
+	return
+}
