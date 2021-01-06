@@ -546,7 +546,7 @@ func resourceRouterIsisUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectRouterIsis(d)
+	obj, err := getObjectRouterIsis(d, false)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterIsis resource while getting object: %v", err)
 	}
@@ -568,13 +568,18 @@ func resourceRouterIsisUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceRouterIsisDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteRouterIsis(mkey)
+	obj, err := getObjectRouterIsis(d, true)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting RouterIsis resource: %v", err)
+		return fmt.Errorf("Error updating RouterIsis resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateRouterIsis(obj, mkey)
+	if err != nil {
+		return fmt.Errorf("Error clearing RouterIsis resource: %v", err)
 	}
 
 	d.SetId("")
@@ -2401,7 +2406,7 @@ func expandRouterIsisRedistribute6Routemap(d *schema.ResourceData, v interface{}
 	return v, nil
 }
 
-func getObjectRouterIsis(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectRouterIsis(d *schema.ResourceData, bemptysontable bool) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("is_type"); ok {
@@ -2719,57 +2724,81 @@ func getObjectRouterIsis(d *schema.ResourceData) (*map[string]interface{}, error
 		}
 	}
 
-	if v, ok := d.GetOk("isis_net"); ok {
-		t, err := expandRouterIsisIsisNet(d, v, "isis_net")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["isis-net"] = t
+	if bemptysontable {
+		obj["isis-net"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("isis_net"); ok {
+			t, err := expandRouterIsisIsisNet(d, v, "isis_net")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["isis-net"] = t
+			}
 		}
 	}
 
-	if v, ok := d.GetOk("isis_interface"); ok {
-		t, err := expandRouterIsisIsisInterface(d, v, "isis_interface")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["isis-interface"] = t
+	if bemptysontable {
+		obj["isis-interface"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("isis_interface"); ok {
+			t, err := expandRouterIsisIsisInterface(d, v, "isis_interface")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["isis-interface"] = t
+			}
 		}
 	}
 
-	if v, ok := d.GetOk("summary_address"); ok {
-		t, err := expandRouterIsisSummaryAddress(d, v, "summary_address")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["summary-address"] = t
+	if bemptysontable {
+		obj["summary-address"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("summary_address"); ok {
+			t, err := expandRouterIsisSummaryAddress(d, v, "summary_address")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["summary-address"] = t
+			}
 		}
 	}
 
-	if v, ok := d.GetOk("summary_address6"); ok {
-		t, err := expandRouterIsisSummaryAddress6(d, v, "summary_address6")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["summary-address6"] = t
+	if bemptysontable {
+		obj["summary-address6"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("summary_address6"); ok {
+			t, err := expandRouterIsisSummaryAddress6(d, v, "summary_address6")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["summary-address6"] = t
+			}
 		}
 	}
 
-	if v, ok := d.GetOk("redistribute"); ok {
-		t, err := expandRouterIsisRedistribute(d, v, "redistribute")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["redistribute"] = t
+	if bemptysontable {
+		obj["redistribute"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("redistribute"); ok {
+			t, err := expandRouterIsisRedistribute(d, v, "redistribute")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["redistribute"] = t
+			}
 		}
 	}
 
-	if v, ok := d.GetOk("redistribute6"); ok {
-		t, err := expandRouterIsisRedistribute6(d, v, "redistribute6")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["redistribute6"] = t
+	if bemptysontable {
+		obj["redistribute6"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("redistribute6"); ok {
+			t, err := expandRouterIsisRedistribute6(d, v, "redistribute6")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["redistribute6"] = t
+			}
 		}
 	}
 
