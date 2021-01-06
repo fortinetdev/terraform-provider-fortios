@@ -410,7 +410,7 @@ func resourceRouterMulticastUpdate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectRouterMulticast(d)
+	obj, err := getObjectRouterMulticast(d, false)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterMulticast resource while getting object: %v", err)
 	}
@@ -432,13 +432,18 @@ func resourceRouterMulticastUpdate(d *schema.ResourceData, m interface{}) error 
 
 func resourceRouterMulticastDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteRouterMulticast(mkey)
+	obj, err := getObjectRouterMulticast(d, true)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting RouterMulticast resource: %v", err)
+		return fmt.Errorf("Error updating RouterMulticast resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateRouterMulticast(obj, mkey)
+	if err != nil {
+		return fmt.Errorf("Error clearing RouterMulticast resource: %v", err)
 	}
 
 	d.SetId("")
@@ -1766,7 +1771,7 @@ func expandRouterMulticastInterfaceIgmpRouterAlertCheck(d *schema.ResourceData, 
 	return v, nil
 }
 
-func getObjectRouterMulticast(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectRouterMulticast(d *schema.ResourceData, bemptysontable bool) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("route_threshold"); ok {
@@ -1805,12 +1810,16 @@ func getObjectRouterMulticast(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
-	if v, ok := d.GetOk("interface"); ok {
-		t, err := expandRouterMulticastInterface(d, v, "interface")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["interface"] = t
+	if bemptysontable {
+		obj["interface"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("interface"); ok {
+			t, err := expandRouterMulticastInterface(d, v, "interface")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["interface"] = t
+			}
 		}
 	}
 
