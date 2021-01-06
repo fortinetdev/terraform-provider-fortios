@@ -57,7 +57,7 @@ func resourceRouterBfd6Update(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectRouterBfd6(d)
+	obj, err := getObjectRouterBfd6(d, false)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterBfd6 resource while getting object: %v", err)
 	}
@@ -79,13 +79,18 @@ func resourceRouterBfd6Update(d *schema.ResourceData, m interface{}) error {
 
 func resourceRouterBfd6Delete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteRouterBfd6(mkey)
+	obj, err := getObjectRouterBfd6(d, true)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting RouterBfd6 resource: %v", err)
+		return fmt.Errorf("Error updating RouterBfd6 resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateRouterBfd6(obj, mkey)
+	if err != nil {
+		return fmt.Errorf("Error clearing RouterBfd6 resource: %v", err)
 	}
 
 	d.SetId("")
@@ -230,15 +235,19 @@ func expandRouterBfd6NeighborInterface(d *schema.ResourceData, v interface{}, pr
 	return v, nil
 }
 
-func getObjectRouterBfd6(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectRouterBfd6(d *schema.ResourceData, bemptysontable bool) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("neighbor"); ok {
-		t, err := expandRouterBfd6Neighbor(d, v, "neighbor")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["neighbor"] = t
+	if bemptysontable {
+		obj["neighbor"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("neighbor"); ok {
+			t, err := expandRouterBfd6Neighbor(d, v, "neighbor")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["neighbor"] = t
+			}
 		}
 	}
 

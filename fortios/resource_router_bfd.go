@@ -57,7 +57,7 @@ func resourceRouterBfdUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectRouterBfd(d)
+	obj, err := getObjectRouterBfd(d, false)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterBfd resource while getting object: %v", err)
 	}
@@ -79,13 +79,18 @@ func resourceRouterBfdUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceRouterBfdDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteRouterBfd(mkey)
+	obj, err := getObjectRouterBfd(d, true)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting RouterBfd resource: %v", err)
+		return fmt.Errorf("Error updating RouterBfd resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateRouterBfd(obj, mkey)
+	if err != nil {
+		return fmt.Errorf("Error clearing RouterBfd resource: %v", err)
 	}
 
 	d.SetId("")
@@ -230,15 +235,19 @@ func expandRouterBfdNeighborInterface(d *schema.ResourceData, v interface{}, pre
 	return v, nil
 }
 
-func getObjectRouterBfd(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectRouterBfd(d *schema.ResourceData, bemptysontable bool) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
-	if v, ok := d.GetOk("neighbor"); ok {
-		t, err := expandRouterBfdNeighbor(d, v, "neighbor")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["neighbor"] = t
+	if bemptysontable {
+		obj["neighbor"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("neighbor"); ok {
+			t, err := expandRouterBfdNeighbor(d, v, "neighbor")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["neighbor"] = t
+			}
 		}
 	}
 

@@ -591,6 +591,7 @@ func Provider() terraform.ResourceProvider {
 			"fortios_router_setting":                                    resourceRouterSetting(),
 			"fortios_router_bfd":                                        resourceRouterBfd(),
 			"fortios_router_bfd6":                                       resourceRouterBfd6(),
+			"fortios_routerbgp_neighbor":                                resourceRouterbgpNeighbor(),
 		},
 
 		ConfigureFunc: providerConfigure,
