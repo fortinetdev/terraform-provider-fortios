@@ -1,5 +1,28 @@
-## 1.7.0 (Unreleased)
+## 1.8.0 (Unreleased)
 
+
+## 1.7.0 (Jan 8, 2021)
+
+IMPROVEMENTS:
+
+* Support internet_service_name for fortios_firewall_policy #128
+* Support when resource_router_ripng is destroyed, clean its child table
+* Support when resource_router_rip is destroyed, clean its child table
+* Support when resource_router_multicast(6) is destroyed, clean its child table
+* Support when resource_router_isis is destroyed, clean its child table
+* Support when resource_router_bfd(6) is destroyed, clean its child table
+* Support when resource_router_ospf/resource_router_ospf6 are destroyed, clean its child table #129
+* Support when resource_router_bgp is destroyed, clean its child table #127
+
+BUG FIXES:
+
+* Improve documentation of fortios_firewall_security_policysort
+* Update fortios_firewall_security_policysort.html.markdown to fix the alignment problem of the example format
+
+FEATURES:
+
+* **New Data Source:** `fortios_json_generic_api`
+* **New Resource:** `fortios_routerbgp_neighbor`
 
 ## 1.6.18 (Dec 23, 2020)
 
