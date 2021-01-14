@@ -11,6 +11,7 @@ package fortios
 import (
 	"fmt"
 	"log"
+	"sort"
 	"strconv"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
@@ -126,6 +127,11 @@ func resourceFirewallAddrgrp() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
 			},
 		},
 	}
@@ -255,6 +261,17 @@ func flattenFirewallAddrgrpMember(v interface{}, d *schema.ResourceData, pre str
 		result = append(result, tmp)
 
 		con += 1
+	}
+
+	if v, ok := d.GetOk("dynamic_sort_subtable"); ok {
+		if v.(string) == "true" {
+			sort.Slice(result, func(i, j int) bool {
+				v1 := fmt.Sprintf("%v", result[i]["name"])
+				v2 := fmt.Sprintf("%v", result[j]["name"])
+
+				return v1 < v2
+			})
+		}
 	}
 
 	return result
