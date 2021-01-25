@@ -31,6 +31,7 @@ The following arguments are supported:
 * `acceptable_connections` - Set strategy when accepting cache collaboration connection.
 * `dst_peer` - Modify cache-service destination peer list. The structure of `dst_peer` block is documented below.
 * `src_peer` - Modify cache-service source peer list. The structure of `src_peer` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `dst_peer` block supports:
 
@@ -47,7 +48,7 @@ The `src_peer` block supports:
 * `encode_type` - Set encode type for this peer.
 * `priority` - Set priority for this peer.
 * `ip` - Set cluster IP address of this peer.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

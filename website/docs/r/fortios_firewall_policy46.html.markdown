@@ -81,6 +81,7 @@ The following arguments are supported:
 * `comments` - Comment.
 * `ippool` - Enable/disable use of IP Pools for source NAT.
 * `poolname` - IP Pool names. The structure of `poolname` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `srcaddr` block supports:
 
@@ -97,7 +98,7 @@ The `service` block supports:
 The `poolname` block supports:
 
 * `name` - IP pool name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

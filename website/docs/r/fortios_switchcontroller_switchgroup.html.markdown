@@ -17,11 +17,12 @@ The following arguments are supported:
 * `name` - Switch group name.
 * `description` - Optional switch group description.
 * `members` - FortiSwitch members belonging to this switch group. The structure of `members` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `members` block supports:
 
 * `name` - Managed device ID.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

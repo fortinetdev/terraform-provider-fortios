@@ -17,6 +17,7 @@ The following arguments are supported:
 * `name` - QOS-MAP name.
 * `dscp_except` - Differentiated Services Code Point (DSCP) exceptions. The structure of `dscp_except` block is documented below.
 * `dscp_range` - Differentiated Services Code Point (DSCP) ranges. The structure of `dscp_range` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `dscp_except` block supports:
 
@@ -30,7 +31,7 @@ The `dscp_range` block supports:
 * `up` - User priority.
 * `low` - DSCP low value.
 * `high` - DSCP high value.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

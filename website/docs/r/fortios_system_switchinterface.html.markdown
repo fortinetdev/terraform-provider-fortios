@@ -23,6 +23,7 @@ The following arguments are supported:
 * `intra_switch_policy` - Allow any traffic between switch interfaces or require firewall policies to allow traffic between switch interfaces.
 * `span` - Enable/disable port spanning. Port spanning echoes traffic received by the software switch to the span destination port.
 * `span_direction` - The direction in which the SPAN port operates, either: rx, tx, or both.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `span_source_port` block supports:
 
@@ -31,7 +32,7 @@ The `span_source_port` block supports:
 The `member` block supports:
 
 * `interface_name` - Physical interface name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

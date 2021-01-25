@@ -193,6 +193,7 @@ The following arguments are supported:
 * `rsa_signature_format` - Digital Signature Authentication RSA signature format.
 * `enforce_unique_id` - Enable/disable peer ID uniqueness check.
 * `cert_id_validation` - Enable/disable cross validation of peer ID and the identity in the peer's certificate as specified in RFC 4945.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `certificate` block supports:
 
@@ -213,7 +214,7 @@ The `ipv6_exclude_range` block supports:
 The `backup_gateway` block supports:
 
 * `address` - Address of backup gateway.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

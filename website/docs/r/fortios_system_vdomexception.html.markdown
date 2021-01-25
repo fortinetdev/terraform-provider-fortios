@@ -30,11 +30,12 @@ The following arguments are supported:
 * `oid` - Object ID.
 * `scope` - Determine whether the configuration object can be configured separately for all VDOMs or if some VDOMs share the same configuration.
 * `vdom` - Names of the VDOMs. The structure of `vdom` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `vdom` block supports:
 
 * `name` - VDOM name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

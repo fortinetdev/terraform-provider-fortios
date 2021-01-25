@@ -16,6 +16,7 @@ The following arguments are supported:
 
 * `name` - NAI realm list name.
 * `nai_list` - NAI list. The structure of `nai_list` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `nai_list` block supports:
 
@@ -35,7 +36,7 @@ The `auth_param` block supports:
 * `index` - Param index.
 * `id` - ID of authentication parameter.
 * `val` - Value of authentication parameter.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

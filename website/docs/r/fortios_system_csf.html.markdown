@@ -39,6 +39,7 @@ The following arguments are supported:
 * `fixed_key` - Auto-generated fixed key used when this device is the root. (Will automatically be generated if not set.)
 * `trusted_list` - Pre-authorized and blocked security fabric nodes. The structure of `trusted_list` block is documented below.
 * `fabric_device` - Fabric device configuration. The structure of `fabric_device` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `trusted_list` block supports:
 
@@ -54,7 +55,7 @@ The `fabric_device` block supports:
 * `device_type` - Device type.
 * `login` - Device login name.
 * `password` - Device login password.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

@@ -50,6 +50,7 @@ The following arguments are supported:
 * `server_list` - Additional severs that the FortiGate can use for updates (for AV, IPS, updates) and ratings (for web filter and antispam ratings) servers. The structure of `server_list` block is documented below.
 * `include_default_servers` - Enable/disable inclusion of public FortiGuard servers in the override server list.
 * `enc_algorithm` - Encryption strength for communications between the FortiGate and central management.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `server_list` block supports:
 
@@ -59,7 +60,7 @@ The `server_list` block supports:
 * `server_address` - IPv4 address of override server.
 * `server_address6` - IPv6 address of override server.
 * `fqdn` - FQDN address of override server.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

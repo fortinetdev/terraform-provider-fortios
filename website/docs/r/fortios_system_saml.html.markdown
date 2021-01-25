@@ -44,6 +44,7 @@ The following arguments are supported:
 * `tolerance` - Tolerance to the range of time when the assertion is valid (in minutes).
 * `life` - Length of the range of time when the assertion is valid (in minutes).
 * `service_providers` - Authorized service providers. The structure of `service_providers` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `service_providers` block supports:
 
@@ -63,7 +64,7 @@ The `assertion_attributes` block supports:
 
 * `name` - Name.
 * `type` - Type.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

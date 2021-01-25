@@ -132,6 +132,7 @@ The following arguments are supported:
 * `skip_check_for_browser` - Enable to skip host check for browser support.
 * `hide_sso_credential` - Enable to prevent SSO credential being sent to client.
 * `split_dns` - Split DNS for SSL VPN. The structure of `split_dns` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `ip_pools` block supports:
 
@@ -215,7 +216,7 @@ The `split_dns` block supports:
 * `dns_server2` - DNS server 2.
 * `ipv6_dns_server1` - IPv6 DNS server 1.
 * `ipv6_dns_server2` - IPv6 DNS server 2.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

@@ -62,6 +62,7 @@ The following arguments are supported:
 * `app_service_type` - Application service type.
 * `app_category` - Application category ID. The structure of `app_category` block is documented below.
 * `application` - Application ID. The structure of `application` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `app_category` block supports:
 
@@ -70,7 +71,7 @@ The `app_category` block supports:
 The `application` block supports:
 
 * `id` - Application id.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

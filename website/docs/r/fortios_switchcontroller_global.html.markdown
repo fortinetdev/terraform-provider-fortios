@@ -36,6 +36,7 @@ The following arguments are supported:
 * `log_mac_limit_violations` - Enable/disable logs for Learning Limit Violations.
 * `mac_violation_timer` - Set timeout for Learning Limit Violations (0 = disabled).
 * `custom_command` - List of custom commands to be pushed to all FortiSwitches in the VDOM. The structure of `custom_command` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `disable_discovery` block supports:
 
@@ -45,7 +46,7 @@ The `custom_command` block supports:
 
 * `command_entry` - List of FortiSwitch commands.
 * `command_name` - Name of custom command to push to all FortiSwitches in VDOM.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

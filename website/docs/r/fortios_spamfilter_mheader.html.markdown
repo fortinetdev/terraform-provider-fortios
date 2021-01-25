@@ -37,6 +37,7 @@ The following arguments are supported:
 * `name` - (Required) Name of table.
 * `comment` - Optional comments.
 * `entries` - Spam filter mime header content. The structure of `entries` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `entries` block supports:
 
@@ -46,7 +47,7 @@ The `entries` block supports:
 * `fieldbody` - Pattern for the header field body.
 * `pattern_type` - Wildcard pattern or regular expression.
 * `action` - Mark spam or good.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

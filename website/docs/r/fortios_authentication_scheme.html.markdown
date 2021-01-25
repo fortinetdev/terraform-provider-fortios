@@ -49,11 +49,12 @@ The following arguments are supported:
 * `fsso_guest` - Enable/disable user fsso-guest authentication (default = disable).
 * `user_database` - Authentication server to contain user information; "local" (default) or "123" (for LDAP). The structure of `user_database` block is documented below.
 * `ssh_ca` - SSH CA name.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `user_database` block supports:
 
 * `name` - Authentication server name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

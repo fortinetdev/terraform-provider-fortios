@@ -26,6 +26,7 @@ The following arguments are supported:
 * `name` - (Required) Name.
 * `comments` - Comments.
 * `rule` - Rule. The structure of `rule` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `rule` block supports:
 
@@ -37,7 +38,7 @@ The `rule` block supports:
 The `groups` block supports:
 
 * `name` - Group name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

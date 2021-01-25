@@ -27,13 +27,14 @@ The following arguments are supported:
 * `name` - (Required) Name of table.
 * `comment` - Optional comments.
 * `entries` - Configure content types used by web filter. The structure of `entries` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `entries` block supports:
 
 * `pattern` - Content type (regular expression).
 * `action` - Action to take for this content type.
 * `category` - Categories that this content type applies to.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

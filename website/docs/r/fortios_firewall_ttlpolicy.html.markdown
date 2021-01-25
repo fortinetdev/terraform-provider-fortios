@@ -43,6 +43,7 @@ The following arguments are supported:
 * `service` - (Required) Service object(s) from available options. Separate multiple names with a space. The structure of `service` block is documented below.
 * `schedule` - (Required) Schedule object from available options.
 * `ttl` - (Required) Value/range to match against the packet's Time to Live value (format: ttl[ - ttl_high], 1 - 255).
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `srcaddr` block supports:
 
@@ -51,7 +52,7 @@ The `srcaddr` block supports:
 The `service` block supports:
 
 * `name` - Service name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

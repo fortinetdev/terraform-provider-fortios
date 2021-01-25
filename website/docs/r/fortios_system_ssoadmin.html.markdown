@@ -30,11 +30,12 @@ The following arguments are supported:
 * `name` - SSO admin name.
 * `accprofile` - (Required) SSO admin user access profile.
 * `vdom` - Virtual domain(s) that the administrator can access. The structure of `vdom` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `vdom` block supports:
 
 * `name` - Virtual domain name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

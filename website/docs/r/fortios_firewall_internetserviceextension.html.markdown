@@ -27,6 +27,7 @@ The following arguments are supported:
 * `comment` - Comment.
 * `entry` - Entries added to the Internet Service extension database. The structure of `entry` block is documented below.
 * `disable_entry` - Disable entries in the Internet Service database. The structure of `disable_entry` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `entry` block supports:
 
@@ -57,7 +58,7 @@ The `ip_range` block supports:
 * `id` - Disable entry range ID.
 * `start_ip` - Start IP address.
 * `end_ip` - End IP address.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

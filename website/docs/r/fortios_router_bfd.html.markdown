@@ -15,12 +15,13 @@ Configure BFD.
 The following arguments are supported:
 
 * `neighbor` - neighbor The structure of `neighbor` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `neighbor` block supports:
 
 * `ip` - IPv4 address of the BFD neighbor.
 * `interface` - Interface name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

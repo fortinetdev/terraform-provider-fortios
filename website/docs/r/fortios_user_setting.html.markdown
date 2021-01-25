@@ -53,13 +53,14 @@ The following arguments are supported:
 * `auth_lockout_threshold` - Maximum number of failed login attempts before login lockout is triggered.
 * `auth_lockout_duration` - Lockout period in seconds after too many login failures.
 * `auth_ports` - Set up non-standard ports for authentication with HTTP, HTTPS, FTP, and TELNET. The structure of `auth_ports` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `auth_ports` block supports:
 
 * `id` - ID.
 * `type` - Service type.
 * `port` - Non-standard port for firewall user authentication.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

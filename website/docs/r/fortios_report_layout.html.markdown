@@ -50,6 +50,7 @@ The following arguments are supported:
 * `max_pdf_report` - Maximum number of PDF reports to keep at one time (oldest report is overwritten).
 * `page` - Configure report page. The structure of `page` block is documented below.
 * `body_item` - Configure report body item. The structure of `body_item` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `page` block supports:
 
@@ -125,7 +126,7 @@ The `list` block supports:
 
 * `id` - List entry ID.
 * `content` - List entry content.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

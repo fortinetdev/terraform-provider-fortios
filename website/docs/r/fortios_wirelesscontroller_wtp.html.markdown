@@ -50,6 +50,7 @@ The following arguments are supported:
 * `mesh_bridge_enable` - Enable/disable mesh Ethernet bridge when WTP is configured as a mesh branch/leaf AP.
 * `coordinate_latitude` - WTP latitude coordinate.
 * `coordinate_longitude` - WTP longitude coordinate.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `split_tunneling_acl` block supports:
 
@@ -128,7 +129,7 @@ The `vaps` block supports:
 The `channel` block supports:
 
 * `chan` - Channel number.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

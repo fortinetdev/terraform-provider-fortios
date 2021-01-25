@@ -70,6 +70,7 @@ The following arguments are supported:
 * `dlp_sensor` - DLP sensor name.
 * `scan_botnet_connections` - Enable/disable scanning for connections to Botnet servers.
 * `label` - Label.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `srcaddr6` block supports:
 
@@ -82,7 +83,7 @@ The `dstaddr6` block supports:
 The `service6` block supports:
 
 * `name` - Address name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

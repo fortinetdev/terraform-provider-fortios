@@ -51,6 +51,7 @@ The following arguments are supported:
 * `trap_v2c_lport` - SNMP v2c trap local port (default = 162).
 * `trap_v2c_rport` - SNMP v2c trap remote port (default = 162).
 * `events` - SNMP trap events.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `hosts` block supports:
 
@@ -67,7 +68,7 @@ The `hosts6` block supports:
 * `ipv6` - SNMP manager IPv6 address prefix.
 * `ha_direct` - Enable/disable direct management of HA cluster members.
 * `host_type` - Control whether the SNMP manager sends SNMP queries, receives SNMP traps, or both.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

@@ -32,6 +32,7 @@ The following arguments are supported:
 * `type` - Application group type.
 * `application` - Application ID list. The structure of `application` block is documented below.
 * `category` - Application category ID list. The structure of `category` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `application` block supports:
 
@@ -40,7 +41,7 @@ The `application` block supports:
 The `category` block supports:
 
 * `id` - Category IDs.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

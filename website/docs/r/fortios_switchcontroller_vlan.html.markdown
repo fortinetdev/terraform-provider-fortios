@@ -26,6 +26,7 @@ The following arguments are supported:
 * `portal_message_override_group` - Specify captive portal replacement message override group.
 * `portal_message_overrides` - Individual message overrides. The structure of `portal_message_overrides` block is documented below.
 * `selected_usergroups` - Selected user group. The structure of `selected_usergroups` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `portal_message_overrides` block supports:
 
@@ -37,7 +38,7 @@ The `portal_message_overrides` block supports:
 The `selected_usergroups` block supports:
 
 * `name` - User group name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

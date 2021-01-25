@@ -57,6 +57,7 @@ The following arguments are supported:
 * `list` - IP address list. The structure of `list` block is documented below.
 * `tagging` - Config object tagging. The structure of `tagging` block is documented below.
 * `allow_routing` - Enable/disable use of this address in the static route configuration.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `list` block supports:
 
@@ -71,7 +72,7 @@ The `tagging` block supports:
 The `tags` block supports:
 
 * `name` - Tag name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

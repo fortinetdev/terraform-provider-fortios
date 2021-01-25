@@ -50,6 +50,7 @@ The following arguments are supported:
 * `subnet_segment` - IPv6 subnet segments. The structure of `subnet_segment` block is documented below.
 * `host_type` - Host type.
 * `host` - Host Address.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `list` block supports:
 
@@ -70,7 +71,7 @@ The `subnet_segment` block supports:
 * `name` - Name.
 * `type` - Subnet segment type.
 * `value` - Subnet segment value.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

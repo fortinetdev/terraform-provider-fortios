@@ -38,11 +38,12 @@ The following arguments are supported:
 * `name` - (Required) Schedule group name.
 * `member` - (Required) Schedules added to the schedule group. The structure of `member` block is documented below.
 * `color` - Color of icon on the GUI.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `member` block supports:
 
 * `name` - Schedule name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

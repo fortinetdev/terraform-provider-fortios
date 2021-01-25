@@ -51,6 +51,7 @@ The following arguments are supported:
 * `learn_client_ip_from_header` - Learn client IP address from the specified headers.
 * `learn_client_ip_srcaddr` - Source address name (srcaddr or srcaddr6 must be set). The structure of `learn_client_ip_srcaddr` block is documented below.
 * `learn_client_ip_srcaddr6` - IPv6 Source address name (srcaddr or srcaddr6 must be set). The structure of `learn_client_ip_srcaddr6` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `learn_client_ip_srcaddr` block supports:
 
@@ -59,7 +60,7 @@ The `learn_client_ip_srcaddr` block supports:
 The `learn_client_ip_srcaddr6` block supports:
 
 * `name` - Address name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

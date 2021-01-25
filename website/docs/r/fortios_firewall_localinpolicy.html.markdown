@@ -49,6 +49,7 @@ The following arguments are supported:
 * `schedule` - (Required) Schedule object from available options.
 * `status` - Enable/disable this local-in policy.
 * `comments` - Comment.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `srcaddr` block supports:
 
@@ -61,7 +62,7 @@ The `dstaddr` block supports:
 The `service` block supports:
 
 * `name` - Service name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

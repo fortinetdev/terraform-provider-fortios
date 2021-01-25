@@ -28,6 +28,7 @@ The following arguments are supported:
 * `schedule` - (Required) COS queue scheduling.
 * `rate_by` - (Required) COS queue rate by kbps or percent.
 * `cos_queue` - COS queue configuration. The structure of `cos_queue` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `cos_queue` block supports:
 
@@ -39,7 +40,7 @@ The `cos_queue` block supports:
 * `max_rate_percent` - Maximum rate (% of link speed).
 * `drop_policy` - COS queue drop policy.
 * `weight` - Weight of weighted round robin scheduling.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

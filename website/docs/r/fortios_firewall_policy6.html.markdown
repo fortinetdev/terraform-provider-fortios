@@ -152,6 +152,7 @@ The following arguments are supported:
 * `ssl_mirror_intf` - SSL mirror interface name. The structure of `ssl_mirror_intf` block is documented below.
 * `dsri` - Enable DSRI to ignore HTTP server responses.
 * `vlan_filter` - Set VLAN filters.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `srcintf` block supports:
 
@@ -212,7 +213,7 @@ The `devices` block supports:
 The `ssl_mirror_intf` block supports:
 
 * `name` - Interface name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

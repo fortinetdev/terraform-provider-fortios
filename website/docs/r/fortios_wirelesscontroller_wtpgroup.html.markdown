@@ -17,11 +17,12 @@ The following arguments are supported:
 * `name` - WTP group name.
 * `platform_type` - FortiAP models to define the WTP group platform type.
 * `wtps` - WTP list. The structure of `wtps` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `wtps` block supports:
 
 * `wtp_id` - WTP ID.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

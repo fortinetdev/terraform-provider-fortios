@@ -24,13 +24,14 @@ The following arguments are supported:
 
 * `name` - Roaming consortium name.
 * `oi_list` - Organization identifier list. The structure of `oi_list` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `oi_list` block supports:
 
 * `index` - OI index.
 * `oi` - Organization identifier.
 * `comment` - Comment.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

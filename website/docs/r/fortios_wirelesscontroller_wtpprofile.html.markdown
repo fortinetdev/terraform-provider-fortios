@@ -47,6 +47,7 @@ The following arguments are supported:
 * `radio_2` - Configuration options for radio 2. The structure of `radio_2` block is documented below.
 * `lbs` - Set various location based service (LBS) options. The structure of `lbs` block is documented below.
 * `ext_info_enable` - Enable/disable station/VAP/radio extension information.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `platform` block supports:
 
@@ -216,7 +217,7 @@ The `lbs` block supports:
 * `fortipresence_rogue` - Enable/disable FortiPresence finding and reporting rogue APs.
 * `fortipresence_unassoc` - Enable/disable FortiPresence finding and reporting unassociated stations.
 * `station_locate` - Enable/disable client station locating services for all clients, whether associated or not (default = disable).
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

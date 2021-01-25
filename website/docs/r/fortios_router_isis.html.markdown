@@ -88,6 +88,7 @@ The following arguments are supported:
 * `summary_address6` - IS-IS IPv6 summary address. The structure of `summary_address6` block is documented below.
 * `redistribute` - IS-IS redistribute protocols. The structure of `redistribute` block is documented below.
 * `redistribute6` - IS-IS IPv6 redistribution for routing protocols. The structure of `redistribute6` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `isis_net` block supports:
 
@@ -156,7 +157,7 @@ The `redistribute6` block supports:
 * `metric_type` - Metric type.
 * `level` - Level.
 * `routemap` - Route map name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

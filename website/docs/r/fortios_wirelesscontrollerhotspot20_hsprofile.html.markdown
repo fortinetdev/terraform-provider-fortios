@@ -46,11 +46,12 @@ The following arguments are supported:
 * `conn_cap` - Connection capability name.
 * `qos_map` - QoS MAP set ID.
 * `ip_addr_type` - IP address type name.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `osu_provider` block supports:
 
 * `name` - OSU provider name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

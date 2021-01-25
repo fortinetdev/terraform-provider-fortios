@@ -85,11 +85,12 @@ The following arguments are supported:
 * `color` - Integer value to determine the color of the icon in the GUI (range 1 to 32, default = 0, which sets the value to 1).
 * `comments` - Comment.
 * `member` - (Required) Member VIP objects of the group (Separate multiple objects with a space). The structure of `member` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `member` block supports:
 
 * `name` - IPv6 VIP name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

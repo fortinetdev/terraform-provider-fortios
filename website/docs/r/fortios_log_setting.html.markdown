@@ -60,11 +60,12 @@ The following arguments are supported:
 * `faz_override` - Enable/disable override FortiAnalyzer settings.
 * `syslog_override` - Enable/disable override Syslog settings.
 * `custom_log_fields` - Custom fields to append to all log messages. The structure of `custom_log_fields` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `custom_log_fields` block supports:
 
 * `field_id` - Custom log field.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

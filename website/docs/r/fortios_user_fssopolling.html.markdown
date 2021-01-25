@@ -27,11 +27,12 @@ The following arguments are supported:
 * `adgrp` - LDAP Group Info. The structure of `adgrp` block is documented below.
 * `smbv1` - Enable/disable support of SMBv1 for Samba.
 * `smb_ntlmv1_auth` - Enable/disable support of NTLMv1 for Samba authentication.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `adgrp` block supports:
 
 * `name` - Name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

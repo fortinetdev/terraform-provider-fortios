@@ -66,6 +66,7 @@ The following arguments are supported:
 * `tcp_mss_sender` - TCP MSS value of sender.
 * `tcp_mss_receiver` - TCP MSS value of receiver.
 * `comments` - Comment.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `srcaddr` block supports:
 
@@ -82,7 +83,7 @@ The `service` block supports:
 The `poolname` block supports:
 
 * `name` - IP pool name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

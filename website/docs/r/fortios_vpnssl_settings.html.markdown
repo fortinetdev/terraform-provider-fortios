@@ -83,6 +83,7 @@ The following arguments are supported:
 * `auth_session_check_source_ip` - Enable/disable checking of source IP for authentication session.
 * `tunnel_connect_without_reauth` - Enable/disable tunnel connection without re-authorization if previous connection dropped.
 * `tunnel_user_session_timeout` - Time out value to clean up user session after tunnel connection is dropped (1 - 255 sec, default=30).
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `tunnel_ip_pools` block supports:
 
@@ -139,7 +140,7 @@ The `users` block supports:
 The `groups` block supports:
 
 * `name` - Group name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

@@ -51,6 +51,7 @@ The following arguments are supported:
 * `headers` - Request headers. The structure of `headers` block is documented below.
 * `security_tag` - NSX security tag.
 * `sdn_connector` - NSX SDN connector names. The structure of `sdn_connector` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `email_to` block supports:
 
@@ -63,7 +64,7 @@ The `headers` block supports:
 The `sdn_connector` block supports:
 
 * `name` - SDN connector name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

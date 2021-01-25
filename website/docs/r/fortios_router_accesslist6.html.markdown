@@ -26,6 +26,7 @@ The following arguments are supported:
 * `name` - (Required) Name.
 * `comments` - Comment.
 * `rule` - Rule. The structure of `rule` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `rule` block supports:
 
@@ -34,7 +35,7 @@ The `rule` block supports:
 * `prefix6` - IPv6 prefix to define regular filter criteria, such as "any" or subnets.
 * `exact_match` - Enable/disable exact prefix match.
 * `flags` - Flags.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

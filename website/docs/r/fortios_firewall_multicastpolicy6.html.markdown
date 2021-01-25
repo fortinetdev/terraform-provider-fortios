@@ -49,6 +49,7 @@ The following arguments are supported:
 * `protocol` - Integer value for the protocol type as defined by IANA (0 - 255, default = 0).
 * `start_port` - Integer value for starting TCP/UDP/SCTP destination port in range (1 - 65535, default = 1).
 * `end_port` - Integer value for ending TCP/UDP/SCTP destination port in range (1 - 65535, default = 65535).
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `srcaddr` block supports:
 
@@ -57,7 +58,7 @@ The `srcaddr` block supports:
 The `dstaddr` block supports:
 
 * `name` - Address name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

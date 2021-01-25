@@ -86,6 +86,7 @@ The following arguments are supported:
 * `rsso_flush_ip_session` - Enable/disable flushing user IP sessions on RADIUS accounting Stop messages.
 * `rsso_ep_one_ip_only` - Enable/disable the replacement of old IP addresses with new ones for the same endpoint on RADIUS accounting Start messages.
 * `accounting_server` - Additional accounting servers. The structure of `accounting_server` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `class` block supports:
 
@@ -99,7 +100,7 @@ The `accounting_server` block supports:
 * `secret` - Secret key.
 * `port` - RADIUS accounting port number.
 * `source_ip` - Source IP address for communications to the RADIUS server.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

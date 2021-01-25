@@ -87,6 +87,7 @@ The following arguments are supported:
 * `user_groups` - User groups. The structure of `user_groups` block is documented below.
 * `on_net_addr` - Addresses for on-net detection. The structure of `on_net_addr` block is documented below.
 * `replacemsg_override_group` - Select an endpoint control replacement message override group from available options.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `forticlient_winmac_settings` block supports:
 
@@ -221,7 +222,7 @@ The `user_groups` block supports:
 The `on_net_addr` block supports:
 
 * `name` - Address object from available options.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

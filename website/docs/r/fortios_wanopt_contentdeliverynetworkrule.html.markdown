@@ -44,6 +44,7 @@ The following arguments are supported:
 * `text_response_vcache` - Enable/disable caching of text responses.
 * `updateserver` - Enable/disable update server.
 * `rules` - WAN optimization content delivery network rule entries. The structure of `rules` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `host_domain_name_suffix` block supports:
 
@@ -88,7 +89,7 @@ The `content_id` block supports:
 * `end_skip` - Number of characters in URL to skip after end-str has been matched.
 * `end_direction` - Search direction from end-str match.
 * `range_str` - Name of content ID within the start string and end string.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

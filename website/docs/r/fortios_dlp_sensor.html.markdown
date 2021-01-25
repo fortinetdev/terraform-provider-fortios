@@ -38,6 +38,7 @@ The following arguments are supported:
 * `options` - Configure DLP options.
 * `full_archive_proto` - Protocols to always content archive.
 * `summary_proto` - Protocols to always log summary.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `filter` block supports:
 
@@ -60,7 +61,7 @@ The `filter` block supports:
 The `fp_sensitivity` block supports:
 
 * `name` - Select a DLP sensitivity.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

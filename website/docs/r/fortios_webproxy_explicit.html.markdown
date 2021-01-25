@@ -41,6 +41,7 @@ The following arguments are supported:
 * `pac_policy` - PAC policies. The structure of `pac_policy` block is documented below.
 * `ssl_algorithm` - Relative strength of encryption algorithms accepted in HTTPS deep scan: high, medium, or low.
 * `trace_auth_no_rsp` - Enable/disable logging timed-out authentication requests.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `pac_policy` block supports:
 
@@ -64,7 +65,7 @@ The `srcaddr6` block supports:
 The `dstaddr` block supports:
 
 * `name` - Address name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

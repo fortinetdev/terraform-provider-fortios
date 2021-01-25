@@ -53,6 +53,7 @@ The following arguments are supported:
 * `color` - Color of icon on the GUI.
 * `tagging` - Config object tagging. The structure of `tagging` block is documented below.
 * `allow_routing` - Enable/disable use of this group in the static route configuration.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `member` block supports:
 
@@ -71,7 +72,7 @@ The `tagging` block supports:
 The `tags` block supports:
 
 * `name` - Tag name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

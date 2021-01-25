@@ -67,11 +67,12 @@ The following arguments are supported:
 * `update_cascade_interface` - Enable/disable update cascade interface.
 * `update_static_route` - Enable/disable updating the static route.
 * `status` - Enable/disable this link monitor.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `server` block supports:
 
 * `address` - Server address.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

@@ -58,6 +58,7 @@ The following arguments are supported:
 * `max_accounts` - Maximum number of guest accounts that can be created for this group (0 means unlimited).
 * `multiple_guest_add` - Enable/disable addition of multiple guests.
 * `guest` - Guest User. The structure of `guest` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `member` block supports:
 
@@ -80,7 +81,7 @@ The `guest` block supports:
 * `email` - Email.
 * `expiration` - Expire time.
 * `comment` - Comment.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

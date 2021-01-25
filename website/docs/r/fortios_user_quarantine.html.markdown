@@ -25,6 +25,7 @@ The following arguments are supported:
 * `quarantine` - Enable/disable quarantine.
 * `traffic_policy` - Traffic policy for quarantined MACs.
 * `targets` - Quarantine entry to hold multiple MACs. The structure of `targets` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `targets` block supports:
 
@@ -38,7 +39,7 @@ The `macs` block supports:
 * `entry_id` - FSW entry id for the quarantine MAC.
 * `description` - Description for the quarantine MAC.
 * `parent` - Parent entry name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

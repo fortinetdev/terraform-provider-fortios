@@ -78,6 +78,7 @@ The following arguments are supported:
 * `redistribute` - Redistribute configuration. The structure of `redistribute` block is documented below.
 * `passive_interface` - Passive interface configuration. The structure of `passive_interface` block is documented below.
 * `summary_address` - IPv6 address summary configuration. The structure of `summary_address` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `area` block supports:
 
@@ -151,7 +152,7 @@ The `summary_address` block supports:
 * `prefix6` - IPv6 prefix.
 * `advertise` - Enable/disable advertise status.
 * `tag` - Tag value.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

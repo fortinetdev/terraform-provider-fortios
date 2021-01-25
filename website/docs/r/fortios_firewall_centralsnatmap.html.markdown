@@ -55,6 +55,7 @@ The following arguments are supported:
 * `nat_port` - Translated port or port range (0 to 65535).
 * `nat` - (Required) Enable/disable source NAT.
 * `comments` - Comment.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `orig_addr` block supports:
 
@@ -75,7 +76,7 @@ The `dstintf` block supports:
 The `nat_ippool` block supports:
 
 * `name` - IP pool name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

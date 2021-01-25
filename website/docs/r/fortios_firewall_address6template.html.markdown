@@ -41,6 +41,7 @@ The following arguments are supported:
 * `ip6` - (Required) IPv6 address prefix.
 * `subnet_segment_count` - (Required) Number of IPv6 subnet segments.
 * `subnet_segment` - IPv6 subnet segments. The structure of `subnet_segment` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `subnet_segment` block supports:
 
@@ -54,7 +55,7 @@ The `values` block supports:
 
 * `name` - Subnet segment value name.
 * `value` - Subnet segment value.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

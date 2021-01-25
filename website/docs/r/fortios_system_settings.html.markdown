@@ -140,11 +140,12 @@ The following arguments are supported:
 * `ike_quick_crash_detect` - Enable/disable IKE quick crash detection (RFC 6290).
 * `ike_dn_format` - Configure IKE ASN.1 Distinguished Name format conventions.
 * `block_land_attack` - Enable/disable blocking of land attacks.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `gui_default_policy_columns` block supports:
 
 * `name` - Select column name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

@@ -68,6 +68,7 @@ The following arguments are supported:
 * `timeout_timer` - Timeout timer.
 * `garbage_timer` - Garbage timer.
 * `interface` - RIPng interface configuration. The structure of `interface` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `distance` block supports:
 
@@ -126,7 +127,7 @@ The `interface` block supports:
 * `split_horizon_status` - Enable/disable split horizon.
 * `split_horizon` - Enable/disable split horizon.
 * `flags` - Flags.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

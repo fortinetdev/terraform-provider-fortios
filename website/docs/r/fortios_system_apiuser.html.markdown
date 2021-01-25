@@ -109,6 +109,7 @@ The following arguments are supported:
 * `peer_auth` - Enable/disable peer authentication.
 * `peer_group` - Peer group name.
 * `trusthost` - Trusthost. The structure of `trusthost` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `vdom` block supports:
 
@@ -120,7 +121,7 @@ The `trusthost` block supports:
 * `type` - Trusthost type.
 * `ipv4_trusthost` - IPv4 trusted host address.
 * `ipv6_trusthost` - IPv6 trusted host address.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

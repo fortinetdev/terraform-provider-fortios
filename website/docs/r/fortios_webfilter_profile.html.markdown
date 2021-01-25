@@ -127,6 +127,7 @@ The following arguments are supported:
 * `web_ftgd_quota_usage` - Enable/disable logging daily quota usage.
 * `extended_log` - Enable/disable extended logging for web filtering.
 * `web_extended_all_action_log` - Enable/disable extended any filter action logging for web filtering.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `override` block supports:
 
@@ -212,7 +213,7 @@ The `quota` block supports:
 The `wisp_servers` block supports:
 
 * `name` - Server name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

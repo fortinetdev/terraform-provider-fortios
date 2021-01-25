@@ -33,6 +33,7 @@ The following arguments are supported:
 * `address_list` - Black address list and white address list. The structure of `address_list` block is documented below.
 * `url_access` - URL access list The structure of `url_access` block is documented below.
 * `comment` - Comment.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `signature` block supports:
 
@@ -255,7 +256,7 @@ The `access_pattern` block supports:
 * `pattern` - URL pattern.
 * `regex` - Enable/disable regular expression based pattern match.
 * `negate` - Enable/disable match negation.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

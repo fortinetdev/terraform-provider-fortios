@@ -24,13 +24,14 @@ The following arguments are supported:
 
 * `name` - 3GPP PLMN name.
 * `mcc_mnc_list` - Mobile Country Code and Mobile Network Code configuration. The structure of `mcc_mnc_list` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `mcc_mnc_list` block supports:
 
 * `id` - ID.
 * `mcc` - Mobile country code.
 * `mnc` - Mobile network code.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

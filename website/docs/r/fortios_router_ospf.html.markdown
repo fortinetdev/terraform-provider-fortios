@@ -108,6 +108,7 @@ The following arguments are supported:
 * `summary_address` - IP address summary configuration. The structure of `summary_address` block is documented below.
 * `distribute_list` - Distribute list configuration. The structure of `distribute_list` block is documented below.
 * `redistribute` - Redistribute configuration. The structure of `redistribute` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `area` block supports:
 
@@ -217,7 +218,7 @@ The `redistribute` block supports:
 * `routemap` - Route map name.
 * `metric_type` - Metric type.
 * `tag` - Tag value.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

@@ -22,6 +22,7 @@ The following arguments are supported:
 * `dstaddr` - (Required) Destination address name from available addresses. The structure of `dstaddr` block is documented below.
 * `service` - Service object from available options. The structure of `service` block is documented below.
 * `anomaly` - Anomaly name. The structure of `anomaly` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `srcaddr` block supports:
 
@@ -46,7 +47,7 @@ The `anomaly` block supports:
 * `quarantine_log` - Enable/disable quarantine logging.
 * `threshold` - Anomaly threshold. Number of detected instances per minute that triggers the anomaly action.
 * `thresholddefault` - Number of detected instances per minute which triggers action (1 - 2147483647, default = 1000). Note that each anomaly has a different threshold value assigned to it.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

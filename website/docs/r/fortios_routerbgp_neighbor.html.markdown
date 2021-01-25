@@ -104,13 +104,14 @@ The following arguments are supported:
 * `adv_additional_path6` - Number of IPv6 additional paths that can be advertised to this neighbor.
 * `password` - Password used in MD5 authentication.
 * `conditional_advertise` - Conditional advertisement. The structure of `conditional_advertise` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `conditional_advertise` block supports:
 
 * `advertise_routemap` - Name of advertising route map.
 * `condition_routemap` - Name of condition route map.
 * `condition_type` - Type of condition.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

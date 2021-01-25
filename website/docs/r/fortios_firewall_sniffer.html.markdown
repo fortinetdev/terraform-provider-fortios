@@ -64,6 +64,7 @@ The following arguments are supported:
 * `anomaly` - Configuration method to edit Denial of Service (DoS) anomaly settings. The structure of `anomaly` block is documented below.
 * `scan_botnet_connections` - Enable/disable scanning of connections to Botnet servers.
 * `max_packet_count` - Maximum packet count (1 - 1000000, default = 10000).
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `anomaly` block supports:
 
@@ -76,7 +77,7 @@ The `anomaly` block supports:
 * `quarantine_log` - Enable/disable quarantine logging.
 * `threshold` - Anomaly threshold. Number of detected instances per minute that triggers the anomaly action.
 * `thresholddefault` - Number of detected instances per minute which triggers action (1 - 2147483647, default = 1000). Note that each anomaly has a different threshold value assigned to it.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

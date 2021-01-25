@@ -31,6 +31,7 @@ The following arguments are supported:
 * `visibility` - Enable/disable visibility of the IPv6 multicast address on the GUI.
 * `color` - Color of icon on the GUI.
 * `tagging` - Config object tagging. The structure of `tagging` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `tagging` block supports:
 
@@ -41,7 +42,7 @@ The `tagging` block supports:
 The `tags` block supports:
 
 * `name` - Tag name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

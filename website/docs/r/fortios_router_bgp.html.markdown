@@ -149,6 +149,7 @@ The following arguments are supported:
 * `redistribute` - BGP IPv4 redistribute table. The structure of `redistribute` block is documented below.
 * `redistribute6` - BGP IPv6 redistribute table. The structure of `redistribute6` block is documented below.
 * `admin_distance` - Administrative distance modifications. The structure of `admin_distance` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `confederation_peers` block supports:
 
@@ -398,7 +399,7 @@ The `admin_distance` block supports:
 * `neighbour_prefix` - Neighbor address prefix.
 * `route_list` - Access list of routes to apply new distance to.
 * `distance` - Administrative distance to apply (1 - 255).
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

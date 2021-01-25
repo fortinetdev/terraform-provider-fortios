@@ -16,6 +16,7 @@ The following arguments are supported:
 
 * `fosid` - Internet Service application list ID.
 * `entry` - Protocol and port information in an Internet Service entry. The structure of `entry` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `entry` block supports:
 
@@ -24,7 +25,7 @@ The `entry` block supports:
 * `name` - Internet Service name.
 * `protocol` - Integer value for the protocol type as defined by IANA (0 - 255).
 * `port` - Integer value for ending TCP/UDP/SCTP destination port in range (0 to 65535). 0 means undefined.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

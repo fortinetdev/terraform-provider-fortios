@@ -30,6 +30,7 @@ The following arguments are supported:
 * `version` - Version.
 * `guid` - Globally unique ID.
 * `check_item_list` - Check item list. The structure of `check_item_list` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `check_item_list` block supports:
 
@@ -43,7 +44,7 @@ The `check_item_list` block supports:
 The `md5s` block supports:
 
 * `id` - Hex string of MD5 checksum.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

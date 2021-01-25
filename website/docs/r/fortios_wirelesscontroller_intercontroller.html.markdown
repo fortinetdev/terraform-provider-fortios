@@ -32,6 +32,7 @@ The following arguments are supported:
 * `fast_failover_max` - Maximum number of retransmissions for fast failover HA messages between peer wireless controllers (3 - 64, default = 10).
 * `fast_failover_wait` - Minimum wait time before an AP transitions from secondary controller to primary controller (10 - 86400 sec, default = 10).
 * `inter_controller_peer` - Fast failover peer wireless controller list. The structure of `inter_controller_peer` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `inter_controller_peer` block supports:
 
@@ -39,7 +40,7 @@ The `inter_controller_peer` block supports:
 * `peer_ip` - Peer wireless controller's IP address.
 * `peer_port` - Port used by the wireless controller's for inter-controller communications (1024 - 49150, default = 5246).
 * `peer_priority` - Peer wireless controller's priority (primary or secondary, default = primary).
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

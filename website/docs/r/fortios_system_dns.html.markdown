@@ -42,11 +42,12 @@ The following arguments are supported:
 * `dns_cache_ttl` - Duration in seconds that the DNS cache retains information.
 * `cache_notfound_responses` - Enable/disable response from the DNS server when a record is not in cache.
 * `source_ip` - IP address used by the DNS server as its source IP.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `domain` block supports:
 
 * `domain` - DNS search domain list separated by space (maximum 8 domains)
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

@@ -44,6 +44,7 @@ The following arguments are supported:
 * `custom_command` - Configuration method to edit FortiSwitch commands to be pushed to this FortiSwitch device upon rebooting the FortiGate switch controller or the FortiSwitch. The structure of `custom_command` block is documented below.
 * `igmp_snooping` - Configure FortiSwitch IGMP snooping global settings. The structure of `igmp_snooping` block is documented below.
 * `n802_1X_settings` - Configuration method to edit FortiSwitch 802.1X global settings. The structure of `n802_1X_settings` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `ports` block supports:
 
@@ -201,7 +202,7 @@ The `n802_1X_settings` block supports:
 * `link_down_auth` - Authentication state to set if a link is down.
 * `reauth_period` - Reauthentication time interval (1 - 1440 min, default = 60, 0 = disable).
 * `max_reauth_attempt` - Maximum number of authentication attempts (0 - 15, default = 3).
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

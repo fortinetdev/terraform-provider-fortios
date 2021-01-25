@@ -35,6 +35,7 @@ The following arguments are supported:
 * `comment` - Comment.
 * `default_class_id` - (Required) Default class ID to handle unclassified packets (including all local traffic).
 * `shaping_entries` - Define shaping entries of this shaping profile. The structure of `shaping_entries` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `shaping_entries` block supports:
 
@@ -43,7 +44,7 @@ The `shaping_entries` block supports:
 * `priority` - Priority.
 * `guaranteed_bandwidth_percentage` - Guaranteed bandwith in percentage.
 * `maximum_bandwidth_percentage` - Maximum bandwith in percentage.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

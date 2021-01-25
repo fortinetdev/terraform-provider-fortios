@@ -45,6 +45,7 @@ The following arguments are supported:
 * `utm` - Replacement message table entries. The structure of `utm` block is documented below.
 * `custom_message` - Replacement message table entries. The structure of `custom_message` block is documented below.
 * `icap` - Replacement message table entries. The structure of `icap` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `mail` block supports:
 
@@ -171,7 +172,7 @@ The `icap` block supports:
 * `buffer` - Message string.
 * `header` - Header flag.
 * `format` - Format flag.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

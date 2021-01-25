@@ -50,6 +50,7 @@ The following arguments are supported:
 * `multicast_routing` - Enable/disable IP multicast routing.
 * `pim_sm_global` - PIM sparse-mode global settings. The structure of `pim_sm_global` block is documented below.
 * `interface` - PIM interfaces. The structure of `interface` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `pim_sm_global` block supports:
 
@@ -124,7 +125,7 @@ The `igmp` block supports:
 * `query_interval` - Interval between queries to IGMP hosts (1 - 65535 sec, default = 125).
 * `query_timeout` - Timeout between queries before becoming querier for network (60 - 900, default = 255).
 * `router_alert_check` - Enable/disable require IGMP packets contain router alert option.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

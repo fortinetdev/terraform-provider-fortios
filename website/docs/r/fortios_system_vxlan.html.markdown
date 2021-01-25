@@ -37,6 +37,7 @@ The following arguments are supported:
 * `remote_ip6` - IPv6 IP address of the VXLAN interface on the device at the remote end of the VXLAN. The structure of `remote_ip6` block is documented below.
 * `dstport` - VXLAN destination port (1 - 65535, default = 4789).
 * `multicast_ttl` - VXLAN multicast TTL (1-255, default = 0).
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `remote_ip` block supports:
 
@@ -45,7 +46,7 @@ The `remote_ip` block supports:
 The `remote_ip6` block supports:
 
 * `ip6` - IPv6 address.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

@@ -31,6 +31,7 @@ The following arguments are supported:
 * `multicast_pmtu` - Enable/disable PMTU for IPv6 multicast.
 * `interface` - Protocol Independent Multicast (PIM) interfaces. The structure of `interface` block is documented below.
 * `pim_sm_global` - PIM sparse-mode global settings. The structure of `pim_sm_global` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `interface` block supports:
 
@@ -47,7 +48,7 @@ The `rp_address` block supports:
 
 * `id` - ID of the entry.
 * `ip6_address` - RP router IPv6 address.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

@@ -18,6 +18,7 @@ The following arguments are supported:
 * `name` - (Required) Name of table.
 * `comment` - Optional comments.
 * `entries` - Spam filter trusted IP addresses. The structure of `entries` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `entries` block supports:
 
@@ -26,7 +27,7 @@ The `entries` block supports:
 * `addr_type` - Type of address.
 * `ip4_subnet` - IPv4 network address or network address/subnet mask bits.
 * `ip6_subnet` - IPv6 network address/subnet mask bits.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

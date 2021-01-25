@@ -18,11 +18,12 @@ The following arguments are supported:
 * `member` - (Required) Interfaces belong to the virtual-wire-pair. The structure of `member` block is documented below.
 * `wildcard_vlan` - Enable/disable wildcard VLAN.
 * `vlan_filter` - Set VLAN filters.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `member` block supports:
 
 * `interface_name` - Interface name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

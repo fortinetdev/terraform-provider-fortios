@@ -30,11 +30,12 @@ The following arguments are supported:
 * `portal_addr` - Address (or FQDN) of the authentication portal.
 * `portal_addr6` - IPv6 address (or FQDN) of authentication portal.
 * `identity_based_route` - Name of the identity-based route that applies to this portal.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `groups` block supports:
 
 * `name` - Group name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

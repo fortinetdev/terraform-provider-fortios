@@ -16,12 +16,13 @@ The following arguments are supported:
 
 * `name` - (Required) Auto-Config FortiLink or ISL/ICL interface name.
 * `switch_binding` - Switch binding list. The structure of `switch_binding` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `switch_binding` block supports:
 
 * `switch_id` - Switch name.
 * `policy` - Custom auto-config policy.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

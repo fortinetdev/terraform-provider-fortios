@@ -30,13 +30,14 @@ The following arguments are supported:
 * `name` - (Required) Name.
 * `comments` - Comment.
 * `flows` - Multicast-flow entries. The structure of `flows` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `flows` block supports:
 
 * `id` - Flow ID.
 * `group_addr` - Multicast group IP address.
 * `source_addr` - Multicast source IP address.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

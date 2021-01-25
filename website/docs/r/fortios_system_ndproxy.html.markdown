@@ -24,11 +24,12 @@ The following arguments are supported:
 
 * `status` - Enable/disable neighbor discovery proxy.
 * `member` - Interfaces using the neighbor discovery proxy. The structure of `member` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `member` block supports:
 
 * `interface_name` - Interface name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

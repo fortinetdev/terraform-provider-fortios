@@ -115,6 +115,7 @@ The following arguments are supported:
 * `scan_botnet_connections` - Enable/disable scanning of connections to Botnet servers.
 * `comments` - Optional comments.
 * `redirect_url` - Redirect URL for further explicit web proxy processing.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `srcintf` block supports:
 
@@ -163,7 +164,7 @@ The `groups` block supports:
 The `users` block supports:
 
 * `name` - Group name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

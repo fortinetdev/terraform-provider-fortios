@@ -30,6 +30,7 @@ The following arguments are supported:
 * `log` - SSH logging options.
 * `default_command_log` - Enable/disable logging unmatched shell commands.
 * `shell_commands` - SSH command filter. The structure of `shell_commands` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `shell_commands` block supports:
 
@@ -40,7 +41,7 @@ The `shell_commands` block supports:
 * `log` - Enable/disable logging.
 * `alert` - Enable/disable alert.
 * `severity` - Log severity.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

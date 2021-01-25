@@ -152,6 +152,7 @@ The following arguments are supported:
 * `monitor` - Name of the health check monitor to use when polling to determine a virtual server's connectivity status. The structure of `monitor` block is documented below.
 * `max_embryonic_connections` - Maximum number of incomplete connections.
 * `color` - Color of icon on the GUI.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `src_filter` block supports:
 
@@ -202,7 +203,7 @@ The `ssl_server_cipher_suites` block supports:
 The `monitor` block supports:
 
 * `name` - Health monitor name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

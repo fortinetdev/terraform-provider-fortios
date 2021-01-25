@@ -32,6 +32,7 @@ The following arguments are supported:
 * `dscp_wmm_vi` - DSCP mapping for video access (default = 32 40). The structure of `dscp_wmm_vi` block is documented below.
 * `dscp_wmm_be` - DSCP mapping for best effort access (default = 0 24). The structure of `dscp_wmm_be` block is documented below.
 * `dscp_wmm_bk` - DSCP mapping for background access (default = 8 16). The structure of `dscp_wmm_bk` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `dscp_wmm_vo` block supports:
 
@@ -48,7 +49,7 @@ The `dscp_wmm_be` block supports:
 The `dscp_wmm_bk` block supports:
 
 * `id` - DSCP WMM mapping numbers (0 - 63).
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

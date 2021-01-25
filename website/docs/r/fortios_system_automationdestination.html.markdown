@@ -28,11 +28,12 @@ The following arguments are supported:
 * `type` - Destination type.
 * `destination` - Destinations. The structure of `destination` block is documented below.
 * `ha_group_id` - Cluster group ID set for this destination (default = 0).
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `destination` block supports:
 
 * `name` - Destination.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

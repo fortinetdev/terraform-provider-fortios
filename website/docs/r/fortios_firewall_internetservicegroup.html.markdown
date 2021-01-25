@@ -49,11 +49,12 @@ The following arguments are supported:
 * `comment` - Comment.
 * `direction` - How this service may be used (source, destination or both).
 * `member` - Internet Service group member. The structure of `member` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `member` block supports:
 
 * `id` - Internet Service ID.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

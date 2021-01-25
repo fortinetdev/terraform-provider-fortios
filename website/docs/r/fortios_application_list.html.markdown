@@ -45,6 +45,7 @@ The following arguments are supported:
 * `deep_app_inspection` - Enable/disable deep application inspection.
 * `options` - Basic application protocol signatures allowed by default.
 * `entries` - Application list entries. The structure of `entries` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `entries` block supports:
 
@@ -94,7 +95,7 @@ The `parameters` block supports:
 
 * `id` - Parameter ID.
 * `value` - Parameter value.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

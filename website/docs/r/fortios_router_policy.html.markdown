@@ -59,6 +59,7 @@ The following arguments are supported:
 * `tos_mask` - Type of service evaluated bits.
 * `status` - Enable/disable this policy route.
 * `comments` - Optional comments.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `input_device` block supports:
 
@@ -79,7 +80,7 @@ The `dst` block supports:
 The `dstaddr` block supports:
 
 * `name` - Address/group name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

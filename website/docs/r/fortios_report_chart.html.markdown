@@ -58,6 +58,7 @@ The following arguments are supported:
 * `legend` - Enable/Disable Legend area.
 * `legend_font_size` - Font size of legend area.
 * `column` - Table column definition. The structure of `column` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `drill_down_charts` block supports:
 
@@ -120,7 +121,7 @@ The `mapping` block supports:
 * `value1` - Value 1.
 * `value2` - Value 2.
 * `displayname` - Display name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

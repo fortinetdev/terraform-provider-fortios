@@ -36,6 +36,7 @@ The following arguments are supported:
 * `hb_lost_threshold` - Lost heartbeat threshold (1 - 10).
 * `slave_add_ike_routes` - Enable/disable IKE route announcement on the backup unit.
 * `session_sync_filter` - Add one or more filters if you only want to synchronize some sessions. Use the filter to configure the types of sessions to synchronize. The structure of `session_sync_filter` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `syncvd` block supports:
 
@@ -60,7 +61,7 @@ The `custom_service` block supports:
 * `id` - Custom service ID.
 * `src_port_range` - Custom service source port range.
 * `dst_port_range` - Custom service destination port range.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

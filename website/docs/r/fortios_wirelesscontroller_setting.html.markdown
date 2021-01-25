@@ -21,13 +21,14 @@ The following arguments are supported:
 * `phishing_ssid_detect` - Enable/disable phishing SSID detection.
 * `fake_ssid_action` - Actions taken for detected fake SSID.
 * `offending_ssid` - Configure offending SSID. The structure of `offending_ssid` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `offending_ssid` block supports:
 
 * `id` - ID.
 * `ssid_pattern` - Define offending SSID pattern (case insensitive), eg: word, word*, *word, wo*rd.
 * `action` - Actions taken for detected offending SSID.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

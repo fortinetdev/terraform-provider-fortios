@@ -24,13 +24,14 @@ The following arguments are supported:
 
 * `name` - Friendly name ID.
 * `value_list` - Name list. The structure of `value_list` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `value_list` block supports:
 
 * `index` - Value index.
 * `lang` - Language code.
 * `value` - Friendly name value.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

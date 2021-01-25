@@ -34,12 +34,13 @@ The following arguments are supported:
 * `always_synthesize_aaaa_record` - Enable/disable AAAA record synthesis (default = enable).
 * `generate_ipv6_fragment_header` - Enable/disable IPv6 fragment header generation.
 * `nat46_force_ipv4_packet_forwarding` - Enable/disable mandatory IPv4 packet forwarding in nat46.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `secondary_prefix` block supports:
 
 * `name` - NAT64 prefix name.
 * `nat64_prefix` - NAT64 prefix.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

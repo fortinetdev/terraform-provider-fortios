@@ -80,6 +80,7 @@ The following arguments are supported:
 * `vci_string` - One or more VCI strings in quotes separated by spaces. The structure of `vci_string` block is documented below.
 * `exclude_range` - Exclude one or more ranges of IP addresses from being assigned to clients. The structure of `exclude_range` block is documented below.
 * `reserved_address` - Options for the DHCP server to assign IP settings to specific MAC addresses. The structure of `reserved_address` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `ip_range` block supports:
 
@@ -119,7 +120,7 @@ The `reserved_address` block supports:
 * `circuit_id` - Option 82 circuit-ID of the client that will get the reserved IP address.
 * `remote_id` - Option 82 remote-ID of the client that will get the reserved IP address.
 * `description` - Description.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

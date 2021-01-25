@@ -95,6 +95,7 @@ The following arguments are supported:
 * `gui_global_menu_favorites` - Favorite GUI menu IDs for the global VDOM. The structure of `gui_global_menu_favorites` block is documented below.
 * `gui_vdom_menu_favorites` - Favorite GUI menu IDs for VDOMs. The structure of `gui_vdom_menu_favorites` block is documented below.
 * `gui_new_feature_acknowledge` - Acknowledgement of new features. The structure of `gui_new_feature_acknowledge` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `vdom` block supports:
 
@@ -155,7 +156,7 @@ The `gui_vdom_menu_favorites` block supports:
 The `gui_new_feature_acknowledge` block supports:
 
 * `id` - Select menu ID.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

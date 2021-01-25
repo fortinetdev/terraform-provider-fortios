@@ -34,6 +34,7 @@ The following arguments are supported:
 * `tagging` - Config object tagging. The structure of `tagging` block is documented below.
 * `type` - Device type.
 * `category` - Device category.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `tagging` block supports:
 
@@ -44,7 +45,7 @@ The `tagging` block supports:
 The `tags` block supports:
 
 * `name` - Tag name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

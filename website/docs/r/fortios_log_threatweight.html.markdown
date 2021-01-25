@@ -146,6 +146,7 @@ The following arguments are supported:
 * `web` - Web filtering threat weight settings. The structure of `web` block is documented below.
 * `geolocation` - Geolocation-based threat weight settings. The structure of `geolocation` block is documented below.
 * `application` - Application-control threat weight settings. The structure of `application` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `level` block supports:
 
@@ -193,7 +194,7 @@ The `application` block supports:
 * `id` - Entry ID.
 * `category` - Application category.
 * `level` - Threat weight score for Application events.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

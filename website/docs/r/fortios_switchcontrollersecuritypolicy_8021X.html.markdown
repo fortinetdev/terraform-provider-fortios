@@ -53,11 +53,12 @@ The following arguments are supported:
 * `framevid_apply` - Enable/disable the capability to apply the EAP/MAB frame VLAN to the port native VLAN.
 * `radius_timeout_overwrite` - Enable to override the global RADIUS session timeout.
 * `policy_type` - Policy type.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `user_group` block supports:
 
 * `name` - Group name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

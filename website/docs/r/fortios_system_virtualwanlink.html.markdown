@@ -31,6 +31,7 @@ The following arguments are supported:
 * `members` - Physical FortiGate interfaces added to the virtual-wan-link. The structure of `members` block is documented below.
 * `health_check` - SD-WAN status checking or health checking. Identify a server on the Internet and determine how SD-WAN verifies that the FortiGate can communicate with it. The structure of `health_check` block is documented below.
 * `service` - Create SD-WAN rules or priority rules (also called services) to control how sessions are distributed to physical interfaces in the SD-WAN. The structure of `service` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `fail_alert_interfaces` block supports:
 
@@ -202,7 +203,7 @@ The `sla` block supports:
 The `priority_members` block supports:
 
 * `seq_num` - Member sequence number.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

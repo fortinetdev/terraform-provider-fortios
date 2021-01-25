@@ -68,6 +68,7 @@ The following arguments are supported:
 * `private_key` - Private key of GCP service account.
 * `secret_token` - Secret token of Kubernetes service account.
 * `update_interval` - Dynamic object update interval (0 - 3600 sec, 0 means disabled, default = 60).
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `nic` block supports:
 
@@ -96,7 +97,7 @@ The `external_ip` block supports:
 The `route` block supports:
 
 * `name` - Route name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

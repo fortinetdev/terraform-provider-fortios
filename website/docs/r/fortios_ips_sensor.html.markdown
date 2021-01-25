@@ -22,6 +22,7 @@ The following arguments are supported:
 * `entries` - IPS sensor filter. The structure of `entries` block is documented below.
 * `filter` - IPS sensor filter. The structure of `filter` block is documented below.
 * `override` - IPS override rule. The structure of `override` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `entries` block supports:
 
@@ -89,7 +90,7 @@ The `exempt_ip` block supports:
 * `id` - Exempt IP ID.
 * `src_ip` - Source IP address and netmask.
 * `dst_ip` - Destination IP address and netmask.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

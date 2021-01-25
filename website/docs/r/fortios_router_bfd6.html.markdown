@@ -15,12 +15,13 @@ Configure IPv6 BFD.
 The following arguments are supported:
 
 * `neighbor` - Configure neighbor of IPv6 BFD. The structure of `neighbor` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `neighbor` block supports:
 
 * `ip6_address` - IPv6 address of the BFD neighbor.
 * `interface` - Interface to the BFD neighbor.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

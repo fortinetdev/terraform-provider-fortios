@@ -90,6 +90,7 @@ The following arguments are supported:
 * `diffserv_reverse` - Enable to change packet's reverse (reply) DiffServ values to the specified diffservcode-rev value.
 * `diffservcode_forward` - Change packet's DiffServ to this value.
 * `diffservcode_rev` - Change packet's reverse (reply) DiffServ to this value.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `srcaddr` block supports:
 
@@ -170,7 +171,7 @@ The `url_category` block supports:
 The `dstintf` block supports:
 
 * `name` - Interface name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

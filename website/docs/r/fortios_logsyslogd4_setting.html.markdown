@@ -41,13 +41,14 @@ The following arguments are supported:
 * `certificate` - Certificate used to communicate with Syslog server.
 * `custom_field_name` - Custom field name for CEF format logging. The structure of `custom_field_name` block is documented below.
 * `syslog_type` - Hidden setting index of Syslog.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `custom_field_name` block supports:
 
 * `id` - Entry ID.
 * `name` - Field name.
 * `custom` - Field custom name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

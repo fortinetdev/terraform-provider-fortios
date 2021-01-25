@@ -70,6 +70,7 @@ The following arguments are supported:
 * `app_category` - Application category ID list. The structure of `app_category` block is documented below.
 * `url_category` - URL category ID list. The structure of `url_category` block is documented below.
 * `app_group` - Application group names. The structure of `app_group` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `srcintf` block supports:
 
@@ -130,7 +131,7 @@ The `url_category` block supports:
 The `app_group` block supports:
 
 * `name` - Application group names.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

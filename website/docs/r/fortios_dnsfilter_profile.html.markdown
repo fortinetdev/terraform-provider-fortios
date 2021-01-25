@@ -74,6 +74,7 @@ The following arguments are supported:
 * `safe_search` - Enable/disable Google, Bing, and YouTube safe search.
 * `youtube_restrict` - Set safe search for YouTube restriction level.
 * `external_ip_blocklist` - One or more external IP block lists. The structure of `external_ip_blocklist` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `domain_filter` block supports:
 
@@ -94,7 +95,7 @@ The `filters` block supports:
 The `external_ip_blocklist` block supports:
 
 * `name` - External domain block list name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

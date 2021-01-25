@@ -31,6 +31,7 @@ The following arguments are supported:
 * `one_arm_ips_urlfilter` - Enable/disable DNS resolver for one-arm IPS URL filter operation.
 * `ip_addr_block` - Enable/disable blocking URLs when the hostname appears as an IP address.
 * `entries` - URL filter entries. The structure of `entries` block is documented below.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `entries` block supports:
 
@@ -43,7 +44,7 @@ The `entries` block supports:
 * `web_proxy_profile` - Web proxy profile.
 * `referrer_host` - Referrer host name.
 * `dns_address_family` - Resolve IPv4 address, IPv6 address, or both from DNS server.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 

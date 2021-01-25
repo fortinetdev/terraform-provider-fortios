@@ -160,11 +160,12 @@ The following arguments are supported:
 * `name` - IPsec aggregate name.
 * `member` - (Required) Member tunnels of the aggregate. The structure of `member` block is documented below.
 * `algorithm` - Frame distribution algorithm.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `member` block supports:
 
 * `tunnel_name` - Tunnel name.
-* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
 
 ## Attribute Reference
 
