@@ -77,6 +77,8 @@ func (c *FortiSDKClient) CreateNetworkingInterfacePort(params *JSONNetworkingInt
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -85,8 +87,6 @@ func (c *FortiSDKClient) CreateNetworkingInterfacePort(params *JSONNetworkingInt
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
-
-	req.HTTPResponse.Body.Close()
 
 	err = fortiAPIErrorFormat(result, string(body))
 
@@ -129,6 +129,8 @@ func (c *FortiSDKClient) UpdateNetworkingInterfacePort(params *JSONNetworkingInt
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -137,8 +139,6 @@ func (c *FortiSDKClient) UpdateNetworkingInterfacePort(params *JSONNetworkingInt
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
-
-	req.HTTPResponse.Body.Close()
 
 	err = fortiAPIErrorFormat(result, string(body))
 
@@ -171,6 +171,8 @@ func (c *FortiSDKClient) DeleteNetworkingInterfacePort(mkey string) (err error) 
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -179,8 +181,6 @@ func (c *FortiSDKClient) DeleteNetworkingInterfacePort(mkey string) (err error) 
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
-
-	req.HTTPResponse.Body.Close()
 
 	err = fortiAPIErrorFormat(result, string(body))
 
@@ -207,6 +207,8 @@ func (c *FortiSDKClient) ReadNetworkingInterfacePort(mkey string) (output *JSONN
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -216,13 +218,11 @@ func (c *FortiSDKClient) ReadNetworkingInterfacePort(mkey string) (output *JSONN
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
 
-	req.HTTPResponse.Body.Close()
-
 	if fortiAPIHttpStatus404Checking(result) == true {
 		output = nil
 		return
 	}
-	
+
 	err = fortiAPIErrorFormat(result, string(body))
 
 	if err == nil {

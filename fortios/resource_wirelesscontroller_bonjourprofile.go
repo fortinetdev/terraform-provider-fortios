@@ -2,7 +2,7 @@
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
 // Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu),
-// Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
+// Xing Li (@lix-fortinet), Yue Wang (@yuew-ftnt), Yuffie Zhu (@yuffiezhu)
 
 // Description: Configure Bonjour profiles. Bonjour is Apple's zero configuration networking protocol. Bonjour profiles allow APs and FortiAPs to connnect to networks using Bonjour.
 

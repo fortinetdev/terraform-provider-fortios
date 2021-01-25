@@ -2,7 +2,7 @@
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
 // Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu),
-// Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
+// Xing Li (@lix-fortinet), Yue Wang (@yuew-ftnt), Yuffie Zhu (@yuffiezhu)
 
 // Description: Create a DLP fingerprint database by allowing the FortiGate to access a file server containing files from which to create fingerprints.
 

@@ -53,6 +53,8 @@ func (c *FortiSDKClient) CreateSystemLicenseVM(params *JSONSystemLicenseVM) (out
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -61,8 +63,6 @@ func (c *FortiSDKClient) CreateSystemLicenseVM(params *JSONSystemLicenseVM) (out
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
-
-	req.HTTPResponse.Body.Close()
 
 	err = fortiAPIErrorFormat(result, string(body))
 
@@ -96,12 +96,12 @@ func (c *FortiSDKClient) UpdateSystemLicenseVM(params *JSONSystemLicenseVM, mkey
 	// err = req.Send()
 
 	// body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	// req.HTTPResponse.Body.Close() //#
+
 	// log.Printf("FOS-fortios response: %s", string(body))
 
 	// var result map[string]interface{}
 	// json.Unmarshal([]byte(string(body)), &result)
-
-	// req.HTTPResponse.Body.Close()
 
 	// if result != nil {
 	// 	if result["vdom"] != nil {
@@ -141,6 +141,8 @@ func (c *FortiSDKClient) DeleteSystemLicenseVM(mkey string) (err error) {
 	// err = req.Send()
 
 	// body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	// req.HTTPResponse.Body.Close() //#
+
 	// log.Printf("FOS-fortios response: %s", string(body))
 
 	// var result map[string]interface{}

@@ -66,6 +66,8 @@ func (c *FortiSDKClient) CreateSystemAPIUserSetting(params *JSONSystemAPIUserSet
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -73,8 +75,6 @@ func (c *FortiSDKClient) CreateSystemAPIUserSetting(params *JSONSystemAPIUserSet
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
-
-	req.HTTPResponse.Body.Close()
 
 	err = fortiAPIErrorFormat(result, string(body))
 
@@ -115,6 +115,8 @@ func (c *FortiSDKClient) UpdateSystemAPIUserSetting(params *JSONSystemAPIUserSet
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -123,8 +125,6 @@ func (c *FortiSDKClient) UpdateSystemAPIUserSetting(params *JSONSystemAPIUserSet
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
-
-	req.HTTPResponse.Body.Close()
 
 	err = fortiAPIErrorFormat(result, string(body))
 
@@ -157,6 +157,8 @@ func (c *FortiSDKClient) DeleteSystemAPIUserSetting(mkey string) (err error) {
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -165,8 +167,6 @@ func (c *FortiSDKClient) DeleteSystemAPIUserSetting(mkey string) (err error) {
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
-
-	req.HTTPResponse.Body.Close()
 
 	err = fortiAPIErrorFormat(result, string(body))
 
@@ -193,6 +193,8 @@ func (c *FortiSDKClient) ReadSystemAPIUserSetting(mkey string) (output *JSONSyst
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -202,13 +204,11 @@ func (c *FortiSDKClient) ReadSystemAPIUserSetting(mkey string) (output *JSONSyst
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
 
-	req.HTTPResponse.Body.Close()
-
 	if fortiAPIHttpStatus404Checking(result) == true {
 		output = nil
 		return
 	}
-	
+
 	err = fortiAPIErrorFormat(result, string(body))
 
 	if err == nil {

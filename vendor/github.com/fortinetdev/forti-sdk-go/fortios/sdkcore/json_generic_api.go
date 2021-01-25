@@ -52,6 +52,8 @@ func (c *FortiSDKClient) CreateJSONGenericAPI(params *JSONJSONGenericAPI) (res s
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %v", err)
 		return
@@ -59,7 +61,6 @@ func (c *FortiSDKClient) CreateJSONGenericAPI(params *JSONJSONGenericAPI) (res s
 	log.Printf("FOS-fortios response1: %s", string(body))
 
 	res = string(body)
-	req.HTTPResponse.Body.Close()
 
 	return
 }
@@ -89,13 +90,13 @@ func (c *FortiSDKClient) GenericGroupRead(path, specialparams string) (mapTmp []
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %v", err)
 		return
 	}
 	log.Printf("FOS-fortios reading response: %s", string(body))
-
-	req.HTTPResponse.Body.Close()
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)

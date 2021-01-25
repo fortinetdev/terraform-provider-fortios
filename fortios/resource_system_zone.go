@@ -2,7 +2,7 @@
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
 // Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu),
-// Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
+// Xing Li (@lix-fortinet), Yue Wang (@yuew-ftnt), Yuffie Zhu (@yuffiezhu)
 
 // Description: Configure zones to group two or more interfaces. When a zone is created you can configure policies for the zone instead of individual interfaces in the zone.
 

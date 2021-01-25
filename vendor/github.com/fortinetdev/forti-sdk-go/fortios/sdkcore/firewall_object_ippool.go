@@ -58,6 +58,8 @@ func (c *FortiSDKClient) CreateFirewallObjectIPPool(params *JSONFirewallObjectIP
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -65,8 +67,6 @@ func (c *FortiSDKClient) CreateFirewallObjectIPPool(params *JSONFirewallObjectIP
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
-
-	req.HTTPResponse.Body.Close()
 
 	err = fortiAPIErrorFormat(result, string(body))
 
@@ -107,6 +107,8 @@ func (c *FortiSDKClient) UpdateFirewallObjectIPPool(params *JSONFirewallObjectIP
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -115,8 +117,6 @@ func (c *FortiSDKClient) UpdateFirewallObjectIPPool(params *JSONFirewallObjectIP
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
-
-	req.HTTPResponse.Body.Close()
 
 	err = fortiAPIErrorFormat(result, string(body))
 
@@ -149,6 +149,8 @@ func (c *FortiSDKClient) DeleteFirewallObjectIPPool(mkey string) (err error) {
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -157,8 +159,6 @@ func (c *FortiSDKClient) DeleteFirewallObjectIPPool(mkey string) (err error) {
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
-
-	req.HTTPResponse.Body.Close()
 
 	err = fortiAPIErrorFormat(result, string(body))
 
@@ -185,6 +185,8 @@ func (c *FortiSDKClient) ReadFirewallObjectIPPool(mkey string) (output *JSONFire
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -194,13 +196,11 @@ func (c *FortiSDKClient) ReadFirewallObjectIPPool(mkey string) (output *JSONFire
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
 
-	req.HTTPResponse.Body.Close()
-
 	if fortiAPIHttpStatus404Checking(result) == true {
 		output = nil
 		return
 	}
-	
+
 	err = fortiAPIErrorFormat(result, string(body))
 
 	if err == nil {

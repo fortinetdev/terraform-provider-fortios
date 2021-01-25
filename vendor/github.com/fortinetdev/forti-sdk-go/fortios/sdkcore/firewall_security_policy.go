@@ -102,6 +102,8 @@ func (c *FortiSDKClient) CreateFirewallSecurityPolicy(params *JSONFirewallSecuri
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -110,8 +112,6 @@ func (c *FortiSDKClient) CreateFirewallSecurityPolicy(params *JSONFirewallSecuri
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
 
-	req.HTTPResponse.Body.Close()
-	
 	err = fortiAPIErrorFormat(result, string(body))
 
 	if err == nil {
@@ -150,6 +150,8 @@ func (c *FortiSDKClient) UpdateFirewallSecurityPolicy(params *JSONFirewallSecuri
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -158,8 +160,6 @@ func (c *FortiSDKClient) UpdateFirewallSecurityPolicy(params *JSONFirewallSecuri
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
-
-	req.HTTPResponse.Body.Close()
 
 	err = fortiAPIErrorFormat(result, string(body))
 
@@ -192,6 +192,8 @@ func (c *FortiSDKClient) DeleteFirewallSecurityPolicy(mkey string) (err error) {
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -200,8 +202,6 @@ func (c *FortiSDKClient) DeleteFirewallSecurityPolicy(mkey string) (err error) {
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
-
-	req.HTTPResponse.Body.Close()
 
 	err = fortiAPIErrorFormat(result, string(body))
 
@@ -228,6 +228,8 @@ func (c *FortiSDKClient) ReadFirewallSecurityPolicy(mkey string) (output *JSONFi
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -237,13 +239,11 @@ func (c *FortiSDKClient) ReadFirewallSecurityPolicy(mkey string) (output *JSONFi
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
 
-	req.HTTPResponse.Body.Close()
-
 	if fortiAPIHttpStatus404Checking(result) == true {
 		output = nil
 		return
 	}
-	
+
 	err = fortiAPIErrorFormat(result, string(body))
 
 	if err == nil {

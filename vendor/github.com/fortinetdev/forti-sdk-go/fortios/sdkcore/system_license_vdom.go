@@ -62,6 +62,8 @@ func (c *FortiSDKClient) CreateSystemLicenseVDOM(params *JSONSystemLicenseVDOM) 
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -69,8 +71,6 @@ func (c *FortiSDKClient) CreateSystemLicenseVDOM(params *JSONSystemLicenseVDOM) 
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
-
-	req.HTTPResponse.Body.Close()
 
 	err = fortiAPIErrorFormat(result, string(body))
 
@@ -107,12 +107,12 @@ func (c *FortiSDKClient) UpdateSystemLicenseVDOM(params *JSONSystemLicenseVDOM, 
 	// err = req.Send()
 
 	// body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	// req.HTTPResponse.Body.Close() //#
+
 	// log.Printf("FOS-fortios response: %s", string(body))
 
 	// var result map[string]interface{}
 	// json.Unmarshal([]byte(string(body)), &result)
-
-	// req.HTTPResponse.Body.Close()
 
 	// if result != nil {
 	// 	if result["vdom"] != nil {
@@ -154,12 +154,12 @@ func (c *FortiSDKClient) DeleteSystemLicenseVDOM(mkey string) (err error) {
 	// err = req.Send()
 
 	// body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	// req.HTTPResponse.Body.Close() //#
+
 	// log.Printf("FOS-fortios response: %s", string(body))
 
 	// var result map[string]interface{}
 	// json.Unmarshal([]byte(string(body)), &result)
-
-	// req.HTTPResponse.Body.Close()
 
 	// if result != nil {
 	// 	if result["status"] == nil {
@@ -199,6 +199,8 @@ func (c *FortiSDKClient) ReadSystemLicenseVDOM(mkey string) (output *JSONSystemL
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -208,8 +210,6 @@ func (c *FortiSDKClient) ReadSystemLicenseVDOM(mkey string) (output *JSONSystemL
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
-
-	req.HTTPResponse.Body.Close()
 
 	err = fortiAPIErrorFormat(result, string(body))
 

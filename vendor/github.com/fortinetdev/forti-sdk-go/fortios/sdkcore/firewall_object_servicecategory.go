@@ -59,6 +59,8 @@ func (c *FortiSDKClient) CreateFirewallObjectServiceCategory(params *JSONFirewal
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -69,8 +71,6 @@ func (c *FortiSDKClient) CreateFirewallObjectServiceCategory(params *JSONFirewal
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
-
-	req.HTTPResponse.Body.Close()
 
 	if result != nil && result["status"] != "success" {
 		if result["error"] == -5 {
@@ -117,6 +117,8 @@ func (c *FortiSDKClient) UpdateFirewallObjectServiceCategory(params *JSONFirewal
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -126,8 +128,6 @@ func (c *FortiSDKClient) UpdateFirewallObjectServiceCategory(params *JSONFirewal
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
-
-	req.HTTPResponse.Body.Close()
 
 	err = fortiAPIErrorFormat(result, string(body))
 
@@ -159,6 +159,8 @@ func (c *FortiSDKClient) DeleteFirewallObjectServiceCategory(mkey string) (err e
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -169,8 +171,6 @@ func (c *FortiSDKClient) DeleteFirewallObjectServiceCategory(mkey string) (err e
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
-
-	req.HTTPResponse.Body.Close()
 
 	err = fortiAPIErrorFormat(result, string(body))
 
@@ -199,6 +199,8 @@ func (c *FortiSDKClient) ReadFirewallObjectServiceCategory(mkey string) (output 
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -209,8 +211,6 @@ func (c *FortiSDKClient) ReadFirewallObjectServiceCategory(mkey string) (output 
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
-
-	req.HTTPResponse.Body.Close()
 
 	if fortiAPIHttpStatus404Checking(result) == true {
 		output = nil

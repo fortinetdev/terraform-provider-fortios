@@ -64,6 +64,8 @@ func (c *FortiSDKClient) CreateNetworkingRouteStatic(params *JSONNetworkingRoute
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -72,8 +74,6 @@ func (c *FortiSDKClient) CreateNetworkingRouteStatic(params *JSONNetworkingRoute
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
 
-	req.HTTPResponse.Body.Close()
-		
 	err = fortiAPIErrorFormat(result, string(body))
 
 	if err == nil {
@@ -112,6 +112,8 @@ func (c *FortiSDKClient) UpdateNetworkingRouteStatic(params *JSONNetworkingRoute
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -120,8 +122,6 @@ func (c *FortiSDKClient) UpdateNetworkingRouteStatic(params *JSONNetworkingRoute
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
-
-	req.HTTPResponse.Body.Close()
 
 	err = fortiAPIErrorFormat(result, string(body))
 
@@ -154,6 +154,8 @@ func (c *FortiSDKClient) DeleteNetworkingRouteStatic(mkey string) (err error) {
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -162,8 +164,6 @@ func (c *FortiSDKClient) DeleteNetworkingRouteStatic(mkey string) (err error) {
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
-
-	req.HTTPResponse.Body.Close()
 
 	err = fortiAPIErrorFormat(result, string(body))
 
@@ -190,6 +190,8 @@ func (c *FortiSDKClient) ReadNetworkingRouteStatic(mkey string) (output *JSONNet
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -199,13 +201,11 @@ func (c *FortiSDKClient) ReadNetworkingRouteStatic(mkey string) (output *JSONNet
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
 
-	req.HTTPResponse.Body.Close()
-
 	if fortiAPIHttpStatus404Checking(result) == true {
 		output = nil
 		return
 	}
-	
+
 	err = fortiAPIErrorFormat(result, string(body))
 
 	if err == nil {

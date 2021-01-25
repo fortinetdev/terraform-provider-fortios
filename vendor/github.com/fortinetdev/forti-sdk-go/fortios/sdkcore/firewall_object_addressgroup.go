@@ -55,6 +55,8 @@ func (c *FortiSDKClient) CreateFirewallObjectAddressGroup(params *JSONFirewallOb
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -62,8 +64,6 @@ func (c *FortiSDKClient) CreateFirewallObjectAddressGroup(params *JSONFirewallOb
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
-
-	req.HTTPResponse.Body.Close()
 
 	err = fortiAPIErrorFormat(result, string(body))
 
@@ -104,6 +104,8 @@ func (c *FortiSDKClient) UpdateFirewallObjectAddressGroup(params *JSONFirewallOb
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -112,8 +114,6 @@ func (c *FortiSDKClient) UpdateFirewallObjectAddressGroup(params *JSONFirewallOb
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
-
-	req.HTTPResponse.Body.Close()
 
 	err = fortiAPIErrorFormat(result, string(body))
 
@@ -146,6 +146,8 @@ func (c *FortiSDKClient) DeleteFirewallObjectAddressGroup(mkey string) (err erro
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -154,8 +156,6 @@ func (c *FortiSDKClient) DeleteFirewallObjectAddressGroup(mkey string) (err erro
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
-
-	req.HTTPResponse.Body.Close()
 
 	err = fortiAPIErrorFormat(result, string(body))
 
@@ -182,6 +182,8 @@ func (c *FortiSDKClient) ReadFirewallObjectAddressGroup(mkey string) (output *JS
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -191,13 +193,11 @@ func (c *FortiSDKClient) ReadFirewallObjectAddressGroup(mkey string) (output *JS
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
 
-	req.HTTPResponse.Body.Close()
-
 	if fortiAPIHttpStatus404Checking(result) == true {
 		output = nil
 		return
 	}
-	
+
 	err = fortiAPIErrorFormat(result, string(body))
 
 	if err == nil {

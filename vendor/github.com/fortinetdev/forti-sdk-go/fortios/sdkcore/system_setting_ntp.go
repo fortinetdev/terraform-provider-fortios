@@ -56,11 +56,10 @@ func (c *FortiSDKClient) CreateSystemSettingNTP(params *JSONSystemSettingNTP) (o
 	// err = req.Send()
 
 	// body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	// req.HTTPResponse.Body.Close() //#
 
 	// var result map[string]interface{}
 	// json.Unmarshal([]byte(string(body)), &result)
-
-	// req.HTTPResponse.Body.Close()
 
 	// if result != nil {
 	// 	if result["vdom"] != nil {
@@ -119,6 +118,8 @@ func (c *FortiSDKClient) UpdateSystemSettingNTP(params *JSONSystemSettingNTP, mk
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -127,8 +128,6 @@ func (c *FortiSDKClient) UpdateSystemSettingNTP(params *JSONSystemSettingNTP, mk
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
-
-	req.HTTPResponse.Body.Close()
 
 	err = fortiAPIErrorFormat(result, string(body))
 
@@ -155,12 +154,12 @@ func (c *FortiSDKClient) DeleteSystemSettingNTP(mkey string) (err error) {
 	// err = req.Send()
 
 	// body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	// req.HTTPResponse.Body.Close() //#
+
 	// log.Printf("FOS-fortios response: %s", string(body))
 
 	// var result map[string]interface{}
 	// json.Unmarshal([]byte(string(body)), &result)
-
-	// req.HTTPResponse.Body.Close()
 
 	// if result != nil {
 	// 	if result["status"] == nil {
@@ -200,6 +199,8 @@ func (c *FortiSDKClient) ReadSystemSettingNTP(mkey string) (output *JSONSystemSe
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -209,13 +210,11 @@ func (c *FortiSDKClient) ReadSystemSettingNTP(mkey string) (output *JSONSystemSe
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
 
-	req.HTTPResponse.Body.Close()
-
 	if fortiAPIHttpStatus404Checking(result) == true {
 		output = nil
 		return
 	}
-	
+
 	err = fortiAPIErrorFormat(result, string(body))
 
 	if err == nil {

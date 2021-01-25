@@ -57,6 +57,8 @@ func (c *FortiSDKClient) CreateSystemVdomSetting(params *JSONSystemVdomSetting) 
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -64,8 +66,6 @@ func (c *FortiSDKClient) CreateSystemVdomSetting(params *JSONSystemVdomSetting) 
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
-
-	req.HTTPResponse.Body.Close()
 
 	err = fortiAPIErrorFormat(result, string(body))
 
@@ -106,6 +106,8 @@ func (c *FortiSDKClient) UpdateSystemVdomSetting(params *JSONSystemVdomSetting, 
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -114,8 +116,6 @@ func (c *FortiSDKClient) UpdateSystemVdomSetting(params *JSONSystemVdomSetting, 
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
-
-	req.HTTPResponse.Body.Close()
 
 	err = fortiAPIErrorFormat(result, string(body))
 
@@ -148,6 +148,8 @@ func (c *FortiSDKClient) DeleteSystemVdomSetting(mkey string) (err error) {
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -156,8 +158,6 @@ func (c *FortiSDKClient) DeleteSystemVdomSetting(mkey string) (err error) {
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
-
-	req.HTTPResponse.Body.Close()
 
 	err = fortiAPIErrorFormat(result, string(body))
 
@@ -184,6 +184,8 @@ func (c *FortiSDKClient) ReadSystemVdomSetting(mkey string) (output *JSONSystemV
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -193,13 +195,11 @@ func (c *FortiSDKClient) ReadSystemVdomSetting(mkey string) (output *JSONSystemV
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
 
-	req.HTTPResponse.Body.Close()
-
 	if fortiAPIHttpStatus404Checking(result) == true {
 		output = nil
 		return
 	}
-	
+
 	err = fortiAPIErrorFormat(result, string(body))
 
 	if err == nil {

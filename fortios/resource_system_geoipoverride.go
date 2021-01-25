@@ -2,7 +2,7 @@
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
 // Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu),
-// Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
+// Xing Li (@lix-fortinet), Yue Wang (@yuew-ftnt), Yuffie Zhu (@yuffiezhu)
 
 // Description: Configure geographical location mapping for IP address(es) to override mappings from FortiGuard.
 

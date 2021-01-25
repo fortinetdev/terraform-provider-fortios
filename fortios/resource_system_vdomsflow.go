@@ -2,7 +2,7 @@
 // Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
 // Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu),
-// Yuffie Zhu (@yuffiezhu), Yue Wang (@yuew-ftnt)
+// Xing Li (@lix-fortinet), Yue Wang (@yuew-ftnt), Yuffie Zhu (@yuffiezhu)
 
 // Description: Configure sFlow per VDOM to add or change the IP address and UDP port that FortiGate sFlow agents in this VDOM use to send sFlow datagrams to an sFlow collector.
 

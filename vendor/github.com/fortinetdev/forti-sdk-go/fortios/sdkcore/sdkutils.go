@@ -25,12 +25,12 @@ func createUpdate(c *FortiSDKClient, method string, path string, params *map[str
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %v", err)
 		return
 	}
-
-	req.HTTPResponse.Body.Close()
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -59,13 +59,13 @@ func delete(c *FortiSDKClient, method string, path string) (err error) {
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %v", err)
 		return
 	}
 	log.Printf("FOS-fortios response: %s", string(body))
-
-	req.HTTPResponse.Body.Close()
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
@@ -84,13 +84,13 @@ func read(c *FortiSDKClient, method string, path string, bcomplex bool) (mapTmp 
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %v", err)
 		return
 	}
 	log.Printf("FOS-fortios reading response: %s", string(body))
-
-	req.HTTPResponse.Body.Close()
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)

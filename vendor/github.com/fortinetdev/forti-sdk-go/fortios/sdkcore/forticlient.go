@@ -78,12 +78,17 @@ func (c *FortiSDKClient) GetDeviceVersion() (version string, err error) {
 	err = req.Send()
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
+	if err != nil || body == nil {
+		err = fmt.Errorf("cannot get response body %s", err)
+		return "", err
+	}
+
 	log.Printf("FOS-fortios reading response: %s", string(body))
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
-
-	req.HTTPResponse.Body.Close()
 
 	if result != nil {
 		if result["status"] == nil {

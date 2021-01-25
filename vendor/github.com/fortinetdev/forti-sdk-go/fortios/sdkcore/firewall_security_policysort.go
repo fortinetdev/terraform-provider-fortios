@@ -28,6 +28,8 @@ func getPolicyList(c *FortiSDKClient) (idlist []policySort, err error) {
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -36,8 +38,6 @@ func getPolicyList(c *FortiSDKClient) (idlist []policySort, err error) {
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
-
-	req.HTTPResponse.Body.Close()
 
 	if fortiAPIHttpStatus404Checking(result) == true {
 		return
@@ -118,6 +118,8 @@ func moveAfter(idbefore, idafter int, c *FortiSDKClient) (err error) {
 	}
 
 	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+
 	if err != nil || body == nil {
 		err = fmt.Errorf("cannot get response body %s", err)
 		return
@@ -126,8 +128,6 @@ func moveAfter(idbefore, idafter int, c *FortiSDKClient) (err error) {
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
-
-	req.HTTPResponse.Body.Close()
 
 	err = fortiAPIErrorFormat(result, string(body))
 	return
