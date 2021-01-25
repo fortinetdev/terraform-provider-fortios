@@ -1,5 +1,76 @@
-## 1.8.0 (Unreleased)
+## 1.9.0 (Unreleased)
 
+## 1.8.0 (Jan 25, 2021)
+
+IMPROVEMENTS:
+
+* Support dynamic_sort_subtable for for_each + toset #132
+* Filter doc for datasource list
+
+BUG FIXES:
+
+* Clear fortios_vpnssl_settings sub tables when terraform destroy #133
+
+FEATURES:
+
+* **New Data Source:** `fortios_system_interfacelist`
+* **New Data Source:** `fortios_system_interface`
+* **New Data Source:** `fortios_system_global`
+* **New Data Source:** `fortios_routerbgp_neighborlist`
+* **New Data Source:** `fortios_routerbgp_neighbor`
+* **New Data Source:** `fortios_router_staticlist`
+* **New Data Source:** `fortios_router_static6list`
+* **New Data Source:** `fortios_router_static6`
+* **New Data Source:** `fortios_router_static`
+* **New Data Source:** `fortios_router_setting`
+* **New Data Source:** `fortios_router_routemaplist`
+* **New Data Source:** `fortios_router_routemap`
+* **New Data Source:** `fortios_router_ripng`
+* **New Data Source:** `fortios_router_rip`
+* **New Data Source:** `fortios_router_prefixlistlist`
+* **New Data Source:** `fortios_router_prefixlist6list`
+* **New Data Source:** `fortios_router_prefixlist6`
+* **New Data Source:** `fortios_router_prefixlist`
+* **New Data Source:** `fortios_router_policylist`
+* **New Data Source:** `fortios_router_policy6list`
+* **New Data Source:** `fortios_router_policy6`
+* **New Data Source:** `fortios_router_policy`
+* **New Data Source:** `fortios_router_ospf6`
+* **New Data Source:** `fortios_router_ospf`
+* **New Data Source:** `fortios_router_multicastflowlist`
+* **New Data Source:** `fortios_router_multicastflow`
+* **New Data Source:** `fortios_router_multicast6`
+* **New Data Source:** `fortios_router_multicast`
+* **New Data Source:** `fortios_router_keychainlist`
+* **New Data Source:** `fortios_router_keychain`
+* **New Data Source:** `fortios_router_isis`
+* **New Data Source:** `fortios_router_communitylistlist`
+* **New Data Source:** `fortios_router_communitylist`
+* **New Data Source:** `fortios_router_bgp`
+* **New Data Source:** `fortios_router_bfd6`
+* **New Data Source:** `fortios_router_bfd`
+* **New Data Source:** `fortios_router_authpathlist`
+* **New Data Source:** `fortios_router_authpath`
+* **New Data Source:** `fortios_router_aspathlistlist`
+* **New Data Source:** `fortios_router_aspathlist`
+* **New Data Source:** `fortios_router_accesslistlist`
+* **New Data Source:** `fortios_router_accesslist6list`
+* **New Data Source:** `fortios_router_accesslist6`
+* **New Data Source:** `fortios_router_accesslist`
+* **New Data Source:** `fortios_firewall_policylist`
+* **New Data Source:** `fortios_firewall_policy6list`
+* **New Data Source:** `fortios_firewall_policy64list`
+* **New Data Source:** `fortios_firewall_policy64`
+* **New Data Source:** `fortios_firewall_policy6`
+* **New Data Source:** `fortios_firewall_policy`
+* **New Data Source:** `fortios_firewall_addrgrplist`
+* **New Data Source:** `fortios_firewall_addrgrp6list`
+* **New Data Source:** `fortios_firewall_addrgrp6`
+* **New Data Source:** `fortios_firewall_addrgrp`
+* **New Data Source:** `fortios_firewall_addresslist`
+* **New Data Source:** `fortios_firewall_address6list`
+* **New Data Source:** `fortios_firewall_address6`
+* **New Data Source:** `fortios_firewall_address`
 
 ## 1.7.0 (Jan 8, 2021)
 
