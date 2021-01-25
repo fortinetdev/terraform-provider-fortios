@@ -78,3 +78,38 @@ func (c *FortiSDKClient) DeleteJSONGenericAPI(mkey string) (err error) {
 func (c *FortiSDKClient) ReadJSONGenericAPI(mkey string) (output *JSONJSONGenericAPI, err error) {
 	return
 }
+
+// GenericGroupRead API operation for FortiOS, Read Generic Group
+func (c *FortiSDKClient) GenericGroupRead(path, specialparams string) (mapTmp []interface{}, err error) {
+	req := c.NewRequest("GET", path, nil, nil)
+	err = req.SendWithSpecialParams(specialparams)
+	if err != nil || req.HTTPResponse == nil {
+		err = fmt.Errorf("cannot send request %v", err)
+		return
+	}
+
+	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	if err != nil || body == nil {
+		err = fmt.Errorf("cannot get response body %v", err)
+		return
+	}
+	log.Printf("FOS-fortios reading response: %s", string(body))
+
+	req.HTTPResponse.Body.Close()
+
+	var result map[string]interface{}
+	json.Unmarshal([]byte(string(body)), &result)
+
+	if fortiAPIHttpStatus404Checking(result) == true {
+		mapTmp = nil
+		return
+	}
+
+	err = fortiAPIErrorFormat(result, string(body))
+
+	if err == nil {
+		mapTmp = result["results"].([]interface{})
+	}
+
+	return
+}
