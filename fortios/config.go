@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net"
 	"os"
+	"sort"
 	"strconv"
 	"strings"
 
@@ -21,6 +22,45 @@ func validateConvIPMask2CIDR(oNewIP, oOldIP string) string {
 		}
 	}
 	return oOldIP
+}
+
+func fortiStringValue(t interface{}) string {
+	if v, ok := t.(string); ok {
+		return v
+	} else {
+		return ""
+	}
+}
+
+func fortiIntValue(t interface{}) int {
+	if v, ok := t.(float64); ok {
+		return int(v)
+	} else {
+		return 0
+	}
+}
+
+func escapeFilter(filter string) string {
+	filter = strings.ReplaceAll(filter, "_", "-")
+	filter = strings.ReplaceAll(filter, "fosid", "id")
+	filter = strings.ReplaceAll(filter, "&", "&filter=")
+	filter = strings.ReplaceAll(filter, ".", "\\.")
+	filter = strings.ReplaceAll(filter, "\\", "\\\\")
+	filter = "filter=" + filter
+	return filter
+}
+
+func dynamic_sort_subtable(result []map[string]interface{}, fieldname string, d *schema.ResourceData) {
+	if v, ok := d.GetOk("dynamic_sort_subtable"); ok {
+		if v.(string) == "true" {
+			sort.Slice(result, func(i, j int) bool {
+				v1 := fmt.Sprintf("%v", result[i][fieldname])
+				v2 := fmt.Sprintf("%v", result[j][fieldname])
+
+				return v1 < v2
+			})
+		}
+	}
 }
 
 func fortiAPIPatch(t interface{}) bool {
