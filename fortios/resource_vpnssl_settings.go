@@ -498,7 +498,7 @@ func resourceVpnSslSettingsUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectVpnSslSettings(d)
+	obj, err := getObjectVpnSslSettings(d, false)
 	if err != nil {
 		return fmt.Errorf("Error updating VpnSslSettings resource while getting object: %v", err)
 	}
@@ -520,13 +520,18 @@ func resourceVpnSslSettingsUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceVpnSslSettingsDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteVpnSslSettings(mkey)
+	obj, err := getObjectVpnSslSettings(d, true)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting VpnSslSettings resource: %v", err)
+		return fmt.Errorf("Error updating VpnSslSettings resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateVpnSslSettings(obj, mkey)
+	if err != nil {
+		return fmt.Errorf("Error clearing VpnSslSettings resource: %v", err)
 	}
 
 	d.SetId("")
@@ -2309,7 +2314,7 @@ func expandVpnSslSettingsTunnelUserSessionTimeout(d *schema.ResourceData, v inte
 	return v, nil
 }
 
-func getObjectVpnSslSettings(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectVpnSslSettings(d *schema.ResourceData, bemptysontable bool) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("reqclientcert"); ok {
@@ -2510,21 +2515,29 @@ func getObjectVpnSslSettings(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("tunnel_ip_pools"); ok {
-		t, err := expandVpnSslSettingsTunnelIpPools(d, v, "tunnel_ip_pools")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["tunnel-ip-pools"] = t
+	if bemptysontable {
+		obj["tunnel-ip-pools"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("tunnel_ip_pools"); ok {
+			t, err := expandVpnSslSettingsTunnelIpPools(d, v, "tunnel_ip_pools")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["tunnel-ip-pools"] = t
+			}
 		}
 	}
 
-	if v, ok := d.GetOk("tunnel_ipv6_pools"); ok {
-		t, err := expandVpnSslSettingsTunnelIpv6Pools(d, v, "tunnel_ipv6_pools")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["tunnel-ipv6-pools"] = t
+	if bemptysontable {
+		obj["tunnel-ipv6-pools"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("tunnel_ipv6_pools"); ok {
+			t, err := expandVpnSslSettingsTunnelIpv6Pools(d, v, "tunnel_ipv6_pools")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["tunnel-ipv6-pools"] = t
+			}
 		}
 	}
 
@@ -2699,21 +2712,29 @@ func getObjectVpnSslSettings(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("source_interface"); ok {
-		t, err := expandVpnSslSettingsSourceInterface(d, v, "source_interface")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["source-interface"] = t
+	if bemptysontable {
+		obj["source-interface"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("source_interface"); ok {
+			t, err := expandVpnSslSettingsSourceInterface(d, v, "source_interface")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source-interface"] = t
+			}
 		}
 	}
 
-	if v, ok := d.GetOk("source_address"); ok {
-		t, err := expandVpnSslSettingsSourceAddress(d, v, "source_address")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["source-address"] = t
+	if bemptysontable {
+		obj["source-address"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("source_address"); ok {
+			t, err := expandVpnSslSettingsSourceAddress(d, v, "source_address")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source-address"] = t
+			}
 		}
 	}
 
@@ -2726,12 +2747,16 @@ func getObjectVpnSslSettings(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("source_address6"); ok {
-		t, err := expandVpnSslSettingsSourceAddress6(d, v, "source_address6")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["source-address6"] = t
+	if bemptysontable {
+		obj["source-address6"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("source_address6"); ok {
+			t, err := expandVpnSslSettingsSourceAddress6(d, v, "source_address6")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["source-address6"] = t
+			}
 		}
 	}
 
@@ -2753,12 +2778,16 @@ func getObjectVpnSslSettings(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
-	if v, ok := d.GetOk("authentication_rule"); ok {
-		t, err := expandVpnSslSettingsAuthenticationRule(d, v, "authentication_rule")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["authentication-rule"] = t
+	if bemptysontable {
+		obj["authentication-rule"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("authentication_rule"); ok {
+			t, err := expandVpnSslSettingsAuthenticationRule(d, v, "authentication_rule")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["authentication-rule"] = t
+			}
 		}
 	}
 
