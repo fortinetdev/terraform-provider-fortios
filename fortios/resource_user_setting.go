@@ -154,7 +154,7 @@ func resourceUserSettingUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectUserSetting(d)
+	obj, err := getObjectUserSetting(d, false)
 	if err != nil {
 		return fmt.Errorf("Error updating UserSetting resource while getting object: %v", err)
 	}
@@ -176,13 +176,18 @@ func resourceUserSettingUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceUserSettingDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteUserSetting(mkey)
+	obj, err := getObjectUserSetting(d, true)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting UserSetting resource: %v", err)
+		return fmt.Errorf("Error updating UserSetting resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateUserSetting(obj, mkey)
+	if err != nil {
+		return fmt.Errorf("Error clearing UserSetting resource: %v", err)
 	}
 
 	d.SetId("")
@@ -570,7 +575,7 @@ func expandUserSettingAuthPortsPort(d *schema.ResourceData, v interface{}, pre s
 	return v, nil
 }
 
-func getObjectUserSetting(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectUserSetting(d *schema.ResourceData, bemptysontable bool) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("auth_type"); ok {
@@ -717,12 +722,16 @@ func getObjectUserSetting(d *schema.ResourceData) (*map[string]interface{}, erro
 		}
 	}
 
-	if v, ok := d.GetOk("auth_ports"); ok {
-		t, err := expandUserSettingAuthPorts(d, v, "auth_ports")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["auth-ports"] = t
+	if bemptysontable {
+		obj["auth-ports"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("auth_ports"); ok {
+			t, err := expandUserSettingAuthPorts(d, v, "auth_ports")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["auth-ports"] = t
+			}
 		}
 	}
 

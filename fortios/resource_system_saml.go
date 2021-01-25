@@ -220,7 +220,7 @@ func resourceSystemSamlUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemSaml(d)
+	obj, err := getObjectSystemSaml(d, false)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSaml resource while getting object: %v", err)
 	}
@@ -242,13 +242,18 @@ func resourceSystemSamlUpdate(d *schema.ResourceData, m interface{}) error {
 
 func resourceSystemSamlDelete(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemSaml(mkey)
+	obj, err := getObjectSystemSaml(d, true)
+
 	if err != nil {
-		return fmt.Errorf("Error deleting SystemSaml resource: %v", err)
+		return fmt.Errorf("Error updating SystemSaml resource while getting object: %v", err)
+	}
+
+	_, err = c.UpdateSystemSaml(obj, mkey)
+	if err != nil {
+		return fmt.Errorf("Error clearing SystemSaml resource: %v", err)
 	}
 
 	d.SetId("")
@@ -859,7 +864,7 @@ func expandSystemSamlServiceProvidersAssertionAttributesType(d *schema.ResourceD
 	return v, nil
 }
 
-func getObjectSystemSaml(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemSaml(d *schema.ResourceData, bemptysontable bool) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
@@ -1006,12 +1011,16 @@ func getObjectSystemSaml(d *schema.ResourceData) (*map[string]interface{}, error
 		}
 	}
 
-	if v, ok := d.GetOk("service_providers"); ok {
-		t, err := expandSystemSamlServiceProviders(d, v, "service_providers")
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["service-providers"] = t
+	if bemptysontable {
+		obj["service-providers"] = make([]struct{}, 0)
+	} else {
+		if v, ok := d.GetOk("service_providers"); ok {
+			t, err := expandSystemSamlServiceProviders(d, v, "service_providers")
+			if err != nil {
+				return &obj, err
+			} else if t != nil {
+				obj["service-providers"] = t
+			}
 		}
 	}
 
