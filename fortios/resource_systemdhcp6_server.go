@@ -168,6 +168,11 @@ func resourceSystemDhcp6Server() *schema.Resource {
 					},
 				},
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -373,6 +378,7 @@ func flattenSystemDhcp6ServerPrefixRange(v interface{}, d *schema.ResourceData, 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -431,6 +437,7 @@ func flattenSystemDhcp6ServerIpRange(v interface{}, d *schema.ResourceData, pre 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 

@@ -91,6 +91,7 @@ resource "fortios_router_bgp" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `as` - (Required) Router AS number, valid from 1 to 4294967295, 0 to disable BGP.
@@ -397,7 +398,7 @@ The `admin_distance` block supports:
 * `neighbour_prefix` - Neighbor address prefix.
 * `route_list` - Access list of routes to apply new distance to.
 * `distance` - Administrative distance to apply (1 - 255).
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

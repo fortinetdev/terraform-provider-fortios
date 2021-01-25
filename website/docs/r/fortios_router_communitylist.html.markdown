@@ -26,6 +26,7 @@ resource "fortios_router_communitylist" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - (Required) Community list name.
@@ -38,7 +39,7 @@ The `rule` block supports:
 * `action` - Permit or deny route-based operations, based on the route's COMMUNITY attribute.
 * `regexp` - Ordered list of COMMUNITY attributes as a regular expression.
 * `match` - Community specifications for matching a reserved community.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

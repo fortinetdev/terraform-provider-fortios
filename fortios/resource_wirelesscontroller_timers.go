@@ -126,6 +126,11 @@ func resourceWirelessControllerTimers() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -252,6 +257,7 @@ func flattenWirelessControllerTimersDarrpTime(v interface{}, d *schema.ResourceD
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "time", d)
 	return result
 }
 

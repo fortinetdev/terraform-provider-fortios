@@ -22,6 +22,7 @@ resource "fortios_sshfilter_profile" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - SSH filter profile name.
@@ -39,7 +40,7 @@ The `shell_commands` block supports:
 * `log` - Enable/disable logging.
 * `alert` - Enable/disable alert.
 * `severity` - Log severity.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

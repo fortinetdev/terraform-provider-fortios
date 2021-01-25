@@ -64,6 +64,11 @@ func resourceFirewallServiceGroup() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -190,6 +195,7 @@ func flattenFirewallServiceGroupMember(v interface{}, d *schema.ResourceData, pr
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

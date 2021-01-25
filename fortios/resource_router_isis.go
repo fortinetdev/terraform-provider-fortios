@@ -537,6 +537,11 @@ func resourceRouterIsis() *schema.Resource {
 					},
 				},
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -785,6 +790,7 @@ func flattenRouterIsisIsisNet(v interface{}, d *schema.ResourceData, pre string)
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -978,6 +984,7 @@ func flattenRouterIsisIsisInterface(v interface{}, d *schema.ResourceData, pre s
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1140,6 +1147,7 @@ func flattenRouterIsisSummaryAddress(v interface{}, d *schema.ResourceData, pre 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1201,6 +1209,7 @@ func flattenRouterIsisSummaryAddress6(v interface{}, d *schema.ResourceData, pre
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1270,6 +1279,7 @@ func flattenRouterIsisRedistribute(v interface{}, d *schema.ResourceData, pre st
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "protocol", d)
 	return result
 }
 
@@ -1351,6 +1361,7 @@ func flattenRouterIsisRedistribute6(v interface{}, d *schema.ResourceData, pre s
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "protocol", d)
 	return result
 }
 

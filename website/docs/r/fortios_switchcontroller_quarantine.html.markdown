@@ -11,6 +11,7 @@ Configure FortiSwitch quarantine support.
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `quarantine` - Enable/disable quarantine.
@@ -26,7 +27,7 @@ The `targets` block supports:
 The `tag` block supports:
 
 * `tags` - Tag string(eg. string1 string2 string3).
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

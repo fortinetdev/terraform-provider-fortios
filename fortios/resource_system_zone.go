@@ -89,6 +89,11 @@ func resourceSystemZone() *schema.Resource {
 					},
 				},
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -225,6 +230,7 @@ func flattenSystemZoneTagging(v interface{}, d *schema.ResourceData, pre string)
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -305,6 +311,7 @@ func flattenSystemZoneInterface(v interface{}, d *schema.ResourceData, pre strin
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "interface_name", d)
 	return result
 }
 

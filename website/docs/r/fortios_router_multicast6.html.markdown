@@ -24,6 +24,7 @@ resource "fortios_router_multicast6" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `multicast_routing` - Enable/disable IPv6 multicast routing.
@@ -46,7 +47,7 @@ The `rp_address` block supports:
 
 * `id` - ID of the entry.
 * `ip6_address` - RP router IPv6 address.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

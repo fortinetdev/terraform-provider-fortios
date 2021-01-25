@@ -891,6 +891,11 @@ func resourceWafProfile() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 1023),
 				Optional:     true,
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -2573,6 +2578,7 @@ func flattenWafProfileUrlAccess(v interface{}, d *schema.ResourceData, pre strin
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 

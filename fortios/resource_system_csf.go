@@ -144,6 +144,11 @@ func resourceSystemCsf() *schema.Resource {
 					},
 				},
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -293,6 +298,7 @@ func flattenSystemCsfTrustedList(v interface{}, d *schema.ResourceData, pre stri
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "serial", d)
 	return result
 }
 
@@ -365,6 +371,7 @@ func flattenSystemCsfFabricDevice(v interface{}, d *schema.ResourceData, pre str
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

@@ -23,6 +23,7 @@ resource "fortios_firewallipmacbinding_table" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `seq_num` - Entry number.

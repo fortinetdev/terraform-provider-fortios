@@ -11,6 +11,7 @@ Configure CAPWAP timers.
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `echo_interval` - Time between echo requests sent by the managed WTP, AP, or FortiAP (1 - 255 sec, default = 30).
@@ -32,7 +33,7 @@ The following arguments are supported:
 The `darrp_time` block supports:
 
 * `time` - Time.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

@@ -30,6 +30,7 @@ resource "fortios_logfortianalyzer3_overridefilter" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `severity` - Lowest severity level to log.

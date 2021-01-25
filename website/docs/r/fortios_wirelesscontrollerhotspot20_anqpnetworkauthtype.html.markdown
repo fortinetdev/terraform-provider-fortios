@@ -21,6 +21,7 @@ resource "fortios_wirelesscontrollerhotspot20_anqpnetworkauthtype" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - Authentication type name.

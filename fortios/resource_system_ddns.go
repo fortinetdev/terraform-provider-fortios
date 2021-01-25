@@ -138,6 +138,11 @@ func resourceSystemDdns() *schema.Resource {
 					},
 				},
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -328,6 +333,7 @@ func flattenSystemDdnsMonitorInterface(v interface{}, d *schema.ResourceData, pr
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "interface_name", d)
 	return result
 }
 

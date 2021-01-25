@@ -21,6 +21,7 @@ resource "fortios_system_replacemsgimage" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - Image name.

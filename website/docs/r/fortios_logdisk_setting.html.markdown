@@ -43,6 +43,7 @@ resource "fortios_logdisk_setting" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `status` - (Required) Enable/disable local disk logging.

@@ -57,6 +57,7 @@ resource "fortios_firewall_policy46" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `permit_any_host` - Enable/disable allowing any host.
@@ -96,7 +97,7 @@ The `service` block supports:
 The `poolname` block supports:
 
 * `name` - IP pool name.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

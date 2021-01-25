@@ -29,6 +29,7 @@ resource "fortios_system_passwordpolicy" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `status` - Enable/disable setting a password policy for locally defined administrator passwords and IPsec VPN pre-shared keys.

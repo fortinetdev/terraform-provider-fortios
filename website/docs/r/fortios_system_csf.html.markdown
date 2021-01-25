@@ -25,6 +25,7 @@ resource "fortios_system_csf" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `status` - (Required) Enable/disable Security Fabric.
@@ -53,7 +54,7 @@ The `fabric_device` block supports:
 * `device_type` - Device type.
 * `login` - Device login name.
 * `password` - Device login password.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

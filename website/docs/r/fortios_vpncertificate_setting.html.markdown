@@ -34,6 +34,7 @@ resource "fortios_vpncertificate_setting" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `ocsp_status` - Enable/disable receiving certificates using the OCSP.

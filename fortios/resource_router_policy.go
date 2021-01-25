@@ -182,6 +182,11 @@ func resourceRouterPolicy() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -308,6 +313,7 @@ func flattenRouterPolicyInputDevice(v interface{}, d *schema.ResourceData, pre s
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -344,6 +350,7 @@ func flattenRouterPolicySrc(v interface{}, d *schema.ResourceData, pre string) [
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "subnet", d)
 	return result
 }
 
@@ -380,6 +387,7 @@ func flattenRouterPolicySrcaddr(v interface{}, d *schema.ResourceData, pre strin
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -420,6 +428,7 @@ func flattenRouterPolicyDst(v interface{}, d *schema.ResourceData, pre string) [
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "subnet", d)
 	return result
 }
 
@@ -456,6 +465,7 @@ func flattenRouterPolicyDstaddr(v interface{}, d *schema.ResourceData, pre strin
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

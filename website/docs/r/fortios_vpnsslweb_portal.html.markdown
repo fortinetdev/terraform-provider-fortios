@@ -70,6 +70,7 @@ resource "fortios_vpnsslweb_portal" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - Portal name.
@@ -214,7 +215,7 @@ The `split_dns` block supports:
 * `dns_server2` - DNS server 2.
 * `ipv6_dns_server1` - IPv6 DNS server 1.
 * `ipv6_dns_server2` - IPv6 DNS server 2.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

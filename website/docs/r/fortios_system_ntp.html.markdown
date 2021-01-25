@@ -24,6 +24,7 @@ resource "fortios_system_ntp" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `ntpsync` - Enable/disable setting the FortiGate system time by synchronizing with an NTP Server.
@@ -47,7 +48,7 @@ The `ntpserver` block supports:
 The `interface` block supports:
 
 * `interface_name` - Interface name.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

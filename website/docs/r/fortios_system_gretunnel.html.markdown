@@ -34,6 +34,7 @@ resource "fortios_system_gretunnel" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - Tunnel name.

@@ -21,6 +21,7 @@ resource "fortios_router_authpath" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - (Required) Name of the entry.

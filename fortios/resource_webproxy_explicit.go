@@ -238,6 +238,11 @@ func resourceWebProxyExplicit() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -467,6 +472,7 @@ func flattenWebProxyExplicitPacPolicy(v interface{}, d *schema.ResourceData, pre
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "policyid", d)
 	return result
 }
 

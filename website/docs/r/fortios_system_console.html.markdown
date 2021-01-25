@@ -22,6 +22,7 @@ resource "fortios_system_console" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `mode` - Console mode.

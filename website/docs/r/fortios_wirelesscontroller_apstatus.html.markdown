@@ -11,6 +11,7 @@ Configure access point status (rogue | accepted | suppressed).
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `fosid` - AP ID.

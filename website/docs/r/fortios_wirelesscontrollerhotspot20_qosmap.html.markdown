@@ -11,6 +11,7 @@ Configure QoS map set.
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - QOS-MAP name.
@@ -29,7 +30,7 @@ The `dscp_range` block supports:
 * `up` - User priority.
 * `low` - DSCP low value.
 * `high` - DSCP high value.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

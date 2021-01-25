@@ -216,6 +216,11 @@ func resourceFirewallAddress() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -448,6 +453,7 @@ func flattenFirewallAddressList(v interface{}, d *schema.ResourceData, pre strin
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "ip", d)
 	return result
 }
 
@@ -494,6 +500,7 @@ func flattenFirewallAddressTagging(v interface{}, d *schema.ResourceData, pre st
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

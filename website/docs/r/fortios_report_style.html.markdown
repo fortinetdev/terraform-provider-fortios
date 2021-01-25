@@ -27,6 +27,7 @@ resource "fortios_report_style" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - Report style name.

@@ -641,6 +641,11 @@ func resourceRouterOspf() *schema.Resource {
 					},
 				},
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -901,6 +906,7 @@ func flattenRouterOspfArea(v interface{}, d *schema.ResourceData, pre string) []
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1355,6 +1361,7 @@ func flattenRouterOspfOspfInterface(v interface{}, d *schema.ResourceData, pre s
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1485,6 +1492,7 @@ func flattenRouterOspfNetwork(v interface{}, d *schema.ResourceData, pre string)
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1556,6 +1564,7 @@ func flattenRouterOspfNeighbor(v interface{}, d *schema.ResourceData, pre string
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1608,6 +1617,7 @@ func flattenRouterOspfPassiveInterface(v interface{}, d *schema.ResourceData, pr
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1659,6 +1669,7 @@ func flattenRouterOspfSummaryAddress(v interface{}, d *schema.ResourceData, pre 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1724,6 +1735,7 @@ func flattenRouterOspfDistributeList(v interface{}, d *schema.ResourceData, pre 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1793,6 +1805,7 @@ func flattenRouterOspfRedistribute(v interface{}, d *schema.ResourceData, pre st
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

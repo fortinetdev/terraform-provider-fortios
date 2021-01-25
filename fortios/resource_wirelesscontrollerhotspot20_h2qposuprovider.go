@@ -110,6 +110,11 @@ func resourceWirelessControllerHotspot20H2QpOsuProvider() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -246,6 +251,7 @@ func flattenWirelessControllerHotspot20H2QpOsuProviderFriendlyName(v interface{}
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "index", d)
 	return result
 }
 
@@ -312,6 +318,7 @@ func flattenWirelessControllerHotspot20H2QpOsuProviderServiceDescription(v inter
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "service_id", d)
 	return result
 }
 

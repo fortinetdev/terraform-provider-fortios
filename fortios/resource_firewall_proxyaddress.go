@@ -194,6 +194,11 @@ func resourceFirewallProxyAddress() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -348,6 +353,7 @@ func flattenFirewallProxyAddressCategory(v interface{}, d *schema.ResourceData, 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -419,6 +425,7 @@ func flattenFirewallProxyAddressHeaderGroup(v interface{}, d *schema.ResourceDat
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -481,6 +488,7 @@ func flattenFirewallProxyAddressTagging(v interface{}, d *schema.ResourceData, p
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

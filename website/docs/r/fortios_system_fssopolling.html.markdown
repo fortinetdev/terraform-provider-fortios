@@ -21,6 +21,7 @@ resource "fortios_system_fssopolling" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `status` - Enable/disable FSSO Polling Mode.

@@ -11,6 +11,7 @@ Configure packet redistribution.
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `fosid` - (Required) ID of the packet redistribution setting.

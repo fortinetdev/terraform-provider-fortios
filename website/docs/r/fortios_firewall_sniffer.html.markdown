@@ -34,6 +34,7 @@ resource "fortios_firewall_sniffer" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `fosid` - Sniffer ID.
@@ -75,7 +76,7 @@ The `anomaly` block supports:
 * `quarantine_log` - Enable/disable quarantine logging.
 * `threshold` - Anomaly threshold. Number of detected instances per minute that triggers the anomaly action.
 * `thresholddefault` - Number of detected instances per minute which triggers action (1 - 2147483647, default = 1000). Note that each anomaly has a different threshold value assigned to it.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

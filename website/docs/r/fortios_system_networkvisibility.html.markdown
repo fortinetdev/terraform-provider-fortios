@@ -24,6 +24,7 @@ resource "fortios_system_networkvisibility" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `destination_visibility` - Enable/disable logging of destination visibility.

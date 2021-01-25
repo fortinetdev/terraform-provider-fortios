@@ -25,6 +25,7 @@ resource "fortios_webproxy_forwardserver" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - Server name.

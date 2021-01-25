@@ -44,6 +44,7 @@ resource "fortios_router_isis" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `is_type` - IS type.
@@ -155,7 +156,7 @@ The `redistribute6` block supports:
 * `metric_type` - Metric type.
 * `level` - Level.
 * `routemap` - Route map name.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

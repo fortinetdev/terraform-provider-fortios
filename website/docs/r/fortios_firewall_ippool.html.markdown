@@ -29,6 +29,7 @@ resource "fortios_firewall_ippool" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - IP pool name.

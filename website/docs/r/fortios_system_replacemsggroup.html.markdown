@@ -21,6 +21,7 @@ resource "fortios_system_replacemsggroup" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - Group name.
@@ -170,7 +171,7 @@ The `icap` block supports:
 * `buffer` - Message string.
 * `header` - Header flag.
 * `format` - Format flag.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

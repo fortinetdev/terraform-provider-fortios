@@ -419,6 +419,11 @@ func resourceFirewallProxyPolicy() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 1023),
 				Optional:     true,
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -553,6 +558,7 @@ func flattenFirewallProxyPolicySrcintf(v interface{}, d *schema.ResourceData, pr
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -589,6 +595,7 @@ func flattenFirewallProxyPolicyDstintf(v interface{}, d *schema.ResourceData, pr
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -625,6 +632,7 @@ func flattenFirewallProxyPolicySrcaddr(v interface{}, d *schema.ResourceData, pr
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -661,6 +669,7 @@ func flattenFirewallProxyPolicyPoolname(v interface{}, d *schema.ResourceData, p
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -697,6 +706,7 @@ func flattenFirewallProxyPolicyDstaddr(v interface{}, d *schema.ResourceData, pr
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -741,6 +751,7 @@ func flattenFirewallProxyPolicyInternetServiceId(v interface{}, d *schema.Resour
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -777,6 +788,7 @@ func flattenFirewallProxyPolicyInternetServiceCustom(v interface{}, d *schema.Re
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -813,6 +825,7 @@ func flattenFirewallProxyPolicyService(v interface{}, d *schema.ResourceData, pr
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -881,6 +894,7 @@ func flattenFirewallProxyPolicySrcaddr6(v interface{}, d *schema.ResourceData, p
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -917,6 +931,7 @@ func flattenFirewallProxyPolicyDstaddr6(v interface{}, d *schema.ResourceData, p
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -953,6 +968,7 @@ func flattenFirewallProxyPolicyGroups(v interface{}, d *schema.ResourceData, pre
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -989,6 +1005,7 @@ func flattenFirewallProxyPolicyUsers(v interface{}, d *schema.ResourceData, pre 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

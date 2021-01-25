@@ -115,6 +115,7 @@ resource "fortios_vpnipsec_phase1interface" "trname2" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - IPsec remote gateway name.
@@ -264,7 +265,7 @@ The `ipv6_exclude_range` block supports:
 The `backup_gateway` block supports:
 
 * `address` - Address of backup gateway.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

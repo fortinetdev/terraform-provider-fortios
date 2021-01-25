@@ -55,6 +55,11 @@ func resourceSwitchControllerAutoConfigCustom() *schema.Resource {
 					},
 				},
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -186,6 +191,7 @@ func flattenSwitchControllerAutoConfigCustomSwitchBinding(v interface{}, d *sche
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "switch_id", d)
 	return result
 }
 

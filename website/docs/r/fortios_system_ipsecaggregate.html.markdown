@@ -154,6 +154,7 @@ resource "fortios_system_ipsecaggregate" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - IPsec aggregate name.
@@ -163,7 +164,7 @@ The following arguments are supported:
 The `member` block supports:
 
 * `tunnel_name` - Tunnel name.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

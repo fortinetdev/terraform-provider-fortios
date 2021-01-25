@@ -21,6 +21,7 @@ resource "fortios_webfilter_ftgdlocalrating" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `url` - URL to rate locally.

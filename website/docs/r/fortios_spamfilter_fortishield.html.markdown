@@ -21,6 +21,7 @@ resource "fortios_spamfilter_fortishield" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `spam_submit_srv` - Hostname of the spam submission server.

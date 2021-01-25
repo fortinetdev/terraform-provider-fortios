@@ -22,6 +22,7 @@ resource "fortios_firewall_dnstranslation" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `fosid` - ID.

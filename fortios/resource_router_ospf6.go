@@ -404,6 +404,11 @@ func resourceRouterOspf6() *schema.Resource {
 					},
 				},
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -601,6 +606,7 @@ func flattenRouterOspf6Area(v interface{}, d *schema.ResourceData, pre string) [
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -874,6 +880,7 @@ func flattenRouterOspf6Ospf6Interface(v interface{}, d *schema.ResourceData, pre
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1045,6 +1052,7 @@ func flattenRouterOspf6Redistribute(v interface{}, d *schema.ResourceData, pre s
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1097,6 +1105,7 @@ func flattenRouterOspf6PassiveInterface(v interface{}, d *schema.ResourceData, p
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1148,6 +1157,7 @@ func flattenRouterOspf6SummaryAddress(v interface{}, d *schema.ResourceData, pre
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 

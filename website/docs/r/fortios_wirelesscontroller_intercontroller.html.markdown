@@ -23,6 +23,7 @@ resource "fortios_wirelesscontroller_intercontroller" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `inter_controller_mode` - Configure inter-controller mode (disable, l2-roaming, 1+1, default = disable).
@@ -38,7 +39,7 @@ The `inter_controller_peer` block supports:
 * `peer_ip` - Peer wireless controller's IP address.
 * `peer_port` - Port used by the wireless controller's for inter-controller communications (1024 - 49150, default = 5246).
 * `peer_priority` - Peer wireless controller's priority (primary or secondary, default = primary).
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

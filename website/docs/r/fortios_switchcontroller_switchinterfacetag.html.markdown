@@ -19,6 +19,7 @@ resource "fortios_switchcontroller_switchinterfacetag" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - Tag name.

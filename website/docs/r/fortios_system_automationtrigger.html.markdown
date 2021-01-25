@@ -26,6 +26,7 @@ resource "fortios_system_automationtrigger" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - Name.

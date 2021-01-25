@@ -718,6 +718,11 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 					},
 				},
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -828,6 +833,7 @@ func flattenSystemVirtualWanLinkFailAlertInterfaces(v interface{}, d *schema.Res
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -929,6 +935,7 @@ func flattenSystemVirtualWanLinkMembers(v interface{}, d *schema.ResourceData, p
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "seq_num", d)
 	return result
 }
 
@@ -1151,6 +1158,7 @@ func flattenSystemVirtualWanLinkHealthCheck(v interface{}, d *schema.ResourceDat
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1606,6 +1614,7 @@ func flattenSystemVirtualWanLinkService(v interface{}, d *schema.ResourceData, p
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 

@@ -24,6 +24,7 @@ resource "fortios_application_group" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - Application group name.
@@ -39,7 +40,7 @@ The `application` block supports:
 The `category` block supports:
 
 * `id` - Category IDs.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

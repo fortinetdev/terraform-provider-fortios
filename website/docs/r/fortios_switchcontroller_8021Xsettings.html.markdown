@@ -21,6 +21,7 @@ resource "fortios_switchcontroller_8021Xsettings" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `link_down_auth` - Interface-reauthentication state to set if a link is down.

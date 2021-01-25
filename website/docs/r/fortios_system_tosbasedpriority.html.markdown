@@ -21,6 +21,7 @@ resource "fortios_system_tosbasedpriority" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `fosid` - Item ID.

@@ -11,6 +11,7 @@ Configure explicit Web proxy settings.
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `status` - Enable/disable the explicit Web proxy for HTTP and HTTPS session.
@@ -63,7 +64,7 @@ The `srcaddr6` block supports:
 The `dstaddr` block supports:
 
 * `name` - Address name.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

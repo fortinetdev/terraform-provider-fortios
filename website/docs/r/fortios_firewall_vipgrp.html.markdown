@@ -35,6 +35,7 @@ resource "fortios_firewall_vipgrp" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - VIP group name.
@@ -47,7 +48,7 @@ The following arguments are supported:
 The `member` block supports:
 
 * `name` - VIP name.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

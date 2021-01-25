@@ -24,6 +24,7 @@ resource "fortios_switchcontroller_lldpprofile" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - Profile name.
@@ -51,7 +52,7 @@ The `custom_tlvs` block supports:
 * `oui` - Organizationally unique identifier (OUI), a 3-byte hexadecimal number, for this TLV.
 * `subtype` - Organizationally defined subtype (0 - 255).
 * `information_string` - Organizationally defined information string (0 - 507 hexadecimal bytes).
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

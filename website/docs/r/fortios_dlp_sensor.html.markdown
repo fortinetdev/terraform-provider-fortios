@@ -24,6 +24,7 @@ resource "fortios_dlp_sensor" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - (Required) Name of the DLP sensor.
@@ -59,7 +60,7 @@ The `filter` block supports:
 The `fp_sensitivity` block supports:
 
 * `name` - Select a DLP sensitivity.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

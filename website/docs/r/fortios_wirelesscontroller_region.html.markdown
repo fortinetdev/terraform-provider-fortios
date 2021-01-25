@@ -11,6 +11,7 @@ Configure FortiAP regions (for floor plans and maps).
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - FortiAP region name.

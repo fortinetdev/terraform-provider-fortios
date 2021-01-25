@@ -35,6 +35,7 @@ resource "fortios_user_ldap" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - LDAP server entry name.

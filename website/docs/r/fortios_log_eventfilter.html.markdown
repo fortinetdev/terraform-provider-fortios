@@ -29,6 +29,7 @@ resource "fortios_log_eventfilter" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `event` - Enable/disable event logging.

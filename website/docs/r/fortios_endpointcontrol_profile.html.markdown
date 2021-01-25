@@ -73,6 +73,7 @@ resource "fortios_endpointcontrol_profile" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `profile_name` - Profile name.
@@ -220,7 +221,7 @@ The `user_groups` block supports:
 The `on_net_addr` block supports:
 
 * `name` - Address object from available options.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

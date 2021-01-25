@@ -37,6 +37,7 @@ resource "fortios_system_wccp" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `service_id` - Service ID.

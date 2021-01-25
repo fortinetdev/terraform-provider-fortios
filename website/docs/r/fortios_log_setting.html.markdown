@@ -37,6 +37,7 @@ resource "fortios_log_setting" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `resolve_ip` - Enable/disable adding resolved domain names to traffic logs if possible.
@@ -63,7 +64,7 @@ The following arguments are supported:
 The `custom_log_fields` block supports:
 
 * `field_id` - Custom log field.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

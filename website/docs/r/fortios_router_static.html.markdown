@@ -34,6 +34,7 @@ resource "fortios_router_static" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `seq_num` - Sequence number.

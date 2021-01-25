@@ -43,6 +43,7 @@ resource "fortios_user_domaincontroller" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - Domain controller entry name.
@@ -57,7 +58,7 @@ The `extra_server` block supports:
 * `id` - Server ID.
 * `ip_address` - Domain controller IP address.
 * `port` - Port to be used for communication with the domain controller (default = 445).
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

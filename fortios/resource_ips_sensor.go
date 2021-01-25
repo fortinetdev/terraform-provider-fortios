@@ -337,6 +337,11 @@ func resourceIpsSensor() *schema.Resource {
 					},
 				},
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -574,6 +579,7 @@ func flattenIpsSensorEntries(v interface{}, d *schema.ResourceData, pre string) 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -842,6 +848,7 @@ func flattenIpsSensorFilter(v interface{}, d *schema.ResourceData, pre string) [
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -966,6 +973,7 @@ func flattenIpsSensorOverride(v interface{}, d *schema.ResourceData, pre string)
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "rule_id", d)
 	return result
 }
 

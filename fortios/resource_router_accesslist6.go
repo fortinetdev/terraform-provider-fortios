@@ -74,6 +74,11 @@ func resourceRouterAccessList6() *schema.Resource {
 					},
 				},
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -224,6 +229,7 @@ func flattenRouterAccessList6Rule(v interface{}, d *schema.ResourceData, pre str
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 

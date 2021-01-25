@@ -133,6 +133,11 @@ func resourceFirewallCentralSnatMap() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 1023),
 				Optional:     true,
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -263,6 +268,7 @@ func flattenFirewallCentralSnatMapOrigAddr(v interface{}, d *schema.ResourceData
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -299,6 +305,7 @@ func flattenFirewallCentralSnatMapSrcintf(v interface{}, d *schema.ResourceData,
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -335,6 +342,7 @@ func flattenFirewallCentralSnatMapDstAddr(v interface{}, d *schema.ResourceData,
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -371,6 +379,7 @@ func flattenFirewallCentralSnatMapDstintf(v interface{}, d *schema.ResourceData,
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -407,6 +416,7 @@ func flattenFirewallCentralSnatMapNatIppool(v interface{}, d *schema.ResourceDat
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

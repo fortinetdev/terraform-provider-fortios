@@ -11,6 +11,7 @@ Configure IPS sensor.
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - (Required) Sensor name.
@@ -88,7 +89,7 @@ The `exempt_ip` block supports:
 * `id` - Exempt IP ID.
 * `src_ip` - Source IP address and netmask.
 * `dst_ip` - Destination IP address and netmask.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

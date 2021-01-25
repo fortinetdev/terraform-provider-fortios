@@ -21,6 +21,7 @@ resource "fortios_waf_profile" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - WAF Profile name.
@@ -254,7 +255,7 @@ The `access_pattern` block supports:
 * `pattern` - URL pattern.
 * `regex` - Enable/disable regular expression based pattern match.
 * `negate` - Enable/disable match negation.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

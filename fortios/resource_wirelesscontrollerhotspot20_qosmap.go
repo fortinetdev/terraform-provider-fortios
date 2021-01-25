@@ -94,6 +94,11 @@ func resourceWirelessControllerHotspot20QosMap() *schema.Resource {
 					},
 				},
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -230,6 +235,7 @@ func flattenWirelessControllerHotspot20QosMapDscpExcept(v interface{}, d *schema
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "index", d)
 	return result
 }
 
@@ -289,6 +295,7 @@ func flattenWirelessControllerHotspot20QosMapDscpRange(v interface{}, d *schema.
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "index", d)
 	return result
 }
 

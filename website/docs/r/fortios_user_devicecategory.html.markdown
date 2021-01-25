@@ -11,6 +11,7 @@ Configure device categories.
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - (Required) Device category name.

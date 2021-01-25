@@ -22,6 +22,7 @@ resource "fortios_system_autoinstall" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `auto_install_config` - Enable/disable auto install the config in USB disk.

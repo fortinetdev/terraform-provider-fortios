@@ -34,6 +34,7 @@ resource "fortios_firewallservice_custom" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - Custom service name.
@@ -69,7 +70,7 @@ The `app_category` block supports:
 The `application` block supports:
 
 * `id` - Application id.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

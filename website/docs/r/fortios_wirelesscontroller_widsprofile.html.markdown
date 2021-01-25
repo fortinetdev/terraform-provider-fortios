@@ -11,6 +11,7 @@ Configure wireless intrusion detection system (WIDS) profiles.
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - WIDS profile name.

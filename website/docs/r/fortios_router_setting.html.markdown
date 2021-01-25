@@ -19,6 +19,7 @@ resource "fortios_router_setting" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `show_filter` - Prefix-list as filter for showing routes.

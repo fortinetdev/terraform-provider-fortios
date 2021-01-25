@@ -11,6 +11,7 @@ Configure global MAC synchronization settings.
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `mac_sync_interval` - Time interval between MAC synchronizations (30 - 1800 sec, default = 60, 0 = disable MAC synchronization).

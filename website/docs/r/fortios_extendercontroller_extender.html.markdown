@@ -40,6 +40,7 @@ resource "fortios_extendercontroller_extender" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `fosid` - (Required) FortiExtender serial number.

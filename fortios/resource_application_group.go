@@ -72,6 +72,11 @@ func resourceApplicationGroup() *schema.Resource {
 					},
 				},
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -206,6 +211,7 @@ func flattenApplicationGroupApplication(v interface{}, d *schema.ResourceData, p
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -242,6 +248,7 @@ func flattenApplicationGroupCategory(v interface{}, d *schema.ResourceData, pre 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 

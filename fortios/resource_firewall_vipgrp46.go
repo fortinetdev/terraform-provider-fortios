@@ -65,6 +65,11 @@ func resourceFirewallVipgrp46() *schema.Resource {
 					},
 				},
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -203,6 +208,7 @@ func flattenFirewallVipgrp46Member(v interface{}, d *schema.ResourceData, pre st
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

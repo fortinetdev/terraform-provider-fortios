@@ -23,6 +23,7 @@ resource "fortios_report_setting" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `pdf_report` - Enable/disable PDF report.

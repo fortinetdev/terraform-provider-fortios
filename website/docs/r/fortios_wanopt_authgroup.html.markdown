@@ -22,6 +22,7 @@ resource "fortios_wanopt_authgroup" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - Auth-group name.

@@ -11,6 +11,7 @@ VDOM wireless controller configuration.
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `account_id` - FortiCloud customer account ID.
@@ -26,7 +27,7 @@ The `offending_ssid` block supports:
 * `id` - ID.
 * `ssid_pattern` - Define offending SSID pattern (case insensitive), eg: word, word*, *word, wo*rd.
 * `action` - Actions taken for detected offending SSID.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

@@ -42,6 +42,7 @@ resource "fortios_firewall_policy64" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `policyid` - Policy ID.
@@ -81,7 +82,7 @@ The `service` block supports:
 The `poolname` block supports:
 
 * `name` - IP pool name.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

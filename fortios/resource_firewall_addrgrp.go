@@ -127,6 +127,11 @@ func resourceFirewallAddrgrp() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -257,6 +262,7 @@ func flattenFirewallAddrgrpMember(v interface{}, d *schema.ResourceData, pre str
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -301,6 +307,7 @@ func flattenFirewallAddrgrpExcludeMember(v interface{}, d *schema.ResourceData, 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -355,6 +362,7 @@ func flattenFirewallAddrgrpTagging(v interface{}, d *schema.ResourceData, pre st
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

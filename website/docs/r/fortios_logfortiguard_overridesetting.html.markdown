@@ -23,6 +23,7 @@ resource "fortios_logfortiguard_overridesetting" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `override` - Overriding FortiCloud settings for this VDOM or use global settings.

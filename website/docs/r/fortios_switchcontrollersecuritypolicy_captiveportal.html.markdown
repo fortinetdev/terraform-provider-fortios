@@ -11,6 +11,7 @@ Names of VLANs that use captive portal authentication.
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - Policy name.

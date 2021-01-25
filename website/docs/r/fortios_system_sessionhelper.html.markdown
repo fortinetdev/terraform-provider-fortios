@@ -22,6 +22,7 @@ resource "fortios_system_sessionhelper" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `fosid` - Session helper ID.

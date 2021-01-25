@@ -45,6 +45,7 @@ resource "fortios_user_radius" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - RADIUS server entry name.
@@ -98,7 +99,7 @@ The `accounting_server` block supports:
 * `secret` - Secret key.
 * `port` - RADIUS accounting port number.
 * `source_ip` - Source IP address for communications to the RADIUS server.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

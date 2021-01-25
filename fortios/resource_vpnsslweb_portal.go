@@ -617,6 +617,11 @@ func resourceVpnSslWebPortal() *schema.Resource {
 					},
 				},
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -763,6 +768,7 @@ func flattenVpnSslWebPortalIpPools(v interface{}, d *schema.ResourceData, pre st
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -811,6 +817,7 @@ func flattenVpnSslWebPortalSplitTunnelingRoutingAddress(v interface{}, d *schema
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -871,6 +878,7 @@ func flattenVpnSslWebPortalIpv6Pools(v interface{}, d *schema.ResourceData, pre 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -919,6 +927,7 @@ func flattenVpnSslWebPortalIpv6SplitTunnelingRoutingAddress(v interface{}, d *sc
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -996,6 +1005,7 @@ func flattenVpnSslWebPortalBookmarkGroup(v interface{}, d *schema.ResourceData, 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1368,6 +1378,7 @@ func flattenVpnSslWebPortalHostCheckPolicy(v interface{}, d *schema.ResourceData
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1426,6 +1437,7 @@ func flattenVpnSslWebPortalMacAddrCheckRule(v interface{}, d *schema.ResourceDat
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1521,6 +1533,7 @@ func flattenVpnSslWebPortalOsCheckList(v interface{}, d *schema.ResourceData, pr
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1626,6 +1639,7 @@ func flattenVpnSslWebPortalSplitDns(v interface{}, d *schema.ResourceData, pre s
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 

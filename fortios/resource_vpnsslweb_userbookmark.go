@@ -190,6 +190,11 @@ func resourceVpnSslWebUserBookmark() *schema.Resource {
 					},
 				},
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -443,6 +448,7 @@ func flattenVpnSslWebUserBookmarkBookmarks(v interface{}, d *schema.ResourceData
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

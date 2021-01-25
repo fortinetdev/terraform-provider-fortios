@@ -11,6 +11,7 @@ Configure VLANs for switch controller.
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - Switch VLAN name.
@@ -36,7 +37,7 @@ The `portal_message_overrides` block supports:
 The `selected_usergroups` block supports:
 
 * `name` - User group name.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

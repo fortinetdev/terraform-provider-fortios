@@ -36,6 +36,7 @@ resource "fortios_router_policy" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `seq_num` - Sequence number.
@@ -78,7 +79,7 @@ The `dst` block supports:
 The `dstaddr` block supports:
 
 * `name` - Address/group name.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

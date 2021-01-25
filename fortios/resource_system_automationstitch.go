@@ -73,6 +73,11 @@ func resourceSystemAutomationStitch() *schema.Resource {
 					},
 				},
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -207,6 +212,7 @@ func flattenSystemAutomationStitchAction(v interface{}, d *schema.ResourceData, 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -243,6 +249,7 @@ func flattenSystemAutomationStitchDestination(v interface{}, d *schema.ResourceD
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

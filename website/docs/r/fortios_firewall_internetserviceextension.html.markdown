@@ -20,6 +20,7 @@ resource "fortios_firewall_internetserviceextension" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `fosid` - Internet Service ID in the Internet Service database.
@@ -56,7 +57,7 @@ The `ip_range` block supports:
 * `id` - Disable entry range ID.
 * `start_ip` - Start IP address.
 * `end_ip` - End IP address.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

@@ -120,6 +120,7 @@ resource "fortios_firewall_profileprotocoloptions" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - (Required) Name.

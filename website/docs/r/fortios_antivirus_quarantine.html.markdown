@@ -26,6 +26,7 @@ resource "fortios_antivirus_quarantine" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `agelimit` - Age limit for quarantined files (0 - 479 hours, 0 means forever).

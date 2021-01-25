@@ -48,6 +48,7 @@ resource "fortios_system_fortiguard" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `port` - Port used to communicate with the FortiGuard servers.

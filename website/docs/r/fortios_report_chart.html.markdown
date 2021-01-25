@@ -32,6 +32,7 @@ resource "fortios_report_chart" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - (Required) Chart Widget Name
@@ -119,7 +120,7 @@ The `mapping` block supports:
 * `value1` - Value 1.
 * `value2` - Value 2.
 * `displayname` - Display name.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

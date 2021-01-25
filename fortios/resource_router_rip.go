@@ -320,6 +320,11 @@ func resourceRouterRip() *schema.Resource {
 					},
 				},
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -454,6 +459,7 @@ func flattenRouterRipDistance(v interface{}, d *schema.ResourceData, pre string)
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -529,6 +535,7 @@ func flattenRouterRipDistributeList(v interface{}, d *schema.ResourceData, pre s
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -586,6 +593,7 @@ func flattenRouterRipNeighbor(v interface{}, d *schema.ResourceData, pre string)
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -631,6 +639,7 @@ func flattenRouterRipNetwork(v interface{}, d *schema.ResourceData, pre string) 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -703,6 +712,7 @@ func flattenRouterRipOffsetList(v interface{}, d *schema.ResourceData, pre strin
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -759,6 +769,7 @@ func flattenRouterRipPassiveInterface(v interface{}, d *schema.ResourceData, pre
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -810,6 +821,7 @@ func flattenRouterRipRedistribute(v interface{}, d *schema.ResourceData, pre str
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -923,6 +935,7 @@ func flattenRouterRipInterface(v interface{}, d *schema.ResourceData, pre string
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

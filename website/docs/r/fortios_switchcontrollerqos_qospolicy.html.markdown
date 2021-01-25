@@ -11,6 +11,7 @@ Configure FortiSwitch QoS policy.
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - (Required) QoS policy name.

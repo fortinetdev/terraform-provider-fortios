@@ -28,6 +28,7 @@ resource "fortios_webproxy_profile" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - Profile name.
@@ -51,7 +52,7 @@ The `headers` block supports:
 * `base64_encoding` - Enable/disable use of base64 encoding of HTTP content.
 * `add_option` - Configure options to append content to existing HTTP header or add new HTTP header.
 * `protocol` - Configure protocol(s) to take add-option action on (HTTP, HTTPS, or both).
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

@@ -48,6 +48,11 @@ func resourceRouterBfd6() *schema.Resource {
 					},
 				},
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -156,6 +161,7 @@ func flattenRouterBfd6Neighbor(v interface{}, d *schema.ResourceData, pre string
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "ip6_address", d)
 	return result
 }
 

@@ -31,6 +31,7 @@ resource "fortios_spamfilter_bword" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `fosid` - (Required) ID.
@@ -48,7 +49,7 @@ The `entries` block supports:
 * `where` - Component of the email to be scanned.
 * `language` - Language for the banned word.
 * `score` - Score value.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

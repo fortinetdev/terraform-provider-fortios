@@ -23,6 +23,7 @@ resource "fortios_firewall_authportal" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `groups` - Firewall user groups permitted to authenticate through this portal. Separate group names with spaces. The structure of `groups` block is documented below.
@@ -33,7 +34,7 @@ The following arguments are supported:
 The `groups` block supports:
 
 * `name` - Group name.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

@@ -28,6 +28,7 @@ resource "fortios_dnsfilter_domainfilter" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `fosid` - (Required) ID.
@@ -42,7 +43,7 @@ The `entries` block supports:
 * `type` - DNS domain filter type.
 * `action` - Action to take for domain filter matches.
 * `status` - Enable/disable this domain filter.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

@@ -31,6 +31,7 @@ resource "fortios_spamfilter_bwl" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `fosid` - (Required) ID.
@@ -49,7 +50,7 @@ The `entries` block supports:
 * `ip6_subnet` - IPv6 network address/subnet mask bits.
 * `pattern_type` - Wildcard pattern or regular expression.
 * `email_pattern` - Email address pattern.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

@@ -24,6 +24,7 @@ resource "fortios_switchcontroller_global" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `mac_aging_interval` - Time after which an inactive MAC is aged out (10 - 1000000 sec, default = 300, 0 = disable).
@@ -44,7 +45,7 @@ The `custom_command` block supports:
 
 * `command_entry` - List of FortiSwitch commands.
 * `command_name` - Name of custom command to push to all FortiSwitches in VDOM.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

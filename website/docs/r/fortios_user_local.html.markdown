@@ -48,6 +48,7 @@ resource "fortios_user_local" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - User name.

@@ -108,6 +108,11 @@ func resourceFirewallLocalInPolicy() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 1023),
 				Optional:     true,
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -242,6 +247,7 @@ func flattenFirewallLocalInPolicySrcaddr(v interface{}, d *schema.ResourceData, 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -278,6 +284,7 @@ func flattenFirewallLocalInPolicyDstaddr(v interface{}, d *schema.ResourceData, 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -318,6 +325,7 @@ func flattenFirewallLocalInPolicyService(v interface{}, d *schema.ResourceData, 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

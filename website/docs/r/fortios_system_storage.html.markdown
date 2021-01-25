@@ -11,6 +11,7 @@ Configure logical storage.
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - Storage name.

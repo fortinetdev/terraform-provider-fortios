@@ -508,6 +508,11 @@ func resourceWebfilterProfile() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -960,6 +965,7 @@ func flattenWebfilterProfileYoutubeChannelFilter(v interface{}, d *schema.Resour
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1333,6 +1339,7 @@ func flattenWebfilterProfileWispServers(v interface{}, d *schema.ResourceData, p
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

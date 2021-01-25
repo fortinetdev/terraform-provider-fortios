@@ -11,6 +11,7 @@ Configure system-wide switch controller settings.
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `parallel_process_override` - Enable/disable parallel process override.

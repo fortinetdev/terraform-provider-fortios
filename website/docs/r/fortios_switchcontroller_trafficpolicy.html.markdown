@@ -24,6 +24,7 @@ resource "fortios_switchcontroller_trafficpolicy" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - (Required) Traffic policy name.

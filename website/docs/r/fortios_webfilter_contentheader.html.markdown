@@ -20,6 +20,7 @@ resource "fortios_webfilter_contentheader" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `fosid` - (Required) ID.
@@ -32,7 +33,7 @@ The `entries` block supports:
 * `pattern` - Content type (regular expression).
 * `action` - Action to take for this content type.
 * `category` - Categories that this content type applies to.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

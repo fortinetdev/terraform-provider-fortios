@@ -22,6 +22,7 @@ resource "fortios_systemautoupdate_schedule" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `status` - (Required) Enable/disable scheduled updates.

@@ -90,6 +90,11 @@ func resourceSystemVxlan() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -228,6 +233,7 @@ func flattenSystemVxlanRemoteIp(v interface{}, d *schema.ResourceData, pre strin
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "ip", d)
 	return result
 }
 
@@ -264,6 +270,7 @@ func flattenSystemVxlanRemoteIp6(v interface{}, d *schema.ResourceData, pre stri
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "ip6", d)
 	return result
 }
 

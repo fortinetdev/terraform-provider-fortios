@@ -24,6 +24,7 @@ resource "fortios_system_managementtunnel" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `status` - Enable/disable FGFM tunnel.

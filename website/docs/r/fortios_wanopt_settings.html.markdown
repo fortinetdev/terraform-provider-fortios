@@ -21,6 +21,7 @@ resource "fortios_wanopt_settings" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `host_id` - (Required) Local host ID (must also be entered in the remote FortiGate's peer list).

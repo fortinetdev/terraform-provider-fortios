@@ -28,6 +28,7 @@ resource "fortios_system_dns" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `primary` - (Required) Primary DNS server IP address.
@@ -45,7 +46,7 @@ The following arguments are supported:
 The `domain` block supports:
 
 * `domain` - DNS search domain list separated by space (maximum 8 domains)
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

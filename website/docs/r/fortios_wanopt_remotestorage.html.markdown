@@ -20,6 +20,7 @@ resource "fortios_wanopt_remotestorage" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `status` - Enable/disable using remote device as Web cache storage.

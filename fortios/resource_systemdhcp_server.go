@@ -396,6 +396,11 @@ func resourceSystemDhcpServer() *schema.Resource {
 					},
 				},
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -620,6 +625,7 @@ func flattenSystemDhcpServerIpRange(v interface{}, d *schema.ResourceData, pre s
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -672,6 +678,7 @@ func flattenSystemDhcpServerTftpServer(v interface{}, d *schema.ResourceData, pr
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "tftp_server", d)
 	return result
 }
 
@@ -732,6 +739,7 @@ func flattenSystemDhcpServerOptions(v interface{}, d *schema.ResourceData, pre s
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -840,6 +848,7 @@ func flattenSystemDhcpServerVciString(v interface{}, d *schema.ResourceData, pre
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "vci_string", d)
 	return result
 }
 
@@ -886,6 +895,7 @@ func flattenSystemDhcpServerExcludeRange(v interface{}, d *schema.ResourceData, 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -965,6 +975,7 @@ func flattenSystemDhcpServerReservedAddress(v interface{}, d *schema.ResourceDat
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 

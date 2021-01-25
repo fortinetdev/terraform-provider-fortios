@@ -32,6 +32,7 @@ resource "fortios_system_mobiletunnel" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - Tunnel name.
@@ -55,7 +56,7 @@ The `network` block supports:
 * `id` - Network entry ID.
 * `interface` - Select the associated interface name from available options.
 * `prefix` - Class IP and Netmask with correction (Format:xxx.xxx.xxx.xxx xxx.xxx.xxx.xxx or xxx.xxx.xxx.xxx/x).
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

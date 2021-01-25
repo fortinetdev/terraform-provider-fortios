@@ -24,6 +24,7 @@ resource "fortios_system_fm" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `status` - Enable/disable FM.

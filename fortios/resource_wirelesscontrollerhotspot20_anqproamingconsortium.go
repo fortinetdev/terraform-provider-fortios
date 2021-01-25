@@ -62,6 +62,11 @@ func resourceWirelessControllerHotspot20AnqpRoamingConsortium() *schema.Resource
 					},
 				},
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -198,6 +203,7 @@ func flattenWirelessControllerHotspot20AnqpRoamingConsortiumOiList(v interface{}
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "index", d)
 	return result
 }
 

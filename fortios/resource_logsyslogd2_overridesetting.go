@@ -119,6 +119,11 @@ func resourceLogSyslogd2OverrideSetting() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -271,6 +276,7 @@ func flattenLogSyslogd2OverrideSettingCustomFieldName(v interface{}, d *schema.R
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 

@@ -11,6 +11,7 @@ Configure alarm.
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `status` - Enable/disable alarm.
@@ -42,7 +43,7 @@ The `fw_policy_violations` block supports:
 * `dst_ip` - Destination IP (0=all).
 * `src_port` - Source port (0=all).
 * `dst_port` - Destination port (0=all).
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

@@ -31,6 +31,7 @@ resource "fortios_systemdhcp_server" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `fosid` - (Required) ID.
@@ -118,7 +119,7 @@ The `reserved_address` block supports:
 * `circuit_id` - Option 82 circuit-ID of the client that will get the reserved IP address.
 * `remote_id` - Option 82 remote-ID of the client that will get the reserved IP address.
 * `description` - Description.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

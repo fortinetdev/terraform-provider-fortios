@@ -24,6 +24,7 @@ resource "fortios_firewall_ipv6ehfilter" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `hop_opt` - Enable/disable blocking packets with the Hop-by-Hop Options header (default = disable).

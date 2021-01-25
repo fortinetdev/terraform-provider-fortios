@@ -74,6 +74,7 @@ resource "fortios_firewall_policy6" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `policyid` - Policy ID.
@@ -211,7 +212,7 @@ The `devices` block supports:
 The `ssl_mirror_intf` block supports:
 
 * `name` - Interface name.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

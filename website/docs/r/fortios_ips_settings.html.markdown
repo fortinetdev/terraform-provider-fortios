@@ -22,6 +22,7 @@ resource "fortios_ips_settings" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `packet_log_history` - Number of packets to capture before and including the one in which the IPS signature is detected (1 - 255).

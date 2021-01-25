@@ -11,6 +11,7 @@ Configure application rule settings.
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `fosid` - Rule ID.

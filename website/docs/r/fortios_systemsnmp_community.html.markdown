@@ -32,6 +32,7 @@ resource "fortios_systemsnmp_community" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `fosid` - (Required) Community ID.
@@ -66,7 +67,7 @@ The `hosts6` block supports:
 * `ipv6` - SNMP manager IPv6 address prefix.
 * `ha_direct` - Enable/disable direct management of HA cluster members.
 * `host_type` - Control whether the SNMP manager sends SNMP queries, receives SNMP traps, or both.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

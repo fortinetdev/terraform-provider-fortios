@@ -173,6 +173,11 @@ func resourceSystemAutomationAction() *schema.Resource {
 					},
 				},
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -303,6 +308,7 @@ func flattenSystemAutomationActionEmailTo(v interface{}, d *schema.ResourceData,
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -399,6 +405,7 @@ func flattenSystemAutomationActionHeaders(v interface{}, d *schema.ResourceData,
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "header", d)
 	return result
 }
 
@@ -439,6 +446,7 @@ func flattenSystemAutomationActionSdnConnector(v interface{}, d *schema.Resource
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

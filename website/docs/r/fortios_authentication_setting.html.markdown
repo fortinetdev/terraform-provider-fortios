@@ -24,6 +24,7 @@ resource "fortios_authentication_setting" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `active_auth_scheme` - Active authentication method (scheme name).

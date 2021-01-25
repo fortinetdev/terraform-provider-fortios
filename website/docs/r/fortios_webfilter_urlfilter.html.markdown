@@ -22,6 +22,7 @@ resource "fortios_webfilter_urlfilter" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `fosid` - (Required) ID.
@@ -42,7 +43,7 @@ The `entries` block supports:
 * `web_proxy_profile` - Web proxy profile.
 * `referrer_host` - Referrer host name.
 * `dns_address_family` - Resolve IPv4 address, IPv6 address, or both from DNS server.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

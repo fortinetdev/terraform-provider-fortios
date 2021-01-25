@@ -125,6 +125,11 @@ func resourceSwitchControllerSecurityPolicy8021X() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -255,6 +260,7 @@ func flattenSwitchControllerSecurityPolicy8021XUserGroup(v interface{}, d *schem
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

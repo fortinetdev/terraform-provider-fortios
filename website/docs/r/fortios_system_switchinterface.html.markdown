@@ -11,6 +11,7 @@ Configure software switch interfaces by grouping physical and WiFi interfaces.
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - (Required) Interface name (name cannot be in use by any other interfaces, VLANs, or inter-VDOM links).
@@ -30,7 +31,7 @@ The `span_source_port` block supports:
 The `member` block supports:
 
 * `interface_name` - Physical interface name.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

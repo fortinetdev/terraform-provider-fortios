@@ -22,6 +22,7 @@ resource "fortios_system_global" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `language` - GUI display language.

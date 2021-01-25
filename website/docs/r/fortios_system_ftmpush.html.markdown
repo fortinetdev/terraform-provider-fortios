@@ -21,6 +21,7 @@ resource "fortios_system_ftmpush" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `server_port` - Port to communicate with FortiToken Mobile push services server (1 - 65535, default = 4433).

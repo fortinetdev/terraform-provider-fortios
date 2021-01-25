@@ -31,6 +31,7 @@ EOF
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - Auto script name.

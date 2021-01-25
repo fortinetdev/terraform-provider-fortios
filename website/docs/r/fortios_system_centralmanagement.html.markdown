@@ -31,6 +31,7 @@ resource "fortios_system_centralmanagement" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `mode` - Central management mode.
@@ -58,7 +59,7 @@ The `server_list` block supports:
 * `server_address` - IPv4 address of override server.
 * `server_address6` - IPv6 address of override server.
 * `fqdn` - FQDN address of override server.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

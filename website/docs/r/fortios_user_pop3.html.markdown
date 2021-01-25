@@ -23,6 +23,7 @@ resource "fortios_user_pop3" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - POP3 server entry name.

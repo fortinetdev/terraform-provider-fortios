@@ -11,6 +11,7 @@ Configure default auto-config QoS policy for FortiSwitch.
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `fgt_policy` - Default FortiLink auto-config policy.

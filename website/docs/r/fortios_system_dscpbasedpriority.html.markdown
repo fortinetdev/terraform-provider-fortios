@@ -21,6 +21,7 @@ resource "fortios_system_dscpbasedpriority" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `fosid` - Item ID.

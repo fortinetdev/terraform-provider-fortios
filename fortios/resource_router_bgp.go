@@ -1501,6 +1501,11 @@ func resourceRouterBgp() *schema.Resource {
 					},
 				},
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -1700,6 +1705,7 @@ func flattenRouterBgpConfederationPeers(v interface{}, d *schema.ResourceData, p
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "peer", d)
 	return result
 }
 
@@ -1827,6 +1833,7 @@ func flattenRouterBgpAggregateAddress(v interface{}, d *schema.ResourceData, pre
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1897,6 +1904,7 @@ func flattenRouterBgpAggregateAddress6(v interface{}, d *schema.ResourceData, pr
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -2379,6 +2387,7 @@ func flattenRouterBgpNeighbor(v interface{}, d *schema.ResourceData, pre string)
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "ip", d)
 	return result
 }
 
@@ -3229,6 +3238,7 @@ func flattenRouterBgpNeighborGroup(v interface{}, d *schema.ResourceData, pre st
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -3616,6 +3626,7 @@ func flattenRouterBgpNeighborRange(v interface{}, d *schema.ResourceData, pre st
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -3686,6 +3697,7 @@ func flattenRouterBgpNeighborRange6(v interface{}, d *schema.ResourceData, pre s
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -3749,6 +3761,7 @@ func flattenRouterBgpNetwork(v interface{}, d *schema.ResourceData, pre string) 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -3819,6 +3832,7 @@ func flattenRouterBgpNetwork6(v interface{}, d *schema.ResourceData, pre string)
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -3877,6 +3891,7 @@ func flattenRouterBgpRedistribute(v interface{}, d *schema.ResourceData, pre str
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -3931,6 +3946,7 @@ func flattenRouterBgpRedistribute6(v interface{}, d *schema.ResourceData, pre st
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -3990,6 +4006,7 @@ func flattenRouterBgpAdminDistance(v interface{}, d *schema.ResourceData, pre st
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 

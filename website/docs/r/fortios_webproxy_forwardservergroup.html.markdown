@@ -37,6 +37,7 @@ resource "fortios_webproxy_forwardservergroup" "trname1" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - Configure a forward server group consisting one or multiple forward servers. Supports failover and load balancing.
@@ -49,7 +50,7 @@ The `server_list` block supports:
 
 * `name` - Forward server name.
 * `weight` - Optionally assign a weight of the forwarding server for weighted load balancing (1 - 100, default = 10)
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

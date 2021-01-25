@@ -74,6 +74,7 @@ resource "fortios_router_ospf" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `abr_type` - Area border router type.
@@ -216,7 +217,7 @@ The `redistribute` block supports:
 * `routemap` - Route map name.
 * `metric_type` - Metric type.
 * `tag` - Tag value.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

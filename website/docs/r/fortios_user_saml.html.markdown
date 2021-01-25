@@ -28,6 +28,7 @@ resource "fortios_user_saml" "tr3" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - SAML server entry name.

@@ -14,6 +14,7 @@ BGP neighbor table.
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `ip` - (Required) IP/IPv6 address of neighbor.
@@ -109,7 +110,7 @@ The `conditional_advertise` block supports:
 * `advertise_routemap` - Name of advertising route map.
 * `condition_routemap` - Name of condition route map.
 * `condition_type` - Type of condition.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

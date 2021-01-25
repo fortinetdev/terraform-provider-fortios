@@ -138,6 +138,11 @@ func resourceLogSetting() *schema.Resource {
 					},
 				},
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -312,6 +317,7 @@ func flattenLogSettingCustomLogFields(v interface{}, d *schema.ResourceData, pre
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "field_id", d)
 	return result
 }
 

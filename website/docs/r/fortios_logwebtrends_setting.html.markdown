@@ -19,6 +19,7 @@ resource "fortios_logwebtrends_setting" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `status` - Enable/disable logging to WebTrends.

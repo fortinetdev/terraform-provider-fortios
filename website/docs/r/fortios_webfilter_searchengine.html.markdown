@@ -24,6 +24,7 @@ resource "fortios_webfilter_searchengine" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - (Required) Search engine name.

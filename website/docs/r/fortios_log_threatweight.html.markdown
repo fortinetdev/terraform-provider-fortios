@@ -133,6 +133,7 @@ resource "fortios_log_threatweight" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `status` - Enable/disable the threat weight feature.
@@ -192,7 +193,7 @@ The `application` block supports:
 * `id` - Entry ID.
 * `category` - Application category.
 * `level` - Threat weight score for Application events.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

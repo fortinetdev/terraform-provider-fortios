@@ -29,6 +29,7 @@ resource "fortios_logmemory_filter" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `severity` - Log every message above and including this severity level.

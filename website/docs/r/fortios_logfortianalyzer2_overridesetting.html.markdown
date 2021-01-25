@@ -34,6 +34,7 @@ resource "fortios_logfortianalyzer2_overridesetting" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `override` - Enable/disable overriding FortiAnalyzer settings or use global settings.

@@ -24,6 +24,7 @@ resource "fortios_icap_server" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - Server name.

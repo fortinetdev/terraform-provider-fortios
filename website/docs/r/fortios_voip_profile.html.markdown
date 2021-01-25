@@ -78,6 +78,7 @@ resource "fortios_voip_profile" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - (Required) Profile name.

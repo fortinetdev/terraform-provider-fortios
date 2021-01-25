@@ -22,6 +22,7 @@ resource "fortios_vpnsslweb_realm" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `url_path` - URL path to access SSL-VPN login page.

@@ -22,6 +22,7 @@ resource "fortios_systemsnmp_sysinfo" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `status` - Enable/disable SNMP.

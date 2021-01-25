@@ -20,6 +20,7 @@ resource "fortios_system_smsserver" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - Name of SMS server.

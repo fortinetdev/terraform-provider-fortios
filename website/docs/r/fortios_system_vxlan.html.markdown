@@ -26,6 +26,7 @@ resource "fortios_system_vxlan" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - VXLAN device or interface name. Must be a unique interface name.
@@ -44,7 +45,7 @@ The `remote_ip` block supports:
 The `remote_ip6` block supports:
 
 * `ip6` - IPv6 address.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

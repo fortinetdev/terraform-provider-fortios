@@ -498,6 +498,11 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -1185,6 +1190,7 @@ func flattenFirewallSslSshProfileSslExempt(v interface{}, d *schema.ResourceData
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1300,6 +1306,7 @@ func flattenFirewallSslSshProfileSslServer(v interface{}, d *schema.ResourceData
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 

@@ -27,6 +27,7 @@ resource "fortios_switchcontrollerqos_dot1pmap" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - (Required) Dot1p map name.

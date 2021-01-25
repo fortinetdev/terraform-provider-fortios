@@ -21,6 +21,7 @@ resource "fortios_user_passwordpolicy" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - Password policy name.

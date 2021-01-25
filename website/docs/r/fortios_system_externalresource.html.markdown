@@ -24,6 +24,7 @@ resource "fortios_system_externalresource" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - (Required) External resource name.

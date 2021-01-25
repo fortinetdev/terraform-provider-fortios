@@ -29,6 +29,7 @@ resource "fortios_logwebtrends_filter" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `severity` - Lowest severity level to log to WebTrends.

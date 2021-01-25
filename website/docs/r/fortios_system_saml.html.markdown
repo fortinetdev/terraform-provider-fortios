@@ -24,6 +24,7 @@ resource "fortios_system_saml" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `status` - Enable/disable SAML authentication (default = disable).
@@ -62,7 +63,7 @@ The `assertion_attributes` block supports:
 
 * `name` - Name.
 * `type` - Type.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

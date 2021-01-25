@@ -11,6 +11,7 @@ Configure DNS servers for a non-management VDOM.
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `vdom_dns` - Enable/disable configuring DNS servers for the current VDOM.

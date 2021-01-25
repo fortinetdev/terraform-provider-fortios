@@ -104,6 +104,11 @@ func resourceWirelessControllerHotspot20AnqpNaiRealm() *schema.Resource {
 					},
 				},
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -245,6 +250,7 @@ func flattenWirelessControllerHotspot20AnqpNaiRealmNaiList(v interface{}, d *sch
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

@@ -96,6 +96,7 @@ resource "fortios_system_apiuser" "test2" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - User name.
@@ -119,7 +120,7 @@ The `trusthost` block supports:
 * `type` - Trusthost type.
 * `ipv4_trusthost` - IPv4 trusted host address.
 * `ipv6_trusthost` - IPv6 trusted host address.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

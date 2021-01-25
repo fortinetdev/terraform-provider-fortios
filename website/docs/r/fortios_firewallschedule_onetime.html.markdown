@@ -23,6 +23,7 @@ resource "fortios_firewallschedule_onetime" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - (Required) Onetime schedule name.

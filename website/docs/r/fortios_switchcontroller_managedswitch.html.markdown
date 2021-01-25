@@ -11,6 +11,7 @@ Configure FortiSwitch devices that are managed by this FortiGate.
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `switch_id` - (Required) Managed-switch id.
@@ -200,7 +201,7 @@ The `n802_1X_settings` block supports:
 * `link_down_auth` - Authentication state to set if a link is down.
 * `reauth_period` - Reauthentication time interval (1 - 1440 min, default = 60, 0 = disable).
 * `max_reauth_attempt` - Maximum number of authentication attempts (0 - 15, default = 3).
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

@@ -184,6 +184,11 @@ func resourceFirewallInterfacePolicy() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -330,6 +335,7 @@ func flattenFirewallInterfacePolicySrcaddr(v interface{}, d *schema.ResourceData
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -366,6 +372,7 @@ func flattenFirewallInterfacePolicyDstaddr(v interface{}, d *schema.ResourceData
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -402,6 +409,7 @@ func flattenFirewallInterfacePolicyService(v interface{}, d *schema.ResourceData
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

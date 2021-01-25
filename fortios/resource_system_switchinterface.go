@@ -95,6 +95,11 @@ func resourceSystemSwitchInterface() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -229,6 +234,7 @@ func flattenSystemSwitchInterfaceSpanSourcePort(v interface{}, d *schema.Resourc
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "interface_name", d)
 	return result
 }
 
@@ -265,6 +271,7 @@ func flattenSystemSwitchInterfaceMember(v interface{}, d *schema.ResourceData, p
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "interface_name", d)
 	return result
 }
 

@@ -11,6 +11,7 @@ Configure FSSO active directory servers for polling mode.
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `fosid` - Active Directory server ID.
@@ -30,7 +31,7 @@ The following arguments are supported:
 The `adgrp` block supports:
 
 * `name` - Name.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

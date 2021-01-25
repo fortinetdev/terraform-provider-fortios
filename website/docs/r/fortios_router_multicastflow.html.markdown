@@ -24,6 +24,7 @@ resource "fortios_router_multicastflow" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - (Required) Name.
@@ -35,7 +36,7 @@ The `flows` block supports:
 * `id` - Flow ID.
 * `group_addr` - Multicast group IP address.
 * `source_addr` - Multicast source IP address.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

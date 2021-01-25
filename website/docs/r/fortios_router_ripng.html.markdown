@@ -50,6 +50,7 @@ resource "fortios_router_ripng" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `default_information_originate` - Enable/disable generation of default route.
@@ -125,7 +126,7 @@ The `interface` block supports:
 * `split_horizon_status` - Enable/disable split horizon.
 * `split_horizon` - Enable/disable split horizon.
 * `flags` - Flags.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

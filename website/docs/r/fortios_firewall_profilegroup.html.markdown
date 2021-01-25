@@ -21,6 +21,7 @@ resource "fortios_firewall_profilegroup" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - (Required) Profile group name.

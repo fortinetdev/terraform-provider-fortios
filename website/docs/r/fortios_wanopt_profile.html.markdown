@@ -76,6 +76,7 @@ resource "fortios_wanopt_profile" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - Profile name.

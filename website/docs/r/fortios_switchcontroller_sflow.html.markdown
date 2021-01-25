@@ -20,6 +20,7 @@ resource "fortios_switchcontroller_sflow" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `collector_ip` - (Required) Collector IP.

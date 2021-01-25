@@ -28,6 +28,7 @@ resource "fortios_firewall_address6" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - Address name.
@@ -69,7 +70,7 @@ The `subnet_segment` block supports:
 * `name` - Name.
 * `type` - Subnet segment type.
 * `value` - Subnet segment value.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

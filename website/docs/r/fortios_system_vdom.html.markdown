@@ -21,6 +21,7 @@ resource "fortios_system_vdom" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - VDOM name.

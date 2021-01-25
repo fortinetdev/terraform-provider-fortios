@@ -23,6 +23,7 @@ resource "fortios_user_tacacs" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - TACACS+ server entry name.

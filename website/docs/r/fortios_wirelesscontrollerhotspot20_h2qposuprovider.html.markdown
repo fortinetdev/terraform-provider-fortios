@@ -11,6 +11,7 @@ Configure online sign up (OSU) provider list.
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - OSU provider ID.
@@ -32,7 +33,7 @@ The `service_description` block supports:
 * `service_id` - OSU service ID.
 * `lang` - Language code.
 * `service_description` - Service description.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

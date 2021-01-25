@@ -20,6 +20,7 @@ resource "fortios_endpointcontrol_forticlientregistrationsync" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `peer_name` - Peer name.

@@ -195,6 +195,11 @@ func resourceFirewallVip64() *schema.Resource {
 					},
 				},
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -337,6 +342,7 @@ func flattenFirewallVip64SrcFilter(v interface{}, d *schema.ResourceData, pre st
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "range", d)
 	return result
 }
 
@@ -458,6 +464,7 @@ func flattenFirewallVip64Realservers(v interface{}, d *schema.ResourceData, pre 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -530,6 +537,7 @@ func flattenFirewallVip64Monitor(v interface{}, d *schema.ResourceData, pre stri
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

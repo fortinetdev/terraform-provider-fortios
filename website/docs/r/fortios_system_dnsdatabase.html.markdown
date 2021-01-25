@@ -35,6 +35,7 @@ resource "fortios_system_dnsdatabase" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - (Required) Zone name.
@@ -65,7 +66,7 @@ The `dns_entry` block supports:
 * `ipv6` - IPv6 address of the host.
 * `hostname` - Name of the host.
 * `canonical_name` - Canonical name of the host.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

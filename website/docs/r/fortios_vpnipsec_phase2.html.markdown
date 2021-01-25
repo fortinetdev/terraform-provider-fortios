@@ -131,6 +131,7 @@ resource "fortios_vpnipsec_phase2" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - IPsec tunnel name.

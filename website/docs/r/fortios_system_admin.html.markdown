@@ -35,6 +35,7 @@ resource "fortios_system_admin" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - User name.
@@ -154,7 +155,7 @@ The `gui_vdom_menu_favorites` block supports:
 The `gui_new_feature_acknowledge` block supports:
 
 * `id` - Select menu ID.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

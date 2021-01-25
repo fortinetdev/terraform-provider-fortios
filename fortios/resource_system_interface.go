@@ -1489,6 +1489,11 @@ func resourceSystemInterface() *schema.Resource {
 					},
 				},
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -1721,6 +1726,7 @@ func flattenSystemInterfaceFailAlertInterfaces(v interface{}, d *schema.Resource
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -2106,6 +2112,7 @@ func flattenSystemInterfaceMember(v interface{}, d *schema.ResourceData, pre str
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "interface_name", d)
 	return result
 }
 
@@ -2182,6 +2189,7 @@ func flattenSystemInterfaceManagedDevice(v interface{}, d *schema.ResourceData, 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -2270,6 +2278,7 @@ func flattenSystemInterfaceSecurityGroups(v interface{}, d *schema.ResourceData,
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -2422,6 +2431,7 @@ func flattenSystemInterfaceVrrp(v interface{}, d *schema.ResourceData, pre strin
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "vrid", d)
 	return result
 }
 
@@ -2594,6 +2604,7 @@ func flattenSystemInterfaceSecondaryip(v interface{}, d *schema.ResourceData, pr
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -2732,6 +2743,7 @@ func flattenSystemInterfaceTagging(v interface{}, d *schema.ResourceData, pre st
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

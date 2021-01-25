@@ -32,6 +32,7 @@ resource "fortios_icap_profile" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `replacemsg_group` - Replacement message group.
@@ -55,7 +56,7 @@ The `icap_headers` block supports:
 * `name` - HTTP forwarded header name.
 * `content` - HTTP header content.
 * `base64_encoding` - Enable/disable use of base64 encoding of HTTP content.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

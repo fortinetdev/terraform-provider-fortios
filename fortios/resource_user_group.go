@@ -242,6 +242,11 @@ func resourceUserGroup() *schema.Resource {
 					},
 				},
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -396,6 +401,7 @@ func flattenUserGroupMember(v interface{}, d *schema.ResourceData, pre string) [
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -442,6 +448,7 @@ func flattenUserGroupMatch(v interface{}, d *schema.ResourceData, pre string) []
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -582,6 +589,7 @@ func flattenUserGroupGuest(v interface{}, d *schema.ResourceData, pre string) []
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "user_id", d)
 	return result
 }
 

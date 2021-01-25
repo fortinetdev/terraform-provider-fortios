@@ -41,6 +41,7 @@ resource "fortios_system_linkmonitor" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - Link monitor name.
@@ -70,7 +71,7 @@ The following arguments are supported:
 The `server` block supports:
 
 * `address` - Server address.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

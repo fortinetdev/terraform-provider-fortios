@@ -30,6 +30,7 @@ resource "fortios_endpointcontrol_settings" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `forticlient_reg_key_enforce` - Enable/disable requiring or enforcing FortiClient registration keys.

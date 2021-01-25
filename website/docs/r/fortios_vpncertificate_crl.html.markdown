@@ -11,6 +11,7 @@ Certificate Revocation List as a PEM file.
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - (Required) Name.

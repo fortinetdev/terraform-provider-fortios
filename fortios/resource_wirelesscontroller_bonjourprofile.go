@@ -79,6 +79,11 @@ func resourceWirelessControllerBonjourProfile() *schema.Resource {
 					},
 				},
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -229,6 +234,7 @@ func flattenWirelessControllerBonjourProfilePolicyList(v interface{}, d *schema.
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "policy_id", d)
 	return result
 }
 

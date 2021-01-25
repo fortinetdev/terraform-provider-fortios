@@ -21,6 +21,7 @@ resource "fortios_switchcontrollerqos_queuepolicy" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - (Required) QoS policy name
@@ -38,7 +39,7 @@ The `cos_queue` block supports:
 * `max_rate_percent` - Maximum rate (% of link speed).
 * `drop_policy` - COS queue drop policy.
 * `weight` - Weight of weighted round robin scheduling.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

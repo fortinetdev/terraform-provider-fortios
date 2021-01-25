@@ -88,6 +88,11 @@ func resourceUserDeviceGroup() *schema.Resource {
 				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -214,6 +219,7 @@ func flattenUserDeviceGroupMember(v interface{}, d *schema.ResourceData, pre str
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -260,6 +266,7 @@ func flattenUserDeviceGroupTagging(v interface{}, d *schema.ResourceData, pre st
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

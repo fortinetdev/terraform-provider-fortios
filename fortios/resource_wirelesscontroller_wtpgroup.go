@@ -55,6 +55,11 @@ func resourceWirelessControllerWtpGroup() *schema.Resource {
 					},
 				},
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -185,6 +190,7 @@ func flattenWirelessControllerWtpGroupWtps(v interface{}, d *schema.ResourceData
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "wtp_id", d)
 	return result
 }
 

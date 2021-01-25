@@ -23,6 +23,7 @@ resource "fortios_switchcontroller_lldpsettings" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `status` - Enable/disable LLDP global settings.

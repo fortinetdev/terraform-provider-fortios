@@ -59,6 +59,7 @@ resource "fortios_router_ospf6" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `abr_type` - Area border router type.
@@ -150,7 +151,7 @@ The `summary_address` block supports:
 * `prefix6` - IPv6 prefix.
 * `advertise` - Enable/disable advertise status.
 * `tag` - Tag value.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

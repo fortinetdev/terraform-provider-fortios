@@ -11,6 +11,7 @@ Registered FortiClient list.
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `uid` - FortiClient UID.

@@ -30,6 +30,7 @@ resource "fortios_ips_global" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `fail_open` - Enable to allow traffic if the IPS process crashes. Default is disable and IPS traffic is blocked when the IPS process crashes.

@@ -21,6 +21,7 @@ resource "fortios_system_fortisandbox" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `status` - Enable/disable FortiSandbox.

@@ -25,6 +25,7 @@ resource "fortios_firewall_ldbmonitor" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - Monitor name.

@@ -543,6 +543,11 @@ func resourceSystemAdmin() *schema.Resource {
 					},
 				},
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -859,6 +864,7 @@ func flattenSystemAdminVdom(v interface{}, d *schema.ResourceData, pre string) [
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -956,6 +962,7 @@ func flattenSystemAdminGuiDashboard(v interface{}, d *schema.ResourceData, pre s
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1257,6 +1264,7 @@ func flattenSystemAdminGuestUsergroups(v interface{}, d *schema.ResourceData, pr
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1315,6 +1323,7 @@ func flattenSystemAdminLoginTime(v interface{}, d *schema.ResourceData, pre stri
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "usr_name", d)
 	return result
 }
 
@@ -1359,6 +1368,7 @@ func flattenSystemAdminGuiGlobalMenuFavorites(v interface{}, d *schema.ResourceD
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1395,6 +1405,7 @@ func flattenSystemAdminGuiVdomMenuFavorites(v interface{}, d *schema.ResourceDat
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1431,6 +1442,7 @@ func flattenSystemAdminGuiNewFeatureAcknowledge(v interface{}, d *schema.Resourc
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 

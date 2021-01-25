@@ -26,6 +26,7 @@ resource "fortios_firewallshaper_peripshaper" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - Traffic shaper name.

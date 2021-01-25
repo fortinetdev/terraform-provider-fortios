@@ -21,6 +21,7 @@ resource "fortios_ftpproxy_explicit" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `status` - Enable/disable the explicit FTP proxy.

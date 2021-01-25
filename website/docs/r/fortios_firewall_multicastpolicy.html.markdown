@@ -38,6 +38,7 @@ resource "fortios_firewall_multicastpolicy" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `fosid` - Policy ID.
@@ -62,7 +63,7 @@ The `srcaddr` block supports:
 The `dstaddr` block supports:
 
 * `name` - Destination address objects.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

@@ -164,6 +164,11 @@ func resourceWirelessControllerQosProfile() *schema.Resource {
 					},
 				},
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -342,6 +347,7 @@ func flattenWirelessControllerQosProfileDscpWmmVo(v interface{}, d *schema.Resou
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -378,6 +384,7 @@ func flattenWirelessControllerQosProfileDscpWmmVi(v interface{}, d *schema.Resou
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -414,6 +421,7 @@ func flattenWirelessControllerQosProfileDscpWmmBe(v interface{}, d *schema.Resou
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -450,6 +458,7 @@ func flattenWirelessControllerQosProfileDscpWmmBk(v interface{}, d *schema.Resou
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 

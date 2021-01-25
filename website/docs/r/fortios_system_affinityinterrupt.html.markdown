@@ -11,6 +11,7 @@ Configure interrupt affinity.
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `fosid` - (Required) ID of the interrupt affinity setting.

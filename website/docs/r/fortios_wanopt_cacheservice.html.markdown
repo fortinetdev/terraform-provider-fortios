@@ -22,6 +22,7 @@ resource "fortios_wanopt_cacheservice" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `prefer_scenario` - Set the preferred cache behavior towards the balance between latency and hit-ratio.
@@ -46,7 +47,7 @@ The `src_peer` block supports:
 * `encode_type` - Set encode type for this peer.
 * `priority` - Set priority for this peer.
 * `ip` - Set cluster IP address of this peer.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

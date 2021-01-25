@@ -24,6 +24,7 @@ resource "fortios_system_nat64" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `status` - Enable/disable NAT64 (default = disable).
@@ -38,7 +39,7 @@ The `secondary_prefix` block supports:
 
 * `name` - NAT64 prefix name.
 * `nat64_prefix` - NAT64 prefix.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

@@ -28,6 +28,7 @@ resource "fortios_firewall_shapingprofile" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `profile_name` - (Required) Shaping profile name.
@@ -42,7 +43,7 @@ The `shaping_entries` block supports:
 * `priority` - Priority.
 * `guaranteed_bandwidth_percentage` - Guaranteed bandwith in percentage.
 * `maximum_bandwidth_percentage` - Maximum bandwith in percentage.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

@@ -30,6 +30,7 @@ resource "fortios_antivirus_profile" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - (Required) Profile name.

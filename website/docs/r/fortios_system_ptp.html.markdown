@@ -23,6 +23,7 @@ resource "fortios_system_ptp" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `status` - Enable/disable setting the FortiGate system time by synchronizing with an PTP Server.

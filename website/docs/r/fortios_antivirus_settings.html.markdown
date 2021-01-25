@@ -20,6 +20,7 @@ resource "fortios_antivirus_settings" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `default_db` - Select the AV database to be used for AV scanning.

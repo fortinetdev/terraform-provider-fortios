@@ -22,6 +22,7 @@ resource "fortios_system_ipv6tunnel" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - IPv6 tunnel name.

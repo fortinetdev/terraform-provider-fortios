@@ -101,6 +101,11 @@ func resourceSwitchControllerGlobal() *schema.Resource {
 					},
 				},
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -211,6 +216,7 @@ func flattenSwitchControllerGlobalDisableDiscovery(v interface{}, d *schema.Reso
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -268,6 +274,7 @@ func flattenSwitchControllerGlobalCustomCommand(v interface{}, d *schema.Resourc
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "command_entry", d)
 	return result
 }
 

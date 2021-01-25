@@ -21,6 +21,7 @@ resource "fortios_system_dnsserver" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - DNS server name.

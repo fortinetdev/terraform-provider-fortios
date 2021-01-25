@@ -1003,6 +1003,11 @@ func resourceFirewallPolicy() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -1137,6 +1142,7 @@ func flattenFirewallPolicySrcintf(v interface{}, d *schema.ResourceData, pre str
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1173,6 +1179,7 @@ func flattenFirewallPolicyDstintf(v interface{}, d *schema.ResourceData, pre str
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1209,6 +1216,7 @@ func flattenFirewallPolicySrcaddr(v interface{}, d *schema.ResourceData, pre str
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1245,6 +1253,7 @@ func flattenFirewallPolicyDstaddr(v interface{}, d *schema.ResourceData, pre str
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1285,6 +1294,7 @@ func flattenFirewallPolicyInternetServiceId(v interface{}, d *schema.ResourceDat
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1321,6 +1331,7 @@ func flattenFirewallPolicyInternetServiceName(v interface{}, d *schema.ResourceD
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1357,6 +1368,7 @@ func flattenFirewallPolicyInternetServiceGroup(v interface{}, d *schema.Resource
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1393,6 +1405,7 @@ func flattenFirewallPolicyInternetServiceCustom(v interface{}, d *schema.Resourc
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1429,6 +1442,7 @@ func flattenFirewallPolicyInternetServiceCustomGroup(v interface{}, d *schema.Re
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1469,6 +1483,7 @@ func flattenFirewallPolicyInternetServiceSrcId(v interface{}, d *schema.Resource
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1505,6 +1520,7 @@ func flattenFirewallPolicyInternetServiceSrcGroup(v interface{}, d *schema.Resou
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1541,6 +1557,7 @@ func flattenFirewallPolicyInternetServiceSrcCustom(v interface{}, d *schema.Reso
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1577,6 +1594,7 @@ func flattenFirewallPolicyInternetServiceSrcCustomGroup(v interface{}, d *schema
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1625,6 +1643,7 @@ func flattenFirewallPolicyRtpAddr(v interface{}, d *schema.ResourceData, pre str
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1689,6 +1708,7 @@ func flattenFirewallPolicyService(v interface{}, d *schema.ResourceData, pre str
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -1877,6 +1897,7 @@ func flattenFirewallPolicyApplication(v interface{}, d *schema.ResourceData, pre
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1913,6 +1934,7 @@ func flattenFirewallPolicyAppCategory(v interface{}, d *schema.ResourceData, pre
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1949,6 +1971,7 @@ func flattenFirewallPolicyUrlCategory(v interface{}, d *schema.ResourceData, pre
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "id", d)
 	return result
 }
 
@@ -1985,6 +2008,7 @@ func flattenFirewallPolicyAppGroup(v interface{}, d *schema.ResourceData, pre st
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -2041,6 +2065,7 @@ func flattenFirewallPolicyPoolname(v interface{}, d *schema.ResourceData, pre st
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -2117,6 +2142,7 @@ func flattenFirewallPolicyNtlmEnabledBrowsers(v interface{}, d *schema.ResourceD
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "user_agent_string", d)
 	return result
 }
 
@@ -2169,6 +2195,7 @@ func flattenFirewallPolicyGroups(v interface{}, d *schema.ResourceData, pre stri
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -2205,6 +2232,7 @@ func flattenFirewallPolicyUsers(v interface{}, d *schema.ResourceData, pre strin
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -2241,6 +2269,7 @@ func flattenFirewallPolicyDevices(v interface{}, d *schema.ResourceData, pre str
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -2297,6 +2326,7 @@ func flattenFirewallPolicyFssoGroups(v interface{}, d *schema.ResourceData, pre 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 
@@ -2424,6 +2454,7 @@ func flattenFirewallPolicyCustomLogFields(v interface{}, d *schema.ResourceData,
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "field_id", d)
 	return result
 }
 
@@ -2496,6 +2527,7 @@ func flattenFirewallPolicySslMirrorIntf(v interface{}, d *schema.ResourceData, p
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "name", d)
 	return result
 }
 

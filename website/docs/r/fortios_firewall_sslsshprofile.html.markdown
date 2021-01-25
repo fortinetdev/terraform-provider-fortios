@@ -11,6 +11,7 @@ Configure SSL/SSH protocol options.
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - (Required) Name.
@@ -124,7 +125,7 @@ The `ssl_server` block supports:
 * `imaps_client_cert_request` - Action based on client certificate request during the IMAPS handshake.
 * `ftps_client_cert_request` - Action based on client certificate request during the FTPS handshake.
 * `ssl_other_client_cert_request` - Action based on client certificate request during an SSL protocol handshake.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

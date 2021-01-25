@@ -21,6 +21,7 @@ resource "fortios_firewallipmacbinding_setting" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `bindthroughfw` - Enable/disable use of IP/MAC binding to filter packets that would normally go through the firewall.

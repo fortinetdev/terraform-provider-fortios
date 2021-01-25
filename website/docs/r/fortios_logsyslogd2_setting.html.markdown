@@ -26,6 +26,7 @@ resource "fortios_logsyslogd2_setting" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `status` - Enable/disable remote syslog logging.
@@ -46,7 +47,7 @@ The `custom_field_name` block supports:
 * `id` - Entry ID.
 * `name` - Field name.
 * `custom` - Field custom name.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

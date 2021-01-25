@@ -42,6 +42,7 @@ resource "fortios_router_multicast" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `route_threshold` - Generate warnings when the number of multicast routes exceeds this number, must not be greater than route-limit.
@@ -123,7 +124,7 @@ The `igmp` block supports:
 * `query_interval` - Interval between queries to IGMP hosts (1 - 65535 sec, default = 125).
 * `query_timeout` - Timeout between queries before becoming querier for network (60 - 900, default = 255).
 * `router_alert_check` - Enable/disable require IGMP packets contain router alert option.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

@@ -62,6 +62,11 @@ func resourceWirelessControllerHotspot20H2QpOperatorName() *schema.Resource {
 					},
 				},
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -198,6 +203,7 @@ func flattenWirelessControllerHotspot20H2QpOperatorNameValueList(v interface{}, 
 		con += 1
 	}
 
+	dynamic_sort_subtable(result, "index", d)
 	return result
 }
 

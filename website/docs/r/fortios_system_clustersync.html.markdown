@@ -24,6 +24,7 @@ resource "fortios_system_clustersync" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `sync_id` - Sync ID.
@@ -59,7 +60,7 @@ The `custom_service` block supports:
 * `id` - Custom service ID.
 * `src_port_range` - Custom service source port range.
 * `dst_port_range` - Custom service destination port range.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

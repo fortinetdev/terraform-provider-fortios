@@ -28,6 +28,7 @@ resource "fortios_webfilter_override" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `fosid` - Override rule ID.

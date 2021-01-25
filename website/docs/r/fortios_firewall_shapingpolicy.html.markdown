@@ -48,6 +48,7 @@ resource "fortios_firewall_shapingpolicy" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `fosid` - Shaping policy ID.
@@ -169,7 +170,7 @@ The `url_category` block supports:
 The `dstintf` block supports:
 
 * `name` - Interface name.
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

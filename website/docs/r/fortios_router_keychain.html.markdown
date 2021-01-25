@@ -25,6 +25,7 @@ resource "fortios_router_keychain" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - (Required) Key-chain name.
@@ -36,7 +37,7 @@ The `key` block supports:
 * `accept_lifetime` - Lifetime of received authentication key (format: hh:mm:ss day month year).
 * `send_lifetime` - Lifetime of sent authentication key (format: hh:mm:ss day month year).
 * `key_string` - Password for the key (max. = 35 characters).
-
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 ## Attribute Reference
 

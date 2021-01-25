@@ -29,6 +29,7 @@ resource "fortios_firewallssl_setting" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `proxy_connect_timeout` - (Required) Time limit to make an internal connection to the appropriate proxy process (1 - 60 sec, default = 30).

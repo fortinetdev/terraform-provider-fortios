@@ -22,6 +22,7 @@ resource "fortios_system_proxyarp" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `fosid` - (Required) Unique integer ID of the entry.

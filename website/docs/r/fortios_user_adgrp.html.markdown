@@ -32,6 +32,7 @@ resource "fortios_user_adgrp" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - (Required) Name.

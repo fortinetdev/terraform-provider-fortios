@@ -42,6 +42,7 @@ resource "fortios_user_krbkeytab" "trname" {
 
 ## Argument Reference
 
+
 The following arguments are supported:
 
 * `name` - Kerberos keytab entry name.
