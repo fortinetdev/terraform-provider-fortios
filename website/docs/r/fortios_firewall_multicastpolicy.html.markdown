@@ -38,10 +38,12 @@ resource "fortios_firewall_multicastpolicy" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `fosid` - Policy ID.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `name` - Policy name.
+* `comments` - Comment.
 * `status` - Enable/disable this policy.
 * `logtraffic` - Enable/disable logging traffic accepted by this policy.
 * `srcintf` - (Required) Source interface name.
@@ -55,6 +57,7 @@ The following arguments are supported:
 * `protocol` - Integer value for the protocol type as defined by IANA (0 - 255, default = 0).
 * `start_port` - Integer value for starting TCP/UDP/SCTP destination port in range (1 - 65535, default = 1).
 * `end_port` -  Integer value for ending TCP/UDP/SCTP destination port in range (1 - 65535, default = 1).
+* `auto_asic_offload` - Enable/disable offloading policy traffic for hardware acceleration.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `srcaddr` block supports:
