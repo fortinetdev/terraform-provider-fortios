@@ -19,7 +19,6 @@ resource "fortios_wirelesscontrollerhotspot20_anqproamingconsortium" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Roaming consortium name.
