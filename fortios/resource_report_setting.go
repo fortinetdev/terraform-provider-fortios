@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -65,7 +66,7 @@ func resourceReportSettingUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectReportSetting(d)
+	obj, err := getObjectReportSetting(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating ReportSetting resource while getting object: %v", err)
 	}
@@ -118,61 +119,61 @@ func resourceReportSettingRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectReportSetting(d, o)
+	err = refreshObjectReportSetting(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading ReportSetting resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenReportSettingPdfReport(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenReportSettingPdfReport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenReportSettingFortiview(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenReportSettingFortiview(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenReportSettingReportSource(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenReportSettingReportSource(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenReportSettingWebBrowsingThreshold(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenReportSettingWebBrowsingThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenReportSettingTopN(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenReportSettingTopN(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectReportSetting(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectReportSetting(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("pdf_report", flattenReportSettingPdfReport(o["pdf-report"], d, "pdf_report")); err != nil {
+	if err = d.Set("pdf_report", flattenReportSettingPdfReport(o["pdf-report"], d, "pdf_report", sv)); err != nil {
 		if !fortiAPIPatch(o["pdf-report"]) {
 			return fmt.Errorf("Error reading pdf_report: %v", err)
 		}
 	}
 
-	if err = d.Set("fortiview", flattenReportSettingFortiview(o["fortiview"], d, "fortiview")); err != nil {
+	if err = d.Set("fortiview", flattenReportSettingFortiview(o["fortiview"], d, "fortiview", sv)); err != nil {
 		if !fortiAPIPatch(o["fortiview"]) {
 			return fmt.Errorf("Error reading fortiview: %v", err)
 		}
 	}
 
-	if err = d.Set("report_source", flattenReportSettingReportSource(o["report-source"], d, "report_source")); err != nil {
+	if err = d.Set("report_source", flattenReportSettingReportSource(o["report-source"], d, "report_source", sv)); err != nil {
 		if !fortiAPIPatch(o["report-source"]) {
 			return fmt.Errorf("Error reading report_source: %v", err)
 		}
 	}
 
-	if err = d.Set("web_browsing_threshold", flattenReportSettingWebBrowsingThreshold(o["web-browsing-threshold"], d, "web_browsing_threshold")); err != nil {
+	if err = d.Set("web_browsing_threshold", flattenReportSettingWebBrowsingThreshold(o["web-browsing-threshold"], d, "web_browsing_threshold", sv)); err != nil {
 		if !fortiAPIPatch(o["web-browsing-threshold"]) {
 			return fmt.Errorf("Error reading web_browsing_threshold: %v", err)
 		}
 	}
 
-	if err = d.Set("top_n", flattenReportSettingTopN(o["top-n"], d, "top_n")); err != nil {
+	if err = d.Set("top_n", flattenReportSettingTopN(o["top-n"], d, "top_n", sv)); err != nil {
 		if !fortiAPIPatch(o["top-n"]) {
 			return fmt.Errorf("Error reading top_n: %v", err)
 		}
@@ -184,34 +185,35 @@ func refreshObjectReportSetting(d *schema.ResourceData, o map[string]interface{}
 func flattenReportSettingFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandReportSettingPdfReport(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandReportSettingPdfReport(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandReportSettingFortiview(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandReportSettingFortiview(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandReportSettingReportSource(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandReportSettingReportSource(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandReportSettingWebBrowsingThreshold(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandReportSettingWebBrowsingThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandReportSettingTopN(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandReportSettingTopN(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectReportSetting(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectReportSetting(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("pdf_report"); ok {
-		t, err := expandReportSettingPdfReport(d, v, "pdf_report")
+
+		t, err := expandReportSettingPdfReport(d, v, "pdf_report", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -220,7 +222,8 @@ func getObjectReportSetting(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOk("fortiview"); ok {
-		t, err := expandReportSettingFortiview(d, v, "fortiview")
+
+		t, err := expandReportSettingFortiview(d, v, "fortiview", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -229,7 +232,8 @@ func getObjectReportSetting(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOk("report_source"); ok {
-		t, err := expandReportSettingReportSource(d, v, "report_source")
+
+		t, err := expandReportSettingReportSource(d, v, "report_source", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -238,7 +242,8 @@ func getObjectReportSetting(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOk("web_browsing_threshold"); ok {
-		t, err := expandReportSettingWebBrowsingThreshold(d, v, "web_browsing_threshold")
+
+		t, err := expandReportSettingWebBrowsingThreshold(d, v, "web_browsing_threshold", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -247,7 +252,8 @@ func getObjectReportSetting(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOk("top_n"); ok {
-		t, err := expandReportSettingTopN(d, v, "top_n")
+
+		t, err := expandReportSettingTopN(d, v, "top_n", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
