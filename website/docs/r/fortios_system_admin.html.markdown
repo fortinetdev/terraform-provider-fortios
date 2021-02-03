@@ -35,7 +35,6 @@ resource "fortios_system_admin" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - User name.
@@ -81,6 +80,8 @@ The following arguments are supported:
 * `force_password_change` - Enable/disable force password change on next login.
 * `gui_dashboard` - GUI dashboards. The structure of `gui_dashboard` block is documented below.
 * `two_factor` - Enable/disable two-factor authentication.
+* `two_factor_authentication` - Authentication method by FortiToken Cloud.
+* `two_factor_notification` - Notification method for user activation by FortiToken Cloud.
 * `fortitoken` - This administrator's FortiToken serial number.
 * `email_to` - This administrator's email address.
 * `sms_server` - Send SMS messages using the FortiGuard SMS server or a custom server.
