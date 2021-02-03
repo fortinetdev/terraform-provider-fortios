@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -74,7 +75,7 @@ func resourceSystemDedicatedMgmtUpdate(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemDedicatedMgmt(d)
+	obj, err := getObjectSystemDedicatedMgmt(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemDedicatedMgmt resource while getting object: %v", err)
 	}
@@ -127,81 +128,81 @@ func resourceSystemDedicatedMgmtRead(d *schema.ResourceData, m interface{}) erro
 		return nil
 	}
 
-	err = refreshObjectSystemDedicatedMgmt(d, o)
+	err = refreshObjectSystemDedicatedMgmt(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemDedicatedMgmt resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemDedicatedMgmtStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemDedicatedMgmtStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemDedicatedMgmtInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemDedicatedMgmtInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemDedicatedMgmtDefaultGateway(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemDedicatedMgmtDefaultGateway(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemDedicatedMgmtDhcpServer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemDedicatedMgmtDhcpServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemDedicatedMgmtDhcpNetmask(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemDedicatedMgmtDhcpNetmask(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemDedicatedMgmtDhcpStartIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemDedicatedMgmtDhcpStartIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemDedicatedMgmtDhcpEndIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemDedicatedMgmtDhcpEndIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemDedicatedMgmt(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemDedicatedMgmt(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("status", flattenSystemDedicatedMgmtStatus(o["status"], d, "status")); err != nil {
+	if err = d.Set("status", flattenSystemDedicatedMgmtStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
 		}
 	}
 
-	if err = d.Set("interface", flattenSystemDedicatedMgmtInterface(o["interface"], d, "interface")); err != nil {
+	if err = d.Set("interface", flattenSystemDedicatedMgmtInterface(o["interface"], d, "interface", sv)); err != nil {
 		if !fortiAPIPatch(o["interface"]) {
 			return fmt.Errorf("Error reading interface: %v", err)
 		}
 	}
 
-	if err = d.Set("default_gateway", flattenSystemDedicatedMgmtDefaultGateway(o["default-gateway"], d, "default_gateway")); err != nil {
+	if err = d.Set("default_gateway", flattenSystemDedicatedMgmtDefaultGateway(o["default-gateway"], d, "default_gateway", sv)); err != nil {
 		if !fortiAPIPatch(o["default-gateway"]) {
 			return fmt.Errorf("Error reading default_gateway: %v", err)
 		}
 	}
 
-	if err = d.Set("dhcp_server", flattenSystemDedicatedMgmtDhcpServer(o["dhcp-server"], d, "dhcp_server")); err != nil {
+	if err = d.Set("dhcp_server", flattenSystemDedicatedMgmtDhcpServer(o["dhcp-server"], d, "dhcp_server", sv)); err != nil {
 		if !fortiAPIPatch(o["dhcp-server"]) {
 			return fmt.Errorf("Error reading dhcp_server: %v", err)
 		}
 	}
 
-	if err = d.Set("dhcp_netmask", flattenSystemDedicatedMgmtDhcpNetmask(o["dhcp-netmask"], d, "dhcp_netmask")); err != nil {
+	if err = d.Set("dhcp_netmask", flattenSystemDedicatedMgmtDhcpNetmask(o["dhcp-netmask"], d, "dhcp_netmask", sv)); err != nil {
 		if !fortiAPIPatch(o["dhcp-netmask"]) {
 			return fmt.Errorf("Error reading dhcp_netmask: %v", err)
 		}
 	}
 
-	if err = d.Set("dhcp_start_ip", flattenSystemDedicatedMgmtDhcpStartIp(o["dhcp-start-ip"], d, "dhcp_start_ip")); err != nil {
+	if err = d.Set("dhcp_start_ip", flattenSystemDedicatedMgmtDhcpStartIp(o["dhcp-start-ip"], d, "dhcp_start_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["dhcp-start-ip"]) {
 			return fmt.Errorf("Error reading dhcp_start_ip: %v", err)
 		}
 	}
 
-	if err = d.Set("dhcp_end_ip", flattenSystemDedicatedMgmtDhcpEndIp(o["dhcp-end-ip"], d, "dhcp_end_ip")); err != nil {
+	if err = d.Set("dhcp_end_ip", flattenSystemDedicatedMgmtDhcpEndIp(o["dhcp-end-ip"], d, "dhcp_end_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["dhcp-end-ip"]) {
 			return fmt.Errorf("Error reading dhcp_end_ip: %v", err)
 		}
@@ -213,42 +214,43 @@ func refreshObjectSystemDedicatedMgmt(d *schema.ResourceData, o map[string]inter
 func flattenSystemDedicatedMgmtFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemDedicatedMgmtStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemDedicatedMgmtStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemDedicatedMgmtInterface(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemDedicatedMgmtInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemDedicatedMgmtDefaultGateway(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemDedicatedMgmtDefaultGateway(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemDedicatedMgmtDhcpServer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemDedicatedMgmtDhcpServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemDedicatedMgmtDhcpNetmask(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemDedicatedMgmtDhcpNetmask(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemDedicatedMgmtDhcpStartIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemDedicatedMgmtDhcpStartIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemDedicatedMgmtDhcpEndIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemDedicatedMgmtDhcpEndIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemDedicatedMgmt(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemDedicatedMgmt(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
-		t, err := expandSystemDedicatedMgmtStatus(d, v, "status")
+
+		t, err := expandSystemDedicatedMgmtStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -257,7 +259,8 @@ func getObjectSystemDedicatedMgmt(d *schema.ResourceData) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
-		t, err := expandSystemDedicatedMgmtInterface(d, v, "interface")
+
+		t, err := expandSystemDedicatedMgmtInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -266,7 +269,8 @@ func getObjectSystemDedicatedMgmt(d *schema.ResourceData) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("default_gateway"); ok {
-		t, err := expandSystemDedicatedMgmtDefaultGateway(d, v, "default_gateway")
+
+		t, err := expandSystemDedicatedMgmtDefaultGateway(d, v, "default_gateway", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -275,7 +279,8 @@ func getObjectSystemDedicatedMgmt(d *schema.ResourceData) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("dhcp_server"); ok {
-		t, err := expandSystemDedicatedMgmtDhcpServer(d, v, "dhcp_server")
+
+		t, err := expandSystemDedicatedMgmtDhcpServer(d, v, "dhcp_server", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -284,7 +289,8 @@ func getObjectSystemDedicatedMgmt(d *schema.ResourceData) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("dhcp_netmask"); ok {
-		t, err := expandSystemDedicatedMgmtDhcpNetmask(d, v, "dhcp_netmask")
+
+		t, err := expandSystemDedicatedMgmtDhcpNetmask(d, v, "dhcp_netmask", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -293,7 +299,8 @@ func getObjectSystemDedicatedMgmt(d *schema.ResourceData) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("dhcp_start_ip"); ok {
-		t, err := expandSystemDedicatedMgmtDhcpStartIp(d, v, "dhcp_start_ip")
+
+		t, err := expandSystemDedicatedMgmtDhcpStartIp(d, v, "dhcp_start_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -302,7 +309,8 @@ func getObjectSystemDedicatedMgmt(d *schema.ResourceData) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("dhcp_end_ip"); ok {
-		t, err := expandSystemDedicatedMgmtDhcpEndIp(d, v, "dhcp_end_ip")
+
+		t, err := expandSystemDedicatedMgmtDhcpEndIp(d, v, "dhcp_end_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
