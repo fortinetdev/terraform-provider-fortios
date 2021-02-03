@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -61,7 +62,7 @@ func resourceFirewallScheduleRecurringCreate(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectFirewallScheduleRecurring(d)
+	obj, err := getObjectFirewallScheduleRecurring(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallScheduleRecurring resource while getting object: %v", err)
 	}
@@ -86,7 +87,7 @@ func resourceFirewallScheduleRecurringUpdate(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectFirewallScheduleRecurring(d)
+	obj, err := getObjectFirewallScheduleRecurring(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallScheduleRecurring resource while getting object: %v", err)
 	}
@@ -139,61 +140,61 @@ func resourceFirewallScheduleRecurringRead(d *schema.ResourceData, m interface{}
 		return nil
 	}
 
-	err = refreshObjectFirewallScheduleRecurring(d, o)
+	err = refreshObjectFirewallScheduleRecurring(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallScheduleRecurring resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenFirewallScheduleRecurringName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallScheduleRecurringName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallScheduleRecurringStart(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallScheduleRecurringStart(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallScheduleRecurringEnd(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallScheduleRecurringEnd(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallScheduleRecurringDay(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallScheduleRecurringDay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallScheduleRecurringColor(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallScheduleRecurringColor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectFirewallScheduleRecurring(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectFirewallScheduleRecurring(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenFirewallScheduleRecurringName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenFirewallScheduleRecurringName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("start", flattenFirewallScheduleRecurringStart(o["start"], d, "start")); err != nil {
+	if err = d.Set("start", flattenFirewallScheduleRecurringStart(o["start"], d, "start", sv)); err != nil {
 		if !fortiAPIPatch(o["start"]) {
 			return fmt.Errorf("Error reading start: %v", err)
 		}
 	}
 
-	if err = d.Set("end", flattenFirewallScheduleRecurringEnd(o["end"], d, "end")); err != nil {
+	if err = d.Set("end", flattenFirewallScheduleRecurringEnd(o["end"], d, "end", sv)); err != nil {
 		if !fortiAPIPatch(o["end"]) {
 			return fmt.Errorf("Error reading end: %v", err)
 		}
 	}
 
-	if err = d.Set("day", flattenFirewallScheduleRecurringDay(o["day"], d, "day")); err != nil {
+	if err = d.Set("day", flattenFirewallScheduleRecurringDay(o["day"], d, "day", sv)); err != nil {
 		if !fortiAPIPatch(o["day"]) {
 			return fmt.Errorf("Error reading day: %v", err)
 		}
 	}
 
-	if err = d.Set("color", flattenFirewallScheduleRecurringColor(o["color"], d, "color")); err != nil {
+	if err = d.Set("color", flattenFirewallScheduleRecurringColor(o["color"], d, "color", sv)); err != nil {
 		if !fortiAPIPatch(o["color"]) {
 			return fmt.Errorf("Error reading color: %v", err)
 		}
@@ -205,34 +206,35 @@ func refreshObjectFirewallScheduleRecurring(d *schema.ResourceData, o map[string
 func flattenFirewallScheduleRecurringFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandFirewallScheduleRecurringName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallScheduleRecurringName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallScheduleRecurringStart(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallScheduleRecurringStart(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallScheduleRecurringEnd(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallScheduleRecurringEnd(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallScheduleRecurringDay(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallScheduleRecurringDay(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallScheduleRecurringColor(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallScheduleRecurringColor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectFirewallScheduleRecurring(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectFirewallScheduleRecurring(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandFirewallScheduleRecurringName(d, v, "name")
+
+		t, err := expandFirewallScheduleRecurringName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -241,7 +243,8 @@ func getObjectFirewallScheduleRecurring(d *schema.ResourceData) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("start"); ok {
-		t, err := expandFirewallScheduleRecurringStart(d, v, "start")
+
+		t, err := expandFirewallScheduleRecurringStart(d, v, "start", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -250,7 +253,8 @@ func getObjectFirewallScheduleRecurring(d *schema.ResourceData) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("end"); ok {
-		t, err := expandFirewallScheduleRecurringEnd(d, v, "end")
+
+		t, err := expandFirewallScheduleRecurringEnd(d, v, "end", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -259,7 +263,8 @@ func getObjectFirewallScheduleRecurring(d *schema.ResourceData) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("day"); ok {
-		t, err := expandFirewallScheduleRecurringDay(d, v, "day")
+
+		t, err := expandFirewallScheduleRecurringDay(d, v, "day", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -268,7 +273,8 @@ func getObjectFirewallScheduleRecurring(d *schema.ResourceData) (*map[string]int
 	}
 
 	if v, ok := d.GetOkExists("color"); ok {
-		t, err := expandFirewallScheduleRecurringColor(d, v, "color")
+
+		t, err := expandFirewallScheduleRecurringColor(d, v, "color", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
