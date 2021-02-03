@@ -24,7 +24,6 @@ resource "fortios_system_nat64" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `status` - Enable/disable NAT64 (default = disable).
