@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -68,7 +69,7 @@ func resourceVpnIpsecConcentratorCreate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectVpnIpsecConcentrator(d)
+	obj, err := getObjectVpnIpsecConcentrator(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating VpnIpsecConcentrator resource while getting object: %v", err)
 	}
@@ -93,7 +94,7 @@ func resourceVpnIpsecConcentratorUpdate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectVpnIpsecConcentrator(d)
+	obj, err := getObjectVpnIpsecConcentrator(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating VpnIpsecConcentrator resource while getting object: %v", err)
 	}
@@ -146,22 +147,22 @@ func resourceVpnIpsecConcentratorRead(d *schema.ResourceData, m interface{}) err
 		return nil
 	}
 
-	err = refreshObjectVpnIpsecConcentrator(d, o)
+	err = refreshObjectVpnIpsecConcentrator(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading VpnIpsecConcentrator resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenVpnIpsecConcentratorName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnIpsecConcentratorName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenVpnIpsecConcentratorSrcCheck(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnIpsecConcentratorSrcCheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenVpnIpsecConcentratorMember(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenVpnIpsecConcentratorMember(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -182,7 +183,8 @@ func flattenVpnIpsecConcentratorMember(v interface{}, d *schema.ResourceData, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenVpnIpsecConcentratorMemberName(i["name"], d, pre_append)
+
+			tmp["name"] = flattenVpnIpsecConcentratorMemberName(i["name"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -194,34 +196,34 @@ func flattenVpnIpsecConcentratorMember(v interface{}, d *schema.ResourceData, pr
 	return result
 }
 
-func flattenVpnIpsecConcentratorMemberName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnIpsecConcentratorMemberName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectVpnIpsecConcentrator(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectVpnIpsecConcentrator(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenVpnIpsecConcentratorName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenVpnIpsecConcentratorName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("src_check", flattenVpnIpsecConcentratorSrcCheck(o["src-check"], d, "src_check")); err != nil {
+	if err = d.Set("src_check", flattenVpnIpsecConcentratorSrcCheck(o["src-check"], d, "src_check", sv)); err != nil {
 		if !fortiAPIPatch(o["src-check"]) {
 			return fmt.Errorf("Error reading src_check: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("member", flattenVpnIpsecConcentratorMember(o["member"], d, "member")); err != nil {
+		if err = d.Set("member", flattenVpnIpsecConcentratorMember(o["member"], d, "member", sv)); err != nil {
 			if !fortiAPIPatch(o["member"]) {
 				return fmt.Errorf("Error reading member: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("member"); ok {
-			if err = d.Set("member", flattenVpnIpsecConcentratorMember(o["member"], d, "member")); err != nil {
+			if err = d.Set("member", flattenVpnIpsecConcentratorMember(o["member"], d, "member", sv)); err != nil {
 				if !fortiAPIPatch(o["member"]) {
 					return fmt.Errorf("Error reading member: %v", err)
 				}
@@ -235,18 +237,18 @@ func refreshObjectVpnIpsecConcentrator(d *schema.ResourceData, o map[string]inte
 func flattenVpnIpsecConcentratorFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandVpnIpsecConcentratorName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnIpsecConcentratorName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandVpnIpsecConcentratorSrcCheck(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnIpsecConcentratorSrcCheck(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandVpnIpsecConcentratorMember(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnIpsecConcentratorMember(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -262,7 +264,8 @@ func expandVpnIpsecConcentratorMember(d *schema.ResourceData, v interface{}, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandVpnIpsecConcentratorMemberName(d, i["name"], pre_append)
+
+			tmp["name"], _ = expandVpnIpsecConcentratorMemberName(d, i["name"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -273,15 +276,16 @@ func expandVpnIpsecConcentratorMember(d *schema.ResourceData, v interface{}, pre
 	return result, nil
 }
 
-func expandVpnIpsecConcentratorMemberName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnIpsecConcentratorMemberName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectVpnIpsecConcentrator(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectVpnIpsecConcentrator(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandVpnIpsecConcentratorName(d, v, "name")
+
+		t, err := expandVpnIpsecConcentratorName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -290,7 +294,8 @@ func getObjectVpnIpsecConcentrator(d *schema.ResourceData) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("src_check"); ok {
-		t, err := expandVpnIpsecConcentratorSrcCheck(d, v, "src_check")
+
+		t, err := expandVpnIpsecConcentratorSrcCheck(d, v, "src_check", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -299,7 +304,8 @@ func getObjectVpnIpsecConcentrator(d *schema.ResourceData) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("member"); ok {
-		t, err := expandVpnIpsecConcentratorMember(d, v, "member")
+
+		t, err := expandVpnIpsecConcentratorMember(d, v, "member", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
