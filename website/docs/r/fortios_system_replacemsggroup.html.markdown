@@ -21,7 +21,6 @@ resource "fortios_system_replacemsggroup" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Group name.
@@ -45,6 +44,7 @@ The following arguments are supported:
 * `utm` - Replacement message table entries. The structure of `utm` block is documented below.
 * `custom_message` - Replacement message table entries. The structure of `custom_message` block is documented below.
 * `icap` - Replacement message table entries. The structure of `icap` block is documented below.
+* `automation` - Replacement message table entries. The structure of `automation` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `mail` block supports:
@@ -167,6 +167,13 @@ The `custom_message` block supports:
 * `format` - Format flag.
 
 The `icap` block supports:
+
+* `msg_type` - Message type.
+* `buffer` - Message string.
+* `header` - Header flag.
+* `format` - Format flag.
+
+The `automation` block supports:
 
 * `msg_type` - Message type.
 * `buffer` - Message string.
