@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -49,7 +50,7 @@ func resourceWanoptPeerCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWanoptPeer(d)
+	obj, err := getObjectWanoptPeer(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WanoptPeer resource while getting object: %v", err)
 	}
@@ -74,7 +75,7 @@ func resourceWanoptPeerUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWanoptPeer(d)
+	obj, err := getObjectWanoptPeer(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WanoptPeer resource while getting object: %v", err)
 	}
@@ -127,31 +128,31 @@ func resourceWanoptPeerRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectWanoptPeer(d, o)
+	err = refreshObjectWanoptPeer(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading WanoptPeer resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenWanoptPeerPeerHostId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptPeerPeerHostId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptPeerIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptPeerIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectWanoptPeer(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectWanoptPeer(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("peer_host_id", flattenWanoptPeerPeerHostId(o["peer-host-id"], d, "peer_host_id")); err != nil {
+	if err = d.Set("peer_host_id", flattenWanoptPeerPeerHostId(o["peer-host-id"], d, "peer_host_id", sv)); err != nil {
 		if !fortiAPIPatch(o["peer-host-id"]) {
 			return fmt.Errorf("Error reading peer_host_id: %v", err)
 		}
 	}
 
-	if err = d.Set("ip", flattenWanoptPeerIp(o["ip"], d, "ip")); err != nil {
+	if err = d.Set("ip", flattenWanoptPeerIp(o["ip"], d, "ip", sv)); err != nil {
 		if !fortiAPIPatch(o["ip"]) {
 			return fmt.Errorf("Error reading ip: %v", err)
 		}
@@ -163,22 +164,23 @@ func refreshObjectWanoptPeer(d *schema.ResourceData, o map[string]interface{}) e
 func flattenWanoptPeerFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandWanoptPeerPeerHostId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptPeerPeerHostId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptPeerIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptPeerIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectWanoptPeer(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectWanoptPeer(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("peer_host_id"); ok {
-		t, err := expandWanoptPeerPeerHostId(d, v, "peer_host_id")
+
+		t, err := expandWanoptPeerPeerHostId(d, v, "peer_host_id", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -187,7 +189,8 @@ func getObjectWanoptPeer(d *schema.ResourceData) (*map[string]interface{}, error
 	}
 
 	if v, ok := d.GetOk("ip"); ok {
-		t, err := expandWanoptPeerIp(d, v, "ip")
+
+		t, err := expandWanoptPeerIp(d, v, "ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
