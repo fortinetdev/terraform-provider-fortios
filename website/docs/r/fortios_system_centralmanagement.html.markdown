@@ -12,7 +12,7 @@ Configure central management.
 ## Example Usage
 
 ```hcl
-resource "fortios_system_centralmanagement" "trname" {
+resource "fortios_system_centralmanagement" "trname1" {
   allow_monitor                 = "enable"
   allow_push_configuration      = "enable"
   allow_push_firmware           = "enable"
@@ -27,10 +27,23 @@ resource "fortios_system_centralmanagement" "trname" {
   type                          = "fortimanager"
   vdom                          = "root"
 }
+
+resource "fortios_system_centralmanagement" "trname2" {
+  allow_monitor                 = "enable"
+  allow_push_configuration      = "enable"
+  allow_push_firmware           = "enable"
+  allow_remote_firmware_upgrade = "enable"
+  enc_algorithm                 = "high"
+  fmg                           = ""192.168.52.177""
+  include_default_servers       = "enable"
+  mode                          = "normal"
+  type                          = "fortimanager"
+  vdom                          = "root"
+}
+
 ```
 
 ## Argument Reference
-
 
 The following arguments are supported:
 
@@ -46,10 +59,15 @@ The following arguments are supported:
 * `fmg` - IP address or FQDN of the FortiManager.
 * `fmg_source_ip` - IPv4 source address that this FortiGate uses when communicating with FortiManager.
 * `fmg_source_ip6` - IPv6 source address that this FortiGate uses when communicating with FortiManager.
+* `local_cert` - Certificate to be used by FGFM protocol.
+* `ca_cert` - CA certificate to be used by FGFM protocol.
 * `vdom` - Virtual domain (VDOM) name to use when communicating with FortiManager.
 * `server_list` - Additional severs that the FortiGate can use for updates (for AV, IPS, updates) and ratings (for web filter and antispam ratings) servers. The structure of `server_list` block is documented below.
+* `fmg_update_port` - Port used to communicate with FortiManager that is acting as a FortiGuard update server.
 * `include_default_servers` - Enable/disable inclusion of public FortiGuard servers in the override server list.
 * `enc_algorithm` - Encryption strength for communications between the FortiGate and central management.
+* `interface_select_method` - Specify how to select outgoing interface to reach server.
+* `interface` - Specify outgoing interface to reach server.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `server_list` block supports:
