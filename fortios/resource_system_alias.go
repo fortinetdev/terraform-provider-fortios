@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -49,7 +50,7 @@ func resourceSystemAliasCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemAlias(d)
+	obj, err := getObjectSystemAlias(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemAlias resource while getting object: %v", err)
 	}
@@ -74,7 +75,7 @@ func resourceSystemAliasUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemAlias(d)
+	obj, err := getObjectSystemAlias(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAlias resource while getting object: %v", err)
 	}
@@ -127,31 +128,31 @@ func resourceSystemAliasRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectSystemAlias(d, o)
+	err = refreshObjectSystemAlias(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemAlias resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemAliasName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAliasName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAliasCommand(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAliasCommand(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemAlias(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemAlias(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenSystemAliasName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenSystemAliasName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("command", flattenSystemAliasCommand(o["command"], d, "command")); err != nil {
+	if err = d.Set("command", flattenSystemAliasCommand(o["command"], d, "command", sv)); err != nil {
 		if !fortiAPIPatch(o["command"]) {
 			return fmt.Errorf("Error reading command: %v", err)
 		}
@@ -163,22 +164,23 @@ func refreshObjectSystemAlias(d *schema.ResourceData, o map[string]interface{}) 
 func flattenSystemAliasFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemAliasName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAliasName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAliasCommand(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAliasCommand(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemAlias(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemAlias(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandSystemAliasName(d, v, "name")
+
+		t, err := expandSystemAliasName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -187,7 +189,8 @@ func getObjectSystemAlias(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("command"); ok {
-		t, err := expandSystemAliasCommand(d, v, "command")
+
+		t, err := expandSystemAliasCommand(d, v, "command", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
