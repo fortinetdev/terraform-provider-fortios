@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -92,7 +93,7 @@ func resourceRouterAccessListCreate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectRouterAccessList(d)
+	obj, err := getObjectRouterAccessList(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating RouterAccessList resource while getting object: %v", err)
 	}
@@ -117,7 +118,7 @@ func resourceRouterAccessListUpdate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectRouterAccessList(d)
+	obj, err := getObjectRouterAccessList(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterAccessList resource while getting object: %v", err)
 	}
@@ -170,22 +171,22 @@ func resourceRouterAccessListRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectRouterAccessList(d, o)
+	err = refreshObjectRouterAccessList(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading RouterAccessList resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenRouterAccessListName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterAccessListName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterAccessListComments(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterAccessListComments(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterAccessListRule(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenRouterAccessListRule(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -206,32 +207,38 @@ func flattenRouterAccessListRule(v interface{}, d *schema.ResourceData, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenRouterAccessListRuleId(i["id"], d, pre_append)
+
+			tmp["id"] = flattenRouterAccessListRuleId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenRouterAccessListRuleAction(i["action"], d, pre_append)
+
+			tmp["action"] = flattenRouterAccessListRuleAction(i["action"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
 		if _, ok := i["prefix"]; ok {
-			tmp["prefix"] = flattenRouterAccessListRulePrefix(i["prefix"], d, pre_append)
+
+			tmp["prefix"] = flattenRouterAccessListRulePrefix(i["prefix"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "wildcard"
 		if _, ok := i["wildcard"]; ok {
-			tmp["wildcard"] = flattenRouterAccessListRuleWildcard(i["wildcard"], d, pre_append)
+
+			tmp["wildcard"] = flattenRouterAccessListRuleWildcard(i["wildcard"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "exact_match"
 		if _, ok := i["exact-match"]; ok {
-			tmp["exact_match"] = flattenRouterAccessListRuleExactMatch(i["exact-match"], d, pre_append)
+
+			tmp["exact_match"] = flattenRouterAccessListRuleExactMatch(i["exact-match"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "flags"
 		if _, ok := i["flags"]; ok {
-			tmp["flags"] = flattenRouterAccessListRuleFlags(i["flags"], d, pre_append)
+
+			tmp["flags"] = flattenRouterAccessListRuleFlags(i["flags"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -243,54 +250,54 @@ func flattenRouterAccessListRule(v interface{}, d *schema.ResourceData, pre stri
 	return result
 }
 
-func flattenRouterAccessListRuleId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterAccessListRuleId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterAccessListRuleAction(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterAccessListRuleAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterAccessListRulePrefix(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterAccessListRulePrefix(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterAccessListRuleWildcard(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterAccessListRuleWildcard(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterAccessListRuleExactMatch(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterAccessListRuleExactMatch(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterAccessListRuleFlags(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterAccessListRuleFlags(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectRouterAccessList(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectRouterAccessList(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenRouterAccessListName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenRouterAccessListName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("comments", flattenRouterAccessListComments(o["comments"], d, "comments")); err != nil {
+	if err = d.Set("comments", flattenRouterAccessListComments(o["comments"], d, "comments", sv)); err != nil {
 		if !fortiAPIPatch(o["comments"]) {
 			return fmt.Errorf("Error reading comments: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("rule", flattenRouterAccessListRule(o["rule"], d, "rule")); err != nil {
+		if err = d.Set("rule", flattenRouterAccessListRule(o["rule"], d, "rule", sv)); err != nil {
 			if !fortiAPIPatch(o["rule"]) {
 				return fmt.Errorf("Error reading rule: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("rule"); ok {
-			if err = d.Set("rule", flattenRouterAccessListRule(o["rule"], d, "rule")); err != nil {
+			if err = d.Set("rule", flattenRouterAccessListRule(o["rule"], d, "rule", sv)); err != nil {
 				if !fortiAPIPatch(o["rule"]) {
 					return fmt.Errorf("Error reading rule: %v", err)
 				}
@@ -304,18 +311,18 @@ func refreshObjectRouterAccessList(d *schema.ResourceData, o map[string]interfac
 func flattenRouterAccessListFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandRouterAccessListName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterAccessListName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandRouterAccessListComments(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterAccessListComments(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandRouterAccessListRule(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterAccessListRule(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -331,32 +338,38 @@ func expandRouterAccessListRule(d *schema.ResourceData, v interface{}, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandRouterAccessListRuleId(d, i["id"], pre_append)
+
+			tmp["id"], _ = expandRouterAccessListRuleId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["action"], _ = expandRouterAccessListRuleAction(d, i["action"], pre_append)
+
+			tmp["action"], _ = expandRouterAccessListRuleAction(d, i["action"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["prefix"], _ = expandRouterAccessListRulePrefix(d, i["prefix"], pre_append)
+
+			tmp["prefix"], _ = expandRouterAccessListRulePrefix(d, i["prefix"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "wildcard"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["wildcard"], _ = expandRouterAccessListRuleWildcard(d, i["wildcard"], pre_append)
+
+			tmp["wildcard"], _ = expandRouterAccessListRuleWildcard(d, i["wildcard"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "exact_match"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["exact-match"], _ = expandRouterAccessListRuleExactMatch(d, i["exact_match"], pre_append)
+
+			tmp["exact-match"], _ = expandRouterAccessListRuleExactMatch(d, i["exact_match"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "flags"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["flags"], _ = expandRouterAccessListRuleFlags(d, i["flags"], pre_append)
+
+			tmp["flags"], _ = expandRouterAccessListRuleFlags(d, i["flags"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -367,35 +380,36 @@ func expandRouterAccessListRule(d *schema.ResourceData, v interface{}, pre strin
 	return result, nil
 }
 
-func expandRouterAccessListRuleId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterAccessListRuleId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandRouterAccessListRuleAction(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterAccessListRuleAction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandRouterAccessListRulePrefix(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterAccessListRulePrefix(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandRouterAccessListRuleWildcard(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterAccessListRuleWildcard(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandRouterAccessListRuleExactMatch(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterAccessListRuleExactMatch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandRouterAccessListRuleFlags(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterAccessListRuleFlags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectRouterAccessList(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectRouterAccessList(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandRouterAccessListName(d, v, "name")
+
+		t, err := expandRouterAccessListName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -404,7 +418,8 @@ func getObjectRouterAccessList(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-		t, err := expandRouterAccessListComments(d, v, "comments")
+
+		t, err := expandRouterAccessListComments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -413,7 +428,8 @@ func getObjectRouterAccessList(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("rule"); ok {
-		t, err := expandRouterAccessListRule(d, v, "rule")
+
+		t, err := expandRouterAccessListRule(d, v, "rule", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
