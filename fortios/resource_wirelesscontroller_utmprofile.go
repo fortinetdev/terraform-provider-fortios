@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -84,7 +85,7 @@ func resourceWirelessControllerUtmProfileCreate(d *schema.ResourceData, m interf
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWirelessControllerUtmProfile(d)
+	obj, err := getObjectWirelessControllerUtmProfile(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WirelessControllerUtmProfile resource while getting object: %v", err)
 	}
@@ -109,7 +110,7 @@ func resourceWirelessControllerUtmProfileUpdate(d *schema.ResourceData, m interf
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWirelessControllerUtmProfile(d)
+	obj, err := getObjectWirelessControllerUtmProfile(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerUtmProfile resource while getting object: %v", err)
 	}
@@ -162,91 +163,91 @@ func resourceWirelessControllerUtmProfileRead(d *schema.ResourceData, m interfac
 		return nil
 	}
 
-	err = refreshObjectWirelessControllerUtmProfile(d, o)
+	err = refreshObjectWirelessControllerUtmProfile(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading WirelessControllerUtmProfile resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenWirelessControllerUtmProfileName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerUtmProfileName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerUtmProfileComment(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerUtmProfileComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerUtmProfileUtmLog(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerUtmProfileUtmLog(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerUtmProfileIpsSensor(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerUtmProfileIpsSensor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerUtmProfileApplicationList(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerUtmProfileApplicationList(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerUtmProfileAntivirusProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerUtmProfileAntivirusProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerUtmProfileWebfilterProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerUtmProfileWebfilterProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerUtmProfileScanBotnetConnections(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerUtmProfileScanBotnetConnections(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectWirelessControllerUtmProfile(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectWirelessControllerUtmProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenWirelessControllerUtmProfileName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenWirelessControllerUtmProfileName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("comment", flattenWirelessControllerUtmProfileComment(o["comment"], d, "comment")); err != nil {
+	if err = d.Set("comment", flattenWirelessControllerUtmProfileComment(o["comment"], d, "comment", sv)); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
 		}
 	}
 
-	if err = d.Set("utm_log", flattenWirelessControllerUtmProfileUtmLog(o["utm-log"], d, "utm_log")); err != nil {
+	if err = d.Set("utm_log", flattenWirelessControllerUtmProfileUtmLog(o["utm-log"], d, "utm_log", sv)); err != nil {
 		if !fortiAPIPatch(o["utm-log"]) {
 			return fmt.Errorf("Error reading utm_log: %v", err)
 		}
 	}
 
-	if err = d.Set("ips_sensor", flattenWirelessControllerUtmProfileIpsSensor(o["ips-sensor"], d, "ips_sensor")); err != nil {
+	if err = d.Set("ips_sensor", flattenWirelessControllerUtmProfileIpsSensor(o["ips-sensor"], d, "ips_sensor", sv)); err != nil {
 		if !fortiAPIPatch(o["ips-sensor"]) {
 			return fmt.Errorf("Error reading ips_sensor: %v", err)
 		}
 	}
 
-	if err = d.Set("application_list", flattenWirelessControllerUtmProfileApplicationList(o["application-list"], d, "application_list")); err != nil {
+	if err = d.Set("application_list", flattenWirelessControllerUtmProfileApplicationList(o["application-list"], d, "application_list", sv)); err != nil {
 		if !fortiAPIPatch(o["application-list"]) {
 			return fmt.Errorf("Error reading application_list: %v", err)
 		}
 	}
 
-	if err = d.Set("antivirus_profile", flattenWirelessControllerUtmProfileAntivirusProfile(o["antivirus-profile"], d, "antivirus_profile")); err != nil {
+	if err = d.Set("antivirus_profile", flattenWirelessControllerUtmProfileAntivirusProfile(o["antivirus-profile"], d, "antivirus_profile", sv)); err != nil {
 		if !fortiAPIPatch(o["antivirus-profile"]) {
 			return fmt.Errorf("Error reading antivirus_profile: %v", err)
 		}
 	}
 
-	if err = d.Set("webfilter_profile", flattenWirelessControllerUtmProfileWebfilterProfile(o["webfilter-profile"], d, "webfilter_profile")); err != nil {
+	if err = d.Set("webfilter_profile", flattenWirelessControllerUtmProfileWebfilterProfile(o["webfilter-profile"], d, "webfilter_profile", sv)); err != nil {
 		if !fortiAPIPatch(o["webfilter-profile"]) {
 			return fmt.Errorf("Error reading webfilter_profile: %v", err)
 		}
 	}
 
-	if err = d.Set("scan_botnet_connections", flattenWirelessControllerUtmProfileScanBotnetConnections(o["scan-botnet-connections"], d, "scan_botnet_connections")); err != nil {
+	if err = d.Set("scan_botnet_connections", flattenWirelessControllerUtmProfileScanBotnetConnections(o["scan-botnet-connections"], d, "scan_botnet_connections", sv)); err != nil {
 		if !fortiAPIPatch(o["scan-botnet-connections"]) {
 			return fmt.Errorf("Error reading scan_botnet_connections: %v", err)
 		}
@@ -258,46 +259,47 @@ func refreshObjectWirelessControllerUtmProfile(d *schema.ResourceData, o map[str
 func flattenWirelessControllerUtmProfileFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandWirelessControllerUtmProfileName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerUtmProfileName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerUtmProfileComment(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerUtmProfileComment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerUtmProfileUtmLog(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerUtmProfileUtmLog(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerUtmProfileIpsSensor(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerUtmProfileIpsSensor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerUtmProfileApplicationList(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerUtmProfileApplicationList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerUtmProfileAntivirusProfile(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerUtmProfileAntivirusProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerUtmProfileWebfilterProfile(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerUtmProfileWebfilterProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerUtmProfileScanBotnetConnections(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerUtmProfileScanBotnetConnections(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectWirelessControllerUtmProfile(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectWirelessControllerUtmProfile(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandWirelessControllerUtmProfileName(d, v, "name")
+
+		t, err := expandWirelessControllerUtmProfileName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -306,7 +308,8 @@ func getObjectWirelessControllerUtmProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-		t, err := expandWirelessControllerUtmProfileComment(d, v, "comment")
+
+		t, err := expandWirelessControllerUtmProfileComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -315,7 +318,8 @@ func getObjectWirelessControllerUtmProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("utm_log"); ok {
-		t, err := expandWirelessControllerUtmProfileUtmLog(d, v, "utm_log")
+
+		t, err := expandWirelessControllerUtmProfileUtmLog(d, v, "utm_log", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -324,7 +328,8 @@ func getObjectWirelessControllerUtmProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("ips_sensor"); ok {
-		t, err := expandWirelessControllerUtmProfileIpsSensor(d, v, "ips_sensor")
+
+		t, err := expandWirelessControllerUtmProfileIpsSensor(d, v, "ips_sensor", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -333,7 +338,8 @@ func getObjectWirelessControllerUtmProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("application_list"); ok {
-		t, err := expandWirelessControllerUtmProfileApplicationList(d, v, "application_list")
+
+		t, err := expandWirelessControllerUtmProfileApplicationList(d, v, "application_list", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -342,7 +348,8 @@ func getObjectWirelessControllerUtmProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("antivirus_profile"); ok {
-		t, err := expandWirelessControllerUtmProfileAntivirusProfile(d, v, "antivirus_profile")
+
+		t, err := expandWirelessControllerUtmProfileAntivirusProfile(d, v, "antivirus_profile", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -351,7 +358,8 @@ func getObjectWirelessControllerUtmProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("webfilter_profile"); ok {
-		t, err := expandWirelessControllerUtmProfileWebfilterProfile(d, v, "webfilter_profile")
+
+		t, err := expandWirelessControllerUtmProfileWebfilterProfile(d, v, "webfilter_profile", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -360,7 +368,8 @@ func getObjectWirelessControllerUtmProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("scan_botnet_connections"); ok {
-		t, err := expandWirelessControllerUtmProfileScanBotnetConnections(d, v, "scan_botnet_connections")
+
+		t, err := expandWirelessControllerUtmProfileScanBotnetConnections(d, v, "scan_botnet_connections", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
