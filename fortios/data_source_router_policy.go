@@ -37,6 +37,10 @@ func dataSourceRouterPolicy() *schema.Resource {
 					},
 				},
 			},
+			"input_device_negate": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"src": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -141,6 +145,30 @@ func dataSourceRouterPolicy() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"internet_service_id": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"internet_service_custom": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
 		},
 	}
 }
@@ -217,6 +245,10 @@ func dataSourceFlattenRouterPolicyInputDevice(v interface{}, d *schema.ResourceD
 }
 
 func dataSourceFlattenRouterPolicyInputDeviceName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterPolicyInputDeviceNegate(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -420,6 +452,78 @@ func dataSourceFlattenRouterPolicyComments(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func dataSourceFlattenRouterPolicyInternetServiceId(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := i["id"]; ok {
+			tmp["id"] = dataSourceFlattenRouterPolicyInternetServiceIdId(i["id"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenRouterPolicyInternetServiceIdId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterPolicyInternetServiceCustom(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenRouterPolicyInternetServiceCustomName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenRouterPolicyInternetServiceCustomName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectRouterPolicy(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -432,6 +536,12 @@ func dataSourceRefreshObjectRouterPolicy(d *schema.ResourceData, o map[string]in
 	if err = d.Set("input_device", dataSourceFlattenRouterPolicyInputDevice(o["input-device"], d, "input_device")); err != nil {
 		if !fortiAPIPatch(o["input-device"]) {
 			return fmt.Errorf("Error reading input_device: %v", err)
+		}
+	}
+
+	if err = d.Set("input_device_negate", dataSourceFlattenRouterPolicyInputDeviceNegate(o["input-device-negate"], d, "input_device_negate")); err != nil {
+		if !fortiAPIPatch(o["input-device-negate"]) {
+			return fmt.Errorf("Error reading input_device_negate: %v", err)
 		}
 	}
 
@@ -540,6 +650,18 @@ func dataSourceRefreshObjectRouterPolicy(d *schema.ResourceData, o map[string]in
 	if err = d.Set("comments", dataSourceFlattenRouterPolicyComments(o["comments"], d, "comments")); err != nil {
 		if !fortiAPIPatch(o["comments"]) {
 			return fmt.Errorf("Error reading comments: %v", err)
+		}
+	}
+
+	if err = d.Set("internet_service_id", dataSourceFlattenRouterPolicyInternetServiceId(o["internet-service-id"], d, "internet_service_id")); err != nil {
+		if !fortiAPIPatch(o["internet-service-id"]) {
+			return fmt.Errorf("Error reading internet_service_id: %v", err)
+		}
+	}
+
+	if err = d.Set("internet_service_custom", dataSourceFlattenRouterPolicyInternetServiceCustom(o["internet-service-custom"], d, "internet_service_custom")); err != nil {
+		if !fortiAPIPatch(o["internet-service-custom"]) {
+			return fmt.Errorf("Error reading internet_service_custom: %v", err)
 		}
 	}
 
