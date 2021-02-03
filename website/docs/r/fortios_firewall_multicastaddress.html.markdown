@@ -25,7 +25,6 @@ resource "fortios_firewall_multicastaddress" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Multicast address name.
