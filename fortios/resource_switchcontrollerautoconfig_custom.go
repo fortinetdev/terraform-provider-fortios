@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -68,7 +69,7 @@ func resourceSwitchControllerAutoConfigCustomCreate(d *schema.ResourceData, m in
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSwitchControllerAutoConfigCustom(d)
+	obj, err := getObjectSwitchControllerAutoConfigCustom(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerAutoConfigCustom resource while getting object: %v", err)
 	}
@@ -93,7 +94,7 @@ func resourceSwitchControllerAutoConfigCustomUpdate(d *schema.ResourceData, m in
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSwitchControllerAutoConfigCustom(d)
+	obj, err := getObjectSwitchControllerAutoConfigCustom(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerAutoConfigCustom resource while getting object: %v", err)
 	}
@@ -146,18 +147,18 @@ func resourceSwitchControllerAutoConfigCustomRead(d *schema.ResourceData, m inte
 		return nil
 	}
 
-	err = refreshObjectSwitchControllerAutoConfigCustom(d, o)
+	err = refreshObjectSwitchControllerAutoConfigCustom(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerAutoConfigCustom resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSwitchControllerAutoConfigCustomName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerAutoConfigCustomName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerAutoConfigCustomSwitchBinding(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSwitchControllerAutoConfigCustomSwitchBinding(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -178,12 +179,14 @@ func flattenSwitchControllerAutoConfigCustomSwitchBinding(v interface{}, d *sche
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "switch_id"
 		if _, ok := i["switch-id"]; ok {
-			tmp["switch_id"] = flattenSwitchControllerAutoConfigCustomSwitchBindingSwitchId(i["switch-id"], d, pre_append)
+
+			tmp["switch_id"] = flattenSwitchControllerAutoConfigCustomSwitchBindingSwitchId(i["switch-id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "policy"
 		if _, ok := i["policy"]; ok {
-			tmp["policy"] = flattenSwitchControllerAutoConfigCustomSwitchBindingPolicy(i["policy"], d, pre_append)
+
+			tmp["policy"] = flattenSwitchControllerAutoConfigCustomSwitchBindingPolicy(i["policy"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -195,32 +198,32 @@ func flattenSwitchControllerAutoConfigCustomSwitchBinding(v interface{}, d *sche
 	return result
 }
 
-func flattenSwitchControllerAutoConfigCustomSwitchBindingSwitchId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerAutoConfigCustomSwitchBindingSwitchId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerAutoConfigCustomSwitchBindingPolicy(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerAutoConfigCustomSwitchBindingPolicy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSwitchControllerAutoConfigCustom(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSwitchControllerAutoConfigCustom(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenSwitchControllerAutoConfigCustomName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenSwitchControllerAutoConfigCustomName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("switch_binding", flattenSwitchControllerAutoConfigCustomSwitchBinding(o["switch-binding"], d, "switch_binding")); err != nil {
+		if err = d.Set("switch_binding", flattenSwitchControllerAutoConfigCustomSwitchBinding(o["switch-binding"], d, "switch_binding", sv)); err != nil {
 			if !fortiAPIPatch(o["switch-binding"]) {
 				return fmt.Errorf("Error reading switch_binding: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("switch_binding"); ok {
-			if err = d.Set("switch_binding", flattenSwitchControllerAutoConfigCustomSwitchBinding(o["switch-binding"], d, "switch_binding")); err != nil {
+			if err = d.Set("switch_binding", flattenSwitchControllerAutoConfigCustomSwitchBinding(o["switch-binding"], d, "switch_binding", sv)); err != nil {
 				if !fortiAPIPatch(o["switch-binding"]) {
 					return fmt.Errorf("Error reading switch_binding: %v", err)
 				}
@@ -234,14 +237,14 @@ func refreshObjectSwitchControllerAutoConfigCustom(d *schema.ResourceData, o map
 func flattenSwitchControllerAutoConfigCustomFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSwitchControllerAutoConfigCustomName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerAutoConfigCustomName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerAutoConfigCustomSwitchBinding(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerAutoConfigCustomSwitchBinding(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -257,12 +260,14 @@ func expandSwitchControllerAutoConfigCustomSwitchBinding(d *schema.ResourceData,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "switch_id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["switch-id"], _ = expandSwitchControllerAutoConfigCustomSwitchBindingSwitchId(d, i["switch_id"], pre_append)
+
+			tmp["switch-id"], _ = expandSwitchControllerAutoConfigCustomSwitchBindingSwitchId(d, i["switch_id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "policy"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["policy"], _ = expandSwitchControllerAutoConfigCustomSwitchBindingPolicy(d, i["policy"], pre_append)
+
+			tmp["policy"], _ = expandSwitchControllerAutoConfigCustomSwitchBindingPolicy(d, i["policy"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -273,19 +278,20 @@ func expandSwitchControllerAutoConfigCustomSwitchBinding(d *schema.ResourceData,
 	return result, nil
 }
 
-func expandSwitchControllerAutoConfigCustomSwitchBindingSwitchId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerAutoConfigCustomSwitchBindingSwitchId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerAutoConfigCustomSwitchBindingPolicy(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerAutoConfigCustomSwitchBindingPolicy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSwitchControllerAutoConfigCustom(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSwitchControllerAutoConfigCustom(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandSwitchControllerAutoConfigCustomName(d, v, "name")
+
+		t, err := expandSwitchControllerAutoConfigCustomName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -294,7 +300,8 @@ func getObjectSwitchControllerAutoConfigCustom(d *schema.ResourceData) (*map[str
 	}
 
 	if v, ok := d.GetOk("switch_binding"); ok {
-		t, err := expandSwitchControllerAutoConfigCustomSwitchBinding(d, v, "switch_binding")
+
+		t, err := expandSwitchControllerAutoConfigCustomSwitchBinding(d, v, "switch_binding", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
