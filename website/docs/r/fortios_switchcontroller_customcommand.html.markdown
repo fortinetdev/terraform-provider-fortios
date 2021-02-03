@@ -20,7 +20,6 @@ resource "fortios_switchcontroller_customcommand" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `command_name` - Command name called by the FortiGate switch controller in the execute command.
