@@ -174,8 +174,9 @@ func resourceSystemCsf() *schema.Resource {
 							Computed:     true,
 						},
 						"access_token": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
+							Type:      schema.TypeString,
+							Optional:  true,
+							Sensitive: true,
 						},
 						"device_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -466,6 +467,10 @@ func flattenSystemCsfFabricDevice(v interface{}, d *schema.ResourceData, pre str
 		if _, ok := i["access-token"]; ok {
 
 			tmp["access_token"] = flattenSystemCsfFabricDeviceAccessToken(i["access-token"], d, pre_append, sv)
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["access_token"] = c
+			}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device_type"

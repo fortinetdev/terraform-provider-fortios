@@ -133,7 +133,9 @@ func dataSourceSystemCsf() *schema.Resource {
 							Computed: true,
 						},
 						"access_token": &schema.Schema{
-							Type: schema.TypeString,
+							Type:      schema.TypeString,
+							Sensitive: true,
+							Computed:  true,
 						},
 						"device_type": &schema.Schema{
 							Type:     schema.TypeString,
@@ -364,6 +366,10 @@ func dataSourceFlattenSystemCsfFabricDevice(v interface{}, d *schema.ResourceDat
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "access_token"
 		if _, ok := i["access-token"]; ok {
 			tmp["access_token"] = dataSourceFlattenSystemCsfFabricDeviceAccessToken(i["access-token"], d, pre_append)
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["access_token"] = c
+			}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device_type"
