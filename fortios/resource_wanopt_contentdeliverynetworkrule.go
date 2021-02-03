@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -243,7 +244,7 @@ func resourceWanoptContentDeliveryNetworkRuleCreate(d *schema.ResourceData, m in
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWanoptContentDeliveryNetworkRule(d)
+	obj, err := getObjectWanoptContentDeliveryNetworkRule(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WanoptContentDeliveryNetworkRule resource while getting object: %v", err)
 	}
@@ -268,7 +269,7 @@ func resourceWanoptContentDeliveryNetworkRuleUpdate(d *schema.ResourceData, m in
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWanoptContentDeliveryNetworkRule(d)
+	obj, err := getObjectWanoptContentDeliveryNetworkRule(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WanoptContentDeliveryNetworkRule resource while getting object: %v", err)
 	}
@@ -321,26 +322,26 @@ func resourceWanoptContentDeliveryNetworkRuleRead(d *schema.ResourceData, m inte
 		return nil
 	}
 
-	err = refreshObjectWanoptContentDeliveryNetworkRule(d, o)
+	err = refreshObjectWanoptContentDeliveryNetworkRule(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading WanoptContentDeliveryNetworkRule resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenWanoptContentDeliveryNetworkRuleName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptContentDeliveryNetworkRuleName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptContentDeliveryNetworkRuleComment(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptContentDeliveryNetworkRuleComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptContentDeliveryNetworkRuleStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptContentDeliveryNetworkRuleStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptContentDeliveryNetworkRuleHostDomainNameSuffix(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenWanoptContentDeliveryNetworkRuleHostDomainNameSuffix(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -361,7 +362,8 @@ func flattenWanoptContentDeliveryNetworkRuleHostDomainNameSuffix(v interface{}, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWanoptContentDeliveryNetworkRuleHostDomainNameSuffixName(i["name"], d, pre_append)
+
+			tmp["name"] = flattenWanoptContentDeliveryNetworkRuleHostDomainNameSuffixName(i["name"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -373,35 +375,35 @@ func flattenWanoptContentDeliveryNetworkRuleHostDomainNameSuffix(v interface{}, 
 	return result
 }
 
-func flattenWanoptContentDeliveryNetworkRuleHostDomainNameSuffixName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptContentDeliveryNetworkRuleHostDomainNameSuffixName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptContentDeliveryNetworkRuleCategory(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptContentDeliveryNetworkRuleCategory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptContentDeliveryNetworkRuleRequestCacheControl(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptContentDeliveryNetworkRuleRequestCacheControl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptContentDeliveryNetworkRuleResponseCacheControl(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptContentDeliveryNetworkRuleResponseCacheControl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptContentDeliveryNetworkRuleResponseExpires(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptContentDeliveryNetworkRuleResponseExpires(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptContentDeliveryNetworkRuleTextResponseVcache(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptContentDeliveryNetworkRuleTextResponseVcache(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptContentDeliveryNetworkRuleUpdateserver(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptContentDeliveryNetworkRuleUpdateserver(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptContentDeliveryNetworkRuleRules(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenWanoptContentDeliveryNetworkRuleRules(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -422,32 +424,38 @@ func flattenWanoptContentDeliveryNetworkRuleRules(v interface{}, d *schema.Resou
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWanoptContentDeliveryNetworkRuleRulesName(i["name"], d, pre_append)
+
+			tmp["name"] = flattenWanoptContentDeliveryNetworkRuleRulesName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_mode"
 		if _, ok := i["match-mode"]; ok {
-			tmp["match_mode"] = flattenWanoptContentDeliveryNetworkRuleRulesMatchMode(i["match-mode"], d, pre_append)
+
+			tmp["match_mode"] = flattenWanoptContentDeliveryNetworkRuleRulesMatchMode(i["match-mode"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "skip_rule_mode"
 		if _, ok := i["skip-rule-mode"]; ok {
-			tmp["skip_rule_mode"] = flattenWanoptContentDeliveryNetworkRuleRulesSkipRuleMode(i["skip-rule-mode"], d, pre_append)
+
+			tmp["skip_rule_mode"] = flattenWanoptContentDeliveryNetworkRuleRulesSkipRuleMode(i["skip-rule-mode"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_entries"
 		if _, ok := i["match-entries"]; ok {
-			tmp["match_entries"] = flattenWanoptContentDeliveryNetworkRuleRulesMatchEntries(i["match-entries"], d, pre_append)
+
+			tmp["match_entries"] = flattenWanoptContentDeliveryNetworkRuleRulesMatchEntries(i["match-entries"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "skip_entries"
 		if _, ok := i["skip-entries"]; ok {
-			tmp["skip_entries"] = flattenWanoptContentDeliveryNetworkRuleRulesSkipEntries(i["skip-entries"], d, pre_append)
+
+			tmp["skip_entries"] = flattenWanoptContentDeliveryNetworkRuleRulesSkipEntries(i["skip-entries"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "content_id"
 		if _, ok := i["content-id"]; ok {
-			tmp["content_id"] = flattenWanoptContentDeliveryNetworkRuleRulesContentId(i["content-id"], d, pre_append)
+
+			tmp["content_id"] = flattenWanoptContentDeliveryNetworkRuleRulesContentId(i["content-id"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -459,19 +467,19 @@ func flattenWanoptContentDeliveryNetworkRuleRules(v interface{}, d *schema.Resou
 	return result
 }
 
-func flattenWanoptContentDeliveryNetworkRuleRulesName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptContentDeliveryNetworkRuleRulesName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptContentDeliveryNetworkRuleRulesMatchMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptContentDeliveryNetworkRuleRulesMatchMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptContentDeliveryNetworkRuleRulesSkipRuleMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptContentDeliveryNetworkRuleRulesSkipRuleMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptContentDeliveryNetworkRuleRulesMatchEntries(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenWanoptContentDeliveryNetworkRuleRulesMatchEntries(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -492,17 +500,20 @@ func flattenWanoptContentDeliveryNetworkRuleRulesMatchEntries(v interface{}, d *
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenWanoptContentDeliveryNetworkRuleRulesMatchEntriesId(i["id"], d, pre_append)
+
+			tmp["id"] = flattenWanoptContentDeliveryNetworkRuleRulesMatchEntriesId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
 		if _, ok := i["target"]; ok {
-			tmp["target"] = flattenWanoptContentDeliveryNetworkRuleRulesMatchEntriesTarget(i["target"], d, pre_append)
+
+			tmp["target"] = flattenWanoptContentDeliveryNetworkRuleRulesMatchEntriesTarget(i["target"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
 		if _, ok := i["pattern"]; ok {
-			tmp["pattern"] = flattenWanoptContentDeliveryNetworkRuleRulesMatchEntriesPattern(i["pattern"], d, pre_append)
+
+			tmp["pattern"] = flattenWanoptContentDeliveryNetworkRuleRulesMatchEntriesPattern(i["pattern"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -513,15 +524,15 @@ func flattenWanoptContentDeliveryNetworkRuleRulesMatchEntries(v interface{}, d *
 	return result
 }
 
-func flattenWanoptContentDeliveryNetworkRuleRulesMatchEntriesId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptContentDeliveryNetworkRuleRulesMatchEntriesId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptContentDeliveryNetworkRuleRulesMatchEntriesTarget(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptContentDeliveryNetworkRuleRulesMatchEntriesTarget(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptContentDeliveryNetworkRuleRulesMatchEntriesPattern(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenWanoptContentDeliveryNetworkRuleRulesMatchEntriesPattern(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -542,7 +553,8 @@ func flattenWanoptContentDeliveryNetworkRuleRulesMatchEntriesPattern(v interface
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "string"
 		if _, ok := i["string"]; ok {
-			tmp["string"] = flattenWanoptContentDeliveryNetworkRuleRulesMatchEntriesPatternString(i["string"], d, pre_append)
+
+			tmp["string"] = flattenWanoptContentDeliveryNetworkRuleRulesMatchEntriesPatternString(i["string"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -553,11 +565,11 @@ func flattenWanoptContentDeliveryNetworkRuleRulesMatchEntriesPattern(v interface
 	return result
 }
 
-func flattenWanoptContentDeliveryNetworkRuleRulesMatchEntriesPatternString(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptContentDeliveryNetworkRuleRulesMatchEntriesPatternString(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptContentDeliveryNetworkRuleRulesSkipEntries(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenWanoptContentDeliveryNetworkRuleRulesSkipEntries(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -578,17 +590,20 @@ func flattenWanoptContentDeliveryNetworkRuleRulesSkipEntries(v interface{}, d *s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenWanoptContentDeliveryNetworkRuleRulesSkipEntriesId(i["id"], d, pre_append)
+
+			tmp["id"] = flattenWanoptContentDeliveryNetworkRuleRulesSkipEntriesId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
 		if _, ok := i["target"]; ok {
-			tmp["target"] = flattenWanoptContentDeliveryNetworkRuleRulesSkipEntriesTarget(i["target"], d, pre_append)
+
+			tmp["target"] = flattenWanoptContentDeliveryNetworkRuleRulesSkipEntriesTarget(i["target"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
 		if _, ok := i["pattern"]; ok {
-			tmp["pattern"] = flattenWanoptContentDeliveryNetworkRuleRulesSkipEntriesPattern(i["pattern"], d, pre_append)
+
+			tmp["pattern"] = flattenWanoptContentDeliveryNetworkRuleRulesSkipEntriesPattern(i["pattern"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -599,15 +614,15 @@ func flattenWanoptContentDeliveryNetworkRuleRulesSkipEntries(v interface{}, d *s
 	return result
 }
 
-func flattenWanoptContentDeliveryNetworkRuleRulesSkipEntriesId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptContentDeliveryNetworkRuleRulesSkipEntriesId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptContentDeliveryNetworkRuleRulesSkipEntriesTarget(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptContentDeliveryNetworkRuleRulesSkipEntriesTarget(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptContentDeliveryNetworkRuleRulesSkipEntriesPattern(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenWanoptContentDeliveryNetworkRuleRulesSkipEntriesPattern(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -628,7 +643,8 @@ func flattenWanoptContentDeliveryNetworkRuleRulesSkipEntriesPattern(v interface{
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "string"
 		if _, ok := i["string"]; ok {
-			tmp["string"] = flattenWanoptContentDeliveryNetworkRuleRulesSkipEntriesPatternString(i["string"], d, pre_append)
+
+			tmp["string"] = flattenWanoptContentDeliveryNetworkRuleRulesSkipEntriesPatternString(i["string"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -639,11 +655,11 @@ func flattenWanoptContentDeliveryNetworkRuleRulesSkipEntriesPattern(v interface{
 	return result
 }
 
-func flattenWanoptContentDeliveryNetworkRuleRulesSkipEntriesPatternString(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptContentDeliveryNetworkRuleRulesSkipEntriesPatternString(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptContentDeliveryNetworkRuleRulesContentId(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenWanoptContentDeliveryNetworkRuleRulesContentId(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -654,110 +670,118 @@ func flattenWanoptContentDeliveryNetworkRuleRulesContentId(v interface{}, d *sch
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "target"
 	if _, ok := i["target"]; ok {
-		result["target"] = flattenWanoptContentDeliveryNetworkRuleRulesContentIdTarget(i["target"], d, pre_append)
+
+		result["target"] = flattenWanoptContentDeliveryNetworkRuleRulesContentIdTarget(i["target"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "start_str"
 	if _, ok := i["start-str"]; ok {
-		result["start_str"] = flattenWanoptContentDeliveryNetworkRuleRulesContentIdStartStr(i["start-str"], d, pre_append)
+
+		result["start_str"] = flattenWanoptContentDeliveryNetworkRuleRulesContentIdStartStr(i["start-str"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "start_skip"
 	if _, ok := i["start-skip"]; ok {
-		result["start_skip"] = flattenWanoptContentDeliveryNetworkRuleRulesContentIdStartSkip(i["start-skip"], d, pre_append)
+
+		result["start_skip"] = flattenWanoptContentDeliveryNetworkRuleRulesContentIdStartSkip(i["start-skip"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "start_direction"
 	if _, ok := i["start-direction"]; ok {
-		result["start_direction"] = flattenWanoptContentDeliveryNetworkRuleRulesContentIdStartDirection(i["start-direction"], d, pre_append)
+
+		result["start_direction"] = flattenWanoptContentDeliveryNetworkRuleRulesContentIdStartDirection(i["start-direction"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "end_str"
 	if _, ok := i["end-str"]; ok {
-		result["end_str"] = flattenWanoptContentDeliveryNetworkRuleRulesContentIdEndStr(i["end-str"], d, pre_append)
+
+		result["end_str"] = flattenWanoptContentDeliveryNetworkRuleRulesContentIdEndStr(i["end-str"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "end_skip"
 	if _, ok := i["end-skip"]; ok {
-		result["end_skip"] = flattenWanoptContentDeliveryNetworkRuleRulesContentIdEndSkip(i["end-skip"], d, pre_append)
+
+		result["end_skip"] = flattenWanoptContentDeliveryNetworkRuleRulesContentIdEndSkip(i["end-skip"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "end_direction"
 	if _, ok := i["end-direction"]; ok {
-		result["end_direction"] = flattenWanoptContentDeliveryNetworkRuleRulesContentIdEndDirection(i["end-direction"], d, pre_append)
+
+		result["end_direction"] = flattenWanoptContentDeliveryNetworkRuleRulesContentIdEndDirection(i["end-direction"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "range_str"
 	if _, ok := i["range-str"]; ok {
-		result["range_str"] = flattenWanoptContentDeliveryNetworkRuleRulesContentIdRangeStr(i["range-str"], d, pre_append)
+
+		result["range_str"] = flattenWanoptContentDeliveryNetworkRuleRulesContentIdRangeStr(i["range-str"], d, pre_append, sv)
 	}
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
 }
 
-func flattenWanoptContentDeliveryNetworkRuleRulesContentIdTarget(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptContentDeliveryNetworkRuleRulesContentIdTarget(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptContentDeliveryNetworkRuleRulesContentIdStartStr(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptContentDeliveryNetworkRuleRulesContentIdStartStr(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptContentDeliveryNetworkRuleRulesContentIdStartSkip(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptContentDeliveryNetworkRuleRulesContentIdStartSkip(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptContentDeliveryNetworkRuleRulesContentIdStartDirection(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptContentDeliveryNetworkRuleRulesContentIdStartDirection(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptContentDeliveryNetworkRuleRulesContentIdEndStr(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptContentDeliveryNetworkRuleRulesContentIdEndStr(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptContentDeliveryNetworkRuleRulesContentIdEndSkip(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptContentDeliveryNetworkRuleRulesContentIdEndSkip(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptContentDeliveryNetworkRuleRulesContentIdEndDirection(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptContentDeliveryNetworkRuleRulesContentIdEndDirection(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptContentDeliveryNetworkRuleRulesContentIdRangeStr(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptContentDeliveryNetworkRuleRulesContentIdRangeStr(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectWanoptContentDeliveryNetworkRule(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectWanoptContentDeliveryNetworkRule(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenWanoptContentDeliveryNetworkRuleName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenWanoptContentDeliveryNetworkRuleName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("comment", flattenWanoptContentDeliveryNetworkRuleComment(o["comment"], d, "comment")); err != nil {
+	if err = d.Set("comment", flattenWanoptContentDeliveryNetworkRuleComment(o["comment"], d, "comment", sv)); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
 		}
 	}
 
-	if err = d.Set("status", flattenWanoptContentDeliveryNetworkRuleStatus(o["status"], d, "status")); err != nil {
+	if err = d.Set("status", flattenWanoptContentDeliveryNetworkRuleStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("host_domain_name_suffix", flattenWanoptContentDeliveryNetworkRuleHostDomainNameSuffix(o["host-domain-name-suffix"], d, "host_domain_name_suffix")); err != nil {
+		if err = d.Set("host_domain_name_suffix", flattenWanoptContentDeliveryNetworkRuleHostDomainNameSuffix(o["host-domain-name-suffix"], d, "host_domain_name_suffix", sv)); err != nil {
 			if !fortiAPIPatch(o["host-domain-name-suffix"]) {
 				return fmt.Errorf("Error reading host_domain_name_suffix: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("host_domain_name_suffix"); ok {
-			if err = d.Set("host_domain_name_suffix", flattenWanoptContentDeliveryNetworkRuleHostDomainNameSuffix(o["host-domain-name-suffix"], d, "host_domain_name_suffix")); err != nil {
+			if err = d.Set("host_domain_name_suffix", flattenWanoptContentDeliveryNetworkRuleHostDomainNameSuffix(o["host-domain-name-suffix"], d, "host_domain_name_suffix", sv)); err != nil {
 				if !fortiAPIPatch(o["host-domain-name-suffix"]) {
 					return fmt.Errorf("Error reading host_domain_name_suffix: %v", err)
 				}
@@ -765,51 +789,51 @@ func refreshObjectWanoptContentDeliveryNetworkRule(d *schema.ResourceData, o map
 		}
 	}
 
-	if err = d.Set("category", flattenWanoptContentDeliveryNetworkRuleCategory(o["category"], d, "category")); err != nil {
+	if err = d.Set("category", flattenWanoptContentDeliveryNetworkRuleCategory(o["category"], d, "category", sv)); err != nil {
 		if !fortiAPIPatch(o["category"]) {
 			return fmt.Errorf("Error reading category: %v", err)
 		}
 	}
 
-	if err = d.Set("request_cache_control", flattenWanoptContentDeliveryNetworkRuleRequestCacheControl(o["request-cache-control"], d, "request_cache_control")); err != nil {
+	if err = d.Set("request_cache_control", flattenWanoptContentDeliveryNetworkRuleRequestCacheControl(o["request-cache-control"], d, "request_cache_control", sv)); err != nil {
 		if !fortiAPIPatch(o["request-cache-control"]) {
 			return fmt.Errorf("Error reading request_cache_control: %v", err)
 		}
 	}
 
-	if err = d.Set("response_cache_control", flattenWanoptContentDeliveryNetworkRuleResponseCacheControl(o["response-cache-control"], d, "response_cache_control")); err != nil {
+	if err = d.Set("response_cache_control", flattenWanoptContentDeliveryNetworkRuleResponseCacheControl(o["response-cache-control"], d, "response_cache_control", sv)); err != nil {
 		if !fortiAPIPatch(o["response-cache-control"]) {
 			return fmt.Errorf("Error reading response_cache_control: %v", err)
 		}
 	}
 
-	if err = d.Set("response_expires", flattenWanoptContentDeliveryNetworkRuleResponseExpires(o["response-expires"], d, "response_expires")); err != nil {
+	if err = d.Set("response_expires", flattenWanoptContentDeliveryNetworkRuleResponseExpires(o["response-expires"], d, "response_expires", sv)); err != nil {
 		if !fortiAPIPatch(o["response-expires"]) {
 			return fmt.Errorf("Error reading response_expires: %v", err)
 		}
 	}
 
-	if err = d.Set("text_response_vcache", flattenWanoptContentDeliveryNetworkRuleTextResponseVcache(o["text-response-vcache"], d, "text_response_vcache")); err != nil {
+	if err = d.Set("text_response_vcache", flattenWanoptContentDeliveryNetworkRuleTextResponseVcache(o["text-response-vcache"], d, "text_response_vcache", sv)); err != nil {
 		if !fortiAPIPatch(o["text-response-vcache"]) {
 			return fmt.Errorf("Error reading text_response_vcache: %v", err)
 		}
 	}
 
-	if err = d.Set("updateserver", flattenWanoptContentDeliveryNetworkRuleUpdateserver(o["updateserver"], d, "updateserver")); err != nil {
+	if err = d.Set("updateserver", flattenWanoptContentDeliveryNetworkRuleUpdateserver(o["updateserver"], d, "updateserver", sv)); err != nil {
 		if !fortiAPIPatch(o["updateserver"]) {
 			return fmt.Errorf("Error reading updateserver: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("rules", flattenWanoptContentDeliveryNetworkRuleRules(o["rules"], d, "rules")); err != nil {
+		if err = d.Set("rules", flattenWanoptContentDeliveryNetworkRuleRules(o["rules"], d, "rules", sv)); err != nil {
 			if !fortiAPIPatch(o["rules"]) {
 				return fmt.Errorf("Error reading rules: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("rules"); ok {
-			if err = d.Set("rules", flattenWanoptContentDeliveryNetworkRuleRules(o["rules"], d, "rules")); err != nil {
+			if err = d.Set("rules", flattenWanoptContentDeliveryNetworkRuleRules(o["rules"], d, "rules", sv)); err != nil {
 				if !fortiAPIPatch(o["rules"]) {
 					return fmt.Errorf("Error reading rules: %v", err)
 				}
@@ -823,22 +847,22 @@ func refreshObjectWanoptContentDeliveryNetworkRule(d *schema.ResourceData, o map
 func flattenWanoptContentDeliveryNetworkRuleFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandWanoptContentDeliveryNetworkRuleName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptContentDeliveryNetworkRuleName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptContentDeliveryNetworkRuleComment(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptContentDeliveryNetworkRuleComment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptContentDeliveryNetworkRuleStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptContentDeliveryNetworkRuleStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptContentDeliveryNetworkRuleHostDomainNameSuffix(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptContentDeliveryNetworkRuleHostDomainNameSuffix(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -854,7 +878,8 @@ func expandWanoptContentDeliveryNetworkRuleHostDomainNameSuffix(d *schema.Resour
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandWanoptContentDeliveryNetworkRuleHostDomainNameSuffixName(d, i["name"], pre_append)
+
+			tmp["name"], _ = expandWanoptContentDeliveryNetworkRuleHostDomainNameSuffixName(d, i["name"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -865,35 +890,35 @@ func expandWanoptContentDeliveryNetworkRuleHostDomainNameSuffix(d *schema.Resour
 	return result, nil
 }
 
-func expandWanoptContentDeliveryNetworkRuleHostDomainNameSuffixName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptContentDeliveryNetworkRuleHostDomainNameSuffixName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptContentDeliveryNetworkRuleCategory(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptContentDeliveryNetworkRuleCategory(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptContentDeliveryNetworkRuleRequestCacheControl(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptContentDeliveryNetworkRuleRequestCacheControl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptContentDeliveryNetworkRuleResponseCacheControl(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptContentDeliveryNetworkRuleResponseCacheControl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptContentDeliveryNetworkRuleResponseExpires(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptContentDeliveryNetworkRuleResponseExpires(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptContentDeliveryNetworkRuleTextResponseVcache(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptContentDeliveryNetworkRuleTextResponseVcache(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptContentDeliveryNetworkRuleUpdateserver(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptContentDeliveryNetworkRuleUpdateserver(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptContentDeliveryNetworkRuleRules(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptContentDeliveryNetworkRuleRules(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -909,36 +934,42 @@ func expandWanoptContentDeliveryNetworkRuleRules(d *schema.ResourceData, v inter
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandWanoptContentDeliveryNetworkRuleRulesName(d, i["name"], pre_append)
+
+			tmp["name"], _ = expandWanoptContentDeliveryNetworkRuleRulesName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_mode"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["match-mode"], _ = expandWanoptContentDeliveryNetworkRuleRulesMatchMode(d, i["match_mode"], pre_append)
+
+			tmp["match-mode"], _ = expandWanoptContentDeliveryNetworkRuleRulesMatchMode(d, i["match_mode"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "skip_rule_mode"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["skip-rule-mode"], _ = expandWanoptContentDeliveryNetworkRuleRulesSkipRuleMode(d, i["skip_rule_mode"], pre_append)
+
+			tmp["skip-rule-mode"], _ = expandWanoptContentDeliveryNetworkRuleRulesSkipRuleMode(d, i["skip_rule_mode"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "match_entries"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["match-entries"], _ = expandWanoptContentDeliveryNetworkRuleRulesMatchEntries(d, i["match_entries"], pre_append)
+
+			tmp["match-entries"], _ = expandWanoptContentDeliveryNetworkRuleRulesMatchEntries(d, i["match_entries"], pre_append, sv)
 		} else {
 			tmp["match-entries"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "skip_entries"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["skip-entries"], _ = expandWanoptContentDeliveryNetworkRuleRulesSkipEntries(d, i["skip_entries"], pre_append)
+
+			tmp["skip-entries"], _ = expandWanoptContentDeliveryNetworkRuleRulesSkipEntries(d, i["skip_entries"], pre_append, sv)
 		} else {
 			tmp["skip-entries"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "content_id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["content-id"], _ = expandWanoptContentDeliveryNetworkRuleRulesContentId(d, i["content_id"], pre_append)
+
+			tmp["content-id"], _ = expandWanoptContentDeliveryNetworkRuleRulesContentId(d, i["content_id"], pre_append, sv)
 		} else {
 			tmp["content-id"] = make([]string, 0)
 		}
@@ -951,19 +982,19 @@ func expandWanoptContentDeliveryNetworkRuleRules(d *schema.ResourceData, v inter
 	return result, nil
 }
 
-func expandWanoptContentDeliveryNetworkRuleRulesName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptContentDeliveryNetworkRuleRulesName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptContentDeliveryNetworkRuleRulesMatchMode(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptContentDeliveryNetworkRuleRulesMatchMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptContentDeliveryNetworkRuleRulesSkipRuleMode(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptContentDeliveryNetworkRuleRulesSkipRuleMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptContentDeliveryNetworkRuleRulesMatchEntries(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptContentDeliveryNetworkRuleRulesMatchEntries(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -979,17 +1010,20 @@ func expandWanoptContentDeliveryNetworkRuleRulesMatchEntries(d *schema.ResourceD
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandWanoptContentDeliveryNetworkRuleRulesMatchEntriesId(d, i["id"], pre_append)
+
+			tmp["id"], _ = expandWanoptContentDeliveryNetworkRuleRulesMatchEntriesId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["target"], _ = expandWanoptContentDeliveryNetworkRuleRulesMatchEntriesTarget(d, i["target"], pre_append)
+
+			tmp["target"], _ = expandWanoptContentDeliveryNetworkRuleRulesMatchEntriesTarget(d, i["target"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["pattern"], _ = expandWanoptContentDeliveryNetworkRuleRulesMatchEntriesPattern(d, i["pattern"], pre_append)
+
+			tmp["pattern"], _ = expandWanoptContentDeliveryNetworkRuleRulesMatchEntriesPattern(d, i["pattern"], pre_append, sv)
 		} else {
 			tmp["pattern"] = make([]string, 0)
 		}
@@ -1002,15 +1036,15 @@ func expandWanoptContentDeliveryNetworkRuleRulesMatchEntries(d *schema.ResourceD
 	return result, nil
 }
 
-func expandWanoptContentDeliveryNetworkRuleRulesMatchEntriesId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptContentDeliveryNetworkRuleRulesMatchEntriesId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptContentDeliveryNetworkRuleRulesMatchEntriesTarget(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptContentDeliveryNetworkRuleRulesMatchEntriesTarget(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptContentDeliveryNetworkRuleRulesMatchEntriesPattern(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptContentDeliveryNetworkRuleRulesMatchEntriesPattern(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1026,7 +1060,8 @@ func expandWanoptContentDeliveryNetworkRuleRulesMatchEntriesPattern(d *schema.Re
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "string"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["string"], _ = expandWanoptContentDeliveryNetworkRuleRulesMatchEntriesPatternString(d, i["string"], pre_append)
+
+			tmp["string"], _ = expandWanoptContentDeliveryNetworkRuleRulesMatchEntriesPatternString(d, i["string"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1037,11 +1072,11 @@ func expandWanoptContentDeliveryNetworkRuleRulesMatchEntriesPattern(d *schema.Re
 	return result, nil
 }
 
-func expandWanoptContentDeliveryNetworkRuleRulesMatchEntriesPatternString(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptContentDeliveryNetworkRuleRulesMatchEntriesPatternString(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptContentDeliveryNetworkRuleRulesSkipEntries(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptContentDeliveryNetworkRuleRulesSkipEntries(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1057,17 +1092,20 @@ func expandWanoptContentDeliveryNetworkRuleRulesSkipEntries(d *schema.ResourceDa
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandWanoptContentDeliveryNetworkRuleRulesSkipEntriesId(d, i["id"], pre_append)
+
+			tmp["id"], _ = expandWanoptContentDeliveryNetworkRuleRulesSkipEntriesId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["target"], _ = expandWanoptContentDeliveryNetworkRuleRulesSkipEntriesTarget(d, i["target"], pre_append)
+
+			tmp["target"], _ = expandWanoptContentDeliveryNetworkRuleRulesSkipEntriesTarget(d, i["target"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["pattern"], _ = expandWanoptContentDeliveryNetworkRuleRulesSkipEntriesPattern(d, i["pattern"], pre_append)
+
+			tmp["pattern"], _ = expandWanoptContentDeliveryNetworkRuleRulesSkipEntriesPattern(d, i["pattern"], pre_append, sv)
 		} else {
 			tmp["pattern"] = make([]string, 0)
 		}
@@ -1080,15 +1118,15 @@ func expandWanoptContentDeliveryNetworkRuleRulesSkipEntries(d *schema.ResourceDa
 	return result, nil
 }
 
-func expandWanoptContentDeliveryNetworkRuleRulesSkipEntriesId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptContentDeliveryNetworkRuleRulesSkipEntriesId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptContentDeliveryNetworkRuleRulesSkipEntriesTarget(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptContentDeliveryNetworkRuleRulesSkipEntriesTarget(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptContentDeliveryNetworkRuleRulesSkipEntriesPattern(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptContentDeliveryNetworkRuleRulesSkipEntriesPattern(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1104,7 +1142,8 @@ func expandWanoptContentDeliveryNetworkRuleRulesSkipEntriesPattern(d *schema.Res
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "string"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["string"], _ = expandWanoptContentDeliveryNetworkRuleRulesSkipEntriesPatternString(d, i["string"], pre_append)
+
+			tmp["string"], _ = expandWanoptContentDeliveryNetworkRuleRulesSkipEntriesPatternString(d, i["string"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1115,11 +1154,11 @@ func expandWanoptContentDeliveryNetworkRuleRulesSkipEntriesPattern(d *schema.Res
 	return result, nil
 }
 
-func expandWanoptContentDeliveryNetworkRuleRulesSkipEntriesPatternString(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptContentDeliveryNetworkRuleRulesSkipEntriesPatternString(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptContentDeliveryNetworkRuleRulesContentId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptContentDeliveryNetworkRuleRulesContentId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1131,77 +1170,86 @@ func expandWanoptContentDeliveryNetworkRuleRulesContentId(d *schema.ResourceData
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "target"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["target"], _ = expandWanoptContentDeliveryNetworkRuleRulesContentIdTarget(d, i["target"], pre_append)
+
+		result["target"], _ = expandWanoptContentDeliveryNetworkRuleRulesContentIdTarget(d, i["target"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "start_str"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["start-str"], _ = expandWanoptContentDeliveryNetworkRuleRulesContentIdStartStr(d, i["start_str"], pre_append)
+
+		result["start-str"], _ = expandWanoptContentDeliveryNetworkRuleRulesContentIdStartStr(d, i["start_str"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "start_skip"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["start-skip"], _ = expandWanoptContentDeliveryNetworkRuleRulesContentIdStartSkip(d, i["start_skip"], pre_append)
+
+		result["start-skip"], _ = expandWanoptContentDeliveryNetworkRuleRulesContentIdStartSkip(d, i["start_skip"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "start_direction"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["start-direction"], _ = expandWanoptContentDeliveryNetworkRuleRulesContentIdStartDirection(d, i["start_direction"], pre_append)
+
+		result["start-direction"], _ = expandWanoptContentDeliveryNetworkRuleRulesContentIdStartDirection(d, i["start_direction"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "end_str"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["end-str"], _ = expandWanoptContentDeliveryNetworkRuleRulesContentIdEndStr(d, i["end_str"], pre_append)
+
+		result["end-str"], _ = expandWanoptContentDeliveryNetworkRuleRulesContentIdEndStr(d, i["end_str"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "end_skip"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["end-skip"], _ = expandWanoptContentDeliveryNetworkRuleRulesContentIdEndSkip(d, i["end_skip"], pre_append)
+
+		result["end-skip"], _ = expandWanoptContentDeliveryNetworkRuleRulesContentIdEndSkip(d, i["end_skip"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "end_direction"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["end-direction"], _ = expandWanoptContentDeliveryNetworkRuleRulesContentIdEndDirection(d, i["end_direction"], pre_append)
+
+		result["end-direction"], _ = expandWanoptContentDeliveryNetworkRuleRulesContentIdEndDirection(d, i["end_direction"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "range_str"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["range-str"], _ = expandWanoptContentDeliveryNetworkRuleRulesContentIdRangeStr(d, i["range_str"], pre_append)
+
+		result["range-str"], _ = expandWanoptContentDeliveryNetworkRuleRulesContentIdRangeStr(d, i["range_str"], pre_append, sv)
 	}
 
 	return result, nil
 }
 
-func expandWanoptContentDeliveryNetworkRuleRulesContentIdTarget(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptContentDeliveryNetworkRuleRulesContentIdTarget(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptContentDeliveryNetworkRuleRulesContentIdStartStr(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptContentDeliveryNetworkRuleRulesContentIdStartStr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptContentDeliveryNetworkRuleRulesContentIdStartSkip(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptContentDeliveryNetworkRuleRulesContentIdStartSkip(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptContentDeliveryNetworkRuleRulesContentIdStartDirection(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptContentDeliveryNetworkRuleRulesContentIdStartDirection(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptContentDeliveryNetworkRuleRulesContentIdEndStr(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptContentDeliveryNetworkRuleRulesContentIdEndStr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptContentDeliveryNetworkRuleRulesContentIdEndSkip(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptContentDeliveryNetworkRuleRulesContentIdEndSkip(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptContentDeliveryNetworkRuleRulesContentIdEndDirection(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptContentDeliveryNetworkRuleRulesContentIdEndDirection(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptContentDeliveryNetworkRuleRulesContentIdRangeStr(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptContentDeliveryNetworkRuleRulesContentIdRangeStr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectWanoptContentDeliveryNetworkRule(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectWanoptContentDeliveryNetworkRule(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandWanoptContentDeliveryNetworkRuleName(d, v, "name")
+
+		t, err := expandWanoptContentDeliveryNetworkRuleName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1210,7 +1258,8 @@ func getObjectWanoptContentDeliveryNetworkRule(d *schema.ResourceData) (*map[str
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-		t, err := expandWanoptContentDeliveryNetworkRuleComment(d, v, "comment")
+
+		t, err := expandWanoptContentDeliveryNetworkRuleComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1219,7 +1268,8 @@ func getObjectWanoptContentDeliveryNetworkRule(d *schema.ResourceData) (*map[str
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-		t, err := expandWanoptContentDeliveryNetworkRuleStatus(d, v, "status")
+
+		t, err := expandWanoptContentDeliveryNetworkRuleStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1228,7 +1278,8 @@ func getObjectWanoptContentDeliveryNetworkRule(d *schema.ResourceData) (*map[str
 	}
 
 	if v, ok := d.GetOk("host_domain_name_suffix"); ok {
-		t, err := expandWanoptContentDeliveryNetworkRuleHostDomainNameSuffix(d, v, "host_domain_name_suffix")
+
+		t, err := expandWanoptContentDeliveryNetworkRuleHostDomainNameSuffix(d, v, "host_domain_name_suffix", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1237,7 +1288,8 @@ func getObjectWanoptContentDeliveryNetworkRule(d *schema.ResourceData) (*map[str
 	}
 
 	if v, ok := d.GetOk("category"); ok {
-		t, err := expandWanoptContentDeliveryNetworkRuleCategory(d, v, "category")
+
+		t, err := expandWanoptContentDeliveryNetworkRuleCategory(d, v, "category", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1246,7 +1298,8 @@ func getObjectWanoptContentDeliveryNetworkRule(d *schema.ResourceData) (*map[str
 	}
 
 	if v, ok := d.GetOk("request_cache_control"); ok {
-		t, err := expandWanoptContentDeliveryNetworkRuleRequestCacheControl(d, v, "request_cache_control")
+
+		t, err := expandWanoptContentDeliveryNetworkRuleRequestCacheControl(d, v, "request_cache_control", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1255,7 +1308,8 @@ func getObjectWanoptContentDeliveryNetworkRule(d *schema.ResourceData) (*map[str
 	}
 
 	if v, ok := d.GetOk("response_cache_control"); ok {
-		t, err := expandWanoptContentDeliveryNetworkRuleResponseCacheControl(d, v, "response_cache_control")
+
+		t, err := expandWanoptContentDeliveryNetworkRuleResponseCacheControl(d, v, "response_cache_control", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1264,7 +1318,8 @@ func getObjectWanoptContentDeliveryNetworkRule(d *schema.ResourceData) (*map[str
 	}
 
 	if v, ok := d.GetOk("response_expires"); ok {
-		t, err := expandWanoptContentDeliveryNetworkRuleResponseExpires(d, v, "response_expires")
+
+		t, err := expandWanoptContentDeliveryNetworkRuleResponseExpires(d, v, "response_expires", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1273,7 +1328,8 @@ func getObjectWanoptContentDeliveryNetworkRule(d *schema.ResourceData) (*map[str
 	}
 
 	if v, ok := d.GetOk("text_response_vcache"); ok {
-		t, err := expandWanoptContentDeliveryNetworkRuleTextResponseVcache(d, v, "text_response_vcache")
+
+		t, err := expandWanoptContentDeliveryNetworkRuleTextResponseVcache(d, v, "text_response_vcache", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1282,7 +1338,8 @@ func getObjectWanoptContentDeliveryNetworkRule(d *schema.ResourceData) (*map[str
 	}
 
 	if v, ok := d.GetOk("updateserver"); ok {
-		t, err := expandWanoptContentDeliveryNetworkRuleUpdateserver(d, v, "updateserver")
+
+		t, err := expandWanoptContentDeliveryNetworkRuleUpdateserver(d, v, "updateserver", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1291,7 +1348,8 @@ func getObjectWanoptContentDeliveryNetworkRule(d *schema.ResourceData) (*map[str
 	}
 
 	if v, ok := d.GetOk("rules"); ok {
-		t, err := expandWanoptContentDeliveryNetworkRuleRules(d, v, "rules")
+
+		t, err := expandWanoptContentDeliveryNetworkRuleRules(d, v, "rules", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
