@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -74,7 +75,7 @@ func resourceSystemAutomationDestinationCreate(d *schema.ResourceData, m interfa
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemAutomationDestination(d)
+	obj, err := getObjectSystemAutomationDestination(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemAutomationDestination resource while getting object: %v", err)
 	}
@@ -99,7 +100,7 @@ func resourceSystemAutomationDestinationUpdate(d *schema.ResourceData, m interfa
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemAutomationDestination(d)
+	obj, err := getObjectSystemAutomationDestination(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAutomationDestination resource while getting object: %v", err)
 	}
@@ -152,22 +153,22 @@ func resourceSystemAutomationDestinationRead(d *schema.ResourceData, m interface
 		return nil
 	}
 
-	err = refreshObjectSystemAutomationDestination(d, o)
+	err = refreshObjectSystemAutomationDestination(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemAutomationDestination resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemAutomationDestinationName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAutomationDestinationName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAutomationDestinationType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAutomationDestinationType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAutomationDestinationDestination(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSystemAutomationDestinationDestination(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -188,7 +189,8 @@ func flattenSystemAutomationDestinationDestination(v interface{}, d *schema.Reso
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemAutomationDestinationDestinationName(i["name"], d, pre_append)
+
+			tmp["name"] = flattenSystemAutomationDestinationDestinationName(i["name"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -200,38 +202,38 @@ func flattenSystemAutomationDestinationDestination(v interface{}, d *schema.Reso
 	return result
 }
 
-func flattenSystemAutomationDestinationDestinationName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAutomationDestinationDestinationName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAutomationDestinationHaGroupId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAutomationDestinationHaGroupId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemAutomationDestination(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemAutomationDestination(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenSystemAutomationDestinationName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenSystemAutomationDestinationName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("type", flattenSystemAutomationDestinationType(o["type"], d, "type")); err != nil {
+	if err = d.Set("type", flattenSystemAutomationDestinationType(o["type"], d, "type", sv)); err != nil {
 		if !fortiAPIPatch(o["type"]) {
 			return fmt.Errorf("Error reading type: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("destination", flattenSystemAutomationDestinationDestination(o["destination"], d, "destination")); err != nil {
+		if err = d.Set("destination", flattenSystemAutomationDestinationDestination(o["destination"], d, "destination", sv)); err != nil {
 			if !fortiAPIPatch(o["destination"]) {
 				return fmt.Errorf("Error reading destination: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("destination"); ok {
-			if err = d.Set("destination", flattenSystemAutomationDestinationDestination(o["destination"], d, "destination")); err != nil {
+			if err = d.Set("destination", flattenSystemAutomationDestinationDestination(o["destination"], d, "destination", sv)); err != nil {
 				if !fortiAPIPatch(o["destination"]) {
 					return fmt.Errorf("Error reading destination: %v", err)
 				}
@@ -239,7 +241,7 @@ func refreshObjectSystemAutomationDestination(d *schema.ResourceData, o map[stri
 		}
 	}
 
-	if err = d.Set("ha_group_id", flattenSystemAutomationDestinationHaGroupId(o["ha-group-id"], d, "ha_group_id")); err != nil {
+	if err = d.Set("ha_group_id", flattenSystemAutomationDestinationHaGroupId(o["ha-group-id"], d, "ha_group_id", sv)); err != nil {
 		if !fortiAPIPatch(o["ha-group-id"]) {
 			return fmt.Errorf("Error reading ha_group_id: %v", err)
 		}
@@ -251,18 +253,18 @@ func refreshObjectSystemAutomationDestination(d *schema.ResourceData, o map[stri
 func flattenSystemAutomationDestinationFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemAutomationDestinationName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAutomationDestinationName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAutomationDestinationType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAutomationDestinationType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAutomationDestinationDestination(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAutomationDestinationDestination(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -278,7 +280,8 @@ func expandSystemAutomationDestinationDestination(d *schema.ResourceData, v inte
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSystemAutomationDestinationDestinationName(d, i["name"], pre_append)
+
+			tmp["name"], _ = expandSystemAutomationDestinationDestinationName(d, i["name"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -289,19 +292,20 @@ func expandSystemAutomationDestinationDestination(d *schema.ResourceData, v inte
 	return result, nil
 }
 
-func expandSystemAutomationDestinationDestinationName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAutomationDestinationDestinationName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAutomationDestinationHaGroupId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAutomationDestinationHaGroupId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemAutomationDestination(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemAutomationDestination(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandSystemAutomationDestinationName(d, v, "name")
+
+		t, err := expandSystemAutomationDestinationName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -310,7 +314,8 @@ func getObjectSystemAutomationDestination(d *schema.ResourceData) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("type"); ok {
-		t, err := expandSystemAutomationDestinationType(d, v, "type")
+
+		t, err := expandSystemAutomationDestinationType(d, v, "type", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -319,7 +324,8 @@ func getObjectSystemAutomationDestination(d *schema.ResourceData) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("destination"); ok {
-		t, err := expandSystemAutomationDestinationDestination(d, v, "destination")
+
+		t, err := expandSystemAutomationDestinationDestination(d, v, "destination", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -328,7 +334,8 @@ func getObjectSystemAutomationDestination(d *schema.ResourceData) (*map[string]i
 	}
 
 	if v, ok := d.GetOkExists("ha_group_id"); ok {
-		t, err := expandSystemAutomationDestinationHaGroupId(d, v, "ha_group_id")
+
+		t, err := expandSystemAutomationDestinationHaGroupId(d, v, "ha_group_id", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
