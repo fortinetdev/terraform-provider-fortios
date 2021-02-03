@@ -29,7 +29,6 @@ resource "fortios_router_static6" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `seq_num` - Sequence number.
@@ -42,7 +41,9 @@ The following arguments are supported:
 * `priority` - Administrative priority (0 - 4294967295).
 * `comment` - Optional comments.
 * `blackhole` - Enable/disable black hole.
+* `sdwan` - Enable/disable egress through the SD-WAN.
 * `virtual_wan_link` - Enable/disable egress through the virtual-wan-link.
+* `link_monitor_exempt` - Enable/disable withdrawal of this static route when link monitor or health check is down.
 * `bfd` - Enable/disable Bidirectional Forwarding Detection (BFD).
 
 
