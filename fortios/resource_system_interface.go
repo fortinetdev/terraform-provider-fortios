@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -62,10 +63,50 @@ func resourceSystemInterface() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"switch_controller_source_ip": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"mode": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"client_options": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
+						},
+						"code": &schema.Schema{
+							Type:         schema.TypeInt,
+							ValidateFunc: validation.IntBetween(0, 255),
+							Optional:     true,
+							Computed:     true,
+						},
+						"type": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"value": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 312),
+							Optional:     true,
+							Computed:     true,
+						},
+						"ip": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
 			},
 			"distance": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -77,6 +118,17 @@ func resourceSystemInterface() *schema.Resource {
 				Type:     schema.TypeInt,
 				Optional: true,
 				Computed: true,
+			},
+			"dhcp_relay_interface_select_method": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"dhcp_relay_interface": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 15),
+				Optional:     true,
+				Computed:     true,
 			},
 			"dhcp_relay_service": &schema.Schema{
 				Type:     schema.TypeString,
@@ -469,6 +521,16 @@ func resourceSystemInterface() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"ring_rx": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
+			"ring_tx": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
 			"wccp": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -559,6 +621,12 @@ func resourceSystemInterface() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"ingress_shaping_profile": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 			"disconnect_threshold": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 10000),
@@ -590,6 +658,11 @@ func resourceSystemInterface() *schema.Resource {
 				Computed:     true,
 			},
 			"external": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"vlan_protocol": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -846,6 +919,26 @@ func resourceSystemInterface() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"measured_upstream_bandwidth": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
+			"measured_downstream_bandwidth": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
+			"bandwidth_measure_time": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
+			"monitor_bandwidth": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"vrrp_virtual_mac": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -916,6 +1009,11 @@ func resourceSystemInterface() *schema.Resource {
 							ValidateFunc: validation.IntBetween(0, 254),
 							Optional:     true,
 							Computed:     true,
+						},
+						"ignore_default_route": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -1028,6 +1126,21 @@ func resourceSystemInterface() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"fortilink_neighbor_detect": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"ip_managed_by_fortiipam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"managed_subnetwork_size": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"fortilink_split_interface": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -1056,7 +1169,28 @@ func resourceSystemInterface() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"switch_controller_rspan_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"switch_controller_mgmt_vlan": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 4094),
+				Optional:     true,
+				Computed:     true,
+			},
 			"switch_controller_igmp_snooping": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"switch_controller_igmp_snooping_proxy": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"switch_controller_igmp_snooping_fast_leave": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -1086,6 +1220,32 @@ func resourceSystemInterface() *schema.Resource {
 				ValidateFunc: validation.IntBetween(0, 128),
 				Optional:     true,
 				Computed:     true,
+			},
+			"switch_controller_nac": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
+			"switch_controller_feature": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"switch_controller_iot_scanning": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"swc_vlan": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
+			"swc_first_create": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"color": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -1205,6 +1365,11 @@ func resourceSystemInterface() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"icmp6_send_redirect": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"ip6_manage_flag": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -1257,6 +1422,21 @@ func resourceSystemInterface() *schema.Resource {
 							Computed:     true,
 						},
 						"autoconf": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"unique_autoconf_addr": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"interface_identifier": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"ip6_prefix_mode": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
 							Computed: true,
@@ -1413,6 +1593,11 @@ func resourceSystemInterface() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"cli_conn6_status": &schema.Schema{
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
+						},
 						"vrrp_virtual_mac6": &schema.Schema{
 							Type:     schema.TypeString,
 							Optional: true,
@@ -1502,7 +1687,7 @@ func resourceSystemInterfaceCreate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemInterface(d)
+	obj, err := getObjectSystemInterface(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemInterface resource while getting object: %v", err)
 	}
@@ -1534,7 +1719,7 @@ func resourceSystemInterfaceUpdate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemInterface(d)
+	obj, err := getObjectSystemInterface(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemInterface resource while getting object: %v", err)
 	}
@@ -1594,110 +1779,200 @@ func resourceSystemInterfaceRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectSystemInterface(d, o)
+	err = refreshObjectSystemInterface(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemInterface resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemInterfaceName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceVdom(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceVdom(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceVrf(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceVrf(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceCliConnStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceCliConnStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceFortilink(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceFortilink(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceSwitchControllerSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceDistance(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfacePriority(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceClientOptions(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := i["id"]; ok {
+
+			tmp["id"] = flattenSystemInterfaceClientOptionsId(i["id"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "code"
+		if _, ok := i["code"]; ok {
+
+			tmp["code"] = flattenSystemInterfaceClientOptionsCode(i["code"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
+		if _, ok := i["type"]; ok {
+
+			tmp["type"] = flattenSystemInterfaceClientOptionsType(i["type"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
+		if _, ok := i["value"]; ok {
+
+			tmp["value"] = flattenSystemInterfaceClientOptionsValue(i["value"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
+		if _, ok := i["ip"]; ok {
+
+			tmp["ip"] = flattenSystemInterfaceClientOptionsIp(i["ip"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "id", d)
+	return result
+}
+
+func flattenSystemInterfaceClientOptionsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceDhcpRelayService(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceClientOptionsCode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceDhcpRelayIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceClientOptionsType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceDhcpRelayType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceClientOptionsValue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceDhcpRelayAgentOption(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceClientOptionsIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceManagementIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceDistance(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfacePriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceAllowaccess(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceDhcpRelayInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceGwdetect(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceDhcpRelayInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfacePingServStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceDhcpRelayService(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceDetectserver(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceDhcpRelayIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceDetectprotocol(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceDhcpRelayType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceHaPriority(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceDhcpRelayAgentOption(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceFailDetect(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceManagementIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceFailDetectOption(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceFailAlertMethod(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceAllowaccess(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceFailActionOnExtender(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceGwdetect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceFailAlertInterfaces(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSystemInterfacePingServStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceDetectserver(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceDetectprotocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceHaPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceFailDetect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceFailDetectOption(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceFailAlertMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceFailActionOnExtender(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceFailAlertInterfaces(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -1718,7 +1993,8 @@ func flattenSystemInterfaceFailAlertInterfaces(v interface{}, d *schema.Resource
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemInterfaceFailAlertInterfacesName(i["name"], d, pre_append)
+
+			tmp["name"] = flattenSystemInterfaceFailAlertInterfacesName(i["name"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1730,203 +2006,203 @@ func flattenSystemInterfaceFailAlertInterfaces(v interface{}, d *schema.Resource
 	return result
 }
 
-func flattenSystemInterfaceFailAlertInterfacesName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceFailAlertInterfacesName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceDhcpClientIdentifier(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceDhcpClientIdentifier(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceDhcpRenewTime(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceDhcpRenewTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpunnumbered(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpunnumbered(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceUsername(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceUsername(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfacePppoeUnnumberedNegotiate(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfacePppoeUnnumberedNegotiate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfacePassword(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfacePassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIdleTimeout(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIdleTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceDetectedPeerMtu(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceDetectedPeerMtu(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceDiscRetryTimeout(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceDiscRetryTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfacePadtRetryTimeout(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfacePadtRetryTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceServiceName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceServiceName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceAcName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceAcName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceLcpEchoInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceLcpEchoInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceLcpMaxEchoFails(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceLcpMaxEchoFails(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceDefaultgw(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceDefaultgw(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceDnsServerOverride(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceDnsServerOverride(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceAuthType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceAuthType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfacePptpClient(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfacePptpClient(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfacePptpUser(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfacePptpUser(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfacePptpPassword(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfacePptpPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfacePptpServerIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfacePptpServerIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfacePptpAuthType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfacePptpAuthType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfacePptpTimeout(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfacePptpTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceArpforward(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceArpforward(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceNdiscforward(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceNdiscforward(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceBroadcastForward(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceBroadcastForward(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceBfd(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceBfd(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceBfdDesiredMinTx(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceBfdDesiredMinTx(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceBfdDetectMult(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceBfdDetectMult(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceBfdRequiredMinRx(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceBfdRequiredMinRx(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceL2Forward(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceL2Forward(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIcmpSendRedirect(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIcmpSendRedirect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIcmpAcceptRedirect(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIcmpAcceptRedirect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceVlanforward(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceVlanforward(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceStpforward(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceStpforward(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceStpforwardMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceStpforwardMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpsSnifferMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpsSnifferMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIdentAccept(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIdentAccept(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpmac(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpmac(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceSubst(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceSubst(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceMacaddr(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceMacaddr(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceSubstituteDstMac(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceSubstituteDstMac(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceSpeed(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceSpeed(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceNetbiosForward(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceNetbiosForward(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceWinsIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceWinsIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceDedicatedTo(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceDedicatedTo(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceTrustIp1(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceTrustIp1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	if v1, ok := d.GetOkExists(pre); ok && v != nil {
 		if s, ok := v1.(string); ok {
 			v = validateConvIPMask2CIDR(s, v.(string))
@@ -1937,7 +2213,7 @@ func flattenSystemInterfaceTrustIp1(v interface{}, d *schema.ResourceData, pre s
 	return v
 }
 
-func flattenSystemInterfaceTrustIp2(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceTrustIp2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	if v1, ok := d.GetOkExists(pre); ok && v != nil {
 		if s, ok := v1.(string); ok {
 			v = validateConvIPMask2CIDR(s, v.(string))
@@ -1948,7 +2224,7 @@ func flattenSystemInterfaceTrustIp2(v interface{}, d *schema.ResourceData, pre s
 	return v
 }
 
-func flattenSystemInterfaceTrustIp3(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceTrustIp3(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	if v1, ok := d.GetOkExists(pre); ok && v != nil {
 		if s, ok := v1.(string); ok {
 			v = validateConvIPMask2CIDR(s, v.(string))
@@ -1959,131 +2235,147 @@ func flattenSystemInterfaceTrustIp3(v interface{}, d *schema.ResourceData, pre s
 	return v
 }
 
-func flattenSystemInterfaceTrustIp61(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceTrustIp61(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceTrustIp62(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceTrustIp62(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceTrustIp63(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceTrustIp63(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceMtuOverride(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceMtuOverride(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceMtu(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceMtu(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceWccp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceRingRx(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceNetflowSampler(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceRingTx(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceSflowSampler(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceWccp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceDropOverlappedFragment(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceNetflowSampler(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceDropFragment(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceSflowSampler(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceScanBotnetConnections(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceDropOverlappedFragment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceSrcCheck(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceDropFragment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceSampleRate(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceScanBotnetConnections(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfacePollingInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceSrcCheck(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceSampleDirection(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceSampleRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceExplicitWebProxy(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfacePollingInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceExplicitFtpProxy(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceSampleDirection(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceProxyCaptivePortal(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceExplicitWebProxy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceTcpMss(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceExplicitFtpProxy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceInbandwidth(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceProxyCaptivePortal(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceOutbandwidth(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceTcpMss(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceEgressShapingProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceInbandwidth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceDisconnectThreshold(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceOutbandwidth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceSpilloverThreshold(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceEgressShapingProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIngressSpilloverThreshold(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIngressShapingProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceWeight(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceDisconnectThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceSpilloverThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceExternal(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIngressSpilloverThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceVlanid(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceForwardDomain(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceRemoteIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceExternal(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceMember(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSystemInterfaceVlanProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceVlanid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceForwardDomain(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceRemoteIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceMember(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -2104,7 +2396,8 @@ func flattenSystemInterfaceMember(v interface{}, d *schema.ResourceData, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
 		if _, ok := i["interface-name"]; ok {
-			tmp["interface_name"] = flattenSystemInterfaceMemberInterfaceName(i["interface-name"], d, pre_append)
+
+			tmp["interface_name"] = flattenSystemInterfaceMemberInterfaceName(i["interface-name"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2116,51 +2409,51 @@ func flattenSystemInterfaceMember(v interface{}, d *schema.ResourceData, pre str
 	return result
 }
 
-func flattenSystemInterfaceMemberInterfaceName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceMemberInterfaceName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceLacpMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceLacpMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceLacpHaSlave(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceLacpHaSlave(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceLacpSpeed(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceLacpSpeed(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceMinLinks(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceMinLinks(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceMinLinksDown(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceMinLinksDown(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceAlgorithm(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceAlgorithm(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceLinkUpDelay(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceLinkUpDelay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfacePriorityOverride(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfacePriorityOverride(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceAggregate(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceAggregate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceRedundantInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceRedundantInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceManagedDevice(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSystemInterfaceManagedDevice(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -2181,7 +2474,8 @@ func flattenSystemInterfaceManagedDevice(v interface{}, d *schema.ResourceData, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemInterfaceManagedDeviceName(i["name"], d, pre_append)
+
+			tmp["name"] = flattenSystemInterfaceManagedDeviceName(i["name"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2193,63 +2487,63 @@ func flattenSystemInterfaceManagedDevice(v interface{}, d *schema.ResourceData, 
 	return result
 }
 
-func flattenSystemInterfaceManagedDeviceName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceManagedDeviceName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceDevindex(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceDevindex(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceVindex(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceVindex(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceSwitch(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceSwitch(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceDescription(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceDescription(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceAlias(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceAlias(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceSecurityMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceSecurityMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceCaptivePortal(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceCaptivePortal(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceSecurityMacAuthBypass(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceSecurityMacAuthBypass(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceSecurityExternalWeb(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceSecurityExternalWeb(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceSecurityExternalLogout(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceSecurityExternalLogout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceReplacemsgOverrideGroup(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceReplacemsgOverrideGroup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceSecurityRedirectUrl(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceSecurityRedirectUrl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceSecurityExemptList(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceSecurityExemptList(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceSecurityGroups(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSystemInterfaceSecurityGroups(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -2270,7 +2564,8 @@ func flattenSystemInterfaceSecurityGroups(v interface{}, d *schema.ResourceData,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemInterfaceSecurityGroupsName(i["name"], d, pre_append)
+
+			tmp["name"] = flattenSystemInterfaceSecurityGroupsName(i["name"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2282,67 +2577,83 @@ func flattenSystemInterfaceSecurityGroups(v interface{}, d *schema.ResourceData,
 	return result
 }
 
-func flattenSystemInterfaceSecurityGroupsName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceSecurityGroupsName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceDeviceIdentification(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceDeviceIdentification(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceDeviceUserIdentification(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceDeviceUserIdentification(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceDeviceIdentificationActiveScan(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceDeviceIdentificationActiveScan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceDeviceAccessList(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceDeviceAccessList(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceDeviceNetscan(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceDeviceNetscan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceLldpReception(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceLldpReception(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceLldpTransmission(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceLldpTransmission(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceLldpNetworkPolicy(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceLldpNetworkPolicy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceFortiheartbeat(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceFortiheartbeat(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceBroadcastForticlientDiscovery(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceBroadcastForticlientDiscovery(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceEndpointCompliance(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceEndpointCompliance(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceEstimatedUpstreamBandwidth(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceEstimatedUpstreamBandwidth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceEstimatedDownstreamBandwidth(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceEstimatedDownstreamBandwidth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceVrrpVirtualMac(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceMeasuredUpstreamBandwidth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceVrrp(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSystemInterfaceMeasuredDownstreamBandwidth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceBandwidthMeasureTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceMonitorBandwidth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceVrrpVirtualMac(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceVrrp(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -2363,67 +2674,86 @@ func flattenSystemInterfaceVrrp(v interface{}, d *schema.ResourceData, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrid"
 		if _, ok := i["vrid"]; ok {
-			tmp["vrid"] = flattenSystemInterfaceVrrpVrid(i["vrid"], d, pre_append)
+
+			tmp["vrid"] = flattenSystemInterfaceVrrpVrid(i["vrid"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "version"
 		if _, ok := i["version"]; ok {
-			tmp["version"] = flattenSystemInterfaceVrrpVersion(i["version"], d, pre_append)
+
+			tmp["version"] = flattenSystemInterfaceVrrpVersion(i["version"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrgrp"
 		if _, ok := i["vrgrp"]; ok {
-			tmp["vrgrp"] = flattenSystemInterfaceVrrpVrgrp(i["vrgrp"], d, pre_append)
+
+			tmp["vrgrp"] = flattenSystemInterfaceVrrpVrgrp(i["vrgrp"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrip"
 		if _, ok := i["vrip"]; ok {
-			tmp["vrip"] = flattenSystemInterfaceVrrpVrip(i["vrip"], d, pre_append)
+
+			tmp["vrip"] = flattenSystemInterfaceVrrpVrip(i["vrip"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
 		if _, ok := i["priority"]; ok {
-			tmp["priority"] = flattenSystemInterfaceVrrpPriority(i["priority"], d, pre_append)
+
+			tmp["priority"] = flattenSystemInterfaceVrrpPriority(i["priority"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "adv_interval"
 		if _, ok := i["adv-interval"]; ok {
-			tmp["adv_interval"] = flattenSystemInterfaceVrrpAdvInterval(i["adv-interval"], d, pre_append)
+
+			tmp["adv_interval"] = flattenSystemInterfaceVrrpAdvInterval(i["adv-interval"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_time"
 		if _, ok := i["start-time"]; ok {
-			tmp["start_time"] = flattenSystemInterfaceVrrpStartTime(i["start-time"], d, pre_append)
+
+			tmp["start_time"] = flattenSystemInterfaceVrrpStartTime(i["start-time"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "preempt"
 		if _, ok := i["preempt"]; ok {
-			tmp["preempt"] = flattenSystemInterfaceVrrpPreempt(i["preempt"], d, pre_append)
+
+			tmp["preempt"] = flattenSystemInterfaceVrrpPreempt(i["preempt"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "accept_mode"
 		if _, ok := i["accept-mode"]; ok {
-			tmp["accept_mode"] = flattenSystemInterfaceVrrpAcceptMode(i["accept-mode"], d, pre_append)
+
+			tmp["accept_mode"] = flattenSystemInterfaceVrrpAcceptMode(i["accept-mode"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrdst"
 		if _, ok := i["vrdst"]; ok {
-			tmp["vrdst"] = flattenSystemInterfaceVrrpVrdst(i["vrdst"], d, pre_append)
+
+			tmp["vrdst"] = flattenSystemInterfaceVrrpVrdst(i["vrdst"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrdst_priority"
 		if _, ok := i["vrdst-priority"]; ok {
-			tmp["vrdst_priority"] = flattenSystemInterfaceVrrpVrdstPriority(i["vrdst-priority"], d, pre_append)
+
+			tmp["vrdst_priority"] = flattenSystemInterfaceVrrpVrdstPriority(i["vrdst-priority"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ignore_default_route"
+		if _, ok := i["ignore-default-route"]; ok {
+
+			tmp["ignore_default_route"] = flattenSystemInterfaceVrrpIgnoreDefaultRoute(i["ignore-default-route"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenSystemInterfaceVrrpStatus(i["status"], d, pre_append)
+
+			tmp["status"] = flattenSystemInterfaceVrrpStatus(i["status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "proxy_arp"
 		if _, ok := i["proxy-arp"]; ok {
-			tmp["proxy_arp"] = flattenSystemInterfaceVrrpProxyArp(i["proxy-arp"], d, pre_append)
+
+			tmp["proxy_arp"] = flattenSystemInterfaceVrrpProxyArp(i["proxy-arp"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2435,55 +2765,59 @@ func flattenSystemInterfaceVrrp(v interface{}, d *schema.ResourceData, pre strin
 	return result
 }
 
-func flattenSystemInterfaceVrrpVrid(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceVrrpVrid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceVrrpVersion(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceVrrpVersion(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceVrrpVrgrp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceVrrpVrgrp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceVrrpVrip(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceVrrpVrip(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceVrrpPriority(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceVrrpPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceVrrpAdvInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceVrrpAdvInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceVrrpStartTime(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceVrrpStartTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceVrrpPreempt(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceVrrpPreempt(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceVrrpAcceptMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceVrrpAcceptMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceVrrpVrdst(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceVrrpVrdst(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceVrrpVrdstPriority(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceVrrpVrdstPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceVrrpStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceVrrpIgnoreDefaultRoute(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceVrrpProxyArp(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSystemInterfaceVrrpStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceVrrpProxyArp(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -2504,12 +2838,14 @@ func flattenSystemInterfaceVrrpProxyArp(v interface{}, d *schema.ResourceData, p
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemInterfaceVrrpProxyArpId(i["id"], d, pre_append)
+
+			tmp["id"] = flattenSystemInterfaceVrrpProxyArpId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := i["ip"]; ok {
-			tmp["ip"] = flattenSystemInterfaceVrrpProxyArpIp(i["ip"], d, pre_append)
+
+			tmp["ip"] = flattenSystemInterfaceVrrpProxyArpIp(i["ip"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2520,27 +2856,27 @@ func flattenSystemInterfaceVrrpProxyArp(v interface{}, d *schema.ResourceData, p
 	return result
 }
 
-func flattenSystemInterfaceVrrpProxyArpId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceVrrpProxyArpId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceVrrpProxyArpIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceVrrpProxyArpIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceRole(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceRole(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceSnmpIndex(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceSnmpIndex(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceSecondaryIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceSecondaryIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceSecondaryip(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSystemInterfaceSecondaryip(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -2561,42 +2897,50 @@ func flattenSystemInterfaceSecondaryip(v interface{}, d *schema.ResourceData, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemInterfaceSecondaryipId(i["id"], d, pre_append)
+
+			tmp["id"] = flattenSystemInterfaceSecondaryipId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := i["ip"]; ok {
-			tmp["ip"] = flattenSystemInterfaceSecondaryipIp(i["ip"], d, pre_append)
+
+			tmp["ip"] = flattenSystemInterfaceSecondaryipIp(i["ip"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowaccess"
 		if _, ok := i["allowaccess"]; ok {
-			tmp["allowaccess"] = flattenSystemInterfaceSecondaryipAllowaccess(i["allowaccess"], d, pre_append)
+
+			tmp["allowaccess"] = flattenSystemInterfaceSecondaryipAllowaccess(i["allowaccess"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "gwdetect"
 		if _, ok := i["gwdetect"]; ok {
-			tmp["gwdetect"] = flattenSystemInterfaceSecondaryipGwdetect(i["gwdetect"], d, pre_append)
+
+			tmp["gwdetect"] = flattenSystemInterfaceSecondaryipGwdetect(i["gwdetect"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ping_serv_status"
 		if _, ok := i["ping-serv-status"]; ok {
-			tmp["ping_serv_status"] = flattenSystemInterfaceSecondaryipPingServStatus(i["ping-serv-status"], d, pre_append)
+
+			tmp["ping_serv_status"] = flattenSystemInterfaceSecondaryipPingServStatus(i["ping-serv-status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "detectserver"
 		if _, ok := i["detectserver"]; ok {
-			tmp["detectserver"] = flattenSystemInterfaceSecondaryipDetectserver(i["detectserver"], d, pre_append)
+
+			tmp["detectserver"] = flattenSystemInterfaceSecondaryipDetectserver(i["detectserver"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "detectprotocol"
 		if _, ok := i["detectprotocol"]; ok {
-			tmp["detectprotocol"] = flattenSystemInterfaceSecondaryipDetectprotocol(i["detectprotocol"], d, pre_append)
+
+			tmp["detectprotocol"] = flattenSystemInterfaceSecondaryipDetectprotocol(i["detectprotocol"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ha_priority"
 		if _, ok := i["ha-priority"]; ok {
-			tmp["ha_priority"] = flattenSystemInterfaceSecondaryipHaPriority(i["ha-priority"], d, pre_append)
+
+			tmp["ha_priority"] = flattenSystemInterfaceSecondaryipHaPriority(i["ha-priority"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2608,103 +2952,151 @@ func flattenSystemInterfaceSecondaryip(v interface{}, d *schema.ResourceData, pr
 	return result
 }
 
-func flattenSystemInterfaceSecondaryipId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceSecondaryipId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceSecondaryipIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceSecondaryipIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceSecondaryipAllowaccess(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceSecondaryipAllowaccess(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceSecondaryipGwdetect(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceSecondaryipGwdetect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceSecondaryipPingServStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceSecondaryipPingServStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceSecondaryipDetectserver(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceSecondaryipDetectserver(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceSecondaryipDetectprotocol(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceSecondaryipDetectprotocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceSecondaryipHaPriority(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceSecondaryipHaPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfacePreserveSessionRoute(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfacePreserveSessionRoute(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceAutoAuthExtensionDevice(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceAutoAuthExtensionDevice(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceApDiscover(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceApDiscover(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceFortilinkStacking(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceFortilinkStacking(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceFortilinkSplitInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceFortilinkNeighborDetect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceInternal(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpManagedByFortiipam(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceFortilinkBackupLink(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceManagedSubnetworkSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceSwitchControllerAccessVlan(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceFortilinkSplitInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceSwitchControllerTrafficPolicy(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceInternal(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceSwitchControllerIgmpSnooping(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceFortilinkBackupLink(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceSwitchControllerDhcpSnooping(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceSwitchControllerAccessVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceSwitchControllerDhcpSnoopingVerifyMac(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceSwitchControllerTrafficPolicy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceSwitchControllerDhcpSnoopingOption82(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceSwitchControllerRspanMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceSwitchControllerArpInspection(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceSwitchControllerMgmtVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceSwitchControllerLearningLimit(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceSwitchControllerIgmpSnooping(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceColor(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceSwitchControllerIgmpSnoopingProxy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceTagging(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSystemInterfaceSwitchControllerIgmpSnoopingFastLeave(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceSwitchControllerDhcpSnooping(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceSwitchControllerDhcpSnoopingVerifyMac(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceSwitchControllerDhcpSnoopingOption82(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceSwitchControllerArpInspection(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceSwitchControllerLearningLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceSwitchControllerNac(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceSwitchControllerFeature(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceSwitchControllerIotScanning(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceSwcVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceSwcFirstCreate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceColor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceTagging(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -2725,17 +3117,20 @@ func flattenSystemInterfaceTagging(v interface{}, d *schema.ResourceData, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemInterfaceTaggingName(i["name"], d, pre_append)
+
+			tmp["name"] = flattenSystemInterfaceTaggingName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := i["category"]; ok {
-			tmp["category"] = flattenSystemInterfaceTaggingCategory(i["category"], d, pre_append)
+
+			tmp["category"] = flattenSystemInterfaceTaggingCategory(i["category"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
 		if _, ok := i["tags"]; ok {
-			tmp["tags"] = flattenSystemInterfaceTaggingTags(i["tags"], d, pre_append)
+
+			tmp["tags"] = flattenSystemInterfaceTaggingTags(i["tags"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2747,15 +3142,15 @@ func flattenSystemInterfaceTagging(v interface{}, d *schema.ResourceData, pre st
 	return result
 }
 
-func flattenSystemInterfaceTaggingName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceTaggingName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceTaggingCategory(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceTaggingCategory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceTaggingTags(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSystemInterfaceTaggingTags(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -2776,7 +3171,8 @@ func flattenSystemInterfaceTaggingTags(v interface{}, d *schema.ResourceData, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemInterfaceTaggingTagsName(i["name"], d, pre_append)
+
+			tmp["name"] = flattenSystemInterfaceTaggingTagsName(i["name"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2787,11 +3183,11 @@ func flattenSystemInterfaceTaggingTags(v interface{}, d *schema.ResourceData, pr
 	return result
 }
 
-func flattenSystemInterfaceTaggingTagsName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceTaggingTagsName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSystemInterfaceIpv6(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -2802,235 +3198,303 @@ func flattenSystemInterfaceIpv6(v interface{}, d *schema.ResourceData, pre strin
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "ip6_mode"
 	if _, ok := i["ip6-mode"]; ok {
-		result["ip6_mode"] = flattenSystemInterfaceIpv6Ip6Mode(i["ip6-mode"], d, pre_append)
+
+		result["ip6_mode"] = flattenSystemInterfaceIpv6Ip6Mode(i["ip6-mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "nd_mode"
 	if _, ok := i["nd-mode"]; ok {
-		result["nd_mode"] = flattenSystemInterfaceIpv6NdMode(i["nd-mode"], d, pre_append)
+
+		result["nd_mode"] = flattenSystemInterfaceIpv6NdMode(i["nd-mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "nd_cert"
 	if _, ok := i["nd-cert"]; ok {
-		result["nd_cert"] = flattenSystemInterfaceIpv6NdCert(i["nd-cert"], d, pre_append)
+
+		result["nd_cert"] = flattenSystemInterfaceIpv6NdCert(i["nd-cert"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "nd_security_level"
 	if _, ok := i["nd-security-level"]; ok {
-		result["nd_security_level"] = flattenSystemInterfaceIpv6NdSecurityLevel(i["nd-security-level"], d, pre_append)
+
+		result["nd_security_level"] = flattenSystemInterfaceIpv6NdSecurityLevel(i["nd-security-level"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "nd_timestamp_delta"
 	if _, ok := i["nd-timestamp-delta"]; ok {
-		result["nd_timestamp_delta"] = flattenSystemInterfaceIpv6NdTimestampDelta(i["nd-timestamp-delta"], d, pre_append)
+
+		result["nd_timestamp_delta"] = flattenSystemInterfaceIpv6NdTimestampDelta(i["nd-timestamp-delta"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "nd_timestamp_fuzz"
 	if _, ok := i["nd-timestamp-fuzz"]; ok {
-		result["nd_timestamp_fuzz"] = flattenSystemInterfaceIpv6NdTimestampFuzz(i["nd-timestamp-fuzz"], d, pre_append)
+
+		result["nd_timestamp_fuzz"] = flattenSystemInterfaceIpv6NdTimestampFuzz(i["nd-timestamp-fuzz"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "nd_cga_modifier"
 	if _, ok := i["nd-cga-modifier"]; ok {
-		result["nd_cga_modifier"] = flattenSystemInterfaceIpv6NdCgaModifier(i["nd-cga-modifier"], d, pre_append)
+
+		result["nd_cga_modifier"] = flattenSystemInterfaceIpv6NdCgaModifier(i["nd-cga-modifier"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "ip6_dns_server_override"
 	if _, ok := i["ip6-dns-server-override"]; ok {
-		result["ip6_dns_server_override"] = flattenSystemInterfaceIpv6Ip6DnsServerOverride(i["ip6-dns-server-override"], d, pre_append)
+
+		result["ip6_dns_server_override"] = flattenSystemInterfaceIpv6Ip6DnsServerOverride(i["ip6-dns-server-override"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "ip6_address"
 	if _, ok := i["ip6-address"]; ok {
-		result["ip6_address"] = flattenSystemInterfaceIpv6Ip6Address(i["ip6-address"], d, pre_append)
+
+		result["ip6_address"] = flattenSystemInterfaceIpv6Ip6Address(i["ip6-address"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "ip6_extra_addr"
 	if _, ok := i["ip6-extra-addr"]; ok {
-		result["ip6_extra_addr"] = flattenSystemInterfaceIpv6Ip6ExtraAddr(i["ip6-extra-addr"], d, pre_append)
+
+		result["ip6_extra_addr"] = flattenSystemInterfaceIpv6Ip6ExtraAddr(i["ip6-extra-addr"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "ip6_allowaccess"
 	if _, ok := i["ip6-allowaccess"]; ok {
-		result["ip6_allowaccess"] = flattenSystemInterfaceIpv6Ip6Allowaccess(i["ip6-allowaccess"], d, pre_append)
+
+		result["ip6_allowaccess"] = flattenSystemInterfaceIpv6Ip6Allowaccess(i["ip6-allowaccess"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "ip6_send_adv"
 	if _, ok := i["ip6-send-adv"]; ok {
-		result["ip6_send_adv"] = flattenSystemInterfaceIpv6Ip6SendAdv(i["ip6-send-adv"], d, pre_append)
+
+		result["ip6_send_adv"] = flattenSystemInterfaceIpv6Ip6SendAdv(i["ip6-send-adv"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "icmp6_send_redirect"
+	if _, ok := i["icmp6-send-redirect"]; ok {
+
+		result["icmp6_send_redirect"] = flattenSystemInterfaceIpv6Icmp6SendRedirect(i["icmp6-send-redirect"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "ip6_manage_flag"
 	if _, ok := i["ip6-manage-flag"]; ok {
-		result["ip6_manage_flag"] = flattenSystemInterfaceIpv6Ip6ManageFlag(i["ip6-manage-flag"], d, pre_append)
+
+		result["ip6_manage_flag"] = flattenSystemInterfaceIpv6Ip6ManageFlag(i["ip6-manage-flag"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "ip6_other_flag"
 	if _, ok := i["ip6-other-flag"]; ok {
-		result["ip6_other_flag"] = flattenSystemInterfaceIpv6Ip6OtherFlag(i["ip6-other-flag"], d, pre_append)
+
+		result["ip6_other_flag"] = flattenSystemInterfaceIpv6Ip6OtherFlag(i["ip6-other-flag"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "ip6_max_interval"
 	if _, ok := i["ip6-max-interval"]; ok {
-		result["ip6_max_interval"] = flattenSystemInterfaceIpv6Ip6MaxInterval(i["ip6-max-interval"], d, pre_append)
+
+		result["ip6_max_interval"] = flattenSystemInterfaceIpv6Ip6MaxInterval(i["ip6-max-interval"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "ip6_min_interval"
 	if _, ok := i["ip6-min-interval"]; ok {
-		result["ip6_min_interval"] = flattenSystemInterfaceIpv6Ip6MinInterval(i["ip6-min-interval"], d, pre_append)
+
+		result["ip6_min_interval"] = flattenSystemInterfaceIpv6Ip6MinInterval(i["ip6-min-interval"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "ip6_link_mtu"
 	if _, ok := i["ip6-link-mtu"]; ok {
-		result["ip6_link_mtu"] = flattenSystemInterfaceIpv6Ip6LinkMtu(i["ip6-link-mtu"], d, pre_append)
+
+		result["ip6_link_mtu"] = flattenSystemInterfaceIpv6Ip6LinkMtu(i["ip6-link-mtu"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "ip6_reachable_time"
 	if _, ok := i["ip6-reachable-time"]; ok {
-		result["ip6_reachable_time"] = flattenSystemInterfaceIpv6Ip6ReachableTime(i["ip6-reachable-time"], d, pre_append)
+
+		result["ip6_reachable_time"] = flattenSystemInterfaceIpv6Ip6ReachableTime(i["ip6-reachable-time"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "ip6_retrans_time"
 	if _, ok := i["ip6-retrans-time"]; ok {
-		result["ip6_retrans_time"] = flattenSystemInterfaceIpv6Ip6RetransTime(i["ip6-retrans-time"], d, pre_append)
+
+		result["ip6_retrans_time"] = flattenSystemInterfaceIpv6Ip6RetransTime(i["ip6-retrans-time"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "ip6_default_life"
 	if _, ok := i["ip6-default-life"]; ok {
-		result["ip6_default_life"] = flattenSystemInterfaceIpv6Ip6DefaultLife(i["ip6-default-life"], d, pre_append)
+
+		result["ip6_default_life"] = flattenSystemInterfaceIpv6Ip6DefaultLife(i["ip6-default-life"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "ip6_hop_limit"
 	if _, ok := i["ip6-hop-limit"]; ok {
-		result["ip6_hop_limit"] = flattenSystemInterfaceIpv6Ip6HopLimit(i["ip6-hop-limit"], d, pre_append)
+
+		result["ip6_hop_limit"] = flattenSystemInterfaceIpv6Ip6HopLimit(i["ip6-hop-limit"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "autoconf"
 	if _, ok := i["autoconf"]; ok {
-		result["autoconf"] = flattenSystemInterfaceIpv6Autoconf(i["autoconf"], d, pre_append)
+
+		result["autoconf"] = flattenSystemInterfaceIpv6Autoconf(i["autoconf"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "unique_autoconf_addr"
+	if _, ok := i["unique-autoconf-addr"]; ok {
+
+		result["unique_autoconf_addr"] = flattenSystemInterfaceIpv6UniqueAutoconfAddr(i["unique-autoconf-addr"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "interface_identifier"
+	if _, ok := i["interface-identifier"]; ok {
+
+		result["interface_identifier"] = flattenSystemInterfaceIpv6InterfaceIdentifier(i["interface-identifier"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "ip6_prefix_mode"
+	if _, ok := i["ip6-prefix-mode"]; ok {
+
+		result["ip6_prefix_mode"] = flattenSystemInterfaceIpv6Ip6PrefixMode(i["ip6-prefix-mode"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "ip6_upstream_interface"
 	if _, ok := i["ip6-upstream-interface"]; ok {
-		result["ip6_upstream_interface"] = flattenSystemInterfaceIpv6Ip6UpstreamInterface(i["ip6-upstream-interface"], d, pre_append)
+
+		result["ip6_upstream_interface"] = flattenSystemInterfaceIpv6Ip6UpstreamInterface(i["ip6-upstream-interface"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "ip6_subnet"
 	if _, ok := i["ip6-subnet"]; ok {
-		result["ip6_subnet"] = flattenSystemInterfaceIpv6Ip6Subnet(i["ip6-subnet"], d, pre_append)
+
+		result["ip6_subnet"] = flattenSystemInterfaceIpv6Ip6Subnet(i["ip6-subnet"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "ip6_prefix_list"
 	if _, ok := i["ip6-prefix-list"]; ok {
-		result["ip6_prefix_list"] = flattenSystemInterfaceIpv6Ip6PrefixList(i["ip6-prefix-list"], d, pre_append)
+
+		result["ip6_prefix_list"] = flattenSystemInterfaceIpv6Ip6PrefixList(i["ip6-prefix-list"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "ip6_delegated_prefix_list"
 	if _, ok := i["ip6-delegated-prefix-list"]; ok {
-		result["ip6_delegated_prefix_list"] = flattenSystemInterfaceIpv6Ip6DelegatedPrefixList(i["ip6-delegated-prefix-list"], d, pre_append)
+
+		result["ip6_delegated_prefix_list"] = flattenSystemInterfaceIpv6Ip6DelegatedPrefixList(i["ip6-delegated-prefix-list"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "dhcp6_relay_service"
 	if _, ok := i["dhcp6-relay-service"]; ok {
-		result["dhcp6_relay_service"] = flattenSystemInterfaceIpv6Dhcp6RelayService(i["dhcp6-relay-service"], d, pre_append)
+
+		result["dhcp6_relay_service"] = flattenSystemInterfaceIpv6Dhcp6RelayService(i["dhcp6-relay-service"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "dhcp6_relay_type"
 	if _, ok := i["dhcp6-relay-type"]; ok {
-		result["dhcp6_relay_type"] = flattenSystemInterfaceIpv6Dhcp6RelayType(i["dhcp6-relay-type"], d, pre_append)
+
+		result["dhcp6_relay_type"] = flattenSystemInterfaceIpv6Dhcp6RelayType(i["dhcp6-relay-type"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "dhcp6_relay_ip"
 	if _, ok := i["dhcp6-relay-ip"]; ok {
-		result["dhcp6_relay_ip"] = flattenSystemInterfaceIpv6Dhcp6RelayIp(i["dhcp6-relay-ip"], d, pre_append)
+
+		result["dhcp6_relay_ip"] = flattenSystemInterfaceIpv6Dhcp6RelayIp(i["dhcp6-relay-ip"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "dhcp6_client_options"
 	if _, ok := i["dhcp6-client-options"]; ok {
-		result["dhcp6_client_options"] = flattenSystemInterfaceIpv6Dhcp6ClientOptions(i["dhcp6-client-options"], d, pre_append)
+
+		result["dhcp6_client_options"] = flattenSystemInterfaceIpv6Dhcp6ClientOptions(i["dhcp6-client-options"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "dhcp6_prefix_delegation"
 	if _, ok := i["dhcp6-prefix-delegation"]; ok {
-		result["dhcp6_prefix_delegation"] = flattenSystemInterfaceIpv6Dhcp6PrefixDelegation(i["dhcp6-prefix-delegation"], d, pre_append)
+
+		result["dhcp6_prefix_delegation"] = flattenSystemInterfaceIpv6Dhcp6PrefixDelegation(i["dhcp6-prefix-delegation"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "dhcp6_information_request"
 	if _, ok := i["dhcp6-information-request"]; ok {
-		result["dhcp6_information_request"] = flattenSystemInterfaceIpv6Dhcp6InformationRequest(i["dhcp6-information-request"], d, pre_append)
+
+		result["dhcp6_information_request"] = flattenSystemInterfaceIpv6Dhcp6InformationRequest(i["dhcp6-information-request"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "dhcp6_prefix_hint"
 	if _, ok := i["dhcp6-prefix-hint"]; ok {
-		result["dhcp6_prefix_hint"] = flattenSystemInterfaceIpv6Dhcp6PrefixHint(i["dhcp6-prefix-hint"], d, pre_append)
+
+		result["dhcp6_prefix_hint"] = flattenSystemInterfaceIpv6Dhcp6PrefixHint(i["dhcp6-prefix-hint"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "dhcp6_prefix_hint_plt"
 	if _, ok := i["dhcp6-prefix-hint-plt"]; ok {
-		result["dhcp6_prefix_hint_plt"] = flattenSystemInterfaceIpv6Dhcp6PrefixHintPlt(i["dhcp6-prefix-hint-plt"], d, pre_append)
+
+		result["dhcp6_prefix_hint_plt"] = flattenSystemInterfaceIpv6Dhcp6PrefixHintPlt(i["dhcp6-prefix-hint-plt"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "dhcp6_prefix_hint_vlt"
 	if _, ok := i["dhcp6-prefix-hint-vlt"]; ok {
-		result["dhcp6_prefix_hint_vlt"] = flattenSystemInterfaceIpv6Dhcp6PrefixHintVlt(i["dhcp6-prefix-hint-vlt"], d, pre_append)
+
+		result["dhcp6_prefix_hint_vlt"] = flattenSystemInterfaceIpv6Dhcp6PrefixHintVlt(i["dhcp6-prefix-hint-vlt"], d, pre_append, sv)
+	}
+
+	pre_append = pre + ".0." + "cli_conn6_status"
+	if _, ok := i["cli-conn6-status"]; ok {
+
+		result["cli_conn6_status"] = flattenSystemInterfaceIpv6CliConn6Status(i["cli-conn6-status"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "vrrp_virtual_mac6"
 	if _, ok := i["vrrp-virtual-mac6"]; ok {
-		result["vrrp_virtual_mac6"] = flattenSystemInterfaceIpv6VrrpVirtualMac6(i["vrrp-virtual-mac6"], d, pre_append)
+
+		result["vrrp_virtual_mac6"] = flattenSystemInterfaceIpv6VrrpVirtualMac6(i["vrrp-virtual-mac6"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "vrip6_link_local"
 	if _, ok := i["vrip6_link_local"]; ok {
-		result["vrip6_link_local"] = flattenSystemInterfaceIpv6Vrip6_Link_Local(i["vrip6_link_local"], d, pre_append)
+
+		result["vrip6_link_local"] = flattenSystemInterfaceIpv6Vrip6_Link_Local(i["vrip6_link_local"], d, pre_append, sv)
 	}
 
 	pre_append = pre + ".0." + "vrrp6"
 	if _, ok := i["vrrp6"]; ok {
-		result["vrrp6"] = flattenSystemInterfaceIpv6Vrrp6(i["vrrp6"], d, pre_append)
+
+		result["vrrp6"] = flattenSystemInterfaceIpv6Vrrp6(i["vrrp6"], d, pre_append, sv)
 	}
 
 	lastresult := []map[string]interface{}{result}
 	return lastresult
 }
 
-func flattenSystemInterfaceIpv6Ip6Mode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Ip6Mode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6NdMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6NdMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6NdCert(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6NdCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6NdSecurityLevel(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6NdSecurityLevel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6NdTimestampDelta(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6NdTimestampDelta(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6NdTimestampFuzz(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6NdTimestampFuzz(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6NdCgaModifier(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6NdCgaModifier(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Ip6DnsServerOverride(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Ip6DnsServerOverride(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Ip6Address(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Ip6Address(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Ip6ExtraAddr(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSystemInterfaceIpv6Ip6ExtraAddr(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -3051,7 +3515,8 @@ func flattenSystemInterfaceIpv6Ip6ExtraAddr(v interface{}, d *schema.ResourceDat
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
 		if _, ok := i["prefix"]; ok {
-			tmp["prefix"] = flattenSystemInterfaceIpv6Ip6ExtraAddrPrefix(i["prefix"], d, pre_append)
+
+			tmp["prefix"] = flattenSystemInterfaceIpv6Ip6ExtraAddrPrefix(i["prefix"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -3062,67 +3527,83 @@ func flattenSystemInterfaceIpv6Ip6ExtraAddr(v interface{}, d *schema.ResourceDat
 	return result
 }
 
-func flattenSystemInterfaceIpv6Ip6ExtraAddrPrefix(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Ip6ExtraAddrPrefix(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Ip6Allowaccess(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Ip6Allowaccess(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Ip6SendAdv(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Ip6SendAdv(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Ip6ManageFlag(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Icmp6SendRedirect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Ip6OtherFlag(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Ip6ManageFlag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Ip6MaxInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Ip6OtherFlag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Ip6MinInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Ip6MaxInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Ip6LinkMtu(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Ip6MinInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Ip6ReachableTime(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Ip6LinkMtu(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Ip6RetransTime(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Ip6ReachableTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Ip6DefaultLife(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Ip6RetransTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Ip6HopLimit(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Ip6DefaultLife(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Autoconf(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Ip6HopLimit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Ip6UpstreamInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Autoconf(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Ip6Subnet(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6UniqueAutoconfAddr(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Ip6PrefixList(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSystemInterfaceIpv6InterfaceIdentifier(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceIpv6Ip6PrefixMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceIpv6Ip6UpstreamInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceIpv6Ip6Subnet(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceIpv6Ip6PrefixList(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -3143,37 +3624,44 @@ func flattenSystemInterfaceIpv6Ip6PrefixList(v interface{}, d *schema.ResourceDa
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
 		if _, ok := i["prefix"]; ok {
-			tmp["prefix"] = flattenSystemInterfaceIpv6Ip6PrefixListPrefix(i["prefix"], d, pre_append)
+
+			tmp["prefix"] = flattenSystemInterfaceIpv6Ip6PrefixListPrefix(i["prefix"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "autonomous_flag"
 		if _, ok := i["autonomous-flag"]; ok {
-			tmp["autonomous_flag"] = flattenSystemInterfaceIpv6Ip6PrefixListAutonomousFlag(i["autonomous-flag"], d, pre_append)
+
+			tmp["autonomous_flag"] = flattenSystemInterfaceIpv6Ip6PrefixListAutonomousFlag(i["autonomous-flag"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "onlink_flag"
 		if _, ok := i["onlink-flag"]; ok {
-			tmp["onlink_flag"] = flattenSystemInterfaceIpv6Ip6PrefixListOnlinkFlag(i["onlink-flag"], d, pre_append)
+
+			tmp["onlink_flag"] = flattenSystemInterfaceIpv6Ip6PrefixListOnlinkFlag(i["onlink-flag"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "valid_life_time"
 		if _, ok := i["valid-life-time"]; ok {
-			tmp["valid_life_time"] = flattenSystemInterfaceIpv6Ip6PrefixListValidLifeTime(i["valid-life-time"], d, pre_append)
+
+			tmp["valid_life_time"] = flattenSystemInterfaceIpv6Ip6PrefixListValidLifeTime(i["valid-life-time"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "preferred_life_time"
 		if _, ok := i["preferred-life-time"]; ok {
-			tmp["preferred_life_time"] = flattenSystemInterfaceIpv6Ip6PrefixListPreferredLifeTime(i["preferred-life-time"], d, pre_append)
+
+			tmp["preferred_life_time"] = flattenSystemInterfaceIpv6Ip6PrefixListPreferredLifeTime(i["preferred-life-time"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rdnss"
 		if _, ok := i["rdnss"]; ok {
-			tmp["rdnss"] = flattenSystemInterfaceIpv6Ip6PrefixListRdnss(i["rdnss"], d, pre_append)
+
+			tmp["rdnss"] = flattenSystemInterfaceIpv6Ip6PrefixListRdnss(i["rdnss"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dnssl"
 		if _, ok := i["dnssl"]; ok {
-			tmp["dnssl"] = flattenSystemInterfaceIpv6Ip6PrefixListDnssl(i["dnssl"], d, pre_append)
+
+			tmp["dnssl"] = flattenSystemInterfaceIpv6Ip6PrefixListDnssl(i["dnssl"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -3184,31 +3672,31 @@ func flattenSystemInterfaceIpv6Ip6PrefixList(v interface{}, d *schema.ResourceDa
 	return result
 }
 
-func flattenSystemInterfaceIpv6Ip6PrefixListPrefix(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Ip6PrefixListPrefix(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Ip6PrefixListAutonomousFlag(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Ip6PrefixListAutonomousFlag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Ip6PrefixListOnlinkFlag(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Ip6PrefixListOnlinkFlag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Ip6PrefixListValidLifeTime(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Ip6PrefixListValidLifeTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Ip6PrefixListPreferredLifeTime(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Ip6PrefixListPreferredLifeTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Ip6PrefixListRdnss(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Ip6PrefixListRdnss(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Ip6PrefixListDnssl(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSystemInterfaceIpv6Ip6PrefixListDnssl(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -3229,7 +3717,8 @@ func flattenSystemInterfaceIpv6Ip6PrefixListDnssl(v interface{}, d *schema.Resou
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain"
 		if _, ok := i["domain"]; ok {
-			tmp["domain"] = flattenSystemInterfaceIpv6Ip6PrefixListDnsslDomain(i["domain"], d, pre_append)
+
+			tmp["domain"] = flattenSystemInterfaceIpv6Ip6PrefixListDnsslDomain(i["domain"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -3240,11 +3729,11 @@ func flattenSystemInterfaceIpv6Ip6PrefixListDnssl(v interface{}, d *schema.Resou
 	return result
 }
 
-func flattenSystemInterfaceIpv6Ip6PrefixListDnsslDomain(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Ip6PrefixListDnsslDomain(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Ip6DelegatedPrefixList(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSystemInterfaceIpv6Ip6DelegatedPrefixList(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -3265,37 +3754,44 @@ func flattenSystemInterfaceIpv6Ip6DelegatedPrefixList(v interface{}, d *schema.R
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_id"
 		if _, ok := i["prefix-id"]; ok {
-			tmp["prefix_id"] = flattenSystemInterfaceIpv6Ip6DelegatedPrefixListPrefixId(i["prefix-id"], d, pre_append)
+
+			tmp["prefix_id"] = flattenSystemInterfaceIpv6Ip6DelegatedPrefixListPrefixId(i["prefix-id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "upstream_interface"
 		if _, ok := i["upstream-interface"]; ok {
-			tmp["upstream_interface"] = flattenSystemInterfaceIpv6Ip6DelegatedPrefixListUpstreamInterface(i["upstream-interface"], d, pre_append)
+
+			tmp["upstream_interface"] = flattenSystemInterfaceIpv6Ip6DelegatedPrefixListUpstreamInterface(i["upstream-interface"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "autonomous_flag"
 		if _, ok := i["autonomous-flag"]; ok {
-			tmp["autonomous_flag"] = flattenSystemInterfaceIpv6Ip6DelegatedPrefixListAutonomousFlag(i["autonomous-flag"], d, pre_append)
+
+			tmp["autonomous_flag"] = flattenSystemInterfaceIpv6Ip6DelegatedPrefixListAutonomousFlag(i["autonomous-flag"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "onlink_flag"
 		if _, ok := i["onlink-flag"]; ok {
-			tmp["onlink_flag"] = flattenSystemInterfaceIpv6Ip6DelegatedPrefixListOnlinkFlag(i["onlink-flag"], d, pre_append)
+
+			tmp["onlink_flag"] = flattenSystemInterfaceIpv6Ip6DelegatedPrefixListOnlinkFlag(i["onlink-flag"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
 		if _, ok := i["subnet"]; ok {
-			tmp["subnet"] = flattenSystemInterfaceIpv6Ip6DelegatedPrefixListSubnet(i["subnet"], d, pre_append)
+
+			tmp["subnet"] = flattenSystemInterfaceIpv6Ip6DelegatedPrefixListSubnet(i["subnet"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rdnss_service"
 		if _, ok := i["rdnss-service"]; ok {
-			tmp["rdnss_service"] = flattenSystemInterfaceIpv6Ip6DelegatedPrefixListRdnssService(i["rdnss-service"], d, pre_append)
+
+			tmp["rdnss_service"] = flattenSystemInterfaceIpv6Ip6DelegatedPrefixListRdnssService(i["rdnss-service"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rdnss"
 		if _, ok := i["rdnss"]; ok {
-			tmp["rdnss"] = flattenSystemInterfaceIpv6Ip6DelegatedPrefixListRdnss(i["rdnss"], d, pre_append)
+
+			tmp["rdnss"] = flattenSystemInterfaceIpv6Ip6DelegatedPrefixListRdnss(i["rdnss"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -3306,79 +3802,83 @@ func flattenSystemInterfaceIpv6Ip6DelegatedPrefixList(v interface{}, d *schema.R
 	return result
 }
 
-func flattenSystemInterfaceIpv6Ip6DelegatedPrefixListPrefixId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Ip6DelegatedPrefixListPrefixId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Ip6DelegatedPrefixListUpstreamInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Ip6DelegatedPrefixListUpstreamInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Ip6DelegatedPrefixListAutonomousFlag(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Ip6DelegatedPrefixListAutonomousFlag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Ip6DelegatedPrefixListOnlinkFlag(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Ip6DelegatedPrefixListOnlinkFlag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Ip6DelegatedPrefixListSubnet(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Ip6DelegatedPrefixListSubnet(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Ip6DelegatedPrefixListRdnssService(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Ip6DelegatedPrefixListRdnssService(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Ip6DelegatedPrefixListRdnss(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Ip6DelegatedPrefixListRdnss(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Dhcp6RelayService(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Dhcp6RelayService(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Dhcp6RelayType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Dhcp6RelayType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Dhcp6RelayIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Dhcp6RelayIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Dhcp6ClientOptions(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Dhcp6ClientOptions(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Dhcp6PrefixDelegation(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Dhcp6PrefixDelegation(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Dhcp6InformationRequest(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Dhcp6InformationRequest(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Dhcp6PrefixHint(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Dhcp6PrefixHint(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Dhcp6PrefixHintPlt(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Dhcp6PrefixHintPlt(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Dhcp6PrefixHintVlt(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Dhcp6PrefixHintVlt(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6VrrpVirtualMac6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6CliConn6Status(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Vrip6_Link_Local(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6VrrpVirtualMac6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Vrrp6(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSystemInterfaceIpv6Vrip6_Link_Local(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemInterfaceIpv6Vrrp6(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -3399,52 +3899,62 @@ func flattenSystemInterfaceIpv6Vrrp6(v interface{}, d *schema.ResourceData, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrid"
 		if _, ok := i["vrid"]; ok {
-			tmp["vrid"] = flattenSystemInterfaceIpv6Vrrp6Vrid(i["vrid"], d, pre_append)
+
+			tmp["vrid"] = flattenSystemInterfaceIpv6Vrrp6Vrid(i["vrid"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrgrp"
 		if _, ok := i["vrgrp"]; ok {
-			tmp["vrgrp"] = flattenSystemInterfaceIpv6Vrrp6Vrgrp(i["vrgrp"], d, pre_append)
+
+			tmp["vrgrp"] = flattenSystemInterfaceIpv6Vrrp6Vrgrp(i["vrgrp"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrip6"
 		if _, ok := i["vrip6"]; ok {
-			tmp["vrip6"] = flattenSystemInterfaceIpv6Vrrp6Vrip6(i["vrip6"], d, pre_append)
+
+			tmp["vrip6"] = flattenSystemInterfaceIpv6Vrrp6Vrip6(i["vrip6"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
 		if _, ok := i["priority"]; ok {
-			tmp["priority"] = flattenSystemInterfaceIpv6Vrrp6Priority(i["priority"], d, pre_append)
+
+			tmp["priority"] = flattenSystemInterfaceIpv6Vrrp6Priority(i["priority"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "adv_interval"
 		if _, ok := i["adv-interval"]; ok {
-			tmp["adv_interval"] = flattenSystemInterfaceIpv6Vrrp6AdvInterval(i["adv-interval"], d, pre_append)
+
+			tmp["adv_interval"] = flattenSystemInterfaceIpv6Vrrp6AdvInterval(i["adv-interval"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_time"
 		if _, ok := i["start-time"]; ok {
-			tmp["start_time"] = flattenSystemInterfaceIpv6Vrrp6StartTime(i["start-time"], d, pre_append)
+
+			tmp["start_time"] = flattenSystemInterfaceIpv6Vrrp6StartTime(i["start-time"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "preempt"
 		if _, ok := i["preempt"]; ok {
-			tmp["preempt"] = flattenSystemInterfaceIpv6Vrrp6Preempt(i["preempt"], d, pre_append)
+
+			tmp["preempt"] = flattenSystemInterfaceIpv6Vrrp6Preempt(i["preempt"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "accept_mode"
 		if _, ok := i["accept-mode"]; ok {
-			tmp["accept_mode"] = flattenSystemInterfaceIpv6Vrrp6AcceptMode(i["accept-mode"], d, pre_append)
+
+			tmp["accept_mode"] = flattenSystemInterfaceIpv6Vrrp6AcceptMode(i["accept-mode"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrdst6"
 		if _, ok := i["vrdst6"]; ok {
-			tmp["vrdst6"] = flattenSystemInterfaceIpv6Vrrp6Vrdst6(i["vrdst6"], d, pre_append)
+
+			tmp["vrdst6"] = flattenSystemInterfaceIpv6Vrrp6Vrdst6(i["vrdst6"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenSystemInterfaceIpv6Vrrp6Status(i["status"], d, pre_append)
+
+			tmp["status"] = flattenSystemInterfaceIpv6Vrrp6Status(i["status"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -3455,202 +3965,236 @@ func flattenSystemInterfaceIpv6Vrrp6(v interface{}, d *schema.ResourceData, pre 
 	return result
 }
 
-func flattenSystemInterfaceIpv6Vrrp6Vrid(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Vrrp6Vrid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Vrrp6Vrgrp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Vrrp6Vrgrp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Vrrp6Vrip6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Vrrp6Vrip6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Vrrp6Priority(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Vrrp6Priority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Vrrp6AdvInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Vrrp6AdvInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Vrrp6StartTime(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Vrrp6StartTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Vrrp6Preempt(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Vrrp6Preempt(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Vrrp6AcceptMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Vrrp6AcceptMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Vrrp6Vrdst6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Vrrp6Vrdst6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemInterfaceIpv6Vrrp6Status(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemInterfaceIpv6Vrrp6Status(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemInterface(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemInterface(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenSystemInterfaceName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenSystemInterfaceName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("vdom", flattenSystemInterfaceVdom(o["vdom"], d, "vdom")); err != nil {
+	if err = d.Set("vdom", flattenSystemInterfaceVdom(o["vdom"], d, "vdom", sv)); err != nil {
 		if !fortiAPIPatch(o["vdom"]) {
 			return fmt.Errorf("Error reading vdom: %v", err)
 		}
 	}
 
-	if err = d.Set("vrf", flattenSystemInterfaceVrf(o["vrf"], d, "vrf")); err != nil {
+	if err = d.Set("vrf", flattenSystemInterfaceVrf(o["vrf"], d, "vrf", sv)); err != nil {
 		if !fortiAPIPatch(o["vrf"]) {
 			return fmt.Errorf("Error reading vrf: %v", err)
 		}
 	}
 
-	if err = d.Set("cli_conn_status", flattenSystemInterfaceCliConnStatus(o["cli-conn-status"], d, "cli_conn_status")); err != nil {
+	if err = d.Set("cli_conn_status", flattenSystemInterfaceCliConnStatus(o["cli-conn-status"], d, "cli_conn_status", sv)); err != nil {
 		if !fortiAPIPatch(o["cli-conn-status"]) {
 			return fmt.Errorf("Error reading cli_conn_status: %v", err)
 		}
 	}
 
-	if err = d.Set("fortilink", flattenSystemInterfaceFortilink(o["fortilink"], d, "fortilink")); err != nil {
+	if err = d.Set("fortilink", flattenSystemInterfaceFortilink(o["fortilink"], d, "fortilink", sv)); err != nil {
 		if !fortiAPIPatch(o["fortilink"]) {
 			return fmt.Errorf("Error reading fortilink: %v", err)
 		}
 	}
 
-	if err = d.Set("mode", flattenSystemInterfaceMode(o["mode"], d, "mode")); err != nil {
+	if err = d.Set("switch_controller_source_ip", flattenSystemInterfaceSwitchControllerSourceIp(o["switch-controller-source-ip"], d, "switch_controller_source_ip", sv)); err != nil {
+		if !fortiAPIPatch(o["switch-controller-source-ip"]) {
+			return fmt.Errorf("Error reading switch_controller_source_ip: %v", err)
+		}
+	}
+
+	if err = d.Set("mode", flattenSystemInterfaceMode(o["mode"], d, "mode", sv)); err != nil {
 		if !fortiAPIPatch(o["mode"]) {
 			return fmt.Errorf("Error reading mode: %v", err)
 		}
 	}
 
-	if err = d.Set("distance", flattenSystemInterfaceDistance(o["distance"], d, "distance")); err != nil {
+	if isImportTable() {
+		if err = d.Set("client_options", flattenSystemInterfaceClientOptions(o["client-options"], d, "client_options", sv)); err != nil {
+			if !fortiAPIPatch(o["client-options"]) {
+				return fmt.Errorf("Error reading client_options: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("client_options"); ok {
+			if err = d.Set("client_options", flattenSystemInterfaceClientOptions(o["client-options"], d, "client_options", sv)); err != nil {
+				if !fortiAPIPatch(o["client-options"]) {
+					return fmt.Errorf("Error reading client_options: %v", err)
+				}
+			}
+		}
+	}
+
+	if err = d.Set("distance", flattenSystemInterfaceDistance(o["distance"], d, "distance", sv)); err != nil {
 		if !fortiAPIPatch(o["distance"]) {
 			return fmt.Errorf("Error reading distance: %v", err)
 		}
 	}
 
-	if err = d.Set("priority", flattenSystemInterfacePriority(o["priority"], d, "priority")); err != nil {
+	if err = d.Set("priority", flattenSystemInterfacePriority(o["priority"], d, "priority", sv)); err != nil {
 		if !fortiAPIPatch(o["priority"]) {
 			return fmt.Errorf("Error reading priority: %v", err)
 		}
 	}
 
-	if err = d.Set("dhcp_relay_service", flattenSystemInterfaceDhcpRelayService(o["dhcp-relay-service"], d, "dhcp_relay_service")); err != nil {
+	if err = d.Set("dhcp_relay_interface_select_method", flattenSystemInterfaceDhcpRelayInterfaceSelectMethod(o["dhcp-relay-interface-select-method"], d, "dhcp_relay_interface_select_method", sv)); err != nil {
+		if !fortiAPIPatch(o["dhcp-relay-interface-select-method"]) {
+			return fmt.Errorf("Error reading dhcp_relay_interface_select_method: %v", err)
+		}
+	}
+
+	if err = d.Set("dhcp_relay_interface", flattenSystemInterfaceDhcpRelayInterface(o["dhcp-relay-interface"], d, "dhcp_relay_interface", sv)); err != nil {
+		if !fortiAPIPatch(o["dhcp-relay-interface"]) {
+			return fmt.Errorf("Error reading dhcp_relay_interface: %v", err)
+		}
+	}
+
+	if err = d.Set("dhcp_relay_service", flattenSystemInterfaceDhcpRelayService(o["dhcp-relay-service"], d, "dhcp_relay_service", sv)); err != nil {
 		if !fortiAPIPatch(o["dhcp-relay-service"]) {
 			return fmt.Errorf("Error reading dhcp_relay_service: %v", err)
 		}
 	}
 
-	if err = d.Set("dhcp_relay_ip", flattenSystemInterfaceDhcpRelayIp(o["dhcp-relay-ip"], d, "dhcp_relay_ip")); err != nil {
+	if err = d.Set("dhcp_relay_ip", flattenSystemInterfaceDhcpRelayIp(o["dhcp-relay-ip"], d, "dhcp_relay_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["dhcp-relay-ip"]) {
 			return fmt.Errorf("Error reading dhcp_relay_ip: %v", err)
 		}
 	}
 
-	if err = d.Set("dhcp_relay_type", flattenSystemInterfaceDhcpRelayType(o["dhcp-relay-type"], d, "dhcp_relay_type")); err != nil {
+	if err = d.Set("dhcp_relay_type", flattenSystemInterfaceDhcpRelayType(o["dhcp-relay-type"], d, "dhcp_relay_type", sv)); err != nil {
 		if !fortiAPIPatch(o["dhcp-relay-type"]) {
 			return fmt.Errorf("Error reading dhcp_relay_type: %v", err)
 		}
 	}
 
-	if err = d.Set("dhcp_relay_agent_option", flattenSystemInterfaceDhcpRelayAgentOption(o["dhcp-relay-agent-option"], d, "dhcp_relay_agent_option")); err != nil {
+	if err = d.Set("dhcp_relay_agent_option", flattenSystemInterfaceDhcpRelayAgentOption(o["dhcp-relay-agent-option"], d, "dhcp_relay_agent_option", sv)); err != nil {
 		if !fortiAPIPatch(o["dhcp-relay-agent-option"]) {
 			return fmt.Errorf("Error reading dhcp_relay_agent_option: %v", err)
 		}
 	}
 
-	if err = d.Set("management_ip", flattenSystemInterfaceManagementIp(o["management-ip"], d, "management_ip")); err != nil {
+	if err = d.Set("management_ip", flattenSystemInterfaceManagementIp(o["management-ip"], d, "management_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["management-ip"]) {
 			return fmt.Errorf("Error reading management_ip: %v", err)
 		}
 	}
 
-	if err = d.Set("ip", flattenSystemInterfaceIp(o["ip"], d, "ip")); err != nil {
+	if err = d.Set("ip", flattenSystemInterfaceIp(o["ip"], d, "ip", sv)); err != nil {
 		if !fortiAPIPatch(o["ip"]) {
 			return fmt.Errorf("Error reading ip: %v", err)
 		}
 	}
 
-	if err = d.Set("allowaccess", flattenSystemInterfaceAllowaccess(o["allowaccess"], d, "allowaccess")); err != nil {
+	if err = d.Set("allowaccess", flattenSystemInterfaceAllowaccess(o["allowaccess"], d, "allowaccess", sv)); err != nil {
 		if !fortiAPIPatch(o["allowaccess"]) {
 			return fmt.Errorf("Error reading allowaccess: %v", err)
 		}
 	}
 
-	if err = d.Set("gwdetect", flattenSystemInterfaceGwdetect(o["gwdetect"], d, "gwdetect")); err != nil {
+	if err = d.Set("gwdetect", flattenSystemInterfaceGwdetect(o["gwdetect"], d, "gwdetect", sv)); err != nil {
 		if !fortiAPIPatch(o["gwdetect"]) {
 			return fmt.Errorf("Error reading gwdetect: %v", err)
 		}
 	}
 
-	if err = d.Set("ping_serv_status", flattenSystemInterfacePingServStatus(o["ping-serv-status"], d, "ping_serv_status")); err != nil {
+	if err = d.Set("ping_serv_status", flattenSystemInterfacePingServStatus(o["ping-serv-status"], d, "ping_serv_status", sv)); err != nil {
 		if !fortiAPIPatch(o["ping-serv-status"]) {
 			return fmt.Errorf("Error reading ping_serv_status: %v", err)
 		}
 	}
 
-	if err = d.Set("detectserver", flattenSystemInterfaceDetectserver(o["detectserver"], d, "detectserver")); err != nil {
+	if err = d.Set("detectserver", flattenSystemInterfaceDetectserver(o["detectserver"], d, "detectserver", sv)); err != nil {
 		if !fortiAPIPatch(o["detectserver"]) {
 			return fmt.Errorf("Error reading detectserver: %v", err)
 		}
 	}
 
-	if err = d.Set("detectprotocol", flattenSystemInterfaceDetectprotocol(o["detectprotocol"], d, "detectprotocol")); err != nil {
+	if err = d.Set("detectprotocol", flattenSystemInterfaceDetectprotocol(o["detectprotocol"], d, "detectprotocol", sv)); err != nil {
 		if !fortiAPIPatch(o["detectprotocol"]) {
 			return fmt.Errorf("Error reading detectprotocol: %v", err)
 		}
 	}
 
-	if err = d.Set("ha_priority", flattenSystemInterfaceHaPriority(o["ha-priority"], d, "ha_priority")); err != nil {
+	if err = d.Set("ha_priority", flattenSystemInterfaceHaPriority(o["ha-priority"], d, "ha_priority", sv)); err != nil {
 		if !fortiAPIPatch(o["ha-priority"]) {
 			return fmt.Errorf("Error reading ha_priority: %v", err)
 		}
 	}
 
-	if err = d.Set("fail_detect", flattenSystemInterfaceFailDetect(o["fail-detect"], d, "fail_detect")); err != nil {
+	if err = d.Set("fail_detect", flattenSystemInterfaceFailDetect(o["fail-detect"], d, "fail_detect", sv)); err != nil {
 		if !fortiAPIPatch(o["fail-detect"]) {
 			return fmt.Errorf("Error reading fail_detect: %v", err)
 		}
 	}
 
-	if err = d.Set("fail_detect_option", flattenSystemInterfaceFailDetectOption(o["fail-detect-option"], d, "fail_detect_option")); err != nil {
+	if err = d.Set("fail_detect_option", flattenSystemInterfaceFailDetectOption(o["fail-detect-option"], d, "fail_detect_option", sv)); err != nil {
 		if !fortiAPIPatch(o["fail-detect-option"]) {
 			return fmt.Errorf("Error reading fail_detect_option: %v", err)
 		}
 	}
 
-	if err = d.Set("fail_alert_method", flattenSystemInterfaceFailAlertMethod(o["fail-alert-method"], d, "fail_alert_method")); err != nil {
+	if err = d.Set("fail_alert_method", flattenSystemInterfaceFailAlertMethod(o["fail-alert-method"], d, "fail_alert_method", sv)); err != nil {
 		if !fortiAPIPatch(o["fail-alert-method"]) {
 			return fmt.Errorf("Error reading fail_alert_method: %v", err)
 		}
 	}
 
-	if err = d.Set("fail_action_on_extender", flattenSystemInterfaceFailActionOnExtender(o["fail-action-on-extender"], d, "fail_action_on_extender")); err != nil {
+	if err = d.Set("fail_action_on_extender", flattenSystemInterfaceFailActionOnExtender(o["fail-action-on-extender"], d, "fail_action_on_extender", sv)); err != nil {
 		if !fortiAPIPatch(o["fail-action-on-extender"]) {
 			return fmt.Errorf("Error reading fail_action_on_extender: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("fail_alert_interfaces", flattenSystemInterfaceFailAlertInterfaces(o["fail-alert-interfaces"], d, "fail_alert_interfaces")); err != nil {
+		if err = d.Set("fail_alert_interfaces", flattenSystemInterfaceFailAlertInterfaces(o["fail-alert-interfaces"], d, "fail_alert_interfaces", sv)); err != nil {
 			if !fortiAPIPatch(o["fail-alert-interfaces"]) {
 				return fmt.Errorf("Error reading fail_alert_interfaces: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("fail_alert_interfaces"); ok {
-			if err = d.Set("fail_alert_interfaces", flattenSystemInterfaceFailAlertInterfaces(o["fail-alert-interfaces"], d, "fail_alert_interfaces")); err != nil {
+			if err = d.Set("fail_alert_interfaces", flattenSystemInterfaceFailAlertInterfaces(o["fail-alert-interfaces"], d, "fail_alert_interfaces", sv)); err != nil {
 				if !fortiAPIPatch(o["fail-alert-interfaces"]) {
 					return fmt.Errorf("Error reading fail_alert_interfaces: %v", err)
 				}
@@ -3658,495 +4202,519 @@ func refreshObjectSystemInterface(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-	if err = d.Set("dhcp_client_identifier", flattenSystemInterfaceDhcpClientIdentifier(o["dhcp-client-identifier"], d, "dhcp_client_identifier")); err != nil {
+	if err = d.Set("dhcp_client_identifier", flattenSystemInterfaceDhcpClientIdentifier(o["dhcp-client-identifier"], d, "dhcp_client_identifier", sv)); err != nil {
 		if !fortiAPIPatch(o["dhcp-client-identifier"]) {
 			return fmt.Errorf("Error reading dhcp_client_identifier: %v", err)
 		}
 	}
 
-	if err = d.Set("dhcp_renew_time", flattenSystemInterfaceDhcpRenewTime(o["dhcp-renew-time"], d, "dhcp_renew_time")); err != nil {
+	if err = d.Set("dhcp_renew_time", flattenSystemInterfaceDhcpRenewTime(o["dhcp-renew-time"], d, "dhcp_renew_time", sv)); err != nil {
 		if !fortiAPIPatch(o["dhcp-renew-time"]) {
 			return fmt.Errorf("Error reading dhcp_renew_time: %v", err)
 		}
 	}
 
-	if err = d.Set("ipunnumbered", flattenSystemInterfaceIpunnumbered(o["ipunnumbered"], d, "ipunnumbered")); err != nil {
+	if err = d.Set("ipunnumbered", flattenSystemInterfaceIpunnumbered(o["ipunnumbered"], d, "ipunnumbered", sv)); err != nil {
 		if !fortiAPIPatch(o["ipunnumbered"]) {
 			return fmt.Errorf("Error reading ipunnumbered: %v", err)
 		}
 	}
 
-	if err = d.Set("username", flattenSystemInterfaceUsername(o["username"], d, "username")); err != nil {
+	if err = d.Set("username", flattenSystemInterfaceUsername(o["username"], d, "username", sv)); err != nil {
 		if !fortiAPIPatch(o["username"]) {
 			return fmt.Errorf("Error reading username: %v", err)
 		}
 	}
 
-	if err = d.Set("pppoe_unnumbered_negotiate", flattenSystemInterfacePppoeUnnumberedNegotiate(o["pppoe-unnumbered-negotiate"], d, "pppoe_unnumbered_negotiate")); err != nil {
+	if err = d.Set("pppoe_unnumbered_negotiate", flattenSystemInterfacePppoeUnnumberedNegotiate(o["pppoe-unnumbered-negotiate"], d, "pppoe_unnumbered_negotiate", sv)); err != nil {
 		if !fortiAPIPatch(o["pppoe-unnumbered-negotiate"]) {
 			return fmt.Errorf("Error reading pppoe_unnumbered_negotiate: %v", err)
 		}
 	}
 
-	if err = d.Set("idle_timeout", flattenSystemInterfaceIdleTimeout(o["idle-timeout"], d, "idle_timeout")); err != nil {
+	if err = d.Set("idle_timeout", flattenSystemInterfaceIdleTimeout(o["idle-timeout"], d, "idle_timeout", sv)); err != nil {
 		if !fortiAPIPatch(o["idle-timeout"]) {
 			return fmt.Errorf("Error reading idle_timeout: %v", err)
 		}
 	}
 
-	if err = d.Set("detected_peer_mtu", flattenSystemInterfaceDetectedPeerMtu(o["detected-peer-mtu"], d, "detected_peer_mtu")); err != nil {
+	if err = d.Set("detected_peer_mtu", flattenSystemInterfaceDetectedPeerMtu(o["detected-peer-mtu"], d, "detected_peer_mtu", sv)); err != nil {
 		if !fortiAPIPatch(o["detected-peer-mtu"]) {
 			return fmt.Errorf("Error reading detected_peer_mtu: %v", err)
 		}
 	}
 
-	if err = d.Set("disc_retry_timeout", flattenSystemInterfaceDiscRetryTimeout(o["disc-retry-timeout"], d, "disc_retry_timeout")); err != nil {
+	if err = d.Set("disc_retry_timeout", flattenSystemInterfaceDiscRetryTimeout(o["disc-retry-timeout"], d, "disc_retry_timeout", sv)); err != nil {
 		if !fortiAPIPatch(o["disc-retry-timeout"]) {
 			return fmt.Errorf("Error reading disc_retry_timeout: %v", err)
 		}
 	}
 
-	if err = d.Set("padt_retry_timeout", flattenSystemInterfacePadtRetryTimeout(o["padt-retry-timeout"], d, "padt_retry_timeout")); err != nil {
+	if err = d.Set("padt_retry_timeout", flattenSystemInterfacePadtRetryTimeout(o["padt-retry-timeout"], d, "padt_retry_timeout", sv)); err != nil {
 		if !fortiAPIPatch(o["padt-retry-timeout"]) {
 			return fmt.Errorf("Error reading padt_retry_timeout: %v", err)
 		}
 	}
 
-	if err = d.Set("service_name", flattenSystemInterfaceServiceName(o["service-name"], d, "service_name")); err != nil {
+	if err = d.Set("service_name", flattenSystemInterfaceServiceName(o["service-name"], d, "service_name", sv)); err != nil {
 		if !fortiAPIPatch(o["service-name"]) {
 			return fmt.Errorf("Error reading service_name: %v", err)
 		}
 	}
 
-	if err = d.Set("ac_name", flattenSystemInterfaceAcName(o["ac-name"], d, "ac_name")); err != nil {
+	if err = d.Set("ac_name", flattenSystemInterfaceAcName(o["ac-name"], d, "ac_name", sv)); err != nil {
 		if !fortiAPIPatch(o["ac-name"]) {
 			return fmt.Errorf("Error reading ac_name: %v", err)
 		}
 	}
 
-	if err = d.Set("lcp_echo_interval", flattenSystemInterfaceLcpEchoInterval(o["lcp-echo-interval"], d, "lcp_echo_interval")); err != nil {
+	if err = d.Set("lcp_echo_interval", flattenSystemInterfaceLcpEchoInterval(o["lcp-echo-interval"], d, "lcp_echo_interval", sv)); err != nil {
 		if !fortiAPIPatch(o["lcp-echo-interval"]) {
 			return fmt.Errorf("Error reading lcp_echo_interval: %v", err)
 		}
 	}
 
-	if err = d.Set("lcp_max_echo_fails", flattenSystemInterfaceLcpMaxEchoFails(o["lcp-max-echo-fails"], d, "lcp_max_echo_fails")); err != nil {
+	if err = d.Set("lcp_max_echo_fails", flattenSystemInterfaceLcpMaxEchoFails(o["lcp-max-echo-fails"], d, "lcp_max_echo_fails", sv)); err != nil {
 		if !fortiAPIPatch(o["lcp-max-echo-fails"]) {
 			return fmt.Errorf("Error reading lcp_max_echo_fails: %v", err)
 		}
 	}
 
-	if err = d.Set("defaultgw", flattenSystemInterfaceDefaultgw(o["defaultgw"], d, "defaultgw")); err != nil {
+	if err = d.Set("defaultgw", flattenSystemInterfaceDefaultgw(o["defaultgw"], d, "defaultgw", sv)); err != nil {
 		if !fortiAPIPatch(o["defaultgw"]) {
 			return fmt.Errorf("Error reading defaultgw: %v", err)
 		}
 	}
 
-	if err = d.Set("dns_server_override", flattenSystemInterfaceDnsServerOverride(o["dns-server-override"], d, "dns_server_override")); err != nil {
+	if err = d.Set("dns_server_override", flattenSystemInterfaceDnsServerOverride(o["dns-server-override"], d, "dns_server_override", sv)); err != nil {
 		if !fortiAPIPatch(o["dns-server-override"]) {
 			return fmt.Errorf("Error reading dns_server_override: %v", err)
 		}
 	}
 
-	if err = d.Set("auth_type", flattenSystemInterfaceAuthType(o["auth-type"], d, "auth_type")); err != nil {
+	if err = d.Set("auth_type", flattenSystemInterfaceAuthType(o["auth-type"], d, "auth_type", sv)); err != nil {
 		if !fortiAPIPatch(o["auth-type"]) {
 			return fmt.Errorf("Error reading auth_type: %v", err)
 		}
 	}
 
-	if err = d.Set("pptp_client", flattenSystemInterfacePptpClient(o["pptp-client"], d, "pptp_client")); err != nil {
+	if err = d.Set("pptp_client", flattenSystemInterfacePptpClient(o["pptp-client"], d, "pptp_client", sv)); err != nil {
 		if !fortiAPIPatch(o["pptp-client"]) {
 			return fmt.Errorf("Error reading pptp_client: %v", err)
 		}
 	}
 
-	if err = d.Set("pptp_user", flattenSystemInterfacePptpUser(o["pptp-user"], d, "pptp_user")); err != nil {
+	if err = d.Set("pptp_user", flattenSystemInterfacePptpUser(o["pptp-user"], d, "pptp_user", sv)); err != nil {
 		if !fortiAPIPatch(o["pptp-user"]) {
 			return fmt.Errorf("Error reading pptp_user: %v", err)
 		}
 	}
 
-	if err = d.Set("pptp_server_ip", flattenSystemInterfacePptpServerIp(o["pptp-server-ip"], d, "pptp_server_ip")); err != nil {
+	if err = d.Set("pptp_server_ip", flattenSystemInterfacePptpServerIp(o["pptp-server-ip"], d, "pptp_server_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["pptp-server-ip"]) {
 			return fmt.Errorf("Error reading pptp_server_ip: %v", err)
 		}
 	}
 
-	if err = d.Set("pptp_auth_type", flattenSystemInterfacePptpAuthType(o["pptp-auth-type"], d, "pptp_auth_type")); err != nil {
+	if err = d.Set("pptp_auth_type", flattenSystemInterfacePptpAuthType(o["pptp-auth-type"], d, "pptp_auth_type", sv)); err != nil {
 		if !fortiAPIPatch(o["pptp-auth-type"]) {
 			return fmt.Errorf("Error reading pptp_auth_type: %v", err)
 		}
 	}
 
-	if err = d.Set("pptp_timeout", flattenSystemInterfacePptpTimeout(o["pptp-timeout"], d, "pptp_timeout")); err != nil {
+	if err = d.Set("pptp_timeout", flattenSystemInterfacePptpTimeout(o["pptp-timeout"], d, "pptp_timeout", sv)); err != nil {
 		if !fortiAPIPatch(o["pptp-timeout"]) {
 			return fmt.Errorf("Error reading pptp_timeout: %v", err)
 		}
 	}
 
-	if err = d.Set("arpforward", flattenSystemInterfaceArpforward(o["arpforward"], d, "arpforward")); err != nil {
+	if err = d.Set("arpforward", flattenSystemInterfaceArpforward(o["arpforward"], d, "arpforward", sv)); err != nil {
 		if !fortiAPIPatch(o["arpforward"]) {
 			return fmt.Errorf("Error reading arpforward: %v", err)
 		}
 	}
 
-	if err = d.Set("ndiscforward", flattenSystemInterfaceNdiscforward(o["ndiscforward"], d, "ndiscforward")); err != nil {
+	if err = d.Set("ndiscforward", flattenSystemInterfaceNdiscforward(o["ndiscforward"], d, "ndiscforward", sv)); err != nil {
 		if !fortiAPIPatch(o["ndiscforward"]) {
 			return fmt.Errorf("Error reading ndiscforward: %v", err)
 		}
 	}
 
-	if err = d.Set("broadcast_forward", flattenSystemInterfaceBroadcastForward(o["broadcast-forward"], d, "broadcast_forward")); err != nil {
+	if err = d.Set("broadcast_forward", flattenSystemInterfaceBroadcastForward(o["broadcast-forward"], d, "broadcast_forward", sv)); err != nil {
 		if !fortiAPIPatch(o["broadcast-forward"]) {
 			return fmt.Errorf("Error reading broadcast_forward: %v", err)
 		}
 	}
 
-	if err = d.Set("bfd", flattenSystemInterfaceBfd(o["bfd"], d, "bfd")); err != nil {
+	if err = d.Set("bfd", flattenSystemInterfaceBfd(o["bfd"], d, "bfd", sv)); err != nil {
 		if !fortiAPIPatch(o["bfd"]) {
 			return fmt.Errorf("Error reading bfd: %v", err)
 		}
 	}
 
-	if err = d.Set("bfd_desired_min_tx", flattenSystemInterfaceBfdDesiredMinTx(o["bfd-desired-min-tx"], d, "bfd_desired_min_tx")); err != nil {
+	if err = d.Set("bfd_desired_min_tx", flattenSystemInterfaceBfdDesiredMinTx(o["bfd-desired-min-tx"], d, "bfd_desired_min_tx", sv)); err != nil {
 		if !fortiAPIPatch(o["bfd-desired-min-tx"]) {
 			return fmt.Errorf("Error reading bfd_desired_min_tx: %v", err)
 		}
 	}
 
-	if err = d.Set("bfd_detect_mult", flattenSystemInterfaceBfdDetectMult(o["bfd-detect-mult"], d, "bfd_detect_mult")); err != nil {
+	if err = d.Set("bfd_detect_mult", flattenSystemInterfaceBfdDetectMult(o["bfd-detect-mult"], d, "bfd_detect_mult", sv)); err != nil {
 		if !fortiAPIPatch(o["bfd-detect-mult"]) {
 			return fmt.Errorf("Error reading bfd_detect_mult: %v", err)
 		}
 	}
 
-	if err = d.Set("bfd_required_min_rx", flattenSystemInterfaceBfdRequiredMinRx(o["bfd-required-min-rx"], d, "bfd_required_min_rx")); err != nil {
+	if err = d.Set("bfd_required_min_rx", flattenSystemInterfaceBfdRequiredMinRx(o["bfd-required-min-rx"], d, "bfd_required_min_rx", sv)); err != nil {
 		if !fortiAPIPatch(o["bfd-required-min-rx"]) {
 			return fmt.Errorf("Error reading bfd_required_min_rx: %v", err)
 		}
 	}
 
-	if err = d.Set("l2forward", flattenSystemInterfaceL2Forward(o["l2forward"], d, "l2forward")); err != nil {
+	if err = d.Set("l2forward", flattenSystemInterfaceL2Forward(o["l2forward"], d, "l2forward", sv)); err != nil {
 		if !fortiAPIPatch(o["l2forward"]) {
 			return fmt.Errorf("Error reading l2forward: %v", err)
 		}
 	}
 
-	if err = d.Set("icmp_send_redirect", flattenSystemInterfaceIcmpSendRedirect(o["icmp-send-redirect"], d, "icmp_send_redirect")); err != nil {
+	if err = d.Set("icmp_send_redirect", flattenSystemInterfaceIcmpSendRedirect(o["icmp-send-redirect"], d, "icmp_send_redirect", sv)); err != nil {
 		if !fortiAPIPatch(o["icmp-send-redirect"]) {
 			return fmt.Errorf("Error reading icmp_send_redirect: %v", err)
 		}
 	}
 
-	if err = d.Set("icmp_accept_redirect", flattenSystemInterfaceIcmpAcceptRedirect(o["icmp-accept-redirect"], d, "icmp_accept_redirect")); err != nil {
+	if err = d.Set("icmp_accept_redirect", flattenSystemInterfaceIcmpAcceptRedirect(o["icmp-accept-redirect"], d, "icmp_accept_redirect", sv)); err != nil {
 		if !fortiAPIPatch(o["icmp-accept-redirect"]) {
 			return fmt.Errorf("Error reading icmp_accept_redirect: %v", err)
 		}
 	}
 
-	if err = d.Set("vlanforward", flattenSystemInterfaceVlanforward(o["vlanforward"], d, "vlanforward")); err != nil {
+	if err = d.Set("vlanforward", flattenSystemInterfaceVlanforward(o["vlanforward"], d, "vlanforward", sv)); err != nil {
 		if !fortiAPIPatch(o["vlanforward"]) {
 			return fmt.Errorf("Error reading vlanforward: %v", err)
 		}
 	}
 
-	if err = d.Set("stpforward", flattenSystemInterfaceStpforward(o["stpforward"], d, "stpforward")); err != nil {
+	if err = d.Set("stpforward", flattenSystemInterfaceStpforward(o["stpforward"], d, "stpforward", sv)); err != nil {
 		if !fortiAPIPatch(o["stpforward"]) {
 			return fmt.Errorf("Error reading stpforward: %v", err)
 		}
 	}
 
-	if err = d.Set("stpforward_mode", flattenSystemInterfaceStpforwardMode(o["stpforward-mode"], d, "stpforward_mode")); err != nil {
+	if err = d.Set("stpforward_mode", flattenSystemInterfaceStpforwardMode(o["stpforward-mode"], d, "stpforward_mode", sv)); err != nil {
 		if !fortiAPIPatch(o["stpforward-mode"]) {
 			return fmt.Errorf("Error reading stpforward_mode: %v", err)
 		}
 	}
 
-	if err = d.Set("ips_sniffer_mode", flattenSystemInterfaceIpsSnifferMode(o["ips-sniffer-mode"], d, "ips_sniffer_mode")); err != nil {
+	if err = d.Set("ips_sniffer_mode", flattenSystemInterfaceIpsSnifferMode(o["ips-sniffer-mode"], d, "ips_sniffer_mode", sv)); err != nil {
 		if !fortiAPIPatch(o["ips-sniffer-mode"]) {
 			return fmt.Errorf("Error reading ips_sniffer_mode: %v", err)
 		}
 	}
 
-	if err = d.Set("ident_accept", flattenSystemInterfaceIdentAccept(o["ident-accept"], d, "ident_accept")); err != nil {
+	if err = d.Set("ident_accept", flattenSystemInterfaceIdentAccept(o["ident-accept"], d, "ident_accept", sv)); err != nil {
 		if !fortiAPIPatch(o["ident-accept"]) {
 			return fmt.Errorf("Error reading ident_accept: %v", err)
 		}
 	}
 
-	if err = d.Set("ipmac", flattenSystemInterfaceIpmac(o["ipmac"], d, "ipmac")); err != nil {
+	if err = d.Set("ipmac", flattenSystemInterfaceIpmac(o["ipmac"], d, "ipmac", sv)); err != nil {
 		if !fortiAPIPatch(o["ipmac"]) {
 			return fmt.Errorf("Error reading ipmac: %v", err)
 		}
 	}
 
-	if err = d.Set("subst", flattenSystemInterfaceSubst(o["subst"], d, "subst")); err != nil {
+	if err = d.Set("subst", flattenSystemInterfaceSubst(o["subst"], d, "subst", sv)); err != nil {
 		if !fortiAPIPatch(o["subst"]) {
 			return fmt.Errorf("Error reading subst: %v", err)
 		}
 	}
 
-	if err = d.Set("macaddr", flattenSystemInterfaceMacaddr(o["macaddr"], d, "macaddr")); err != nil {
+	if err = d.Set("macaddr", flattenSystemInterfaceMacaddr(o["macaddr"], d, "macaddr", sv)); err != nil {
 		if !fortiAPIPatch(o["macaddr"]) {
 			return fmt.Errorf("Error reading macaddr: %v", err)
 		}
 	}
 
-	if err = d.Set("substitute_dst_mac", flattenSystemInterfaceSubstituteDstMac(o["substitute-dst-mac"], d, "substitute_dst_mac")); err != nil {
+	if err = d.Set("substitute_dst_mac", flattenSystemInterfaceSubstituteDstMac(o["substitute-dst-mac"], d, "substitute_dst_mac", sv)); err != nil {
 		if !fortiAPIPatch(o["substitute-dst-mac"]) {
 			return fmt.Errorf("Error reading substitute_dst_mac: %v", err)
 		}
 	}
 
-	if err = d.Set("speed", flattenSystemInterfaceSpeed(o["speed"], d, "speed")); err != nil {
+	if err = d.Set("speed", flattenSystemInterfaceSpeed(o["speed"], d, "speed", sv)); err != nil {
 		if !fortiAPIPatch(o["speed"]) {
 			return fmt.Errorf("Error reading speed: %v", err)
 		}
 	}
 
-	if err = d.Set("status", flattenSystemInterfaceStatus(o["status"], d, "status")); err != nil {
+	if err = d.Set("status", flattenSystemInterfaceStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
 		}
 	}
 
-	if err = d.Set("netbios_forward", flattenSystemInterfaceNetbiosForward(o["netbios-forward"], d, "netbios_forward")); err != nil {
+	if err = d.Set("netbios_forward", flattenSystemInterfaceNetbiosForward(o["netbios-forward"], d, "netbios_forward", sv)); err != nil {
 		if !fortiAPIPatch(o["netbios-forward"]) {
 			return fmt.Errorf("Error reading netbios_forward: %v", err)
 		}
 	}
 
-	if err = d.Set("wins_ip", flattenSystemInterfaceWinsIp(o["wins-ip"], d, "wins_ip")); err != nil {
+	if err = d.Set("wins_ip", flattenSystemInterfaceWinsIp(o["wins-ip"], d, "wins_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["wins-ip"]) {
 			return fmt.Errorf("Error reading wins_ip: %v", err)
 		}
 	}
 
-	if err = d.Set("type", flattenSystemInterfaceType(o["type"], d, "type")); err != nil {
+	if err = d.Set("type", flattenSystemInterfaceType(o["type"], d, "type", sv)); err != nil {
 		if !fortiAPIPatch(o["type"]) {
 			return fmt.Errorf("Error reading type: %v", err)
 		}
 	}
 
-	if err = d.Set("dedicated_to", flattenSystemInterfaceDedicatedTo(o["dedicated-to"], d, "dedicated_to")); err != nil {
+	if err = d.Set("dedicated_to", flattenSystemInterfaceDedicatedTo(o["dedicated-to"], d, "dedicated_to", sv)); err != nil {
 		if !fortiAPIPatch(o["dedicated-to"]) {
 			return fmt.Errorf("Error reading dedicated_to: %v", err)
 		}
 	}
 
-	if err = d.Set("trust_ip_1", flattenSystemInterfaceTrustIp1(o["trust-ip-1"], d, "trust_ip_1")); err != nil {
+	if err = d.Set("trust_ip_1", flattenSystemInterfaceTrustIp1(o["trust-ip-1"], d, "trust_ip_1", sv)); err != nil {
 		if !fortiAPIPatch(o["trust-ip-1"]) {
 			return fmt.Errorf("Error reading trust_ip_1: %v", err)
 		}
 	}
 
-	if err = d.Set("trust_ip_2", flattenSystemInterfaceTrustIp2(o["trust-ip-2"], d, "trust_ip_2")); err != nil {
+	if err = d.Set("trust_ip_2", flattenSystemInterfaceTrustIp2(o["trust-ip-2"], d, "trust_ip_2", sv)); err != nil {
 		if !fortiAPIPatch(o["trust-ip-2"]) {
 			return fmt.Errorf("Error reading trust_ip_2: %v", err)
 		}
 	}
 
-	if err = d.Set("trust_ip_3", flattenSystemInterfaceTrustIp3(o["trust-ip-3"], d, "trust_ip_3")); err != nil {
+	if err = d.Set("trust_ip_3", flattenSystemInterfaceTrustIp3(o["trust-ip-3"], d, "trust_ip_3", sv)); err != nil {
 		if !fortiAPIPatch(o["trust-ip-3"]) {
 			return fmt.Errorf("Error reading trust_ip_3: %v", err)
 		}
 	}
 
-	if err = d.Set("trust_ip6_1", flattenSystemInterfaceTrustIp61(o["trust-ip6-1"], d, "trust_ip6_1")); err != nil {
+	if err = d.Set("trust_ip6_1", flattenSystemInterfaceTrustIp61(o["trust-ip6-1"], d, "trust_ip6_1", sv)); err != nil {
 		if !fortiAPIPatch(o["trust-ip6-1"]) {
 			return fmt.Errorf("Error reading trust_ip6_1: %v", err)
 		}
 	}
 
-	if err = d.Set("trust_ip6_2", flattenSystemInterfaceTrustIp62(o["trust-ip6-2"], d, "trust_ip6_2")); err != nil {
+	if err = d.Set("trust_ip6_2", flattenSystemInterfaceTrustIp62(o["trust-ip6-2"], d, "trust_ip6_2", sv)); err != nil {
 		if !fortiAPIPatch(o["trust-ip6-2"]) {
 			return fmt.Errorf("Error reading trust_ip6_2: %v", err)
 		}
 	}
 
-	if err = d.Set("trust_ip6_3", flattenSystemInterfaceTrustIp63(o["trust-ip6-3"], d, "trust_ip6_3")); err != nil {
+	if err = d.Set("trust_ip6_3", flattenSystemInterfaceTrustIp63(o["trust-ip6-3"], d, "trust_ip6_3", sv)); err != nil {
 		if !fortiAPIPatch(o["trust-ip6-3"]) {
 			return fmt.Errorf("Error reading trust_ip6_3: %v", err)
 		}
 	}
 
-	if err = d.Set("mtu_override", flattenSystemInterfaceMtuOverride(o["mtu-override"], d, "mtu_override")); err != nil {
+	if err = d.Set("mtu_override", flattenSystemInterfaceMtuOverride(o["mtu-override"], d, "mtu_override", sv)); err != nil {
 		if !fortiAPIPatch(o["mtu-override"]) {
 			return fmt.Errorf("Error reading mtu_override: %v", err)
 		}
 	}
 
-	if err = d.Set("mtu", flattenSystemInterfaceMtu(o["mtu"], d, "mtu")); err != nil {
+	if err = d.Set("mtu", flattenSystemInterfaceMtu(o["mtu"], d, "mtu", sv)); err != nil {
 		if !fortiAPIPatch(o["mtu"]) {
 			return fmt.Errorf("Error reading mtu: %v", err)
 		}
 	}
 
-	if err = d.Set("wccp", flattenSystemInterfaceWccp(o["wccp"], d, "wccp")); err != nil {
+	if err = d.Set("ring_rx", flattenSystemInterfaceRingRx(o["ring-rx"], d, "ring_rx", sv)); err != nil {
+		if !fortiAPIPatch(o["ring-rx"]) {
+			return fmt.Errorf("Error reading ring_rx: %v", err)
+		}
+	}
+
+	if err = d.Set("ring_tx", flattenSystemInterfaceRingTx(o["ring-tx"], d, "ring_tx", sv)); err != nil {
+		if !fortiAPIPatch(o["ring-tx"]) {
+			return fmt.Errorf("Error reading ring_tx: %v", err)
+		}
+	}
+
+	if err = d.Set("wccp", flattenSystemInterfaceWccp(o["wccp"], d, "wccp", sv)); err != nil {
 		if !fortiAPIPatch(o["wccp"]) {
 			return fmt.Errorf("Error reading wccp: %v", err)
 		}
 	}
 
-	if err = d.Set("netflow_sampler", flattenSystemInterfaceNetflowSampler(o["netflow-sampler"], d, "netflow_sampler")); err != nil {
+	if err = d.Set("netflow_sampler", flattenSystemInterfaceNetflowSampler(o["netflow-sampler"], d, "netflow_sampler", sv)); err != nil {
 		if !fortiAPIPatch(o["netflow-sampler"]) {
 			return fmt.Errorf("Error reading netflow_sampler: %v", err)
 		}
 	}
 
-	if err = d.Set("sflow_sampler", flattenSystemInterfaceSflowSampler(o["sflow-sampler"], d, "sflow_sampler")); err != nil {
+	if err = d.Set("sflow_sampler", flattenSystemInterfaceSflowSampler(o["sflow-sampler"], d, "sflow_sampler", sv)); err != nil {
 		if !fortiAPIPatch(o["sflow-sampler"]) {
 			return fmt.Errorf("Error reading sflow_sampler: %v", err)
 		}
 	}
 
-	if err = d.Set("drop_overlapped_fragment", flattenSystemInterfaceDropOverlappedFragment(o["drop-overlapped-fragment"], d, "drop_overlapped_fragment")); err != nil {
+	if err = d.Set("drop_overlapped_fragment", flattenSystemInterfaceDropOverlappedFragment(o["drop-overlapped-fragment"], d, "drop_overlapped_fragment", sv)); err != nil {
 		if !fortiAPIPatch(o["drop-overlapped-fragment"]) {
 			return fmt.Errorf("Error reading drop_overlapped_fragment: %v", err)
 		}
 	}
 
-	if err = d.Set("drop_fragment", flattenSystemInterfaceDropFragment(o["drop-fragment"], d, "drop_fragment")); err != nil {
+	if err = d.Set("drop_fragment", flattenSystemInterfaceDropFragment(o["drop-fragment"], d, "drop_fragment", sv)); err != nil {
 		if !fortiAPIPatch(o["drop-fragment"]) {
 			return fmt.Errorf("Error reading drop_fragment: %v", err)
 		}
 	}
 
-	if err = d.Set("scan_botnet_connections", flattenSystemInterfaceScanBotnetConnections(o["scan-botnet-connections"], d, "scan_botnet_connections")); err != nil {
+	if err = d.Set("scan_botnet_connections", flattenSystemInterfaceScanBotnetConnections(o["scan-botnet-connections"], d, "scan_botnet_connections", sv)); err != nil {
 		if !fortiAPIPatch(o["scan-botnet-connections"]) {
 			return fmt.Errorf("Error reading scan_botnet_connections: %v", err)
 		}
 	}
 
-	if err = d.Set("src_check", flattenSystemInterfaceSrcCheck(o["src-check"], d, "src_check")); err != nil {
+	if err = d.Set("src_check", flattenSystemInterfaceSrcCheck(o["src-check"], d, "src_check", sv)); err != nil {
 		if !fortiAPIPatch(o["src-check"]) {
 			return fmt.Errorf("Error reading src_check: %v", err)
 		}
 	}
 
-	if err = d.Set("sample_rate", flattenSystemInterfaceSampleRate(o["sample-rate"], d, "sample_rate")); err != nil {
+	if err = d.Set("sample_rate", flattenSystemInterfaceSampleRate(o["sample-rate"], d, "sample_rate", sv)); err != nil {
 		if !fortiAPIPatch(o["sample-rate"]) {
 			return fmt.Errorf("Error reading sample_rate: %v", err)
 		}
 	}
 
-	if err = d.Set("polling_interval", flattenSystemInterfacePollingInterval(o["polling-interval"], d, "polling_interval")); err != nil {
+	if err = d.Set("polling_interval", flattenSystemInterfacePollingInterval(o["polling-interval"], d, "polling_interval", sv)); err != nil {
 		if !fortiAPIPatch(o["polling-interval"]) {
 			return fmt.Errorf("Error reading polling_interval: %v", err)
 		}
 	}
 
-	if err = d.Set("sample_direction", flattenSystemInterfaceSampleDirection(o["sample-direction"], d, "sample_direction")); err != nil {
+	if err = d.Set("sample_direction", flattenSystemInterfaceSampleDirection(o["sample-direction"], d, "sample_direction", sv)); err != nil {
 		if !fortiAPIPatch(o["sample-direction"]) {
 			return fmt.Errorf("Error reading sample_direction: %v", err)
 		}
 	}
 
-	if err = d.Set("explicit_web_proxy", flattenSystemInterfaceExplicitWebProxy(o["explicit-web-proxy"], d, "explicit_web_proxy")); err != nil {
+	if err = d.Set("explicit_web_proxy", flattenSystemInterfaceExplicitWebProxy(o["explicit-web-proxy"], d, "explicit_web_proxy", sv)); err != nil {
 		if !fortiAPIPatch(o["explicit-web-proxy"]) {
 			return fmt.Errorf("Error reading explicit_web_proxy: %v", err)
 		}
 	}
 
-	if err = d.Set("explicit_ftp_proxy", flattenSystemInterfaceExplicitFtpProxy(o["explicit-ftp-proxy"], d, "explicit_ftp_proxy")); err != nil {
+	if err = d.Set("explicit_ftp_proxy", flattenSystemInterfaceExplicitFtpProxy(o["explicit-ftp-proxy"], d, "explicit_ftp_proxy", sv)); err != nil {
 		if !fortiAPIPatch(o["explicit-ftp-proxy"]) {
 			return fmt.Errorf("Error reading explicit_ftp_proxy: %v", err)
 		}
 	}
 
-	if err = d.Set("proxy_captive_portal", flattenSystemInterfaceProxyCaptivePortal(o["proxy-captive-portal"], d, "proxy_captive_portal")); err != nil {
+	if err = d.Set("proxy_captive_portal", flattenSystemInterfaceProxyCaptivePortal(o["proxy-captive-portal"], d, "proxy_captive_portal", sv)); err != nil {
 		if !fortiAPIPatch(o["proxy-captive-portal"]) {
 			return fmt.Errorf("Error reading proxy_captive_portal: %v", err)
 		}
 	}
 
-	if err = d.Set("tcp_mss", flattenSystemInterfaceTcpMss(o["tcp-mss"], d, "tcp_mss")); err != nil {
+	if err = d.Set("tcp_mss", flattenSystemInterfaceTcpMss(o["tcp-mss"], d, "tcp_mss", sv)); err != nil {
 		if !fortiAPIPatch(o["tcp-mss"]) {
 			return fmt.Errorf("Error reading tcp_mss: %v", err)
 		}
 	}
 
-	if err = d.Set("inbandwidth", flattenSystemInterfaceInbandwidth(o["inbandwidth"], d, "inbandwidth")); err != nil {
+	if err = d.Set("inbandwidth", flattenSystemInterfaceInbandwidth(o["inbandwidth"], d, "inbandwidth", sv)); err != nil {
 		if !fortiAPIPatch(o["inbandwidth"]) {
 			return fmt.Errorf("Error reading inbandwidth: %v", err)
 		}
 	}
 
-	if err = d.Set("outbandwidth", flattenSystemInterfaceOutbandwidth(o["outbandwidth"], d, "outbandwidth")); err != nil {
+	if err = d.Set("outbandwidth", flattenSystemInterfaceOutbandwidth(o["outbandwidth"], d, "outbandwidth", sv)); err != nil {
 		if !fortiAPIPatch(o["outbandwidth"]) {
 			return fmt.Errorf("Error reading outbandwidth: %v", err)
 		}
 	}
 
-	if err = d.Set("egress_shaping_profile", flattenSystemInterfaceEgressShapingProfile(o["egress-shaping-profile"], d, "egress_shaping_profile")); err != nil {
+	if err = d.Set("egress_shaping_profile", flattenSystemInterfaceEgressShapingProfile(o["egress-shaping-profile"], d, "egress_shaping_profile", sv)); err != nil {
 		if !fortiAPIPatch(o["egress-shaping-profile"]) {
 			return fmt.Errorf("Error reading egress_shaping_profile: %v", err)
 		}
 	}
 
-	if err = d.Set("disconnect_threshold", flattenSystemInterfaceDisconnectThreshold(o["disconnect-threshold"], d, "disconnect_threshold")); err != nil {
+	if err = d.Set("ingress_shaping_profile", flattenSystemInterfaceIngressShapingProfile(o["ingress-shaping-profile"], d, "ingress_shaping_profile", sv)); err != nil {
+		if !fortiAPIPatch(o["ingress-shaping-profile"]) {
+			return fmt.Errorf("Error reading ingress_shaping_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("disconnect_threshold", flattenSystemInterfaceDisconnectThreshold(o["disconnect-threshold"], d, "disconnect_threshold", sv)); err != nil {
 		if !fortiAPIPatch(o["disconnect-threshold"]) {
 			return fmt.Errorf("Error reading disconnect_threshold: %v", err)
 		}
 	}
 
-	if err = d.Set("spillover_threshold", flattenSystemInterfaceSpilloverThreshold(o["spillover-threshold"], d, "spillover_threshold")); err != nil {
+	if err = d.Set("spillover_threshold", flattenSystemInterfaceSpilloverThreshold(o["spillover-threshold"], d, "spillover_threshold", sv)); err != nil {
 		if !fortiAPIPatch(o["spillover-threshold"]) {
 			return fmt.Errorf("Error reading spillover_threshold: %v", err)
 		}
 	}
 
-	if err = d.Set("ingress_spillover_threshold", flattenSystemInterfaceIngressSpilloverThreshold(o["ingress-spillover-threshold"], d, "ingress_spillover_threshold")); err != nil {
+	if err = d.Set("ingress_spillover_threshold", flattenSystemInterfaceIngressSpilloverThreshold(o["ingress-spillover-threshold"], d, "ingress_spillover_threshold", sv)); err != nil {
 		if !fortiAPIPatch(o["ingress-spillover-threshold"]) {
 			return fmt.Errorf("Error reading ingress_spillover_threshold: %v", err)
 		}
 	}
 
-	if err = d.Set("weight", flattenSystemInterfaceWeight(o["weight"], d, "weight")); err != nil {
+	if err = d.Set("weight", flattenSystemInterfaceWeight(o["weight"], d, "weight", sv)); err != nil {
 		if !fortiAPIPatch(o["weight"]) {
 			return fmt.Errorf("Error reading weight: %v", err)
 		}
 	}
 
-	if err = d.Set("interface", flattenSystemInterfaceInterface(o["interface"], d, "interface")); err != nil {
+	if err = d.Set("interface", flattenSystemInterfaceInterface(o["interface"], d, "interface", sv)); err != nil {
 		if !fortiAPIPatch(o["interface"]) {
 			return fmt.Errorf("Error reading interface: %v", err)
 		}
 	}
 
-	if err = d.Set("external", flattenSystemInterfaceExternal(o["external"], d, "external")); err != nil {
+	if err = d.Set("external", flattenSystemInterfaceExternal(o["external"], d, "external", sv)); err != nil {
 		if !fortiAPIPatch(o["external"]) {
 			return fmt.Errorf("Error reading external: %v", err)
 		}
 	}
 
-	if err = d.Set("vlanid", flattenSystemInterfaceVlanid(o["vlanid"], d, "vlanid")); err != nil {
+	if err = d.Set("vlan_protocol", flattenSystemInterfaceVlanProtocol(o["vlan-protocol"], d, "vlan_protocol", sv)); err != nil {
+		if !fortiAPIPatch(o["vlan-protocol"]) {
+			return fmt.Errorf("Error reading vlan_protocol: %v", err)
+		}
+	}
+
+	if err = d.Set("vlanid", flattenSystemInterfaceVlanid(o["vlanid"], d, "vlanid", sv)); err != nil {
 		if !fortiAPIPatch(o["vlanid"]) {
 			return fmt.Errorf("Error reading vlanid: %v", err)
 		}
 	}
 
-	if err = d.Set("forward_domain", flattenSystemInterfaceForwardDomain(o["forward-domain"], d, "forward_domain")); err != nil {
+	if err = d.Set("forward_domain", flattenSystemInterfaceForwardDomain(o["forward-domain"], d, "forward_domain", sv)); err != nil {
 		if !fortiAPIPatch(o["forward-domain"]) {
 			return fmt.Errorf("Error reading forward_domain: %v", err)
 		}
 	}
 
-	if err = d.Set("remote_ip", flattenSystemInterfaceRemoteIp(o["remote-ip"], d, "remote_ip")); err != nil {
+	if err = d.Set("remote_ip", flattenSystemInterfaceRemoteIp(o["remote-ip"], d, "remote_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["remote-ip"]) {
 			return fmt.Errorf("Error reading remote_ip: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("member", flattenSystemInterfaceMember(o["member"], d, "member")); err != nil {
+		if err = d.Set("member", flattenSystemInterfaceMember(o["member"], d, "member", sv)); err != nil {
 			if !fortiAPIPatch(o["member"]) {
 				return fmt.Errorf("Error reading member: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("member"); ok {
-			if err = d.Set("member", flattenSystemInterfaceMember(o["member"], d, "member")); err != nil {
+			if err = d.Set("member", flattenSystemInterfaceMember(o["member"], d, "member", sv)); err != nil {
 				if !fortiAPIPatch(o["member"]) {
 					return fmt.Errorf("Error reading member: %v", err)
 				}
@@ -4154,75 +4722,75 @@ func refreshObjectSystemInterface(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-	if err = d.Set("lacp_mode", flattenSystemInterfaceLacpMode(o["lacp-mode"], d, "lacp_mode")); err != nil {
+	if err = d.Set("lacp_mode", flattenSystemInterfaceLacpMode(o["lacp-mode"], d, "lacp_mode", sv)); err != nil {
 		if !fortiAPIPatch(o["lacp-mode"]) {
 			return fmt.Errorf("Error reading lacp_mode: %v", err)
 		}
 	}
 
-	if err = d.Set("lacp_ha_slave", flattenSystemInterfaceLacpHaSlave(o["lacp-ha-slave"], d, "lacp_ha_slave")); err != nil {
+	if err = d.Set("lacp_ha_slave", flattenSystemInterfaceLacpHaSlave(o["lacp-ha-slave"], d, "lacp_ha_slave", sv)); err != nil {
 		if !fortiAPIPatch(o["lacp-ha-slave"]) {
 			return fmt.Errorf("Error reading lacp_ha_slave: %v", err)
 		}
 	}
 
-	if err = d.Set("lacp_speed", flattenSystemInterfaceLacpSpeed(o["lacp-speed"], d, "lacp_speed")); err != nil {
+	if err = d.Set("lacp_speed", flattenSystemInterfaceLacpSpeed(o["lacp-speed"], d, "lacp_speed", sv)); err != nil {
 		if !fortiAPIPatch(o["lacp-speed"]) {
 			return fmt.Errorf("Error reading lacp_speed: %v", err)
 		}
 	}
 
-	if err = d.Set("min_links", flattenSystemInterfaceMinLinks(o["min-links"], d, "min_links")); err != nil {
+	if err = d.Set("min_links", flattenSystemInterfaceMinLinks(o["min-links"], d, "min_links", sv)); err != nil {
 		if !fortiAPIPatch(o["min-links"]) {
 			return fmt.Errorf("Error reading min_links: %v", err)
 		}
 	}
 
-	if err = d.Set("min_links_down", flattenSystemInterfaceMinLinksDown(o["min-links-down"], d, "min_links_down")); err != nil {
+	if err = d.Set("min_links_down", flattenSystemInterfaceMinLinksDown(o["min-links-down"], d, "min_links_down", sv)); err != nil {
 		if !fortiAPIPatch(o["min-links-down"]) {
 			return fmt.Errorf("Error reading min_links_down: %v", err)
 		}
 	}
 
-	if err = d.Set("algorithm", flattenSystemInterfaceAlgorithm(o["algorithm"], d, "algorithm")); err != nil {
+	if err = d.Set("algorithm", flattenSystemInterfaceAlgorithm(o["algorithm"], d, "algorithm", sv)); err != nil {
 		if !fortiAPIPatch(o["algorithm"]) {
 			return fmt.Errorf("Error reading algorithm: %v", err)
 		}
 	}
 
-	if err = d.Set("link_up_delay", flattenSystemInterfaceLinkUpDelay(o["link-up-delay"], d, "link_up_delay")); err != nil {
+	if err = d.Set("link_up_delay", flattenSystemInterfaceLinkUpDelay(o["link-up-delay"], d, "link_up_delay", sv)); err != nil {
 		if !fortiAPIPatch(o["link-up-delay"]) {
 			return fmt.Errorf("Error reading link_up_delay: %v", err)
 		}
 	}
 
-	if err = d.Set("priority_override", flattenSystemInterfacePriorityOverride(o["priority-override"], d, "priority_override")); err != nil {
+	if err = d.Set("priority_override", flattenSystemInterfacePriorityOverride(o["priority-override"], d, "priority_override", sv)); err != nil {
 		if !fortiAPIPatch(o["priority-override"]) {
 			return fmt.Errorf("Error reading priority_override: %v", err)
 		}
 	}
 
-	if err = d.Set("aggregate", flattenSystemInterfaceAggregate(o["aggregate"], d, "aggregate")); err != nil {
+	if err = d.Set("aggregate", flattenSystemInterfaceAggregate(o["aggregate"], d, "aggregate", sv)); err != nil {
 		if !fortiAPIPatch(o["aggregate"]) {
 			return fmt.Errorf("Error reading aggregate: %v", err)
 		}
 	}
 
-	if err = d.Set("redundant_interface", flattenSystemInterfaceRedundantInterface(o["redundant-interface"], d, "redundant_interface")); err != nil {
+	if err = d.Set("redundant_interface", flattenSystemInterfaceRedundantInterface(o["redundant-interface"], d, "redundant_interface", sv)); err != nil {
 		if !fortiAPIPatch(o["redundant-interface"]) {
 			return fmt.Errorf("Error reading redundant_interface: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("managed_device", flattenSystemInterfaceManagedDevice(o["managed-device"], d, "managed_device")); err != nil {
+		if err = d.Set("managed_device", flattenSystemInterfaceManagedDevice(o["managed-device"], d, "managed_device", sv)); err != nil {
 			if !fortiAPIPatch(o["managed-device"]) {
 				return fmt.Errorf("Error reading managed_device: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("managed_device"); ok {
-			if err = d.Set("managed_device", flattenSystemInterfaceManagedDevice(o["managed-device"], d, "managed_device")); err != nil {
+			if err = d.Set("managed_device", flattenSystemInterfaceManagedDevice(o["managed-device"], d, "managed_device", sv)); err != nil {
 				if !fortiAPIPatch(o["managed-device"]) {
 					return fmt.Errorf("Error reading managed_device: %v", err)
 				}
@@ -4230,93 +4798,93 @@ func refreshObjectSystemInterface(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-	if err = d.Set("devindex", flattenSystemInterfaceDevindex(o["devindex"], d, "devindex")); err != nil {
+	if err = d.Set("devindex", flattenSystemInterfaceDevindex(o["devindex"], d, "devindex", sv)); err != nil {
 		if !fortiAPIPatch(o["devindex"]) {
 			return fmt.Errorf("Error reading devindex: %v", err)
 		}
 	}
 
-	if err = d.Set("vindex", flattenSystemInterfaceVindex(o["vindex"], d, "vindex")); err != nil {
+	if err = d.Set("vindex", flattenSystemInterfaceVindex(o["vindex"], d, "vindex", sv)); err != nil {
 		if !fortiAPIPatch(o["vindex"]) {
 			return fmt.Errorf("Error reading vindex: %v", err)
 		}
 	}
 
-	if err = d.Set("switch", flattenSystemInterfaceSwitch(o["switch"], d, "switch")); err != nil {
+	if err = d.Set("switch", flattenSystemInterfaceSwitch(o["switch"], d, "switch", sv)); err != nil {
 		if !fortiAPIPatch(o["switch"]) {
 			return fmt.Errorf("Error reading switch: %v", err)
 		}
 	}
 
-	if err = d.Set("description", flattenSystemInterfaceDescription(o["description"], d, "description")); err != nil {
+	if err = d.Set("description", flattenSystemInterfaceDescription(o["description"], d, "description", sv)); err != nil {
 		if !fortiAPIPatch(o["description"]) {
 			return fmt.Errorf("Error reading description: %v", err)
 		}
 	}
 
-	if err = d.Set("alias", flattenSystemInterfaceAlias(o["alias"], d, "alias")); err != nil {
+	if err = d.Set("alias", flattenSystemInterfaceAlias(o["alias"], d, "alias", sv)); err != nil {
 		if !fortiAPIPatch(o["alias"]) {
 			return fmt.Errorf("Error reading alias: %v", err)
 		}
 	}
 
-	if err = d.Set("security_mode", flattenSystemInterfaceSecurityMode(o["security-mode"], d, "security_mode")); err != nil {
+	if err = d.Set("security_mode", flattenSystemInterfaceSecurityMode(o["security-mode"], d, "security_mode", sv)); err != nil {
 		if !fortiAPIPatch(o["security-mode"]) {
 			return fmt.Errorf("Error reading security_mode: %v", err)
 		}
 	}
 
-	if err = d.Set("captive_portal", flattenSystemInterfaceCaptivePortal(o["captive-portal"], d, "captive_portal")); err != nil {
+	if err = d.Set("captive_portal", flattenSystemInterfaceCaptivePortal(o["captive-portal"], d, "captive_portal", sv)); err != nil {
 		if !fortiAPIPatch(o["captive-portal"]) {
 			return fmt.Errorf("Error reading captive_portal: %v", err)
 		}
 	}
 
-	if err = d.Set("security_mac_auth_bypass", flattenSystemInterfaceSecurityMacAuthBypass(o["security-mac-auth-bypass"], d, "security_mac_auth_bypass")); err != nil {
+	if err = d.Set("security_mac_auth_bypass", flattenSystemInterfaceSecurityMacAuthBypass(o["security-mac-auth-bypass"], d, "security_mac_auth_bypass", sv)); err != nil {
 		if !fortiAPIPatch(o["security-mac-auth-bypass"]) {
 			return fmt.Errorf("Error reading security_mac_auth_bypass: %v", err)
 		}
 	}
 
-	if err = d.Set("security_external_web", flattenSystemInterfaceSecurityExternalWeb(o["security-external-web"], d, "security_external_web")); err != nil {
+	if err = d.Set("security_external_web", flattenSystemInterfaceSecurityExternalWeb(o["security-external-web"], d, "security_external_web", sv)); err != nil {
 		if !fortiAPIPatch(o["security-external-web"]) {
 			return fmt.Errorf("Error reading security_external_web: %v", err)
 		}
 	}
 
-	if err = d.Set("security_external_logout", flattenSystemInterfaceSecurityExternalLogout(o["security-external-logout"], d, "security_external_logout")); err != nil {
+	if err = d.Set("security_external_logout", flattenSystemInterfaceSecurityExternalLogout(o["security-external-logout"], d, "security_external_logout", sv)); err != nil {
 		if !fortiAPIPatch(o["security-external-logout"]) {
 			return fmt.Errorf("Error reading security_external_logout: %v", err)
 		}
 	}
 
-	if err = d.Set("replacemsg_override_group", flattenSystemInterfaceReplacemsgOverrideGroup(o["replacemsg-override-group"], d, "replacemsg_override_group")); err != nil {
+	if err = d.Set("replacemsg_override_group", flattenSystemInterfaceReplacemsgOverrideGroup(o["replacemsg-override-group"], d, "replacemsg_override_group", sv)); err != nil {
 		if !fortiAPIPatch(o["replacemsg-override-group"]) {
 			return fmt.Errorf("Error reading replacemsg_override_group: %v", err)
 		}
 	}
 
-	if err = d.Set("security_redirect_url", flattenSystemInterfaceSecurityRedirectUrl(o["security-redirect-url"], d, "security_redirect_url")); err != nil {
+	if err = d.Set("security_redirect_url", flattenSystemInterfaceSecurityRedirectUrl(o["security-redirect-url"], d, "security_redirect_url", sv)); err != nil {
 		if !fortiAPIPatch(o["security-redirect-url"]) {
 			return fmt.Errorf("Error reading security_redirect_url: %v", err)
 		}
 	}
 
-	if err = d.Set("security_exempt_list", flattenSystemInterfaceSecurityExemptList(o["security-exempt-list"], d, "security_exempt_list")); err != nil {
+	if err = d.Set("security_exempt_list", flattenSystemInterfaceSecurityExemptList(o["security-exempt-list"], d, "security_exempt_list", sv)); err != nil {
 		if !fortiAPIPatch(o["security-exempt-list"]) {
 			return fmt.Errorf("Error reading security_exempt_list: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("security_groups", flattenSystemInterfaceSecurityGroups(o["security-groups"], d, "security_groups")); err != nil {
+		if err = d.Set("security_groups", flattenSystemInterfaceSecurityGroups(o["security-groups"], d, "security_groups", sv)); err != nil {
 			if !fortiAPIPatch(o["security-groups"]) {
 				return fmt.Errorf("Error reading security_groups: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("security_groups"); ok {
-			if err = d.Set("security_groups", flattenSystemInterfaceSecurityGroups(o["security-groups"], d, "security_groups")); err != nil {
+			if err = d.Set("security_groups", flattenSystemInterfaceSecurityGroups(o["security-groups"], d, "security_groups", sv)); err != nil {
 				if !fortiAPIPatch(o["security-groups"]) {
 					return fmt.Errorf("Error reading security_groups: %v", err)
 				}
@@ -4324,99 +4892,123 @@ func refreshObjectSystemInterface(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-	if err = d.Set("device_identification", flattenSystemInterfaceDeviceIdentification(o["device-identification"], d, "device_identification")); err != nil {
+	if err = d.Set("device_identification", flattenSystemInterfaceDeviceIdentification(o["device-identification"], d, "device_identification", sv)); err != nil {
 		if !fortiAPIPatch(o["device-identification"]) {
 			return fmt.Errorf("Error reading device_identification: %v", err)
 		}
 	}
 
-	if err = d.Set("device_user_identification", flattenSystemInterfaceDeviceUserIdentification(o["device-user-identification"], d, "device_user_identification")); err != nil {
+	if err = d.Set("device_user_identification", flattenSystemInterfaceDeviceUserIdentification(o["device-user-identification"], d, "device_user_identification", sv)); err != nil {
 		if !fortiAPIPatch(o["device-user-identification"]) {
 			return fmt.Errorf("Error reading device_user_identification: %v", err)
 		}
 	}
 
-	if err = d.Set("device_identification_active_scan", flattenSystemInterfaceDeviceIdentificationActiveScan(o["device-identification-active-scan"], d, "device_identification_active_scan")); err != nil {
+	if err = d.Set("device_identification_active_scan", flattenSystemInterfaceDeviceIdentificationActiveScan(o["device-identification-active-scan"], d, "device_identification_active_scan", sv)); err != nil {
 		if !fortiAPIPatch(o["device-identification-active-scan"]) {
 			return fmt.Errorf("Error reading device_identification_active_scan: %v", err)
 		}
 	}
 
-	if err = d.Set("device_access_list", flattenSystemInterfaceDeviceAccessList(o["device-access-list"], d, "device_access_list")); err != nil {
+	if err = d.Set("device_access_list", flattenSystemInterfaceDeviceAccessList(o["device-access-list"], d, "device_access_list", sv)); err != nil {
 		if !fortiAPIPatch(o["device-access-list"]) {
 			return fmt.Errorf("Error reading device_access_list: %v", err)
 		}
 	}
 
-	if err = d.Set("device_netscan", flattenSystemInterfaceDeviceNetscan(o["device-netscan"], d, "device_netscan")); err != nil {
+	if err = d.Set("device_netscan", flattenSystemInterfaceDeviceNetscan(o["device-netscan"], d, "device_netscan", sv)); err != nil {
 		if !fortiAPIPatch(o["device-netscan"]) {
 			return fmt.Errorf("Error reading device_netscan: %v", err)
 		}
 	}
 
-	if err = d.Set("lldp_reception", flattenSystemInterfaceLldpReception(o["lldp-reception"], d, "lldp_reception")); err != nil {
+	if err = d.Set("lldp_reception", flattenSystemInterfaceLldpReception(o["lldp-reception"], d, "lldp_reception", sv)); err != nil {
 		if !fortiAPIPatch(o["lldp-reception"]) {
 			return fmt.Errorf("Error reading lldp_reception: %v", err)
 		}
 	}
 
-	if err = d.Set("lldp_transmission", flattenSystemInterfaceLldpTransmission(o["lldp-transmission"], d, "lldp_transmission")); err != nil {
+	if err = d.Set("lldp_transmission", flattenSystemInterfaceLldpTransmission(o["lldp-transmission"], d, "lldp_transmission", sv)); err != nil {
 		if !fortiAPIPatch(o["lldp-transmission"]) {
 			return fmt.Errorf("Error reading lldp_transmission: %v", err)
 		}
 	}
 
-	if err = d.Set("lldp_network_policy", flattenSystemInterfaceLldpNetworkPolicy(o["lldp-network-policy"], d, "lldp_network_policy")); err != nil {
+	if err = d.Set("lldp_network_policy", flattenSystemInterfaceLldpNetworkPolicy(o["lldp-network-policy"], d, "lldp_network_policy", sv)); err != nil {
 		if !fortiAPIPatch(o["lldp-network-policy"]) {
 			return fmt.Errorf("Error reading lldp_network_policy: %v", err)
 		}
 	}
 
-	if err = d.Set("fortiheartbeat", flattenSystemInterfaceFortiheartbeat(o["fortiheartbeat"], d, "fortiheartbeat")); err != nil {
+	if err = d.Set("fortiheartbeat", flattenSystemInterfaceFortiheartbeat(o["fortiheartbeat"], d, "fortiheartbeat", sv)); err != nil {
 		if !fortiAPIPatch(o["fortiheartbeat"]) {
 			return fmt.Errorf("Error reading fortiheartbeat: %v", err)
 		}
 	}
 
-	if err = d.Set("broadcast_forticlient_discovery", flattenSystemInterfaceBroadcastForticlientDiscovery(o["broadcast-forticlient-discovery"], d, "broadcast_forticlient_discovery")); err != nil {
+	if err = d.Set("broadcast_forticlient_discovery", flattenSystemInterfaceBroadcastForticlientDiscovery(o["broadcast-forticlient-discovery"], d, "broadcast_forticlient_discovery", sv)); err != nil {
 		if !fortiAPIPatch(o["broadcast-forticlient-discovery"]) {
 			return fmt.Errorf("Error reading broadcast_forticlient_discovery: %v", err)
 		}
 	}
 
-	if err = d.Set("endpoint_compliance", flattenSystemInterfaceEndpointCompliance(o["endpoint-compliance"], d, "endpoint_compliance")); err != nil {
+	if err = d.Set("endpoint_compliance", flattenSystemInterfaceEndpointCompliance(o["endpoint-compliance"], d, "endpoint_compliance", sv)); err != nil {
 		if !fortiAPIPatch(o["endpoint-compliance"]) {
 			return fmt.Errorf("Error reading endpoint_compliance: %v", err)
 		}
 	}
 
-	if err = d.Set("estimated_upstream_bandwidth", flattenSystemInterfaceEstimatedUpstreamBandwidth(o["estimated-upstream-bandwidth"], d, "estimated_upstream_bandwidth")); err != nil {
+	if err = d.Set("estimated_upstream_bandwidth", flattenSystemInterfaceEstimatedUpstreamBandwidth(o["estimated-upstream-bandwidth"], d, "estimated_upstream_bandwidth", sv)); err != nil {
 		if !fortiAPIPatch(o["estimated-upstream-bandwidth"]) {
 			return fmt.Errorf("Error reading estimated_upstream_bandwidth: %v", err)
 		}
 	}
 
-	if err = d.Set("estimated_downstream_bandwidth", flattenSystemInterfaceEstimatedDownstreamBandwidth(o["estimated-downstream-bandwidth"], d, "estimated_downstream_bandwidth")); err != nil {
+	if err = d.Set("estimated_downstream_bandwidth", flattenSystemInterfaceEstimatedDownstreamBandwidth(o["estimated-downstream-bandwidth"], d, "estimated_downstream_bandwidth", sv)); err != nil {
 		if !fortiAPIPatch(o["estimated-downstream-bandwidth"]) {
 			return fmt.Errorf("Error reading estimated_downstream_bandwidth: %v", err)
 		}
 	}
 
-	if err = d.Set("vrrp_virtual_mac", flattenSystemInterfaceVrrpVirtualMac(o["vrrp-virtual-mac"], d, "vrrp_virtual_mac")); err != nil {
+	if err = d.Set("measured_upstream_bandwidth", flattenSystemInterfaceMeasuredUpstreamBandwidth(o["measured-upstream-bandwidth"], d, "measured_upstream_bandwidth", sv)); err != nil {
+		if !fortiAPIPatch(o["measured-upstream-bandwidth"]) {
+			return fmt.Errorf("Error reading measured_upstream_bandwidth: %v", err)
+		}
+	}
+
+	if err = d.Set("measured_downstream_bandwidth", flattenSystemInterfaceMeasuredDownstreamBandwidth(o["measured-downstream-bandwidth"], d, "measured_downstream_bandwidth", sv)); err != nil {
+		if !fortiAPIPatch(o["measured-downstream-bandwidth"]) {
+			return fmt.Errorf("Error reading measured_downstream_bandwidth: %v", err)
+		}
+	}
+
+	if err = d.Set("bandwidth_measure_time", flattenSystemInterfaceBandwidthMeasureTime(o["bandwidth-measure-time"], d, "bandwidth_measure_time", sv)); err != nil {
+		if !fortiAPIPatch(o["bandwidth-measure-time"]) {
+			return fmt.Errorf("Error reading bandwidth_measure_time: %v", err)
+		}
+	}
+
+	if err = d.Set("monitor_bandwidth", flattenSystemInterfaceMonitorBandwidth(o["monitor-bandwidth"], d, "monitor_bandwidth", sv)); err != nil {
+		if !fortiAPIPatch(o["monitor-bandwidth"]) {
+			return fmt.Errorf("Error reading monitor_bandwidth: %v", err)
+		}
+	}
+
+	if err = d.Set("vrrp_virtual_mac", flattenSystemInterfaceVrrpVirtualMac(o["vrrp-virtual-mac"], d, "vrrp_virtual_mac", sv)); err != nil {
 		if !fortiAPIPatch(o["vrrp-virtual-mac"]) {
 			return fmt.Errorf("Error reading vrrp_virtual_mac: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("vrrp", flattenSystemInterfaceVrrp(o["vrrp"], d, "vrrp")); err != nil {
+		if err = d.Set("vrrp", flattenSystemInterfaceVrrp(o["vrrp"], d, "vrrp", sv)); err != nil {
 			if !fortiAPIPatch(o["vrrp"]) {
 				return fmt.Errorf("Error reading vrrp: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("vrrp"); ok {
-			if err = d.Set("vrrp", flattenSystemInterfaceVrrp(o["vrrp"], d, "vrrp")); err != nil {
+			if err = d.Set("vrrp", flattenSystemInterfaceVrrp(o["vrrp"], d, "vrrp", sv)); err != nil {
 				if !fortiAPIPatch(o["vrrp"]) {
 					return fmt.Errorf("Error reading vrrp: %v", err)
 				}
@@ -4424,33 +5016,33 @@ func refreshObjectSystemInterface(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-	if err = d.Set("role", flattenSystemInterfaceRole(o["role"], d, "role")); err != nil {
+	if err = d.Set("role", flattenSystemInterfaceRole(o["role"], d, "role", sv)); err != nil {
 		if !fortiAPIPatch(o["role"]) {
 			return fmt.Errorf("Error reading role: %v", err)
 		}
 	}
 
-	if err = d.Set("snmp_index", flattenSystemInterfaceSnmpIndex(o["snmp-index"], d, "snmp_index")); err != nil {
+	if err = d.Set("snmp_index", flattenSystemInterfaceSnmpIndex(o["snmp-index"], d, "snmp_index", sv)); err != nil {
 		if !fortiAPIPatch(o["snmp-index"]) {
 			return fmt.Errorf("Error reading snmp_index: %v", err)
 		}
 	}
 
-	if err = d.Set("secondary_ip", flattenSystemInterfaceSecondaryIp(o["secondary-IP"], d, "secondary_ip")); err != nil {
+	if err = d.Set("secondary_ip", flattenSystemInterfaceSecondaryIp(o["secondary-IP"], d, "secondary_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["secondary-IP"]) {
 			return fmt.Errorf("Error reading secondary_ip: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("secondaryip", flattenSystemInterfaceSecondaryip(o["secondaryip"], d, "secondaryip")); err != nil {
+		if err = d.Set("secondaryip", flattenSystemInterfaceSecondaryip(o["secondaryip"], d, "secondaryip", sv)); err != nil {
 			if !fortiAPIPatch(o["secondaryip"]) {
 				return fmt.Errorf("Error reading secondaryip: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("secondaryip"); ok {
-			if err = d.Set("secondaryip", flattenSystemInterfaceSecondaryip(o["secondaryip"], d, "secondaryip")); err != nil {
+			if err = d.Set("secondaryip", flattenSystemInterfaceSecondaryip(o["secondaryip"], d, "secondaryip", sv)); err != nil {
 				if !fortiAPIPatch(o["secondaryip"]) {
 					return fmt.Errorf("Error reading secondaryip: %v", err)
 				}
@@ -4458,111 +5050,183 @@ func refreshObjectSystemInterface(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-	if err = d.Set("preserve_session_route", flattenSystemInterfacePreserveSessionRoute(o["preserve-session-route"], d, "preserve_session_route")); err != nil {
+	if err = d.Set("preserve_session_route", flattenSystemInterfacePreserveSessionRoute(o["preserve-session-route"], d, "preserve_session_route", sv)); err != nil {
 		if !fortiAPIPatch(o["preserve-session-route"]) {
 			return fmt.Errorf("Error reading preserve_session_route: %v", err)
 		}
 	}
 
-	if err = d.Set("auto_auth_extension_device", flattenSystemInterfaceAutoAuthExtensionDevice(o["auto-auth-extension-device"], d, "auto_auth_extension_device")); err != nil {
+	if err = d.Set("auto_auth_extension_device", flattenSystemInterfaceAutoAuthExtensionDevice(o["auto-auth-extension-device"], d, "auto_auth_extension_device", sv)); err != nil {
 		if !fortiAPIPatch(o["auto-auth-extension-device"]) {
 			return fmt.Errorf("Error reading auto_auth_extension_device: %v", err)
 		}
 	}
 
-	if err = d.Set("ap_discover", flattenSystemInterfaceApDiscover(o["ap-discover"], d, "ap_discover")); err != nil {
+	if err = d.Set("ap_discover", flattenSystemInterfaceApDiscover(o["ap-discover"], d, "ap_discover", sv)); err != nil {
 		if !fortiAPIPatch(o["ap-discover"]) {
 			return fmt.Errorf("Error reading ap_discover: %v", err)
 		}
 	}
 
-	if err = d.Set("fortilink_stacking", flattenSystemInterfaceFortilinkStacking(o["fortilink-stacking"], d, "fortilink_stacking")); err != nil {
+	if err = d.Set("fortilink_stacking", flattenSystemInterfaceFortilinkStacking(o["fortilink-stacking"], d, "fortilink_stacking", sv)); err != nil {
 		if !fortiAPIPatch(o["fortilink-stacking"]) {
 			return fmt.Errorf("Error reading fortilink_stacking: %v", err)
 		}
 	}
 
-	if err = d.Set("fortilink_split_interface", flattenSystemInterfaceFortilinkSplitInterface(o["fortilink-split-interface"], d, "fortilink_split_interface")); err != nil {
+	if err = d.Set("fortilink_neighbor_detect", flattenSystemInterfaceFortilinkNeighborDetect(o["fortilink-neighbor-detect"], d, "fortilink_neighbor_detect", sv)); err != nil {
+		if !fortiAPIPatch(o["fortilink-neighbor-detect"]) {
+			return fmt.Errorf("Error reading fortilink_neighbor_detect: %v", err)
+		}
+	}
+
+	if err = d.Set("ip_managed_by_fortiipam", flattenSystemInterfaceIpManagedByFortiipam(o["ip-managed-by-fortiipam"], d, "ip_managed_by_fortiipam", sv)); err != nil {
+		if !fortiAPIPatch(o["ip-managed-by-fortiipam"]) {
+			return fmt.Errorf("Error reading ip_managed_by_fortiipam: %v", err)
+		}
+	}
+
+	if err = d.Set("managed_subnetwork_size", flattenSystemInterfaceManagedSubnetworkSize(o["managed-subnetwork-size"], d, "managed_subnetwork_size", sv)); err != nil {
+		if !fortiAPIPatch(o["managed-subnetwork-size"]) {
+			return fmt.Errorf("Error reading managed_subnetwork_size: %v", err)
+		}
+	}
+
+	if err = d.Set("fortilink_split_interface", flattenSystemInterfaceFortilinkSplitInterface(o["fortilink-split-interface"], d, "fortilink_split_interface", sv)); err != nil {
 		if !fortiAPIPatch(o["fortilink-split-interface"]) {
 			return fmt.Errorf("Error reading fortilink_split_interface: %v", err)
 		}
 	}
 
-	if err = d.Set("internal", flattenSystemInterfaceInternal(o["internal"], d, "internal")); err != nil {
+	if err = d.Set("internal", flattenSystemInterfaceInternal(o["internal"], d, "internal", sv)); err != nil {
 		if !fortiAPIPatch(o["internal"]) {
 			return fmt.Errorf("Error reading internal: %v", err)
 		}
 	}
 
-	if err = d.Set("fortilink_backup_link", flattenSystemInterfaceFortilinkBackupLink(o["fortilink-backup-link"], d, "fortilink_backup_link")); err != nil {
+	if err = d.Set("fortilink_backup_link", flattenSystemInterfaceFortilinkBackupLink(o["fortilink-backup-link"], d, "fortilink_backup_link", sv)); err != nil {
 		if !fortiAPIPatch(o["fortilink-backup-link"]) {
 			return fmt.Errorf("Error reading fortilink_backup_link: %v", err)
 		}
 	}
 
-	if err = d.Set("switch_controller_access_vlan", flattenSystemInterfaceSwitchControllerAccessVlan(o["switch-controller-access-vlan"], d, "switch_controller_access_vlan")); err != nil {
+	if err = d.Set("switch_controller_access_vlan", flattenSystemInterfaceSwitchControllerAccessVlan(o["switch-controller-access-vlan"], d, "switch_controller_access_vlan", sv)); err != nil {
 		if !fortiAPIPatch(o["switch-controller-access-vlan"]) {
 			return fmt.Errorf("Error reading switch_controller_access_vlan: %v", err)
 		}
 	}
 
-	if err = d.Set("switch_controller_traffic_policy", flattenSystemInterfaceSwitchControllerTrafficPolicy(o["switch-controller-traffic-policy"], d, "switch_controller_traffic_policy")); err != nil {
+	if err = d.Set("switch_controller_traffic_policy", flattenSystemInterfaceSwitchControllerTrafficPolicy(o["switch-controller-traffic-policy"], d, "switch_controller_traffic_policy", sv)); err != nil {
 		if !fortiAPIPatch(o["switch-controller-traffic-policy"]) {
 			return fmt.Errorf("Error reading switch_controller_traffic_policy: %v", err)
 		}
 	}
 
-	if err = d.Set("switch_controller_igmp_snooping", flattenSystemInterfaceSwitchControllerIgmpSnooping(o["switch-controller-igmp-snooping"], d, "switch_controller_igmp_snooping")); err != nil {
+	if err = d.Set("switch_controller_rspan_mode", flattenSystemInterfaceSwitchControllerRspanMode(o["switch-controller-rspan-mode"], d, "switch_controller_rspan_mode", sv)); err != nil {
+		if !fortiAPIPatch(o["switch-controller-rspan-mode"]) {
+			return fmt.Errorf("Error reading switch_controller_rspan_mode: %v", err)
+		}
+	}
+
+	if err = d.Set("switch_controller_mgmt_vlan", flattenSystemInterfaceSwitchControllerMgmtVlan(o["switch-controller-mgmt-vlan"], d, "switch_controller_mgmt_vlan", sv)); err != nil {
+		if !fortiAPIPatch(o["switch-controller-mgmt-vlan"]) {
+			return fmt.Errorf("Error reading switch_controller_mgmt_vlan: %v", err)
+		}
+	}
+
+	if err = d.Set("switch_controller_igmp_snooping", flattenSystemInterfaceSwitchControllerIgmpSnooping(o["switch-controller-igmp-snooping"], d, "switch_controller_igmp_snooping", sv)); err != nil {
 		if !fortiAPIPatch(o["switch-controller-igmp-snooping"]) {
 			return fmt.Errorf("Error reading switch_controller_igmp_snooping: %v", err)
 		}
 	}
 
-	if err = d.Set("switch_controller_dhcp_snooping", flattenSystemInterfaceSwitchControllerDhcpSnooping(o["switch-controller-dhcp-snooping"], d, "switch_controller_dhcp_snooping")); err != nil {
+	if err = d.Set("switch_controller_igmp_snooping_proxy", flattenSystemInterfaceSwitchControllerIgmpSnoopingProxy(o["switch-controller-igmp-snooping-proxy"], d, "switch_controller_igmp_snooping_proxy", sv)); err != nil {
+		if !fortiAPIPatch(o["switch-controller-igmp-snooping-proxy"]) {
+			return fmt.Errorf("Error reading switch_controller_igmp_snooping_proxy: %v", err)
+		}
+	}
+
+	if err = d.Set("switch_controller_igmp_snooping_fast_leave", flattenSystemInterfaceSwitchControllerIgmpSnoopingFastLeave(o["switch-controller-igmp-snooping-fast-leave"], d, "switch_controller_igmp_snooping_fast_leave", sv)); err != nil {
+		if !fortiAPIPatch(o["switch-controller-igmp-snooping-fast-leave"]) {
+			return fmt.Errorf("Error reading switch_controller_igmp_snooping_fast_leave: %v", err)
+		}
+	}
+
+	if err = d.Set("switch_controller_dhcp_snooping", flattenSystemInterfaceSwitchControllerDhcpSnooping(o["switch-controller-dhcp-snooping"], d, "switch_controller_dhcp_snooping", sv)); err != nil {
 		if !fortiAPIPatch(o["switch-controller-dhcp-snooping"]) {
 			return fmt.Errorf("Error reading switch_controller_dhcp_snooping: %v", err)
 		}
 	}
 
-	if err = d.Set("switch_controller_dhcp_snooping_verify_mac", flattenSystemInterfaceSwitchControllerDhcpSnoopingVerifyMac(o["switch-controller-dhcp-snooping-verify-mac"], d, "switch_controller_dhcp_snooping_verify_mac")); err != nil {
+	if err = d.Set("switch_controller_dhcp_snooping_verify_mac", flattenSystemInterfaceSwitchControllerDhcpSnoopingVerifyMac(o["switch-controller-dhcp-snooping-verify-mac"], d, "switch_controller_dhcp_snooping_verify_mac", sv)); err != nil {
 		if !fortiAPIPatch(o["switch-controller-dhcp-snooping-verify-mac"]) {
 			return fmt.Errorf("Error reading switch_controller_dhcp_snooping_verify_mac: %v", err)
 		}
 	}
 
-	if err = d.Set("switch_controller_dhcp_snooping_option82", flattenSystemInterfaceSwitchControllerDhcpSnoopingOption82(o["switch-controller-dhcp-snooping-option82"], d, "switch_controller_dhcp_snooping_option82")); err != nil {
+	if err = d.Set("switch_controller_dhcp_snooping_option82", flattenSystemInterfaceSwitchControllerDhcpSnoopingOption82(o["switch-controller-dhcp-snooping-option82"], d, "switch_controller_dhcp_snooping_option82", sv)); err != nil {
 		if !fortiAPIPatch(o["switch-controller-dhcp-snooping-option82"]) {
 			return fmt.Errorf("Error reading switch_controller_dhcp_snooping_option82: %v", err)
 		}
 	}
 
-	if err = d.Set("switch_controller_arp_inspection", flattenSystemInterfaceSwitchControllerArpInspection(o["switch-controller-arp-inspection"], d, "switch_controller_arp_inspection")); err != nil {
+	if err = d.Set("switch_controller_arp_inspection", flattenSystemInterfaceSwitchControllerArpInspection(o["switch-controller-arp-inspection"], d, "switch_controller_arp_inspection", sv)); err != nil {
 		if !fortiAPIPatch(o["switch-controller-arp-inspection"]) {
 			return fmt.Errorf("Error reading switch_controller_arp_inspection: %v", err)
 		}
 	}
 
-	if err = d.Set("switch_controller_learning_limit", flattenSystemInterfaceSwitchControllerLearningLimit(o["switch-controller-learning-limit"], d, "switch_controller_learning_limit")); err != nil {
+	if err = d.Set("switch_controller_learning_limit", flattenSystemInterfaceSwitchControllerLearningLimit(o["switch-controller-learning-limit"], d, "switch_controller_learning_limit", sv)); err != nil {
 		if !fortiAPIPatch(o["switch-controller-learning-limit"]) {
 			return fmt.Errorf("Error reading switch_controller_learning_limit: %v", err)
 		}
 	}
 
-	if err = d.Set("color", flattenSystemInterfaceColor(o["color"], d, "color")); err != nil {
+	if err = d.Set("switch_controller_nac", flattenSystemInterfaceSwitchControllerNac(o["switch-controller-nac"], d, "switch_controller_nac", sv)); err != nil {
+		if !fortiAPIPatch(o["switch-controller-nac"]) {
+			return fmt.Errorf("Error reading switch_controller_nac: %v", err)
+		}
+	}
+
+	if err = d.Set("switch_controller_feature", flattenSystemInterfaceSwitchControllerFeature(o["switch-controller-feature"], d, "switch_controller_feature", sv)); err != nil {
+		if !fortiAPIPatch(o["switch-controller-feature"]) {
+			return fmt.Errorf("Error reading switch_controller_feature: %v", err)
+		}
+	}
+
+	if err = d.Set("switch_controller_iot_scanning", flattenSystemInterfaceSwitchControllerIotScanning(o["switch-controller-iot-scanning"], d, "switch_controller_iot_scanning", sv)); err != nil {
+		if !fortiAPIPatch(o["switch-controller-iot-scanning"]) {
+			return fmt.Errorf("Error reading switch_controller_iot_scanning: %v", err)
+		}
+	}
+
+	if err = d.Set("swc_vlan", flattenSystemInterfaceSwcVlan(o["swc-vlan"], d, "swc_vlan", sv)); err != nil {
+		if !fortiAPIPatch(o["swc-vlan"]) {
+			return fmt.Errorf("Error reading swc_vlan: %v", err)
+		}
+	}
+
+	if err = d.Set("swc_first_create", flattenSystemInterfaceSwcFirstCreate(o["swc-first-create"], d, "swc_first_create", sv)); err != nil {
+		if !fortiAPIPatch(o["swc-first-create"]) {
+			return fmt.Errorf("Error reading swc_first_create: %v", err)
+		}
+	}
+
+	if err = d.Set("color", flattenSystemInterfaceColor(o["color"], d, "color", sv)); err != nil {
 		if !fortiAPIPatch(o["color"]) {
 			return fmt.Errorf("Error reading color: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("tagging", flattenSystemInterfaceTagging(o["tagging"], d, "tagging")); err != nil {
+		if err = d.Set("tagging", flattenSystemInterfaceTagging(o["tagging"], d, "tagging", sv)); err != nil {
 			if !fortiAPIPatch(o["tagging"]) {
 				return fmt.Errorf("Error reading tagging: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("tagging"); ok {
-			if err = d.Set("tagging", flattenSystemInterfaceTagging(o["tagging"], d, "tagging")); err != nil {
+			if err = d.Set("tagging", flattenSystemInterfaceTagging(o["tagging"], d, "tagging", sv)); err != nil {
 				if !fortiAPIPatch(o["tagging"]) {
 					return fmt.Errorf("Error reading tagging: %v", err)
 				}
@@ -4571,14 +5235,14 @@ func refreshObjectSystemInterface(d *schema.ResourceData, o map[string]interface
 	}
 
 	if isImportTable() {
-		if err = d.Set("ipv6", flattenSystemInterfaceIpv6(o["ipv6"], d, "ipv6")); err != nil {
+		if err = d.Set("ipv6", flattenSystemInterfaceIpv6(o["ipv6"], d, "ipv6", sv)); err != nil {
 			if !fortiAPIPatch(o["ipv6"]) {
 				return fmt.Errorf("Error reading ipv6: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("ipv6"); ok {
-			if err = d.Set("ipv6", flattenSystemInterfaceIpv6(o["ipv6"], d, "ipv6")); err != nil {
+			if err = d.Set("ipv6", flattenSystemInterfaceIpv6(o["ipv6"], d, "ipv6", sv)); err != nil {
 				if !fortiAPIPatch(o["ipv6"]) {
 					return fmt.Errorf("Error reading ipv6: %v", err)
 				}
@@ -4592,106 +5256,190 @@ func refreshObjectSystemInterface(d *schema.ResourceData, o map[string]interface
 func flattenSystemInterfaceFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemInterfaceName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceVdom(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceVdom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceVrf(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceVrf(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceCliConnStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceCliConnStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceFortilink(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceFortilink(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceMode(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSwitchControllerSourceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceDistance(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfacePriority(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceClientOptions(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["id"], _ = expandSystemInterfaceClientOptionsId(d, i["id"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "code"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["code"], _ = expandSystemInterfaceClientOptionsCode(d, i["code"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["type"], _ = expandSystemInterfaceClientOptionsType(d, i["type"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["value"], _ = expandSystemInterfaceClientOptionsValue(d, i["value"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["ip"], _ = expandSystemInterfaceClientOptionsIp(d, i["ip"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandSystemInterfaceClientOptionsId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceDhcpRelayService(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceClientOptionsCode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceDhcpRelayIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceClientOptionsType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceDhcpRelayType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceClientOptionsValue(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceDhcpRelayAgentOption(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceClientOptionsIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceManagementIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceDistance(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfacePriority(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceAllowaccess(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceDhcpRelayInterfaceSelectMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceGwdetect(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceDhcpRelayInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfacePingServStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceDhcpRelayService(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceDetectserver(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceDhcpRelayIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceDetectprotocol(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceDhcpRelayType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceHaPriority(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceDhcpRelayAgentOption(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceFailDetect(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceManagementIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceFailDetectOption(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceFailAlertMethod(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceAllowaccess(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceFailActionOnExtender(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceGwdetect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceFailAlertInterfaces(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfacePingServStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceDetectserver(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceDetectprotocol(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceHaPriority(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceFailDetect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceFailDetectOption(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceFailAlertMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceFailActionOnExtender(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceFailAlertInterfaces(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -4707,7 +5455,8 @@ func expandSystemInterfaceFailAlertInterfaces(d *schema.ResourceData, v interfac
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSystemInterfaceFailAlertInterfacesName(d, i["name"], pre_append)
+
+			tmp["name"], _ = expandSystemInterfaceFailAlertInterfacesName(d, i["name"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -4718,339 +5467,355 @@ func expandSystemInterfaceFailAlertInterfaces(d *schema.ResourceData, v interfac
 	return result, nil
 }
 
-func expandSystemInterfaceFailAlertInterfacesName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceFailAlertInterfacesName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceDhcpClientIdentifier(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceDhcpClientIdentifier(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceDhcpRenewTime(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceDhcpRenewTime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpunnumbered(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpunnumbered(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceUsername(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceUsername(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfacePppoeUnnumberedNegotiate(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfacePppoeUnnumberedNegotiate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfacePassword(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfacePassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIdleTimeout(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIdleTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceDetectedPeerMtu(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceDetectedPeerMtu(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceDiscRetryTimeout(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceDiscRetryTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfacePadtRetryTimeout(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfacePadtRetryTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceServiceName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceServiceName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceAcName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceAcName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceLcpEchoInterval(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceLcpEchoInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceLcpMaxEchoFails(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceLcpMaxEchoFails(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceDefaultgw(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceDefaultgw(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceDnsServerOverride(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceDnsServerOverride(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceAuthType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceAuthType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfacePptpClient(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfacePptpClient(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfacePptpUser(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfacePptpUser(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfacePptpPassword(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfacePptpPassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfacePptpServerIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfacePptpServerIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfacePptpAuthType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfacePptpAuthType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfacePptpTimeout(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfacePptpTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceArpforward(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceArpforward(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceNdiscforward(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceNdiscforward(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceBroadcastForward(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceBroadcastForward(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceBfd(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceBfd(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceBfdDesiredMinTx(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceBfdDesiredMinTx(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceBfdDetectMult(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceBfdDetectMult(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceBfdRequiredMinRx(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceBfdRequiredMinRx(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceL2Forward(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceL2Forward(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIcmpSendRedirect(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIcmpSendRedirect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIcmpAcceptRedirect(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIcmpAcceptRedirect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceVlanforward(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceVlanforward(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceStpforward(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceStpforward(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceStpforwardMode(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceStpforwardMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpsSnifferMode(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpsSnifferMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIdentAccept(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIdentAccept(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpmac(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpmac(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceSubst(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSubst(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceMacaddr(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceMacaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceSubstituteDstMac(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSubstituteDstMac(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceSpeed(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSpeed(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceNetbiosForward(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceNetbiosForward(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceWinsIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceWinsIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceDedicatedTo(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceDedicatedTo(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceTrustIp1(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceTrustIp1(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceTrustIp2(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceTrustIp2(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceTrustIp3(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceTrustIp3(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceTrustIp61(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceTrustIp61(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceTrustIp62(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceTrustIp62(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceTrustIp63(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceTrustIp63(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceMtuOverride(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceMtuOverride(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceMtu(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceMtu(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceWccp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceRingRx(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceNetflowSampler(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceRingTx(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceSflowSampler(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceWccp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceDropOverlappedFragment(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceNetflowSampler(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceDropFragment(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSflowSampler(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceScanBotnetConnections(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceDropOverlappedFragment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceSrcCheck(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceDropFragment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceSampleRate(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceScanBotnetConnections(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfacePollingInterval(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSrcCheck(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceSampleDirection(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSampleRate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceExplicitWebProxy(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfacePollingInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceExplicitFtpProxy(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSampleDirection(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceProxyCaptivePortal(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceExplicitWebProxy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceTcpMss(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceExplicitFtpProxy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceInbandwidth(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceProxyCaptivePortal(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceOutbandwidth(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceTcpMss(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceEgressShapingProfile(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceInbandwidth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceDisconnectThreshold(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceOutbandwidth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceSpilloverThreshold(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceEgressShapingProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIngressSpilloverThreshold(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIngressShapingProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceWeight(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceDisconnectThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceInterface(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSpilloverThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceExternal(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIngressSpilloverThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceVlanid(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceWeight(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceForwardDomain(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceRemoteIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceExternal(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceMember(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceVlanProtocol(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceVlanid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceForwardDomain(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceRemoteIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceMember(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -5066,7 +5831,8 @@ func expandSystemInterfaceMember(d *schema.ResourceData, v interface{}, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["interface-name"], _ = expandSystemInterfaceMemberInterfaceName(d, i["interface_name"], pre_append)
+
+			tmp["interface-name"], _ = expandSystemInterfaceMemberInterfaceName(d, i["interface_name"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -5077,51 +5843,51 @@ func expandSystemInterfaceMember(d *schema.ResourceData, v interface{}, pre stri
 	return result, nil
 }
 
-func expandSystemInterfaceMemberInterfaceName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceMemberInterfaceName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceLacpMode(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceLacpMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceLacpHaSlave(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceLacpHaSlave(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceLacpSpeed(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceLacpSpeed(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceMinLinks(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceMinLinks(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceMinLinksDown(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceMinLinksDown(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceAlgorithm(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceAlgorithm(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceLinkUpDelay(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceLinkUpDelay(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfacePriorityOverride(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfacePriorityOverride(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceAggregate(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceAggregate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceRedundantInterface(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceRedundantInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceManagedDevice(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceManagedDevice(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -5137,7 +5903,8 @@ func expandSystemInterfaceManagedDevice(d *schema.ResourceData, v interface{}, p
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSystemInterfaceManagedDeviceName(d, i["name"], pre_append)
+
+			tmp["name"], _ = expandSystemInterfaceManagedDeviceName(d, i["name"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -5148,63 +5915,63 @@ func expandSystemInterfaceManagedDevice(d *schema.ResourceData, v interface{}, p
 	return result, nil
 }
 
-func expandSystemInterfaceManagedDeviceName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceManagedDeviceName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceDevindex(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceDevindex(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceVindex(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceVindex(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceSwitch(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSwitch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceDescription(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceDescription(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceAlias(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceAlias(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceSecurityMode(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSecurityMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceCaptivePortal(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceCaptivePortal(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceSecurityMacAuthBypass(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSecurityMacAuthBypass(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceSecurityExternalWeb(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSecurityExternalWeb(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceSecurityExternalLogout(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSecurityExternalLogout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceReplacemsgOverrideGroup(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceReplacemsgOverrideGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceSecurityRedirectUrl(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSecurityRedirectUrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceSecurityExemptList(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSecurityExemptList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceSecurityGroups(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSecurityGroups(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -5220,7 +5987,8 @@ func expandSystemInterfaceSecurityGroups(d *schema.ResourceData, v interface{}, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSystemInterfaceSecurityGroupsName(d, i["name"], pre_append)
+
+			tmp["name"], _ = expandSystemInterfaceSecurityGroupsName(d, i["name"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -5231,67 +5999,83 @@ func expandSystemInterfaceSecurityGroups(d *schema.ResourceData, v interface{}, 
 	return result, nil
 }
 
-func expandSystemInterfaceSecurityGroupsName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSecurityGroupsName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceDeviceIdentification(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceDeviceIdentification(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceDeviceUserIdentification(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceDeviceUserIdentification(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceDeviceIdentificationActiveScan(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceDeviceIdentificationActiveScan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceDeviceAccessList(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceDeviceAccessList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceDeviceNetscan(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceDeviceNetscan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceLldpReception(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceLldpReception(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceLldpTransmission(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceLldpTransmission(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceLldpNetworkPolicy(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceLldpNetworkPolicy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceFortiheartbeat(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceFortiheartbeat(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceBroadcastForticlientDiscovery(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceBroadcastForticlientDiscovery(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceEndpointCompliance(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceEndpointCompliance(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceEstimatedUpstreamBandwidth(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceEstimatedUpstreamBandwidth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceEstimatedDownstreamBandwidth(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceEstimatedDownstreamBandwidth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceVrrpVirtualMac(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceMeasuredUpstreamBandwidth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceVrrp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceMeasuredDownstreamBandwidth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceBandwidthMeasureTime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceMonitorBandwidth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceVrrpVirtualMac(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceVrrp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -5307,67 +6091,86 @@ func expandSystemInterfaceVrrp(d *schema.ResourceData, v interface{}, pre string
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrid"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["vrid"], _ = expandSystemInterfaceVrrpVrid(d, i["vrid"], pre_append)
+
+			tmp["vrid"], _ = expandSystemInterfaceVrrpVrid(d, i["vrid"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "version"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["version"], _ = expandSystemInterfaceVrrpVersion(d, i["version"], pre_append)
+
+			tmp["version"], _ = expandSystemInterfaceVrrpVersion(d, i["version"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrgrp"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["vrgrp"], _ = expandSystemInterfaceVrrpVrgrp(d, i["vrgrp"], pre_append)
+
+			tmp["vrgrp"], _ = expandSystemInterfaceVrrpVrgrp(d, i["vrgrp"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrip"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["vrip"], _ = expandSystemInterfaceVrrpVrip(d, i["vrip"], pre_append)
+
+			tmp["vrip"], _ = expandSystemInterfaceVrrpVrip(d, i["vrip"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["priority"], _ = expandSystemInterfaceVrrpPriority(d, i["priority"], pre_append)
+
+			tmp["priority"], _ = expandSystemInterfaceVrrpPriority(d, i["priority"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "adv_interval"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["adv-interval"], _ = expandSystemInterfaceVrrpAdvInterval(d, i["adv_interval"], pre_append)
+
+			tmp["adv-interval"], _ = expandSystemInterfaceVrrpAdvInterval(d, i["adv_interval"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_time"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["start-time"], _ = expandSystemInterfaceVrrpStartTime(d, i["start_time"], pre_append)
+
+			tmp["start-time"], _ = expandSystemInterfaceVrrpStartTime(d, i["start_time"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "preempt"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["preempt"], _ = expandSystemInterfaceVrrpPreempt(d, i["preempt"], pre_append)
+
+			tmp["preempt"], _ = expandSystemInterfaceVrrpPreempt(d, i["preempt"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "accept_mode"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["accept-mode"], _ = expandSystemInterfaceVrrpAcceptMode(d, i["accept_mode"], pre_append)
+
+			tmp["accept-mode"], _ = expandSystemInterfaceVrrpAcceptMode(d, i["accept_mode"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrdst"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["vrdst"], _ = expandSystemInterfaceVrrpVrdst(d, i["vrdst"], pre_append)
+
+			tmp["vrdst"], _ = expandSystemInterfaceVrrpVrdst(d, i["vrdst"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrdst_priority"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["vrdst-priority"], _ = expandSystemInterfaceVrrpVrdstPriority(d, i["vrdst_priority"], pre_append)
+
+			tmp["vrdst-priority"], _ = expandSystemInterfaceVrrpVrdstPriority(d, i["vrdst_priority"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ignore_default_route"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["ignore-default-route"], _ = expandSystemInterfaceVrrpIgnoreDefaultRoute(d, i["ignore_default_route"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["status"], _ = expandSystemInterfaceVrrpStatus(d, i["status"], pre_append)
+
+			tmp["status"], _ = expandSystemInterfaceVrrpStatus(d, i["status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "proxy_arp"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["proxy-arp"], _ = expandSystemInterfaceVrrpProxyArp(d, i["proxy_arp"], pre_append)
+
+			tmp["proxy-arp"], _ = expandSystemInterfaceVrrpProxyArp(d, i["proxy_arp"], pre_append, sv)
 		} else {
 			tmp["proxy-arp"] = make([]string, 0)
 		}
@@ -5380,55 +6183,59 @@ func expandSystemInterfaceVrrp(d *schema.ResourceData, v interface{}, pre string
 	return result, nil
 }
 
-func expandSystemInterfaceVrrpVrid(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceVrrpVrid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceVrrpVersion(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceVrrpVersion(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceVrrpVrgrp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceVrrpVrgrp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceVrrpVrip(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceVrrpVrip(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceVrrpPriority(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceVrrpPriority(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceVrrpAdvInterval(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceVrrpAdvInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceVrrpStartTime(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceVrrpStartTime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceVrrpPreempt(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceVrrpPreempt(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceVrrpAcceptMode(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceVrrpAcceptMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceVrrpVrdst(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceVrrpVrdst(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceVrrpVrdstPriority(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceVrrpVrdstPriority(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceVrrpStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceVrrpIgnoreDefaultRoute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceVrrpProxyArp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceVrrpStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceVrrpProxyArp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -5444,12 +6251,14 @@ func expandSystemInterfaceVrrpProxyArp(d *schema.ResourceData, v interface{}, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandSystemInterfaceVrrpProxyArpId(d, i["id"], pre_append)
+
+			tmp["id"], _ = expandSystemInterfaceVrrpProxyArpId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["ip"], _ = expandSystemInterfaceVrrpProxyArpIp(d, i["ip"], pre_append)
+
+			tmp["ip"], _ = expandSystemInterfaceVrrpProxyArpIp(d, i["ip"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -5460,27 +6269,27 @@ func expandSystemInterfaceVrrpProxyArp(d *schema.ResourceData, v interface{}, pr
 	return result, nil
 }
 
-func expandSystemInterfaceVrrpProxyArpId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceVrrpProxyArpId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceVrrpProxyArpIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceVrrpProxyArpIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceRole(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceRole(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceSnmpIndex(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSnmpIndex(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceSecondaryIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSecondaryIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceSecondaryip(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSecondaryip(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -5496,42 +6305,50 @@ func expandSystemInterfaceSecondaryip(d *schema.ResourceData, v interface{}, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandSystemInterfaceSecondaryipId(d, i["id"], pre_append)
+
+			tmp["id"], _ = expandSystemInterfaceSecondaryipId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["ip"], _ = expandSystemInterfaceSecondaryipIp(d, i["ip"], pre_append)
+
+			tmp["ip"], _ = expandSystemInterfaceSecondaryipIp(d, i["ip"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "allowaccess"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["allowaccess"], _ = expandSystemInterfaceSecondaryipAllowaccess(d, i["allowaccess"], pre_append)
+
+			tmp["allowaccess"], _ = expandSystemInterfaceSecondaryipAllowaccess(d, i["allowaccess"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "gwdetect"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["gwdetect"], _ = expandSystemInterfaceSecondaryipGwdetect(d, i["gwdetect"], pre_append)
+
+			tmp["gwdetect"], _ = expandSystemInterfaceSecondaryipGwdetect(d, i["gwdetect"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ping_serv_status"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["ping-serv-status"], _ = expandSystemInterfaceSecondaryipPingServStatus(d, i["ping_serv_status"], pre_append)
+
+			tmp["ping-serv-status"], _ = expandSystemInterfaceSecondaryipPingServStatus(d, i["ping_serv_status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "detectserver"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["detectserver"], _ = expandSystemInterfaceSecondaryipDetectserver(d, i["detectserver"], pre_append)
+
+			tmp["detectserver"], _ = expandSystemInterfaceSecondaryipDetectserver(d, i["detectserver"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "detectprotocol"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["detectprotocol"], _ = expandSystemInterfaceSecondaryipDetectprotocol(d, i["detectprotocol"], pre_append)
+
+			tmp["detectprotocol"], _ = expandSystemInterfaceSecondaryipDetectprotocol(d, i["detectprotocol"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ha_priority"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["ha-priority"], _ = expandSystemInterfaceSecondaryipHaPriority(d, i["ha_priority"], pre_append)
+
+			tmp["ha-priority"], _ = expandSystemInterfaceSecondaryipHaPriority(d, i["ha_priority"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -5542,103 +6359,151 @@ func expandSystemInterfaceSecondaryip(d *schema.ResourceData, v interface{}, pre
 	return result, nil
 }
 
-func expandSystemInterfaceSecondaryipId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSecondaryipId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceSecondaryipIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSecondaryipIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceSecondaryipAllowaccess(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSecondaryipAllowaccess(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceSecondaryipGwdetect(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSecondaryipGwdetect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceSecondaryipPingServStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSecondaryipPingServStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceSecondaryipDetectserver(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSecondaryipDetectserver(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceSecondaryipDetectprotocol(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSecondaryipDetectprotocol(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceSecondaryipHaPriority(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSecondaryipHaPriority(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfacePreserveSessionRoute(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfacePreserveSessionRoute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceAutoAuthExtensionDevice(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceAutoAuthExtensionDevice(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceApDiscover(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceApDiscover(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceFortilinkStacking(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceFortilinkStacking(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceFortilinkSplitInterface(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceFortilinkNeighborDetect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceInternal(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpManagedByFortiipam(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceFortilinkBackupLink(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceManagedSubnetworkSize(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceSwitchControllerAccessVlan(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceFortilinkSplitInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceSwitchControllerTrafficPolicy(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceInternal(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceSwitchControllerIgmpSnooping(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceFortilinkBackupLink(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceSwitchControllerDhcpSnooping(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSwitchControllerAccessVlan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceSwitchControllerDhcpSnoopingVerifyMac(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSwitchControllerTrafficPolicy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceSwitchControllerDhcpSnoopingOption82(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSwitchControllerRspanMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceSwitchControllerArpInspection(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSwitchControllerMgmtVlan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceSwitchControllerLearningLimit(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSwitchControllerIgmpSnooping(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceColor(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSwitchControllerIgmpSnoopingProxy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceTagging(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceSwitchControllerIgmpSnoopingFastLeave(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceSwitchControllerDhcpSnooping(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceSwitchControllerDhcpSnoopingVerifyMac(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceSwitchControllerDhcpSnoopingOption82(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceSwitchControllerArpInspection(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceSwitchControllerLearningLimit(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceSwitchControllerNac(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceSwitchControllerFeature(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceSwitchControllerIotScanning(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceSwcVlan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceSwcFirstCreate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceColor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceTagging(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -5654,17 +6519,20 @@ func expandSystemInterfaceTagging(d *schema.ResourceData, v interface{}, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSystemInterfaceTaggingName(d, i["name"], pre_append)
+
+			tmp["name"], _ = expandSystemInterfaceTaggingName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["category"], _ = expandSystemInterfaceTaggingCategory(d, i["category"], pre_append)
+
+			tmp["category"], _ = expandSystemInterfaceTaggingCategory(d, i["category"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["tags"], _ = expandSystemInterfaceTaggingTags(d, i["tags"], pre_append)
+
+			tmp["tags"], _ = expandSystemInterfaceTaggingTags(d, i["tags"], pre_append, sv)
 		} else {
 			tmp["tags"] = make([]string, 0)
 		}
@@ -5677,15 +6545,15 @@ func expandSystemInterfaceTagging(d *schema.ResourceData, v interface{}, pre str
 	return result, nil
 }
 
-func expandSystemInterfaceTaggingName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceTaggingName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceTaggingCategory(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceTaggingCategory(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceTaggingTags(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceTaggingTags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -5701,7 +6569,8 @@ func expandSystemInterfaceTaggingTags(d *schema.ResourceData, v interface{}, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSystemInterfaceTaggingTagsName(d, i["name"], pre_append)
+
+			tmp["name"], _ = expandSystemInterfaceTaggingTagsName(d, i["name"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -5712,11 +6581,11 @@ func expandSystemInterfaceTaggingTags(d *schema.ResourceData, v interface{}, pre
 	return result, nil
 }
 
-func expandSystemInterfaceTaggingTagsName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceTaggingTagsName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -5728,161 +6597,224 @@ func expandSystemInterfaceIpv6(d *schema.ResourceData, v interface{}, pre string
 	pre_append := "" // complex
 	pre_append = pre + ".0." + "ip6_mode"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["ip6-mode"], _ = expandSystemInterfaceIpv6Ip6Mode(d, i["ip6_mode"], pre_append)
+
+		result["ip6-mode"], _ = expandSystemInterfaceIpv6Ip6Mode(d, i["ip6_mode"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "nd_mode"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["nd-mode"], _ = expandSystemInterfaceIpv6NdMode(d, i["nd_mode"], pre_append)
+
+		result["nd-mode"], _ = expandSystemInterfaceIpv6NdMode(d, i["nd_mode"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "nd_cert"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["nd-cert"], _ = expandSystemInterfaceIpv6NdCert(d, i["nd_cert"], pre_append)
+
+		result["nd-cert"], _ = expandSystemInterfaceIpv6NdCert(d, i["nd_cert"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "nd_security_level"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["nd-security-level"], _ = expandSystemInterfaceIpv6NdSecurityLevel(d, i["nd_security_level"], pre_append)
+
+		result["nd-security-level"], _ = expandSystemInterfaceIpv6NdSecurityLevel(d, i["nd_security_level"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "nd_timestamp_delta"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["nd-timestamp-delta"], _ = expandSystemInterfaceIpv6NdTimestampDelta(d, i["nd_timestamp_delta"], pre_append)
+
+		result["nd-timestamp-delta"], _ = expandSystemInterfaceIpv6NdTimestampDelta(d, i["nd_timestamp_delta"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "nd_timestamp_fuzz"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["nd-timestamp-fuzz"], _ = expandSystemInterfaceIpv6NdTimestampFuzz(d, i["nd_timestamp_fuzz"], pre_append)
+
+		result["nd-timestamp-fuzz"], _ = expandSystemInterfaceIpv6NdTimestampFuzz(d, i["nd_timestamp_fuzz"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "nd_cga_modifier"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["nd-cga-modifier"], _ = expandSystemInterfaceIpv6NdCgaModifier(d, i["nd_cga_modifier"], pre_append)
+
+		result["nd-cga-modifier"], _ = expandSystemInterfaceIpv6NdCgaModifier(d, i["nd_cga_modifier"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "ip6_dns_server_override"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["ip6-dns-server-override"], _ = expandSystemInterfaceIpv6Ip6DnsServerOverride(d, i["ip6_dns_server_override"], pre_append)
+
+		result["ip6-dns-server-override"], _ = expandSystemInterfaceIpv6Ip6DnsServerOverride(d, i["ip6_dns_server_override"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "ip6_address"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["ip6-address"], _ = expandSystemInterfaceIpv6Ip6Address(d, i["ip6_address"], pre_append)
+
+		result["ip6-address"], _ = expandSystemInterfaceIpv6Ip6Address(d, i["ip6_address"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "ip6_extra_addr"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["ip6-extra-addr"], _ = expandSystemInterfaceIpv6Ip6ExtraAddr(d, i["ip6_extra_addr"], pre_append)
+
+		result["ip6-extra-addr"], _ = expandSystemInterfaceIpv6Ip6ExtraAddr(d, i["ip6_extra_addr"], pre_append, sv)
 	} else {
 		result["ip6-extra-addr"] = make([]string, 0)
 	}
 	pre_append = pre + ".0." + "ip6_allowaccess"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["ip6-allowaccess"], _ = expandSystemInterfaceIpv6Ip6Allowaccess(d, i["ip6_allowaccess"], pre_append)
+
+		result["ip6-allowaccess"], _ = expandSystemInterfaceIpv6Ip6Allowaccess(d, i["ip6_allowaccess"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "ip6_send_adv"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["ip6-send-adv"], _ = expandSystemInterfaceIpv6Ip6SendAdv(d, i["ip6_send_adv"], pre_append)
+
+		result["ip6-send-adv"], _ = expandSystemInterfaceIpv6Ip6SendAdv(d, i["ip6_send_adv"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "icmp6_send_redirect"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["icmp6-send-redirect"], _ = expandSystemInterfaceIpv6Icmp6SendRedirect(d, i["icmp6_send_redirect"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "ip6_manage_flag"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["ip6-manage-flag"], _ = expandSystemInterfaceIpv6Ip6ManageFlag(d, i["ip6_manage_flag"], pre_append)
+
+		result["ip6-manage-flag"], _ = expandSystemInterfaceIpv6Ip6ManageFlag(d, i["ip6_manage_flag"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "ip6_other_flag"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["ip6-other-flag"], _ = expandSystemInterfaceIpv6Ip6OtherFlag(d, i["ip6_other_flag"], pre_append)
+
+		result["ip6-other-flag"], _ = expandSystemInterfaceIpv6Ip6OtherFlag(d, i["ip6_other_flag"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "ip6_max_interval"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["ip6-max-interval"], _ = expandSystemInterfaceIpv6Ip6MaxInterval(d, i["ip6_max_interval"], pre_append)
+
+		result["ip6-max-interval"], _ = expandSystemInterfaceIpv6Ip6MaxInterval(d, i["ip6_max_interval"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "ip6_min_interval"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["ip6-min-interval"], _ = expandSystemInterfaceIpv6Ip6MinInterval(d, i["ip6_min_interval"], pre_append)
+
+		result["ip6-min-interval"], _ = expandSystemInterfaceIpv6Ip6MinInterval(d, i["ip6_min_interval"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "ip6_link_mtu"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["ip6-link-mtu"], _ = expandSystemInterfaceIpv6Ip6LinkMtu(d, i["ip6_link_mtu"], pre_append)
+
+		result["ip6-link-mtu"], _ = expandSystemInterfaceIpv6Ip6LinkMtu(d, i["ip6_link_mtu"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "ip6_reachable_time"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["ip6-reachable-time"], _ = expandSystemInterfaceIpv6Ip6ReachableTime(d, i["ip6_reachable_time"], pre_append)
+
+		result["ip6-reachable-time"], _ = expandSystemInterfaceIpv6Ip6ReachableTime(d, i["ip6_reachable_time"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "ip6_retrans_time"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["ip6-retrans-time"], _ = expandSystemInterfaceIpv6Ip6RetransTime(d, i["ip6_retrans_time"], pre_append)
+
+		result["ip6-retrans-time"], _ = expandSystemInterfaceIpv6Ip6RetransTime(d, i["ip6_retrans_time"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "ip6_default_life"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["ip6-default-life"], _ = expandSystemInterfaceIpv6Ip6DefaultLife(d, i["ip6_default_life"], pre_append)
+
+		result["ip6-default-life"], _ = expandSystemInterfaceIpv6Ip6DefaultLife(d, i["ip6_default_life"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "ip6_hop_limit"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["ip6-hop-limit"], _ = expandSystemInterfaceIpv6Ip6HopLimit(d, i["ip6_hop_limit"], pre_append)
+
+		result["ip6-hop-limit"], _ = expandSystemInterfaceIpv6Ip6HopLimit(d, i["ip6_hop_limit"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "autoconf"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["autoconf"], _ = expandSystemInterfaceIpv6Autoconf(d, i["autoconf"], pre_append)
+
+		result["autoconf"], _ = expandSystemInterfaceIpv6Autoconf(d, i["autoconf"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "unique_autoconf_addr"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["unique-autoconf-addr"], _ = expandSystemInterfaceIpv6UniqueAutoconfAddr(d, i["unique_autoconf_addr"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "interface_identifier"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["interface-identifier"], _ = expandSystemInterfaceIpv6InterfaceIdentifier(d, i["interface_identifier"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "ip6_prefix_mode"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["ip6-prefix-mode"], _ = expandSystemInterfaceIpv6Ip6PrefixMode(d, i["ip6_prefix_mode"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "ip6_upstream_interface"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["ip6-upstream-interface"], _ = expandSystemInterfaceIpv6Ip6UpstreamInterface(d, i["ip6_upstream_interface"], pre_append)
+
+		result["ip6-upstream-interface"], _ = expandSystemInterfaceIpv6Ip6UpstreamInterface(d, i["ip6_upstream_interface"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "ip6_subnet"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["ip6-subnet"], _ = expandSystemInterfaceIpv6Ip6Subnet(d, i["ip6_subnet"], pre_append)
+
+		result["ip6-subnet"], _ = expandSystemInterfaceIpv6Ip6Subnet(d, i["ip6_subnet"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "ip6_prefix_list"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["ip6-prefix-list"], _ = expandSystemInterfaceIpv6Ip6PrefixList(d, i["ip6_prefix_list"], pre_append)
+
+		result["ip6-prefix-list"], _ = expandSystemInterfaceIpv6Ip6PrefixList(d, i["ip6_prefix_list"], pre_append, sv)
 	} else {
 		result["ip6-prefix-list"] = make([]string, 0)
 	}
 	pre_append = pre + ".0." + "ip6_delegated_prefix_list"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["ip6-delegated-prefix-list"], _ = expandSystemInterfaceIpv6Ip6DelegatedPrefixList(d, i["ip6_delegated_prefix_list"], pre_append)
+
+		result["ip6-delegated-prefix-list"], _ = expandSystemInterfaceIpv6Ip6DelegatedPrefixList(d, i["ip6_delegated_prefix_list"], pre_append, sv)
 	} else {
 		result["ip6-delegated-prefix-list"] = make([]string, 0)
 	}
 	pre_append = pre + ".0." + "dhcp6_relay_service"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["dhcp6-relay-service"], _ = expandSystemInterfaceIpv6Dhcp6RelayService(d, i["dhcp6_relay_service"], pre_append)
+
+		result["dhcp6-relay-service"], _ = expandSystemInterfaceIpv6Dhcp6RelayService(d, i["dhcp6_relay_service"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "dhcp6_relay_type"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["dhcp6-relay-type"], _ = expandSystemInterfaceIpv6Dhcp6RelayType(d, i["dhcp6_relay_type"], pre_append)
+
+		result["dhcp6-relay-type"], _ = expandSystemInterfaceIpv6Dhcp6RelayType(d, i["dhcp6_relay_type"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "dhcp6_relay_ip"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["dhcp6-relay-ip"], _ = expandSystemInterfaceIpv6Dhcp6RelayIp(d, i["dhcp6_relay_ip"], pre_append)
+
+		result["dhcp6-relay-ip"], _ = expandSystemInterfaceIpv6Dhcp6RelayIp(d, i["dhcp6_relay_ip"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "dhcp6_client_options"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["dhcp6-client-options"], _ = expandSystemInterfaceIpv6Dhcp6ClientOptions(d, i["dhcp6_client_options"], pre_append)
+
+		result["dhcp6-client-options"], _ = expandSystemInterfaceIpv6Dhcp6ClientOptions(d, i["dhcp6_client_options"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "dhcp6_prefix_delegation"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["dhcp6-prefix-delegation"], _ = expandSystemInterfaceIpv6Dhcp6PrefixDelegation(d, i["dhcp6_prefix_delegation"], pre_append)
+
+		result["dhcp6-prefix-delegation"], _ = expandSystemInterfaceIpv6Dhcp6PrefixDelegation(d, i["dhcp6_prefix_delegation"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "dhcp6_information_request"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["dhcp6-information-request"], _ = expandSystemInterfaceIpv6Dhcp6InformationRequest(d, i["dhcp6_information_request"], pre_append)
+
+		result["dhcp6-information-request"], _ = expandSystemInterfaceIpv6Dhcp6InformationRequest(d, i["dhcp6_information_request"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "dhcp6_prefix_hint"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["dhcp6-prefix-hint"], _ = expandSystemInterfaceIpv6Dhcp6PrefixHint(d, i["dhcp6_prefix_hint"], pre_append)
+
+		result["dhcp6-prefix-hint"], _ = expandSystemInterfaceIpv6Dhcp6PrefixHint(d, i["dhcp6_prefix_hint"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "dhcp6_prefix_hint_plt"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["dhcp6-prefix-hint-plt"], _ = expandSystemInterfaceIpv6Dhcp6PrefixHintPlt(d, i["dhcp6_prefix_hint_plt"], pre_append)
+
+		result["dhcp6-prefix-hint-plt"], _ = expandSystemInterfaceIpv6Dhcp6PrefixHintPlt(d, i["dhcp6_prefix_hint_plt"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "dhcp6_prefix_hint_vlt"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["dhcp6-prefix-hint-vlt"], _ = expandSystemInterfaceIpv6Dhcp6PrefixHintVlt(d, i["dhcp6_prefix_hint_vlt"], pre_append)
+
+		result["dhcp6-prefix-hint-vlt"], _ = expandSystemInterfaceIpv6Dhcp6PrefixHintVlt(d, i["dhcp6_prefix_hint_vlt"], pre_append, sv)
+	}
+	pre_append = pre + ".0." + "cli_conn6_status"
+	if _, ok := d.GetOk(pre_append); ok {
+
+		result["cli-conn6-status"], _ = expandSystemInterfaceIpv6CliConn6Status(d, i["cli_conn6_status"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "vrrp_virtual_mac6"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["vrrp-virtual-mac6"], _ = expandSystemInterfaceIpv6VrrpVirtualMac6(d, i["vrrp_virtual_mac6"], pre_append)
+
+		result["vrrp-virtual-mac6"], _ = expandSystemInterfaceIpv6VrrpVirtualMac6(d, i["vrrp_virtual_mac6"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "vrip6_link_local"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["vrip6_link_local"], _ = expandSystemInterfaceIpv6Vrip6_Link_Local(d, i["vrip6_link_local"], pre_append)
+
+		result["vrip6_link_local"], _ = expandSystemInterfaceIpv6Vrip6_Link_Local(d, i["vrip6_link_local"], pre_append, sv)
 	}
 	pre_append = pre + ".0." + "vrrp6"
 	if _, ok := d.GetOk(pre_append); ok {
-		result["vrrp6"], _ = expandSystemInterfaceIpv6Vrrp6(d, i["vrrp6"], pre_append)
+
+		result["vrrp6"], _ = expandSystemInterfaceIpv6Vrrp6(d, i["vrrp6"], pre_append, sv)
 	} else {
 		result["vrrp6"] = make([]string, 0)
 	}
@@ -5890,43 +6822,43 @@ func expandSystemInterfaceIpv6(d *schema.ResourceData, v interface{}, pre string
 	return result, nil
 }
 
-func expandSystemInterfaceIpv6Ip6Mode(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Ip6Mode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6NdMode(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6NdMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6NdCert(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6NdCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6NdSecurityLevel(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6NdSecurityLevel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6NdTimestampDelta(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6NdTimestampDelta(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6NdTimestampFuzz(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6NdTimestampFuzz(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6NdCgaModifier(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6NdCgaModifier(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Ip6DnsServerOverride(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Ip6DnsServerOverride(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Ip6Address(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Ip6Address(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Ip6ExtraAddr(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Ip6ExtraAddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -5942,7 +6874,8 @@ func expandSystemInterfaceIpv6Ip6ExtraAddr(d *schema.ResourceData, v interface{}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["prefix"], _ = expandSystemInterfaceIpv6Ip6ExtraAddrPrefix(d, i["prefix"], pre_append)
+
+			tmp["prefix"], _ = expandSystemInterfaceIpv6Ip6ExtraAddrPrefix(d, i["prefix"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -5953,67 +6886,83 @@ func expandSystemInterfaceIpv6Ip6ExtraAddr(d *schema.ResourceData, v interface{}
 	return result, nil
 }
 
-func expandSystemInterfaceIpv6Ip6ExtraAddrPrefix(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Ip6ExtraAddrPrefix(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Ip6Allowaccess(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Ip6Allowaccess(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Ip6SendAdv(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Ip6SendAdv(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Ip6ManageFlag(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Icmp6SendRedirect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Ip6OtherFlag(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Ip6ManageFlag(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Ip6MaxInterval(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Ip6OtherFlag(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Ip6MinInterval(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Ip6MaxInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Ip6LinkMtu(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Ip6MinInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Ip6ReachableTime(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Ip6LinkMtu(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Ip6RetransTime(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Ip6ReachableTime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Ip6DefaultLife(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Ip6RetransTime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Ip6HopLimit(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Ip6DefaultLife(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Autoconf(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Ip6HopLimit(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Ip6UpstreamInterface(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Autoconf(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Ip6Subnet(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6UniqueAutoconfAddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Ip6PrefixList(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6InterfaceIdentifier(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceIpv6Ip6PrefixMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceIpv6Ip6UpstreamInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceIpv6Ip6Subnet(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceIpv6Ip6PrefixList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -6029,37 +6978,44 @@ func expandSystemInterfaceIpv6Ip6PrefixList(d *schema.ResourceData, v interface{
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["prefix"], _ = expandSystemInterfaceIpv6Ip6PrefixListPrefix(d, i["prefix"], pre_append)
+
+			tmp["prefix"], _ = expandSystemInterfaceIpv6Ip6PrefixListPrefix(d, i["prefix"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "autonomous_flag"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["autonomous-flag"], _ = expandSystemInterfaceIpv6Ip6PrefixListAutonomousFlag(d, i["autonomous_flag"], pre_append)
+
+			tmp["autonomous-flag"], _ = expandSystemInterfaceIpv6Ip6PrefixListAutonomousFlag(d, i["autonomous_flag"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "onlink_flag"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["onlink-flag"], _ = expandSystemInterfaceIpv6Ip6PrefixListOnlinkFlag(d, i["onlink_flag"], pre_append)
+
+			tmp["onlink-flag"], _ = expandSystemInterfaceIpv6Ip6PrefixListOnlinkFlag(d, i["onlink_flag"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "valid_life_time"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["valid-life-time"], _ = expandSystemInterfaceIpv6Ip6PrefixListValidLifeTime(d, i["valid_life_time"], pre_append)
+
+			tmp["valid-life-time"], _ = expandSystemInterfaceIpv6Ip6PrefixListValidLifeTime(d, i["valid_life_time"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "preferred_life_time"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["preferred-life-time"], _ = expandSystemInterfaceIpv6Ip6PrefixListPreferredLifeTime(d, i["preferred_life_time"], pre_append)
+
+			tmp["preferred-life-time"], _ = expandSystemInterfaceIpv6Ip6PrefixListPreferredLifeTime(d, i["preferred_life_time"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rdnss"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["rdnss"], _ = expandSystemInterfaceIpv6Ip6PrefixListRdnss(d, i["rdnss"], pre_append)
+
+			tmp["rdnss"], _ = expandSystemInterfaceIpv6Ip6PrefixListRdnss(d, i["rdnss"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dnssl"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["dnssl"], _ = expandSystemInterfaceIpv6Ip6PrefixListDnssl(d, i["dnssl"], pre_append)
+
+			tmp["dnssl"], _ = expandSystemInterfaceIpv6Ip6PrefixListDnssl(d, i["dnssl"], pre_append, sv)
 		} else {
 			tmp["dnssl"] = make([]string, 0)
 		}
@@ -6072,31 +7028,31 @@ func expandSystemInterfaceIpv6Ip6PrefixList(d *schema.ResourceData, v interface{
 	return result, nil
 }
 
-func expandSystemInterfaceIpv6Ip6PrefixListPrefix(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Ip6PrefixListPrefix(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Ip6PrefixListAutonomousFlag(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Ip6PrefixListAutonomousFlag(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Ip6PrefixListOnlinkFlag(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Ip6PrefixListOnlinkFlag(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Ip6PrefixListValidLifeTime(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Ip6PrefixListValidLifeTime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Ip6PrefixListPreferredLifeTime(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Ip6PrefixListPreferredLifeTime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Ip6PrefixListRdnss(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Ip6PrefixListRdnss(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Ip6PrefixListDnssl(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Ip6PrefixListDnssl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -6112,7 +7068,8 @@ func expandSystemInterfaceIpv6Ip6PrefixListDnssl(d *schema.ResourceData, v inter
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["domain"], _ = expandSystemInterfaceIpv6Ip6PrefixListDnsslDomain(d, i["domain"], pre_append)
+
+			tmp["domain"], _ = expandSystemInterfaceIpv6Ip6PrefixListDnsslDomain(d, i["domain"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -6123,11 +7080,11 @@ func expandSystemInterfaceIpv6Ip6PrefixListDnssl(d *schema.ResourceData, v inter
 	return result, nil
 }
 
-func expandSystemInterfaceIpv6Ip6PrefixListDnsslDomain(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Ip6PrefixListDnsslDomain(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Ip6DelegatedPrefixList(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Ip6DelegatedPrefixList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -6143,37 +7100,44 @@ func expandSystemInterfaceIpv6Ip6DelegatedPrefixList(d *schema.ResourceData, v i
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix_id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["prefix-id"], _ = expandSystemInterfaceIpv6Ip6DelegatedPrefixListPrefixId(d, i["prefix_id"], pre_append)
+
+			tmp["prefix-id"], _ = expandSystemInterfaceIpv6Ip6DelegatedPrefixListPrefixId(d, i["prefix_id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "upstream_interface"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["upstream-interface"], _ = expandSystemInterfaceIpv6Ip6DelegatedPrefixListUpstreamInterface(d, i["upstream_interface"], pre_append)
+
+			tmp["upstream-interface"], _ = expandSystemInterfaceIpv6Ip6DelegatedPrefixListUpstreamInterface(d, i["upstream_interface"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "autonomous_flag"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["autonomous-flag"], _ = expandSystemInterfaceIpv6Ip6DelegatedPrefixListAutonomousFlag(d, i["autonomous_flag"], pre_append)
+
+			tmp["autonomous-flag"], _ = expandSystemInterfaceIpv6Ip6DelegatedPrefixListAutonomousFlag(d, i["autonomous_flag"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "onlink_flag"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["onlink-flag"], _ = expandSystemInterfaceIpv6Ip6DelegatedPrefixListOnlinkFlag(d, i["onlink_flag"], pre_append)
+
+			tmp["onlink-flag"], _ = expandSystemInterfaceIpv6Ip6DelegatedPrefixListOnlinkFlag(d, i["onlink_flag"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "subnet"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["subnet"], _ = expandSystemInterfaceIpv6Ip6DelegatedPrefixListSubnet(d, i["subnet"], pre_append)
+
+			tmp["subnet"], _ = expandSystemInterfaceIpv6Ip6DelegatedPrefixListSubnet(d, i["subnet"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rdnss_service"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["rdnss-service"], _ = expandSystemInterfaceIpv6Ip6DelegatedPrefixListRdnssService(d, i["rdnss_service"], pre_append)
+
+			tmp["rdnss-service"], _ = expandSystemInterfaceIpv6Ip6DelegatedPrefixListRdnssService(d, i["rdnss_service"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "rdnss"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["rdnss"], _ = expandSystemInterfaceIpv6Ip6DelegatedPrefixListRdnss(d, i["rdnss"], pre_append)
+
+			tmp["rdnss"], _ = expandSystemInterfaceIpv6Ip6DelegatedPrefixListRdnss(d, i["rdnss"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -6184,79 +7148,83 @@ func expandSystemInterfaceIpv6Ip6DelegatedPrefixList(d *schema.ResourceData, v i
 	return result, nil
 }
 
-func expandSystemInterfaceIpv6Ip6DelegatedPrefixListPrefixId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Ip6DelegatedPrefixListPrefixId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Ip6DelegatedPrefixListUpstreamInterface(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Ip6DelegatedPrefixListUpstreamInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Ip6DelegatedPrefixListAutonomousFlag(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Ip6DelegatedPrefixListAutonomousFlag(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Ip6DelegatedPrefixListOnlinkFlag(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Ip6DelegatedPrefixListOnlinkFlag(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Ip6DelegatedPrefixListSubnet(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Ip6DelegatedPrefixListSubnet(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Ip6DelegatedPrefixListRdnssService(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Ip6DelegatedPrefixListRdnssService(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Ip6DelegatedPrefixListRdnss(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Ip6DelegatedPrefixListRdnss(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Dhcp6RelayService(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Dhcp6RelayService(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Dhcp6RelayType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Dhcp6RelayType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Dhcp6RelayIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Dhcp6RelayIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Dhcp6ClientOptions(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Dhcp6ClientOptions(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Dhcp6PrefixDelegation(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Dhcp6PrefixDelegation(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Dhcp6InformationRequest(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Dhcp6InformationRequest(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Dhcp6PrefixHint(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Dhcp6PrefixHint(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Dhcp6PrefixHintPlt(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Dhcp6PrefixHintPlt(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Dhcp6PrefixHintVlt(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Dhcp6PrefixHintVlt(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6VrrpVirtualMac6(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6CliConn6Status(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Vrip6_Link_Local(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6VrrpVirtualMac6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Vrrp6(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Vrip6_Link_Local(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemInterfaceIpv6Vrrp6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -6272,52 +7240,62 @@ func expandSystemInterfaceIpv6Vrrp6(d *schema.ResourceData, v interface{}, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrid"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["vrid"], _ = expandSystemInterfaceIpv6Vrrp6Vrid(d, i["vrid"], pre_append)
+
+			tmp["vrid"], _ = expandSystemInterfaceIpv6Vrrp6Vrid(d, i["vrid"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrgrp"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["vrgrp"], _ = expandSystemInterfaceIpv6Vrrp6Vrgrp(d, i["vrgrp"], pre_append)
+
+			tmp["vrgrp"], _ = expandSystemInterfaceIpv6Vrrp6Vrgrp(d, i["vrgrp"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrip6"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["vrip6"], _ = expandSystemInterfaceIpv6Vrrp6Vrip6(d, i["vrip6"], pre_append)
+
+			tmp["vrip6"], _ = expandSystemInterfaceIpv6Vrrp6Vrip6(d, i["vrip6"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["priority"], _ = expandSystemInterfaceIpv6Vrrp6Priority(d, i["priority"], pre_append)
+
+			tmp["priority"], _ = expandSystemInterfaceIpv6Vrrp6Priority(d, i["priority"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "adv_interval"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["adv-interval"], _ = expandSystemInterfaceIpv6Vrrp6AdvInterval(d, i["adv_interval"], pre_append)
+
+			tmp["adv-interval"], _ = expandSystemInterfaceIpv6Vrrp6AdvInterval(d, i["adv_interval"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_time"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["start-time"], _ = expandSystemInterfaceIpv6Vrrp6StartTime(d, i["start_time"], pre_append)
+
+			tmp["start-time"], _ = expandSystemInterfaceIpv6Vrrp6StartTime(d, i["start_time"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "preempt"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["preempt"], _ = expandSystemInterfaceIpv6Vrrp6Preempt(d, i["preempt"], pre_append)
+
+			tmp["preempt"], _ = expandSystemInterfaceIpv6Vrrp6Preempt(d, i["preempt"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "accept_mode"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["accept-mode"], _ = expandSystemInterfaceIpv6Vrrp6AcceptMode(d, i["accept_mode"], pre_append)
+
+			tmp["accept-mode"], _ = expandSystemInterfaceIpv6Vrrp6AcceptMode(d, i["accept_mode"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrdst6"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["vrdst6"], _ = expandSystemInterfaceIpv6Vrrp6Vrdst6(d, i["vrdst6"], pre_append)
+
+			tmp["vrdst6"], _ = expandSystemInterfaceIpv6Vrrp6Vrdst6(d, i["vrdst6"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["status"], _ = expandSystemInterfaceIpv6Vrrp6Status(d, i["status"], pre_append)
+
+			tmp["status"], _ = expandSystemInterfaceIpv6Vrrp6Status(d, i["status"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -6328,51 +7306,52 @@ func expandSystemInterfaceIpv6Vrrp6(d *schema.ResourceData, v interface{}, pre s
 	return result, nil
 }
 
-func expandSystemInterfaceIpv6Vrrp6Vrid(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Vrrp6Vrid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Vrrp6Vrgrp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Vrrp6Vrgrp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Vrrp6Vrip6(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Vrrp6Vrip6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Vrrp6Priority(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Vrrp6Priority(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Vrrp6AdvInterval(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Vrrp6AdvInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Vrrp6StartTime(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Vrrp6StartTime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Vrrp6Preempt(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Vrrp6Preempt(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Vrrp6AcceptMode(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Vrrp6AcceptMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Vrrp6Vrdst6(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Vrrp6Vrdst6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemInterfaceIpv6Vrrp6Status(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemInterfaceIpv6Vrrp6Status(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemInterface(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandSystemInterfaceName(d, v, "name")
+
+		t, err := expandSystemInterfaceName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6381,7 +7360,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("vdom"); ok {
-		t, err := expandSystemInterfaceVdom(d, v, "vdom")
+
+		t, err := expandSystemInterfaceVdom(d, v, "vdom", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6390,7 +7370,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOkExists("vrf"); ok {
-		t, err := expandSystemInterfaceVrf(d, v, "vrf")
+
+		t, err := expandSystemInterfaceVrf(d, v, "vrf", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6399,7 +7380,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOkExists("cli_conn_status"); ok {
-		t, err := expandSystemInterfaceCliConnStatus(d, v, "cli_conn_status")
+
+		t, err := expandSystemInterfaceCliConnStatus(d, v, "cli_conn_status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6408,7 +7390,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("fortilink"); ok {
-		t, err := expandSystemInterfaceFortilink(d, v, "fortilink")
+
+		t, err := expandSystemInterfaceFortilink(d, v, "fortilink", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6416,8 +7399,19 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
+	if v, ok := d.GetOk("switch_controller_source_ip"); ok {
+
+		t, err := expandSystemInterfaceSwitchControllerSourceIp(d, v, "switch_controller_source_ip", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["switch-controller-source-ip"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("mode"); ok {
-		t, err := expandSystemInterfaceMode(d, v, "mode")
+
+		t, err := expandSystemInterfaceMode(d, v, "mode", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6425,8 +7419,19 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
+	if v, ok := d.GetOk("client_options"); ok {
+
+		t, err := expandSystemInterfaceClientOptions(d, v, "client_options", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["client-options"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("distance"); ok {
-		t, err := expandSystemInterfaceDistance(d, v, "distance")
+
+		t, err := expandSystemInterfaceDistance(d, v, "distance", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6435,7 +7440,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOkExists("priority"); ok {
-		t, err := expandSystemInterfacePriority(d, v, "priority")
+
+		t, err := expandSystemInterfacePriority(d, v, "priority", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6443,8 +7449,29 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
+	if v, ok := d.GetOk("dhcp_relay_interface_select_method"); ok {
+
+		t, err := expandSystemInterfaceDhcpRelayInterfaceSelectMethod(d, v, "dhcp_relay_interface_select_method", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dhcp-relay-interface-select-method"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("dhcp_relay_interface"); ok {
+
+		t, err := expandSystemInterfaceDhcpRelayInterface(d, v, "dhcp_relay_interface", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["dhcp-relay-interface"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("dhcp_relay_service"); ok {
-		t, err := expandSystemInterfaceDhcpRelayService(d, v, "dhcp_relay_service")
+
+		t, err := expandSystemInterfaceDhcpRelayService(d, v, "dhcp_relay_service", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6453,7 +7480,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("dhcp_relay_ip"); ok {
-		t, err := expandSystemInterfaceDhcpRelayIp(d, v, "dhcp_relay_ip")
+
+		t, err := expandSystemInterfaceDhcpRelayIp(d, v, "dhcp_relay_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6462,7 +7490,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("dhcp_relay_type"); ok {
-		t, err := expandSystemInterfaceDhcpRelayType(d, v, "dhcp_relay_type")
+
+		t, err := expandSystemInterfaceDhcpRelayType(d, v, "dhcp_relay_type", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6471,7 +7500,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("dhcp_relay_agent_option"); ok {
-		t, err := expandSystemInterfaceDhcpRelayAgentOption(d, v, "dhcp_relay_agent_option")
+
+		t, err := expandSystemInterfaceDhcpRelayAgentOption(d, v, "dhcp_relay_agent_option", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6480,7 +7510,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("management_ip"); ok {
-		t, err := expandSystemInterfaceManagementIp(d, v, "management_ip")
+
+		t, err := expandSystemInterfaceManagementIp(d, v, "management_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6489,7 +7520,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("ip"); ok {
-		t, err := expandSystemInterfaceIp(d, v, "ip")
+
+		t, err := expandSystemInterfaceIp(d, v, "ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6498,7 +7530,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("allowaccess"); ok {
-		t, err := expandSystemInterfaceAllowaccess(d, v, "allowaccess")
+
+		t, err := expandSystemInterfaceAllowaccess(d, v, "allowaccess", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6507,7 +7540,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("gwdetect"); ok {
-		t, err := expandSystemInterfaceGwdetect(d, v, "gwdetect")
+
+		t, err := expandSystemInterfaceGwdetect(d, v, "gwdetect", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6516,7 +7550,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOkExists("ping_serv_status"); ok {
-		t, err := expandSystemInterfacePingServStatus(d, v, "ping_serv_status")
+
+		t, err := expandSystemInterfacePingServStatus(d, v, "ping_serv_status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6525,7 +7560,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("detectserver"); ok {
-		t, err := expandSystemInterfaceDetectserver(d, v, "detectserver")
+
+		t, err := expandSystemInterfaceDetectserver(d, v, "detectserver", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6534,7 +7570,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("detectprotocol"); ok {
-		t, err := expandSystemInterfaceDetectprotocol(d, v, "detectprotocol")
+
+		t, err := expandSystemInterfaceDetectprotocol(d, v, "detectprotocol", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6543,7 +7580,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("ha_priority"); ok {
-		t, err := expandSystemInterfaceHaPriority(d, v, "ha_priority")
+
+		t, err := expandSystemInterfaceHaPriority(d, v, "ha_priority", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6552,7 +7590,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("fail_detect"); ok {
-		t, err := expandSystemInterfaceFailDetect(d, v, "fail_detect")
+
+		t, err := expandSystemInterfaceFailDetect(d, v, "fail_detect", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6561,7 +7600,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("fail_detect_option"); ok {
-		t, err := expandSystemInterfaceFailDetectOption(d, v, "fail_detect_option")
+
+		t, err := expandSystemInterfaceFailDetectOption(d, v, "fail_detect_option", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6570,7 +7610,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("fail_alert_method"); ok {
-		t, err := expandSystemInterfaceFailAlertMethod(d, v, "fail_alert_method")
+
+		t, err := expandSystemInterfaceFailAlertMethod(d, v, "fail_alert_method", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6579,7 +7620,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("fail_action_on_extender"); ok {
-		t, err := expandSystemInterfaceFailActionOnExtender(d, v, "fail_action_on_extender")
+
+		t, err := expandSystemInterfaceFailActionOnExtender(d, v, "fail_action_on_extender", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6588,7 +7630,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("fail_alert_interfaces"); ok {
-		t, err := expandSystemInterfaceFailAlertInterfaces(d, v, "fail_alert_interfaces")
+
+		t, err := expandSystemInterfaceFailAlertInterfaces(d, v, "fail_alert_interfaces", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6597,7 +7640,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("dhcp_client_identifier"); ok {
-		t, err := expandSystemInterfaceDhcpClientIdentifier(d, v, "dhcp_client_identifier")
+
+		t, err := expandSystemInterfaceDhcpClientIdentifier(d, v, "dhcp_client_identifier", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6606,7 +7650,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOkExists("dhcp_renew_time"); ok {
-		t, err := expandSystemInterfaceDhcpRenewTime(d, v, "dhcp_renew_time")
+
+		t, err := expandSystemInterfaceDhcpRenewTime(d, v, "dhcp_renew_time", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6615,7 +7660,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("ipunnumbered"); ok {
-		t, err := expandSystemInterfaceIpunnumbered(d, v, "ipunnumbered")
+
+		t, err := expandSystemInterfaceIpunnumbered(d, v, "ipunnumbered", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6624,7 +7670,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("username"); ok {
-		t, err := expandSystemInterfaceUsername(d, v, "username")
+
+		t, err := expandSystemInterfaceUsername(d, v, "username", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6633,7 +7680,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("pppoe_unnumbered_negotiate"); ok {
-		t, err := expandSystemInterfacePppoeUnnumberedNegotiate(d, v, "pppoe_unnumbered_negotiate")
+
+		t, err := expandSystemInterfacePppoeUnnumberedNegotiate(d, v, "pppoe_unnumbered_negotiate", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6642,7 +7690,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("password"); ok {
-		t, err := expandSystemInterfacePassword(d, v, "password")
+
+		t, err := expandSystemInterfacePassword(d, v, "password", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6651,7 +7700,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOkExists("idle_timeout"); ok {
-		t, err := expandSystemInterfaceIdleTimeout(d, v, "idle_timeout")
+
+		t, err := expandSystemInterfaceIdleTimeout(d, v, "idle_timeout", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6660,7 +7710,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOkExists("detected_peer_mtu"); ok {
-		t, err := expandSystemInterfaceDetectedPeerMtu(d, v, "detected_peer_mtu")
+
+		t, err := expandSystemInterfaceDetectedPeerMtu(d, v, "detected_peer_mtu", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6669,7 +7720,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOkExists("disc_retry_timeout"); ok {
-		t, err := expandSystemInterfaceDiscRetryTimeout(d, v, "disc_retry_timeout")
+
+		t, err := expandSystemInterfaceDiscRetryTimeout(d, v, "disc_retry_timeout", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6678,7 +7730,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOkExists("padt_retry_timeout"); ok {
-		t, err := expandSystemInterfacePadtRetryTimeout(d, v, "padt_retry_timeout")
+
+		t, err := expandSystemInterfacePadtRetryTimeout(d, v, "padt_retry_timeout", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6687,7 +7740,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("service_name"); ok {
-		t, err := expandSystemInterfaceServiceName(d, v, "service_name")
+
+		t, err := expandSystemInterfaceServiceName(d, v, "service_name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6696,7 +7750,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("ac_name"); ok {
-		t, err := expandSystemInterfaceAcName(d, v, "ac_name")
+
+		t, err := expandSystemInterfaceAcName(d, v, "ac_name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6705,7 +7760,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOkExists("lcp_echo_interval"); ok {
-		t, err := expandSystemInterfaceLcpEchoInterval(d, v, "lcp_echo_interval")
+
+		t, err := expandSystemInterfaceLcpEchoInterval(d, v, "lcp_echo_interval", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6714,7 +7770,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOkExists("lcp_max_echo_fails"); ok {
-		t, err := expandSystemInterfaceLcpMaxEchoFails(d, v, "lcp_max_echo_fails")
+
+		t, err := expandSystemInterfaceLcpMaxEchoFails(d, v, "lcp_max_echo_fails", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6723,7 +7780,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("defaultgw"); ok {
-		t, err := expandSystemInterfaceDefaultgw(d, v, "defaultgw")
+
+		t, err := expandSystemInterfaceDefaultgw(d, v, "defaultgw", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6732,7 +7790,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("dns_server_override"); ok {
-		t, err := expandSystemInterfaceDnsServerOverride(d, v, "dns_server_override")
+
+		t, err := expandSystemInterfaceDnsServerOverride(d, v, "dns_server_override", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6741,7 +7800,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("auth_type"); ok {
-		t, err := expandSystemInterfaceAuthType(d, v, "auth_type")
+
+		t, err := expandSystemInterfaceAuthType(d, v, "auth_type", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6750,7 +7810,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("pptp_client"); ok {
-		t, err := expandSystemInterfacePptpClient(d, v, "pptp_client")
+
+		t, err := expandSystemInterfacePptpClient(d, v, "pptp_client", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6759,7 +7820,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("pptp_user"); ok {
-		t, err := expandSystemInterfacePptpUser(d, v, "pptp_user")
+
+		t, err := expandSystemInterfacePptpUser(d, v, "pptp_user", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6768,7 +7830,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("pptp_password"); ok {
-		t, err := expandSystemInterfacePptpPassword(d, v, "pptp_password")
+
+		t, err := expandSystemInterfacePptpPassword(d, v, "pptp_password", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6777,7 +7840,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("pptp_server_ip"); ok {
-		t, err := expandSystemInterfacePptpServerIp(d, v, "pptp_server_ip")
+
+		t, err := expandSystemInterfacePptpServerIp(d, v, "pptp_server_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6786,7 +7850,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("pptp_auth_type"); ok {
-		t, err := expandSystemInterfacePptpAuthType(d, v, "pptp_auth_type")
+
+		t, err := expandSystemInterfacePptpAuthType(d, v, "pptp_auth_type", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6795,7 +7860,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOkExists("pptp_timeout"); ok {
-		t, err := expandSystemInterfacePptpTimeout(d, v, "pptp_timeout")
+
+		t, err := expandSystemInterfacePptpTimeout(d, v, "pptp_timeout", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6804,7 +7870,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("arpforward"); ok {
-		t, err := expandSystemInterfaceArpforward(d, v, "arpforward")
+
+		t, err := expandSystemInterfaceArpforward(d, v, "arpforward", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6813,7 +7880,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("ndiscforward"); ok {
-		t, err := expandSystemInterfaceNdiscforward(d, v, "ndiscforward")
+
+		t, err := expandSystemInterfaceNdiscforward(d, v, "ndiscforward", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6822,7 +7890,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("broadcast_forward"); ok {
-		t, err := expandSystemInterfaceBroadcastForward(d, v, "broadcast_forward")
+
+		t, err := expandSystemInterfaceBroadcastForward(d, v, "broadcast_forward", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6831,7 +7900,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("bfd"); ok {
-		t, err := expandSystemInterfaceBfd(d, v, "bfd")
+
+		t, err := expandSystemInterfaceBfd(d, v, "bfd", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6840,7 +7910,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("bfd_desired_min_tx"); ok {
-		t, err := expandSystemInterfaceBfdDesiredMinTx(d, v, "bfd_desired_min_tx")
+
+		t, err := expandSystemInterfaceBfdDesiredMinTx(d, v, "bfd_desired_min_tx", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6849,7 +7920,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("bfd_detect_mult"); ok {
-		t, err := expandSystemInterfaceBfdDetectMult(d, v, "bfd_detect_mult")
+
+		t, err := expandSystemInterfaceBfdDetectMult(d, v, "bfd_detect_mult", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6858,7 +7930,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("bfd_required_min_rx"); ok {
-		t, err := expandSystemInterfaceBfdRequiredMinRx(d, v, "bfd_required_min_rx")
+
+		t, err := expandSystemInterfaceBfdRequiredMinRx(d, v, "bfd_required_min_rx", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6867,7 +7940,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("l2forward"); ok {
-		t, err := expandSystemInterfaceL2Forward(d, v, "l2forward")
+
+		t, err := expandSystemInterfaceL2Forward(d, v, "l2forward", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6876,7 +7950,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("icmp_send_redirect"); ok {
-		t, err := expandSystemInterfaceIcmpSendRedirect(d, v, "icmp_send_redirect")
+
+		t, err := expandSystemInterfaceIcmpSendRedirect(d, v, "icmp_send_redirect", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6885,7 +7960,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("icmp_accept_redirect"); ok {
-		t, err := expandSystemInterfaceIcmpAcceptRedirect(d, v, "icmp_accept_redirect")
+
+		t, err := expandSystemInterfaceIcmpAcceptRedirect(d, v, "icmp_accept_redirect", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6894,7 +7970,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("vlanforward"); ok {
-		t, err := expandSystemInterfaceVlanforward(d, v, "vlanforward")
+
+		t, err := expandSystemInterfaceVlanforward(d, v, "vlanforward", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6903,7 +7980,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("stpforward"); ok {
-		t, err := expandSystemInterfaceStpforward(d, v, "stpforward")
+
+		t, err := expandSystemInterfaceStpforward(d, v, "stpforward", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6912,7 +7990,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("stpforward_mode"); ok {
-		t, err := expandSystemInterfaceStpforwardMode(d, v, "stpforward_mode")
+
+		t, err := expandSystemInterfaceStpforwardMode(d, v, "stpforward_mode", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6921,7 +8000,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("ips_sniffer_mode"); ok {
-		t, err := expandSystemInterfaceIpsSnifferMode(d, v, "ips_sniffer_mode")
+
+		t, err := expandSystemInterfaceIpsSnifferMode(d, v, "ips_sniffer_mode", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6930,7 +8010,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("ident_accept"); ok {
-		t, err := expandSystemInterfaceIdentAccept(d, v, "ident_accept")
+
+		t, err := expandSystemInterfaceIdentAccept(d, v, "ident_accept", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6939,7 +8020,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("ipmac"); ok {
-		t, err := expandSystemInterfaceIpmac(d, v, "ipmac")
+
+		t, err := expandSystemInterfaceIpmac(d, v, "ipmac", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6948,7 +8030,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("subst"); ok {
-		t, err := expandSystemInterfaceSubst(d, v, "subst")
+
+		t, err := expandSystemInterfaceSubst(d, v, "subst", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6957,7 +8040,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("macaddr"); ok {
-		t, err := expandSystemInterfaceMacaddr(d, v, "macaddr")
+
+		t, err := expandSystemInterfaceMacaddr(d, v, "macaddr", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6966,7 +8050,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("substitute_dst_mac"); ok {
-		t, err := expandSystemInterfaceSubstituteDstMac(d, v, "substitute_dst_mac")
+
+		t, err := expandSystemInterfaceSubstituteDstMac(d, v, "substitute_dst_mac", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6975,7 +8060,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("speed"); ok {
-		t, err := expandSystemInterfaceSpeed(d, v, "speed")
+
+		t, err := expandSystemInterfaceSpeed(d, v, "speed", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6984,7 +8070,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-		t, err := expandSystemInterfaceStatus(d, v, "status")
+
+		t, err := expandSystemInterfaceStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -6993,7 +8080,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("netbios_forward"); ok {
-		t, err := expandSystemInterfaceNetbiosForward(d, v, "netbios_forward")
+
+		t, err := expandSystemInterfaceNetbiosForward(d, v, "netbios_forward", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7002,7 +8090,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("wins_ip"); ok {
-		t, err := expandSystemInterfaceWinsIp(d, v, "wins_ip")
+
+		t, err := expandSystemInterfaceWinsIp(d, v, "wins_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7011,7 +8100,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("type"); ok {
-		t, err := expandSystemInterfaceType(d, v, "type")
+
+		t, err := expandSystemInterfaceType(d, v, "type", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7020,7 +8110,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("dedicated_to"); ok {
-		t, err := expandSystemInterfaceDedicatedTo(d, v, "dedicated_to")
+
+		t, err := expandSystemInterfaceDedicatedTo(d, v, "dedicated_to", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7029,7 +8120,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("trust_ip_1"); ok {
-		t, err := expandSystemInterfaceTrustIp1(d, v, "trust_ip_1")
+
+		t, err := expandSystemInterfaceTrustIp1(d, v, "trust_ip_1", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7038,7 +8130,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("trust_ip_2"); ok {
-		t, err := expandSystemInterfaceTrustIp2(d, v, "trust_ip_2")
+
+		t, err := expandSystemInterfaceTrustIp2(d, v, "trust_ip_2", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7047,7 +8140,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("trust_ip_3"); ok {
-		t, err := expandSystemInterfaceTrustIp3(d, v, "trust_ip_3")
+
+		t, err := expandSystemInterfaceTrustIp3(d, v, "trust_ip_3", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7056,7 +8150,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("trust_ip6_1"); ok {
-		t, err := expandSystemInterfaceTrustIp61(d, v, "trust_ip6_1")
+
+		t, err := expandSystemInterfaceTrustIp61(d, v, "trust_ip6_1", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7065,7 +8160,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("trust_ip6_2"); ok {
-		t, err := expandSystemInterfaceTrustIp62(d, v, "trust_ip6_2")
+
+		t, err := expandSystemInterfaceTrustIp62(d, v, "trust_ip6_2", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7074,7 +8170,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("trust_ip6_3"); ok {
-		t, err := expandSystemInterfaceTrustIp63(d, v, "trust_ip6_3")
+
+		t, err := expandSystemInterfaceTrustIp63(d, v, "trust_ip6_3", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7083,7 +8180,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("mtu_override"); ok {
-		t, err := expandSystemInterfaceMtuOverride(d, v, "mtu_override")
+
+		t, err := expandSystemInterfaceMtuOverride(d, v, "mtu_override", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7092,7 +8190,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOkExists("mtu"); ok {
-		t, err := expandSystemInterfaceMtu(d, v, "mtu")
+
+		t, err := expandSystemInterfaceMtu(d, v, "mtu", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7100,8 +8199,29 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
+	if v, ok := d.GetOkExists("ring_rx"); ok {
+
+		t, err := expandSystemInterfaceRingRx(d, v, "ring_rx", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ring-rx"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("ring_tx"); ok {
+
+		t, err := expandSystemInterfaceRingTx(d, v, "ring_tx", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ring-tx"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("wccp"); ok {
-		t, err := expandSystemInterfaceWccp(d, v, "wccp")
+
+		t, err := expandSystemInterfaceWccp(d, v, "wccp", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7110,7 +8230,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("netflow_sampler"); ok {
-		t, err := expandSystemInterfaceNetflowSampler(d, v, "netflow_sampler")
+
+		t, err := expandSystemInterfaceNetflowSampler(d, v, "netflow_sampler", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7119,7 +8240,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("sflow_sampler"); ok {
-		t, err := expandSystemInterfaceSflowSampler(d, v, "sflow_sampler")
+
+		t, err := expandSystemInterfaceSflowSampler(d, v, "sflow_sampler", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7128,7 +8250,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("drop_overlapped_fragment"); ok {
-		t, err := expandSystemInterfaceDropOverlappedFragment(d, v, "drop_overlapped_fragment")
+
+		t, err := expandSystemInterfaceDropOverlappedFragment(d, v, "drop_overlapped_fragment", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7137,7 +8260,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("drop_fragment"); ok {
-		t, err := expandSystemInterfaceDropFragment(d, v, "drop_fragment")
+
+		t, err := expandSystemInterfaceDropFragment(d, v, "drop_fragment", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7146,7 +8270,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("scan_botnet_connections"); ok {
-		t, err := expandSystemInterfaceScanBotnetConnections(d, v, "scan_botnet_connections")
+
+		t, err := expandSystemInterfaceScanBotnetConnections(d, v, "scan_botnet_connections", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7155,7 +8280,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("src_check"); ok {
-		t, err := expandSystemInterfaceSrcCheck(d, v, "src_check")
+
+		t, err := expandSystemInterfaceSrcCheck(d, v, "src_check", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7164,7 +8290,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("sample_rate"); ok {
-		t, err := expandSystemInterfaceSampleRate(d, v, "sample_rate")
+
+		t, err := expandSystemInterfaceSampleRate(d, v, "sample_rate", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7173,7 +8300,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("polling_interval"); ok {
-		t, err := expandSystemInterfacePollingInterval(d, v, "polling_interval")
+
+		t, err := expandSystemInterfacePollingInterval(d, v, "polling_interval", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7182,7 +8310,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("sample_direction"); ok {
-		t, err := expandSystemInterfaceSampleDirection(d, v, "sample_direction")
+
+		t, err := expandSystemInterfaceSampleDirection(d, v, "sample_direction", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7191,7 +8320,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("explicit_web_proxy"); ok {
-		t, err := expandSystemInterfaceExplicitWebProxy(d, v, "explicit_web_proxy")
+
+		t, err := expandSystemInterfaceExplicitWebProxy(d, v, "explicit_web_proxy", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7200,7 +8330,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("explicit_ftp_proxy"); ok {
-		t, err := expandSystemInterfaceExplicitFtpProxy(d, v, "explicit_ftp_proxy")
+
+		t, err := expandSystemInterfaceExplicitFtpProxy(d, v, "explicit_ftp_proxy", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7209,7 +8340,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("proxy_captive_portal"); ok {
-		t, err := expandSystemInterfaceProxyCaptivePortal(d, v, "proxy_captive_portal")
+
+		t, err := expandSystemInterfaceProxyCaptivePortal(d, v, "proxy_captive_portal", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7218,7 +8350,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOkExists("tcp_mss"); ok {
-		t, err := expandSystemInterfaceTcpMss(d, v, "tcp_mss")
+
+		t, err := expandSystemInterfaceTcpMss(d, v, "tcp_mss", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7227,7 +8360,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOkExists("inbandwidth"); ok {
-		t, err := expandSystemInterfaceInbandwidth(d, v, "inbandwidth")
+
+		t, err := expandSystemInterfaceInbandwidth(d, v, "inbandwidth", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7236,7 +8370,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOkExists("outbandwidth"); ok {
-		t, err := expandSystemInterfaceOutbandwidth(d, v, "outbandwidth")
+
+		t, err := expandSystemInterfaceOutbandwidth(d, v, "outbandwidth", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7245,7 +8380,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("egress_shaping_profile"); ok {
-		t, err := expandSystemInterfaceEgressShapingProfile(d, v, "egress_shaping_profile")
+
+		t, err := expandSystemInterfaceEgressShapingProfile(d, v, "egress_shaping_profile", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7253,8 +8389,19 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
+	if v, ok := d.GetOk("ingress_shaping_profile"); ok {
+
+		t, err := expandSystemInterfaceIngressShapingProfile(d, v, "ingress_shaping_profile", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ingress-shaping-profile"] = t
+		}
+	}
+
 	if v, ok := d.GetOkExists("disconnect_threshold"); ok {
-		t, err := expandSystemInterfaceDisconnectThreshold(d, v, "disconnect_threshold")
+
+		t, err := expandSystemInterfaceDisconnectThreshold(d, v, "disconnect_threshold", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7263,7 +8410,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOkExists("spillover_threshold"); ok {
-		t, err := expandSystemInterfaceSpilloverThreshold(d, v, "spillover_threshold")
+
+		t, err := expandSystemInterfaceSpilloverThreshold(d, v, "spillover_threshold", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7272,7 +8420,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOkExists("ingress_spillover_threshold"); ok {
-		t, err := expandSystemInterfaceIngressSpilloverThreshold(d, v, "ingress_spillover_threshold")
+
+		t, err := expandSystemInterfaceIngressSpilloverThreshold(d, v, "ingress_spillover_threshold", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7281,7 +8430,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOkExists("weight"); ok {
-		t, err := expandSystemInterfaceWeight(d, v, "weight")
+
+		t, err := expandSystemInterfaceWeight(d, v, "weight", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7290,7 +8440,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
-		t, err := expandSystemInterfaceInterface(d, v, "interface")
+
+		t, err := expandSystemInterfaceInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7299,7 +8450,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("external"); ok {
-		t, err := expandSystemInterfaceExternal(d, v, "external")
+
+		t, err := expandSystemInterfaceExternal(d, v, "external", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7307,8 +8459,19 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
+	if v, ok := d.GetOk("vlan_protocol"); ok {
+
+		t, err := expandSystemInterfaceVlanProtocol(d, v, "vlan_protocol", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["vlan-protocol"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("vlanid"); ok {
-		t, err := expandSystemInterfaceVlanid(d, v, "vlanid")
+
+		t, err := expandSystemInterfaceVlanid(d, v, "vlanid", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7317,7 +8480,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOkExists("forward_domain"); ok {
-		t, err := expandSystemInterfaceForwardDomain(d, v, "forward_domain")
+
+		t, err := expandSystemInterfaceForwardDomain(d, v, "forward_domain", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7326,7 +8490,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("remote_ip"); ok {
-		t, err := expandSystemInterfaceRemoteIp(d, v, "remote_ip")
+
+		t, err := expandSystemInterfaceRemoteIp(d, v, "remote_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7335,7 +8500,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("member"); ok {
-		t, err := expandSystemInterfaceMember(d, v, "member")
+
+		t, err := expandSystemInterfaceMember(d, v, "member", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7344,7 +8510,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("lacp_mode"); ok {
-		t, err := expandSystemInterfaceLacpMode(d, v, "lacp_mode")
+
+		t, err := expandSystemInterfaceLacpMode(d, v, "lacp_mode", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7353,7 +8520,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("lacp_ha_slave"); ok {
-		t, err := expandSystemInterfaceLacpHaSlave(d, v, "lacp_ha_slave")
+
+		t, err := expandSystemInterfaceLacpHaSlave(d, v, "lacp_ha_slave", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7362,7 +8530,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("lacp_speed"); ok {
-		t, err := expandSystemInterfaceLacpSpeed(d, v, "lacp_speed")
+
+		t, err := expandSystemInterfaceLacpSpeed(d, v, "lacp_speed", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7371,7 +8540,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("min_links"); ok {
-		t, err := expandSystemInterfaceMinLinks(d, v, "min_links")
+
+		t, err := expandSystemInterfaceMinLinks(d, v, "min_links", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7380,7 +8550,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("min_links_down"); ok {
-		t, err := expandSystemInterfaceMinLinksDown(d, v, "min_links_down")
+
+		t, err := expandSystemInterfaceMinLinksDown(d, v, "min_links_down", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7389,7 +8560,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("algorithm"); ok {
-		t, err := expandSystemInterfaceAlgorithm(d, v, "algorithm")
+
+		t, err := expandSystemInterfaceAlgorithm(d, v, "algorithm", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7398,7 +8570,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("link_up_delay"); ok {
-		t, err := expandSystemInterfaceLinkUpDelay(d, v, "link_up_delay")
+
+		t, err := expandSystemInterfaceLinkUpDelay(d, v, "link_up_delay", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7407,7 +8580,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("priority_override"); ok {
-		t, err := expandSystemInterfacePriorityOverride(d, v, "priority_override")
+
+		t, err := expandSystemInterfacePriorityOverride(d, v, "priority_override", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7416,7 +8590,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("aggregate"); ok {
-		t, err := expandSystemInterfaceAggregate(d, v, "aggregate")
+
+		t, err := expandSystemInterfaceAggregate(d, v, "aggregate", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7425,7 +8600,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("redundant_interface"); ok {
-		t, err := expandSystemInterfaceRedundantInterface(d, v, "redundant_interface")
+
+		t, err := expandSystemInterfaceRedundantInterface(d, v, "redundant_interface", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7434,7 +8610,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("managed_device"); ok {
-		t, err := expandSystemInterfaceManagedDevice(d, v, "managed_device")
+
+		t, err := expandSystemInterfaceManagedDevice(d, v, "managed_device", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7443,7 +8620,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOkExists("devindex"); ok {
-		t, err := expandSystemInterfaceDevindex(d, v, "devindex")
+
+		t, err := expandSystemInterfaceDevindex(d, v, "devindex", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7452,7 +8630,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOkExists("vindex"); ok {
-		t, err := expandSystemInterfaceVindex(d, v, "vindex")
+
+		t, err := expandSystemInterfaceVindex(d, v, "vindex", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7461,7 +8640,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("switch"); ok {
-		t, err := expandSystemInterfaceSwitch(d, v, "switch")
+
+		t, err := expandSystemInterfaceSwitch(d, v, "switch", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7470,7 +8650,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("description"); ok {
-		t, err := expandSystemInterfaceDescription(d, v, "description")
+
+		t, err := expandSystemInterfaceDescription(d, v, "description", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7479,7 +8660,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("alias"); ok {
-		t, err := expandSystemInterfaceAlias(d, v, "alias")
+
+		t, err := expandSystemInterfaceAlias(d, v, "alias", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7488,7 +8670,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("security_mode"); ok {
-		t, err := expandSystemInterfaceSecurityMode(d, v, "security_mode")
+
+		t, err := expandSystemInterfaceSecurityMode(d, v, "security_mode", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7497,7 +8680,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOkExists("captive_portal"); ok {
-		t, err := expandSystemInterfaceCaptivePortal(d, v, "captive_portal")
+
+		t, err := expandSystemInterfaceCaptivePortal(d, v, "captive_portal", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7506,7 +8690,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("security_mac_auth_bypass"); ok {
-		t, err := expandSystemInterfaceSecurityMacAuthBypass(d, v, "security_mac_auth_bypass")
+
+		t, err := expandSystemInterfaceSecurityMacAuthBypass(d, v, "security_mac_auth_bypass", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7515,7 +8700,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("security_external_web"); ok {
-		t, err := expandSystemInterfaceSecurityExternalWeb(d, v, "security_external_web")
+
+		t, err := expandSystemInterfaceSecurityExternalWeb(d, v, "security_external_web", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7524,7 +8710,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("security_external_logout"); ok {
-		t, err := expandSystemInterfaceSecurityExternalLogout(d, v, "security_external_logout")
+
+		t, err := expandSystemInterfaceSecurityExternalLogout(d, v, "security_external_logout", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7533,7 +8720,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("replacemsg_override_group"); ok {
-		t, err := expandSystemInterfaceReplacemsgOverrideGroup(d, v, "replacemsg_override_group")
+
+		t, err := expandSystemInterfaceReplacemsgOverrideGroup(d, v, "replacemsg_override_group", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7542,7 +8730,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("security_redirect_url"); ok {
-		t, err := expandSystemInterfaceSecurityRedirectUrl(d, v, "security_redirect_url")
+
+		t, err := expandSystemInterfaceSecurityRedirectUrl(d, v, "security_redirect_url", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7551,7 +8740,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("security_exempt_list"); ok {
-		t, err := expandSystemInterfaceSecurityExemptList(d, v, "security_exempt_list")
+
+		t, err := expandSystemInterfaceSecurityExemptList(d, v, "security_exempt_list", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7560,7 +8750,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("security_groups"); ok {
-		t, err := expandSystemInterfaceSecurityGroups(d, v, "security_groups")
+
+		t, err := expandSystemInterfaceSecurityGroups(d, v, "security_groups", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7569,7 +8760,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("device_identification"); ok {
-		t, err := expandSystemInterfaceDeviceIdentification(d, v, "device_identification")
+
+		t, err := expandSystemInterfaceDeviceIdentification(d, v, "device_identification", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7578,7 +8770,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("device_user_identification"); ok {
-		t, err := expandSystemInterfaceDeviceUserIdentification(d, v, "device_user_identification")
+
+		t, err := expandSystemInterfaceDeviceUserIdentification(d, v, "device_user_identification", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7587,7 +8780,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("device_identification_active_scan"); ok {
-		t, err := expandSystemInterfaceDeviceIdentificationActiveScan(d, v, "device_identification_active_scan")
+
+		t, err := expandSystemInterfaceDeviceIdentificationActiveScan(d, v, "device_identification_active_scan", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7596,7 +8790,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("device_access_list"); ok {
-		t, err := expandSystemInterfaceDeviceAccessList(d, v, "device_access_list")
+
+		t, err := expandSystemInterfaceDeviceAccessList(d, v, "device_access_list", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7605,7 +8800,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("device_netscan"); ok {
-		t, err := expandSystemInterfaceDeviceNetscan(d, v, "device_netscan")
+
+		t, err := expandSystemInterfaceDeviceNetscan(d, v, "device_netscan", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7614,7 +8810,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("lldp_reception"); ok {
-		t, err := expandSystemInterfaceLldpReception(d, v, "lldp_reception")
+
+		t, err := expandSystemInterfaceLldpReception(d, v, "lldp_reception", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7623,7 +8820,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("lldp_transmission"); ok {
-		t, err := expandSystemInterfaceLldpTransmission(d, v, "lldp_transmission")
+
+		t, err := expandSystemInterfaceLldpTransmission(d, v, "lldp_transmission", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7632,7 +8830,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("lldp_network_policy"); ok {
-		t, err := expandSystemInterfaceLldpNetworkPolicy(d, v, "lldp_network_policy")
+
+		t, err := expandSystemInterfaceLldpNetworkPolicy(d, v, "lldp_network_policy", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7641,7 +8840,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("fortiheartbeat"); ok {
-		t, err := expandSystemInterfaceFortiheartbeat(d, v, "fortiheartbeat")
+
+		t, err := expandSystemInterfaceFortiheartbeat(d, v, "fortiheartbeat", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7650,7 +8850,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("broadcast_forticlient_discovery"); ok {
-		t, err := expandSystemInterfaceBroadcastForticlientDiscovery(d, v, "broadcast_forticlient_discovery")
+
+		t, err := expandSystemInterfaceBroadcastForticlientDiscovery(d, v, "broadcast_forticlient_discovery", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7659,7 +8860,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("endpoint_compliance"); ok {
-		t, err := expandSystemInterfaceEndpointCompliance(d, v, "endpoint_compliance")
+
+		t, err := expandSystemInterfaceEndpointCompliance(d, v, "endpoint_compliance", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7668,7 +8870,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOkExists("estimated_upstream_bandwidth"); ok {
-		t, err := expandSystemInterfaceEstimatedUpstreamBandwidth(d, v, "estimated_upstream_bandwidth")
+
+		t, err := expandSystemInterfaceEstimatedUpstreamBandwidth(d, v, "estimated_upstream_bandwidth", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7677,7 +8880,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOkExists("estimated_downstream_bandwidth"); ok {
-		t, err := expandSystemInterfaceEstimatedDownstreamBandwidth(d, v, "estimated_downstream_bandwidth")
+
+		t, err := expandSystemInterfaceEstimatedDownstreamBandwidth(d, v, "estimated_downstream_bandwidth", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7685,8 +8889,49 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
+	if v, ok := d.GetOkExists("measured_upstream_bandwidth"); ok {
+
+		t, err := expandSystemInterfaceMeasuredUpstreamBandwidth(d, v, "measured_upstream_bandwidth", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["measured-upstream-bandwidth"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("measured_downstream_bandwidth"); ok {
+
+		t, err := expandSystemInterfaceMeasuredDownstreamBandwidth(d, v, "measured_downstream_bandwidth", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["measured-downstream-bandwidth"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("bandwidth_measure_time"); ok {
+
+		t, err := expandSystemInterfaceBandwidthMeasureTime(d, v, "bandwidth_measure_time", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["bandwidth-measure-time"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("monitor_bandwidth"); ok {
+
+		t, err := expandSystemInterfaceMonitorBandwidth(d, v, "monitor_bandwidth", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["monitor-bandwidth"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("vrrp_virtual_mac"); ok {
-		t, err := expandSystemInterfaceVrrpVirtualMac(d, v, "vrrp_virtual_mac")
+
+		t, err := expandSystemInterfaceVrrpVirtualMac(d, v, "vrrp_virtual_mac", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7695,7 +8940,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("vrrp"); ok {
-		t, err := expandSystemInterfaceVrrp(d, v, "vrrp")
+
+		t, err := expandSystemInterfaceVrrp(d, v, "vrrp", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7704,7 +8950,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("role"); ok {
-		t, err := expandSystemInterfaceRole(d, v, "role")
+
+		t, err := expandSystemInterfaceRole(d, v, "role", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7713,7 +8960,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOkExists("snmp_index"); ok {
-		t, err := expandSystemInterfaceSnmpIndex(d, v, "snmp_index")
+
+		t, err := expandSystemInterfaceSnmpIndex(d, v, "snmp_index", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7722,7 +8970,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("secondary_ip"); ok {
-		t, err := expandSystemInterfaceSecondaryIp(d, v, "secondary_ip")
+
+		t, err := expandSystemInterfaceSecondaryIp(d, v, "secondary_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7731,7 +8980,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("secondaryip"); ok {
-		t, err := expandSystemInterfaceSecondaryip(d, v, "secondaryip")
+
+		t, err := expandSystemInterfaceSecondaryip(d, v, "secondaryip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7740,7 +8990,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("preserve_session_route"); ok {
-		t, err := expandSystemInterfacePreserveSessionRoute(d, v, "preserve_session_route")
+
+		t, err := expandSystemInterfacePreserveSessionRoute(d, v, "preserve_session_route", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7749,7 +9000,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("auto_auth_extension_device"); ok {
-		t, err := expandSystemInterfaceAutoAuthExtensionDevice(d, v, "auto_auth_extension_device")
+
+		t, err := expandSystemInterfaceAutoAuthExtensionDevice(d, v, "auto_auth_extension_device", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7758,7 +9010,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("ap_discover"); ok {
-		t, err := expandSystemInterfaceApDiscover(d, v, "ap_discover")
+
+		t, err := expandSystemInterfaceApDiscover(d, v, "ap_discover", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7767,7 +9020,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("fortilink_stacking"); ok {
-		t, err := expandSystemInterfaceFortilinkStacking(d, v, "fortilink_stacking")
+
+		t, err := expandSystemInterfaceFortilinkStacking(d, v, "fortilink_stacking", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7775,8 +9029,39 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
+	if v, ok := d.GetOk("fortilink_neighbor_detect"); ok {
+
+		t, err := expandSystemInterfaceFortilinkNeighborDetect(d, v, "fortilink_neighbor_detect", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fortilink-neighbor-detect"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ip_managed_by_fortiipam"); ok {
+
+		t, err := expandSystemInterfaceIpManagedByFortiipam(d, v, "ip_managed_by_fortiipam", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ip-managed-by-fortiipam"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("managed_subnetwork_size"); ok {
+
+		t, err := expandSystemInterfaceManagedSubnetworkSize(d, v, "managed_subnetwork_size", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["managed-subnetwork-size"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("fortilink_split_interface"); ok {
-		t, err := expandSystemInterfaceFortilinkSplitInterface(d, v, "fortilink_split_interface")
+
+		t, err := expandSystemInterfaceFortilinkSplitInterface(d, v, "fortilink_split_interface", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7785,7 +9070,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOkExists("internal"); ok {
-		t, err := expandSystemInterfaceInternal(d, v, "internal")
+
+		t, err := expandSystemInterfaceInternal(d, v, "internal", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7794,7 +9080,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOkExists("fortilink_backup_link"); ok {
-		t, err := expandSystemInterfaceFortilinkBackupLink(d, v, "fortilink_backup_link")
+
+		t, err := expandSystemInterfaceFortilinkBackupLink(d, v, "fortilink_backup_link", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7803,7 +9090,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("switch_controller_access_vlan"); ok {
-		t, err := expandSystemInterfaceSwitchControllerAccessVlan(d, v, "switch_controller_access_vlan")
+
+		t, err := expandSystemInterfaceSwitchControllerAccessVlan(d, v, "switch_controller_access_vlan", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7812,7 +9100,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("switch_controller_traffic_policy"); ok {
-		t, err := expandSystemInterfaceSwitchControllerTrafficPolicy(d, v, "switch_controller_traffic_policy")
+
+		t, err := expandSystemInterfaceSwitchControllerTrafficPolicy(d, v, "switch_controller_traffic_policy", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7820,8 +9109,29 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
+	if v, ok := d.GetOk("switch_controller_rspan_mode"); ok {
+
+		t, err := expandSystemInterfaceSwitchControllerRspanMode(d, v, "switch_controller_rspan_mode", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["switch-controller-rspan-mode"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("switch_controller_mgmt_vlan"); ok {
+
+		t, err := expandSystemInterfaceSwitchControllerMgmtVlan(d, v, "switch_controller_mgmt_vlan", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["switch-controller-mgmt-vlan"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("switch_controller_igmp_snooping"); ok {
-		t, err := expandSystemInterfaceSwitchControllerIgmpSnooping(d, v, "switch_controller_igmp_snooping")
+
+		t, err := expandSystemInterfaceSwitchControllerIgmpSnooping(d, v, "switch_controller_igmp_snooping", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7829,8 +9139,29 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
+	if v, ok := d.GetOk("switch_controller_igmp_snooping_proxy"); ok {
+
+		t, err := expandSystemInterfaceSwitchControllerIgmpSnoopingProxy(d, v, "switch_controller_igmp_snooping_proxy", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["switch-controller-igmp-snooping-proxy"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("switch_controller_igmp_snooping_fast_leave"); ok {
+
+		t, err := expandSystemInterfaceSwitchControllerIgmpSnoopingFastLeave(d, v, "switch_controller_igmp_snooping_fast_leave", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["switch-controller-igmp-snooping-fast-leave"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("switch_controller_dhcp_snooping"); ok {
-		t, err := expandSystemInterfaceSwitchControllerDhcpSnooping(d, v, "switch_controller_dhcp_snooping")
+
+		t, err := expandSystemInterfaceSwitchControllerDhcpSnooping(d, v, "switch_controller_dhcp_snooping", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7839,7 +9170,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("switch_controller_dhcp_snooping_verify_mac"); ok {
-		t, err := expandSystemInterfaceSwitchControllerDhcpSnoopingVerifyMac(d, v, "switch_controller_dhcp_snooping_verify_mac")
+
+		t, err := expandSystemInterfaceSwitchControllerDhcpSnoopingVerifyMac(d, v, "switch_controller_dhcp_snooping_verify_mac", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7848,7 +9180,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("switch_controller_dhcp_snooping_option82"); ok {
-		t, err := expandSystemInterfaceSwitchControllerDhcpSnoopingOption82(d, v, "switch_controller_dhcp_snooping_option82")
+
+		t, err := expandSystemInterfaceSwitchControllerDhcpSnoopingOption82(d, v, "switch_controller_dhcp_snooping_option82", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7857,7 +9190,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("switch_controller_arp_inspection"); ok {
-		t, err := expandSystemInterfaceSwitchControllerArpInspection(d, v, "switch_controller_arp_inspection")
+
+		t, err := expandSystemInterfaceSwitchControllerArpInspection(d, v, "switch_controller_arp_inspection", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7866,7 +9200,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOkExists("switch_controller_learning_limit"); ok {
-		t, err := expandSystemInterfaceSwitchControllerLearningLimit(d, v, "switch_controller_learning_limit")
+
+		t, err := expandSystemInterfaceSwitchControllerLearningLimit(d, v, "switch_controller_learning_limit", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7874,8 +9209,59 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
+	if v, ok := d.GetOk("switch_controller_nac"); ok {
+
+		t, err := expandSystemInterfaceSwitchControllerNac(d, v, "switch_controller_nac", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["switch-controller-nac"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("switch_controller_feature"); ok {
+
+		t, err := expandSystemInterfaceSwitchControllerFeature(d, v, "switch_controller_feature", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["switch-controller-feature"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("switch_controller_iot_scanning"); ok {
+
+		t, err := expandSystemInterfaceSwitchControllerIotScanning(d, v, "switch_controller_iot_scanning", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["switch-controller-iot-scanning"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("swc_vlan"); ok {
+
+		t, err := expandSystemInterfaceSwcVlan(d, v, "swc_vlan", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["swc-vlan"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("swc_first_create"); ok {
+
+		t, err := expandSystemInterfaceSwcFirstCreate(d, v, "swc_first_create", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["swc-first-create"] = t
+		}
+	}
+
 	if v, ok := d.GetOkExists("color"); ok {
-		t, err := expandSystemInterfaceColor(d, v, "color")
+
+		t, err := expandSystemInterfaceColor(d, v, "color", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7884,7 +9270,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("tagging"); ok {
-		t, err := expandSystemInterfaceTagging(d, v, "tagging")
+
+		t, err := expandSystemInterfaceTagging(d, v, "tagging", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -7893,7 +9280,8 @@ func getObjectSystemInterface(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("ipv6"); ok {
-		t, err := expandSystemInterfaceIpv6(d, v, "ipv6")
+
+		t, err := expandSystemInterfaceIpv6(d, v, "ipv6", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
