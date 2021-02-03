@@ -34,7 +34,6 @@ resource "fortios_switchcontrollersecuritypolicy_8021X" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Policy name.
@@ -43,6 +42,7 @@ The following arguments are supported:
 * `mac_auth_bypass` - Enable/disable MAB for this policy.
 * `open_auth` - Enable/disable open authentication for this policy.
 * `eap_passthru` - Enable/disable EAP pass-through mode, allowing protocols (such as LLDP) to pass through ports for more flexible authentication.
+* `eap_auto_untagged_vlans` - Enable/disable automatic inclusion of untagged VLANs.
 * `guest_vlan` - Enable the guest VLAN feature to allow limited access to non-802.1X-compliant clients.
 * `guest_vlanid` - Guest VLAN ID.
 * `guest_vlan_id` - Guest VLAN name.
@@ -53,6 +53,9 @@ The following arguments are supported:
 * `framevid_apply` - Enable/disable the capability to apply the EAP/MAB frame VLAN to the port native VLAN.
 * `radius_timeout_overwrite` - Enable to override the global RADIUS session timeout.
 * `policy_type` - Policy type.
+* `authserver_timeout_period` - Authentication server timeout period (3 - 15 sec, default = 3).
+* `authserver_timeout_vlan` - Enable/disable the authentication server timeout VLAN to allow limited access when RADIUS is unavailable. 
+* `authserver_timeout_vlanid` - Authentication server timeout VLAN name.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `user_group` block supports:
