@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_user_devicegroup
-Configure device groups.
+Configure device groups. Applies to FortiOS Version `<= 6.2.0`.
 
 ## Example Usage
 
@@ -29,7 +29,6 @@ resource "fortios_user_devicegroup" "trname" {
 ```
 
 ## Argument Reference
-
 
 The following arguments are supported:
 
