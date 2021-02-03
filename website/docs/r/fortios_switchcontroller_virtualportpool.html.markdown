@@ -20,7 +20,6 @@ resource "fortios_switchcontroller_virtualportpool" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Virtual switch pool name.
