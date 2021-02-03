@@ -29,7 +29,6 @@ resource "fortios_system_sdnconnector" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - SDN connector name.
@@ -40,6 +39,9 @@ The following arguments are supported:
 * `server_port` - Port number of the remote SDN connector.
 * `username` - Username of the remote SDN connector as login credentials.
 * `password` - Password of the remote SDN connector as login credentials.
+* `vcenter_server` - vCenter server address for NSX quarantine.
+* `vcenter_username` - vCenter server username for NSX quarantine.
+* `vcenter_password` - vCenter server password for NSX quarantine.
 * `access_key` - AWS access key ID.
 * `secret_key` - AWS secret access key.
 * `region` - AWS region name.
@@ -57,6 +59,7 @@ The following arguments are supported:
 * `user_id` - User ID.
 * `compartment_id` - Compartment ID.
 * `oci_region` - OCI server region.
+* `oci_region_type` - OCI region type.
 * `oci_cert` - OCI certificate.
 * `oci_fingerprint` - OCI pubkey fingerprint.
 * `external_ip` - Configure GCP external IP. The structure of `external_ip` block is documented below.
@@ -67,6 +70,11 @@ The following arguments are supported:
 * `key_passwd` - Private key password.
 * `private_key` - Private key of GCP service account.
 * `secret_token` - Secret token of Kubernetes service account.
+* `domain` - Domain name.
+* `group_name` - Group name of computers.
+* `api_key` - IBM cloud API key or service ID API key.
+* `compute_generation` - Compute generation for IBM cloud infrastructure.
+* `ibm_region` - IBM cloud region name.
 * `update_interval` - Dynamic object update interval (0 - 3600 sec, 0 means disabled, default = 60).
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
@@ -79,10 +87,13 @@ The `ip` block supports:
 
 * `name` - IP configuration name.
 * `public_ip` - Public IP name.
+* `resource_group` - Resource group of Azure public IP.
 
 The `route_table` block supports:
 
 * `name` - Route table name.
+* `subscription_id` - Subscription ID of Azure route table.
+* `resource_group` - Resource group of Azure route table.
 * `route` - Configure Azure route. The structure of `route` block is documented below.
 
 The `route` block supports:
