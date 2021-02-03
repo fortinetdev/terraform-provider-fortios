@@ -18,7 +18,7 @@ resource "fortios_system_centralmanagement" "trname" {
   allow_push_firmware           = "enable"
   allow_remote_firmware_upgrade = "enable"
   enc_algorithm                 = "high"
-  fmg_source_ip                 = "0.0.0.0"
+  fmg                           = "0.0.0.0"
   fmg_source_ip6                = "::"
   include_default_servers       = "enable"
   mode                          = "normal"
