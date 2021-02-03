@@ -41,7 +41,6 @@ resource "fortios_system_linkmonitor" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Link monitor name.
@@ -58,8 +57,10 @@ The following arguments are supported:
 * `http_agent` - String in the http-agent field in the HTTP header.
 * `http_match` - String that you expect to see in the HTTP-GET requests of the traffic to be monitored.
 * `interval` - Detection interval (1 - 3600 sec, default = 5).
+* `probe_timeout` - Time to wait before a probe packet is considered lost (500 - 5000 msec, default = 500).
 * `failtime` - Number of retry attempts before the server is considered down (1 - 10, default = 5)
 * `recoverytime` - Number of successful responses received before server is considered recovered (1 - 10, default = 5).
+* `probe_count` - Number of most recent probes that should be used to calculate latency and jitter (5 - 30, default = 30).
 * `security_mode` - Twamp controller security mode.
 * `password` - Twamp controller password in authentication mode
 * `packet_size` - Packet size of a twamp test session,
