@@ -24,7 +24,6 @@ resource "fortios_router_aspathlist" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - (Required) AS path list name.
