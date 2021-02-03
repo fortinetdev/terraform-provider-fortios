@@ -33,7 +33,6 @@ resource "fortios_ips_rule" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Rule name.
