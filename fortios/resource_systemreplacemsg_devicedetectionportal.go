@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -58,7 +59,7 @@ func resourceSystemReplacemsgDeviceDetectionPortalCreate(d *schema.ResourceData,
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemReplacemsgDeviceDetectionPortal(d)
+	obj, err := getObjectSystemReplacemsgDeviceDetectionPortal(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemReplacemsgDeviceDetectionPortal resource while getting object: %v", err)
 	}
@@ -83,7 +84,7 @@ func resourceSystemReplacemsgDeviceDetectionPortalUpdate(d *schema.ResourceData,
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemReplacemsgDeviceDetectionPortal(d)
+	obj, err := getObjectSystemReplacemsgDeviceDetectionPortal(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemReplacemsgDeviceDetectionPortal resource while getting object: %v", err)
 	}
@@ -136,51 +137,51 @@ func resourceSystemReplacemsgDeviceDetectionPortalRead(d *schema.ResourceData, m
 		return nil
 	}
 
-	err = refreshObjectSystemReplacemsgDeviceDetectionPortal(d, o)
+	err = refreshObjectSystemReplacemsgDeviceDetectionPortal(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemReplacemsgDeviceDetectionPortal resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemReplacemsgDeviceDetectionPortalMsgType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemReplacemsgDeviceDetectionPortalMsgType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemReplacemsgDeviceDetectionPortalBuffer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemReplacemsgDeviceDetectionPortalBuffer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemReplacemsgDeviceDetectionPortalHeader(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemReplacemsgDeviceDetectionPortalHeader(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemReplacemsgDeviceDetectionPortalFormat(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemReplacemsgDeviceDetectionPortalFormat(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemReplacemsgDeviceDetectionPortal(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemReplacemsgDeviceDetectionPortal(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("msg_type", flattenSystemReplacemsgDeviceDetectionPortalMsgType(o["msg-type"], d, "msg_type")); err != nil {
+	if err = d.Set("msg_type", flattenSystemReplacemsgDeviceDetectionPortalMsgType(o["msg-type"], d, "msg_type", sv)); err != nil {
 		if !fortiAPIPatch(o["msg-type"]) {
 			return fmt.Errorf("Error reading msg_type: %v", err)
 		}
 	}
 
-	if err = d.Set("buffer", flattenSystemReplacemsgDeviceDetectionPortalBuffer(o["buffer"], d, "buffer")); err != nil {
+	if err = d.Set("buffer", flattenSystemReplacemsgDeviceDetectionPortalBuffer(o["buffer"], d, "buffer", sv)); err != nil {
 		if !fortiAPIPatch(o["buffer"]) {
 			return fmt.Errorf("Error reading buffer: %v", err)
 		}
 	}
 
-	if err = d.Set("header", flattenSystemReplacemsgDeviceDetectionPortalHeader(o["header"], d, "header")); err != nil {
+	if err = d.Set("header", flattenSystemReplacemsgDeviceDetectionPortalHeader(o["header"], d, "header", sv)); err != nil {
 		if !fortiAPIPatch(o["header"]) {
 			return fmt.Errorf("Error reading header: %v", err)
 		}
 	}
 
-	if err = d.Set("format", flattenSystemReplacemsgDeviceDetectionPortalFormat(o["format"], d, "format")); err != nil {
+	if err = d.Set("format", flattenSystemReplacemsgDeviceDetectionPortalFormat(o["format"], d, "format", sv)); err != nil {
 		if !fortiAPIPatch(o["format"]) {
 			return fmt.Errorf("Error reading format: %v", err)
 		}
@@ -192,30 +193,31 @@ func refreshObjectSystemReplacemsgDeviceDetectionPortal(d *schema.ResourceData, 
 func flattenSystemReplacemsgDeviceDetectionPortalFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemReplacemsgDeviceDetectionPortalMsgType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemReplacemsgDeviceDetectionPortalMsgType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemReplacemsgDeviceDetectionPortalBuffer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemReplacemsgDeviceDetectionPortalBuffer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemReplacemsgDeviceDetectionPortalHeader(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemReplacemsgDeviceDetectionPortalHeader(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemReplacemsgDeviceDetectionPortalFormat(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemReplacemsgDeviceDetectionPortalFormat(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemReplacemsgDeviceDetectionPortal(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemReplacemsgDeviceDetectionPortal(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("msg_type"); ok {
-		t, err := expandSystemReplacemsgDeviceDetectionPortalMsgType(d, v, "msg_type")
+
+		t, err := expandSystemReplacemsgDeviceDetectionPortalMsgType(d, v, "msg_type", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -224,7 +226,8 @@ func getObjectSystemReplacemsgDeviceDetectionPortal(d *schema.ResourceData) (*ma
 	}
 
 	if v, ok := d.GetOk("buffer"); ok {
-		t, err := expandSystemReplacemsgDeviceDetectionPortalBuffer(d, v, "buffer")
+
+		t, err := expandSystemReplacemsgDeviceDetectionPortalBuffer(d, v, "buffer", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -233,7 +236,8 @@ func getObjectSystemReplacemsgDeviceDetectionPortal(d *schema.ResourceData) (*ma
 	}
 
 	if v, ok := d.GetOk("header"); ok {
-		t, err := expandSystemReplacemsgDeviceDetectionPortalHeader(d, v, "header")
+
+		t, err := expandSystemReplacemsgDeviceDetectionPortalHeader(d, v, "header", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -242,7 +246,8 @@ func getObjectSystemReplacemsgDeviceDetectionPortal(d *schema.ResourceData) (*ma
 	}
 
 	if v, ok := d.GetOk("format"); ok {
-		t, err := expandSystemReplacemsgDeviceDetectionPortalFormat(d, v, "format")
+
+		t, err := expandSystemReplacemsgDeviceDetectionPortalFormat(d, v, "format", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
