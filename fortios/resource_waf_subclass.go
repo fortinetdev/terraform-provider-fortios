@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -49,7 +50,7 @@ func resourceWafSubClassCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWafSubClass(d)
+	obj, err := getObjectWafSubClass(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WafSubClass resource while getting object: %v", err)
 	}
@@ -74,7 +75,7 @@ func resourceWafSubClassUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWafSubClass(d)
+	obj, err := getObjectWafSubClass(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WafSubClass resource while getting object: %v", err)
 	}
@@ -127,31 +128,31 @@ func resourceWafSubClassRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectWafSubClass(d, o)
+	err = refreshObjectWafSubClass(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading WafSubClass resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenWafSubClassName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWafSubClassName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWafSubClassId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWafSubClassId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectWafSubClass(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectWafSubClass(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenWafSubClassName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenWafSubClassName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("fosid", flattenWafSubClassId(o["id"], d, "fosid")); err != nil {
+	if err = d.Set("fosid", flattenWafSubClassId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
 			return fmt.Errorf("Error reading fosid: %v", err)
 		}
@@ -163,22 +164,23 @@ func refreshObjectWafSubClass(d *schema.ResourceData, o map[string]interface{}) 
 func flattenWafSubClassFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandWafSubClassName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWafSubClassName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWafSubClassId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWafSubClassId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectWafSubClass(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectWafSubClass(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandWafSubClassName(d, v, "name")
+
+		t, err := expandWafSubClassName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -187,7 +189,8 @@ func getObjectWafSubClass(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-		t, err := expandWafSubClassId(d, v, "fosid")
+
+		t, err := expandWafSubClassId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
