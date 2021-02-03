@@ -48,15 +48,17 @@ resource "fortios_system_fortiguard" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
+* `protocol` - Protocol used to communicate with the FortiGuard servers.
 * `port` - Port used to communicate with the FortiGuard servers.
 * `service_account_id` - Service account ID.
 * `load_balance_servers` - Number of servers to alternate between as first FortiGuard option.
 * `auto_join_forticloud` - Automatically connect to and login to FortiCloud.
 * `update_server_location` - Signature update server location.
 * `sandbox_region` - Cloud sandbox region.
+* `fortiguard_anycast` - Enable/disable use of FortiGuard's anycast network.
+* `fortiguard_anycast_source` - Configure which of Fortinet's servers to provide FortiGuard services in FortiGuard's anycast network. Default is Fortinet.
 * `antispam_force_off` - Enable/disable turning off the FortiGuard antispam service.
 * `antispam_cache` - Enable/disable FortiGuard antispam request caching. Uses a small amount of memory but improves performance.
 * `antispam_cache_ttl` - Time-to-live for antispam cache entries in seconds (300 - 86400). Lower times reduce the cache size. Higher times may improve performance since the cache will have more entries.
@@ -79,10 +81,19 @@ The following arguments are supported:
 * `webfilter_timeout` - (Required) Web filter query time out (1 - 30 sec, default = 7).
 * `sdns_server_ip` - IP address of the FortiDNS server.
 * `sdns_server_port` - Port used to communicate with FortiDNS servers.
+* `anycast_sdns_server_ip` - IP address of the FortiGuard anycast DNS rating server.
+* `anycast_sdns_server_port` - Port to connect to on the FortiGuard anycast DNS rating server.
+* `sdns_options` - Customization options for the FortiGuard DNS service.
 * `source_ip` - Source IPv4 address used to communicate with FortiGuard.
 * `source_ip6` - Source IPv6 address used to communicate with FortiGuard.
+* `proxy_server_ip` - IP address of the proxy server.
+* `proxy_server_port` - Port used to communicate with the proxy server.
+* `proxy_username` - Proxy user name.
+* `proxy_password` - Proxy user password.
 * `ddns_server_ip` - IP address of the FortiDDNS server.
 * `ddns_server_port` - Port used to communicate with FortiDDNS servers.
+* `interface_select_method` - Specify how to select outgoing interface to reach server.
+* `interface` - Specify outgoing interface to reach server.
 
 
 ## Attribute Reference
