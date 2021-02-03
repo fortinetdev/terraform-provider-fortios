@@ -18,6 +18,7 @@ Use this data source to get information on an fortios firewall policy64
 The following attributes are exported:
 
 * `policyid` - Policy ID.
+* `name` - Policy name.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `srcintf` - Source interface name.
 * `dstintf` - Destination interface name.
@@ -28,6 +29,7 @@ The following attributes are exported:
 * `schedule` - Schedule name.
 * `service` - Service name. The structure of `service` block is documented below.
 * `logtraffic` - Enable/disable policy log traffic.
+* `logtraffic_start` - Record logs when a session starts and ends.
 * `permit_any_host` - Enable/disable permit any host in.
 * `traffic_shaper` - Traffic shaper.
 * `traffic_shaper_reverse` - Reverse traffic shaper.
