@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -78,7 +79,7 @@ func resourceEndpointControlRegisteredForticlientCreate(d *schema.ResourceData, 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectEndpointControlRegisteredForticlient(d)
+	obj, err := getObjectEndpointControlRegisteredForticlient(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating EndpointControlRegisteredForticlient resource while getting object: %v", err)
 	}
@@ -103,7 +104,7 @@ func resourceEndpointControlRegisteredForticlientUpdate(d *schema.ResourceData, 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectEndpointControlRegisteredForticlient(d)
+	obj, err := getObjectEndpointControlRegisteredForticlient(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating EndpointControlRegisteredForticlient resource while getting object: %v", err)
 	}
@@ -156,81 +157,81 @@ func resourceEndpointControlRegisteredForticlientRead(d *schema.ResourceData, m 
 		return nil
 	}
 
-	err = refreshObjectEndpointControlRegisteredForticlient(d, o)
+	err = refreshObjectEndpointControlRegisteredForticlient(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading EndpointControlRegisteredForticlient resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenEndpointControlRegisteredForticlientUid(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenEndpointControlRegisteredForticlientUid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenEndpointControlRegisteredForticlientVdom(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenEndpointControlRegisteredForticlientVdom(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenEndpointControlRegisteredForticlientIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenEndpointControlRegisteredForticlientIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenEndpointControlRegisteredForticlientMac(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenEndpointControlRegisteredForticlientMac(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenEndpointControlRegisteredForticlientStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenEndpointControlRegisteredForticlientStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenEndpointControlRegisteredForticlientFlag(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenEndpointControlRegisteredForticlientFlag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenEndpointControlRegisteredForticlientRegFortigate(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenEndpointControlRegisteredForticlientRegFortigate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectEndpointControlRegisteredForticlient(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectEndpointControlRegisteredForticlient(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("uid", flattenEndpointControlRegisteredForticlientUid(o["uid"], d, "uid")); err != nil {
+	if err = d.Set("uid", flattenEndpointControlRegisteredForticlientUid(o["uid"], d, "uid", sv)); err != nil {
 		if !fortiAPIPatch(o["uid"]) {
 			return fmt.Errorf("Error reading uid: %v", err)
 		}
 	}
 
-	if err = d.Set("vdom", flattenEndpointControlRegisteredForticlientVdom(o["vdom"], d, "vdom")); err != nil {
+	if err = d.Set("vdom", flattenEndpointControlRegisteredForticlientVdom(o["vdom"], d, "vdom", sv)); err != nil {
 		if !fortiAPIPatch(o["vdom"]) {
 			return fmt.Errorf("Error reading vdom: %v", err)
 		}
 	}
 
-	if err = d.Set("ip", flattenEndpointControlRegisteredForticlientIp(o["ip"], d, "ip")); err != nil {
+	if err = d.Set("ip", flattenEndpointControlRegisteredForticlientIp(o["ip"], d, "ip", sv)); err != nil {
 		if !fortiAPIPatch(o["ip"]) {
 			return fmt.Errorf("Error reading ip: %v", err)
 		}
 	}
 
-	if err = d.Set("mac", flattenEndpointControlRegisteredForticlientMac(o["mac"], d, "mac")); err != nil {
+	if err = d.Set("mac", flattenEndpointControlRegisteredForticlientMac(o["mac"], d, "mac", sv)); err != nil {
 		if !fortiAPIPatch(o["mac"]) {
 			return fmt.Errorf("Error reading mac: %v", err)
 		}
 	}
 
-	if err = d.Set("status", flattenEndpointControlRegisteredForticlientStatus(o["status"], d, "status")); err != nil {
+	if err = d.Set("status", flattenEndpointControlRegisteredForticlientStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
 		}
 	}
 
-	if err = d.Set("flag", flattenEndpointControlRegisteredForticlientFlag(o["flag"], d, "flag")); err != nil {
+	if err = d.Set("flag", flattenEndpointControlRegisteredForticlientFlag(o["flag"], d, "flag", sv)); err != nil {
 		if !fortiAPIPatch(o["flag"]) {
 			return fmt.Errorf("Error reading flag: %v", err)
 		}
 	}
 
-	if err = d.Set("reg_fortigate", flattenEndpointControlRegisteredForticlientRegFortigate(o["reg-fortigate"], d, "reg_fortigate")); err != nil {
+	if err = d.Set("reg_fortigate", flattenEndpointControlRegisteredForticlientRegFortigate(o["reg-fortigate"], d, "reg_fortigate", sv)); err != nil {
 		if !fortiAPIPatch(o["reg-fortigate"]) {
 			return fmt.Errorf("Error reading reg_fortigate: %v", err)
 		}
@@ -242,42 +243,43 @@ func refreshObjectEndpointControlRegisteredForticlient(d *schema.ResourceData, o
 func flattenEndpointControlRegisteredForticlientFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandEndpointControlRegisteredForticlientUid(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandEndpointControlRegisteredForticlientUid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandEndpointControlRegisteredForticlientVdom(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandEndpointControlRegisteredForticlientVdom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandEndpointControlRegisteredForticlientIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandEndpointControlRegisteredForticlientIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandEndpointControlRegisteredForticlientMac(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandEndpointControlRegisteredForticlientMac(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandEndpointControlRegisteredForticlientStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandEndpointControlRegisteredForticlientStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandEndpointControlRegisteredForticlientFlag(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandEndpointControlRegisteredForticlientFlag(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandEndpointControlRegisteredForticlientRegFortigate(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandEndpointControlRegisteredForticlientRegFortigate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectEndpointControlRegisteredForticlient(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectEndpointControlRegisteredForticlient(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("uid"); ok {
-		t, err := expandEndpointControlRegisteredForticlientUid(d, v, "uid")
+
+		t, err := expandEndpointControlRegisteredForticlientUid(d, v, "uid", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -286,7 +288,8 @@ func getObjectEndpointControlRegisteredForticlient(d *schema.ResourceData) (*map
 	}
 
 	if v, ok := d.GetOk("vdom"); ok {
-		t, err := expandEndpointControlRegisteredForticlientVdom(d, v, "vdom")
+
+		t, err := expandEndpointControlRegisteredForticlientVdom(d, v, "vdom", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -295,7 +298,8 @@ func getObjectEndpointControlRegisteredForticlient(d *schema.ResourceData) (*map
 	}
 
 	if v, ok := d.GetOk("ip"); ok {
-		t, err := expandEndpointControlRegisteredForticlientIp(d, v, "ip")
+
+		t, err := expandEndpointControlRegisteredForticlientIp(d, v, "ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -304,7 +308,8 @@ func getObjectEndpointControlRegisteredForticlient(d *schema.ResourceData) (*map
 	}
 
 	if v, ok := d.GetOk("mac"); ok {
-		t, err := expandEndpointControlRegisteredForticlientMac(d, v, "mac")
+
+		t, err := expandEndpointControlRegisteredForticlientMac(d, v, "mac", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -313,7 +318,8 @@ func getObjectEndpointControlRegisteredForticlient(d *schema.ResourceData) (*map
 	}
 
 	if v, ok := d.GetOkExists("status"); ok {
-		t, err := expandEndpointControlRegisteredForticlientStatus(d, v, "status")
+
+		t, err := expandEndpointControlRegisteredForticlientStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -322,7 +328,8 @@ func getObjectEndpointControlRegisteredForticlient(d *schema.ResourceData) (*map
 	}
 
 	if v, ok := d.GetOkExists("flag"); ok {
-		t, err := expandEndpointControlRegisteredForticlientFlag(d, v, "flag")
+
+		t, err := expandEndpointControlRegisteredForticlientFlag(d, v, "flag", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -331,7 +338,8 @@ func getObjectEndpointControlRegisteredForticlient(d *schema.ResourceData) (*map
 	}
 
 	if v, ok := d.GetOk("reg_fortigate"); ok {
-		t, err := expandEndpointControlRegisteredForticlientRegFortigate(d, v, "reg_fortigate")
+
+		t, err := expandEndpointControlRegisteredForticlientRegFortigate(d, v, "reg_fortigate", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
