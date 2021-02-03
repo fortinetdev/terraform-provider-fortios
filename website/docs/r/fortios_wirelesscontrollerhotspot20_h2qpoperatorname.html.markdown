@@ -19,7 +19,6 @@ resource "fortios_wirelesscontrollerhotspot20_h2qpoperatorname" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Friendly name ID.
