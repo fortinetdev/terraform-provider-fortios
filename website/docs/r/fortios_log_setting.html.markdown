@@ -37,7 +37,6 @@ resource "fortios_log_setting" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `resolve_ip` - Enable/disable adding resolved domain names to traffic logs if possible.
