@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -138,7 +139,7 @@ func resourceWanoptCacheServiceUpdate(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWanoptCacheService(d)
+	obj, err := getObjectWanoptCacheService(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WanoptCacheService resource while getting object: %v", err)
 	}
@@ -191,30 +192,30 @@ func resourceWanoptCacheServiceRead(d *schema.ResourceData, m interface{}) error
 		return nil
 	}
 
-	err = refreshObjectWanoptCacheService(d, o)
+	err = refreshObjectWanoptCacheService(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading WanoptCacheService resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenWanoptCacheServicePreferScenario(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptCacheServicePreferScenario(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptCacheServiceCollaboration(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptCacheServiceCollaboration(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptCacheServiceDeviceId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptCacheServiceDeviceId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptCacheServiceAcceptableConnections(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptCacheServiceAcceptableConnections(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptCacheServiceDstPeer(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenWanoptCacheServiceDstPeer(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -235,27 +236,32 @@ func flattenWanoptCacheServiceDstPeer(v interface{}, d *schema.ResourceData, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device_id"
 		if _, ok := i["device-id"]; ok {
-			tmp["device_id"] = flattenWanoptCacheServiceDstPeerDeviceId(i["device-id"], d, pre_append)
+
+			tmp["device_id"] = flattenWanoptCacheServiceDstPeerDeviceId(i["device-id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_type"
 		if _, ok := i["auth-type"]; ok {
-			tmp["auth_type"] = flattenWanoptCacheServiceDstPeerAuthType(i["auth-type"], d, pre_append)
+
+			tmp["auth_type"] = flattenWanoptCacheServiceDstPeerAuthType(i["auth-type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "encode_type"
 		if _, ok := i["encode-type"]; ok {
-			tmp["encode_type"] = flattenWanoptCacheServiceDstPeerEncodeType(i["encode-type"], d, pre_append)
+
+			tmp["encode_type"] = flattenWanoptCacheServiceDstPeerEncodeType(i["encode-type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
 		if _, ok := i["priority"]; ok {
-			tmp["priority"] = flattenWanoptCacheServiceDstPeerPriority(i["priority"], d, pre_append)
+
+			tmp["priority"] = flattenWanoptCacheServiceDstPeerPriority(i["priority"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := i["ip"]; ok {
-			tmp["ip"] = flattenWanoptCacheServiceDstPeerIp(i["ip"], d, pre_append)
+
+			tmp["ip"] = flattenWanoptCacheServiceDstPeerIp(i["ip"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -267,27 +273,27 @@ func flattenWanoptCacheServiceDstPeer(v interface{}, d *schema.ResourceData, pre
 	return result
 }
 
-func flattenWanoptCacheServiceDstPeerDeviceId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptCacheServiceDstPeerDeviceId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptCacheServiceDstPeerAuthType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptCacheServiceDstPeerAuthType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptCacheServiceDstPeerEncodeType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptCacheServiceDstPeerEncodeType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptCacheServiceDstPeerPriority(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptCacheServiceDstPeerPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptCacheServiceDstPeerIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptCacheServiceDstPeerIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptCacheServiceSrcPeer(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenWanoptCacheServiceSrcPeer(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -308,27 +314,32 @@ func flattenWanoptCacheServiceSrcPeer(v interface{}, d *schema.ResourceData, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device_id"
 		if _, ok := i["device-id"]; ok {
-			tmp["device_id"] = flattenWanoptCacheServiceSrcPeerDeviceId(i["device-id"], d, pre_append)
+
+			tmp["device_id"] = flattenWanoptCacheServiceSrcPeerDeviceId(i["device-id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_type"
 		if _, ok := i["auth-type"]; ok {
-			tmp["auth_type"] = flattenWanoptCacheServiceSrcPeerAuthType(i["auth-type"], d, pre_append)
+
+			tmp["auth_type"] = flattenWanoptCacheServiceSrcPeerAuthType(i["auth-type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "encode_type"
 		if _, ok := i["encode-type"]; ok {
-			tmp["encode_type"] = flattenWanoptCacheServiceSrcPeerEncodeType(i["encode-type"], d, pre_append)
+
+			tmp["encode_type"] = flattenWanoptCacheServiceSrcPeerEncodeType(i["encode-type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
 		if _, ok := i["priority"]; ok {
-			tmp["priority"] = flattenWanoptCacheServiceSrcPeerPriority(i["priority"], d, pre_append)
+
+			tmp["priority"] = flattenWanoptCacheServiceSrcPeerPriority(i["priority"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := i["ip"]; ok {
-			tmp["ip"] = flattenWanoptCacheServiceSrcPeerIp(i["ip"], d, pre_append)
+
+			tmp["ip"] = flattenWanoptCacheServiceSrcPeerIp(i["ip"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -340,62 +351,62 @@ func flattenWanoptCacheServiceSrcPeer(v interface{}, d *schema.ResourceData, pre
 	return result
 }
 
-func flattenWanoptCacheServiceSrcPeerDeviceId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptCacheServiceSrcPeerDeviceId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptCacheServiceSrcPeerAuthType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptCacheServiceSrcPeerAuthType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptCacheServiceSrcPeerEncodeType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptCacheServiceSrcPeerEncodeType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptCacheServiceSrcPeerPriority(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptCacheServiceSrcPeerPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptCacheServiceSrcPeerIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptCacheServiceSrcPeerIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectWanoptCacheService(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectWanoptCacheService(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("prefer_scenario", flattenWanoptCacheServicePreferScenario(o["prefer-scenario"], d, "prefer_scenario")); err != nil {
+	if err = d.Set("prefer_scenario", flattenWanoptCacheServicePreferScenario(o["prefer-scenario"], d, "prefer_scenario", sv)); err != nil {
 		if !fortiAPIPatch(o["prefer-scenario"]) {
 			return fmt.Errorf("Error reading prefer_scenario: %v", err)
 		}
 	}
 
-	if err = d.Set("collaboration", flattenWanoptCacheServiceCollaboration(o["collaboration"], d, "collaboration")); err != nil {
+	if err = d.Set("collaboration", flattenWanoptCacheServiceCollaboration(o["collaboration"], d, "collaboration", sv)); err != nil {
 		if !fortiAPIPatch(o["collaboration"]) {
 			return fmt.Errorf("Error reading collaboration: %v", err)
 		}
 	}
 
-	if err = d.Set("device_id", flattenWanoptCacheServiceDeviceId(o["device-id"], d, "device_id")); err != nil {
+	if err = d.Set("device_id", flattenWanoptCacheServiceDeviceId(o["device-id"], d, "device_id", sv)); err != nil {
 		if !fortiAPIPatch(o["device-id"]) {
 			return fmt.Errorf("Error reading device_id: %v", err)
 		}
 	}
 
-	if err = d.Set("acceptable_connections", flattenWanoptCacheServiceAcceptableConnections(o["acceptable-connections"], d, "acceptable_connections")); err != nil {
+	if err = d.Set("acceptable_connections", flattenWanoptCacheServiceAcceptableConnections(o["acceptable-connections"], d, "acceptable_connections", sv)); err != nil {
 		if !fortiAPIPatch(o["acceptable-connections"]) {
 			return fmt.Errorf("Error reading acceptable_connections: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("dst_peer", flattenWanoptCacheServiceDstPeer(o["dst-peer"], d, "dst_peer")); err != nil {
+		if err = d.Set("dst_peer", flattenWanoptCacheServiceDstPeer(o["dst-peer"], d, "dst_peer", sv)); err != nil {
 			if !fortiAPIPatch(o["dst-peer"]) {
 				return fmt.Errorf("Error reading dst_peer: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("dst_peer"); ok {
-			if err = d.Set("dst_peer", flattenWanoptCacheServiceDstPeer(o["dst-peer"], d, "dst_peer")); err != nil {
+			if err = d.Set("dst_peer", flattenWanoptCacheServiceDstPeer(o["dst-peer"], d, "dst_peer", sv)); err != nil {
 				if !fortiAPIPatch(o["dst-peer"]) {
 					return fmt.Errorf("Error reading dst_peer: %v", err)
 				}
@@ -404,14 +415,14 @@ func refreshObjectWanoptCacheService(d *schema.ResourceData, o map[string]interf
 	}
 
 	if isImportTable() {
-		if err = d.Set("src_peer", flattenWanoptCacheServiceSrcPeer(o["src-peer"], d, "src_peer")); err != nil {
+		if err = d.Set("src_peer", flattenWanoptCacheServiceSrcPeer(o["src-peer"], d, "src_peer", sv)); err != nil {
 			if !fortiAPIPatch(o["src-peer"]) {
 				return fmt.Errorf("Error reading src_peer: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("src_peer"); ok {
-			if err = d.Set("src_peer", flattenWanoptCacheServiceSrcPeer(o["src-peer"], d, "src_peer")); err != nil {
+			if err = d.Set("src_peer", flattenWanoptCacheServiceSrcPeer(o["src-peer"], d, "src_peer", sv)); err != nil {
 				if !fortiAPIPatch(o["src-peer"]) {
 					return fmt.Errorf("Error reading src_peer: %v", err)
 				}
@@ -425,26 +436,26 @@ func refreshObjectWanoptCacheService(d *schema.ResourceData, o map[string]interf
 func flattenWanoptCacheServiceFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandWanoptCacheServicePreferScenario(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptCacheServicePreferScenario(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptCacheServiceCollaboration(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptCacheServiceCollaboration(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptCacheServiceDeviceId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptCacheServiceDeviceId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptCacheServiceAcceptableConnections(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptCacheServiceAcceptableConnections(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptCacheServiceDstPeer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptCacheServiceDstPeer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -460,27 +471,32 @@ func expandWanoptCacheServiceDstPeer(d *schema.ResourceData, v interface{}, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device_id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["device-id"], _ = expandWanoptCacheServiceDstPeerDeviceId(d, i["device_id"], pre_append)
+
+			tmp["device-id"], _ = expandWanoptCacheServiceDstPeerDeviceId(d, i["device_id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_type"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["auth-type"], _ = expandWanoptCacheServiceDstPeerAuthType(d, i["auth_type"], pre_append)
+
+			tmp["auth-type"], _ = expandWanoptCacheServiceDstPeerAuthType(d, i["auth_type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "encode_type"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["encode-type"], _ = expandWanoptCacheServiceDstPeerEncodeType(d, i["encode_type"], pre_append)
+
+			tmp["encode-type"], _ = expandWanoptCacheServiceDstPeerEncodeType(d, i["encode_type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["priority"], _ = expandWanoptCacheServiceDstPeerPriority(d, i["priority"], pre_append)
+
+			tmp["priority"], _ = expandWanoptCacheServiceDstPeerPriority(d, i["priority"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["ip"], _ = expandWanoptCacheServiceDstPeerIp(d, i["ip"], pre_append)
+
+			tmp["ip"], _ = expandWanoptCacheServiceDstPeerIp(d, i["ip"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -491,27 +507,27 @@ func expandWanoptCacheServiceDstPeer(d *schema.ResourceData, v interface{}, pre 
 	return result, nil
 }
 
-func expandWanoptCacheServiceDstPeerDeviceId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptCacheServiceDstPeerDeviceId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptCacheServiceDstPeerAuthType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptCacheServiceDstPeerAuthType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptCacheServiceDstPeerEncodeType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptCacheServiceDstPeerEncodeType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptCacheServiceDstPeerPriority(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptCacheServiceDstPeerPriority(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptCacheServiceDstPeerIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptCacheServiceDstPeerIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptCacheServiceSrcPeer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptCacheServiceSrcPeer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -527,27 +543,32 @@ func expandWanoptCacheServiceSrcPeer(d *schema.ResourceData, v interface{}, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device_id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["device-id"], _ = expandWanoptCacheServiceSrcPeerDeviceId(d, i["device_id"], pre_append)
+
+			tmp["device-id"], _ = expandWanoptCacheServiceSrcPeerDeviceId(d, i["device_id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_type"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["auth-type"], _ = expandWanoptCacheServiceSrcPeerAuthType(d, i["auth_type"], pre_append)
+
+			tmp["auth-type"], _ = expandWanoptCacheServiceSrcPeerAuthType(d, i["auth_type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "encode_type"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["encode-type"], _ = expandWanoptCacheServiceSrcPeerEncodeType(d, i["encode_type"], pre_append)
+
+			tmp["encode-type"], _ = expandWanoptCacheServiceSrcPeerEncodeType(d, i["encode_type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "priority"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["priority"], _ = expandWanoptCacheServiceSrcPeerPriority(d, i["priority"], pre_append)
+
+			tmp["priority"], _ = expandWanoptCacheServiceSrcPeerPriority(d, i["priority"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["ip"], _ = expandWanoptCacheServiceSrcPeerIp(d, i["ip"], pre_append)
+
+			tmp["ip"], _ = expandWanoptCacheServiceSrcPeerIp(d, i["ip"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -558,31 +579,32 @@ func expandWanoptCacheServiceSrcPeer(d *schema.ResourceData, v interface{}, pre 
 	return result, nil
 }
 
-func expandWanoptCacheServiceSrcPeerDeviceId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptCacheServiceSrcPeerDeviceId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptCacheServiceSrcPeerAuthType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptCacheServiceSrcPeerAuthType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptCacheServiceSrcPeerEncodeType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptCacheServiceSrcPeerEncodeType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptCacheServiceSrcPeerPriority(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptCacheServiceSrcPeerPriority(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptCacheServiceSrcPeerIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptCacheServiceSrcPeerIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectWanoptCacheService(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectWanoptCacheService(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("prefer_scenario"); ok {
-		t, err := expandWanoptCacheServicePreferScenario(d, v, "prefer_scenario")
+
+		t, err := expandWanoptCacheServicePreferScenario(d, v, "prefer_scenario", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -591,7 +613,8 @@ func getObjectWanoptCacheService(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("collaboration"); ok {
-		t, err := expandWanoptCacheServiceCollaboration(d, v, "collaboration")
+
+		t, err := expandWanoptCacheServiceCollaboration(d, v, "collaboration", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -600,7 +623,8 @@ func getObjectWanoptCacheService(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("device_id"); ok {
-		t, err := expandWanoptCacheServiceDeviceId(d, v, "device_id")
+
+		t, err := expandWanoptCacheServiceDeviceId(d, v, "device_id", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -609,7 +633,8 @@ func getObjectWanoptCacheService(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("acceptable_connections"); ok {
-		t, err := expandWanoptCacheServiceAcceptableConnections(d, v, "acceptable_connections")
+
+		t, err := expandWanoptCacheServiceAcceptableConnections(d, v, "acceptable_connections", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -618,7 +643,8 @@ func getObjectWanoptCacheService(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("dst_peer"); ok {
-		t, err := expandWanoptCacheServiceDstPeer(d, v, "dst_peer")
+
+		t, err := expandWanoptCacheServiceDstPeer(d, v, "dst_peer", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -627,7 +653,8 @@ func getObjectWanoptCacheService(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("src_peer"); ok {
-		t, err := expandWanoptCacheServiceSrcPeer(d, v, "src_peer")
+
+		t, err := expandWanoptCacheServiceSrcPeer(d, v, "src_peer", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
