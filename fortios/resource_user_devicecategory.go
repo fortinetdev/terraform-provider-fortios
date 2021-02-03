@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -53,7 +54,7 @@ func resourceUserDeviceCategoryCreate(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectUserDeviceCategory(d)
+	obj, err := getObjectUserDeviceCategory(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating UserDeviceCategory resource while getting object: %v", err)
 	}
@@ -78,7 +79,7 @@ func resourceUserDeviceCategoryUpdate(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectUserDeviceCategory(d)
+	obj, err := getObjectUserDeviceCategory(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating UserDeviceCategory resource while getting object: %v", err)
 	}
@@ -131,41 +132,41 @@ func resourceUserDeviceCategoryRead(d *schema.ResourceData, m interface{}) error
 		return nil
 	}
 
-	err = refreshObjectUserDeviceCategory(d, o)
+	err = refreshObjectUserDeviceCategory(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading UserDeviceCategory resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenUserDeviceCategoryName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserDeviceCategoryName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserDeviceCategoryDesc(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserDeviceCategoryDesc(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserDeviceCategoryComment(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserDeviceCategoryComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectUserDeviceCategory(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectUserDeviceCategory(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenUserDeviceCategoryName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenUserDeviceCategoryName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("desc", flattenUserDeviceCategoryDesc(o["desc"], d, "desc")); err != nil {
+	if err = d.Set("desc", flattenUserDeviceCategoryDesc(o["desc"], d, "desc", sv)); err != nil {
 		if !fortiAPIPatch(o["desc"]) {
 			return fmt.Errorf("Error reading desc: %v", err)
 		}
 	}
 
-	if err = d.Set("comment", flattenUserDeviceCategoryComment(o["comment"], d, "comment")); err != nil {
+	if err = d.Set("comment", flattenUserDeviceCategoryComment(o["comment"], d, "comment", sv)); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
 		}
@@ -177,26 +178,27 @@ func refreshObjectUserDeviceCategory(d *schema.ResourceData, o map[string]interf
 func flattenUserDeviceCategoryFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandUserDeviceCategoryName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserDeviceCategoryName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserDeviceCategoryDesc(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserDeviceCategoryDesc(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserDeviceCategoryComment(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserDeviceCategoryComment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectUserDeviceCategory(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectUserDeviceCategory(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandUserDeviceCategoryName(d, v, "name")
+
+		t, err := expandUserDeviceCategoryName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -205,7 +207,8 @@ func getObjectUserDeviceCategory(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("desc"); ok {
-		t, err := expandUserDeviceCategoryDesc(d, v, "desc")
+
+		t, err := expandUserDeviceCategoryDesc(d, v, "desc", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -214,7 +217,8 @@ func getObjectUserDeviceCategory(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-		t, err := expandUserDeviceCategoryComment(d, v, "comment")
+
+		t, err := expandUserDeviceCategoryComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
