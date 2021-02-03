@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -56,7 +57,7 @@ func resourceFirewallIppool6Create(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectFirewallIppool6(d)
+	obj, err := getObjectFirewallIppool6(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallIppool6 resource while getting object: %v", err)
 	}
@@ -81,7 +82,7 @@ func resourceFirewallIppool6Update(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectFirewallIppool6(d)
+	obj, err := getObjectFirewallIppool6(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallIppool6 resource while getting object: %v", err)
 	}
@@ -134,51 +135,51 @@ func resourceFirewallIppool6Read(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectFirewallIppool6(d, o)
+	err = refreshObjectFirewallIppool6(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallIppool6 resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenFirewallIppool6Name(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallIppool6Name(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallIppool6Startip(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallIppool6Startip(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallIppool6Endip(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallIppool6Endip(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallIppool6Comments(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallIppool6Comments(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectFirewallIppool6(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectFirewallIppool6(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenFirewallIppool6Name(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenFirewallIppool6Name(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("startip", flattenFirewallIppool6Startip(o["startip"], d, "startip")); err != nil {
+	if err = d.Set("startip", flattenFirewallIppool6Startip(o["startip"], d, "startip", sv)); err != nil {
 		if !fortiAPIPatch(o["startip"]) {
 			return fmt.Errorf("Error reading startip: %v", err)
 		}
 	}
 
-	if err = d.Set("endip", flattenFirewallIppool6Endip(o["endip"], d, "endip")); err != nil {
+	if err = d.Set("endip", flattenFirewallIppool6Endip(o["endip"], d, "endip", sv)); err != nil {
 		if !fortiAPIPatch(o["endip"]) {
 			return fmt.Errorf("Error reading endip: %v", err)
 		}
 	}
 
-	if err = d.Set("comments", flattenFirewallIppool6Comments(o["comments"], d, "comments")); err != nil {
+	if err = d.Set("comments", flattenFirewallIppool6Comments(o["comments"], d, "comments", sv)); err != nil {
 		if !fortiAPIPatch(o["comments"]) {
 			return fmt.Errorf("Error reading comments: %v", err)
 		}
@@ -190,30 +191,31 @@ func refreshObjectFirewallIppool6(d *schema.ResourceData, o map[string]interface
 func flattenFirewallIppool6FortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandFirewallIppool6Name(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallIppool6Name(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallIppool6Startip(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallIppool6Startip(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallIppool6Endip(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallIppool6Endip(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallIppool6Comments(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallIppool6Comments(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectFirewallIppool6(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectFirewallIppool6(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandFirewallIppool6Name(d, v, "name")
+
+		t, err := expandFirewallIppool6Name(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -222,7 +224,8 @@ func getObjectFirewallIppool6(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("startip"); ok {
-		t, err := expandFirewallIppool6Startip(d, v, "startip")
+
+		t, err := expandFirewallIppool6Startip(d, v, "startip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -231,7 +234,8 @@ func getObjectFirewallIppool6(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("endip"); ok {
-		t, err := expandFirewallIppool6Endip(d, v, "endip")
+
+		t, err := expandFirewallIppool6Endip(d, v, "endip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -240,7 +244,8 @@ func getObjectFirewallIppool6(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-		t, err := expandFirewallIppool6Comments(d, v, "comments")
+
+		t, err := expandFirewallIppool6Comments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
