@@ -23,7 +23,6 @@ resource "fortios_firewall_authportal" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `groups` - Firewall user groups permitted to authenticate through this portal. Separate group names with spaces. The structure of `groups` block is documented below.
