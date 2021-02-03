@@ -22,7 +22,6 @@ resource "fortios_system_vdomsflow" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `vdom_sflow` - Enable/disable the sFlow configuration for the current VDOM.
