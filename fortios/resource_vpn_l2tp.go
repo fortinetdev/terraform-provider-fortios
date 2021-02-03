@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -54,6 +55,23 @@ func resourceVpnL2Tp() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"lcp_echo_interval": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 32767),
+				Optional:     true,
+				Computed:     true,
+			},
+			"lcp_max_echo_fails": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 32767),
+				Optional:     true,
+				Computed:     true,
+			},
+			"compress": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -63,7 +81,7 @@ func resourceVpnL2TpUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectVpnL2Tp(d)
+	obj, err := getObjectVpnL2Tp(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating VpnL2Tp resource while getting object: %v", err)
 	}
@@ -116,63 +134,93 @@ func resourceVpnL2TpRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectVpnL2Tp(d, o)
+	err = refreshObjectVpnL2Tp(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading VpnL2Tp resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenVpnL2TpEip(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnL2TpEip(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenVpnL2TpSip(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnL2TpSip(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenVpnL2TpStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnL2TpStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenVpnL2TpUsrgrp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnL2TpUsrgrp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenVpnL2TpEnforceIpsec(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnL2TpEnforceIpsec(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectVpnL2Tp(d *schema.ResourceData, o map[string]interface{}) error {
+func flattenVpnL2TpLcpEchoInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnL2TpLcpMaxEchoFails(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenVpnL2TpCompress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func refreshObjectVpnL2Tp(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("eip", flattenVpnL2TpEip(o["eip"], d, "eip")); err != nil {
+	if err = d.Set("eip", flattenVpnL2TpEip(o["eip"], d, "eip", sv)); err != nil {
 		if !fortiAPIPatch(o["eip"]) {
 			return fmt.Errorf("Error reading eip: %v", err)
 		}
 	}
 
-	if err = d.Set("sip", flattenVpnL2TpSip(o["sip"], d, "sip")); err != nil {
+	if err = d.Set("sip", flattenVpnL2TpSip(o["sip"], d, "sip", sv)); err != nil {
 		if !fortiAPIPatch(o["sip"]) {
 			return fmt.Errorf("Error reading sip: %v", err)
 		}
 	}
 
-	if err = d.Set("status", flattenVpnL2TpStatus(o["status"], d, "status")); err != nil {
+	if err = d.Set("status", flattenVpnL2TpStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
 		}
 	}
 
-	if err = d.Set("usrgrp", flattenVpnL2TpUsrgrp(o["usrgrp"], d, "usrgrp")); err != nil {
+	if err = d.Set("usrgrp", flattenVpnL2TpUsrgrp(o["usrgrp"], d, "usrgrp", sv)); err != nil {
 		if !fortiAPIPatch(o["usrgrp"]) {
 			return fmt.Errorf("Error reading usrgrp: %v", err)
 		}
 	}
 
-	if err = d.Set("enforce_ipsec", flattenVpnL2TpEnforceIpsec(o["enforce-ipsec"], d, "enforce_ipsec")); err != nil {
+	if err = d.Set("enforce_ipsec", flattenVpnL2TpEnforceIpsec(o["enforce-ipsec"], d, "enforce_ipsec", sv)); err != nil {
 		if !fortiAPIPatch(o["enforce-ipsec"]) {
 			return fmt.Errorf("Error reading enforce_ipsec: %v", err)
+		}
+	}
+
+	if err = d.Set("lcp_echo_interval", flattenVpnL2TpLcpEchoInterval(o["lcp-echo-interval"], d, "lcp_echo_interval", sv)); err != nil {
+		if !fortiAPIPatch(o["lcp-echo-interval"]) {
+			return fmt.Errorf("Error reading lcp_echo_interval: %v", err)
+		}
+	}
+
+	if err = d.Set("lcp_max_echo_fails", flattenVpnL2TpLcpMaxEchoFails(o["lcp-max-echo-fails"], d, "lcp_max_echo_fails", sv)); err != nil {
+		if !fortiAPIPatch(o["lcp-max-echo-fails"]) {
+			return fmt.Errorf("Error reading lcp_max_echo_fails: %v", err)
+		}
+	}
+
+	if err = d.Set("compress", flattenVpnL2TpCompress(o["compress"], d, "compress", sv)); err != nil {
+		if !fortiAPIPatch(o["compress"]) {
+			return fmt.Errorf("Error reading compress: %v", err)
 		}
 	}
 
@@ -182,34 +230,47 @@ func refreshObjectVpnL2Tp(d *schema.ResourceData, o map[string]interface{}) erro
 func flattenVpnL2TpFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandVpnL2TpEip(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnL2TpEip(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandVpnL2TpSip(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnL2TpSip(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandVpnL2TpStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnL2TpStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandVpnL2TpUsrgrp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnL2TpUsrgrp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandVpnL2TpEnforceIpsec(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnL2TpEnforceIpsec(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectVpnL2Tp(d *schema.ResourceData) (*map[string]interface{}, error) {
+func expandVpnL2TpLcpEchoInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnL2TpLcpMaxEchoFails(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandVpnL2TpCompress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func getObjectVpnL2Tp(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("eip"); ok {
-		t, err := expandVpnL2TpEip(d, v, "eip")
+
+		t, err := expandVpnL2TpEip(d, v, "eip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -218,7 +279,8 @@ func getObjectVpnL2Tp(d *schema.ResourceData) (*map[string]interface{}, error) {
 	}
 
 	if v, ok := d.GetOk("sip"); ok {
-		t, err := expandVpnL2TpSip(d, v, "sip")
+
+		t, err := expandVpnL2TpSip(d, v, "sip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -227,7 +289,8 @@ func getObjectVpnL2Tp(d *schema.ResourceData) (*map[string]interface{}, error) {
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-		t, err := expandVpnL2TpStatus(d, v, "status")
+
+		t, err := expandVpnL2TpStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -236,7 +299,8 @@ func getObjectVpnL2Tp(d *schema.ResourceData) (*map[string]interface{}, error) {
 	}
 
 	if v, ok := d.GetOk("usrgrp"); ok {
-		t, err := expandVpnL2TpUsrgrp(d, v, "usrgrp")
+
+		t, err := expandVpnL2TpUsrgrp(d, v, "usrgrp", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -245,11 +309,42 @@ func getObjectVpnL2Tp(d *schema.ResourceData) (*map[string]interface{}, error) {
 	}
 
 	if v, ok := d.GetOk("enforce_ipsec"); ok {
-		t, err := expandVpnL2TpEnforceIpsec(d, v, "enforce_ipsec")
+
+		t, err := expandVpnL2TpEnforceIpsec(d, v, "enforce_ipsec", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
 			obj["enforce-ipsec"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("lcp_echo_interval"); ok {
+
+		t, err := expandVpnL2TpLcpEchoInterval(d, v, "lcp_echo_interval", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["lcp-echo-interval"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("lcp_max_echo_fails"); ok {
+
+		t, err := expandVpnL2TpLcpMaxEchoFails(d, v, "lcp_max_echo_fails", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["lcp-max-echo-fails"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("compress"); ok {
+
+		t, err := expandVpnL2TpCompress(d, v, "compress", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["compress"] = t
 		}
 	}
 
