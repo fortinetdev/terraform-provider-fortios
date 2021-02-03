@@ -11,7 +11,6 @@ Configure application signatures.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Application name.
@@ -25,9 +24,14 @@ The following arguments are supported:
 * `technology` - Application technology.
 * `behavior` - Application behavior.
 * `vendor` - Application vendor.
+* `parameters` - Application parameters. The structure of `parameters` block is documented below.
 * `parameter` - Application parameter name.
 * `metadata` - Meta data. The structure of `metadata` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
+The `parameters` block supports:
+
+* `name` - Parameter name.
 
 The `metadata` block supports:
 
