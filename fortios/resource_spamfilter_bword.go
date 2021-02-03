@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -107,7 +108,7 @@ func resourceSpamfilterBwordCreate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSpamfilterBword(d)
+	obj, err := getObjectSpamfilterBword(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SpamfilterBword resource while getting object: %v", err)
 	}
@@ -132,7 +133,7 @@ func resourceSpamfilterBwordUpdate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSpamfilterBword(d)
+	obj, err := getObjectSpamfilterBword(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SpamfilterBword resource while getting object: %v", err)
 	}
@@ -185,26 +186,26 @@ func resourceSpamfilterBwordRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectSpamfilterBword(d, o)
+	err = refreshObjectSpamfilterBword(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SpamfilterBword resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSpamfilterBwordId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSpamfilterBwordId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSpamfilterBwordName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSpamfilterBwordName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSpamfilterBwordComment(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSpamfilterBwordComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSpamfilterBwordEntries(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSpamfilterBwordEntries(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -225,42 +226,50 @@ func flattenSpamfilterBwordEntries(v interface{}, d *schema.ResourceData, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenSpamfilterBwordEntriesStatus(i["status"], d, pre_append)
+
+			tmp["status"] = flattenSpamfilterBwordEntriesStatus(i["status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSpamfilterBwordEntriesId(i["id"], d, pre_append)
+
+			tmp["id"] = flattenSpamfilterBwordEntriesId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
 		if _, ok := i["pattern"]; ok {
-			tmp["pattern"] = flattenSpamfilterBwordEntriesPattern(i["pattern"], d, pre_append)
+
+			tmp["pattern"] = flattenSpamfilterBwordEntriesPattern(i["pattern"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern_type"
 		if _, ok := i["pattern-type"]; ok {
-			tmp["pattern_type"] = flattenSpamfilterBwordEntriesPatternType(i["pattern-type"], d, pre_append)
+
+			tmp["pattern_type"] = flattenSpamfilterBwordEntriesPatternType(i["pattern-type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenSpamfilterBwordEntriesAction(i["action"], d, pre_append)
+
+			tmp["action"] = flattenSpamfilterBwordEntriesAction(i["action"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "where"
 		if _, ok := i["where"]; ok {
-			tmp["where"] = flattenSpamfilterBwordEntriesWhere(i["where"], d, pre_append)
+
+			tmp["where"] = flattenSpamfilterBwordEntriesWhere(i["where"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "language"
 		if _, ok := i["language"]; ok {
-			tmp["language"] = flattenSpamfilterBwordEntriesLanguage(i["language"], d, pre_append)
+
+			tmp["language"] = flattenSpamfilterBwordEntriesLanguage(i["language"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "score"
 		if _, ok := i["score"]; ok {
-			tmp["score"] = flattenSpamfilterBwordEntriesScore(i["score"], d, pre_append)
+
+			tmp["score"] = flattenSpamfilterBwordEntriesScore(i["score"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -272,68 +281,68 @@ func flattenSpamfilterBwordEntries(v interface{}, d *schema.ResourceData, pre st
 	return result
 }
 
-func flattenSpamfilterBwordEntriesStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSpamfilterBwordEntriesStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSpamfilterBwordEntriesId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSpamfilterBwordEntriesId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSpamfilterBwordEntriesPattern(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSpamfilterBwordEntriesPattern(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSpamfilterBwordEntriesPatternType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSpamfilterBwordEntriesPatternType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSpamfilterBwordEntriesAction(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSpamfilterBwordEntriesAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSpamfilterBwordEntriesWhere(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSpamfilterBwordEntriesWhere(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSpamfilterBwordEntriesLanguage(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSpamfilterBwordEntriesLanguage(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSpamfilterBwordEntriesScore(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSpamfilterBwordEntriesScore(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSpamfilterBword(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSpamfilterBword(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("fosid", flattenSpamfilterBwordId(o["id"], d, "fosid")); err != nil {
+	if err = d.Set("fosid", flattenSpamfilterBwordId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
 			return fmt.Errorf("Error reading fosid: %v", err)
 		}
 	}
 
-	if err = d.Set("name", flattenSpamfilterBwordName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenSpamfilterBwordName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("comment", flattenSpamfilterBwordComment(o["comment"], d, "comment")); err != nil {
+	if err = d.Set("comment", flattenSpamfilterBwordComment(o["comment"], d, "comment", sv)); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("entries", flattenSpamfilterBwordEntries(o["entries"], d, "entries")); err != nil {
+		if err = d.Set("entries", flattenSpamfilterBwordEntries(o["entries"], d, "entries", sv)); err != nil {
 			if !fortiAPIPatch(o["entries"]) {
 				return fmt.Errorf("Error reading entries: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("entries"); ok {
-			if err = d.Set("entries", flattenSpamfilterBwordEntries(o["entries"], d, "entries")); err != nil {
+			if err = d.Set("entries", flattenSpamfilterBwordEntries(o["entries"], d, "entries", sv)); err != nil {
 				if !fortiAPIPatch(o["entries"]) {
 					return fmt.Errorf("Error reading entries: %v", err)
 				}
@@ -347,22 +356,22 @@ func refreshObjectSpamfilterBword(d *schema.ResourceData, o map[string]interface
 func flattenSpamfilterBwordFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSpamfilterBwordId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSpamfilterBwordId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSpamfilterBwordName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSpamfilterBwordName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSpamfilterBwordComment(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSpamfilterBwordComment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSpamfilterBwordEntries(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSpamfilterBwordEntries(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -378,42 +387,50 @@ func expandSpamfilterBwordEntries(d *schema.ResourceData, v interface{}, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["status"], _ = expandSpamfilterBwordEntriesStatus(d, i["status"], pre_append)
+
+			tmp["status"], _ = expandSpamfilterBwordEntriesStatus(d, i["status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandSpamfilterBwordEntriesId(d, i["id"], pre_append)
+
+			tmp["id"], _ = expandSpamfilterBwordEntriesId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["pattern"], _ = expandSpamfilterBwordEntriesPattern(d, i["pattern"], pre_append)
+
+			tmp["pattern"], _ = expandSpamfilterBwordEntriesPattern(d, i["pattern"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern_type"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["pattern-type"], _ = expandSpamfilterBwordEntriesPatternType(d, i["pattern_type"], pre_append)
+
+			tmp["pattern-type"], _ = expandSpamfilterBwordEntriesPatternType(d, i["pattern_type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["action"], _ = expandSpamfilterBwordEntriesAction(d, i["action"], pre_append)
+
+			tmp["action"], _ = expandSpamfilterBwordEntriesAction(d, i["action"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "where"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["where"], _ = expandSpamfilterBwordEntriesWhere(d, i["where"], pre_append)
+
+			tmp["where"], _ = expandSpamfilterBwordEntriesWhere(d, i["where"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "language"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["language"], _ = expandSpamfilterBwordEntriesLanguage(d, i["language"], pre_append)
+
+			tmp["language"], _ = expandSpamfilterBwordEntriesLanguage(d, i["language"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "score"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["score"], _ = expandSpamfilterBwordEntriesScore(d, i["score"], pre_append)
+
+			tmp["score"], _ = expandSpamfilterBwordEntriesScore(d, i["score"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -424,43 +441,44 @@ func expandSpamfilterBwordEntries(d *schema.ResourceData, v interface{}, pre str
 	return result, nil
 }
 
-func expandSpamfilterBwordEntriesStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSpamfilterBwordEntriesStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSpamfilterBwordEntriesId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSpamfilterBwordEntriesId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSpamfilterBwordEntriesPattern(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSpamfilterBwordEntriesPattern(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSpamfilterBwordEntriesPatternType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSpamfilterBwordEntriesPatternType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSpamfilterBwordEntriesAction(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSpamfilterBwordEntriesAction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSpamfilterBwordEntriesWhere(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSpamfilterBwordEntriesWhere(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSpamfilterBwordEntriesLanguage(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSpamfilterBwordEntriesLanguage(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSpamfilterBwordEntriesScore(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSpamfilterBwordEntriesScore(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSpamfilterBword(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSpamfilterBword(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-		t, err := expandSpamfilterBwordId(d, v, "fosid")
+
+		t, err := expandSpamfilterBwordId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -469,7 +487,8 @@ func getObjectSpamfilterBword(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandSpamfilterBwordName(d, v, "name")
+
+		t, err := expandSpamfilterBwordName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -478,7 +497,8 @@ func getObjectSpamfilterBword(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-		t, err := expandSpamfilterBwordComment(d, v, "comment")
+
+		t, err := expandSpamfilterBwordComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -487,7 +507,8 @@ func getObjectSpamfilterBword(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("entries"); ok {
-		t, err := expandSpamfilterBwordEntries(d, v, "entries")
+
+		t, err := expandSpamfilterBwordEntries(d, v, "entries", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
