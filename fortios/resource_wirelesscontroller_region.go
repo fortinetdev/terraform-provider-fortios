@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -66,7 +67,7 @@ func resourceWirelessControllerRegionCreate(d *schema.ResourceData, m interface{
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWirelessControllerRegion(d)
+	obj, err := getObjectWirelessControllerRegion(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WirelessControllerRegion resource while getting object: %v", err)
 	}
@@ -91,7 +92,7 @@ func resourceWirelessControllerRegionUpdate(d *schema.ResourceData, m interface{
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWirelessControllerRegion(d)
+	obj, err := getObjectWirelessControllerRegion(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerRegion resource while getting object: %v", err)
 	}
@@ -144,61 +145,61 @@ func resourceWirelessControllerRegionRead(d *schema.ResourceData, m interface{})
 		return nil
 	}
 
-	err = refreshObjectWirelessControllerRegion(d, o)
+	err = refreshObjectWirelessControllerRegion(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading WirelessControllerRegion resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenWirelessControllerRegionName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerRegionName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerRegionImageType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerRegionImageType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerRegionComments(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerRegionComments(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerRegionGrayscale(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerRegionGrayscale(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerRegionOpacity(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerRegionOpacity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectWirelessControllerRegion(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectWirelessControllerRegion(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenWirelessControllerRegionName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenWirelessControllerRegionName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("image_type", flattenWirelessControllerRegionImageType(o["image-type"], d, "image_type")); err != nil {
+	if err = d.Set("image_type", flattenWirelessControllerRegionImageType(o["image-type"], d, "image_type", sv)); err != nil {
 		if !fortiAPIPatch(o["image-type"]) {
 			return fmt.Errorf("Error reading image_type: %v", err)
 		}
 	}
 
-	if err = d.Set("comments", flattenWirelessControllerRegionComments(o["comments"], d, "comments")); err != nil {
+	if err = d.Set("comments", flattenWirelessControllerRegionComments(o["comments"], d, "comments", sv)); err != nil {
 		if !fortiAPIPatch(o["comments"]) {
 			return fmt.Errorf("Error reading comments: %v", err)
 		}
 	}
 
-	if err = d.Set("grayscale", flattenWirelessControllerRegionGrayscale(o["grayscale"], d, "grayscale")); err != nil {
+	if err = d.Set("grayscale", flattenWirelessControllerRegionGrayscale(o["grayscale"], d, "grayscale", sv)); err != nil {
 		if !fortiAPIPatch(o["grayscale"]) {
 			return fmt.Errorf("Error reading grayscale: %v", err)
 		}
 	}
 
-	if err = d.Set("opacity", flattenWirelessControllerRegionOpacity(o["opacity"], d, "opacity")); err != nil {
+	if err = d.Set("opacity", flattenWirelessControllerRegionOpacity(o["opacity"], d, "opacity", sv)); err != nil {
 		if !fortiAPIPatch(o["opacity"]) {
 			return fmt.Errorf("Error reading opacity: %v", err)
 		}
@@ -210,34 +211,35 @@ func refreshObjectWirelessControllerRegion(d *schema.ResourceData, o map[string]
 func flattenWirelessControllerRegionFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandWirelessControllerRegionName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerRegionName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerRegionImageType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerRegionImageType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerRegionComments(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerRegionComments(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerRegionGrayscale(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerRegionGrayscale(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerRegionOpacity(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerRegionOpacity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectWirelessControllerRegion(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectWirelessControllerRegion(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandWirelessControllerRegionName(d, v, "name")
+
+		t, err := expandWirelessControllerRegionName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -246,7 +248,8 @@ func getObjectWirelessControllerRegion(d *schema.ResourceData) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("image_type"); ok {
-		t, err := expandWirelessControllerRegionImageType(d, v, "image_type")
+
+		t, err := expandWirelessControllerRegionImageType(d, v, "image_type", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -255,7 +258,8 @@ func getObjectWirelessControllerRegion(d *schema.ResourceData) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-		t, err := expandWirelessControllerRegionComments(d, v, "comments")
+
+		t, err := expandWirelessControllerRegionComments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -264,7 +268,8 @@ func getObjectWirelessControllerRegion(d *schema.ResourceData) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("grayscale"); ok {
-		t, err := expandWirelessControllerRegionGrayscale(d, v, "grayscale")
+
+		t, err := expandWirelessControllerRegionGrayscale(d, v, "grayscale", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -273,7 +278,8 @@ func getObjectWirelessControllerRegion(d *schema.ResourceData) (*map[string]inte
 	}
 
 	if v, ok := d.GetOkExists("opacity"); ok {
-		t, err := expandWirelessControllerRegionOpacity(d, v, "opacity")
+
+		t, err := expandWirelessControllerRegionOpacity(d, v, "opacity", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
