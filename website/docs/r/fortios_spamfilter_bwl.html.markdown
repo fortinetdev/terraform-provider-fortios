@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_spamfilter_bwl
-Configure anti-spam black/white list.
+Configure anti-spam black/white list. Applies to FortiOS Version `<= 6.2.0`.
 
 ## Example Usage
 
@@ -30,7 +30,6 @@ resource "fortios_spamfilter_bwl" "trname" {
 ```
 
 ## Argument Reference
-
 
 The following arguments are supported:
 
