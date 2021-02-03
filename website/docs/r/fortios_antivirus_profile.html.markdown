@@ -30,15 +30,17 @@ resource "fortios_antivirus_profile" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - (Required) Profile name.
 * `comment` - Comment.
 * `replacemsg_group` - Replacement message group customized for this profile.
+* `feature_set` - Flow/proxy feature set.
 * `inspection_mode` - Inspection mode.
 * `ftgd_analytics` - Settings to control which files are uploaded to FortiSandbox.
 * `analytics_max_upload` - Maximum size of files that can be uploaded to FortiSandbox (1 - 395 MBytes, default = 10).
+* `analytics_ignore_filetype` - Do not submit files matching this DLP file-pattern to FortiSandbox.
+* `analytics_accept_filetype` - Only submit files matching this DLP file-pattern to FortiSandbox.
 * `analytics_wl_filetype` - Do not submit files matching this DLP file-pattern to FortiSandbox.
 * `analytics_bl_filetype` - Only submit files matching this DLP file-pattern to FortiSandbox.
 * `analytics_db` - Enable/disable using the FortiSandbox signature database to supplement the AV signature databases.
@@ -50,6 +52,8 @@ The following arguments are supported:
 * `smtp` - Configure SMTP AntiVirus options. The structure of `smtp` block is documented below.
 * `mapi` - Configure MAPI AntiVirus options. The structure of `mapi` block is documented below.
 * `nntp` - Configure NNTP AntiVirus options. The structure of `nntp` block is documented below.
+* `cifs` - Configure CIFS AntiVirus options. The structure of `cifs` block is documented below.
+* `ssh` - Configure SFTP and SCP AntiVirus options. The structure of `ssh` block is documented below.
 * `smb` - Configure SMB AntiVirus options. The structure of `smb` block is documented below.
 * `nac_quar` - Configure AntiVirus quarantine settings. The structure of `nac_quar` block is documented below.
 * `outbreak_prevention` - Configure Virus Outbreak Prevention settings. The structure of `outbreak_prevention` block is documented below.
@@ -123,6 +127,22 @@ The `nntp` block supports:
 * `emulator` - Enable/disable the virus emulator.
 * `outbreak_prevention` - Enable Virus Outbreak Prevention service.
 
+The `cifs` block supports:
+
+* `options` - Enable/disable CIFS AntiVirus scanning, monitoring, and quarantine.
+* `archive_block` - Select the archive types to block.
+* `archive_log` - Select the archive types to log.
+* `emulator` - Enable/disable the virus emulator.
+* `outbreak_prevention` - Enable Virus Outbreak Prevention service.
+
+The `ssh` block supports:
+
+* `options` - Enable/disable SFTP and SCP AntiVirus scanning, monitoring, and quarantine.
+* `archive_block` - Select the archive types to block.
+* `archive_log` - Select the archive types to log.
+* `emulator` - Enable/disable the virus emulator.
+* `outbreak_prevention` - Enable Virus Outbreak Prevention service.
+
 The `smb` block supports:
 
 * `options` - Enable/disable SMB AntiVirus scanning, monitoring, and quarantine.
@@ -145,10 +165,13 @@ The `outbreak_prevention` block supports:
 The `content_disarm` block supports:
 
 * `original_file_destination` - Destination to send original file if active content is removed.
+* `error_action` - Action to be taken if CDR engine encounters an unrecoverable error.
 * `office_macro` - Enable/disable stripping of macros in Microsoft Office documents.
 * `office_hylink` - Enable/disable stripping of hyperlinks in Microsoft Office documents.
 * `office_linked` - Enable/disable stripping of linked objects in Microsoft Office documents.
 * `office_embed` - Enable/disable stripping of embedded objects in Microsoft Office documents.
+* `office_dde` - Enable/disable stripping of Dynamic Data Exchange events in Microsoft Office documents.
+* `office_action` - Enable/disable stripping of PowerPoint action events in Microsoft Office documents.
 * `pdf_javacode` - Enable/disable stripping of JavaScript code in PDF documents.
 * `pdf_embedfile` - Enable/disable stripping of embedded files in PDF documents.
 * `pdf_hyperlink` - Enable/disable stripping of hyperlinks from PDF documents.
