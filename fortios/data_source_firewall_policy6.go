@@ -133,7 +133,35 @@ func dataSourceFirewallPolicy6() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"anti_replay": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"utm_status": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"inspection_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"webcache": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"webcache_https": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"http_policy_redirect": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"ssh_policy_redirect": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"webproxy_profile": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -150,6 +178,14 @@ func dataSourceFirewallPolicy6() *schema.Resource {
 				Computed: true,
 			},
 			"webfilter_profile": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"dnsfilter_profile": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"emailfilter_profile": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -177,6 +213,14 @@ func dataSourceFirewallPolicy6() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"cifs_profile": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"waf_profile": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"ssh_filter_profile": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -194,6 +238,14 @@ func dataSourceFirewallPolicy6() *schema.Resource {
 				Computed: true,
 			},
 			"logtraffic_start": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"auto_asic_offload": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"webproxy_forward_server": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -417,6 +469,10 @@ func dataSourceFirewallPolicy6() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"decrypted_traffic_mirror": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"ssl_mirror": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -440,6 +496,18 @@ func dataSourceFirewallPolicy6() *schema.Resource {
 			"vlan_filter": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
+			},
+			"fsso_groups": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
 			},
 		},
 	}
@@ -712,7 +780,35 @@ func dataSourceFlattenFirewallPolicy6TcpSessionWithoutSyn(v interface{}, d *sche
 	return v
 }
 
+func dataSourceFlattenFirewallPolicy6AntiReplay(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallPolicy6UtmStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallPolicy6InspectionMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallPolicy6Webcache(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallPolicy6WebcacheHttps(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallPolicy6HttpPolicyRedirect(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallPolicy6SshPolicyRedirect(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallPolicy6WebproxyProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -729,6 +825,14 @@ func dataSourceFlattenFirewallPolicy6AvProfile(v interface{}, d *schema.Resource
 }
 
 func dataSourceFlattenFirewallPolicy6WebfilterProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallPolicy6DnsfilterProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallPolicy6EmailfilterProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -756,6 +860,14 @@ func dataSourceFlattenFirewallPolicy6IcapProfile(v interface{}, d *schema.Resour
 	return v
 }
 
+func dataSourceFlattenFirewallPolicy6CifsProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallPolicy6WafProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallPolicy6SshFilterProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -773,6 +885,14 @@ func dataSourceFlattenFirewallPolicy6Logtraffic(v interface{}, d *schema.Resourc
 }
 
 func dataSourceFlattenFirewallPolicy6LogtrafficStart(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallPolicy6AutoAsicOffload(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallPolicy6WebproxyForwardServer(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1212,6 +1332,10 @@ func dataSourceFlattenFirewallPolicy6TimeoutSendRst(v interface{}, d *schema.Res
 	return v
 }
 
+func dataSourceFlattenFirewallPolicy6DecryptedTrafficMirror(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallPolicy6SslMirror(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -1257,6 +1381,42 @@ func dataSourceFlattenFirewallPolicy6Dsri(v interface{}, d *schema.ResourceData,
 }
 
 func dataSourceFlattenFirewallPolicy6VlanFilter(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallPolicy6FssoGroups(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenFirewallPolicy6FssoGroupsName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallPolicy6FssoGroupsName(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1371,9 +1531,51 @@ func dataSourceRefreshObjectFirewallPolicy6(d *schema.ResourceData, o map[string
 		}
 	}
 
+	if err = d.Set("anti_replay", dataSourceFlattenFirewallPolicy6AntiReplay(o["anti-replay"], d, "anti_replay")); err != nil {
+		if !fortiAPIPatch(o["anti-replay"]) {
+			return fmt.Errorf("Error reading anti_replay: %v", err)
+		}
+	}
+
 	if err = d.Set("utm_status", dataSourceFlattenFirewallPolicy6UtmStatus(o["utm-status"], d, "utm_status")); err != nil {
 		if !fortiAPIPatch(o["utm-status"]) {
 			return fmt.Errorf("Error reading utm_status: %v", err)
+		}
+	}
+
+	if err = d.Set("inspection_mode", dataSourceFlattenFirewallPolicy6InspectionMode(o["inspection-mode"], d, "inspection_mode")); err != nil {
+		if !fortiAPIPatch(o["inspection-mode"]) {
+			return fmt.Errorf("Error reading inspection_mode: %v", err)
+		}
+	}
+
+	if err = d.Set("webcache", dataSourceFlattenFirewallPolicy6Webcache(o["webcache"], d, "webcache")); err != nil {
+		if !fortiAPIPatch(o["webcache"]) {
+			return fmt.Errorf("Error reading webcache: %v", err)
+		}
+	}
+
+	if err = d.Set("webcache_https", dataSourceFlattenFirewallPolicy6WebcacheHttps(o["webcache-https"], d, "webcache_https")); err != nil {
+		if !fortiAPIPatch(o["webcache-https"]) {
+			return fmt.Errorf("Error reading webcache_https: %v", err)
+		}
+	}
+
+	if err = d.Set("http_policy_redirect", dataSourceFlattenFirewallPolicy6HttpPolicyRedirect(o["http-policy-redirect"], d, "http_policy_redirect")); err != nil {
+		if !fortiAPIPatch(o["http-policy-redirect"]) {
+			return fmt.Errorf("Error reading http_policy_redirect: %v", err)
+		}
+	}
+
+	if err = d.Set("ssh_policy_redirect", dataSourceFlattenFirewallPolicy6SshPolicyRedirect(o["ssh-policy-redirect"], d, "ssh_policy_redirect")); err != nil {
+		if !fortiAPIPatch(o["ssh-policy-redirect"]) {
+			return fmt.Errorf("Error reading ssh_policy_redirect: %v", err)
+		}
+	}
+
+	if err = d.Set("webproxy_profile", dataSourceFlattenFirewallPolicy6WebproxyProfile(o["webproxy-profile"], d, "webproxy_profile")); err != nil {
+		if !fortiAPIPatch(o["webproxy-profile"]) {
+			return fmt.Errorf("Error reading webproxy_profile: %v", err)
 		}
 	}
 
@@ -1398,6 +1600,18 @@ func dataSourceRefreshObjectFirewallPolicy6(d *schema.ResourceData, o map[string
 	if err = d.Set("webfilter_profile", dataSourceFlattenFirewallPolicy6WebfilterProfile(o["webfilter-profile"], d, "webfilter_profile")); err != nil {
 		if !fortiAPIPatch(o["webfilter-profile"]) {
 			return fmt.Errorf("Error reading webfilter_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("dnsfilter_profile", dataSourceFlattenFirewallPolicy6DnsfilterProfile(o["dnsfilter-profile"], d, "dnsfilter_profile")); err != nil {
+		if !fortiAPIPatch(o["dnsfilter-profile"]) {
+			return fmt.Errorf("Error reading dnsfilter_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("emailfilter_profile", dataSourceFlattenFirewallPolicy6EmailfilterProfile(o["emailfilter-profile"], d, "emailfilter_profile")); err != nil {
+		if !fortiAPIPatch(o["emailfilter-profile"]) {
+			return fmt.Errorf("Error reading emailfilter_profile: %v", err)
 		}
 	}
 
@@ -1437,6 +1651,18 @@ func dataSourceRefreshObjectFirewallPolicy6(d *schema.ResourceData, o map[string
 		}
 	}
 
+	if err = d.Set("cifs_profile", dataSourceFlattenFirewallPolicy6CifsProfile(o["cifs-profile"], d, "cifs_profile")); err != nil {
+		if !fortiAPIPatch(o["cifs-profile"]) {
+			return fmt.Errorf("Error reading cifs_profile: %v", err)
+		}
+	}
+
+	if err = d.Set("waf_profile", dataSourceFlattenFirewallPolicy6WafProfile(o["waf-profile"], d, "waf_profile")); err != nil {
+		if !fortiAPIPatch(o["waf-profile"]) {
+			return fmt.Errorf("Error reading waf_profile: %v", err)
+		}
+	}
+
 	if err = d.Set("ssh_filter_profile", dataSourceFlattenFirewallPolicy6SshFilterProfile(o["ssh-filter-profile"], d, "ssh_filter_profile")); err != nil {
 		if !fortiAPIPatch(o["ssh-filter-profile"]) {
 			return fmt.Errorf("Error reading ssh_filter_profile: %v", err)
@@ -1464,6 +1690,18 @@ func dataSourceRefreshObjectFirewallPolicy6(d *schema.ResourceData, o map[string
 	if err = d.Set("logtraffic_start", dataSourceFlattenFirewallPolicy6LogtrafficStart(o["logtraffic-start"], d, "logtraffic_start")); err != nil {
 		if !fortiAPIPatch(o["logtraffic-start"]) {
 			return fmt.Errorf("Error reading logtraffic_start: %v", err)
+		}
+	}
+
+	if err = d.Set("auto_asic_offload", dataSourceFlattenFirewallPolicy6AutoAsicOffload(o["auto-asic-offload"], d, "auto_asic_offload")); err != nil {
+		if !fortiAPIPatch(o["auto-asic-offload"]) {
+			return fmt.Errorf("Error reading auto_asic_offload: %v", err)
+		}
+	}
+
+	if err = d.Set("webproxy_forward_server", dataSourceFlattenFirewallPolicy6WebproxyForwardServer(o["webproxy-forward-server"], d, "webproxy_forward_server")); err != nil {
+		if !fortiAPIPatch(o["webproxy-forward-server"]) {
+			return fmt.Errorf("Error reading webproxy_forward_server: %v", err)
 		}
 	}
 
@@ -1689,6 +1927,12 @@ func dataSourceRefreshObjectFirewallPolicy6(d *schema.ResourceData, o map[string
 		}
 	}
 
+	if err = d.Set("decrypted_traffic_mirror", dataSourceFlattenFirewallPolicy6DecryptedTrafficMirror(o["decrypted-traffic-mirror"], d, "decrypted_traffic_mirror")); err != nil {
+		if !fortiAPIPatch(o["decrypted-traffic-mirror"]) {
+			return fmt.Errorf("Error reading decrypted_traffic_mirror: %v", err)
+		}
+	}
+
 	if err = d.Set("ssl_mirror", dataSourceFlattenFirewallPolicy6SslMirror(o["ssl-mirror"], d, "ssl_mirror")); err != nil {
 		if !fortiAPIPatch(o["ssl-mirror"]) {
 			return fmt.Errorf("Error reading ssl_mirror: %v", err)
@@ -1710,6 +1954,12 @@ func dataSourceRefreshObjectFirewallPolicy6(d *schema.ResourceData, o map[string
 	if err = d.Set("vlan_filter", dataSourceFlattenFirewallPolicy6VlanFilter(o["vlan-filter"], d, "vlan_filter")); err != nil {
 		if !fortiAPIPatch(o["vlan-filter"]) {
 			return fmt.Errorf("Error reading vlan_filter: %v", err)
+		}
+	}
+
+	if err = d.Set("fsso_groups", dataSourceFlattenFirewallPolicy6FssoGroups(o["fsso-groups"], d, "fsso_groups")); err != nil {
+		if !fortiAPIPatch(o["fsso-groups"]) {
+			return fmt.Errorf("Error reading fsso_groups: %v", err)
 		}
 	}
 
