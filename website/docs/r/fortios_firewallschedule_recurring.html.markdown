@@ -23,7 +23,6 @@ resource "fortios_firewallschedule_recurring" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - (Required) Recurring schedule name.
