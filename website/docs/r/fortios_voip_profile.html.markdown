@@ -78,7 +78,6 @@ resource "fortios_voip_profile" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - (Required) Profile name.
@@ -90,6 +89,7 @@ The `sip` block supports:
 
 * `status` - Enable/disable SIP.
 * `rtp` - Enable/disable create pinholes for RTP traffic to traverse firewall.
+* `nat_port_range` - RTP NAT port range.
 * `open_register_pinhole` - Enable/disable open pinhole for REGISTER Contact port.
 * `open_contact_pinhole` - Enable/disable open pinhole for non-REGISTER Contact port.
 * `strict_register` - Enable/disable only allow the registrar to connect.
