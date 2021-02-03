@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -56,7 +57,7 @@ func resourceSystemProxyArpCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemProxyArp(d)
+	obj, err := getObjectSystemProxyArp(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemProxyArp resource while getting object: %v", err)
 	}
@@ -81,7 +82,7 @@ func resourceSystemProxyArpUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemProxyArp(d)
+	obj, err := getObjectSystemProxyArp(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemProxyArp resource while getting object: %v", err)
 	}
@@ -134,51 +135,51 @@ func resourceSystemProxyArpRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectSystemProxyArp(d, o)
+	err = refreshObjectSystemProxyArp(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemProxyArp resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemProxyArpId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemProxyArpId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemProxyArpInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemProxyArpInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemProxyArpIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemProxyArpIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemProxyArpEndIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemProxyArpEndIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemProxyArp(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemProxyArp(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("fosid", flattenSystemProxyArpId(o["id"], d, "fosid")); err != nil {
+	if err = d.Set("fosid", flattenSystemProxyArpId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
 			return fmt.Errorf("Error reading fosid: %v", err)
 		}
 	}
 
-	if err = d.Set("interface", flattenSystemProxyArpInterface(o["interface"], d, "interface")); err != nil {
+	if err = d.Set("interface", flattenSystemProxyArpInterface(o["interface"], d, "interface", sv)); err != nil {
 		if !fortiAPIPatch(o["interface"]) {
 			return fmt.Errorf("Error reading interface: %v", err)
 		}
 	}
 
-	if err = d.Set("ip", flattenSystemProxyArpIp(o["ip"], d, "ip")); err != nil {
+	if err = d.Set("ip", flattenSystemProxyArpIp(o["ip"], d, "ip", sv)); err != nil {
 		if !fortiAPIPatch(o["ip"]) {
 			return fmt.Errorf("Error reading ip: %v", err)
 		}
 	}
 
-	if err = d.Set("end_ip", flattenSystemProxyArpEndIp(o["end-ip"], d, "end_ip")); err != nil {
+	if err = d.Set("end_ip", flattenSystemProxyArpEndIp(o["end-ip"], d, "end_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["end-ip"]) {
 			return fmt.Errorf("Error reading end_ip: %v", err)
 		}
@@ -190,30 +191,31 @@ func refreshObjectSystemProxyArp(d *schema.ResourceData, o map[string]interface{
 func flattenSystemProxyArpFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemProxyArpId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemProxyArpId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemProxyArpInterface(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemProxyArpInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemProxyArpIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemProxyArpIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemProxyArpEndIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemProxyArpEndIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemProxyArp(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemProxyArp(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-		t, err := expandSystemProxyArpId(d, v, "fosid")
+
+		t, err := expandSystemProxyArpId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -222,7 +224,8 @@ func getObjectSystemProxyArp(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
-		t, err := expandSystemProxyArpInterface(d, v, "interface")
+
+		t, err := expandSystemProxyArpInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -231,7 +234,8 @@ func getObjectSystemProxyArp(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("ip"); ok {
-		t, err := expandSystemProxyArpIp(d, v, "ip")
+
+		t, err := expandSystemProxyArpIp(d, v, "ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -240,7 +244,8 @@ func getObjectSystemProxyArp(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("end_ip"); ok {
-		t, err := expandSystemProxyArpEndIp(d, v, "end_ip")
+
+		t, err := expandSystemProxyArpEndIp(d, v, "end_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
