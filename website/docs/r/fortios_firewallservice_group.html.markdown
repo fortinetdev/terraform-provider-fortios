@@ -44,7 +44,6 @@ resource "fortios_firewallservice_group" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - (Required) Address group name.
