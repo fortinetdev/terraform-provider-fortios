@@ -32,7 +32,6 @@ resource "fortios_systemsnmp_user" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - (Required) SNMP user name.
