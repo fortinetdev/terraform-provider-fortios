@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -78,7 +79,7 @@ func resourceRouterKeyChainCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectRouterKeyChain(d)
+	obj, err := getObjectRouterKeyChain(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating RouterKeyChain resource while getting object: %v", err)
 	}
@@ -103,7 +104,7 @@ func resourceRouterKeyChainUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectRouterKeyChain(d)
+	obj, err := getObjectRouterKeyChain(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterKeyChain resource while getting object: %v", err)
 	}
@@ -156,18 +157,18 @@ func resourceRouterKeyChainRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectRouterKeyChain(d, o)
+	err = refreshObjectRouterKeyChain(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading RouterKeyChain resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenRouterKeyChainName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterKeyChainName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterKeyChainKey(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenRouterKeyChainKey(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -188,22 +189,42 @@ func flattenRouterKeyChainKey(v interface{}, d *schema.ResourceData, pre string)
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenRouterKeyChainKeyId(i["id"], d, pre_append)
+
+			v := flattenRouterKeyChainKeyId(i["id"], d, pre_append, sv)
+			vx := 0
+			bstring := false
+			if i2ss2arrFortiAPIUpgrade(sv, "6.2.4") == true {
+				if vi, ok := v.(string); ok {
+					var err error
+					vx, err = strconv.Atoi(vi)
+					if err == nil {
+						bstring = true
+					}
+				}
+			}
+			if bstring == true {
+				tmp["id"] = vx
+			} else {
+				tmp["id"] = v
+			}
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "accept_lifetime"
 		if _, ok := i["accept-lifetime"]; ok {
-			tmp["accept_lifetime"] = flattenRouterKeyChainKeyAcceptLifetime(i["accept-lifetime"], d, pre_append)
+
+			tmp["accept_lifetime"] = flattenRouterKeyChainKeyAcceptLifetime(i["accept-lifetime"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "send_lifetime"
 		if _, ok := i["send-lifetime"]; ok {
-			tmp["send_lifetime"] = flattenRouterKeyChainKeySendLifetime(i["send-lifetime"], d, pre_append)
+
+			tmp["send_lifetime"] = flattenRouterKeyChainKeySendLifetime(i["send-lifetime"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_string"
 		if _, ok := i["key-string"]; ok {
-			tmp["key_string"] = flattenRouterKeyChainKeyKeyString(i["key-string"], d, pre_append)
+
+			tmp["key_string"] = flattenRouterKeyChainKeyKeyString(i["key-string"], d, pre_append, sv)
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["key_string"] = c
@@ -219,40 +240,40 @@ func flattenRouterKeyChainKey(v interface{}, d *schema.ResourceData, pre string)
 	return result
 }
 
-func flattenRouterKeyChainKeyId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterKeyChainKeyId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterKeyChainKeyAcceptLifetime(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterKeyChainKeyAcceptLifetime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterKeyChainKeySendLifetime(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterKeyChainKeySendLifetime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterKeyChainKeyKeyString(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterKeyChainKeyKeyString(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectRouterKeyChain(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectRouterKeyChain(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenRouterKeyChainName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenRouterKeyChainName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("key", flattenRouterKeyChainKey(o["key"], d, "key")); err != nil {
+		if err = d.Set("key", flattenRouterKeyChainKey(o["key"], d, "key", sv)); err != nil {
 			if !fortiAPIPatch(o["key"]) {
 				return fmt.Errorf("Error reading key: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("key"); ok {
-			if err = d.Set("key", flattenRouterKeyChainKey(o["key"], d, "key")); err != nil {
+			if err = d.Set("key", flattenRouterKeyChainKey(o["key"], d, "key", sv)); err != nil {
 				if !fortiAPIPatch(o["key"]) {
 					return fmt.Errorf("Error reading key: %v", err)
 				}
@@ -266,14 +287,14 @@ func refreshObjectRouterKeyChain(d *schema.ResourceData, o map[string]interface{
 func flattenRouterKeyChainFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandRouterKeyChainName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterKeyChainName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandRouterKeyChainKey(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterKeyChainKey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -289,22 +310,39 @@ func expandRouterKeyChainKey(d *schema.ResourceData, v interface{}, pre string) 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandRouterKeyChainKeyId(d, i["id"], pre_append)
+
+			bstring := false
+			t, _ := expandRouterKeyChainKeyId(d, i["id"], pre_append, sv)
+			if t != nil {
+				if i2ss2arrFortiAPIUpgrade(sv, "6.2.4") == true {
+					bstring = true
+				}
+			}
+
+			if bstring == true {
+				tmp["id"] = fmt.Sprintf("%v", t)
+			} else {
+				tmp["id"] = t
+			}
+
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "accept_lifetime"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["accept-lifetime"], _ = expandRouterKeyChainKeyAcceptLifetime(d, i["accept_lifetime"], pre_append)
+
+			tmp["accept-lifetime"], _ = expandRouterKeyChainKeyAcceptLifetime(d, i["accept_lifetime"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "send_lifetime"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["send-lifetime"], _ = expandRouterKeyChainKeySendLifetime(d, i["send_lifetime"], pre_append)
+
+			tmp["send-lifetime"], _ = expandRouterKeyChainKeySendLifetime(d, i["send_lifetime"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_string"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["key-string"], _ = expandRouterKeyChainKeyKeyString(d, i["key_string"], pre_append)
+
+			tmp["key-string"], _ = expandRouterKeyChainKeyKeyString(d, i["key_string"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -315,27 +353,28 @@ func expandRouterKeyChainKey(d *schema.ResourceData, v interface{}, pre string) 
 	return result, nil
 }
 
-func expandRouterKeyChainKeyId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterKeyChainKeyId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandRouterKeyChainKeyAcceptLifetime(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterKeyChainKeyAcceptLifetime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandRouterKeyChainKeySendLifetime(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterKeyChainKeySendLifetime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandRouterKeyChainKeyKeyString(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterKeyChainKeyKeyString(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectRouterKeyChain(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectRouterKeyChain(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandRouterKeyChainName(d, v, "name")
+
+		t, err := expandRouterKeyChainName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -344,7 +383,8 @@ func getObjectRouterKeyChain(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("key"); ok {
-		t, err := expandRouterKeyChainKey(d, v, "key")
+
+		t, err := expandRouterKeyChainKey(d, v, "key", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
