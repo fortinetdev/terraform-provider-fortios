@@ -22,7 +22,6 @@ resource "fortios_report_theme" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Report theme name.
