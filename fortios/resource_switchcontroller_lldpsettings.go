@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -57,6 +58,11 @@ func resourceSwitchControllerLldpSettings() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"device_detection": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -66,7 +72,7 @@ func resourceSwitchControllerLldpSettingsUpdate(d *schema.ResourceData, m interf
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSwitchControllerLldpSettings(d)
+	obj, err := getObjectSwitchControllerLldpSettings(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerLldpSettings resource while getting object: %v", err)
 	}
@@ -119,63 +125,73 @@ func resourceSwitchControllerLldpSettingsRead(d *schema.ResourceData, m interfac
 		return nil
 	}
 
-	err = refreshObjectSwitchControllerLldpSettings(d, o)
+	err = refreshObjectSwitchControllerLldpSettings(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerLldpSettings resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSwitchControllerLldpSettingsStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerLldpSettingsStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerLldpSettingsTxHold(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerLldpSettingsTxHold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerLldpSettingsTxInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerLldpSettingsTxInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerLldpSettingsFastStartInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerLldpSettingsFastStartInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerLldpSettingsManagementInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerLldpSettingsManagementInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSwitchControllerLldpSettings(d *schema.ResourceData, o map[string]interface{}) error {
+func flattenSwitchControllerLldpSettingsDeviceDetection(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func refreshObjectSwitchControllerLldpSettings(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("status", flattenSwitchControllerLldpSettingsStatus(o["status"], d, "status")); err != nil {
+	if err = d.Set("status", flattenSwitchControllerLldpSettingsStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
 		}
 	}
 
-	if err = d.Set("tx_hold", flattenSwitchControllerLldpSettingsTxHold(o["tx-hold"], d, "tx_hold")); err != nil {
+	if err = d.Set("tx_hold", flattenSwitchControllerLldpSettingsTxHold(o["tx-hold"], d, "tx_hold", sv)); err != nil {
 		if !fortiAPIPatch(o["tx-hold"]) {
 			return fmt.Errorf("Error reading tx_hold: %v", err)
 		}
 	}
 
-	if err = d.Set("tx_interval", flattenSwitchControllerLldpSettingsTxInterval(o["tx-interval"], d, "tx_interval")); err != nil {
+	if err = d.Set("tx_interval", flattenSwitchControllerLldpSettingsTxInterval(o["tx-interval"], d, "tx_interval", sv)); err != nil {
 		if !fortiAPIPatch(o["tx-interval"]) {
 			return fmt.Errorf("Error reading tx_interval: %v", err)
 		}
 	}
 
-	if err = d.Set("fast_start_interval", flattenSwitchControllerLldpSettingsFastStartInterval(o["fast-start-interval"], d, "fast_start_interval")); err != nil {
+	if err = d.Set("fast_start_interval", flattenSwitchControllerLldpSettingsFastStartInterval(o["fast-start-interval"], d, "fast_start_interval", sv)); err != nil {
 		if !fortiAPIPatch(o["fast-start-interval"]) {
 			return fmt.Errorf("Error reading fast_start_interval: %v", err)
 		}
 	}
 
-	if err = d.Set("management_interface", flattenSwitchControllerLldpSettingsManagementInterface(o["management-interface"], d, "management_interface")); err != nil {
+	if err = d.Set("management_interface", flattenSwitchControllerLldpSettingsManagementInterface(o["management-interface"], d, "management_interface", sv)); err != nil {
 		if !fortiAPIPatch(o["management-interface"]) {
 			return fmt.Errorf("Error reading management_interface: %v", err)
+		}
+	}
+
+	if err = d.Set("device_detection", flattenSwitchControllerLldpSettingsDeviceDetection(o["device-detection"], d, "device_detection", sv)); err != nil {
+		if !fortiAPIPatch(o["device-detection"]) {
+			return fmt.Errorf("Error reading device_detection: %v", err)
 		}
 	}
 
@@ -185,34 +201,39 @@ func refreshObjectSwitchControllerLldpSettings(d *schema.ResourceData, o map[str
 func flattenSwitchControllerLldpSettingsFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSwitchControllerLldpSettingsStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerLldpSettingsStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerLldpSettingsTxHold(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerLldpSettingsTxHold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerLldpSettingsTxInterval(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerLldpSettingsTxInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerLldpSettingsFastStartInterval(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerLldpSettingsFastStartInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerLldpSettingsManagementInterface(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerLldpSettingsManagementInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSwitchControllerLldpSettings(d *schema.ResourceData) (*map[string]interface{}, error) {
+func expandSwitchControllerLldpSettingsDeviceDetection(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func getObjectSwitchControllerLldpSettings(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
-		t, err := expandSwitchControllerLldpSettingsStatus(d, v, "status")
+
+		t, err := expandSwitchControllerLldpSettingsStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -221,7 +242,8 @@ func getObjectSwitchControllerLldpSettings(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("tx_hold"); ok {
-		t, err := expandSwitchControllerLldpSettingsTxHold(d, v, "tx_hold")
+
+		t, err := expandSwitchControllerLldpSettingsTxHold(d, v, "tx_hold", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -230,7 +252,8 @@ func getObjectSwitchControllerLldpSettings(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("tx_interval"); ok {
-		t, err := expandSwitchControllerLldpSettingsTxInterval(d, v, "tx_interval")
+
+		t, err := expandSwitchControllerLldpSettingsTxInterval(d, v, "tx_interval", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -239,7 +262,8 @@ func getObjectSwitchControllerLldpSettings(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOkExists("fast_start_interval"); ok {
-		t, err := expandSwitchControllerLldpSettingsFastStartInterval(d, v, "fast_start_interval")
+
+		t, err := expandSwitchControllerLldpSettingsFastStartInterval(d, v, "fast_start_interval", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -248,11 +272,22 @@ func getObjectSwitchControllerLldpSettings(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("management_interface"); ok {
-		t, err := expandSwitchControllerLldpSettingsManagementInterface(d, v, "management_interface")
+
+		t, err := expandSwitchControllerLldpSettingsManagementInterface(d, v, "management_interface", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
 			obj["management-interface"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("device_detection"); ok {
+
+		t, err := expandSwitchControllerLldpSettingsDeviceDetection(d, v, "device_detection", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["device-detection"] = t
 		}
 	}
 
