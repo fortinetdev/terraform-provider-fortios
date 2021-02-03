@@ -30,12 +30,12 @@ resource "fortios_firewall_vip46" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - VIP46 name.
 * `fosid` - Custom defined id.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
+* `srcintf_filter` - Interfaces to which the VIP46 applies. Separate the names with spaces. The structure of `srcintf_filter` block is documented below.
 * `comment` - Comment.
 * `type` - VIP type: static NAT or server load balance.
 * `src_filter` - Source IP filter (x.x.x.x/x). The structure of `src_filter` block is documented below.
@@ -52,6 +52,10 @@ The following arguments are supported:
 * `realservers` - Real servers. The structure of `realservers` block is documented below.
 * `monitor` - Health monitors. The structure of `monitor` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
+The `srcintf_filter` block supports:
+
+* `interface_name` - Interface name.
 
 The `src_filter` block supports:
 
