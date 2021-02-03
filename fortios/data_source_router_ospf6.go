@@ -106,6 +106,44 @@ func dataSourceRouterOspf6() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"authentication": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"key_rollover_interval": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"ipsec_auth_alg": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"ipsec_enc_alg": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"ipsec_keys": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"spi": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"auth_key": &schema.Schema{
+										Type:      schema.TypeString,
+										Sensitive: true,
+										Computed:  true,
+									},
+									"enc_key": &schema.Schema{
+										Type:      schema.TypeString,
+										Sensitive: true,
+										Computed:  true,
+									},
+								},
+							},
+						},
 						"range": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -154,6 +192,44 @@ func dataSourceRouterOspf6() *schema.Resource {
 									"peer": &schema.Schema{
 										Type:     schema.TypeString,
 										Computed: true,
+									},
+									"authentication": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"key_rollover_interval": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"ipsec_auth_alg": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"ipsec_enc_alg": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"ipsec_keys": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"spi": &schema.Schema{
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+												"auth_key": &schema.Schema{
+													Type:      schema.TypeString,
+													Sensitive: true,
+													Computed:  true,
+												},
+												"enc_key": &schema.Schema{
+													Type:      schema.TypeString,
+													Sensitive: true,
+													Computed:  true,
+												},
+											},
+										},
 									},
 								},
 							},
@@ -221,6 +297,44 @@ func dataSourceRouterOspf6() *schema.Resource {
 						"mtu_ignore": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
+						},
+						"authentication": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"key_rollover_interval": &schema.Schema{
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"ipsec_auth_alg": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"ipsec_enc_alg": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"ipsec_keys": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"spi": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"auth_key": &schema.Schema{
+										Type:      schema.TypeString,
+										Sensitive: true,
+										Computed:  true,
+									},
+									"enc_key": &schema.Schema{
+										Type:      schema.TypeString,
+										Sensitive: true,
+										Computed:  true,
+									},
+								},
+							},
 						},
 						"neighbor": &schema.Schema{
 							Type:     schema.TypeList,
@@ -451,6 +565,31 @@ func dataSourceFlattenRouterOspf6Area(v interface{}, d *schema.ResourceData, pre
 			tmp["nssa_redistribution"] = dataSourceFlattenRouterOspf6AreaNssaRedistribution(i["nssa-redistribution"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "authentication"
+		if _, ok := i["authentication"]; ok {
+			tmp["authentication"] = dataSourceFlattenRouterOspf6AreaAuthentication(i["authentication"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_rollover_interval"
+		if _, ok := i["key-rollover-interval"]; ok {
+			tmp["key_rollover_interval"] = dataSourceFlattenRouterOspf6AreaKeyRolloverInterval(i["key-rollover-interval"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipsec_auth_alg"
+		if _, ok := i["ipsec-auth-alg"]; ok {
+			tmp["ipsec_auth_alg"] = dataSourceFlattenRouterOspf6AreaIpsecAuthAlg(i["ipsec-auth-alg"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipsec_enc_alg"
+		if _, ok := i["ipsec-enc-alg"]; ok {
+			tmp["ipsec_enc_alg"] = dataSourceFlattenRouterOspf6AreaIpsecEncAlg(i["ipsec-enc-alg"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipsec_keys"
+		if _, ok := i["ipsec-keys"]; ok {
+			tmp["ipsec_keys"] = dataSourceFlattenRouterOspf6AreaIpsecKeys(i["ipsec-keys"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "range"
 		if _, ok := i["range"]; ok {
 			tmp["range"] = dataSourceFlattenRouterOspf6AreaRange(i["range"], d, pre_append)
@@ -502,6 +641,84 @@ func dataSourceFlattenRouterOspf6AreaNssaDefaultInformationOriginateMetricType(v
 }
 
 func dataSourceFlattenRouterOspf6AreaNssaRedistribution(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterOspf6AreaAuthentication(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterOspf6AreaKeyRolloverInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterOspf6AreaIpsecAuthAlg(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterOspf6AreaIpsecEncAlg(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterOspf6AreaIpsecKeys(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "spi"
+		if _, ok := i["spi"]; ok {
+			tmp["spi"] = dataSourceFlattenRouterOspf6AreaIpsecKeysSpi(i["spi"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_key"
+		if _, ok := i["auth-key"]; ok {
+			tmp["auth_key"] = dataSourceFlattenRouterOspf6AreaIpsecKeysAuthKey(i["auth-key"], d, pre_append)
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["auth_key"] = c
+			}
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "enc_key"
+		if _, ok := i["enc-key"]; ok {
+			tmp["enc_key"] = dataSourceFlattenRouterOspf6AreaIpsecKeysEncKey(i["enc-key"], d, pre_append)
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["enc_key"] = c
+			}
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenRouterOspf6AreaIpsecKeysSpi(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterOspf6AreaIpsecKeysAuthKey(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterOspf6AreaIpsecKeysEncKey(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -608,6 +825,31 @@ func dataSourceFlattenRouterOspf6AreaVirtualLink(v interface{}, d *schema.Resour
 			tmp["peer"] = dataSourceFlattenRouterOspf6AreaVirtualLinkPeer(i["peer"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "authentication"
+		if _, ok := i["authentication"]; ok {
+			tmp["authentication"] = dataSourceFlattenRouterOspf6AreaVirtualLinkAuthentication(i["authentication"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_rollover_interval"
+		if _, ok := i["key-rollover-interval"]; ok {
+			tmp["key_rollover_interval"] = dataSourceFlattenRouterOspf6AreaVirtualLinkKeyRolloverInterval(i["key-rollover-interval"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipsec_auth_alg"
+		if _, ok := i["ipsec-auth-alg"]; ok {
+			tmp["ipsec_auth_alg"] = dataSourceFlattenRouterOspf6AreaVirtualLinkIpsecAuthAlg(i["ipsec-auth-alg"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipsec_enc_alg"
+		if _, ok := i["ipsec-enc-alg"]; ok {
+			tmp["ipsec_enc_alg"] = dataSourceFlattenRouterOspf6AreaVirtualLinkIpsecEncAlg(i["ipsec-enc-alg"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipsec_keys"
+		if _, ok := i["ipsec-keys"]; ok {
+			tmp["ipsec_keys"] = dataSourceFlattenRouterOspf6AreaVirtualLinkIpsecKeys(i["ipsec-keys"], d, pre_append)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -637,6 +879,84 @@ func dataSourceFlattenRouterOspf6AreaVirtualLinkTransmitDelay(v interface{}, d *
 }
 
 func dataSourceFlattenRouterOspf6AreaVirtualLinkPeer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterOspf6AreaVirtualLinkAuthentication(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterOspf6AreaVirtualLinkKeyRolloverInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterOspf6AreaVirtualLinkIpsecAuthAlg(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterOspf6AreaVirtualLinkIpsecEncAlg(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterOspf6AreaVirtualLinkIpsecKeys(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "spi"
+		if _, ok := i["spi"]; ok {
+			tmp["spi"] = dataSourceFlattenRouterOspf6AreaVirtualLinkIpsecKeysSpi(i["spi"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_key"
+		if _, ok := i["auth-key"]; ok {
+			tmp["auth_key"] = dataSourceFlattenRouterOspf6AreaVirtualLinkIpsecKeysAuthKey(i["auth-key"], d, pre_append)
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["auth_key"] = c
+			}
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "enc_key"
+		if _, ok := i["enc-key"]; ok {
+			tmp["enc_key"] = dataSourceFlattenRouterOspf6AreaVirtualLinkIpsecKeysEncKey(i["enc-key"], d, pre_append)
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["enc_key"] = c
+			}
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenRouterOspf6AreaVirtualLinkIpsecKeysSpi(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterOspf6AreaVirtualLinkIpsecKeysAuthKey(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterOspf6AreaVirtualLinkIpsecKeysEncKey(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -729,6 +1049,31 @@ func dataSourceFlattenRouterOspf6Ospf6Interface(v interface{}, d *schema.Resourc
 			tmp["mtu_ignore"] = dataSourceFlattenRouterOspf6Ospf6InterfaceMtuIgnore(i["mtu-ignore"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "authentication"
+		if _, ok := i["authentication"]; ok {
+			tmp["authentication"] = dataSourceFlattenRouterOspf6Ospf6InterfaceAuthentication(i["authentication"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_rollover_interval"
+		if _, ok := i["key-rollover-interval"]; ok {
+			tmp["key_rollover_interval"] = dataSourceFlattenRouterOspf6Ospf6InterfaceKeyRolloverInterval(i["key-rollover-interval"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipsec_auth_alg"
+		if _, ok := i["ipsec-auth-alg"]; ok {
+			tmp["ipsec_auth_alg"] = dataSourceFlattenRouterOspf6Ospf6InterfaceIpsecAuthAlg(i["ipsec-auth-alg"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipsec_enc_alg"
+		if _, ok := i["ipsec-enc-alg"]; ok {
+			tmp["ipsec_enc_alg"] = dataSourceFlattenRouterOspf6Ospf6InterfaceIpsecEncAlg(i["ipsec-enc-alg"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ipsec_keys"
+		if _, ok := i["ipsec-keys"]; ok {
+			tmp["ipsec_keys"] = dataSourceFlattenRouterOspf6Ospf6InterfaceIpsecKeys(i["ipsec-keys"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "neighbor"
 		if _, ok := i["neighbor"]; ok {
 			tmp["neighbor"] = dataSourceFlattenRouterOspf6Ospf6InterfaceNeighbor(i["neighbor"], d, pre_append)
@@ -795,6 +1140,84 @@ func dataSourceFlattenRouterOspf6Ospf6InterfaceMtu(v interface{}, d *schema.Reso
 }
 
 func dataSourceFlattenRouterOspf6Ospf6InterfaceMtuIgnore(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterOspf6Ospf6InterfaceAuthentication(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterOspf6Ospf6InterfaceKeyRolloverInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterOspf6Ospf6InterfaceIpsecAuthAlg(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterOspf6Ospf6InterfaceIpsecEncAlg(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterOspf6Ospf6InterfaceIpsecKeys(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "spi"
+		if _, ok := i["spi"]; ok {
+			tmp["spi"] = dataSourceFlattenRouterOspf6Ospf6InterfaceIpsecKeysSpi(i["spi"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "auth_key"
+		if _, ok := i["auth-key"]; ok {
+			tmp["auth_key"] = dataSourceFlattenRouterOspf6Ospf6InterfaceIpsecKeysAuthKey(i["auth-key"], d, pre_append)
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["auth_key"] = c
+			}
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "enc_key"
+		if _, ok := i["enc-key"]; ok {
+			tmp["enc_key"] = dataSourceFlattenRouterOspf6Ospf6InterfaceIpsecKeysEncKey(i["enc-key"], d, pre_append)
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["enc_key"] = c
+			}
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenRouterOspf6Ospf6InterfaceIpsecKeysSpi(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterOspf6Ospf6InterfaceIpsecKeysAuthKey(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterOspf6Ospf6InterfaceIpsecKeysEncKey(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
