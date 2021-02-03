@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -164,6 +165,35 @@ func resourceWirelessControllerQosProfile() *schema.Resource {
 					},
 				},
 			},
+			"wmm_dscp_marking": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"wmm_vo_dscp": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
+			},
+			"wmm_vi_dscp": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
+			},
+			"wmm_be_dscp": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
+			},
+			"wmm_bk_dscp": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 63),
+				Optional:     true,
+				Computed:     true,
+			},
 			"dynamic_sort_subtable": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -177,7 +207,7 @@ func resourceWirelessControllerQosProfileCreate(d *schema.ResourceData, m interf
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWirelessControllerQosProfile(d)
+	obj, err := getObjectWirelessControllerQosProfile(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WirelessControllerQosProfile resource while getting object: %v", err)
 	}
@@ -202,7 +232,7 @@ func resourceWirelessControllerQosProfileUpdate(d *schema.ResourceData, m interf
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWirelessControllerQosProfile(d)
+	obj, err := getObjectWirelessControllerQosProfile(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerQosProfile resource while getting object: %v", err)
 	}
@@ -255,70 +285,70 @@ func resourceWirelessControllerQosProfileRead(d *schema.ResourceData, m interfac
 		return nil
 	}
 
-	err = refreshObjectWirelessControllerQosProfile(d, o)
+	err = refreshObjectWirelessControllerQosProfile(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading WirelessControllerQosProfile resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenWirelessControllerQosProfileName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerQosProfileName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerQosProfileComment(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerQosProfileComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerQosProfileUplink(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerQosProfileUplink(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerQosProfileDownlink(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerQosProfileDownlink(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerQosProfileUplinkSta(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerQosProfileUplinkSta(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerQosProfileDownlinkSta(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerQosProfileDownlinkSta(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerQosProfileBurst(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerQosProfileBurst(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerQosProfileWmm(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerQosProfileWmm(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerQosProfileWmmUapsd(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerQosProfileWmmUapsd(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerQosProfileCallAdmissionControl(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerQosProfileCallAdmissionControl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerQosProfileCallCapacity(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerQosProfileCallCapacity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerQosProfileBandwidthAdmissionControl(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerQosProfileBandwidthAdmissionControl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerQosProfileBandwidthCapacity(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerQosProfileBandwidthCapacity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerQosProfileDscpWmmMapping(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerQosProfileDscpWmmMapping(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerQosProfileDscpWmmVo(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenWirelessControllerQosProfileDscpWmmVo(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -339,7 +369,8 @@ func flattenWirelessControllerQosProfileDscpWmmVo(v interface{}, d *schema.Resou
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenWirelessControllerQosProfileDscpWmmVoId(i["id"], d, pre_append)
+
+			tmp["id"] = flattenWirelessControllerQosProfileDscpWmmVoId(i["id"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -351,11 +382,11 @@ func flattenWirelessControllerQosProfileDscpWmmVo(v interface{}, d *schema.Resou
 	return result
 }
 
-func flattenWirelessControllerQosProfileDscpWmmVoId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerQosProfileDscpWmmVoId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerQosProfileDscpWmmVi(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenWirelessControllerQosProfileDscpWmmVi(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -376,7 +407,8 @@ func flattenWirelessControllerQosProfileDscpWmmVi(v interface{}, d *schema.Resou
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenWirelessControllerQosProfileDscpWmmViId(i["id"], d, pre_append)
+
+			tmp["id"] = flattenWirelessControllerQosProfileDscpWmmViId(i["id"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -388,11 +420,11 @@ func flattenWirelessControllerQosProfileDscpWmmVi(v interface{}, d *schema.Resou
 	return result
 }
 
-func flattenWirelessControllerQosProfileDscpWmmViId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerQosProfileDscpWmmViId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerQosProfileDscpWmmBe(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenWirelessControllerQosProfileDscpWmmBe(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -413,7 +445,8 @@ func flattenWirelessControllerQosProfileDscpWmmBe(v interface{}, d *schema.Resou
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenWirelessControllerQosProfileDscpWmmBeId(i["id"], d, pre_append)
+
+			tmp["id"] = flattenWirelessControllerQosProfileDscpWmmBeId(i["id"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -425,11 +458,11 @@ func flattenWirelessControllerQosProfileDscpWmmBe(v interface{}, d *schema.Resou
 	return result
 }
 
-func flattenWirelessControllerQosProfileDscpWmmBeId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerQosProfileDscpWmmBeId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerQosProfileDscpWmmBk(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenWirelessControllerQosProfileDscpWmmBk(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -450,7 +483,8 @@ func flattenWirelessControllerQosProfileDscpWmmBk(v interface{}, d *schema.Resou
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenWirelessControllerQosProfileDscpWmmBkId(i["id"], d, pre_append)
+
+			tmp["id"] = flattenWirelessControllerQosProfileDscpWmmBkId(i["id"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -462,106 +496,126 @@ func flattenWirelessControllerQosProfileDscpWmmBk(v interface{}, d *schema.Resou
 	return result
 }
 
-func flattenWirelessControllerQosProfileDscpWmmBkId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerQosProfileDscpWmmBkId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectWirelessControllerQosProfile(d *schema.ResourceData, o map[string]interface{}) error {
+func flattenWirelessControllerQosProfileWmmDscpMarking(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerQosProfileWmmVoDscp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerQosProfileWmmViDscp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerQosProfileWmmBeDscp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenWirelessControllerQosProfileWmmBkDscp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func refreshObjectWirelessControllerQosProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenWirelessControllerQosProfileName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenWirelessControllerQosProfileName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("comment", flattenWirelessControllerQosProfileComment(o["comment"], d, "comment")); err != nil {
+	if err = d.Set("comment", flattenWirelessControllerQosProfileComment(o["comment"], d, "comment", sv)); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
 		}
 	}
 
-	if err = d.Set("uplink", flattenWirelessControllerQosProfileUplink(o["uplink"], d, "uplink")); err != nil {
+	if err = d.Set("uplink", flattenWirelessControllerQosProfileUplink(o["uplink"], d, "uplink", sv)); err != nil {
 		if !fortiAPIPatch(o["uplink"]) {
 			return fmt.Errorf("Error reading uplink: %v", err)
 		}
 	}
 
-	if err = d.Set("downlink", flattenWirelessControllerQosProfileDownlink(o["downlink"], d, "downlink")); err != nil {
+	if err = d.Set("downlink", flattenWirelessControllerQosProfileDownlink(o["downlink"], d, "downlink", sv)); err != nil {
 		if !fortiAPIPatch(o["downlink"]) {
 			return fmt.Errorf("Error reading downlink: %v", err)
 		}
 	}
 
-	if err = d.Set("uplink_sta", flattenWirelessControllerQosProfileUplinkSta(o["uplink-sta"], d, "uplink_sta")); err != nil {
+	if err = d.Set("uplink_sta", flattenWirelessControllerQosProfileUplinkSta(o["uplink-sta"], d, "uplink_sta", sv)); err != nil {
 		if !fortiAPIPatch(o["uplink-sta"]) {
 			return fmt.Errorf("Error reading uplink_sta: %v", err)
 		}
 	}
 
-	if err = d.Set("downlink_sta", flattenWirelessControllerQosProfileDownlinkSta(o["downlink-sta"], d, "downlink_sta")); err != nil {
+	if err = d.Set("downlink_sta", flattenWirelessControllerQosProfileDownlinkSta(o["downlink-sta"], d, "downlink_sta", sv)); err != nil {
 		if !fortiAPIPatch(o["downlink-sta"]) {
 			return fmt.Errorf("Error reading downlink_sta: %v", err)
 		}
 	}
 
-	if err = d.Set("burst", flattenWirelessControllerQosProfileBurst(o["burst"], d, "burst")); err != nil {
+	if err = d.Set("burst", flattenWirelessControllerQosProfileBurst(o["burst"], d, "burst", sv)); err != nil {
 		if !fortiAPIPatch(o["burst"]) {
 			return fmt.Errorf("Error reading burst: %v", err)
 		}
 	}
 
-	if err = d.Set("wmm", flattenWirelessControllerQosProfileWmm(o["wmm"], d, "wmm")); err != nil {
+	if err = d.Set("wmm", flattenWirelessControllerQosProfileWmm(o["wmm"], d, "wmm", sv)); err != nil {
 		if !fortiAPIPatch(o["wmm"]) {
 			return fmt.Errorf("Error reading wmm: %v", err)
 		}
 	}
 
-	if err = d.Set("wmm_uapsd", flattenWirelessControllerQosProfileWmmUapsd(o["wmm-uapsd"], d, "wmm_uapsd")); err != nil {
+	if err = d.Set("wmm_uapsd", flattenWirelessControllerQosProfileWmmUapsd(o["wmm-uapsd"], d, "wmm_uapsd", sv)); err != nil {
 		if !fortiAPIPatch(o["wmm-uapsd"]) {
 			return fmt.Errorf("Error reading wmm_uapsd: %v", err)
 		}
 	}
 
-	if err = d.Set("call_admission_control", flattenWirelessControllerQosProfileCallAdmissionControl(o["call-admission-control"], d, "call_admission_control")); err != nil {
+	if err = d.Set("call_admission_control", flattenWirelessControllerQosProfileCallAdmissionControl(o["call-admission-control"], d, "call_admission_control", sv)); err != nil {
 		if !fortiAPIPatch(o["call-admission-control"]) {
 			return fmt.Errorf("Error reading call_admission_control: %v", err)
 		}
 	}
 
-	if err = d.Set("call_capacity", flattenWirelessControllerQosProfileCallCapacity(o["call-capacity"], d, "call_capacity")); err != nil {
+	if err = d.Set("call_capacity", flattenWirelessControllerQosProfileCallCapacity(o["call-capacity"], d, "call_capacity", sv)); err != nil {
 		if !fortiAPIPatch(o["call-capacity"]) {
 			return fmt.Errorf("Error reading call_capacity: %v", err)
 		}
 	}
 
-	if err = d.Set("bandwidth_admission_control", flattenWirelessControllerQosProfileBandwidthAdmissionControl(o["bandwidth-admission-control"], d, "bandwidth_admission_control")); err != nil {
+	if err = d.Set("bandwidth_admission_control", flattenWirelessControllerQosProfileBandwidthAdmissionControl(o["bandwidth-admission-control"], d, "bandwidth_admission_control", sv)); err != nil {
 		if !fortiAPIPatch(o["bandwidth-admission-control"]) {
 			return fmt.Errorf("Error reading bandwidth_admission_control: %v", err)
 		}
 	}
 
-	if err = d.Set("bandwidth_capacity", flattenWirelessControllerQosProfileBandwidthCapacity(o["bandwidth-capacity"], d, "bandwidth_capacity")); err != nil {
+	if err = d.Set("bandwidth_capacity", flattenWirelessControllerQosProfileBandwidthCapacity(o["bandwidth-capacity"], d, "bandwidth_capacity", sv)); err != nil {
 		if !fortiAPIPatch(o["bandwidth-capacity"]) {
 			return fmt.Errorf("Error reading bandwidth_capacity: %v", err)
 		}
 	}
 
-	if err = d.Set("dscp_wmm_mapping", flattenWirelessControllerQosProfileDscpWmmMapping(o["dscp-wmm-mapping"], d, "dscp_wmm_mapping")); err != nil {
+	if err = d.Set("dscp_wmm_mapping", flattenWirelessControllerQosProfileDscpWmmMapping(o["dscp-wmm-mapping"], d, "dscp_wmm_mapping", sv)); err != nil {
 		if !fortiAPIPatch(o["dscp-wmm-mapping"]) {
 			return fmt.Errorf("Error reading dscp_wmm_mapping: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("dscp_wmm_vo", flattenWirelessControllerQosProfileDscpWmmVo(o["dscp-wmm-vo"], d, "dscp_wmm_vo")); err != nil {
+		if err = d.Set("dscp_wmm_vo", flattenWirelessControllerQosProfileDscpWmmVo(o["dscp-wmm-vo"], d, "dscp_wmm_vo", sv)); err != nil {
 			if !fortiAPIPatch(o["dscp-wmm-vo"]) {
 				return fmt.Errorf("Error reading dscp_wmm_vo: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("dscp_wmm_vo"); ok {
-			if err = d.Set("dscp_wmm_vo", flattenWirelessControllerQosProfileDscpWmmVo(o["dscp-wmm-vo"], d, "dscp_wmm_vo")); err != nil {
+			if err = d.Set("dscp_wmm_vo", flattenWirelessControllerQosProfileDscpWmmVo(o["dscp-wmm-vo"], d, "dscp_wmm_vo", sv)); err != nil {
 				if !fortiAPIPatch(o["dscp-wmm-vo"]) {
 					return fmt.Errorf("Error reading dscp_wmm_vo: %v", err)
 				}
@@ -570,14 +624,14 @@ func refreshObjectWirelessControllerQosProfile(d *schema.ResourceData, o map[str
 	}
 
 	if isImportTable() {
-		if err = d.Set("dscp_wmm_vi", flattenWirelessControllerQosProfileDscpWmmVi(o["dscp-wmm-vi"], d, "dscp_wmm_vi")); err != nil {
+		if err = d.Set("dscp_wmm_vi", flattenWirelessControllerQosProfileDscpWmmVi(o["dscp-wmm-vi"], d, "dscp_wmm_vi", sv)); err != nil {
 			if !fortiAPIPatch(o["dscp-wmm-vi"]) {
 				return fmt.Errorf("Error reading dscp_wmm_vi: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("dscp_wmm_vi"); ok {
-			if err = d.Set("dscp_wmm_vi", flattenWirelessControllerQosProfileDscpWmmVi(o["dscp-wmm-vi"], d, "dscp_wmm_vi")); err != nil {
+			if err = d.Set("dscp_wmm_vi", flattenWirelessControllerQosProfileDscpWmmVi(o["dscp-wmm-vi"], d, "dscp_wmm_vi", sv)); err != nil {
 				if !fortiAPIPatch(o["dscp-wmm-vi"]) {
 					return fmt.Errorf("Error reading dscp_wmm_vi: %v", err)
 				}
@@ -586,14 +640,14 @@ func refreshObjectWirelessControllerQosProfile(d *schema.ResourceData, o map[str
 	}
 
 	if isImportTable() {
-		if err = d.Set("dscp_wmm_be", flattenWirelessControllerQosProfileDscpWmmBe(o["dscp-wmm-be"], d, "dscp_wmm_be")); err != nil {
+		if err = d.Set("dscp_wmm_be", flattenWirelessControllerQosProfileDscpWmmBe(o["dscp-wmm-be"], d, "dscp_wmm_be", sv)); err != nil {
 			if !fortiAPIPatch(o["dscp-wmm-be"]) {
 				return fmt.Errorf("Error reading dscp_wmm_be: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("dscp_wmm_be"); ok {
-			if err = d.Set("dscp_wmm_be", flattenWirelessControllerQosProfileDscpWmmBe(o["dscp-wmm-be"], d, "dscp_wmm_be")); err != nil {
+			if err = d.Set("dscp_wmm_be", flattenWirelessControllerQosProfileDscpWmmBe(o["dscp-wmm-be"], d, "dscp_wmm_be", sv)); err != nil {
 				if !fortiAPIPatch(o["dscp-wmm-be"]) {
 					return fmt.Errorf("Error reading dscp_wmm_be: %v", err)
 				}
@@ -602,18 +656,48 @@ func refreshObjectWirelessControllerQosProfile(d *schema.ResourceData, o map[str
 	}
 
 	if isImportTable() {
-		if err = d.Set("dscp_wmm_bk", flattenWirelessControllerQosProfileDscpWmmBk(o["dscp-wmm-bk"], d, "dscp_wmm_bk")); err != nil {
+		if err = d.Set("dscp_wmm_bk", flattenWirelessControllerQosProfileDscpWmmBk(o["dscp-wmm-bk"], d, "dscp_wmm_bk", sv)); err != nil {
 			if !fortiAPIPatch(o["dscp-wmm-bk"]) {
 				return fmt.Errorf("Error reading dscp_wmm_bk: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("dscp_wmm_bk"); ok {
-			if err = d.Set("dscp_wmm_bk", flattenWirelessControllerQosProfileDscpWmmBk(o["dscp-wmm-bk"], d, "dscp_wmm_bk")); err != nil {
+			if err = d.Set("dscp_wmm_bk", flattenWirelessControllerQosProfileDscpWmmBk(o["dscp-wmm-bk"], d, "dscp_wmm_bk", sv)); err != nil {
 				if !fortiAPIPatch(o["dscp-wmm-bk"]) {
 					return fmt.Errorf("Error reading dscp_wmm_bk: %v", err)
 				}
 			}
+		}
+	}
+
+	if err = d.Set("wmm_dscp_marking", flattenWirelessControllerQosProfileWmmDscpMarking(o["wmm-dscp-marking"], d, "wmm_dscp_marking", sv)); err != nil {
+		if !fortiAPIPatch(o["wmm-dscp-marking"]) {
+			return fmt.Errorf("Error reading wmm_dscp_marking: %v", err)
+		}
+	}
+
+	if err = d.Set("wmm_vo_dscp", flattenWirelessControllerQosProfileWmmVoDscp(o["wmm-vo-dscp"], d, "wmm_vo_dscp", sv)); err != nil {
+		if !fortiAPIPatch(o["wmm-vo-dscp"]) {
+			return fmt.Errorf("Error reading wmm_vo_dscp: %v", err)
+		}
+	}
+
+	if err = d.Set("wmm_vi_dscp", flattenWirelessControllerQosProfileWmmViDscp(o["wmm-vi-dscp"], d, "wmm_vi_dscp", sv)); err != nil {
+		if !fortiAPIPatch(o["wmm-vi-dscp"]) {
+			return fmt.Errorf("Error reading wmm_vi_dscp: %v", err)
+		}
+	}
+
+	if err = d.Set("wmm_be_dscp", flattenWirelessControllerQosProfileWmmBeDscp(o["wmm-be-dscp"], d, "wmm_be_dscp", sv)); err != nil {
+		if !fortiAPIPatch(o["wmm-be-dscp"]) {
+			return fmt.Errorf("Error reading wmm_be_dscp: %v", err)
+		}
+	}
+
+	if err = d.Set("wmm_bk_dscp", flattenWirelessControllerQosProfileWmmBkDscp(o["wmm-bk-dscp"], d, "wmm_bk_dscp", sv)); err != nil {
+		if !fortiAPIPatch(o["wmm-bk-dscp"]) {
+			return fmt.Errorf("Error reading wmm_bk_dscp: %v", err)
 		}
 	}
 
@@ -623,66 +707,66 @@ func refreshObjectWirelessControllerQosProfile(d *schema.ResourceData, o map[str
 func flattenWirelessControllerQosProfileFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandWirelessControllerQosProfileName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerQosProfileName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerQosProfileComment(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerQosProfileComment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerQosProfileUplink(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerQosProfileUplink(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerQosProfileDownlink(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerQosProfileDownlink(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerQosProfileUplinkSta(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerQosProfileUplinkSta(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerQosProfileDownlinkSta(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerQosProfileDownlinkSta(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerQosProfileBurst(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerQosProfileBurst(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerQosProfileWmm(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerQosProfileWmm(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerQosProfileWmmUapsd(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerQosProfileWmmUapsd(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerQosProfileCallAdmissionControl(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerQosProfileCallAdmissionControl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerQosProfileCallCapacity(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerQosProfileCallCapacity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerQosProfileBandwidthAdmissionControl(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerQosProfileBandwidthAdmissionControl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerQosProfileBandwidthCapacity(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerQosProfileBandwidthCapacity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerQosProfileDscpWmmMapping(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerQosProfileDscpWmmMapping(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerQosProfileDscpWmmVo(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerQosProfileDscpWmmVo(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -698,7 +782,8 @@ func expandWirelessControllerQosProfileDscpWmmVo(d *schema.ResourceData, v inter
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandWirelessControllerQosProfileDscpWmmVoId(d, i["id"], pre_append)
+
+			tmp["id"], _ = expandWirelessControllerQosProfileDscpWmmVoId(d, i["id"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -709,11 +794,11 @@ func expandWirelessControllerQosProfileDscpWmmVo(d *schema.ResourceData, v inter
 	return result, nil
 }
 
-func expandWirelessControllerQosProfileDscpWmmVoId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerQosProfileDscpWmmVoId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerQosProfileDscpWmmVi(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerQosProfileDscpWmmVi(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -729,7 +814,8 @@ func expandWirelessControllerQosProfileDscpWmmVi(d *schema.ResourceData, v inter
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandWirelessControllerQosProfileDscpWmmViId(d, i["id"], pre_append)
+
+			tmp["id"], _ = expandWirelessControllerQosProfileDscpWmmViId(d, i["id"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -740,11 +826,11 @@ func expandWirelessControllerQosProfileDscpWmmVi(d *schema.ResourceData, v inter
 	return result, nil
 }
 
-func expandWirelessControllerQosProfileDscpWmmViId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerQosProfileDscpWmmViId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerQosProfileDscpWmmBe(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerQosProfileDscpWmmBe(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -760,7 +846,8 @@ func expandWirelessControllerQosProfileDscpWmmBe(d *schema.ResourceData, v inter
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandWirelessControllerQosProfileDscpWmmBeId(d, i["id"], pre_append)
+
+			tmp["id"], _ = expandWirelessControllerQosProfileDscpWmmBeId(d, i["id"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -771,11 +858,11 @@ func expandWirelessControllerQosProfileDscpWmmBe(d *schema.ResourceData, v inter
 	return result, nil
 }
 
-func expandWirelessControllerQosProfileDscpWmmBeId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerQosProfileDscpWmmBeId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerQosProfileDscpWmmBk(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerQosProfileDscpWmmBk(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -791,7 +878,8 @@ func expandWirelessControllerQosProfileDscpWmmBk(d *schema.ResourceData, v inter
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandWirelessControllerQosProfileDscpWmmBkId(d, i["id"], pre_append)
+
+			tmp["id"], _ = expandWirelessControllerQosProfileDscpWmmBkId(d, i["id"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -802,15 +890,36 @@ func expandWirelessControllerQosProfileDscpWmmBk(d *schema.ResourceData, v inter
 	return result, nil
 }
 
-func expandWirelessControllerQosProfileDscpWmmBkId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerQosProfileDscpWmmBkId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectWirelessControllerQosProfile(d *schema.ResourceData) (*map[string]interface{}, error) {
+func expandWirelessControllerQosProfileWmmDscpMarking(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerQosProfileWmmVoDscp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerQosProfileWmmViDscp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerQosProfileWmmBeDscp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandWirelessControllerQosProfileWmmBkDscp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func getObjectWirelessControllerQosProfile(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandWirelessControllerQosProfileName(d, v, "name")
+
+		t, err := expandWirelessControllerQosProfileName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -819,7 +928,8 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-		t, err := expandWirelessControllerQosProfileComment(d, v, "comment")
+
+		t, err := expandWirelessControllerQosProfileComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -828,7 +938,8 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOkExists("uplink"); ok {
-		t, err := expandWirelessControllerQosProfileUplink(d, v, "uplink")
+
+		t, err := expandWirelessControllerQosProfileUplink(d, v, "uplink", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -837,7 +948,8 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOkExists("downlink"); ok {
-		t, err := expandWirelessControllerQosProfileDownlink(d, v, "downlink")
+
+		t, err := expandWirelessControllerQosProfileDownlink(d, v, "downlink", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -846,7 +958,8 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOkExists("uplink_sta"); ok {
-		t, err := expandWirelessControllerQosProfileUplinkSta(d, v, "uplink_sta")
+
+		t, err := expandWirelessControllerQosProfileUplinkSta(d, v, "uplink_sta", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -855,7 +968,8 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOkExists("downlink_sta"); ok {
-		t, err := expandWirelessControllerQosProfileDownlinkSta(d, v, "downlink_sta")
+
+		t, err := expandWirelessControllerQosProfileDownlinkSta(d, v, "downlink_sta", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -864,7 +978,8 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("burst"); ok {
-		t, err := expandWirelessControllerQosProfileBurst(d, v, "burst")
+
+		t, err := expandWirelessControllerQosProfileBurst(d, v, "burst", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -873,7 +988,8 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("wmm"); ok {
-		t, err := expandWirelessControllerQosProfileWmm(d, v, "wmm")
+
+		t, err := expandWirelessControllerQosProfileWmm(d, v, "wmm", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -882,7 +998,8 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("wmm_uapsd"); ok {
-		t, err := expandWirelessControllerQosProfileWmmUapsd(d, v, "wmm_uapsd")
+
+		t, err := expandWirelessControllerQosProfileWmmUapsd(d, v, "wmm_uapsd", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -891,7 +1008,8 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("call_admission_control"); ok {
-		t, err := expandWirelessControllerQosProfileCallAdmissionControl(d, v, "call_admission_control")
+
+		t, err := expandWirelessControllerQosProfileCallAdmissionControl(d, v, "call_admission_control", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -900,7 +1018,8 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOkExists("call_capacity"); ok {
-		t, err := expandWirelessControllerQosProfileCallCapacity(d, v, "call_capacity")
+
+		t, err := expandWirelessControllerQosProfileCallCapacity(d, v, "call_capacity", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -909,7 +1028,8 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("bandwidth_admission_control"); ok {
-		t, err := expandWirelessControllerQosProfileBandwidthAdmissionControl(d, v, "bandwidth_admission_control")
+
+		t, err := expandWirelessControllerQosProfileBandwidthAdmissionControl(d, v, "bandwidth_admission_control", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -918,7 +1038,8 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("bandwidth_capacity"); ok {
-		t, err := expandWirelessControllerQosProfileBandwidthCapacity(d, v, "bandwidth_capacity")
+
+		t, err := expandWirelessControllerQosProfileBandwidthCapacity(d, v, "bandwidth_capacity", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -927,7 +1048,8 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("dscp_wmm_mapping"); ok {
-		t, err := expandWirelessControllerQosProfileDscpWmmMapping(d, v, "dscp_wmm_mapping")
+
+		t, err := expandWirelessControllerQosProfileDscpWmmMapping(d, v, "dscp_wmm_mapping", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -936,7 +1058,8 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("dscp_wmm_vo"); ok {
-		t, err := expandWirelessControllerQosProfileDscpWmmVo(d, v, "dscp_wmm_vo")
+
+		t, err := expandWirelessControllerQosProfileDscpWmmVo(d, v, "dscp_wmm_vo", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -945,7 +1068,8 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("dscp_wmm_vi"); ok {
-		t, err := expandWirelessControllerQosProfileDscpWmmVi(d, v, "dscp_wmm_vi")
+
+		t, err := expandWirelessControllerQosProfileDscpWmmVi(d, v, "dscp_wmm_vi", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -954,7 +1078,8 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("dscp_wmm_be"); ok {
-		t, err := expandWirelessControllerQosProfileDscpWmmBe(d, v, "dscp_wmm_be")
+
+		t, err := expandWirelessControllerQosProfileDscpWmmBe(d, v, "dscp_wmm_be", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -963,11 +1088,62 @@ func getObjectWirelessControllerQosProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("dscp_wmm_bk"); ok {
-		t, err := expandWirelessControllerQosProfileDscpWmmBk(d, v, "dscp_wmm_bk")
+
+		t, err := expandWirelessControllerQosProfileDscpWmmBk(d, v, "dscp_wmm_bk", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
 			obj["dscp-wmm-bk"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("wmm_dscp_marking"); ok {
+
+		t, err := expandWirelessControllerQosProfileWmmDscpMarking(d, v, "wmm_dscp_marking", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["wmm-dscp-marking"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("wmm_vo_dscp"); ok {
+
+		t, err := expandWirelessControllerQosProfileWmmVoDscp(d, v, "wmm_vo_dscp", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["wmm-vo-dscp"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("wmm_vi_dscp"); ok {
+
+		t, err := expandWirelessControllerQosProfileWmmViDscp(d, v, "wmm_vi_dscp", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["wmm-vi-dscp"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("wmm_be_dscp"); ok {
+
+		t, err := expandWirelessControllerQosProfileWmmBeDscp(d, v, "wmm_be_dscp", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["wmm-be-dscp"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("wmm_bk_dscp"); ok {
+
+		t, err := expandWirelessControllerQosProfileWmmBkDscp(d, v, "wmm_bk_dscp", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["wmm-bk-dscp"] = t
 		}
 	}
 
