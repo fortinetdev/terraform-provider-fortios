@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -85,6 +86,11 @@ func resourceSwitchControllerQosQueuePolicy() *schema.Resource {
 							Optional: true,
 							Computed: true,
 						},
+						"ecn": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
 						"weight": &schema.Schema{
 							Type:     schema.TypeInt,
 							Optional: true,
@@ -106,7 +112,7 @@ func resourceSwitchControllerQosQueuePolicyCreate(d *schema.ResourceData, m inte
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSwitchControllerQosQueuePolicy(d)
+	obj, err := getObjectSwitchControllerQosQueuePolicy(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerQosQueuePolicy resource while getting object: %v", err)
 	}
@@ -131,7 +137,7 @@ func resourceSwitchControllerQosQueuePolicyUpdate(d *schema.ResourceData, m inte
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSwitchControllerQosQueuePolicy(d)
+	obj, err := getObjectSwitchControllerQosQueuePolicy(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerQosQueuePolicy resource while getting object: %v", err)
 	}
@@ -184,26 +190,26 @@ func resourceSwitchControllerQosQueuePolicyRead(d *schema.ResourceData, m interf
 		return nil
 	}
 
-	err = refreshObjectSwitchControllerQosQueuePolicy(d, o)
+	err = refreshObjectSwitchControllerQosQueuePolicy(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerQosQueuePolicy resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSwitchControllerQosQueuePolicyName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerQosQueuePolicyName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerQosQueuePolicySchedule(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerQosQueuePolicySchedule(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerQosQueuePolicyRateBy(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerQosQueuePolicyRateBy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerQosQueuePolicyCosQueue(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSwitchControllerQosQueuePolicyCosQueue(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -224,42 +230,56 @@ func flattenSwitchControllerQosQueuePolicyCosQueue(v interface{}, d *schema.Reso
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSwitchControllerQosQueuePolicyCosQueueName(i["name"], d, pre_append)
+
+			tmp["name"] = flattenSwitchControllerQosQueuePolicyCosQueueName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := i["description"]; ok {
-			tmp["description"] = flattenSwitchControllerQosQueuePolicyCosQueueDescription(i["description"], d, pre_append)
+
+			tmp["description"] = flattenSwitchControllerQosQueuePolicyCosQueueDescription(i["description"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "min_rate"
 		if _, ok := i["min-rate"]; ok {
-			tmp["min_rate"] = flattenSwitchControllerQosQueuePolicyCosQueueMinRate(i["min-rate"], d, pre_append)
+
+			tmp["min_rate"] = flattenSwitchControllerQosQueuePolicyCosQueueMinRate(i["min-rate"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "max_rate"
 		if _, ok := i["max-rate"]; ok {
-			tmp["max_rate"] = flattenSwitchControllerQosQueuePolicyCosQueueMaxRate(i["max-rate"], d, pre_append)
+
+			tmp["max_rate"] = flattenSwitchControllerQosQueuePolicyCosQueueMaxRate(i["max-rate"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "min_rate_percent"
 		if _, ok := i["min-rate-percent"]; ok {
-			tmp["min_rate_percent"] = flattenSwitchControllerQosQueuePolicyCosQueueMinRatePercent(i["min-rate-percent"], d, pre_append)
+
+			tmp["min_rate_percent"] = flattenSwitchControllerQosQueuePolicyCosQueueMinRatePercent(i["min-rate-percent"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "max_rate_percent"
 		if _, ok := i["max-rate-percent"]; ok {
-			tmp["max_rate_percent"] = flattenSwitchControllerQosQueuePolicyCosQueueMaxRatePercent(i["max-rate-percent"], d, pre_append)
+
+			tmp["max_rate_percent"] = flattenSwitchControllerQosQueuePolicyCosQueueMaxRatePercent(i["max-rate-percent"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "drop_policy"
 		if _, ok := i["drop-policy"]; ok {
-			tmp["drop_policy"] = flattenSwitchControllerQosQueuePolicyCosQueueDropPolicy(i["drop-policy"], d, pre_append)
+
+			tmp["drop_policy"] = flattenSwitchControllerQosQueuePolicyCosQueueDropPolicy(i["drop-policy"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ecn"
+		if _, ok := i["ecn"]; ok {
+
+			tmp["ecn"] = flattenSwitchControllerQosQueuePolicyCosQueueEcn(i["ecn"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
 		if _, ok := i["weight"]; ok {
-			tmp["weight"] = flattenSwitchControllerQosQueuePolicyCosQueueWeight(i["weight"], d, pre_append)
+
+			tmp["weight"] = flattenSwitchControllerQosQueuePolicyCosQueueWeight(i["weight"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -271,68 +291,72 @@ func flattenSwitchControllerQosQueuePolicyCosQueue(v interface{}, d *schema.Reso
 	return result
 }
 
-func flattenSwitchControllerQosQueuePolicyCosQueueName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerQosQueuePolicyCosQueueName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerQosQueuePolicyCosQueueDescription(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerQosQueuePolicyCosQueueDescription(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerQosQueuePolicyCosQueueMinRate(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerQosQueuePolicyCosQueueMinRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerQosQueuePolicyCosQueueMaxRate(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerQosQueuePolicyCosQueueMaxRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerQosQueuePolicyCosQueueMinRatePercent(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerQosQueuePolicyCosQueueMinRatePercent(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerQosQueuePolicyCosQueueMaxRatePercent(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerQosQueuePolicyCosQueueMaxRatePercent(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerQosQueuePolicyCosQueueDropPolicy(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerQosQueuePolicyCosQueueDropPolicy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerQosQueuePolicyCosQueueWeight(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerQosQueuePolicyCosQueueEcn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSwitchControllerQosQueuePolicy(d *schema.ResourceData, o map[string]interface{}) error {
+func flattenSwitchControllerQosQueuePolicyCosQueueWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func refreshObjectSwitchControllerQosQueuePolicy(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenSwitchControllerQosQueuePolicyName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenSwitchControllerQosQueuePolicyName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("schedule", flattenSwitchControllerQosQueuePolicySchedule(o["schedule"], d, "schedule")); err != nil {
+	if err = d.Set("schedule", flattenSwitchControllerQosQueuePolicySchedule(o["schedule"], d, "schedule", sv)); err != nil {
 		if !fortiAPIPatch(o["schedule"]) {
 			return fmt.Errorf("Error reading schedule: %v", err)
 		}
 	}
 
-	if err = d.Set("rate_by", flattenSwitchControllerQosQueuePolicyRateBy(o["rate-by"], d, "rate_by")); err != nil {
+	if err = d.Set("rate_by", flattenSwitchControllerQosQueuePolicyRateBy(o["rate-by"], d, "rate_by", sv)); err != nil {
 		if !fortiAPIPatch(o["rate-by"]) {
 			return fmt.Errorf("Error reading rate_by: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("cos_queue", flattenSwitchControllerQosQueuePolicyCosQueue(o["cos-queue"], d, "cos_queue")); err != nil {
+		if err = d.Set("cos_queue", flattenSwitchControllerQosQueuePolicyCosQueue(o["cos-queue"], d, "cos_queue", sv)); err != nil {
 			if !fortiAPIPatch(o["cos-queue"]) {
 				return fmt.Errorf("Error reading cos_queue: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("cos_queue"); ok {
-			if err = d.Set("cos_queue", flattenSwitchControllerQosQueuePolicyCosQueue(o["cos-queue"], d, "cos_queue")); err != nil {
+			if err = d.Set("cos_queue", flattenSwitchControllerQosQueuePolicyCosQueue(o["cos-queue"], d, "cos_queue", sv)); err != nil {
 				if !fortiAPIPatch(o["cos-queue"]) {
 					return fmt.Errorf("Error reading cos_queue: %v", err)
 				}
@@ -346,22 +370,22 @@ func refreshObjectSwitchControllerQosQueuePolicy(d *schema.ResourceData, o map[s
 func flattenSwitchControllerQosQueuePolicyFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSwitchControllerQosQueuePolicyName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerQosQueuePolicyName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerQosQueuePolicySchedule(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerQosQueuePolicySchedule(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerQosQueuePolicyRateBy(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerQosQueuePolicyRateBy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerQosQueuePolicyCosQueue(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerQosQueuePolicyCosQueue(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -377,42 +401,56 @@ func expandSwitchControllerQosQueuePolicyCosQueue(d *schema.ResourceData, v inte
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSwitchControllerQosQueuePolicyCosQueueName(d, i["name"], pre_append)
+
+			tmp["name"], _ = expandSwitchControllerQosQueuePolicyCosQueueName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["description"], _ = expandSwitchControllerQosQueuePolicyCosQueueDescription(d, i["description"], pre_append)
+
+			tmp["description"], _ = expandSwitchControllerQosQueuePolicyCosQueueDescription(d, i["description"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "min_rate"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["min-rate"], _ = expandSwitchControllerQosQueuePolicyCosQueueMinRate(d, i["min_rate"], pre_append)
+
+			tmp["min-rate"], _ = expandSwitchControllerQosQueuePolicyCosQueueMinRate(d, i["min_rate"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "max_rate"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["max-rate"], _ = expandSwitchControllerQosQueuePolicyCosQueueMaxRate(d, i["max_rate"], pre_append)
+
+			tmp["max-rate"], _ = expandSwitchControllerQosQueuePolicyCosQueueMaxRate(d, i["max_rate"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "min_rate_percent"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["min-rate-percent"], _ = expandSwitchControllerQosQueuePolicyCosQueueMinRatePercent(d, i["min_rate_percent"], pre_append)
+
+			tmp["min-rate-percent"], _ = expandSwitchControllerQosQueuePolicyCosQueueMinRatePercent(d, i["min_rate_percent"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "max_rate_percent"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["max-rate-percent"], _ = expandSwitchControllerQosQueuePolicyCosQueueMaxRatePercent(d, i["max_rate_percent"], pre_append)
+
+			tmp["max-rate-percent"], _ = expandSwitchControllerQosQueuePolicyCosQueueMaxRatePercent(d, i["max_rate_percent"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "drop_policy"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["drop-policy"], _ = expandSwitchControllerQosQueuePolicyCosQueueDropPolicy(d, i["drop_policy"], pre_append)
+
+			tmp["drop-policy"], _ = expandSwitchControllerQosQueuePolicyCosQueueDropPolicy(d, i["drop_policy"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "ecn"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["ecn"], _ = expandSwitchControllerQosQueuePolicyCosQueueEcn(d, i["ecn"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "weight"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["weight"], _ = expandSwitchControllerQosQueuePolicyCosQueueWeight(d, i["weight"], pre_append)
+
+			tmp["weight"], _ = expandSwitchControllerQosQueuePolicyCosQueueWeight(d, i["weight"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -423,43 +461,48 @@ func expandSwitchControllerQosQueuePolicyCosQueue(d *schema.ResourceData, v inte
 	return result, nil
 }
 
-func expandSwitchControllerQosQueuePolicyCosQueueName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerQosQueuePolicyCosQueueName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerQosQueuePolicyCosQueueDescription(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerQosQueuePolicyCosQueueDescription(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerQosQueuePolicyCosQueueMinRate(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerQosQueuePolicyCosQueueMinRate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerQosQueuePolicyCosQueueMaxRate(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerQosQueuePolicyCosQueueMaxRate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerQosQueuePolicyCosQueueMinRatePercent(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerQosQueuePolicyCosQueueMinRatePercent(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerQosQueuePolicyCosQueueMaxRatePercent(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerQosQueuePolicyCosQueueMaxRatePercent(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerQosQueuePolicyCosQueueDropPolicy(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerQosQueuePolicyCosQueueDropPolicy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerQosQueuePolicyCosQueueWeight(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerQosQueuePolicyCosQueueEcn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSwitchControllerQosQueuePolicy(d *schema.ResourceData) (*map[string]interface{}, error) {
+func expandSwitchControllerQosQueuePolicyCosQueueWeight(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func getObjectSwitchControllerQosQueuePolicy(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandSwitchControllerQosQueuePolicyName(d, v, "name")
+
+		t, err := expandSwitchControllerQosQueuePolicyName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -468,7 +511,8 @@ func getObjectSwitchControllerQosQueuePolicy(d *schema.ResourceData) (*map[strin
 	}
 
 	if v, ok := d.GetOk("schedule"); ok {
-		t, err := expandSwitchControllerQosQueuePolicySchedule(d, v, "schedule")
+
+		t, err := expandSwitchControllerQosQueuePolicySchedule(d, v, "schedule", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -477,7 +521,8 @@ func getObjectSwitchControllerQosQueuePolicy(d *schema.ResourceData) (*map[strin
 	}
 
 	if v, ok := d.GetOk("rate_by"); ok {
-		t, err := expandSwitchControllerQosQueuePolicyRateBy(d, v, "rate_by")
+
+		t, err := expandSwitchControllerQosQueuePolicyRateBy(d, v, "rate_by", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -486,7 +531,8 @@ func getObjectSwitchControllerQosQueuePolicy(d *schema.ResourceData) (*map[strin
 	}
 
 	if v, ok := d.GetOk("cos_queue"); ok {
-		t, err := expandSwitchControllerQosQueuePolicyCosQueue(d, v, "cos_queue")
+
+		t, err := expandSwitchControllerQosQueuePolicyCosQueue(d, v, "cos_queue", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
