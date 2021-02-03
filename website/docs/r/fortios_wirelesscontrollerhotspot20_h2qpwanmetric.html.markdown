@@ -27,7 +27,6 @@ resource "fortios_wirelesscontrollerhotspot20_h2qpwanmetric" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - WAN metric name.
