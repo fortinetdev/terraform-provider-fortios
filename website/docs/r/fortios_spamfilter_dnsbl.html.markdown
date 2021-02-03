@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_spamfilter_dnsbl
-Configure AntiSpam DNSBL/ORBL.
+Configure AntiSpam DNSBL/ORBL. Applies to FortiOS Version `<= 6.2.0`.
 
 ## Example Usage
 
@@ -26,7 +26,6 @@ resource "fortios_spamfilter_dnsbl" "trname" {
 ```
 
 ## Argument Reference
-
 
 The following arguments are supported:
 
