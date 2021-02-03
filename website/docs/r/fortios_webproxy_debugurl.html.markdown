@@ -22,7 +22,6 @@ resource "fortios_webproxy_debugurl" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Debug URL name.
