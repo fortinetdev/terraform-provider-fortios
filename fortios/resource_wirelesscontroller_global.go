@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -130,7 +131,7 @@ func resourceWirelessControllerGlobalUpdate(d *schema.ResourceData, m interface{
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWirelessControllerGlobal(d)
+	obj, err := getObjectWirelessControllerGlobal(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerGlobal resource while getting object: %v", err)
 	}
@@ -183,181 +184,181 @@ func resourceWirelessControllerGlobalRead(d *schema.ResourceData, m interface{})
 		return nil
 	}
 
-	err = refreshObjectWirelessControllerGlobal(d, o)
+	err = refreshObjectWirelessControllerGlobal(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading WirelessControllerGlobal resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenWirelessControllerGlobalName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerGlobalName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerGlobalLocation(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerGlobalLocation(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerGlobalImageDownload(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerGlobalImageDownload(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerGlobalMaxRetransmit(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerGlobalMaxRetransmit(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerGlobalControlMessageOffload(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerGlobalControlMessageOffload(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerGlobalDataEthernetIi(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerGlobalDataEthernetIi(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerGlobalLinkAggregation(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerGlobalLinkAggregation(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerGlobalMeshEthType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerGlobalMeshEthType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerGlobalFiappEthType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerGlobalFiappEthType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerGlobalDiscoveryMcAddr(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerGlobalDiscoveryMcAddr(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerGlobalMaxClients(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerGlobalMaxClients(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerGlobalRogueScanMacAdjacency(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerGlobalRogueScanMacAdjacency(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerGlobalIpsecBaseIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerGlobalIpsecBaseIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerGlobalWtpShare(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerGlobalWtpShare(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerGlobalApLogServer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerGlobalApLogServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerGlobalApLogServerIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerGlobalApLogServerIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerGlobalApLogServerPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerGlobalApLogServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectWirelessControllerGlobal(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectWirelessControllerGlobal(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenWirelessControllerGlobalName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenWirelessControllerGlobalName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("location", flattenWirelessControllerGlobalLocation(o["location"], d, "location")); err != nil {
+	if err = d.Set("location", flattenWirelessControllerGlobalLocation(o["location"], d, "location", sv)); err != nil {
 		if !fortiAPIPatch(o["location"]) {
 			return fmt.Errorf("Error reading location: %v", err)
 		}
 	}
 
-	if err = d.Set("image_download", flattenWirelessControllerGlobalImageDownload(o["image-download"], d, "image_download")); err != nil {
+	if err = d.Set("image_download", flattenWirelessControllerGlobalImageDownload(o["image-download"], d, "image_download", sv)); err != nil {
 		if !fortiAPIPatch(o["image-download"]) {
 			return fmt.Errorf("Error reading image_download: %v", err)
 		}
 	}
 
-	if err = d.Set("max_retransmit", flattenWirelessControllerGlobalMaxRetransmit(o["max-retransmit"], d, "max_retransmit")); err != nil {
+	if err = d.Set("max_retransmit", flattenWirelessControllerGlobalMaxRetransmit(o["max-retransmit"], d, "max_retransmit", sv)); err != nil {
 		if !fortiAPIPatch(o["max-retransmit"]) {
 			return fmt.Errorf("Error reading max_retransmit: %v", err)
 		}
 	}
 
-	if err = d.Set("control_message_offload", flattenWirelessControllerGlobalControlMessageOffload(o["control-message-offload"], d, "control_message_offload")); err != nil {
+	if err = d.Set("control_message_offload", flattenWirelessControllerGlobalControlMessageOffload(o["control-message-offload"], d, "control_message_offload", sv)); err != nil {
 		if !fortiAPIPatch(o["control-message-offload"]) {
 			return fmt.Errorf("Error reading control_message_offload: %v", err)
 		}
 	}
 
-	if err = d.Set("data_ethernet_ii", flattenWirelessControllerGlobalDataEthernetIi(o["data-ethernet-II"], d, "data_ethernet_ii")); err != nil {
+	if err = d.Set("data_ethernet_ii", flattenWirelessControllerGlobalDataEthernetIi(o["data-ethernet-II"], d, "data_ethernet_ii", sv)); err != nil {
 		if !fortiAPIPatch(o["data-ethernet-II"]) {
 			return fmt.Errorf("Error reading data_ethernet_ii: %v", err)
 		}
 	}
 
-	if err = d.Set("link_aggregation", flattenWirelessControllerGlobalLinkAggregation(o["link-aggregation"], d, "link_aggregation")); err != nil {
+	if err = d.Set("link_aggregation", flattenWirelessControllerGlobalLinkAggregation(o["link-aggregation"], d, "link_aggregation", sv)); err != nil {
 		if !fortiAPIPatch(o["link-aggregation"]) {
 			return fmt.Errorf("Error reading link_aggregation: %v", err)
 		}
 	}
 
-	if err = d.Set("mesh_eth_type", flattenWirelessControllerGlobalMeshEthType(o["mesh-eth-type"], d, "mesh_eth_type")); err != nil {
+	if err = d.Set("mesh_eth_type", flattenWirelessControllerGlobalMeshEthType(o["mesh-eth-type"], d, "mesh_eth_type", sv)); err != nil {
 		if !fortiAPIPatch(o["mesh-eth-type"]) {
 			return fmt.Errorf("Error reading mesh_eth_type: %v", err)
 		}
 	}
 
-	if err = d.Set("fiapp_eth_type", flattenWirelessControllerGlobalFiappEthType(o["fiapp-eth-type"], d, "fiapp_eth_type")); err != nil {
+	if err = d.Set("fiapp_eth_type", flattenWirelessControllerGlobalFiappEthType(o["fiapp-eth-type"], d, "fiapp_eth_type", sv)); err != nil {
 		if !fortiAPIPatch(o["fiapp-eth-type"]) {
 			return fmt.Errorf("Error reading fiapp_eth_type: %v", err)
 		}
 	}
 
-	if err = d.Set("discovery_mc_addr", flattenWirelessControllerGlobalDiscoveryMcAddr(o["discovery-mc-addr"], d, "discovery_mc_addr")); err != nil {
+	if err = d.Set("discovery_mc_addr", flattenWirelessControllerGlobalDiscoveryMcAddr(o["discovery-mc-addr"], d, "discovery_mc_addr", sv)); err != nil {
 		if !fortiAPIPatch(o["discovery-mc-addr"]) {
 			return fmt.Errorf("Error reading discovery_mc_addr: %v", err)
 		}
 	}
 
-	if err = d.Set("max_clients", flattenWirelessControllerGlobalMaxClients(o["max-clients"], d, "max_clients")); err != nil {
+	if err = d.Set("max_clients", flattenWirelessControllerGlobalMaxClients(o["max-clients"], d, "max_clients", sv)); err != nil {
 		if !fortiAPIPatch(o["max-clients"]) {
 			return fmt.Errorf("Error reading max_clients: %v", err)
 		}
 	}
 
-	if err = d.Set("rogue_scan_mac_adjacency", flattenWirelessControllerGlobalRogueScanMacAdjacency(o["rogue-scan-mac-adjacency"], d, "rogue_scan_mac_adjacency")); err != nil {
+	if err = d.Set("rogue_scan_mac_adjacency", flattenWirelessControllerGlobalRogueScanMacAdjacency(o["rogue-scan-mac-adjacency"], d, "rogue_scan_mac_adjacency", sv)); err != nil {
 		if !fortiAPIPatch(o["rogue-scan-mac-adjacency"]) {
 			return fmt.Errorf("Error reading rogue_scan_mac_adjacency: %v", err)
 		}
 	}
 
-	if err = d.Set("ipsec_base_ip", flattenWirelessControllerGlobalIpsecBaseIp(o["ipsec-base-ip"], d, "ipsec_base_ip")); err != nil {
+	if err = d.Set("ipsec_base_ip", flattenWirelessControllerGlobalIpsecBaseIp(o["ipsec-base-ip"], d, "ipsec_base_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["ipsec-base-ip"]) {
 			return fmt.Errorf("Error reading ipsec_base_ip: %v", err)
 		}
 	}
 
-	if err = d.Set("wtp_share", flattenWirelessControllerGlobalWtpShare(o["wtp-share"], d, "wtp_share")); err != nil {
+	if err = d.Set("wtp_share", flattenWirelessControllerGlobalWtpShare(o["wtp-share"], d, "wtp_share", sv)); err != nil {
 		if !fortiAPIPatch(o["wtp-share"]) {
 			return fmt.Errorf("Error reading wtp_share: %v", err)
 		}
 	}
 
-	if err = d.Set("ap_log_server", flattenWirelessControllerGlobalApLogServer(o["ap-log-server"], d, "ap_log_server")); err != nil {
+	if err = d.Set("ap_log_server", flattenWirelessControllerGlobalApLogServer(o["ap-log-server"], d, "ap_log_server", sv)); err != nil {
 		if !fortiAPIPatch(o["ap-log-server"]) {
 			return fmt.Errorf("Error reading ap_log_server: %v", err)
 		}
 	}
 
-	if err = d.Set("ap_log_server_ip", flattenWirelessControllerGlobalApLogServerIp(o["ap-log-server-ip"], d, "ap_log_server_ip")); err != nil {
+	if err = d.Set("ap_log_server_ip", flattenWirelessControllerGlobalApLogServerIp(o["ap-log-server-ip"], d, "ap_log_server_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["ap-log-server-ip"]) {
 			return fmt.Errorf("Error reading ap_log_server_ip: %v", err)
 		}
 	}
 
-	if err = d.Set("ap_log_server_port", flattenWirelessControllerGlobalApLogServerPort(o["ap-log-server-port"], d, "ap_log_server_port")); err != nil {
+	if err = d.Set("ap_log_server_port", flattenWirelessControllerGlobalApLogServerPort(o["ap-log-server-port"], d, "ap_log_server_port", sv)); err != nil {
 		if !fortiAPIPatch(o["ap-log-server-port"]) {
 			return fmt.Errorf("Error reading ap_log_server_port: %v", err)
 		}
@@ -369,82 +370,83 @@ func refreshObjectWirelessControllerGlobal(d *schema.ResourceData, o map[string]
 func flattenWirelessControllerGlobalFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandWirelessControllerGlobalName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerGlobalName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerGlobalLocation(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerGlobalLocation(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerGlobalImageDownload(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerGlobalImageDownload(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerGlobalMaxRetransmit(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerGlobalMaxRetransmit(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerGlobalControlMessageOffload(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerGlobalControlMessageOffload(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerGlobalDataEthernetIi(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerGlobalDataEthernetIi(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerGlobalLinkAggregation(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerGlobalLinkAggregation(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerGlobalMeshEthType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerGlobalMeshEthType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerGlobalFiappEthType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerGlobalFiappEthType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerGlobalDiscoveryMcAddr(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerGlobalDiscoveryMcAddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerGlobalMaxClients(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerGlobalMaxClients(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerGlobalRogueScanMacAdjacency(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerGlobalRogueScanMacAdjacency(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerGlobalIpsecBaseIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerGlobalIpsecBaseIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerGlobalWtpShare(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerGlobalWtpShare(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerGlobalApLogServer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerGlobalApLogServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerGlobalApLogServerIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerGlobalApLogServerIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerGlobalApLogServerPort(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerGlobalApLogServerPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectWirelessControllerGlobal(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectWirelessControllerGlobal(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandWirelessControllerGlobalName(d, v, "name")
+
+		t, err := expandWirelessControllerGlobalName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -453,7 +455,8 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("location"); ok {
-		t, err := expandWirelessControllerGlobalLocation(d, v, "location")
+
+		t, err := expandWirelessControllerGlobalLocation(d, v, "location", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -462,7 +465,8 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("image_download"); ok {
-		t, err := expandWirelessControllerGlobalImageDownload(d, v, "image_download")
+
+		t, err := expandWirelessControllerGlobalImageDownload(d, v, "image_download", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -471,7 +475,8 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData) (*map[string]inte
 	}
 
 	if v, ok := d.GetOkExists("max_retransmit"); ok {
-		t, err := expandWirelessControllerGlobalMaxRetransmit(d, v, "max_retransmit")
+
+		t, err := expandWirelessControllerGlobalMaxRetransmit(d, v, "max_retransmit", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -480,7 +485,8 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("control_message_offload"); ok {
-		t, err := expandWirelessControllerGlobalControlMessageOffload(d, v, "control_message_offload")
+
+		t, err := expandWirelessControllerGlobalControlMessageOffload(d, v, "control_message_offload", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -489,7 +495,8 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("data_ethernet_ii"); ok {
-		t, err := expandWirelessControllerGlobalDataEthernetIi(d, v, "data_ethernet_ii")
+
+		t, err := expandWirelessControllerGlobalDataEthernetIi(d, v, "data_ethernet_ii", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -498,7 +505,8 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("link_aggregation"); ok {
-		t, err := expandWirelessControllerGlobalLinkAggregation(d, v, "link_aggregation")
+
+		t, err := expandWirelessControllerGlobalLinkAggregation(d, v, "link_aggregation", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -507,7 +515,8 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData) (*map[string]inte
 	}
 
 	if v, ok := d.GetOkExists("mesh_eth_type"); ok {
-		t, err := expandWirelessControllerGlobalMeshEthType(d, v, "mesh_eth_type")
+
+		t, err := expandWirelessControllerGlobalMeshEthType(d, v, "mesh_eth_type", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -516,7 +525,8 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData) (*map[string]inte
 	}
 
 	if v, ok := d.GetOkExists("fiapp_eth_type"); ok {
-		t, err := expandWirelessControllerGlobalFiappEthType(d, v, "fiapp_eth_type")
+
+		t, err := expandWirelessControllerGlobalFiappEthType(d, v, "fiapp_eth_type", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -525,7 +535,8 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("discovery_mc_addr"); ok {
-		t, err := expandWirelessControllerGlobalDiscoveryMcAddr(d, v, "discovery_mc_addr")
+
+		t, err := expandWirelessControllerGlobalDiscoveryMcAddr(d, v, "discovery_mc_addr", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -534,7 +545,8 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData) (*map[string]inte
 	}
 
 	if v, ok := d.GetOkExists("max_clients"); ok {
-		t, err := expandWirelessControllerGlobalMaxClients(d, v, "max_clients")
+
+		t, err := expandWirelessControllerGlobalMaxClients(d, v, "max_clients", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -543,7 +555,8 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData) (*map[string]inte
 	}
 
 	if v, ok := d.GetOkExists("rogue_scan_mac_adjacency"); ok {
-		t, err := expandWirelessControllerGlobalRogueScanMacAdjacency(d, v, "rogue_scan_mac_adjacency")
+
+		t, err := expandWirelessControllerGlobalRogueScanMacAdjacency(d, v, "rogue_scan_mac_adjacency", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -552,7 +565,8 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("ipsec_base_ip"); ok {
-		t, err := expandWirelessControllerGlobalIpsecBaseIp(d, v, "ipsec_base_ip")
+
+		t, err := expandWirelessControllerGlobalIpsecBaseIp(d, v, "ipsec_base_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -561,7 +575,8 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("wtp_share"); ok {
-		t, err := expandWirelessControllerGlobalWtpShare(d, v, "wtp_share")
+
+		t, err := expandWirelessControllerGlobalWtpShare(d, v, "wtp_share", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -570,7 +585,8 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("ap_log_server"); ok {
-		t, err := expandWirelessControllerGlobalApLogServer(d, v, "ap_log_server")
+
+		t, err := expandWirelessControllerGlobalApLogServer(d, v, "ap_log_server", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -579,7 +595,8 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("ap_log_server_ip"); ok {
-		t, err := expandWirelessControllerGlobalApLogServerIp(d, v, "ap_log_server_ip")
+
+		t, err := expandWirelessControllerGlobalApLogServerIp(d, v, "ap_log_server_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -588,7 +605,8 @@ func getObjectWirelessControllerGlobal(d *schema.ResourceData) (*map[string]inte
 	}
 
 	if v, ok := d.GetOkExists("ap_log_server_port"); ok {
-		t, err := expandWirelessControllerGlobalApLogServerPort(d, v, "ap_log_server_port")
+
+		t, err := expandWirelessControllerGlobalApLogServerPort(d, v, "ap_log_server_port", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
