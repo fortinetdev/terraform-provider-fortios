@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -64,7 +65,7 @@ func resourceFirewallSshLocalKeyCreate(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectFirewallSshLocalKey(d)
+	obj, err := getObjectFirewallSshLocalKey(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallSshLocalKey resource while getting object: %v", err)
 	}
@@ -89,7 +90,7 @@ func resourceFirewallSshLocalKeyUpdate(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectFirewallSshLocalKey(d)
+	obj, err := getObjectFirewallSshLocalKey(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallSshLocalKey resource while getting object: %v", err)
 	}
@@ -142,43 +143,43 @@ func resourceFirewallSshLocalKeyRead(d *schema.ResourceData, m interface{}) erro
 		return nil
 	}
 
-	err = refreshObjectFirewallSshLocalKey(d, o)
+	err = refreshObjectFirewallSshLocalKey(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallSshLocalKey resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenFirewallSshLocalKeyName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSshLocalKeyName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallSshLocalKeyPassword(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSshLocalKeyPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallSshLocalKeyPrivateKey(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSshLocalKeyPrivateKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallSshLocalKeyPublicKey(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSshLocalKeyPublicKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallSshLocalKeySource(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSshLocalKeySource(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectFirewallSshLocalKey(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectFirewallSshLocalKey(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenFirewallSshLocalKeyName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenFirewallSshLocalKeyName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("source", flattenFirewallSshLocalKeySource(o["source"], d, "source")); err != nil {
+	if err = d.Set("source", flattenFirewallSshLocalKeySource(o["source"], d, "source", sv)); err != nil {
 		if !fortiAPIPatch(o["source"]) {
 			return fmt.Errorf("Error reading source: %v", err)
 		}
@@ -190,34 +191,35 @@ func refreshObjectFirewallSshLocalKey(d *schema.ResourceData, o map[string]inter
 func flattenFirewallSshLocalKeyFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandFirewallSshLocalKeyName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSshLocalKeyName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallSshLocalKeyPassword(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSshLocalKeyPassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallSshLocalKeyPrivateKey(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSshLocalKeyPrivateKey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallSshLocalKeyPublicKey(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSshLocalKeyPublicKey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallSshLocalKeySource(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSshLocalKeySource(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectFirewallSshLocalKey(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectFirewallSshLocalKey(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandFirewallSshLocalKeyName(d, v, "name")
+
+		t, err := expandFirewallSshLocalKeyName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -226,7 +228,8 @@ func getObjectFirewallSshLocalKey(d *schema.ResourceData) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("password"); ok {
-		t, err := expandFirewallSshLocalKeyPassword(d, v, "password")
+
+		t, err := expandFirewallSshLocalKeyPassword(d, v, "password", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -235,7 +238,8 @@ func getObjectFirewallSshLocalKey(d *schema.ResourceData) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("private_key"); ok {
-		t, err := expandFirewallSshLocalKeyPrivateKey(d, v, "private_key")
+
+		t, err := expandFirewallSshLocalKeyPrivateKey(d, v, "private_key", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -244,7 +248,8 @@ func getObjectFirewallSshLocalKey(d *schema.ResourceData) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("public_key"); ok {
-		t, err := expandFirewallSshLocalKeyPublicKey(d, v, "public_key")
+
+		t, err := expandFirewallSshLocalKeyPublicKey(d, v, "public_key", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -253,7 +258,8 @@ func getObjectFirewallSshLocalKey(d *schema.ResourceData) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("source"); ok {
-		t, err := expandFirewallSshLocalKeySource(d, v, "source")
+
+		t, err := expandFirewallSshLocalKeySource(d, v, "source", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
