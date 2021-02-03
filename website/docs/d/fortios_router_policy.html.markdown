@@ -19,6 +19,7 @@ The following attributes are exported:
 
 * `seq_num` - Sequence number.
 * `input_device` - Incoming interface name. The structure of `input_device` block is documented below.
+* `input_device_negate` - Enable/disable negation of input device match.
 * `src` - Source IP and mask (x.x.x.x/x). The structure of `src` block is documented below.
 * `srcaddr` - Source address name. The structure of `srcaddr` block is documented below.
 * `src_negate` - Enable/disable negating source address match.
@@ -37,6 +38,8 @@ The following attributes are exported:
 * `tos_mask` - Type of service evaluated bits.
 * `status` - Enable/disable this policy route.
 * `comments` - Optional comments.
+* `internet_service_id` - Destination Internet Service ID. The structure of `internet_service_id` block is documented below.
+* `internet_service_custom` - Custom Destination Internet Service name. The structure of `internet_service_custom` block is documented below.
 
 The `input_device` block contains:
 
@@ -57,4 +60,12 @@ The `dst` block contains:
 The `dstaddr` block contains:
 
 * `name` - Address/group name.
+
+The `internet_service_id` block contains:
+
+* `id` - Destination Internet Service ID.
+
+The `internet_service_custom` block contains:
+
+* `name` - Custom Destination Internet Service name.
 
