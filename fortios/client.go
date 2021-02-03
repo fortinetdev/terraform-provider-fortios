@@ -154,14 +154,16 @@ func createFortiOSClient(fClient *FortiClient, c *Config) error {
 		Timeout:   time.Second * 250,
 	}
 
-	fc := forticlient.NewClient(auth, client)
+	fc, err := forticlient.NewClient(auth, client)
+
+	if err != nil {
+		return fmt.Errorf("connection error: %v", err)
+	}
 
 	fClient.Client = fc
 
 	return nil
 }
-
-// Will Support FortiGate REST API access using PKI group
 
 func createFortiManagerClient(fClient *FortiClient, c *Config) error {
 	if c.FMG_Hostname == "" {
