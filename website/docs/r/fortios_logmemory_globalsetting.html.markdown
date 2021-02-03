@@ -22,7 +22,6 @@ resource "fortios_logmemory_globalsetting" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `max_size` - Maximum amount of memory that can be used for memory logging in bytes.
