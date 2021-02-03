@@ -35,7 +35,6 @@ resource "fortios_user_ldap" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - LDAP server entry name.
@@ -47,6 +46,9 @@ The following arguments are supported:
 * `cnid` - Common name identifier for the LDAP server. The common name identifier for most LDAP servers is "cn".
 * `dn` - (Required) Distinguished name used to look up entries on the LDAP server.
 * `type` - Authentication type for LDAP searches.
+* `two_factor` - Enable/disable two-factor authentication.
+* `two_factor_authentication` - Authentication method by FortiToken Cloud.
+* `two_factor_notification` - Notification method for user activation by FortiToken Cloud.
 * `username` - Username (full DN) for initial binding.
 * `password` - Password for initial binding.
 * `group_member_check` - Group member checking methods.
@@ -63,6 +65,10 @@ The following arguments are supported:
 * `account_key_processing` - Account key processing operation, either keep or strip domain string of UPN in the token.
 * `account_key_filter` - Account key filter, using the UPN as the search filter.
 * `search_type` - Search type.
+* `obtain_user_info` - Enable/disable obtaining of user information.
+* `user_info_exchange_server` - MS Exchange server from which to fetch user information.
+* `interface_select_method` - Specify how to select outgoing interface to reach server.
+* `interface` - Specify outgoing interface to reach server.
 
 
 ## Attribute Reference
