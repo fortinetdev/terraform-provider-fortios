@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -63,6 +64,11 @@ func resourceFirewallLdbMonitor() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"src_ip": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"http_get": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
@@ -89,7 +95,7 @@ func resourceFirewallLdbMonitorCreate(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectFirewallLdbMonitor(d)
+	obj, err := getObjectFirewallLdbMonitor(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallLdbMonitor resource while getting object: %v", err)
 	}
@@ -114,7 +120,7 @@ func resourceFirewallLdbMonitorUpdate(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectFirewallLdbMonitor(d)
+	obj, err := getObjectFirewallLdbMonitor(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallLdbMonitor resource while getting object: %v", err)
 	}
@@ -167,101 +173,111 @@ func resourceFirewallLdbMonitorRead(d *schema.ResourceData, m interface{}) error
 		return nil
 	}
 
-	err = refreshObjectFirewallLdbMonitor(d, o)
+	err = refreshObjectFirewallLdbMonitor(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallLdbMonitor resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenFirewallLdbMonitorName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallLdbMonitorName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallLdbMonitorType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallLdbMonitorType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallLdbMonitorInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallLdbMonitorInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallLdbMonitorTimeout(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallLdbMonitorTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallLdbMonitorRetry(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallLdbMonitorRetry(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallLdbMonitorPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallLdbMonitorPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallLdbMonitorHttpGet(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallLdbMonitorSrcIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallLdbMonitorHttpMatch(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallLdbMonitorHttpGet(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallLdbMonitorHttpMaxRedirects(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallLdbMonitorHttpMatch(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectFirewallLdbMonitor(d *schema.ResourceData, o map[string]interface{}) error {
+func flattenFirewallLdbMonitorHttpMaxRedirects(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func refreshObjectFirewallLdbMonitor(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenFirewallLdbMonitorName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenFirewallLdbMonitorName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("type", flattenFirewallLdbMonitorType(o["type"], d, "type")); err != nil {
+	if err = d.Set("type", flattenFirewallLdbMonitorType(o["type"], d, "type", sv)); err != nil {
 		if !fortiAPIPatch(o["type"]) {
 			return fmt.Errorf("Error reading type: %v", err)
 		}
 	}
 
-	if err = d.Set("interval", flattenFirewallLdbMonitorInterval(o["interval"], d, "interval")); err != nil {
+	if err = d.Set("interval", flattenFirewallLdbMonitorInterval(o["interval"], d, "interval", sv)); err != nil {
 		if !fortiAPIPatch(o["interval"]) {
 			return fmt.Errorf("Error reading interval: %v", err)
 		}
 	}
 
-	if err = d.Set("timeout", flattenFirewallLdbMonitorTimeout(o["timeout"], d, "timeout")); err != nil {
+	if err = d.Set("timeout", flattenFirewallLdbMonitorTimeout(o["timeout"], d, "timeout", sv)); err != nil {
 		if !fortiAPIPatch(o["timeout"]) {
 			return fmt.Errorf("Error reading timeout: %v", err)
 		}
 	}
 
-	if err = d.Set("retry", flattenFirewallLdbMonitorRetry(o["retry"], d, "retry")); err != nil {
+	if err = d.Set("retry", flattenFirewallLdbMonitorRetry(o["retry"], d, "retry", sv)); err != nil {
 		if !fortiAPIPatch(o["retry"]) {
 			return fmt.Errorf("Error reading retry: %v", err)
 		}
 	}
 
-	if err = d.Set("port", flattenFirewallLdbMonitorPort(o["port"], d, "port")); err != nil {
+	if err = d.Set("port", flattenFirewallLdbMonitorPort(o["port"], d, "port", sv)); err != nil {
 		if !fortiAPIPatch(o["port"]) {
 			return fmt.Errorf("Error reading port: %v", err)
 		}
 	}
 
-	if err = d.Set("http_get", flattenFirewallLdbMonitorHttpGet(o["http-get"], d, "http_get")); err != nil {
+	if err = d.Set("src_ip", flattenFirewallLdbMonitorSrcIp(o["src-ip"], d, "src_ip", sv)); err != nil {
+		if !fortiAPIPatch(o["src-ip"]) {
+			return fmt.Errorf("Error reading src_ip: %v", err)
+		}
+	}
+
+	if err = d.Set("http_get", flattenFirewallLdbMonitorHttpGet(o["http-get"], d, "http_get", sv)); err != nil {
 		if !fortiAPIPatch(o["http-get"]) {
 			return fmt.Errorf("Error reading http_get: %v", err)
 		}
 	}
 
-	if err = d.Set("http_match", flattenFirewallLdbMonitorHttpMatch(o["http-match"], d, "http_match")); err != nil {
+	if err = d.Set("http_match", flattenFirewallLdbMonitorHttpMatch(o["http-match"], d, "http_match", sv)); err != nil {
 		if !fortiAPIPatch(o["http-match"]) {
 			return fmt.Errorf("Error reading http_match: %v", err)
 		}
 	}
 
-	if err = d.Set("http_max_redirects", flattenFirewallLdbMonitorHttpMaxRedirects(o["http-max-redirects"], d, "http_max_redirects")); err != nil {
+	if err = d.Set("http_max_redirects", flattenFirewallLdbMonitorHttpMaxRedirects(o["http-max-redirects"], d, "http_max_redirects", sv)); err != nil {
 		if !fortiAPIPatch(o["http-max-redirects"]) {
 			return fmt.Errorf("Error reading http_max_redirects: %v", err)
 		}
@@ -273,50 +289,55 @@ func refreshObjectFirewallLdbMonitor(d *schema.ResourceData, o map[string]interf
 func flattenFirewallLdbMonitorFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandFirewallLdbMonitorName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallLdbMonitorName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallLdbMonitorType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallLdbMonitorType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallLdbMonitorInterval(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallLdbMonitorInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallLdbMonitorTimeout(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallLdbMonitorTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallLdbMonitorRetry(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallLdbMonitorRetry(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallLdbMonitorPort(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallLdbMonitorPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallLdbMonitorHttpGet(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallLdbMonitorSrcIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallLdbMonitorHttpMatch(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallLdbMonitorHttpGet(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallLdbMonitorHttpMaxRedirects(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallLdbMonitorHttpMatch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectFirewallLdbMonitor(d *schema.ResourceData) (*map[string]interface{}, error) {
+func expandFirewallLdbMonitorHttpMaxRedirects(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func getObjectFirewallLdbMonitor(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandFirewallLdbMonitorName(d, v, "name")
+
+		t, err := expandFirewallLdbMonitorName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -325,7 +346,8 @@ func getObjectFirewallLdbMonitor(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("type"); ok {
-		t, err := expandFirewallLdbMonitorType(d, v, "type")
+
+		t, err := expandFirewallLdbMonitorType(d, v, "type", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -334,7 +356,8 @@ func getObjectFirewallLdbMonitor(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("interval"); ok {
-		t, err := expandFirewallLdbMonitorInterval(d, v, "interval")
+
+		t, err := expandFirewallLdbMonitorInterval(d, v, "interval", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -343,7 +366,8 @@ func getObjectFirewallLdbMonitor(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("timeout"); ok {
-		t, err := expandFirewallLdbMonitorTimeout(d, v, "timeout")
+
+		t, err := expandFirewallLdbMonitorTimeout(d, v, "timeout", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -352,7 +376,8 @@ func getObjectFirewallLdbMonitor(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("retry"); ok {
-		t, err := expandFirewallLdbMonitorRetry(d, v, "retry")
+
+		t, err := expandFirewallLdbMonitorRetry(d, v, "retry", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -361,7 +386,8 @@ func getObjectFirewallLdbMonitor(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOkExists("port"); ok {
-		t, err := expandFirewallLdbMonitorPort(d, v, "port")
+
+		t, err := expandFirewallLdbMonitorPort(d, v, "port", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -369,8 +395,19 @@ func getObjectFirewallLdbMonitor(d *schema.ResourceData) (*map[string]interface{
 		}
 	}
 
+	if v, ok := d.GetOk("src_ip"); ok {
+
+		t, err := expandFirewallLdbMonitorSrcIp(d, v, "src_ip", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["src-ip"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("http_get"); ok {
-		t, err := expandFirewallLdbMonitorHttpGet(d, v, "http_get")
+
+		t, err := expandFirewallLdbMonitorHttpGet(d, v, "http_get", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -379,7 +416,8 @@ func getObjectFirewallLdbMonitor(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("http_match"); ok {
-		t, err := expandFirewallLdbMonitorHttpMatch(d, v, "http_match")
+
+		t, err := expandFirewallLdbMonitorHttpMatch(d, v, "http_match", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -388,7 +426,8 @@ func getObjectFirewallLdbMonitor(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOkExists("http_max_redirects"); ok {
-		t, err := expandFirewallLdbMonitorHttpMaxRedirects(d, v, "http_max_redirects")
+
+		t, err := expandFirewallLdbMonitorHttpMaxRedirects(d, v, "http_max_redirects", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
