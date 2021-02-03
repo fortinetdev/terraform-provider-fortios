@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -60,7 +61,7 @@ func resourceSystemFssoPollingUpdate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemFssoPolling(d)
+	obj, err := getObjectSystemFssoPolling(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemFssoPolling resource while getting object: %v", err)
 	}
@@ -113,45 +114,45 @@ func resourceSystemFssoPollingRead(d *schema.ResourceData, m interface{}) error 
 		return nil
 	}
 
-	err = refreshObjectSystemFssoPolling(d, o)
+	err = refreshObjectSystemFssoPolling(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemFssoPolling resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemFssoPollingStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemFssoPollingStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemFssoPollingListeningPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemFssoPollingListeningPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemFssoPollingAuthentication(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemFssoPollingAuthentication(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemFssoPollingAuthPassword(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemFssoPollingAuthPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemFssoPolling(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemFssoPolling(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("status", flattenSystemFssoPollingStatus(o["status"], d, "status")); err != nil {
+	if err = d.Set("status", flattenSystemFssoPollingStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
 		}
 	}
 
-	if err = d.Set("listening_port", flattenSystemFssoPollingListeningPort(o["listening-port"], d, "listening_port")); err != nil {
+	if err = d.Set("listening_port", flattenSystemFssoPollingListeningPort(o["listening-port"], d, "listening_port", sv)); err != nil {
 		if !fortiAPIPatch(o["listening-port"]) {
 			return fmt.Errorf("Error reading listening_port: %v", err)
 		}
 	}
 
-	if err = d.Set("authentication", flattenSystemFssoPollingAuthentication(o["authentication"], d, "authentication")); err != nil {
+	if err = d.Set("authentication", flattenSystemFssoPollingAuthentication(o["authentication"], d, "authentication", sv)); err != nil {
 		if !fortiAPIPatch(o["authentication"]) {
 			return fmt.Errorf("Error reading authentication: %v", err)
 		}
@@ -163,30 +164,31 @@ func refreshObjectSystemFssoPolling(d *schema.ResourceData, o map[string]interfa
 func flattenSystemFssoPollingFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemFssoPollingStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemFssoPollingStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemFssoPollingListeningPort(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemFssoPollingListeningPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemFssoPollingAuthentication(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemFssoPollingAuthentication(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemFssoPollingAuthPassword(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemFssoPollingAuthPassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemFssoPolling(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemFssoPolling(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
-		t, err := expandSystemFssoPollingStatus(d, v, "status")
+
+		t, err := expandSystemFssoPollingStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -195,7 +197,8 @@ func getObjectSystemFssoPolling(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("listening_port"); ok {
-		t, err := expandSystemFssoPollingListeningPort(d, v, "listening_port")
+
+		t, err := expandSystemFssoPollingListeningPort(d, v, "listening_port", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -204,7 +207,8 @@ func getObjectSystemFssoPolling(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("authentication"); ok {
-		t, err := expandSystemFssoPollingAuthentication(d, v, "authentication")
+
+		t, err := expandSystemFssoPollingAuthentication(d, v, "authentication", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -213,7 +217,8 @@ func getObjectSystemFssoPolling(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("auth_password"); ok {
-		t, err := expandSystemFssoPollingAuthPassword(d, v, "auth_password")
+
+		t, err := expandSystemFssoPollingAuthPassword(d, v, "auth_password", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
