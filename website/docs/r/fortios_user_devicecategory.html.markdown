@@ -7,10 +7,9 @@ description: |-
 ---
 
 # fortios_user_devicecategory
-Configure device categories.
+Configure device categories. Applies to FortiOS Version `<= 6.2.0`.
 
 ## Argument Reference
-
 
 The following arguments are supported:
 
