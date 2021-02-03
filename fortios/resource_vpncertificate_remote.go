@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -58,7 +59,7 @@ func resourceVpnCertificateRemoteCreate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectVpnCertificateRemote(d)
+	obj, err := getObjectVpnCertificateRemote(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating VpnCertificateRemote resource while getting object: %v", err)
 	}
@@ -83,7 +84,7 @@ func resourceVpnCertificateRemoteUpdate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectVpnCertificateRemote(d)
+	obj, err := getObjectVpnCertificateRemote(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating VpnCertificateRemote resource while getting object: %v", err)
 	}
@@ -136,51 +137,51 @@ func resourceVpnCertificateRemoteRead(d *schema.ResourceData, m interface{}) err
 		return nil
 	}
 
-	err = refreshObjectVpnCertificateRemote(d, o)
+	err = refreshObjectVpnCertificateRemote(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading VpnCertificateRemote resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenVpnCertificateRemoteName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnCertificateRemoteName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenVpnCertificateRemoteRemote(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnCertificateRemoteRemote(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenVpnCertificateRemoteRange(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnCertificateRemoteRange(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenVpnCertificateRemoteSource(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnCertificateRemoteSource(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectVpnCertificateRemote(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectVpnCertificateRemote(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenVpnCertificateRemoteName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenVpnCertificateRemoteName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("remote", flattenVpnCertificateRemoteRemote(o["remote"], d, "remote")); err != nil {
+	if err = d.Set("remote", flattenVpnCertificateRemoteRemote(o["remote"], d, "remote", sv)); err != nil {
 		if !fortiAPIPatch(o["remote"]) {
 			return fmt.Errorf("Error reading remote: %v", err)
 		}
 	}
 
-	if err = d.Set("range", flattenVpnCertificateRemoteRange(o["range"], d, "range")); err != nil {
+	if err = d.Set("range", flattenVpnCertificateRemoteRange(o["range"], d, "range", sv)); err != nil {
 		if !fortiAPIPatch(o["range"]) {
 			return fmt.Errorf("Error reading range: %v", err)
 		}
 	}
 
-	if err = d.Set("source", flattenVpnCertificateRemoteSource(o["source"], d, "source")); err != nil {
+	if err = d.Set("source", flattenVpnCertificateRemoteSource(o["source"], d, "source", sv)); err != nil {
 		if !fortiAPIPatch(o["source"]) {
 			return fmt.Errorf("Error reading source: %v", err)
 		}
@@ -192,30 +193,31 @@ func refreshObjectVpnCertificateRemote(d *schema.ResourceData, o map[string]inte
 func flattenVpnCertificateRemoteFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandVpnCertificateRemoteName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnCertificateRemoteName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandVpnCertificateRemoteRemote(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnCertificateRemoteRemote(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandVpnCertificateRemoteRange(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnCertificateRemoteRange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandVpnCertificateRemoteSource(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnCertificateRemoteSource(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectVpnCertificateRemote(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectVpnCertificateRemote(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandVpnCertificateRemoteName(d, v, "name")
+
+		t, err := expandVpnCertificateRemoteName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -224,7 +226,8 @@ func getObjectVpnCertificateRemote(d *schema.ResourceData) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("remote"); ok {
-		t, err := expandVpnCertificateRemoteRemote(d, v, "remote")
+
+		t, err := expandVpnCertificateRemoteRemote(d, v, "remote", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -233,7 +236,8 @@ func getObjectVpnCertificateRemote(d *schema.ResourceData) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("range"); ok {
-		t, err := expandVpnCertificateRemoteRange(d, v, "range")
+
+		t, err := expandVpnCertificateRemoteRange(d, v, "range", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -242,7 +246,8 @@ func getObjectVpnCertificateRemote(d *schema.ResourceData) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("source"); ok {
-		t, err := expandVpnCertificateRemoteSource(d, v, "source")
+
+		t, err := expandVpnCertificateRemoteSource(d, v, "source", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
