@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -67,7 +68,7 @@ func resourceSystemAutoupdateTunnelingUpdate(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemAutoupdateTunneling(d)
+	obj, err := getObjectSystemAutoupdateTunneling(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAutoupdateTunneling resource while getting object: %v", err)
 	}
@@ -120,55 +121,55 @@ func resourceSystemAutoupdateTunnelingRead(d *schema.ResourceData, m interface{}
 		return nil
 	}
 
-	err = refreshObjectSystemAutoupdateTunneling(d, o)
+	err = refreshObjectSystemAutoupdateTunneling(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemAutoupdateTunneling resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemAutoupdateTunnelingStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAutoupdateTunnelingStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAutoupdateTunnelingAddress(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAutoupdateTunnelingAddress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAutoupdateTunnelingPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAutoupdateTunnelingPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAutoupdateTunnelingUsername(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAutoupdateTunnelingUsername(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAutoupdateTunnelingPassword(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAutoupdateTunnelingPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemAutoupdateTunneling(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemAutoupdateTunneling(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("status", flattenSystemAutoupdateTunnelingStatus(o["status"], d, "status")); err != nil {
+	if err = d.Set("status", flattenSystemAutoupdateTunnelingStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
 		}
 	}
 
-	if err = d.Set("address", flattenSystemAutoupdateTunnelingAddress(o["address"], d, "address")); err != nil {
+	if err = d.Set("address", flattenSystemAutoupdateTunnelingAddress(o["address"], d, "address", sv)); err != nil {
 		if !fortiAPIPatch(o["address"]) {
 			return fmt.Errorf("Error reading address: %v", err)
 		}
 	}
 
-	if err = d.Set("port", flattenSystemAutoupdateTunnelingPort(o["port"], d, "port")); err != nil {
+	if err = d.Set("port", flattenSystemAutoupdateTunnelingPort(o["port"], d, "port", sv)); err != nil {
 		if !fortiAPIPatch(o["port"]) {
 			return fmt.Errorf("Error reading port: %v", err)
 		}
 	}
 
-	if err = d.Set("username", flattenSystemAutoupdateTunnelingUsername(o["username"], d, "username")); err != nil {
+	if err = d.Set("username", flattenSystemAutoupdateTunnelingUsername(o["username"], d, "username", sv)); err != nil {
 		if !fortiAPIPatch(o["username"]) {
 			return fmt.Errorf("Error reading username: %v", err)
 		}
@@ -180,34 +181,35 @@ func refreshObjectSystemAutoupdateTunneling(d *schema.ResourceData, o map[string
 func flattenSystemAutoupdateTunnelingFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemAutoupdateTunnelingStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAutoupdateTunnelingStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAutoupdateTunnelingAddress(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAutoupdateTunnelingAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAutoupdateTunnelingPort(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAutoupdateTunnelingPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAutoupdateTunnelingUsername(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAutoupdateTunnelingUsername(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAutoupdateTunnelingPassword(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAutoupdateTunnelingPassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemAutoupdateTunneling(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemAutoupdateTunneling(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
-		t, err := expandSystemAutoupdateTunnelingStatus(d, v, "status")
+
+		t, err := expandSystemAutoupdateTunnelingStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -216,7 +218,8 @@ func getObjectSystemAutoupdateTunneling(d *schema.ResourceData) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("address"); ok {
-		t, err := expandSystemAutoupdateTunnelingAddress(d, v, "address")
+
+		t, err := expandSystemAutoupdateTunnelingAddress(d, v, "address", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -225,7 +228,8 @@ func getObjectSystemAutoupdateTunneling(d *schema.ResourceData) (*map[string]int
 	}
 
 	if v, ok := d.GetOkExists("port"); ok {
-		t, err := expandSystemAutoupdateTunnelingPort(d, v, "port")
+
+		t, err := expandSystemAutoupdateTunnelingPort(d, v, "port", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -234,7 +238,8 @@ func getObjectSystemAutoupdateTunneling(d *schema.ResourceData) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("username"); ok {
-		t, err := expandSystemAutoupdateTunnelingUsername(d, v, "username")
+
+		t, err := expandSystemAutoupdateTunnelingUsername(d, v, "username", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -243,7 +248,8 @@ func getObjectSystemAutoupdateTunneling(d *schema.ResourceData) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("password"); ok {
-		t, err := expandSystemAutoupdateTunnelingPassword(d, v, "password")
+
+		t, err := expandSystemAutoupdateTunnelingPassword(d, v, "password", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
