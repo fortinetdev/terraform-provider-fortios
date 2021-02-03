@@ -7,10 +7,9 @@ description: |-
 ---
 
 # fortios_switchcontrollersecuritypolicy_captiveportal
-Names of VLANs that use captive portal authentication.
+Names of VLANs that use captive portal authentication. Applies to FortiOS Version `<= 6.2.0`.
 
 ## Argument Reference
-
 
 The following arguments are supported:
 
