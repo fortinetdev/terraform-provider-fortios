@@ -22,7 +22,6 @@ resource "fortios_wanopt_cacheservice" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `prefer_scenario` - Set the preferred cache behavior towards the balance between latency and hit-ratio.
