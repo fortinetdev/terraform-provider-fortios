@@ -34,12 +34,14 @@ resource "fortios_vpncertificate_setting" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `ocsp_status` - Enable/disable receiving certificates using the OCSP.
 * `ocsp_option` - Specify whether the OCSP URL is from certificate or configured OCSP server.
+* `ssl_ocsp_source_ip` - Source IP address to use to communicate with the OCSP server.
 * `ocsp_default_server` - Default OCSP server.
+* `interface_select_method` - Specify how to select outgoing interface to reach server.
+* `interface` - Specify outgoing interface to reach server.
 * `check_ca_cert` - Enable/disable verification of the user certificate and pass authentication if any CA in the chain is trusted (default = enable).
 * `check_ca_chain` - Enable/disable verification of the entire certificate chain and pass authentication only if the chain is complete and all of the CAs in the chain are trusted (default = disable).
 * `subject_match` - When searching for a matching certificate, control how to find matches in the certificate subject name.
@@ -48,12 +50,17 @@ The following arguments are supported:
 * `strict_ocsp_check` - Enable/disable strict mode OCSP checking.
 * `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting).
 * `cmp_save_extra_certs` - Enable/disable saving extra certificates in CMP mode.
+* `cmp_key_usage_checking` - Enable/disable server certificate key usage checking in CMP mode (default = enable).
 * `certname_rsa1024` - (Required) 1024 bit RSA key certificate for re-signing server certificates for SSL inspection.
 * `certname_rsa2048` - (Required) 2048 bit RSA key certificate for re-signing server certificates for SSL inspection.
+* `certname_rsa4096` - 4096 bit RSA key certificate for re-signing server certificates for SSL inspection.
 * `certname_dsa1024` - (Required) 1024 bit DSA key certificate for re-signing server certificates for SSL inspection.
 * `certname_dsa2048` - (Required) 2048 bit DSA key certificate for re-signing server certificates for SSL inspection.
 * `certname_ecdsa256` - (Required) 256 bit ECDSA key certificate for re-signing server certificates for SSL inspection.
 * `certname_ecdsa384` - (Required) 384 bit ECDSA key certificate for re-signing server certificates for SSL inspection.
+* `certname_ecdsa521` - 521 bit ECDSA key certificate for re-signing server certificates for SSL inspection.
+* `certname_ed25519` - 253 bit EdDSA key certificate for re-signing server certificates for SSL inspection.
+* `certname_ed448` - 456 bit EdDSA key certificate for re-signing server certificates for SSL inspection.
 
 
 ## Attribute Reference
