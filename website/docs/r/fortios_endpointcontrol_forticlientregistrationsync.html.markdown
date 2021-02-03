@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_endpointcontrol_forticlientregistrationsync
-Configure FortiClient registration synchronization settings.
+Configure FortiClient registration synchronization settings. Applies to FortiOS Version `<= 6.2.0`.
 
 ## Example Usage
 
@@ -19,7 +19,6 @@ resource "fortios_endpointcontrol_forticlientregistrationsync" "trname" {
 ```
 
 ## Argument Reference
-
 
 The following arguments are supported:
 
