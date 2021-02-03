@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -65,7 +66,7 @@ func resourceUserPop3Create(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectUserPop3(d)
+	obj, err := getObjectUserPop3(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating UserPop3 resource while getting object: %v", err)
 	}
@@ -90,7 +91,7 @@ func resourceUserPop3Update(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectUserPop3(d)
+	obj, err := getObjectUserPop3(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating UserPop3 resource while getting object: %v", err)
 	}
@@ -143,61 +144,61 @@ func resourceUserPop3Read(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectUserPop3(d, o)
+	err = refreshObjectUserPop3(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading UserPop3 resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenUserPop3Name(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserPop3Name(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserPop3Server(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserPop3Server(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserPop3Port(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserPop3Port(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserPop3Secure(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserPop3Secure(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserPop3SslMinProtoVersion(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserPop3SslMinProtoVersion(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectUserPop3(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectUserPop3(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenUserPop3Name(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenUserPop3Name(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("server", flattenUserPop3Server(o["server"], d, "server")); err != nil {
+	if err = d.Set("server", flattenUserPop3Server(o["server"], d, "server", sv)); err != nil {
 		if !fortiAPIPatch(o["server"]) {
 			return fmt.Errorf("Error reading server: %v", err)
 		}
 	}
 
-	if err = d.Set("port", flattenUserPop3Port(o["port"], d, "port")); err != nil {
+	if err = d.Set("port", flattenUserPop3Port(o["port"], d, "port", sv)); err != nil {
 		if !fortiAPIPatch(o["port"]) {
 			return fmt.Errorf("Error reading port: %v", err)
 		}
 	}
 
-	if err = d.Set("secure", flattenUserPop3Secure(o["secure"], d, "secure")); err != nil {
+	if err = d.Set("secure", flattenUserPop3Secure(o["secure"], d, "secure", sv)); err != nil {
 		if !fortiAPIPatch(o["secure"]) {
 			return fmt.Errorf("Error reading secure: %v", err)
 		}
 	}
 
-	if err = d.Set("ssl_min_proto_version", flattenUserPop3SslMinProtoVersion(o["ssl-min-proto-version"], d, "ssl_min_proto_version")); err != nil {
+	if err = d.Set("ssl_min_proto_version", flattenUserPop3SslMinProtoVersion(o["ssl-min-proto-version"], d, "ssl_min_proto_version", sv)); err != nil {
 		if !fortiAPIPatch(o["ssl-min-proto-version"]) {
 			return fmt.Errorf("Error reading ssl_min_proto_version: %v", err)
 		}
@@ -209,34 +210,35 @@ func refreshObjectUserPop3(d *schema.ResourceData, o map[string]interface{}) err
 func flattenUserPop3FortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandUserPop3Name(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserPop3Name(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserPop3Server(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserPop3Server(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserPop3Port(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserPop3Port(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserPop3Secure(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserPop3Secure(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserPop3SslMinProtoVersion(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserPop3SslMinProtoVersion(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectUserPop3(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectUserPop3(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandUserPop3Name(d, v, "name")
+
+		t, err := expandUserPop3Name(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -245,7 +247,8 @@ func getObjectUserPop3(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("server"); ok {
-		t, err := expandUserPop3Server(d, v, "server")
+
+		t, err := expandUserPop3Server(d, v, "server", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -254,7 +257,8 @@ func getObjectUserPop3(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOkExists("port"); ok {
-		t, err := expandUserPop3Port(d, v, "port")
+
+		t, err := expandUserPop3Port(d, v, "port", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -263,7 +267,8 @@ func getObjectUserPop3(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("secure"); ok {
-		t, err := expandUserPop3Secure(d, v, "secure")
+
+		t, err := expandUserPop3Secure(d, v, "secure", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -272,7 +277,8 @@ func getObjectUserPop3(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("ssl_min_proto_version"); ok {
-		t, err := expandUserPop3SslMinProtoVersion(d, v, "ssl_min_proto_version")
+
+		t, err := expandUserPop3SslMinProtoVersion(d, v, "ssl_min_proto_version", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
