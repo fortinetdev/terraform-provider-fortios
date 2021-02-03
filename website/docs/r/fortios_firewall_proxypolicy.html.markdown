@@ -59,11 +59,11 @@ resource "fortios_firewall_proxypolicy" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `policyid` - Policy ID.
+* `name` - Policy name.
 * `proxy` - (Required) Type of explicit proxy.
 * `srcintf` - Source interface names. The structure of `srcintf` block is documented below.
 * `dstintf` - (Required) Destination interface names. The structure of `dstintf` block is documented below.
@@ -72,8 +72,11 @@ The following arguments are supported:
 * `dstaddr` - Destination address objects. The structure of `dstaddr` block is documented below.
 * `internet_service` - Enable/disable use of Internet Services for this policy. If enabled, destination address and service are not used.
 * `internet_service_negate` - When enabled, Internet Services match against any internet service EXCEPT the selected Internet Service.
+* `internet_service_name` - Internet Service name. The structure of `internet_service_name` block is documented below.
 * `internet_service_id` - Internet Service ID. The structure of `internet_service_id` block is documented below.
+* `internet_service_group` - Internet Service group name. The structure of `internet_service_group` block is documented below.
 * `internet_service_custom` - Custom Internet Service name. The structure of `internet_service_custom` block is documented below.
+* `internet_service_custom_group` - Custom Internet Service group name. The structure of `internet_service_custom_group` block is documented below.
 * `service` - Name of service objects. The structure of `service` block is documented below.
 * `srcaddr_negate` - When enabled, source addresses match against any address EXCEPT the specified source addresses.
 * `dstaddr_negate` - When enabled, destination addresses match against any address EXCEPT the specified destination addresses.
@@ -88,6 +91,7 @@ The following arguments are supported:
 * `groups` - Names of group objects. The structure of `groups` block is documented below.
 * `users` - Names of user objects. The structure of `users` block is documented below.
 * `http_tunnel_auth` - Enable/disable HTTP tunnel authentication.
+* `ssh_policy_redirect` - Redirect SSH traffic to matching transparent proxy policy.
 * `webproxy_forward_server` - Web proxy forward server name.
 * `webproxy_profile` - Name of web proxy profile.
 * `transparent` - Enable to use the IP address of the client to connect to the server.
@@ -99,11 +103,14 @@ The following arguments are supported:
 * `profile_group` - Name of profile group.
 * `av_profile` - Name of an existing Antivirus profile.
 * `webfilter_profile` - Name of an existing Web filter profile.
+* `emailfilter_profile` - Name of an existing email filter profile.
 * `spamfilter_profile` - Name of an existing Spam filter profile.
 * `dlp_sensor` - Name of an existing DLP sensor.
+* `file_filter_profile` - Name of an existing file-filter profile.
 * `ips_sensor` - Name of an existing IPS sensor.
 * `application_list` - Name of an existing Application list.
 * `icap_profile` - Name of an existing ICAP profile.
+* `cifs_profile` - Name of an existing CIFS profile.
 * `waf_profile` - Name of an existing Web application firewall profile.
 * `ssh_filter_profile` - Name of an existing SSH filter profile.
 * `profile_protocol_options` - Name of an existing Protocol options profile.
@@ -115,6 +122,7 @@ The following arguments are supported:
 * `scan_botnet_connections` - Enable/disable scanning of connections to Botnet servers.
 * `comments` - Optional comments.
 * `redirect_url` - Redirect URL for further explicit web proxy processing.
+* `decrypted_traffic_mirror` - Decrypted traffic mirror.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `srcintf` block supports:
@@ -137,13 +145,25 @@ The `dstaddr` block supports:
 
 * `name` - Address name.
 
+The `internet_service_name` block supports:
+
+* `name` - Internet Service name.
+
 The `internet_service_id` block supports:
 
 * `id` - Internet Service ID.
 
+The `internet_service_group` block supports:
+
+* `name` - Internet Service group name.
+
 The `internet_service_custom` block supports:
 
 * `name` - Custom name.
+
+The `internet_service_custom_group` block supports:
+
+* `name` - Custom Internet Service group name.
 
 The `service` block supports:
 
