@@ -36,10 +36,10 @@ resource "fortios_firewall_localinpolicy" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `policyid` - User defined local in policy ID.
+* `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `ha_mgmt_intf_only` - Enable/disable dedicating the HA management interface only for local-in policy.
 * `intf` - Incoming interface name from available options.
 * `srcaddr` - (Required) Source address object from available options. The structure of `srcaddr` block is documented below.
