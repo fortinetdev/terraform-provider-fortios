@@ -11,7 +11,6 @@ Configure IPS decoder.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Decoder name.
