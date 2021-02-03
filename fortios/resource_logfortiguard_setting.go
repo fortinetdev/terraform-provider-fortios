@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -54,6 +55,17 @@ func resourceLogFortiguardSetting() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"priority": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"max_log_rate": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 100000),
+				Optional:     true,
+				Computed:     true,
+			},
 			"enc_algorithm": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -64,10 +76,27 @@ func resourceLogFortiguardSetting() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"conn_timeout": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 3600),
+				Optional:     true,
+				Computed:     true,
+			},
 			"source_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
+			},
+			"interface_select_method": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"interface": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 15),
+				Optional:     true,
+				Computed:     true,
 			},
 		},
 	}
@@ -78,7 +107,7 @@ func resourceLogFortiguardSettingUpdate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectLogFortiguardSetting(d)
+	obj, err := getObjectLogFortiguardSetting(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogFortiguardSetting resource while getting object: %v", err)
 	}
@@ -131,93 +160,143 @@ func resourceLogFortiguardSettingRead(d *schema.ResourceData, m interface{}) err
 		return nil
 	}
 
-	err = refreshObjectLogFortiguardSetting(d, o)
+	err = refreshObjectLogFortiguardSetting(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading LogFortiguardSetting resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenLogFortiguardSettingStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogFortiguardSettingStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogFortiguardSettingUploadOption(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogFortiguardSettingUploadOption(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogFortiguardSettingUploadInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogFortiguardSettingUploadInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogFortiguardSettingUploadDay(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogFortiguardSettingUploadDay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogFortiguardSettingUploadTime(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogFortiguardSettingUploadTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogFortiguardSettingEncAlgorithm(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogFortiguardSettingPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogFortiguardSettingSslMinProtoVersion(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogFortiguardSettingMaxLogRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogFortiguardSettingSourceIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogFortiguardSettingEncAlgorithm(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectLogFortiguardSetting(d *schema.ResourceData, o map[string]interface{}) error {
+func flattenLogFortiguardSettingSslMinProtoVersion(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenLogFortiguardSettingConnTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenLogFortiguardSettingSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenLogFortiguardSettingInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenLogFortiguardSettingInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func refreshObjectLogFortiguardSetting(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("status", flattenLogFortiguardSettingStatus(o["status"], d, "status")); err != nil {
+	if err = d.Set("status", flattenLogFortiguardSettingStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
 		}
 	}
 
-	if err = d.Set("upload_option", flattenLogFortiguardSettingUploadOption(o["upload-option"], d, "upload_option")); err != nil {
+	if err = d.Set("upload_option", flattenLogFortiguardSettingUploadOption(o["upload-option"], d, "upload_option", sv)); err != nil {
 		if !fortiAPIPatch(o["upload-option"]) {
 			return fmt.Errorf("Error reading upload_option: %v", err)
 		}
 	}
 
-	if err = d.Set("upload_interval", flattenLogFortiguardSettingUploadInterval(o["upload-interval"], d, "upload_interval")); err != nil {
+	if err = d.Set("upload_interval", flattenLogFortiguardSettingUploadInterval(o["upload-interval"], d, "upload_interval", sv)); err != nil {
 		if !fortiAPIPatch(o["upload-interval"]) {
 			return fmt.Errorf("Error reading upload_interval: %v", err)
 		}
 	}
 
-	if err = d.Set("upload_day", flattenLogFortiguardSettingUploadDay(o["upload-day"], d, "upload_day")); err != nil {
+	if err = d.Set("upload_day", flattenLogFortiguardSettingUploadDay(o["upload-day"], d, "upload_day", sv)); err != nil {
 		if !fortiAPIPatch(o["upload-day"]) {
 			return fmt.Errorf("Error reading upload_day: %v", err)
 		}
 	}
 
-	if err = d.Set("upload_time", flattenLogFortiguardSettingUploadTime(o["upload-time"], d, "upload_time")); err != nil {
+	if err = d.Set("upload_time", flattenLogFortiguardSettingUploadTime(o["upload-time"], d, "upload_time", sv)); err != nil {
 		if !fortiAPIPatch(o["upload-time"]) {
 			return fmt.Errorf("Error reading upload_time: %v", err)
 		}
 	}
 
-	if err = d.Set("enc_algorithm", flattenLogFortiguardSettingEncAlgorithm(o["enc-algorithm"], d, "enc_algorithm")); err != nil {
+	if err = d.Set("priority", flattenLogFortiguardSettingPriority(o["priority"], d, "priority", sv)); err != nil {
+		if !fortiAPIPatch(o["priority"]) {
+			return fmt.Errorf("Error reading priority: %v", err)
+		}
+	}
+
+	if err = d.Set("max_log_rate", flattenLogFortiguardSettingMaxLogRate(o["max-log-rate"], d, "max_log_rate", sv)); err != nil {
+		if !fortiAPIPatch(o["max-log-rate"]) {
+			return fmt.Errorf("Error reading max_log_rate: %v", err)
+		}
+	}
+
+	if err = d.Set("enc_algorithm", flattenLogFortiguardSettingEncAlgorithm(o["enc-algorithm"], d, "enc_algorithm", sv)); err != nil {
 		if !fortiAPIPatch(o["enc-algorithm"]) {
 			return fmt.Errorf("Error reading enc_algorithm: %v", err)
 		}
 	}
 
-	if err = d.Set("ssl_min_proto_version", flattenLogFortiguardSettingSslMinProtoVersion(o["ssl-min-proto-version"], d, "ssl_min_proto_version")); err != nil {
+	if err = d.Set("ssl_min_proto_version", flattenLogFortiguardSettingSslMinProtoVersion(o["ssl-min-proto-version"], d, "ssl_min_proto_version", sv)); err != nil {
 		if !fortiAPIPatch(o["ssl-min-proto-version"]) {
 			return fmt.Errorf("Error reading ssl_min_proto_version: %v", err)
 		}
 	}
 
-	if err = d.Set("source_ip", flattenLogFortiguardSettingSourceIp(o["source-ip"], d, "source_ip")); err != nil {
+	if err = d.Set("conn_timeout", flattenLogFortiguardSettingConnTimeout(o["conn-timeout"], d, "conn_timeout", sv)); err != nil {
+		if !fortiAPIPatch(o["conn-timeout"]) {
+			return fmt.Errorf("Error reading conn_timeout: %v", err)
+		}
+	}
+
+	if err = d.Set("source_ip", flattenLogFortiguardSettingSourceIp(o["source-ip"], d, "source_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["source-ip"]) {
 			return fmt.Errorf("Error reading source_ip: %v", err)
+		}
+	}
+
+	if err = d.Set("interface_select_method", flattenLogFortiguardSettingInterfaceSelectMethod(o["interface-select-method"], d, "interface_select_method", sv)); err != nil {
+		if !fortiAPIPatch(o["interface-select-method"]) {
+			return fmt.Errorf("Error reading interface_select_method: %v", err)
+		}
+	}
+
+	if err = d.Set("interface", flattenLogFortiguardSettingInterface(o["interface"], d, "interface", sv)); err != nil {
+		if !fortiAPIPatch(o["interface"]) {
+			return fmt.Errorf("Error reading interface: %v", err)
 		}
 	}
 
@@ -227,46 +306,67 @@ func refreshObjectLogFortiguardSetting(d *schema.ResourceData, o map[string]inte
 func flattenLogFortiguardSettingFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandLogFortiguardSettingStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogFortiguardSettingStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogFortiguardSettingUploadOption(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogFortiguardSettingUploadOption(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogFortiguardSettingUploadInterval(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogFortiguardSettingUploadInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogFortiguardSettingUploadDay(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogFortiguardSettingUploadDay(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogFortiguardSettingUploadTime(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogFortiguardSettingUploadTime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogFortiguardSettingEncAlgorithm(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogFortiguardSettingPriority(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogFortiguardSettingSslMinProtoVersion(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogFortiguardSettingMaxLogRate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogFortiguardSettingSourceIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogFortiguardSettingEncAlgorithm(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectLogFortiguardSetting(d *schema.ResourceData) (*map[string]interface{}, error) {
+func expandLogFortiguardSettingSslMinProtoVersion(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogFortiguardSettingConnTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogFortiguardSettingSourceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogFortiguardSettingInterfaceSelectMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogFortiguardSettingInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func getObjectLogFortiguardSetting(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
-		t, err := expandLogFortiguardSettingStatus(d, v, "status")
+
+		t, err := expandLogFortiguardSettingStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -275,7 +375,8 @@ func getObjectLogFortiguardSetting(d *schema.ResourceData) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("upload_option"); ok {
-		t, err := expandLogFortiguardSettingUploadOption(d, v, "upload_option")
+
+		t, err := expandLogFortiguardSettingUploadOption(d, v, "upload_option", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -284,7 +385,8 @@ func getObjectLogFortiguardSetting(d *schema.ResourceData) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("upload_interval"); ok {
-		t, err := expandLogFortiguardSettingUploadInterval(d, v, "upload_interval")
+
+		t, err := expandLogFortiguardSettingUploadInterval(d, v, "upload_interval", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -293,7 +395,8 @@ func getObjectLogFortiguardSetting(d *schema.ResourceData) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("upload_day"); ok {
-		t, err := expandLogFortiguardSettingUploadDay(d, v, "upload_day")
+
+		t, err := expandLogFortiguardSettingUploadDay(d, v, "upload_day", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -302,7 +405,8 @@ func getObjectLogFortiguardSetting(d *schema.ResourceData) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("upload_time"); ok {
-		t, err := expandLogFortiguardSettingUploadTime(d, v, "upload_time")
+
+		t, err := expandLogFortiguardSettingUploadTime(d, v, "upload_time", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -310,8 +414,29 @@ func getObjectLogFortiguardSetting(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
+	if v, ok := d.GetOk("priority"); ok {
+
+		t, err := expandLogFortiguardSettingPriority(d, v, "priority", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["priority"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("max_log_rate"); ok {
+
+		t, err := expandLogFortiguardSettingMaxLogRate(d, v, "max_log_rate", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["max-log-rate"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("enc_algorithm"); ok {
-		t, err := expandLogFortiguardSettingEncAlgorithm(d, v, "enc_algorithm")
+
+		t, err := expandLogFortiguardSettingEncAlgorithm(d, v, "enc_algorithm", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -320,7 +445,8 @@ func getObjectLogFortiguardSetting(d *schema.ResourceData) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("ssl_min_proto_version"); ok {
-		t, err := expandLogFortiguardSettingSslMinProtoVersion(d, v, "ssl_min_proto_version")
+
+		t, err := expandLogFortiguardSettingSslMinProtoVersion(d, v, "ssl_min_proto_version", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -328,12 +454,43 @@ func getObjectLogFortiguardSetting(d *schema.ResourceData) (*map[string]interfac
 		}
 	}
 
+	if v, ok := d.GetOk("conn_timeout"); ok {
+
+		t, err := expandLogFortiguardSettingConnTimeout(d, v, "conn_timeout", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["conn-timeout"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("source_ip"); ok {
-		t, err := expandLogFortiguardSettingSourceIp(d, v, "source_ip")
+
+		t, err := expandLogFortiguardSettingSourceIp(d, v, "source_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
 			obj["source-ip"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("interface_select_method"); ok {
+
+		t, err := expandLogFortiguardSettingInterfaceSelectMethod(d, v, "interface_select_method", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["interface-select-method"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("interface"); ok {
+
+		t, err := expandLogFortiguardSettingInterface(d, v, "interface", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["interface"] = t
 		}
 	}
 
