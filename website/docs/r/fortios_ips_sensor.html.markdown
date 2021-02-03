@@ -11,13 +11,13 @@ Configure IPS sensor.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - (Required) Sensor name.
 * `comment` - Comment.
 * `replacemsg_group` - Replacement message group.
 * `block_malicious_url` - Enable/disable malicious URL blocking.
+* `scan_botnet_connections` - Block or monitor connections to Botnet servers, or disable Botnet scanning.
 * `extended_log` - Enable/disable extended logging.
 * `entries` - IPS sensor filter. The structure of `entries` block is documented below.
 * `filter` - IPS sensor filter. The structure of `filter` block is documented below.
@@ -33,6 +33,7 @@ The `entries` block supports:
 * `protocol` - Protocols to be examined. set protocol ? lists available protocols. all includes all protocols. other includes all unlisted protocols.
 * `os` - Operating systems to be protected.  all includes all operating systems. other includes all unlisted operating systems.
 * `application` - Applications to be protected. set application ? lists available applications. all includes all applications. other includes all unlisted applications.
+* `cve` - List of CVE IDs of the signatures to add to the sensor The structure of `cve` block is documented below.
 * `status` - Status of the signatures included in filter. default enables the filter and only use filters with default status of enable. Filters with default status of disable will not be used.
 * `log` - Enable/disable logging of signatures included in filter.
 * `log_packet` - Enable/disable packet logging. Enable to save the packet that triggers the filter. You can download the packets in pcap format for diagnostic use.
@@ -50,6 +51,10 @@ The `entries` block supports:
 The `rule` block supports:
 
 * `id` - Rule IPS.
+
+The `cve` block supports:
+
+* `cve_entry` - CVE IDs or CVE wildcards.
 
 The `exempt_ip` block supports:
 
