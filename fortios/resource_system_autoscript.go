@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -64,6 +65,12 @@ func resourceSystemAutoScript() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"timeout": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 300),
+				Optional:     true,
+				Computed:     true,
+			},
 		},
 	}
 }
@@ -72,7 +79,7 @@ func resourceSystemAutoScriptCreate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemAutoScript(d)
+	obj, err := getObjectSystemAutoScript(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemAutoScript resource while getting object: %v", err)
 	}
@@ -97,7 +104,7 @@ func resourceSystemAutoScriptUpdate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemAutoScript(d)
+	obj, err := getObjectSystemAutoScript(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAutoScript resource while getting object: %v", err)
 	}
@@ -150,73 +157,83 @@ func resourceSystemAutoScriptRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectSystemAutoScript(d, o)
+	err = refreshObjectSystemAutoScript(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemAutoScript resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemAutoScriptName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAutoScriptName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAutoScriptInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAutoScriptInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAutoScriptRepeat(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAutoScriptRepeat(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAutoScriptStart(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAutoScriptStart(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAutoScriptScript(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAutoScriptScript(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAutoScriptOutputSize(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAutoScriptOutputSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemAutoScript(d *schema.ResourceData, o map[string]interface{}) error {
+func flattenSystemAutoScriptTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func refreshObjectSystemAutoScript(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenSystemAutoScriptName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenSystemAutoScriptName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("interval", flattenSystemAutoScriptInterval(o["interval"], d, "interval")); err != nil {
+	if err = d.Set("interval", flattenSystemAutoScriptInterval(o["interval"], d, "interval", sv)); err != nil {
 		if !fortiAPIPatch(o["interval"]) {
 			return fmt.Errorf("Error reading interval: %v", err)
 		}
 	}
 
-	if err = d.Set("repeat", flattenSystemAutoScriptRepeat(o["repeat"], d, "repeat")); err != nil {
+	if err = d.Set("repeat", flattenSystemAutoScriptRepeat(o["repeat"], d, "repeat", sv)); err != nil {
 		if !fortiAPIPatch(o["repeat"]) {
 			return fmt.Errorf("Error reading repeat: %v", err)
 		}
 	}
 
-	if err = d.Set("start", flattenSystemAutoScriptStart(o["start"], d, "start")); err != nil {
+	if err = d.Set("start", flattenSystemAutoScriptStart(o["start"], d, "start", sv)); err != nil {
 		if !fortiAPIPatch(o["start"]) {
 			return fmt.Errorf("Error reading start: %v", err)
 		}
 	}
 
-	if err = d.Set("script", flattenSystemAutoScriptScript(o["script"], d, "script")); err != nil {
+	if err = d.Set("script", flattenSystemAutoScriptScript(o["script"], d, "script", sv)); err != nil {
 		if !fortiAPIPatch(o["script"]) {
 			return fmt.Errorf("Error reading script: %v", err)
 		}
 	}
 
-	if err = d.Set("output_size", flattenSystemAutoScriptOutputSize(o["output-size"], d, "output_size")); err != nil {
+	if err = d.Set("output_size", flattenSystemAutoScriptOutputSize(o["output-size"], d, "output_size", sv)); err != nil {
 		if !fortiAPIPatch(o["output-size"]) {
 			return fmt.Errorf("Error reading output_size: %v", err)
+		}
+	}
+
+	if err = d.Set("timeout", flattenSystemAutoScriptTimeout(o["timeout"], d, "timeout", sv)); err != nil {
+		if !fortiAPIPatch(o["timeout"]) {
+			return fmt.Errorf("Error reading timeout: %v", err)
 		}
 	}
 
@@ -226,38 +243,43 @@ func refreshObjectSystemAutoScript(d *schema.ResourceData, o map[string]interfac
 func flattenSystemAutoScriptFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemAutoScriptName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAutoScriptName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAutoScriptInterval(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAutoScriptInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAutoScriptRepeat(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAutoScriptRepeat(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAutoScriptStart(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAutoScriptStart(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAutoScriptScript(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAutoScriptScript(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAutoScriptOutputSize(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAutoScriptOutputSize(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemAutoScript(d *schema.ResourceData) (*map[string]interface{}, error) {
+func expandSystemAutoScriptTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func getObjectSystemAutoScript(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandSystemAutoScriptName(d, v, "name")
+
+		t, err := expandSystemAutoScriptName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -266,7 +288,8 @@ func getObjectSystemAutoScript(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOkExists("interval"); ok {
-		t, err := expandSystemAutoScriptInterval(d, v, "interval")
+
+		t, err := expandSystemAutoScriptInterval(d, v, "interval", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -275,7 +298,8 @@ func getObjectSystemAutoScript(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOkExists("repeat"); ok {
-		t, err := expandSystemAutoScriptRepeat(d, v, "repeat")
+
+		t, err := expandSystemAutoScriptRepeat(d, v, "repeat", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -284,7 +308,8 @@ func getObjectSystemAutoScript(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("start"); ok {
-		t, err := expandSystemAutoScriptStart(d, v, "start")
+
+		t, err := expandSystemAutoScriptStart(d, v, "start", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -293,7 +318,8 @@ func getObjectSystemAutoScript(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("script"); ok {
-		t, err := expandSystemAutoScriptScript(d, v, "script")
+
+		t, err := expandSystemAutoScriptScript(d, v, "script", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -302,11 +328,22 @@ func getObjectSystemAutoScript(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("output_size"); ok {
-		t, err := expandSystemAutoScriptOutputSize(d, v, "output_size")
+
+		t, err := expandSystemAutoScriptOutputSize(d, v, "output_size", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
 			obj["output-size"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("timeout"); ok {
+
+		t, err := expandSystemAutoScriptTimeout(d, v, "timeout", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["timeout"] = t
 		}
 	}
 
