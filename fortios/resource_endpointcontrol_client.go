@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -69,7 +70,7 @@ func resourceEndpointControlClientCreate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectEndpointControlClient(d)
+	obj, err := getObjectEndpointControlClient(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating EndpointControlClient resource while getting object: %v", err)
 	}
@@ -94,7 +95,7 @@ func resourceEndpointControlClientUpdate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectEndpointControlClient(d)
+	obj, err := getObjectEndpointControlClient(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating EndpointControlClient resource while getting object: %v", err)
 	}
@@ -147,71 +148,71 @@ func resourceEndpointControlClientRead(d *schema.ResourceData, m interface{}) er
 		return nil
 	}
 
-	err = refreshObjectEndpointControlClient(d, o)
+	err = refreshObjectEndpointControlClient(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading EndpointControlClient resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenEndpointControlClientId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenEndpointControlClientId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenEndpointControlClientFtclUid(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenEndpointControlClientFtclUid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenEndpointControlClientSrcIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenEndpointControlClientSrcIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenEndpointControlClientSrcMac(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenEndpointControlClientSrcMac(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenEndpointControlClientInfo(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenEndpointControlClientInfo(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenEndpointControlClientAdGroups(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenEndpointControlClientAdGroups(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectEndpointControlClient(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectEndpointControlClient(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("fosid", flattenEndpointControlClientId(o["id"], d, "fosid")); err != nil {
+	if err = d.Set("fosid", flattenEndpointControlClientId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
 			return fmt.Errorf("Error reading fosid: %v", err)
 		}
 	}
 
-	if err = d.Set("ftcl_uid", flattenEndpointControlClientFtclUid(o["ftcl-uid"], d, "ftcl_uid")); err != nil {
+	if err = d.Set("ftcl_uid", flattenEndpointControlClientFtclUid(o["ftcl-uid"], d, "ftcl_uid", sv)); err != nil {
 		if !fortiAPIPatch(o["ftcl-uid"]) {
 			return fmt.Errorf("Error reading ftcl_uid: %v", err)
 		}
 	}
 
-	if err = d.Set("src_ip", flattenEndpointControlClientSrcIp(o["src-ip"], d, "src_ip")); err != nil {
+	if err = d.Set("src_ip", flattenEndpointControlClientSrcIp(o["src-ip"], d, "src_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["src-ip"]) {
 			return fmt.Errorf("Error reading src_ip: %v", err)
 		}
 	}
 
-	if err = d.Set("src_mac", flattenEndpointControlClientSrcMac(o["src-mac"], d, "src_mac")); err != nil {
+	if err = d.Set("src_mac", flattenEndpointControlClientSrcMac(o["src-mac"], d, "src_mac", sv)); err != nil {
 		if !fortiAPIPatch(o["src-mac"]) {
 			return fmt.Errorf("Error reading src_mac: %v", err)
 		}
 	}
 
-	if err = d.Set("info", flattenEndpointControlClientInfo(o["info"], d, "info")); err != nil {
+	if err = d.Set("info", flattenEndpointControlClientInfo(o["info"], d, "info", sv)); err != nil {
 		if !fortiAPIPatch(o["info"]) {
 			return fmt.Errorf("Error reading info: %v", err)
 		}
 	}
 
-	if err = d.Set("ad_groups", flattenEndpointControlClientAdGroups(o["ad-groups"], d, "ad_groups")); err != nil {
+	if err = d.Set("ad_groups", flattenEndpointControlClientAdGroups(o["ad-groups"], d, "ad_groups", sv)); err != nil {
 		if !fortiAPIPatch(o["ad-groups"]) {
 			return fmt.Errorf("Error reading ad_groups: %v", err)
 		}
@@ -223,38 +224,39 @@ func refreshObjectEndpointControlClient(d *schema.ResourceData, o map[string]int
 func flattenEndpointControlClientFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandEndpointControlClientId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandEndpointControlClientId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandEndpointControlClientFtclUid(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandEndpointControlClientFtclUid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandEndpointControlClientSrcIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandEndpointControlClientSrcIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandEndpointControlClientSrcMac(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandEndpointControlClientSrcMac(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandEndpointControlClientInfo(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandEndpointControlClientInfo(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandEndpointControlClientAdGroups(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandEndpointControlClientAdGroups(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectEndpointControlClient(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectEndpointControlClient(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-		t, err := expandEndpointControlClientId(d, v, "fosid")
+
+		t, err := expandEndpointControlClientId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -263,7 +265,8 @@ func getObjectEndpointControlClient(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("ftcl_uid"); ok {
-		t, err := expandEndpointControlClientFtclUid(d, v, "ftcl_uid")
+
+		t, err := expandEndpointControlClientFtclUid(d, v, "ftcl_uid", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -272,7 +275,8 @@ func getObjectEndpointControlClient(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("src_ip"); ok {
-		t, err := expandEndpointControlClientSrcIp(d, v, "src_ip")
+
+		t, err := expandEndpointControlClientSrcIp(d, v, "src_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -281,7 +285,8 @@ func getObjectEndpointControlClient(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("src_mac"); ok {
-		t, err := expandEndpointControlClientSrcMac(d, v, "src_mac")
+
+		t, err := expandEndpointControlClientSrcMac(d, v, "src_mac", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -290,7 +295,8 @@ func getObjectEndpointControlClient(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("info"); ok {
-		t, err := expandEndpointControlClientInfo(d, v, "info")
+
+		t, err := expandEndpointControlClientInfo(d, v, "info", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -299,7 +305,8 @@ func getObjectEndpointControlClient(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("ad_groups"); ok {
-		t, err := expandEndpointControlClientAdGroups(d, v, "ad_groups")
+
+		t, err := expandEndpointControlClientAdGroups(d, v, "ad_groups", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
