@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -91,7 +92,7 @@ func resourceFirewallIdentityBasedRouteCreate(d *schema.ResourceData, m interfac
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectFirewallIdentityBasedRoute(d)
+	obj, err := getObjectFirewallIdentityBasedRoute(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallIdentityBasedRoute resource while getting object: %v", err)
 	}
@@ -116,7 +117,7 @@ func resourceFirewallIdentityBasedRouteUpdate(d *schema.ResourceData, m interfac
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectFirewallIdentityBasedRoute(d)
+	obj, err := getObjectFirewallIdentityBasedRoute(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallIdentityBasedRoute resource while getting object: %v", err)
 	}
@@ -169,22 +170,22 @@ func resourceFirewallIdentityBasedRouteRead(d *schema.ResourceData, m interface{
 		return nil
 	}
 
-	err = refreshObjectFirewallIdentityBasedRoute(d, o)
+	err = refreshObjectFirewallIdentityBasedRoute(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallIdentityBasedRoute resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenFirewallIdentityBasedRouteName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallIdentityBasedRouteName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallIdentityBasedRouteComments(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallIdentityBasedRouteComments(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallIdentityBasedRouteRule(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenFirewallIdentityBasedRouteRule(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -205,22 +206,26 @@ func flattenFirewallIdentityBasedRouteRule(v interface{}, d *schema.ResourceData
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenFirewallIdentityBasedRouteRuleId(i["id"], d, pre_append)
+
+			tmp["id"] = flattenFirewallIdentityBasedRouteRuleId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "gateway"
 		if _, ok := i["gateway"]; ok {
-			tmp["gateway"] = flattenFirewallIdentityBasedRouteRuleGateway(i["gateway"], d, pre_append)
+
+			tmp["gateway"] = flattenFirewallIdentityBasedRouteRuleGateway(i["gateway"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device"
 		if _, ok := i["device"]; ok {
-			tmp["device"] = flattenFirewallIdentityBasedRouteRuleDevice(i["device"], d, pre_append)
+
+			tmp["device"] = flattenFirewallIdentityBasedRouteRuleDevice(i["device"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "groups"
 		if _, ok := i["groups"]; ok {
-			tmp["groups"] = flattenFirewallIdentityBasedRouteRuleGroups(i["groups"], d, pre_append)
+
+			tmp["groups"] = flattenFirewallIdentityBasedRouteRuleGroups(i["groups"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -232,19 +237,19 @@ func flattenFirewallIdentityBasedRouteRule(v interface{}, d *schema.ResourceData
 	return result
 }
 
-func flattenFirewallIdentityBasedRouteRuleId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallIdentityBasedRouteRuleId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallIdentityBasedRouteRuleGateway(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallIdentityBasedRouteRuleGateway(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallIdentityBasedRouteRuleDevice(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallIdentityBasedRouteRuleDevice(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallIdentityBasedRouteRuleGroups(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenFirewallIdentityBasedRouteRuleGroups(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -265,7 +270,8 @@ func flattenFirewallIdentityBasedRouteRuleGroups(v interface{}, d *schema.Resour
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallIdentityBasedRouteRuleGroupsName(i["name"], d, pre_append)
+
+			tmp["name"] = flattenFirewallIdentityBasedRouteRuleGroupsName(i["name"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -276,34 +282,34 @@ func flattenFirewallIdentityBasedRouteRuleGroups(v interface{}, d *schema.Resour
 	return result
 }
 
-func flattenFirewallIdentityBasedRouteRuleGroupsName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallIdentityBasedRouteRuleGroupsName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectFirewallIdentityBasedRoute(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectFirewallIdentityBasedRoute(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenFirewallIdentityBasedRouteName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenFirewallIdentityBasedRouteName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("comments", flattenFirewallIdentityBasedRouteComments(o["comments"], d, "comments")); err != nil {
+	if err = d.Set("comments", flattenFirewallIdentityBasedRouteComments(o["comments"], d, "comments", sv)); err != nil {
 		if !fortiAPIPatch(o["comments"]) {
 			return fmt.Errorf("Error reading comments: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("rule", flattenFirewallIdentityBasedRouteRule(o["rule"], d, "rule")); err != nil {
+		if err = d.Set("rule", flattenFirewallIdentityBasedRouteRule(o["rule"], d, "rule", sv)); err != nil {
 			if !fortiAPIPatch(o["rule"]) {
 				return fmt.Errorf("Error reading rule: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("rule"); ok {
-			if err = d.Set("rule", flattenFirewallIdentityBasedRouteRule(o["rule"], d, "rule")); err != nil {
+			if err = d.Set("rule", flattenFirewallIdentityBasedRouteRule(o["rule"], d, "rule", sv)); err != nil {
 				if !fortiAPIPatch(o["rule"]) {
 					return fmt.Errorf("Error reading rule: %v", err)
 				}
@@ -317,18 +323,18 @@ func refreshObjectFirewallIdentityBasedRoute(d *schema.ResourceData, o map[strin
 func flattenFirewallIdentityBasedRouteFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandFirewallIdentityBasedRouteName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallIdentityBasedRouteName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallIdentityBasedRouteComments(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallIdentityBasedRouteComments(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallIdentityBasedRouteRule(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallIdentityBasedRouteRule(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -344,22 +350,26 @@ func expandFirewallIdentityBasedRouteRule(d *schema.ResourceData, v interface{},
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandFirewallIdentityBasedRouteRuleId(d, i["id"], pre_append)
+
+			tmp["id"], _ = expandFirewallIdentityBasedRouteRuleId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "gateway"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["gateway"], _ = expandFirewallIdentityBasedRouteRuleGateway(d, i["gateway"], pre_append)
+
+			tmp["gateway"], _ = expandFirewallIdentityBasedRouteRuleGateway(d, i["gateway"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "device"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["device"], _ = expandFirewallIdentityBasedRouteRuleDevice(d, i["device"], pre_append)
+
+			tmp["device"], _ = expandFirewallIdentityBasedRouteRuleDevice(d, i["device"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "groups"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["groups"], _ = expandFirewallIdentityBasedRouteRuleGroups(d, i["groups"], pre_append)
+
+			tmp["groups"], _ = expandFirewallIdentityBasedRouteRuleGroups(d, i["groups"], pre_append, sv)
 		} else {
 			tmp["groups"] = make([]string, 0)
 		}
@@ -372,19 +382,19 @@ func expandFirewallIdentityBasedRouteRule(d *schema.ResourceData, v interface{},
 	return result, nil
 }
 
-func expandFirewallIdentityBasedRouteRuleId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallIdentityBasedRouteRuleId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallIdentityBasedRouteRuleGateway(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallIdentityBasedRouteRuleGateway(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallIdentityBasedRouteRuleDevice(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallIdentityBasedRouteRuleDevice(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallIdentityBasedRouteRuleGroups(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallIdentityBasedRouteRuleGroups(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -400,7 +410,8 @@ func expandFirewallIdentityBasedRouteRuleGroups(d *schema.ResourceData, v interf
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallIdentityBasedRouteRuleGroupsName(d, i["name"], pre_append)
+
+			tmp["name"], _ = expandFirewallIdentityBasedRouteRuleGroupsName(d, i["name"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -411,15 +422,16 @@ func expandFirewallIdentityBasedRouteRuleGroups(d *schema.ResourceData, v interf
 	return result, nil
 }
 
-func expandFirewallIdentityBasedRouteRuleGroupsName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallIdentityBasedRouteRuleGroupsName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectFirewallIdentityBasedRoute(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectFirewallIdentityBasedRoute(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandFirewallIdentityBasedRouteName(d, v, "name")
+
+		t, err := expandFirewallIdentityBasedRouteName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -428,7 +440,8 @@ func getObjectFirewallIdentityBasedRoute(d *schema.ResourceData) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-		t, err := expandFirewallIdentityBasedRouteComments(d, v, "comments")
+
+		t, err := expandFirewallIdentityBasedRouteComments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -437,7 +450,8 @@ func getObjectFirewallIdentityBasedRoute(d *schema.ResourceData) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("rule"); ok {
-		t, err := expandFirewallIdentityBasedRouteRule(d, v, "rule")
+
+		t, err := expandFirewallIdentityBasedRouteRule(d, v, "rule", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
