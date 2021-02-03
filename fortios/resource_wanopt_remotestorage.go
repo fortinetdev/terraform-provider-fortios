@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -60,7 +61,7 @@ func resourceWanoptRemoteStorageUpdate(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWanoptRemoteStorage(d)
+	obj, err := getObjectWanoptRemoteStorage(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WanoptRemoteStorage resource while getting object: %v", err)
 	}
@@ -113,51 +114,51 @@ func resourceWanoptRemoteStorageRead(d *schema.ResourceData, m interface{}) erro
 		return nil
 	}
 
-	err = refreshObjectWanoptRemoteStorage(d, o)
+	err = refreshObjectWanoptRemoteStorage(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading WanoptRemoteStorage resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenWanoptRemoteStorageStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptRemoteStorageStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptRemoteStorageLocalCacheId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptRemoteStorageLocalCacheId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptRemoteStorageRemoteCacheId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptRemoteStorageRemoteCacheId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptRemoteStorageRemoteCacheIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptRemoteStorageRemoteCacheIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectWanoptRemoteStorage(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectWanoptRemoteStorage(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("status", flattenWanoptRemoteStorageStatus(o["status"], d, "status")); err != nil {
+	if err = d.Set("status", flattenWanoptRemoteStorageStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
 		}
 	}
 
-	if err = d.Set("local_cache_id", flattenWanoptRemoteStorageLocalCacheId(o["local-cache-id"], d, "local_cache_id")); err != nil {
+	if err = d.Set("local_cache_id", flattenWanoptRemoteStorageLocalCacheId(o["local-cache-id"], d, "local_cache_id", sv)); err != nil {
 		if !fortiAPIPatch(o["local-cache-id"]) {
 			return fmt.Errorf("Error reading local_cache_id: %v", err)
 		}
 	}
 
-	if err = d.Set("remote_cache_id", flattenWanoptRemoteStorageRemoteCacheId(o["remote-cache-id"], d, "remote_cache_id")); err != nil {
+	if err = d.Set("remote_cache_id", flattenWanoptRemoteStorageRemoteCacheId(o["remote-cache-id"], d, "remote_cache_id", sv)); err != nil {
 		if !fortiAPIPatch(o["remote-cache-id"]) {
 			return fmt.Errorf("Error reading remote_cache_id: %v", err)
 		}
 	}
 
-	if err = d.Set("remote_cache_ip", flattenWanoptRemoteStorageRemoteCacheIp(o["remote-cache-ip"], d, "remote_cache_ip")); err != nil {
+	if err = d.Set("remote_cache_ip", flattenWanoptRemoteStorageRemoteCacheIp(o["remote-cache-ip"], d, "remote_cache_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["remote-cache-ip"]) {
 			return fmt.Errorf("Error reading remote_cache_ip: %v", err)
 		}
@@ -169,30 +170,31 @@ func refreshObjectWanoptRemoteStorage(d *schema.ResourceData, o map[string]inter
 func flattenWanoptRemoteStorageFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandWanoptRemoteStorageStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptRemoteStorageStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptRemoteStorageLocalCacheId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptRemoteStorageLocalCacheId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptRemoteStorageRemoteCacheId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptRemoteStorageRemoteCacheId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptRemoteStorageRemoteCacheIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptRemoteStorageRemoteCacheIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectWanoptRemoteStorage(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectWanoptRemoteStorage(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
-		t, err := expandWanoptRemoteStorageStatus(d, v, "status")
+
+		t, err := expandWanoptRemoteStorageStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -201,7 +203,8 @@ func getObjectWanoptRemoteStorage(d *schema.ResourceData) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("local_cache_id"); ok {
-		t, err := expandWanoptRemoteStorageLocalCacheId(d, v, "local_cache_id")
+
+		t, err := expandWanoptRemoteStorageLocalCacheId(d, v, "local_cache_id", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -210,7 +213,8 @@ func getObjectWanoptRemoteStorage(d *schema.ResourceData) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("remote_cache_id"); ok {
-		t, err := expandWanoptRemoteStorageRemoteCacheId(d, v, "remote_cache_id")
+
+		t, err := expandWanoptRemoteStorageRemoteCacheId(d, v, "remote_cache_id", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -219,7 +223,8 @@ func getObjectWanoptRemoteStorage(d *schema.ResourceData) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("remote_cache_ip"); ok {
-		t, err := expandWanoptRemoteStorageRemoteCacheIp(d, v, "remote_cache_ip")
+
+		t, err := expandWanoptRemoteStorageRemoteCacheIp(d, v, "remote_cache_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
