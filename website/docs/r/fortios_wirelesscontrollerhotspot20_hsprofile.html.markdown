@@ -11,7 +11,6 @@ Configure hotspot profile.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Hotspot profile name.
