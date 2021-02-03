@@ -45,7 +45,6 @@ resource "fortios_user_radius" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - RADIUS server entry name.
@@ -66,10 +65,15 @@ The following arguments are supported:
 * `auth_type` - Authentication methods/protocols permitted for this RADIUS server.
 * `source_ip` - Source IP address for communications to the RADIUS server.
 * `username_case_sensitive` - Enable/disable case sensitive user names.
+* `group_override_attr_type` - RADIUS attribute type to override user group information.
 * `class` - Class attribute name(s). The structure of `class` block is documented below.
 * `password_renewal` - Enable/disable password renewal.
 * `password_encoding` - Password encoding.
 * `acct_all_servers` - Enable/disable sending of accounting messages to all configured servers (default = disable).
+* `switch_controller_acct_fast_framedip_detect` - Switch controller accounting message Framed-IP detection from DHCP snooping (seconds, default=2).
+* `interface_select_method` - Specify how to select outgoing interface to reach server.
+* `interface` - Specify outgoing interface to reach server.
+* `switch_controller_service_type` - RADIUS service type.
 * `rsso` - Enable/disable RADIUS based single sign on feature.
 * `rsso_radius_server_port` - UDP port to listen on for RADIUS Start and Stop records.
 * `rsso_radius_response` - Enable/disable sending RADIUS response packets after receiving Start and Stop records.
@@ -100,6 +104,8 @@ The `accounting_server` block supports:
 * `secret` - Secret key.
 * `port` - RADIUS accounting port number.
 * `source_ip` - Source IP address for communications to the RADIUS server.
+* `interface_select_method` - Specify how to select outgoing interface to reach server.
+* `interface` - Specify outgoing interface to reach server.
 
 
 ## Attribute Reference
