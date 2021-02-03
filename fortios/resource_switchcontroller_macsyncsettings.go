@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -44,7 +45,7 @@ func resourceSwitchControllerMacSyncSettingsUpdate(d *schema.ResourceData, m int
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSwitchControllerMacSyncSettings(d)
+	obj, err := getObjectSwitchControllerMacSyncSettings(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerMacSyncSettings resource while getting object: %v", err)
 	}
@@ -97,21 +98,21 @@ func resourceSwitchControllerMacSyncSettingsRead(d *schema.ResourceData, m inter
 		return nil
 	}
 
-	err = refreshObjectSwitchControllerMacSyncSettings(d, o)
+	err = refreshObjectSwitchControllerMacSyncSettings(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerMacSyncSettings resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSwitchControllerMacSyncSettingsMacSyncInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerMacSyncSettingsMacSyncInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSwitchControllerMacSyncSettings(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSwitchControllerMacSyncSettings(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("mac_sync_interval", flattenSwitchControllerMacSyncSettingsMacSyncInterval(o["mac-sync-interval"], d, "mac_sync_interval")); err != nil {
+	if err = d.Set("mac_sync_interval", flattenSwitchControllerMacSyncSettingsMacSyncInterval(o["mac-sync-interval"], d, "mac_sync_interval", sv)); err != nil {
 		if !fortiAPIPatch(o["mac-sync-interval"]) {
 			return fmt.Errorf("Error reading mac_sync_interval: %v", err)
 		}
@@ -123,18 +124,19 @@ func refreshObjectSwitchControllerMacSyncSettings(d *schema.ResourceData, o map[
 func flattenSwitchControllerMacSyncSettingsFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSwitchControllerMacSyncSettingsMacSyncInterval(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerMacSyncSettingsMacSyncInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSwitchControllerMacSyncSettings(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSwitchControllerMacSyncSettings(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("mac_sync_interval"); ok {
-		t, err := expandSwitchControllerMacSyncSettingsMacSyncInterval(d, v, "mac_sync_interval")
+
+		t, err := expandSwitchControllerMacSyncSettingsMacSyncInterval(d, v, "mac_sync_interval", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
