@@ -7,10 +7,9 @@ description: |-
 ---
 
 # fortios_spamfilter_iptrust
-Configure AntiSpam IP trust.
+Configure AntiSpam IP trust. Applies to FortiOS Version `<= 6.2.0`.
 
 ## Argument Reference
-
 
 The following arguments are supported:
 
