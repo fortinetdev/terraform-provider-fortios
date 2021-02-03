@@ -11,7 +11,6 @@ Configure FortiToken.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `serial_number` - Serial number.
