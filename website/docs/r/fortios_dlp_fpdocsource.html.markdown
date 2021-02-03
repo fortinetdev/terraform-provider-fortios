@@ -34,7 +34,6 @@ resource "fortios_dlp_fpdocsource" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Name of the DLP fingerprint database.
