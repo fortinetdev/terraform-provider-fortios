@@ -43,7 +43,6 @@ resource "fortios_user_domaincontroller" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Domain controller entry name.
