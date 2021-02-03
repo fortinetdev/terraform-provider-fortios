@@ -34,7 +34,6 @@ resource "fortios_firewall_sniffer" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `fosid` - Sniffer ID.
@@ -56,15 +55,23 @@ The following arguments are supported:
 * `av_profile` - Name of an existing antivirus profile.
 * `webfilter_profile_status` - Enable/disable web filter profile.
 * `webfilter_profile` - Name of an existing web filter profile.
+* `emailfilter_profile_status` - Enable/disable emailfilter.
+* `emailfilter_profile` - Name of an existing email filter profile.
 * `spamfilter_profile_status` - Enable/disable spam filter.
 * `spamfilter_profile` - Name of an existing spam filter profile.
 * `dlp_sensor_status` - Enable/disable DLP sensor.
 * `dlp_sensor` - Name of an existing DLP sensor.
+* `ip_threatfeed_status` - Enable/disable IP threat feed.
+* `ip_threatfeed` - Name of an existing IP threat feed. The structure of `ip_threatfeed` block is documented below.
 * `ips_dos_status` - Enable/disable IPS DoS anomaly detection.
 * `anomaly` - Configuration method to edit Denial of Service (DoS) anomaly settings. The structure of `anomaly` block is documented below.
 * `scan_botnet_connections` - Enable/disable scanning of connections to Botnet servers.
 * `max_packet_count` - Maximum packet count (1 - 1000000, default = 10000).
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
+The `ip_threatfeed` block supports:
+
+* `name` - Threat feed name.
 
 The `anomaly` block supports:
 
