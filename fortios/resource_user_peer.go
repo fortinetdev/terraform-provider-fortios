@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -112,7 +113,7 @@ func resourceUserPeerCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectUserPeer(d)
+	obj, err := getObjectUserPeer(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating UserPeer resource while getting object: %v", err)
 	}
@@ -137,7 +138,7 @@ func resourceUserPeerUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectUserPeer(d)
+	obj, err := getObjectUserPeer(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating UserPeer resource while getting object: %v", err)
 	}
@@ -190,129 +191,129 @@ func resourceUserPeerRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectUserPeer(d, o)
+	err = refreshObjectUserPeer(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading UserPeer resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenUserPeerName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserPeerName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserPeerMandatoryCaVerify(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserPeerMandatoryCaVerify(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserPeerCa(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserPeerCa(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserPeerSubject(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserPeerSubject(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserPeerCn(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserPeerCn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserPeerCnType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserPeerCnType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserPeerLdapServer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserPeerLdapServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserPeerLdapUsername(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserPeerLdapUsername(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserPeerLdapPassword(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserPeerLdapPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserPeerLdapMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserPeerLdapMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserPeerOcspOverrideServer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserPeerOcspOverrideServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserPeerTwoFactor(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserPeerTwoFactor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserPeerPasswd(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserPeerPasswd(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectUserPeer(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectUserPeer(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenUserPeerName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenUserPeerName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("mandatory_ca_verify", flattenUserPeerMandatoryCaVerify(o["mandatory-ca-verify"], d, "mandatory_ca_verify")); err != nil {
+	if err = d.Set("mandatory_ca_verify", flattenUserPeerMandatoryCaVerify(o["mandatory-ca-verify"], d, "mandatory_ca_verify", sv)); err != nil {
 		if !fortiAPIPatch(o["mandatory-ca-verify"]) {
 			return fmt.Errorf("Error reading mandatory_ca_verify: %v", err)
 		}
 	}
 
-	if err = d.Set("ca", flattenUserPeerCa(o["ca"], d, "ca")); err != nil {
+	if err = d.Set("ca", flattenUserPeerCa(o["ca"], d, "ca", sv)); err != nil {
 		if !fortiAPIPatch(o["ca"]) {
 			return fmt.Errorf("Error reading ca: %v", err)
 		}
 	}
 
-	if err = d.Set("subject", flattenUserPeerSubject(o["subject"], d, "subject")); err != nil {
+	if err = d.Set("subject", flattenUserPeerSubject(o["subject"], d, "subject", sv)); err != nil {
 		if !fortiAPIPatch(o["subject"]) {
 			return fmt.Errorf("Error reading subject: %v", err)
 		}
 	}
 
-	if err = d.Set("cn", flattenUserPeerCn(o["cn"], d, "cn")); err != nil {
+	if err = d.Set("cn", flattenUserPeerCn(o["cn"], d, "cn", sv)); err != nil {
 		if !fortiAPIPatch(o["cn"]) {
 			return fmt.Errorf("Error reading cn: %v", err)
 		}
 	}
 
-	if err = d.Set("cn_type", flattenUserPeerCnType(o["cn-type"], d, "cn_type")); err != nil {
+	if err = d.Set("cn_type", flattenUserPeerCnType(o["cn-type"], d, "cn_type", sv)); err != nil {
 		if !fortiAPIPatch(o["cn-type"]) {
 			return fmt.Errorf("Error reading cn_type: %v", err)
 		}
 	}
 
-	if err = d.Set("ldap_server", flattenUserPeerLdapServer(o["ldap-server"], d, "ldap_server")); err != nil {
+	if err = d.Set("ldap_server", flattenUserPeerLdapServer(o["ldap-server"], d, "ldap_server", sv)); err != nil {
 		if !fortiAPIPatch(o["ldap-server"]) {
 			return fmt.Errorf("Error reading ldap_server: %v", err)
 		}
 	}
 
-	if err = d.Set("ldap_username", flattenUserPeerLdapUsername(o["ldap-username"], d, "ldap_username")); err != nil {
+	if err = d.Set("ldap_username", flattenUserPeerLdapUsername(o["ldap-username"], d, "ldap_username", sv)); err != nil {
 		if !fortiAPIPatch(o["ldap-username"]) {
 			return fmt.Errorf("Error reading ldap_username: %v", err)
 		}
 	}
 
-	if err = d.Set("ldap_mode", flattenUserPeerLdapMode(o["ldap-mode"], d, "ldap_mode")); err != nil {
+	if err = d.Set("ldap_mode", flattenUserPeerLdapMode(o["ldap-mode"], d, "ldap_mode", sv)); err != nil {
 		if !fortiAPIPatch(o["ldap-mode"]) {
 			return fmt.Errorf("Error reading ldap_mode: %v", err)
 		}
 	}
 
-	if err = d.Set("ocsp_override_server", flattenUserPeerOcspOverrideServer(o["ocsp-override-server"], d, "ocsp_override_server")); err != nil {
+	if err = d.Set("ocsp_override_server", flattenUserPeerOcspOverrideServer(o["ocsp-override-server"], d, "ocsp_override_server", sv)); err != nil {
 		if !fortiAPIPatch(o["ocsp-override-server"]) {
 			return fmt.Errorf("Error reading ocsp_override_server: %v", err)
 		}
 	}
 
-	if err = d.Set("two_factor", flattenUserPeerTwoFactor(o["two-factor"], d, "two_factor")); err != nil {
+	if err = d.Set("two_factor", flattenUserPeerTwoFactor(o["two-factor"], d, "two_factor", sv)); err != nil {
 		if !fortiAPIPatch(o["two-factor"]) {
 			return fmt.Errorf("Error reading two_factor: %v", err)
 		}
@@ -324,66 +325,67 @@ func refreshObjectUserPeer(d *schema.ResourceData, o map[string]interface{}) err
 func flattenUserPeerFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandUserPeerName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserPeerName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserPeerMandatoryCaVerify(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserPeerMandatoryCaVerify(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserPeerCa(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserPeerCa(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserPeerSubject(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserPeerSubject(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserPeerCn(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserPeerCn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserPeerCnType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserPeerCnType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserPeerLdapServer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserPeerLdapServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserPeerLdapUsername(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserPeerLdapUsername(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserPeerLdapPassword(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserPeerLdapPassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserPeerLdapMode(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserPeerLdapMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserPeerOcspOverrideServer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserPeerOcspOverrideServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserPeerTwoFactor(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserPeerTwoFactor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserPeerPasswd(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserPeerPasswd(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectUserPeer(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectUserPeer(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandUserPeerName(d, v, "name")
+
+		t, err := expandUserPeerName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -392,7 +394,8 @@ func getObjectUserPeer(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("mandatory_ca_verify"); ok {
-		t, err := expandUserPeerMandatoryCaVerify(d, v, "mandatory_ca_verify")
+
+		t, err := expandUserPeerMandatoryCaVerify(d, v, "mandatory_ca_verify", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -401,7 +404,8 @@ func getObjectUserPeer(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("ca"); ok {
-		t, err := expandUserPeerCa(d, v, "ca")
+
+		t, err := expandUserPeerCa(d, v, "ca", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -410,7 +414,8 @@ func getObjectUserPeer(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("subject"); ok {
-		t, err := expandUserPeerSubject(d, v, "subject")
+
+		t, err := expandUserPeerSubject(d, v, "subject", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -419,7 +424,8 @@ func getObjectUserPeer(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("cn"); ok {
-		t, err := expandUserPeerCn(d, v, "cn")
+
+		t, err := expandUserPeerCn(d, v, "cn", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -428,7 +434,8 @@ func getObjectUserPeer(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("cn_type"); ok {
-		t, err := expandUserPeerCnType(d, v, "cn_type")
+
+		t, err := expandUserPeerCnType(d, v, "cn_type", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -437,7 +444,8 @@ func getObjectUserPeer(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("ldap_server"); ok {
-		t, err := expandUserPeerLdapServer(d, v, "ldap_server")
+
+		t, err := expandUserPeerLdapServer(d, v, "ldap_server", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -446,7 +454,8 @@ func getObjectUserPeer(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("ldap_username"); ok {
-		t, err := expandUserPeerLdapUsername(d, v, "ldap_username")
+
+		t, err := expandUserPeerLdapUsername(d, v, "ldap_username", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -455,7 +464,8 @@ func getObjectUserPeer(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("ldap_password"); ok {
-		t, err := expandUserPeerLdapPassword(d, v, "ldap_password")
+
+		t, err := expandUserPeerLdapPassword(d, v, "ldap_password", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -464,7 +474,8 @@ func getObjectUserPeer(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("ldap_mode"); ok {
-		t, err := expandUserPeerLdapMode(d, v, "ldap_mode")
+
+		t, err := expandUserPeerLdapMode(d, v, "ldap_mode", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -473,7 +484,8 @@ func getObjectUserPeer(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("ocsp_override_server"); ok {
-		t, err := expandUserPeerOcspOverrideServer(d, v, "ocsp_override_server")
+
+		t, err := expandUserPeerOcspOverrideServer(d, v, "ocsp_override_server", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -482,7 +494,8 @@ func getObjectUserPeer(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("two_factor"); ok {
-		t, err := expandUserPeerTwoFactor(d, v, "two_factor")
+
+		t, err := expandUserPeerTwoFactor(d, v, "two_factor", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -491,7 +504,8 @@ func getObjectUserPeer(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("passwd"); ok {
-		t, err := expandUserPeerPasswd(d, v, "passwd")
+
+		t, err := expandUserPeerPasswd(d, v, "passwd", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
