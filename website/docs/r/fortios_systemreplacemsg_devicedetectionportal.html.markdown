@@ -7,10 +7,9 @@ description: |-
 ---
 
 # fortios_systemreplacemsg_devicedetectionportal
-Replacement messages.
+Replacement messages. Applies to FortiOS Version `<= 6.4.0`.
 
 ## Argument Reference
-
 
 The following arguments are supported:
 
