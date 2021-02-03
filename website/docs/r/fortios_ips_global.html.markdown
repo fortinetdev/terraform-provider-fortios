@@ -30,7 +30,6 @@ resource "fortios_ips_global" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `fail_open` - Enable to allow traffic if the IPS process crashes. Default is disable and IPS traffic is blocked when the IPS process crashes.
@@ -46,6 +45,17 @@ The following arguments are supported:
 * `deep_app_insp_timeout` - Timeout for Deep application inspection (1 - 2147483647 sec., 0 = use recommended setting).
 * `deep_app_insp_db_limit` - Limit on number of entries in deep application inspection database (1 - 2147483647, 0 = use recommended setting)
 * `exclude_signatures` - Excluded signatures.
+* `packet_log_queue_depth` - Packet/pcap log queue depth per IPS engine.
+* `ngfw_max_scan_range` - NGFW policy-mode app detection threshold.
+* `tls_active_probe` - TLS active probe configuration. The structure of `tls_active_probe` block is documented below.
+
+The `tls_active_probe` block supports:
+
+* `interface_select_method` - Specify how to select outgoing interface to reach server.
+* `interface` - Specify outgoing interface to reach server.
+* `vdom` - Virtual domain name for TLS active probe.
+* `source_ip` - Source IP address used for TLS active probe.
+* `source_ip6` - Source IPv6 address used for TLS active probe.
 
 
 ## Attribute Reference
