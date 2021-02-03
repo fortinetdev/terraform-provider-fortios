@@ -19,7 +19,6 @@ resource "fortios_wirelesscontrollerhotspot20_anqp3gppcellular" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - 3GPP PLMN name.
