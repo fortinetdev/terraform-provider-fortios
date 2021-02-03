@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -78,7 +79,7 @@ func resourceFirewallVipgrp64Create(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectFirewallVipgrp64(d)
+	obj, err := getObjectFirewallVipgrp64(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallVipgrp64 resource while getting object: %v", err)
 	}
@@ -103,7 +104,7 @@ func resourceFirewallVipgrp64Update(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectFirewallVipgrp64(d)
+	obj, err := getObjectFirewallVipgrp64(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallVipgrp64 resource while getting object: %v", err)
 	}
@@ -156,30 +157,30 @@ func resourceFirewallVipgrp64Read(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectFirewallVipgrp64(d, o)
+	err = refreshObjectFirewallVipgrp64(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallVipgrp64 resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenFirewallVipgrp64Name(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallVipgrp64Name(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallVipgrp64Uuid(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallVipgrp64Uuid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallVipgrp64Color(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallVipgrp64Color(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallVipgrp64Comments(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallVipgrp64Comments(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallVipgrp64Member(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenFirewallVipgrp64Member(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -200,7 +201,8 @@ func flattenFirewallVipgrp64Member(v interface{}, d *schema.ResourceData, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallVipgrp64MemberName(i["name"], d, pre_append)
+
+			tmp["name"] = flattenFirewallVipgrp64MemberName(i["name"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -212,46 +214,46 @@ func flattenFirewallVipgrp64Member(v interface{}, d *schema.ResourceData, pre st
 	return result
 }
 
-func flattenFirewallVipgrp64MemberName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallVipgrp64MemberName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectFirewallVipgrp64(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectFirewallVipgrp64(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenFirewallVipgrp64Name(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenFirewallVipgrp64Name(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("uuid", flattenFirewallVipgrp64Uuid(o["uuid"], d, "uuid")); err != nil {
+	if err = d.Set("uuid", flattenFirewallVipgrp64Uuid(o["uuid"], d, "uuid", sv)); err != nil {
 		if !fortiAPIPatch(o["uuid"]) {
 			return fmt.Errorf("Error reading uuid: %v", err)
 		}
 	}
 
-	if err = d.Set("color", flattenFirewallVipgrp64Color(o["color"], d, "color")); err != nil {
+	if err = d.Set("color", flattenFirewallVipgrp64Color(o["color"], d, "color", sv)); err != nil {
 		if !fortiAPIPatch(o["color"]) {
 			return fmt.Errorf("Error reading color: %v", err)
 		}
 	}
 
-	if err = d.Set("comments", flattenFirewallVipgrp64Comments(o["comments"], d, "comments")); err != nil {
+	if err = d.Set("comments", flattenFirewallVipgrp64Comments(o["comments"], d, "comments", sv)); err != nil {
 		if !fortiAPIPatch(o["comments"]) {
 			return fmt.Errorf("Error reading comments: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("member", flattenFirewallVipgrp64Member(o["member"], d, "member")); err != nil {
+		if err = d.Set("member", flattenFirewallVipgrp64Member(o["member"], d, "member", sv)); err != nil {
 			if !fortiAPIPatch(o["member"]) {
 				return fmt.Errorf("Error reading member: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("member"); ok {
-			if err = d.Set("member", flattenFirewallVipgrp64Member(o["member"], d, "member")); err != nil {
+			if err = d.Set("member", flattenFirewallVipgrp64Member(o["member"], d, "member", sv)); err != nil {
 				if !fortiAPIPatch(o["member"]) {
 					return fmt.Errorf("Error reading member: %v", err)
 				}
@@ -265,26 +267,26 @@ func refreshObjectFirewallVipgrp64(d *schema.ResourceData, o map[string]interfac
 func flattenFirewallVipgrp64FortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandFirewallVipgrp64Name(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallVipgrp64Name(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallVipgrp64Uuid(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallVipgrp64Uuid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallVipgrp64Color(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallVipgrp64Color(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallVipgrp64Comments(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallVipgrp64Comments(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallVipgrp64Member(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallVipgrp64Member(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -300,7 +302,8 @@ func expandFirewallVipgrp64Member(d *schema.ResourceData, v interface{}, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallVipgrp64MemberName(d, i["name"], pre_append)
+
+			tmp["name"], _ = expandFirewallVipgrp64MemberName(d, i["name"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -311,15 +314,16 @@ func expandFirewallVipgrp64Member(d *schema.ResourceData, v interface{}, pre str
 	return result, nil
 }
 
-func expandFirewallVipgrp64MemberName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallVipgrp64MemberName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectFirewallVipgrp64(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectFirewallVipgrp64(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandFirewallVipgrp64Name(d, v, "name")
+
+		t, err := expandFirewallVipgrp64Name(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -328,7 +332,8 @@ func getObjectFirewallVipgrp64(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("uuid"); ok {
-		t, err := expandFirewallVipgrp64Uuid(d, v, "uuid")
+
+		t, err := expandFirewallVipgrp64Uuid(d, v, "uuid", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -337,7 +342,8 @@ func getObjectFirewallVipgrp64(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOkExists("color"); ok {
-		t, err := expandFirewallVipgrp64Color(d, v, "color")
+
+		t, err := expandFirewallVipgrp64Color(d, v, "color", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -346,7 +352,8 @@ func getObjectFirewallVipgrp64(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-		t, err := expandFirewallVipgrp64Comments(d, v, "comments")
+
+		t, err := expandFirewallVipgrp64Comments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -355,7 +362,8 @@ func getObjectFirewallVipgrp64(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("member"); ok {
-		t, err := expandFirewallVipgrp64Member(d, v, "member")
+
+		t, err := expandFirewallVipgrp64Member(d, v, "member", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
