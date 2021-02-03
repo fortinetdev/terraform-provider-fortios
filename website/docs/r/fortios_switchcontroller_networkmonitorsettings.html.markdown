@@ -19,7 +19,6 @@ resource "fortios_switchcontroller_networkmonitorsettings" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `network_monitoring` - Enable/disable passive gathering of information by FortiSwitch units concerning other network devices.
