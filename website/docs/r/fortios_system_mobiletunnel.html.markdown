@@ -32,7 +32,6 @@ resource "fortios_system_mobiletunnel" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Tunnel name.
