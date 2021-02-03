@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -145,7 +146,7 @@ func resourceSystemVdomPropertyCreate(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemVdomProperty(d)
+	obj, err := getObjectSystemVdomProperty(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemVdomProperty resource while getting object: %v", err)
 	}
@@ -170,7 +171,7 @@ func resourceSystemVdomPropertyUpdate(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemVdomProperty(d)
+	obj, err := getObjectSystemVdomProperty(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemVdomProperty resource while getting object: %v", err)
 	}
@@ -223,221 +224,221 @@ func resourceSystemVdomPropertyRead(d *schema.ResourceData, m interface{}) error
 		return nil
 	}
 
-	err = refreshObjectSystemVdomProperty(d, o)
+	err = refreshObjectSystemVdomProperty(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemVdomProperty resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemVdomPropertyName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomPropertyName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVdomPropertyDescription(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomPropertyDescription(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVdomPropertySnmpIndex(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomPropertySnmpIndex(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVdomPropertySession(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomPropertySession(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVdomPropertyIpsecPhase1(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomPropertyIpsecPhase1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVdomPropertyIpsecPhase2(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomPropertyIpsecPhase2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVdomPropertyIpsecPhase1Interface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomPropertyIpsecPhase1Interface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVdomPropertyIpsecPhase2Interface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomPropertyIpsecPhase2Interface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVdomPropertyDialupTunnel(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomPropertyDialupTunnel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVdomPropertyFirewallPolicy(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomPropertyFirewallPolicy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVdomPropertyFirewallAddress(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomPropertyFirewallAddress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVdomPropertyFirewallAddrgrp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomPropertyFirewallAddrgrp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVdomPropertyCustomService(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomPropertyCustomService(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVdomPropertyServiceGroup(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomPropertyServiceGroup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVdomPropertyOnetimeSchedule(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomPropertyOnetimeSchedule(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVdomPropertyRecurringSchedule(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomPropertyRecurringSchedule(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVdomPropertyUser(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomPropertyUser(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVdomPropertyUserGroup(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomPropertyUserGroup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVdomPropertySslvpn(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomPropertySslvpn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVdomPropertyProxy(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomPropertyProxy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVdomPropertyLogDiskQuota(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomPropertyLogDiskQuota(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemVdomProperty(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemVdomProperty(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenSystemVdomPropertyName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenSystemVdomPropertyName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("description", flattenSystemVdomPropertyDescription(o["description"], d, "description")); err != nil {
+	if err = d.Set("description", flattenSystemVdomPropertyDescription(o["description"], d, "description", sv)); err != nil {
 		if !fortiAPIPatch(o["description"]) {
 			return fmt.Errorf("Error reading description: %v", err)
 		}
 	}
 
-	if err = d.Set("snmp_index", flattenSystemVdomPropertySnmpIndex(o["snmp-index"], d, "snmp_index")); err != nil {
+	if err = d.Set("snmp_index", flattenSystemVdomPropertySnmpIndex(o["snmp-index"], d, "snmp_index", sv)); err != nil {
 		if !fortiAPIPatch(o["snmp-index"]) {
 			return fmt.Errorf("Error reading snmp_index: %v", err)
 		}
 	}
 
-	if err = d.Set("session", flattenSystemVdomPropertySession(o["session"], d, "session")); err != nil {
+	if err = d.Set("session", flattenSystemVdomPropertySession(o["session"], d, "session", sv)); err != nil {
 		if !fortiAPIPatch(o["session"]) {
 			return fmt.Errorf("Error reading session: %v", err)
 		}
 	}
 
-	if err = d.Set("ipsec_phase1", flattenSystemVdomPropertyIpsecPhase1(o["ipsec-phase1"], d, "ipsec_phase1")); err != nil {
+	if err = d.Set("ipsec_phase1", flattenSystemVdomPropertyIpsecPhase1(o["ipsec-phase1"], d, "ipsec_phase1", sv)); err != nil {
 		if !fortiAPIPatch(o["ipsec-phase1"]) {
 			return fmt.Errorf("Error reading ipsec_phase1: %v", err)
 		}
 	}
 
-	if err = d.Set("ipsec_phase2", flattenSystemVdomPropertyIpsecPhase2(o["ipsec-phase2"], d, "ipsec_phase2")); err != nil {
+	if err = d.Set("ipsec_phase2", flattenSystemVdomPropertyIpsecPhase2(o["ipsec-phase2"], d, "ipsec_phase2", sv)); err != nil {
 		if !fortiAPIPatch(o["ipsec-phase2"]) {
 			return fmt.Errorf("Error reading ipsec_phase2: %v", err)
 		}
 	}
 
-	if err = d.Set("ipsec_phase1_interface", flattenSystemVdomPropertyIpsecPhase1Interface(o["ipsec-phase1-interface"], d, "ipsec_phase1_interface")); err != nil {
+	if err = d.Set("ipsec_phase1_interface", flattenSystemVdomPropertyIpsecPhase1Interface(o["ipsec-phase1-interface"], d, "ipsec_phase1_interface", sv)); err != nil {
 		if !fortiAPIPatch(o["ipsec-phase1-interface"]) {
 			return fmt.Errorf("Error reading ipsec_phase1_interface: %v", err)
 		}
 	}
 
-	if err = d.Set("ipsec_phase2_interface", flattenSystemVdomPropertyIpsecPhase2Interface(o["ipsec-phase2-interface"], d, "ipsec_phase2_interface")); err != nil {
+	if err = d.Set("ipsec_phase2_interface", flattenSystemVdomPropertyIpsecPhase2Interface(o["ipsec-phase2-interface"], d, "ipsec_phase2_interface", sv)); err != nil {
 		if !fortiAPIPatch(o["ipsec-phase2-interface"]) {
 			return fmt.Errorf("Error reading ipsec_phase2_interface: %v", err)
 		}
 	}
 
-	if err = d.Set("dialup_tunnel", flattenSystemVdomPropertyDialupTunnel(o["dialup-tunnel"], d, "dialup_tunnel")); err != nil {
+	if err = d.Set("dialup_tunnel", flattenSystemVdomPropertyDialupTunnel(o["dialup-tunnel"], d, "dialup_tunnel", sv)); err != nil {
 		if !fortiAPIPatch(o["dialup-tunnel"]) {
 			return fmt.Errorf("Error reading dialup_tunnel: %v", err)
 		}
 	}
 
-	if err = d.Set("firewall_policy", flattenSystemVdomPropertyFirewallPolicy(o["firewall-policy"], d, "firewall_policy")); err != nil {
+	if err = d.Set("firewall_policy", flattenSystemVdomPropertyFirewallPolicy(o["firewall-policy"], d, "firewall_policy", sv)); err != nil {
 		if !fortiAPIPatch(o["firewall-policy"]) {
 			return fmt.Errorf("Error reading firewall_policy: %v", err)
 		}
 	}
 
-	if err = d.Set("firewall_address", flattenSystemVdomPropertyFirewallAddress(o["firewall-address"], d, "firewall_address")); err != nil {
+	if err = d.Set("firewall_address", flattenSystemVdomPropertyFirewallAddress(o["firewall-address"], d, "firewall_address", sv)); err != nil {
 		if !fortiAPIPatch(o["firewall-address"]) {
 			return fmt.Errorf("Error reading firewall_address: %v", err)
 		}
 	}
 
-	if err = d.Set("firewall_addrgrp", flattenSystemVdomPropertyFirewallAddrgrp(o["firewall-addrgrp"], d, "firewall_addrgrp")); err != nil {
+	if err = d.Set("firewall_addrgrp", flattenSystemVdomPropertyFirewallAddrgrp(o["firewall-addrgrp"], d, "firewall_addrgrp", sv)); err != nil {
 		if !fortiAPIPatch(o["firewall-addrgrp"]) {
 			return fmt.Errorf("Error reading firewall_addrgrp: %v", err)
 		}
 	}
 
-	if err = d.Set("custom_service", flattenSystemVdomPropertyCustomService(o["custom-service"], d, "custom_service")); err != nil {
+	if err = d.Set("custom_service", flattenSystemVdomPropertyCustomService(o["custom-service"], d, "custom_service", sv)); err != nil {
 		if !fortiAPIPatch(o["custom-service"]) {
 			return fmt.Errorf("Error reading custom_service: %v", err)
 		}
 	}
 
-	if err = d.Set("service_group", flattenSystemVdomPropertyServiceGroup(o["service-group"], d, "service_group")); err != nil {
+	if err = d.Set("service_group", flattenSystemVdomPropertyServiceGroup(o["service-group"], d, "service_group", sv)); err != nil {
 		if !fortiAPIPatch(o["service-group"]) {
 			return fmt.Errorf("Error reading service_group: %v", err)
 		}
 	}
 
-	if err = d.Set("onetime_schedule", flattenSystemVdomPropertyOnetimeSchedule(o["onetime-schedule"], d, "onetime_schedule")); err != nil {
+	if err = d.Set("onetime_schedule", flattenSystemVdomPropertyOnetimeSchedule(o["onetime-schedule"], d, "onetime_schedule", sv)); err != nil {
 		if !fortiAPIPatch(o["onetime-schedule"]) {
 			return fmt.Errorf("Error reading onetime_schedule: %v", err)
 		}
 	}
 
-	if err = d.Set("recurring_schedule", flattenSystemVdomPropertyRecurringSchedule(o["recurring-schedule"], d, "recurring_schedule")); err != nil {
+	if err = d.Set("recurring_schedule", flattenSystemVdomPropertyRecurringSchedule(o["recurring-schedule"], d, "recurring_schedule", sv)); err != nil {
 		if !fortiAPIPatch(o["recurring-schedule"]) {
 			return fmt.Errorf("Error reading recurring_schedule: %v", err)
 		}
 	}
 
-	if err = d.Set("user", flattenSystemVdomPropertyUser(o["user"], d, "user")); err != nil {
+	if err = d.Set("user", flattenSystemVdomPropertyUser(o["user"], d, "user", sv)); err != nil {
 		if !fortiAPIPatch(o["user"]) {
 			return fmt.Errorf("Error reading user: %v", err)
 		}
 	}
 
-	if err = d.Set("user_group", flattenSystemVdomPropertyUserGroup(o["user-group"], d, "user_group")); err != nil {
+	if err = d.Set("user_group", flattenSystemVdomPropertyUserGroup(o["user-group"], d, "user_group", sv)); err != nil {
 		if !fortiAPIPatch(o["user-group"]) {
 			return fmt.Errorf("Error reading user_group: %v", err)
 		}
 	}
 
-	if err = d.Set("sslvpn", flattenSystemVdomPropertySslvpn(o["sslvpn"], d, "sslvpn")); err != nil {
+	if err = d.Set("sslvpn", flattenSystemVdomPropertySslvpn(o["sslvpn"], d, "sslvpn", sv)); err != nil {
 		if !fortiAPIPatch(o["sslvpn"]) {
 			return fmt.Errorf("Error reading sslvpn: %v", err)
 		}
 	}
 
-	if err = d.Set("proxy", flattenSystemVdomPropertyProxy(o["proxy"], d, "proxy")); err != nil {
+	if err = d.Set("proxy", flattenSystemVdomPropertyProxy(o["proxy"], d, "proxy", sv)); err != nil {
 		if !fortiAPIPatch(o["proxy"]) {
 			return fmt.Errorf("Error reading proxy: %v", err)
 		}
 	}
 
-	if err = d.Set("log_disk_quota", flattenSystemVdomPropertyLogDiskQuota(o["log-disk-quota"], d, "log_disk_quota")); err != nil {
+	if err = d.Set("log_disk_quota", flattenSystemVdomPropertyLogDiskQuota(o["log-disk-quota"], d, "log_disk_quota", sv)); err != nil {
 		if !fortiAPIPatch(o["log-disk-quota"]) {
 			return fmt.Errorf("Error reading log_disk_quota: %v", err)
 		}
@@ -449,98 +450,99 @@ func refreshObjectSystemVdomProperty(d *schema.ResourceData, o map[string]interf
 func flattenSystemVdomPropertyFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemVdomPropertyName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomPropertyName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVdomPropertyDescription(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomPropertyDescription(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVdomPropertySnmpIndex(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomPropertySnmpIndex(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVdomPropertySession(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomPropertySession(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVdomPropertyIpsecPhase1(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomPropertyIpsecPhase1(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVdomPropertyIpsecPhase2(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomPropertyIpsecPhase2(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVdomPropertyIpsecPhase1Interface(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomPropertyIpsecPhase1Interface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVdomPropertyIpsecPhase2Interface(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomPropertyIpsecPhase2Interface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVdomPropertyDialupTunnel(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomPropertyDialupTunnel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVdomPropertyFirewallPolicy(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomPropertyFirewallPolicy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVdomPropertyFirewallAddress(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomPropertyFirewallAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVdomPropertyFirewallAddrgrp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomPropertyFirewallAddrgrp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVdomPropertyCustomService(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomPropertyCustomService(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVdomPropertyServiceGroup(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomPropertyServiceGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVdomPropertyOnetimeSchedule(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomPropertyOnetimeSchedule(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVdomPropertyRecurringSchedule(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomPropertyRecurringSchedule(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVdomPropertyUser(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomPropertyUser(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVdomPropertyUserGroup(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomPropertyUserGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVdomPropertySslvpn(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomPropertySslvpn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVdomPropertyProxy(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomPropertyProxy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVdomPropertyLogDiskQuota(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomPropertyLogDiskQuota(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemVdomProperty(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemVdomProperty(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandSystemVdomPropertyName(d, v, "name")
+
+		t, err := expandSystemVdomPropertyName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -549,7 +551,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("description"); ok {
-		t, err := expandSystemVdomPropertyDescription(d, v, "description")
+
+		t, err := expandSystemVdomPropertyDescription(d, v, "description", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -558,7 +561,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOkExists("snmp_index"); ok {
-		t, err := expandSystemVdomPropertySnmpIndex(d, v, "snmp_index")
+
+		t, err := expandSystemVdomPropertySnmpIndex(d, v, "snmp_index", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -567,7 +571,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("session"); ok {
-		t, err := expandSystemVdomPropertySession(d, v, "session")
+
+		t, err := expandSystemVdomPropertySession(d, v, "session", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -576,7 +581,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("ipsec_phase1"); ok {
-		t, err := expandSystemVdomPropertyIpsecPhase1(d, v, "ipsec_phase1")
+
+		t, err := expandSystemVdomPropertyIpsecPhase1(d, v, "ipsec_phase1", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -585,7 +591,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("ipsec_phase2"); ok {
-		t, err := expandSystemVdomPropertyIpsecPhase2(d, v, "ipsec_phase2")
+
+		t, err := expandSystemVdomPropertyIpsecPhase2(d, v, "ipsec_phase2", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -594,7 +601,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("ipsec_phase1_interface"); ok {
-		t, err := expandSystemVdomPropertyIpsecPhase1Interface(d, v, "ipsec_phase1_interface")
+
+		t, err := expandSystemVdomPropertyIpsecPhase1Interface(d, v, "ipsec_phase1_interface", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -603,7 +611,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("ipsec_phase2_interface"); ok {
-		t, err := expandSystemVdomPropertyIpsecPhase2Interface(d, v, "ipsec_phase2_interface")
+
+		t, err := expandSystemVdomPropertyIpsecPhase2Interface(d, v, "ipsec_phase2_interface", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -612,7 +621,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("dialup_tunnel"); ok {
-		t, err := expandSystemVdomPropertyDialupTunnel(d, v, "dialup_tunnel")
+
+		t, err := expandSystemVdomPropertyDialupTunnel(d, v, "dialup_tunnel", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -621,7 +631,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("firewall_policy"); ok {
-		t, err := expandSystemVdomPropertyFirewallPolicy(d, v, "firewall_policy")
+
+		t, err := expandSystemVdomPropertyFirewallPolicy(d, v, "firewall_policy", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -630,7 +641,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("firewall_address"); ok {
-		t, err := expandSystemVdomPropertyFirewallAddress(d, v, "firewall_address")
+
+		t, err := expandSystemVdomPropertyFirewallAddress(d, v, "firewall_address", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -639,7 +651,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("firewall_addrgrp"); ok {
-		t, err := expandSystemVdomPropertyFirewallAddrgrp(d, v, "firewall_addrgrp")
+
+		t, err := expandSystemVdomPropertyFirewallAddrgrp(d, v, "firewall_addrgrp", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -648,7 +661,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("custom_service"); ok {
-		t, err := expandSystemVdomPropertyCustomService(d, v, "custom_service")
+
+		t, err := expandSystemVdomPropertyCustomService(d, v, "custom_service", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -657,7 +671,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("service_group"); ok {
-		t, err := expandSystemVdomPropertyServiceGroup(d, v, "service_group")
+
+		t, err := expandSystemVdomPropertyServiceGroup(d, v, "service_group", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -666,7 +681,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("onetime_schedule"); ok {
-		t, err := expandSystemVdomPropertyOnetimeSchedule(d, v, "onetime_schedule")
+
+		t, err := expandSystemVdomPropertyOnetimeSchedule(d, v, "onetime_schedule", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -675,7 +691,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("recurring_schedule"); ok {
-		t, err := expandSystemVdomPropertyRecurringSchedule(d, v, "recurring_schedule")
+
+		t, err := expandSystemVdomPropertyRecurringSchedule(d, v, "recurring_schedule", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -684,7 +701,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("user"); ok {
-		t, err := expandSystemVdomPropertyUser(d, v, "user")
+
+		t, err := expandSystemVdomPropertyUser(d, v, "user", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -693,7 +711,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("user_group"); ok {
-		t, err := expandSystemVdomPropertyUserGroup(d, v, "user_group")
+
+		t, err := expandSystemVdomPropertyUserGroup(d, v, "user_group", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -702,7 +721,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("sslvpn"); ok {
-		t, err := expandSystemVdomPropertySslvpn(d, v, "sslvpn")
+
+		t, err := expandSystemVdomPropertySslvpn(d, v, "sslvpn", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -711,7 +731,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("proxy"); ok {
-		t, err := expandSystemVdomPropertyProxy(d, v, "proxy")
+
+		t, err := expandSystemVdomPropertyProxy(d, v, "proxy", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -720,7 +741,8 @@ func getObjectSystemVdomProperty(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("log_disk_quota"); ok {
-		t, err := expandSystemVdomPropertyLogDiskQuota(d, v, "log_disk_quota")
+
+		t, err := expandSystemVdomPropertyLogDiskQuota(d, v, "log_disk_quota", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
