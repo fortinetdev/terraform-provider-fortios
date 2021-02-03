@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -78,7 +79,7 @@ func resourceSystemNetflowUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemNetflow(d)
+	obj, err := getObjectSystemNetflow(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemNetflow resource while getting object: %v", err)
 	}
@@ -131,81 +132,81 @@ func resourceSystemNetflowRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectSystemNetflow(d, o)
+	err = refreshObjectSystemNetflow(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemNetflow resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemNetflowCollectorIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemNetflowCollectorIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemNetflowCollectorPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemNetflowCollectorPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemNetflowSourceIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemNetflowSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemNetflowActiveFlowTimeout(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemNetflowActiveFlowTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemNetflowInactiveFlowTimeout(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemNetflowInactiveFlowTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemNetflowTemplateTxTimeout(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemNetflowTemplateTxTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemNetflowTemplateTxCounter(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemNetflowTemplateTxCounter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemNetflow(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemNetflow(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("collector_ip", flattenSystemNetflowCollectorIp(o["collector-ip"], d, "collector_ip")); err != nil {
+	if err = d.Set("collector_ip", flattenSystemNetflowCollectorIp(o["collector-ip"], d, "collector_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["collector-ip"]) {
 			return fmt.Errorf("Error reading collector_ip: %v", err)
 		}
 	}
 
-	if err = d.Set("collector_port", flattenSystemNetflowCollectorPort(o["collector-port"], d, "collector_port")); err != nil {
+	if err = d.Set("collector_port", flattenSystemNetflowCollectorPort(o["collector-port"], d, "collector_port", sv)); err != nil {
 		if !fortiAPIPatch(o["collector-port"]) {
 			return fmt.Errorf("Error reading collector_port: %v", err)
 		}
 	}
 
-	if err = d.Set("source_ip", flattenSystemNetflowSourceIp(o["source-ip"], d, "source_ip")); err != nil {
+	if err = d.Set("source_ip", flattenSystemNetflowSourceIp(o["source-ip"], d, "source_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["source-ip"]) {
 			return fmt.Errorf("Error reading source_ip: %v", err)
 		}
 	}
 
-	if err = d.Set("active_flow_timeout", flattenSystemNetflowActiveFlowTimeout(o["active-flow-timeout"], d, "active_flow_timeout")); err != nil {
+	if err = d.Set("active_flow_timeout", flattenSystemNetflowActiveFlowTimeout(o["active-flow-timeout"], d, "active_flow_timeout", sv)); err != nil {
 		if !fortiAPIPatch(o["active-flow-timeout"]) {
 			return fmt.Errorf("Error reading active_flow_timeout: %v", err)
 		}
 	}
 
-	if err = d.Set("inactive_flow_timeout", flattenSystemNetflowInactiveFlowTimeout(o["inactive-flow-timeout"], d, "inactive_flow_timeout")); err != nil {
+	if err = d.Set("inactive_flow_timeout", flattenSystemNetflowInactiveFlowTimeout(o["inactive-flow-timeout"], d, "inactive_flow_timeout", sv)); err != nil {
 		if !fortiAPIPatch(o["inactive-flow-timeout"]) {
 			return fmt.Errorf("Error reading inactive_flow_timeout: %v", err)
 		}
 	}
 
-	if err = d.Set("template_tx_timeout", flattenSystemNetflowTemplateTxTimeout(o["template-tx-timeout"], d, "template_tx_timeout")); err != nil {
+	if err = d.Set("template_tx_timeout", flattenSystemNetflowTemplateTxTimeout(o["template-tx-timeout"], d, "template_tx_timeout", sv)); err != nil {
 		if !fortiAPIPatch(o["template-tx-timeout"]) {
 			return fmt.Errorf("Error reading template_tx_timeout: %v", err)
 		}
 	}
 
-	if err = d.Set("template_tx_counter", flattenSystemNetflowTemplateTxCounter(o["template-tx-counter"], d, "template_tx_counter")); err != nil {
+	if err = d.Set("template_tx_counter", flattenSystemNetflowTemplateTxCounter(o["template-tx-counter"], d, "template_tx_counter", sv)); err != nil {
 		if !fortiAPIPatch(o["template-tx-counter"]) {
 			return fmt.Errorf("Error reading template_tx_counter: %v", err)
 		}
@@ -217,42 +218,43 @@ func refreshObjectSystemNetflow(d *schema.ResourceData, o map[string]interface{}
 func flattenSystemNetflowFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemNetflowCollectorIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemNetflowCollectorIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemNetflowCollectorPort(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemNetflowCollectorPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemNetflowSourceIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemNetflowSourceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemNetflowActiveFlowTimeout(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemNetflowActiveFlowTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemNetflowInactiveFlowTimeout(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemNetflowInactiveFlowTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemNetflowTemplateTxTimeout(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemNetflowTemplateTxTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemNetflowTemplateTxCounter(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemNetflowTemplateTxCounter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemNetflow(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemNetflow(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("collector_ip"); ok {
-		t, err := expandSystemNetflowCollectorIp(d, v, "collector_ip")
+
+		t, err := expandSystemNetflowCollectorIp(d, v, "collector_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -261,7 +263,8 @@ func getObjectSystemNetflow(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOkExists("collector_port"); ok {
-		t, err := expandSystemNetflowCollectorPort(d, v, "collector_port")
+
+		t, err := expandSystemNetflowCollectorPort(d, v, "collector_port", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -270,7 +273,8 @@ func getObjectSystemNetflow(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
-		t, err := expandSystemNetflowSourceIp(d, v, "source_ip")
+
+		t, err := expandSystemNetflowSourceIp(d, v, "source_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -279,7 +283,8 @@ func getObjectSystemNetflow(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOk("active_flow_timeout"); ok {
-		t, err := expandSystemNetflowActiveFlowTimeout(d, v, "active_flow_timeout")
+
+		t, err := expandSystemNetflowActiveFlowTimeout(d, v, "active_flow_timeout", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -288,7 +293,8 @@ func getObjectSystemNetflow(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOk("inactive_flow_timeout"); ok {
-		t, err := expandSystemNetflowInactiveFlowTimeout(d, v, "inactive_flow_timeout")
+
+		t, err := expandSystemNetflowInactiveFlowTimeout(d, v, "inactive_flow_timeout", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -297,7 +303,8 @@ func getObjectSystemNetflow(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOk("template_tx_timeout"); ok {
-		t, err := expandSystemNetflowTemplateTxTimeout(d, v, "template_tx_timeout")
+
+		t, err := expandSystemNetflowTemplateTxTimeout(d, v, "template_tx_timeout", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -306,7 +313,8 @@ func getObjectSystemNetflow(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOk("template_tx_counter"); ok {
-		t, err := expandSystemNetflowTemplateTxCounter(d, v, "template_tx_counter")
+
+		t, err := expandSystemNetflowTemplateTxCounter(d, v, "template_tx_counter", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
