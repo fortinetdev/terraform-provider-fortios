@@ -31,7 +31,6 @@ EOF
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Auto script name.
@@ -40,6 +39,7 @@ The following arguments are supported:
 * `start` - Script starting mode.
 * `script` - List of FortiOS CLI commands to repeat.
 * `output_size` - Number of megabytes to limit script output to (10 - 1024, default = 10).
+* `timeout` - Maximum running time for this script in seconds (0 = no timeout).
 
 
 ## Attribute Reference
