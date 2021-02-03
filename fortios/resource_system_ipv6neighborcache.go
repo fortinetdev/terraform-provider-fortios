@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -55,7 +56,7 @@ func resourceSystemIpv6NeighborCacheCreate(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemIpv6NeighborCache(d)
+	obj, err := getObjectSystemIpv6NeighborCache(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemIpv6NeighborCache resource while getting object: %v", err)
 	}
@@ -80,7 +81,7 @@ func resourceSystemIpv6NeighborCacheUpdate(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemIpv6NeighborCache(d)
+	obj, err := getObjectSystemIpv6NeighborCache(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemIpv6NeighborCache resource while getting object: %v", err)
 	}
@@ -133,51 +134,51 @@ func resourceSystemIpv6NeighborCacheRead(d *schema.ResourceData, m interface{}) 
 		return nil
 	}
 
-	err = refreshObjectSystemIpv6NeighborCache(d, o)
+	err = refreshObjectSystemIpv6NeighborCache(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemIpv6NeighborCache resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemIpv6NeighborCacheId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemIpv6NeighborCacheId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemIpv6NeighborCacheInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemIpv6NeighborCacheInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemIpv6NeighborCacheIpv6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemIpv6NeighborCacheIpv6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemIpv6NeighborCacheMac(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemIpv6NeighborCacheMac(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemIpv6NeighborCache(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemIpv6NeighborCache(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("fosid", flattenSystemIpv6NeighborCacheId(o["id"], d, "fosid")); err != nil {
+	if err = d.Set("fosid", flattenSystemIpv6NeighborCacheId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
 			return fmt.Errorf("Error reading fosid: %v", err)
 		}
 	}
 
-	if err = d.Set("interface", flattenSystemIpv6NeighborCacheInterface(o["interface"], d, "interface")); err != nil {
+	if err = d.Set("interface", flattenSystemIpv6NeighborCacheInterface(o["interface"], d, "interface", sv)); err != nil {
 		if !fortiAPIPatch(o["interface"]) {
 			return fmt.Errorf("Error reading interface: %v", err)
 		}
 	}
 
-	if err = d.Set("ipv6", flattenSystemIpv6NeighborCacheIpv6(o["ipv6"], d, "ipv6")); err != nil {
+	if err = d.Set("ipv6", flattenSystemIpv6NeighborCacheIpv6(o["ipv6"], d, "ipv6", sv)); err != nil {
 		if !fortiAPIPatch(o["ipv6"]) {
 			return fmt.Errorf("Error reading ipv6: %v", err)
 		}
 	}
 
-	if err = d.Set("mac", flattenSystemIpv6NeighborCacheMac(o["mac"], d, "mac")); err != nil {
+	if err = d.Set("mac", flattenSystemIpv6NeighborCacheMac(o["mac"], d, "mac", sv)); err != nil {
 		if !fortiAPIPatch(o["mac"]) {
 			return fmt.Errorf("Error reading mac: %v", err)
 		}
@@ -189,30 +190,31 @@ func refreshObjectSystemIpv6NeighborCache(d *schema.ResourceData, o map[string]i
 func flattenSystemIpv6NeighborCacheFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemIpv6NeighborCacheId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemIpv6NeighborCacheId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemIpv6NeighborCacheInterface(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemIpv6NeighborCacheInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemIpv6NeighborCacheIpv6(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemIpv6NeighborCacheIpv6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemIpv6NeighborCacheMac(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemIpv6NeighborCacheMac(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemIpv6NeighborCache(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemIpv6NeighborCache(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-		t, err := expandSystemIpv6NeighborCacheId(d, v, "fosid")
+
+		t, err := expandSystemIpv6NeighborCacheId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -221,7 +223,8 @@ func getObjectSystemIpv6NeighborCache(d *schema.ResourceData) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
-		t, err := expandSystemIpv6NeighborCacheInterface(d, v, "interface")
+
+		t, err := expandSystemIpv6NeighborCacheInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -230,7 +233,8 @@ func getObjectSystemIpv6NeighborCache(d *schema.ResourceData) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("ipv6"); ok {
-		t, err := expandSystemIpv6NeighborCacheIpv6(d, v, "ipv6")
+
+		t, err := expandSystemIpv6NeighborCacheIpv6(d, v, "ipv6", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -239,7 +243,8 @@ func getObjectSystemIpv6NeighborCache(d *schema.ResourceData) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("mac"); ok {
-		t, err := expandSystemIpv6NeighborCacheMac(d, v, "mac")
+
+		t, err := expandSystemIpv6NeighborCacheMac(d, v, "mac", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
