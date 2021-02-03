@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_spamfilter_fortishield
-Configure FortiGuard - AntiSpam.
+Configure FortiGuard - AntiSpam. Applies to FortiOS Version `<= 6.2.0`.
 
 ## Example Usage
 
@@ -20,7 +20,6 @@ resource "fortios_spamfilter_fortishield" "trname" {
 ```
 
 ## Argument Reference
-
 
 The following arguments are supported:
 
