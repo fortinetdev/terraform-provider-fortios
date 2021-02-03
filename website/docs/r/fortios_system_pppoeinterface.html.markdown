@@ -30,7 +30,6 @@ resource "fortios_system_pppoeinterface" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Name of the PPPoE interface.
