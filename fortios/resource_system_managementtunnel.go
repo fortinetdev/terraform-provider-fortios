@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -73,7 +74,7 @@ func resourceSystemManagementTunnelUpdate(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemManagementTunnel(d)
+	obj, err := getObjectSystemManagementTunnel(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemManagementTunnel resource while getting object: %v", err)
 	}
@@ -126,81 +127,81 @@ func resourceSystemManagementTunnelRead(d *schema.ResourceData, m interface{}) e
 		return nil
 	}
 
-	err = refreshObjectSystemManagementTunnel(d, o)
+	err = refreshObjectSystemManagementTunnel(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemManagementTunnel resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemManagementTunnelStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemManagementTunnelStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemManagementTunnelAllowConfigRestore(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemManagementTunnelAllowConfigRestore(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemManagementTunnelAllowPushConfiguration(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemManagementTunnelAllowPushConfiguration(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemManagementTunnelAllowPushFirmware(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemManagementTunnelAllowPushFirmware(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemManagementTunnelAllowCollectStatistics(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemManagementTunnelAllowCollectStatistics(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemManagementTunnelAuthorizedManagerOnly(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemManagementTunnelAuthorizedManagerOnly(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemManagementTunnelSerialNumber(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemManagementTunnelSerialNumber(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemManagementTunnel(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemManagementTunnel(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("status", flattenSystemManagementTunnelStatus(o["status"], d, "status")); err != nil {
+	if err = d.Set("status", flattenSystemManagementTunnelStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
 		}
 	}
 
-	if err = d.Set("allow_config_restore", flattenSystemManagementTunnelAllowConfigRestore(o["allow-config-restore"], d, "allow_config_restore")); err != nil {
+	if err = d.Set("allow_config_restore", flattenSystemManagementTunnelAllowConfigRestore(o["allow-config-restore"], d, "allow_config_restore", sv)); err != nil {
 		if !fortiAPIPatch(o["allow-config-restore"]) {
 			return fmt.Errorf("Error reading allow_config_restore: %v", err)
 		}
 	}
 
-	if err = d.Set("allow_push_configuration", flattenSystemManagementTunnelAllowPushConfiguration(o["allow-push-configuration"], d, "allow_push_configuration")); err != nil {
+	if err = d.Set("allow_push_configuration", flattenSystemManagementTunnelAllowPushConfiguration(o["allow-push-configuration"], d, "allow_push_configuration", sv)); err != nil {
 		if !fortiAPIPatch(o["allow-push-configuration"]) {
 			return fmt.Errorf("Error reading allow_push_configuration: %v", err)
 		}
 	}
 
-	if err = d.Set("allow_push_firmware", flattenSystemManagementTunnelAllowPushFirmware(o["allow-push-firmware"], d, "allow_push_firmware")); err != nil {
+	if err = d.Set("allow_push_firmware", flattenSystemManagementTunnelAllowPushFirmware(o["allow-push-firmware"], d, "allow_push_firmware", sv)); err != nil {
 		if !fortiAPIPatch(o["allow-push-firmware"]) {
 			return fmt.Errorf("Error reading allow_push_firmware: %v", err)
 		}
 	}
 
-	if err = d.Set("allow_collect_statistics", flattenSystemManagementTunnelAllowCollectStatistics(o["allow-collect-statistics"], d, "allow_collect_statistics")); err != nil {
+	if err = d.Set("allow_collect_statistics", flattenSystemManagementTunnelAllowCollectStatistics(o["allow-collect-statistics"], d, "allow_collect_statistics", sv)); err != nil {
 		if !fortiAPIPatch(o["allow-collect-statistics"]) {
 			return fmt.Errorf("Error reading allow_collect_statistics: %v", err)
 		}
 	}
 
-	if err = d.Set("authorized_manager_only", flattenSystemManagementTunnelAuthorizedManagerOnly(o["authorized-manager-only"], d, "authorized_manager_only")); err != nil {
+	if err = d.Set("authorized_manager_only", flattenSystemManagementTunnelAuthorizedManagerOnly(o["authorized-manager-only"], d, "authorized_manager_only", sv)); err != nil {
 		if !fortiAPIPatch(o["authorized-manager-only"]) {
 			return fmt.Errorf("Error reading authorized_manager_only: %v", err)
 		}
 	}
 
-	if err = d.Set("serial_number", flattenSystemManagementTunnelSerialNumber(o["serial-number"], d, "serial_number")); err != nil {
+	if err = d.Set("serial_number", flattenSystemManagementTunnelSerialNumber(o["serial-number"], d, "serial_number", sv)); err != nil {
 		if !fortiAPIPatch(o["serial-number"]) {
 			return fmt.Errorf("Error reading serial_number: %v", err)
 		}
@@ -212,42 +213,43 @@ func refreshObjectSystemManagementTunnel(d *schema.ResourceData, o map[string]in
 func flattenSystemManagementTunnelFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemManagementTunnelStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemManagementTunnelStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemManagementTunnelAllowConfigRestore(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemManagementTunnelAllowConfigRestore(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemManagementTunnelAllowPushConfiguration(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemManagementTunnelAllowPushConfiguration(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemManagementTunnelAllowPushFirmware(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemManagementTunnelAllowPushFirmware(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemManagementTunnelAllowCollectStatistics(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemManagementTunnelAllowCollectStatistics(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemManagementTunnelAuthorizedManagerOnly(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemManagementTunnelAuthorizedManagerOnly(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemManagementTunnelSerialNumber(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemManagementTunnelSerialNumber(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemManagementTunnel(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemManagementTunnel(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
-		t, err := expandSystemManagementTunnelStatus(d, v, "status")
+
+		t, err := expandSystemManagementTunnelStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -256,7 +258,8 @@ func getObjectSystemManagementTunnel(d *schema.ResourceData) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("allow_config_restore"); ok {
-		t, err := expandSystemManagementTunnelAllowConfigRestore(d, v, "allow_config_restore")
+
+		t, err := expandSystemManagementTunnelAllowConfigRestore(d, v, "allow_config_restore", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -265,7 +268,8 @@ func getObjectSystemManagementTunnel(d *schema.ResourceData) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("allow_push_configuration"); ok {
-		t, err := expandSystemManagementTunnelAllowPushConfiguration(d, v, "allow_push_configuration")
+
+		t, err := expandSystemManagementTunnelAllowPushConfiguration(d, v, "allow_push_configuration", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -274,7 +278,8 @@ func getObjectSystemManagementTunnel(d *schema.ResourceData) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("allow_push_firmware"); ok {
-		t, err := expandSystemManagementTunnelAllowPushFirmware(d, v, "allow_push_firmware")
+
+		t, err := expandSystemManagementTunnelAllowPushFirmware(d, v, "allow_push_firmware", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -283,7 +288,8 @@ func getObjectSystemManagementTunnel(d *schema.ResourceData) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("allow_collect_statistics"); ok {
-		t, err := expandSystemManagementTunnelAllowCollectStatistics(d, v, "allow_collect_statistics")
+
+		t, err := expandSystemManagementTunnelAllowCollectStatistics(d, v, "allow_collect_statistics", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -292,7 +298,8 @@ func getObjectSystemManagementTunnel(d *schema.ResourceData) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("authorized_manager_only"); ok {
-		t, err := expandSystemManagementTunnelAuthorizedManagerOnly(d, v, "authorized_manager_only")
+
+		t, err := expandSystemManagementTunnelAuthorizedManagerOnly(d, v, "authorized_manager_only", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -301,7 +308,8 @@ func getObjectSystemManagementTunnel(d *schema.ResourceData) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("serial_number"); ok {
-		t, err := expandSystemManagementTunnelSerialNumber(d, v, "serial_number")
+
+		t, err := expandSystemManagementTunnelSerialNumber(d, v, "serial_number", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
