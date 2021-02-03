@@ -68,7 +68,6 @@ resource "fortios_firewall_vip6" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Virtual ip6 name.
@@ -79,6 +78,7 @@ The following arguments are supported:
 * `src_filter` - Source IP6 filter (x:x:x:x:x:x:x:x/x). Separate addresses with spaces. The structure of `src_filter` block is documented below.
 * `extip` - (Required) IP address or address range on the external interface that you want to map to an address or address range on the destination network.
 * `mappedip` - (Required) Mapped IP address range in the format startIP-endIP.
+* `nat_source_vip` - Enable to perform SNAT on traffic from mappedip to the extip for all egress interfaces.
 * `arp_reply` - Enable to respond to ARP requests for this virtual IP address. Enabled by default.
 * `portforward` - Enable port forwarding.
 * `protocol` - Protocol to use when forwarding packets.
@@ -87,6 +87,7 @@ The following arguments are supported:
 * `color` - Color of icon on the GUI.
 * `ldb_method` - Method used to distribute sessions to real servers.
 * `server_type` - Protocol to be load balanced by the virtual server (also called the server load balance virtual IP).
+* `http_redirect` - Enable/disable redirection of HTTP to HTTPS
 * `persistence` - Configure how to make sure that clients connect to the same server every time they make a request that is part of the same session.
 * `realservers` - Select the real servers that this server load balancing VIP will distribute traffic to. The structure of `realservers` block is documented below.
 * `http_cookie_domain_from_host` - Enable/disable use of HTTP cookie domain from host field in HTTP.
@@ -120,6 +121,7 @@ The following arguments are supported:
 * `ssl_client_session_state_type` - How to expire SSL sessions for the segment of the SSL connection between the client and the FortiGate.
 * `ssl_client_session_state_timeout` - Number of minutes to keep client to FortiGate SSL session state.
 * `ssl_client_session_state_max` - Maximum number of client to FortiGate SSL session states to keep.
+* `ssl_client_rekey_count` - Maximum length of data in MB before triggering a client rekey (0 = disable).
 * `ssl_server_session_state_type` - How to expire SSL sessions for the segment of the SSL connection between the server and the FortiGate.
 * `ssl_server_session_state_timeout` - Number of minutes to keep FortiGate to Server SSL session state.
 * `ssl_server_session_state_max` - Maximum number of FortiGate to Server SSL session states to keep.
