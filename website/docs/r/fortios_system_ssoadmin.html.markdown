@@ -24,7 +24,6 @@ resource "fortios_system_ssoadmin" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - SSO admin name.
