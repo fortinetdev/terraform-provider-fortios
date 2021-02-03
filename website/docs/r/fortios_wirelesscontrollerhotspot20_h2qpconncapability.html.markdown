@@ -30,7 +30,6 @@ resource "fortios_wirelesscontrollerhotspot20_h2qpconncapability" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Connection capability name.
