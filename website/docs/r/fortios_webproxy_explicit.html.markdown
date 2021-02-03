@@ -11,7 +11,6 @@ Configure explicit Web proxy settings.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `status` - Enable/disable the explicit Web proxy for HTTP and HTTPS session.
