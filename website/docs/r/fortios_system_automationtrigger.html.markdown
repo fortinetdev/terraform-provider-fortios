@@ -26,7 +26,6 @@ resource "fortios_system_automationtrigger" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Name.
@@ -34,12 +33,24 @@ The following arguments are supported:
 * `event_type` - Event type.
 * `license_type` - License type.
 * `ioc_level` - IOC threat level.
+* `report_type` - Security Rating report.
 * `logid` - Log ID to trigger event.
 * `trigger_frequency` - Scheduled trigger frequency (default = daily).
 * `trigger_weekday` - Day of week for trigger.
 * `trigger_day` - Day within a month to trigger.
 * `trigger_hour` - Hour of the day on which to trigger (0 - 23, default = 1).
 * `trigger_minute` - Minute of the hour on which to trigger (0 - 59, 60 to randomize).
+* `fields` - Customized trigger field settings. The structure of `fields` block is documented below.
+* `faz_event_name` - FortiAnalyzer event handler name.
+* `faz_event_severity` - FortiAnalyzer event severity.
+* `faz_event_tags` - FortiAnalyzer event tags.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
+The `fields` block supports:
+
+* `id` - Entry ID.
+* `name` - Name.
+* `value` - Value.
 
 
 ## Attribute Reference
