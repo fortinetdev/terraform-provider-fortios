@@ -11,7 +11,6 @@ Configure FortiSwitch Auto-Config custom QoS policy.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - (Required) Auto-Config FortiLink or ISL/ICL interface name.
