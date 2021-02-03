@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -50,7 +51,7 @@ func resourceWebfilterIpsUrlfilterCacheSettingUpdate(d *schema.ResourceData, m i
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWebfilterIpsUrlfilterCacheSetting(d)
+	obj, err := getObjectWebfilterIpsUrlfilterCacheSetting(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WebfilterIpsUrlfilterCacheSetting resource while getting object: %v", err)
 	}
@@ -103,31 +104,31 @@ func resourceWebfilterIpsUrlfilterCacheSettingRead(d *schema.ResourceData, m int
 		return nil
 	}
 
-	err = refreshObjectWebfilterIpsUrlfilterCacheSetting(d, o)
+	err = refreshObjectWebfilterIpsUrlfilterCacheSetting(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading WebfilterIpsUrlfilterCacheSetting resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenWebfilterIpsUrlfilterCacheSettingDnsRetryInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebfilterIpsUrlfilterCacheSettingDnsRetryInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebfilterIpsUrlfilterCacheSettingExtendedTtl(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebfilterIpsUrlfilterCacheSettingExtendedTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectWebfilterIpsUrlfilterCacheSetting(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectWebfilterIpsUrlfilterCacheSetting(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("dns_retry_interval", flattenWebfilterIpsUrlfilterCacheSettingDnsRetryInterval(o["dns-retry-interval"], d, "dns_retry_interval")); err != nil {
+	if err = d.Set("dns_retry_interval", flattenWebfilterIpsUrlfilterCacheSettingDnsRetryInterval(o["dns-retry-interval"], d, "dns_retry_interval", sv)); err != nil {
 		if !fortiAPIPatch(o["dns-retry-interval"]) {
 			return fmt.Errorf("Error reading dns_retry_interval: %v", err)
 		}
 	}
 
-	if err = d.Set("extended_ttl", flattenWebfilterIpsUrlfilterCacheSettingExtendedTtl(o["extended-ttl"], d, "extended_ttl")); err != nil {
+	if err = d.Set("extended_ttl", flattenWebfilterIpsUrlfilterCacheSettingExtendedTtl(o["extended-ttl"], d, "extended_ttl", sv)); err != nil {
 		if !fortiAPIPatch(o["extended-ttl"]) {
 			return fmt.Errorf("Error reading extended_ttl: %v", err)
 		}
@@ -139,22 +140,23 @@ func refreshObjectWebfilterIpsUrlfilterCacheSetting(d *schema.ResourceData, o ma
 func flattenWebfilterIpsUrlfilterCacheSettingFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandWebfilterIpsUrlfilterCacheSettingDnsRetryInterval(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebfilterIpsUrlfilterCacheSettingDnsRetryInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebfilterIpsUrlfilterCacheSettingExtendedTtl(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebfilterIpsUrlfilterCacheSettingExtendedTtl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectWebfilterIpsUrlfilterCacheSetting(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectWebfilterIpsUrlfilterCacheSetting(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("dns_retry_interval"); ok {
-		t, err := expandWebfilterIpsUrlfilterCacheSettingDnsRetryInterval(d, v, "dns_retry_interval")
+
+		t, err := expandWebfilterIpsUrlfilterCacheSettingDnsRetryInterval(d, v, "dns_retry_interval", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -163,7 +165,8 @@ func getObjectWebfilterIpsUrlfilterCacheSetting(d *schema.ResourceData) (*map[st
 	}
 
 	if v, ok := d.GetOkExists("extended_ttl"); ok {
-		t, err := expandWebfilterIpsUrlfilterCacheSettingExtendedTtl(d, v, "extended_ttl")
+
+		t, err := expandWebfilterIpsUrlfilterCacheSettingExtendedTtl(d, v, "extended_ttl", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
