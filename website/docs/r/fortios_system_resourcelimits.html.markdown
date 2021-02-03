@@ -36,7 +36,6 @@ resource "fortios_system_resourcelimits" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `session` - Maximum number of sessions.
