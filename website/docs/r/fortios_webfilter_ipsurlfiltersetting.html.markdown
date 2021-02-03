@@ -20,7 +20,6 @@ resource "fortios_webfilter_ipsurlfiltersetting" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `device` - Interface for this route.
