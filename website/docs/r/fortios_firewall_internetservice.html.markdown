@@ -11,7 +11,6 @@ Show Internet Service application.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `fosid` - Internet Service ID.
@@ -22,8 +21,9 @@ The following arguments are supported:
 * `direction` - How this service may be used in a firewall policy (source, destination or both).
 * `database` - Database name this Internet Service belongs to.
 * `ip_range_number` - Total number of IP ranges.
+* `extra_ip_range_number` - Extra number of IP ranges.
 * `ip_number` - Total number of IP addresses.
-* `Singularity` - Singular level of the Internet Service.
+* `singularity` - Singular level of the Internet Service.
 * `obsolete` - Indicates whether the Internet Service can be used.
 
 
