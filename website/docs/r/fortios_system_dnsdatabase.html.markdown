@@ -35,7 +35,6 @@ resource "fortios_system_dnsdatabase" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - (Required) Zone name.
@@ -44,6 +43,7 @@ The following arguments are supported:
 * `allow_transfer` - DNS zone transfer IP address list.
 * `type` - (Required) Zone type (master to manage entries directly, slave to import entries from other zones).
 * `view` - (Required) Zone view (public to serve public clients, shadow to serve internal clients).
+* `ip_primary` - IP address of primary DNS server. Entries in this primary DNS server and imported into the DNS zone.
 * `ip_master` - IP address of master DNS server. Entries in this master DNS server and imported into the DNS zone.
 * `primary_name` - Domain name of the default DNS server for this zone.
 * `contact` - Email address of the administrator for this zone.
@@ -53,6 +53,7 @@ The following arguments are supported:
 * `authoritative` - (Required) Enable/disable authoritative zone.
 * `forwarder` - DNS zone forwarder IP address list.
 * `source_ip` - Source IP for forwarding to DNS server.
+* `rr_max` - Maximum number of resource records (10 - 65536, 0 means infinite).
 * `dns_entry` - DNS entry. The structure of `dns_entry` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
