@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -50,7 +51,7 @@ func resourceSwitchControllerVirtualPortPoolCreate(d *schema.ResourceData, m int
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSwitchControllerVirtualPortPool(d)
+	obj, err := getObjectSwitchControllerVirtualPortPool(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerVirtualPortPool resource while getting object: %v", err)
 	}
@@ -75,7 +76,7 @@ func resourceSwitchControllerVirtualPortPoolUpdate(d *schema.ResourceData, m int
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSwitchControllerVirtualPortPool(d)
+	obj, err := getObjectSwitchControllerVirtualPortPool(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerVirtualPortPool resource while getting object: %v", err)
 	}
@@ -128,31 +129,31 @@ func resourceSwitchControllerVirtualPortPoolRead(d *schema.ResourceData, m inter
 		return nil
 	}
 
-	err = refreshObjectSwitchControllerVirtualPortPool(d, o)
+	err = refreshObjectSwitchControllerVirtualPortPool(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerVirtualPortPool resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSwitchControllerVirtualPortPoolName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerVirtualPortPoolName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerVirtualPortPoolDescription(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerVirtualPortPoolDescription(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSwitchControllerVirtualPortPool(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSwitchControllerVirtualPortPool(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenSwitchControllerVirtualPortPoolName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenSwitchControllerVirtualPortPoolName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("description", flattenSwitchControllerVirtualPortPoolDescription(o["description"], d, "description")); err != nil {
+	if err = d.Set("description", flattenSwitchControllerVirtualPortPoolDescription(o["description"], d, "description", sv)); err != nil {
 		if !fortiAPIPatch(o["description"]) {
 			return fmt.Errorf("Error reading description: %v", err)
 		}
@@ -164,22 +165,23 @@ func refreshObjectSwitchControllerVirtualPortPool(d *schema.ResourceData, o map[
 func flattenSwitchControllerVirtualPortPoolFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSwitchControllerVirtualPortPoolName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerVirtualPortPoolName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerVirtualPortPoolDescription(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerVirtualPortPoolDescription(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSwitchControllerVirtualPortPool(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSwitchControllerVirtualPortPool(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandSwitchControllerVirtualPortPoolName(d, v, "name")
+
+		t, err := expandSwitchControllerVirtualPortPoolName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -188,7 +190,8 @@ func getObjectSwitchControllerVirtualPortPool(d *schema.ResourceData) (*map[stri
 	}
 
 	if v, ok := d.GetOk("description"); ok {
-		t, err := expandSwitchControllerVirtualPortPoolDescription(d, v, "description")
+
+		t, err := expandSwitchControllerVirtualPortPoolDescription(d, v, "description", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
