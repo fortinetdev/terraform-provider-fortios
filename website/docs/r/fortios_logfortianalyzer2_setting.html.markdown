@@ -33,12 +33,14 @@ resource "fortios_logfortianalyzer2_setting" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `status` - Enable/disable logging to FortiAnalyzer.
 * `ips_archive` - Enable/disable IPS packet archive logging.
 * `server` - The remote FortiAnalyzer.
+* `certificate_verification` - Enable/disable identity verification of FortiAnalyzer by use of certificate.
+* `serial` - Serial numbers of the FortiAnalyzer. The structure of `serial` block is documented below.
+* `access_config` - Enable/disable FortiAnalyzer access to configuration and data.
 * `hmac_algorithm` - FortiAnalyzer IPsec tunnel HMAC algorithm.
 * `enc_algorithm` - Enable/disable sending FortiAnalyzer log data with SSL encryption.
 * `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting).
@@ -55,6 +57,15 @@ The following arguments are supported:
 * `upload_day` - Day of week (month) to upload logs.
 * `upload_time` - Time to upload logs (hh:mm).
 * `reliable` - Enable/disable reliable logging to FortiAnalyzer.
+* `priority` - Set log transmission priority.
+* `max_log_rate` - FortiAnalyzer maximum log rate in MBps (0 = unlimited).
+* `interface_select_method` - Specify how to select outgoing interface to reach server.
+* `interface` - Specify outgoing interface to reach server.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
+The `serial` block supports:
+
+* `name` - Serial Number.
 
 
 ## Attribute Reference
