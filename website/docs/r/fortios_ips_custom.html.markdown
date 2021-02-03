@@ -11,7 +11,6 @@ Configure IPS custom signature.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `tag` - Signature tag.
