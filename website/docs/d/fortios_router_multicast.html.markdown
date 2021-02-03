@@ -78,6 +78,8 @@ The `interface` block contains:
 * `rp_candidate_interval` - RP candidate advertisement interval (1 - 16383 sec, default = 60).
 * `multicast_flow` - Acceptable source for multicast group.
 * `static_group` - Statically set multicast groups to forward out.
+* `rpf_nbr_fail_back` - Enable/disable fail back for RPF neighbor query.
+* `rpf_nbr_fail_back_filter` - Filter for fail back RPF neighbors.
 * `join_group` - Join multicast groups. The structure of `join_group` block is documented below.
 * `igmp` - IGMP configuration options. The structure of `igmp` block is documented below.
 
