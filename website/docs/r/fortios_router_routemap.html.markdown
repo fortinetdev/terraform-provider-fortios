@@ -51,7 +51,6 @@ resource "fortios_router_routemap" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - (Required) Name.
@@ -75,6 +74,7 @@ The `rule` block supports:
 * `match_metric` - Match metric for redistribute routes.
 * `match_route_type` - Match route type.
 * `match_tag` - Match tag.
+* `match_vrf` - Match VRF ID.
 * `set_aggregator_as` - BGP aggregator AS.
 * `set_aggregator_ip` - BGP aggregator IP.
 * `set_aspath_action` - Specify preferred action of set-aspath.
