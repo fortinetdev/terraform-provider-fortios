@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -48,7 +49,7 @@ func resourceFirewallServiceCategoryCreate(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectFirewallServiceCategory(d)
+	obj, err := getObjectFirewallServiceCategory(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallServiceCategory resource while getting object: %v", err)
 	}
@@ -73,7 +74,7 @@ func resourceFirewallServiceCategoryUpdate(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectFirewallServiceCategory(d)
+	obj, err := getObjectFirewallServiceCategory(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallServiceCategory resource while getting object: %v", err)
 	}
@@ -126,31 +127,31 @@ func resourceFirewallServiceCategoryRead(d *schema.ResourceData, m interface{}) 
 		return nil
 	}
 
-	err = refreshObjectFirewallServiceCategory(d, o)
+	err = refreshObjectFirewallServiceCategory(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallServiceCategory resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenFirewallServiceCategoryName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallServiceCategoryName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallServiceCategoryComment(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallServiceCategoryComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectFirewallServiceCategory(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectFirewallServiceCategory(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenFirewallServiceCategoryName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenFirewallServiceCategoryName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("comment", flattenFirewallServiceCategoryComment(o["comment"], d, "comment")); err != nil {
+	if err = d.Set("comment", flattenFirewallServiceCategoryComment(o["comment"], d, "comment", sv)); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
 		}
@@ -162,22 +163,23 @@ func refreshObjectFirewallServiceCategory(d *schema.ResourceData, o map[string]i
 func flattenFirewallServiceCategoryFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandFirewallServiceCategoryName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallServiceCategoryName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallServiceCategoryComment(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallServiceCategoryComment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectFirewallServiceCategory(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectFirewallServiceCategory(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandFirewallServiceCategoryName(d, v, "name")
+
+		t, err := expandFirewallServiceCategoryName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -186,7 +188,8 @@ func getObjectFirewallServiceCategory(d *schema.ResourceData) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-		t, err := expandFirewallServiceCategoryComment(d, v, "comment")
+
+		t, err := expandFirewallServiceCategoryComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
