@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -99,7 +100,7 @@ func resourceUserSamlCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectUserSaml(d)
+	obj, err := getObjectUserSaml(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating UserSaml resource while getting object: %v", err)
 	}
@@ -124,7 +125,7 @@ func resourceUserSamlUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectUserSaml(d)
+	obj, err := getObjectUserSaml(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating UserSaml resource while getting object: %v", err)
 	}
@@ -177,121 +178,121 @@ func resourceUserSamlRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectUserSaml(d, o)
+	err = refreshObjectUserSaml(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading UserSaml resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenUserSamlName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserSamlName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserSamlCert(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserSamlCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserSamlEntityId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserSamlEntityId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserSamlSingleSignOnUrl(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserSamlSingleSignOnUrl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserSamlSingleLogoutUrl(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserSamlSingleLogoutUrl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserSamlIdpEntityId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserSamlIdpEntityId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserSamlIdpSingleSignOnUrl(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserSamlIdpSingleSignOnUrl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserSamlIdpSingleLogoutUrl(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserSamlIdpSingleLogoutUrl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserSamlIdpCert(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserSamlIdpCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserSamlUserName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserSamlUserName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserSamlGroupName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserSamlGroupName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectUserSaml(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectUserSaml(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenUserSamlName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenUserSamlName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("cert", flattenUserSamlCert(o["cert"], d, "cert")); err != nil {
+	if err = d.Set("cert", flattenUserSamlCert(o["cert"], d, "cert", sv)); err != nil {
 		if !fortiAPIPatch(o["cert"]) {
 			return fmt.Errorf("Error reading cert: %v", err)
 		}
 	}
 
-	if err = d.Set("entity_id", flattenUserSamlEntityId(o["entity-id"], d, "entity_id")); err != nil {
+	if err = d.Set("entity_id", flattenUserSamlEntityId(o["entity-id"], d, "entity_id", sv)); err != nil {
 		if !fortiAPIPatch(o["entity-id"]) {
 			return fmt.Errorf("Error reading entity_id: %v", err)
 		}
 	}
 
-	if err = d.Set("single_sign_on_url", flattenUserSamlSingleSignOnUrl(o["single-sign-on-url"], d, "single_sign_on_url")); err != nil {
+	if err = d.Set("single_sign_on_url", flattenUserSamlSingleSignOnUrl(o["single-sign-on-url"], d, "single_sign_on_url", sv)); err != nil {
 		if !fortiAPIPatch(o["single-sign-on-url"]) {
 			return fmt.Errorf("Error reading single_sign_on_url: %v", err)
 		}
 	}
 
-	if err = d.Set("single_logout_url", flattenUserSamlSingleLogoutUrl(o["single-logout-url"], d, "single_logout_url")); err != nil {
+	if err = d.Set("single_logout_url", flattenUserSamlSingleLogoutUrl(o["single-logout-url"], d, "single_logout_url", sv)); err != nil {
 		if !fortiAPIPatch(o["single-logout-url"]) {
 			return fmt.Errorf("Error reading single_logout_url: %v", err)
 		}
 	}
 
-	if err = d.Set("idp_entity_id", flattenUserSamlIdpEntityId(o["idp-entity-id"], d, "idp_entity_id")); err != nil {
+	if err = d.Set("idp_entity_id", flattenUserSamlIdpEntityId(o["idp-entity-id"], d, "idp_entity_id", sv)); err != nil {
 		if !fortiAPIPatch(o["idp-entity-id"]) {
 			return fmt.Errorf("Error reading idp_entity_id: %v", err)
 		}
 	}
 
-	if err = d.Set("idp_single_sign_on_url", flattenUserSamlIdpSingleSignOnUrl(o["idp-single-sign-on-url"], d, "idp_single_sign_on_url")); err != nil {
+	if err = d.Set("idp_single_sign_on_url", flattenUserSamlIdpSingleSignOnUrl(o["idp-single-sign-on-url"], d, "idp_single_sign_on_url", sv)); err != nil {
 		if !fortiAPIPatch(o["idp-single-sign-on-url"]) {
 			return fmt.Errorf("Error reading idp_single_sign_on_url: %v", err)
 		}
 	}
 
-	if err = d.Set("idp_single_logout_url", flattenUserSamlIdpSingleLogoutUrl(o["idp-single-logout-url"], d, "idp_single_logout_url")); err != nil {
+	if err = d.Set("idp_single_logout_url", flattenUserSamlIdpSingleLogoutUrl(o["idp-single-logout-url"], d, "idp_single_logout_url", sv)); err != nil {
 		if !fortiAPIPatch(o["idp-single-logout-url"]) {
 			return fmt.Errorf("Error reading idp_single_logout_url: %v", err)
 		}
 	}
 
-	if err = d.Set("idp_cert", flattenUserSamlIdpCert(o["idp-cert"], d, "idp_cert")); err != nil {
+	if err = d.Set("idp_cert", flattenUserSamlIdpCert(o["idp-cert"], d, "idp_cert", sv)); err != nil {
 		if !fortiAPIPatch(o["idp-cert"]) {
 			return fmt.Errorf("Error reading idp_cert: %v", err)
 		}
 	}
 
-	if err = d.Set("user_name", flattenUserSamlUserName(o["user-name"], d, "user_name")); err != nil {
+	if err = d.Set("user_name", flattenUserSamlUserName(o["user-name"], d, "user_name", sv)); err != nil {
 		if !fortiAPIPatch(o["user-name"]) {
 			return fmt.Errorf("Error reading user_name: %v", err)
 		}
 	}
 
-	if err = d.Set("group_name", flattenUserSamlGroupName(o["group-name"], d, "group_name")); err != nil {
+	if err = d.Set("group_name", flattenUserSamlGroupName(o["group-name"], d, "group_name", sv)); err != nil {
 		if !fortiAPIPatch(o["group-name"]) {
 			return fmt.Errorf("Error reading group_name: %v", err)
 		}
@@ -303,58 +304,59 @@ func refreshObjectUserSaml(d *schema.ResourceData, o map[string]interface{}) err
 func flattenUserSamlFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandUserSamlName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserSamlName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserSamlCert(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserSamlCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserSamlEntityId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserSamlEntityId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserSamlSingleSignOnUrl(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserSamlSingleSignOnUrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserSamlSingleLogoutUrl(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserSamlSingleLogoutUrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserSamlIdpEntityId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserSamlIdpEntityId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserSamlIdpSingleSignOnUrl(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserSamlIdpSingleSignOnUrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserSamlIdpSingleLogoutUrl(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserSamlIdpSingleLogoutUrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserSamlIdpCert(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserSamlIdpCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserSamlUserName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserSamlUserName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserSamlGroupName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserSamlGroupName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectUserSaml(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectUserSaml(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandUserSamlName(d, v, "name")
+
+		t, err := expandUserSamlName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -363,7 +365,8 @@ func getObjectUserSaml(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("cert"); ok {
-		t, err := expandUserSamlCert(d, v, "cert")
+
+		t, err := expandUserSamlCert(d, v, "cert", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -372,7 +375,8 @@ func getObjectUserSaml(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("entity_id"); ok {
-		t, err := expandUserSamlEntityId(d, v, "entity_id")
+
+		t, err := expandUserSamlEntityId(d, v, "entity_id", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -381,7 +385,8 @@ func getObjectUserSaml(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("single_sign_on_url"); ok {
-		t, err := expandUserSamlSingleSignOnUrl(d, v, "single_sign_on_url")
+
+		t, err := expandUserSamlSingleSignOnUrl(d, v, "single_sign_on_url", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -390,7 +395,8 @@ func getObjectUserSaml(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("single_logout_url"); ok {
-		t, err := expandUserSamlSingleLogoutUrl(d, v, "single_logout_url")
+
+		t, err := expandUserSamlSingleLogoutUrl(d, v, "single_logout_url", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -399,7 +405,8 @@ func getObjectUserSaml(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("idp_entity_id"); ok {
-		t, err := expandUserSamlIdpEntityId(d, v, "idp_entity_id")
+
+		t, err := expandUserSamlIdpEntityId(d, v, "idp_entity_id", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -408,7 +415,8 @@ func getObjectUserSaml(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("idp_single_sign_on_url"); ok {
-		t, err := expandUserSamlIdpSingleSignOnUrl(d, v, "idp_single_sign_on_url")
+
+		t, err := expandUserSamlIdpSingleSignOnUrl(d, v, "idp_single_sign_on_url", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -417,7 +425,8 @@ func getObjectUserSaml(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("idp_single_logout_url"); ok {
-		t, err := expandUserSamlIdpSingleLogoutUrl(d, v, "idp_single_logout_url")
+
+		t, err := expandUserSamlIdpSingleLogoutUrl(d, v, "idp_single_logout_url", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -426,7 +435,8 @@ func getObjectUserSaml(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("idp_cert"); ok {
-		t, err := expandUserSamlIdpCert(d, v, "idp_cert")
+
+		t, err := expandUserSamlIdpCert(d, v, "idp_cert", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -435,7 +445,8 @@ func getObjectUserSaml(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("user_name"); ok {
-		t, err := expandUserSamlUserName(d, v, "user_name")
+
+		t, err := expandUserSamlUserName(d, v, "user_name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -444,7 +455,8 @@ func getObjectUserSaml(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("group_name"); ok {
-		t, err := expandUserSamlGroupName(d, v, "group_name")
+
+		t, err := expandUserSamlGroupName(d, v, "group_name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
