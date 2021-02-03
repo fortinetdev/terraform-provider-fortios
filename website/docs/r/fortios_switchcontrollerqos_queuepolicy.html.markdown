@@ -21,7 +21,6 @@ resource "fortios_switchcontrollerqos_queuepolicy" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - (Required) QoS policy name
@@ -39,6 +38,7 @@ The `cos_queue` block supports:
 * `min_rate_percent` - Minimum rate (% of link speed).
 * `max_rate_percent` - Maximum rate (% of link speed).
 * `drop_policy` - COS queue drop policy.
+* `ecn` - Enable/disable ECN packet marking to drop eligible packets.
 * `weight` - Weight of weighted round robin scheduling.
 
 
