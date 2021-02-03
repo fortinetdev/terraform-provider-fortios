@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_user_device
-Configure devices.
+Configure devices. Applies to FortiOS Version `<= 6.2.0`.
 
 ## Example Usage
 
@@ -21,7 +21,6 @@ resource "fortios_user_device" "trname" {
 ```
 
 ## Argument Reference
-
 
 The following arguments are supported:
 
