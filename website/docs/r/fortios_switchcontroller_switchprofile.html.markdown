@@ -20,7 +20,6 @@ resource "fortios_switchcontroller_switchprofile" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - FortiSwitch Profile name.
