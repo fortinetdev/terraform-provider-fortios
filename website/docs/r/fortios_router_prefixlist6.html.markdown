@@ -19,7 +19,6 @@ resource "fortios_router_prefixlist6" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - (Required) Name.
