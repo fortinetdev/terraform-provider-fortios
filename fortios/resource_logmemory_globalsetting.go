@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -61,7 +62,7 @@ func resourceLogMemoryGlobalSettingUpdate(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectLogMemoryGlobalSetting(d)
+	obj, err := getObjectLogMemoryGlobalSetting(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogMemoryGlobalSetting resource while getting object: %v", err)
 	}
@@ -114,51 +115,51 @@ func resourceLogMemoryGlobalSettingRead(d *schema.ResourceData, m interface{}) e
 		return nil
 	}
 
-	err = refreshObjectLogMemoryGlobalSetting(d, o)
+	err = refreshObjectLogMemoryGlobalSetting(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading LogMemoryGlobalSetting resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenLogMemoryGlobalSettingMaxSize(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogMemoryGlobalSettingMaxSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogMemoryGlobalSettingFullFirstWarningThreshold(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogMemoryGlobalSettingFullFirstWarningThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogMemoryGlobalSettingFullSecondWarningThreshold(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogMemoryGlobalSettingFullSecondWarningThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogMemoryGlobalSettingFullFinalWarningThreshold(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogMemoryGlobalSettingFullFinalWarningThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectLogMemoryGlobalSetting(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectLogMemoryGlobalSetting(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("max_size", flattenLogMemoryGlobalSettingMaxSize(o["max-size"], d, "max_size")); err != nil {
+	if err = d.Set("max_size", flattenLogMemoryGlobalSettingMaxSize(o["max-size"], d, "max_size", sv)); err != nil {
 		if !fortiAPIPatch(o["max-size"]) {
 			return fmt.Errorf("Error reading max_size: %v", err)
 		}
 	}
 
-	if err = d.Set("full_first_warning_threshold", flattenLogMemoryGlobalSettingFullFirstWarningThreshold(o["full-first-warning-threshold"], d, "full_first_warning_threshold")); err != nil {
+	if err = d.Set("full_first_warning_threshold", flattenLogMemoryGlobalSettingFullFirstWarningThreshold(o["full-first-warning-threshold"], d, "full_first_warning_threshold", sv)); err != nil {
 		if !fortiAPIPatch(o["full-first-warning-threshold"]) {
 			return fmt.Errorf("Error reading full_first_warning_threshold: %v", err)
 		}
 	}
 
-	if err = d.Set("full_second_warning_threshold", flattenLogMemoryGlobalSettingFullSecondWarningThreshold(o["full-second-warning-threshold"], d, "full_second_warning_threshold")); err != nil {
+	if err = d.Set("full_second_warning_threshold", flattenLogMemoryGlobalSettingFullSecondWarningThreshold(o["full-second-warning-threshold"], d, "full_second_warning_threshold", sv)); err != nil {
 		if !fortiAPIPatch(o["full-second-warning-threshold"]) {
 			return fmt.Errorf("Error reading full_second_warning_threshold: %v", err)
 		}
 	}
 
-	if err = d.Set("full_final_warning_threshold", flattenLogMemoryGlobalSettingFullFinalWarningThreshold(o["full-final-warning-threshold"], d, "full_final_warning_threshold")); err != nil {
+	if err = d.Set("full_final_warning_threshold", flattenLogMemoryGlobalSettingFullFinalWarningThreshold(o["full-final-warning-threshold"], d, "full_final_warning_threshold", sv)); err != nil {
 		if !fortiAPIPatch(o["full-final-warning-threshold"]) {
 			return fmt.Errorf("Error reading full_final_warning_threshold: %v", err)
 		}
@@ -170,30 +171,31 @@ func refreshObjectLogMemoryGlobalSetting(d *schema.ResourceData, o map[string]in
 func flattenLogMemoryGlobalSettingFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandLogMemoryGlobalSettingMaxSize(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogMemoryGlobalSettingMaxSize(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogMemoryGlobalSettingFullFirstWarningThreshold(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogMemoryGlobalSettingFullFirstWarningThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogMemoryGlobalSettingFullSecondWarningThreshold(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogMemoryGlobalSettingFullSecondWarningThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogMemoryGlobalSettingFullFinalWarningThreshold(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogMemoryGlobalSettingFullFinalWarningThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectLogMemoryGlobalSetting(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectLogMemoryGlobalSetting(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("max_size"); ok {
-		t, err := expandLogMemoryGlobalSettingMaxSize(d, v, "max_size")
+
+		t, err := expandLogMemoryGlobalSettingMaxSize(d, v, "max_size", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -202,7 +204,8 @@ func getObjectLogMemoryGlobalSetting(d *schema.ResourceData) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("full_first_warning_threshold"); ok {
-		t, err := expandLogMemoryGlobalSettingFullFirstWarningThreshold(d, v, "full_first_warning_threshold")
+
+		t, err := expandLogMemoryGlobalSettingFullFirstWarningThreshold(d, v, "full_first_warning_threshold", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -211,7 +214,8 @@ func getObjectLogMemoryGlobalSetting(d *schema.ResourceData) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("full_second_warning_threshold"); ok {
-		t, err := expandLogMemoryGlobalSettingFullSecondWarningThreshold(d, v, "full_second_warning_threshold")
+
+		t, err := expandLogMemoryGlobalSettingFullSecondWarningThreshold(d, v, "full_second_warning_threshold", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -220,7 +224,8 @@ func getObjectLogMemoryGlobalSetting(d *schema.ResourceData) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("full_final_warning_threshold"); ok {
-		t, err := expandLogMemoryGlobalSettingFullFinalWarningThreshold(d, v, "full_final_warning_threshold")
+
+		t, err := expandLogMemoryGlobalSettingFullFinalWarningThreshold(d, v, "full_final_warning_threshold", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
