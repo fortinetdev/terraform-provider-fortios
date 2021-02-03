@@ -19,7 +19,6 @@ resource "fortios_wirelesscontrollerhotspot20_icon" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Icon list ID.
