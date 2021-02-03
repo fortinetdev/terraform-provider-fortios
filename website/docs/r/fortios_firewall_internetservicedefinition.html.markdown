@@ -11,7 +11,6 @@ Internet Service definition.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `fosid` - Internet Service application list ID.
@@ -24,7 +23,14 @@ The `entry` block supports:
 * `category_id` - Internet Service category ID.
 * `name` - Internet Service name.
 * `protocol` - Integer value for the protocol type as defined by IANA (0 - 255).
+* `port_range` - Port ranges in the definition entry. The structure of `port_range` block is documented below.
 * `port` - Integer value for ending TCP/UDP/SCTP destination port in range (0 to 65535). 0 means undefined.
+
+The `port_range` block supports:
+
+* `id` - Custom entry port range ID.
+* `start_port` - Starting TCP/UDP/SCTP destination port (1 to 65535).
+* `end_port` - Ending TCP/UDP/SCTP destination port (1 to 65535).
 
 
 ## Attribute Reference
