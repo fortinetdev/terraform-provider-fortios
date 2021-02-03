@@ -28,7 +28,6 @@ resource "fortios_webproxy_profile" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Profile name.
@@ -48,11 +47,21 @@ The `headers` block supports:
 
 * `id` - HTTP forwarded header id.
 * `name` - HTTP forwarded header name.
+* `dstaddr` - Destination address and address group names. The structure of `dstaddr` block is documented below.
+* `dstaddr6` - Destination address and address group names (IPv6). The structure of `dstaddr6` block is documented below.
 * `action` - Action when the HTTP header is forwarded.
 * `content` - HTTP header content.
 * `base64_encoding` - Enable/disable use of base64 encoding of HTTP content.
 * `add_option` - Configure options to append content to existing HTTP header or add new HTTP header.
 * `protocol` - Configure protocol(s) to take add-option action on (HTTP, HTTPS, or both).
+
+The `dstaddr` block supports:
+
+* `name` - Address name.
+
+The `dstaddr6` block supports:
+
+* `name` - Address name.
 
 
 ## Attribute Reference
