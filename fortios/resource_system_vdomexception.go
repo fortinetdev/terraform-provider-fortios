@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -77,7 +78,7 @@ func resourceSystemVdomExceptionCreate(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemVdomException(d)
+	obj, err := getObjectSystemVdomException(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemVdomException resource while getting object: %v", err)
 	}
@@ -102,7 +103,7 @@ func resourceSystemVdomExceptionUpdate(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemVdomException(d)
+	obj, err := getObjectSystemVdomException(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemVdomException resource while getting object: %v", err)
 	}
@@ -155,30 +156,30 @@ func resourceSystemVdomExceptionRead(d *schema.ResourceData, m interface{}) erro
 		return nil
 	}
 
-	err = refreshObjectSystemVdomException(d, o)
+	err = refreshObjectSystemVdomException(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemVdomException resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemVdomExceptionId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomExceptionId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVdomExceptionObject(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomExceptionObject(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVdomExceptionOid(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomExceptionOid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVdomExceptionScope(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomExceptionScope(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVdomExceptionVdom(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSystemVdomExceptionVdom(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -199,7 +200,8 @@ func flattenSystemVdomExceptionVdom(v interface{}, d *schema.ResourceData, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemVdomExceptionVdomName(i["name"], d, pre_append)
+
+			tmp["name"] = flattenSystemVdomExceptionVdomName(i["name"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -211,46 +213,46 @@ func flattenSystemVdomExceptionVdom(v interface{}, d *schema.ResourceData, pre s
 	return result
 }
 
-func flattenSystemVdomExceptionVdomName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomExceptionVdomName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemVdomException(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemVdomException(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("fosid", flattenSystemVdomExceptionId(o["id"], d, "fosid")); err != nil {
+	if err = d.Set("fosid", flattenSystemVdomExceptionId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
 			return fmt.Errorf("Error reading fosid: %v", err)
 		}
 	}
 
-	if err = d.Set("object", flattenSystemVdomExceptionObject(o["object"], d, "object")); err != nil {
+	if err = d.Set("object", flattenSystemVdomExceptionObject(o["object"], d, "object", sv)); err != nil {
 		if !fortiAPIPatch(o["object"]) {
 			return fmt.Errorf("Error reading object: %v", err)
 		}
 	}
 
-	if err = d.Set("oid", flattenSystemVdomExceptionOid(o["oid"], d, "oid")); err != nil {
+	if err = d.Set("oid", flattenSystemVdomExceptionOid(o["oid"], d, "oid", sv)); err != nil {
 		if !fortiAPIPatch(o["oid"]) {
 			return fmt.Errorf("Error reading oid: %v", err)
 		}
 	}
 
-	if err = d.Set("scope", flattenSystemVdomExceptionScope(o["scope"], d, "scope")); err != nil {
+	if err = d.Set("scope", flattenSystemVdomExceptionScope(o["scope"], d, "scope", sv)); err != nil {
 		if !fortiAPIPatch(o["scope"]) {
 			return fmt.Errorf("Error reading scope: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("vdom", flattenSystemVdomExceptionVdom(o["vdom"], d, "vdom")); err != nil {
+		if err = d.Set("vdom", flattenSystemVdomExceptionVdom(o["vdom"], d, "vdom", sv)); err != nil {
 			if !fortiAPIPatch(o["vdom"]) {
 				return fmt.Errorf("Error reading vdom: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("vdom"); ok {
-			if err = d.Set("vdom", flattenSystemVdomExceptionVdom(o["vdom"], d, "vdom")); err != nil {
+			if err = d.Set("vdom", flattenSystemVdomExceptionVdom(o["vdom"], d, "vdom", sv)); err != nil {
 				if !fortiAPIPatch(o["vdom"]) {
 					return fmt.Errorf("Error reading vdom: %v", err)
 				}
@@ -264,26 +266,26 @@ func refreshObjectSystemVdomException(d *schema.ResourceData, o map[string]inter
 func flattenSystemVdomExceptionFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemVdomExceptionId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomExceptionId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVdomExceptionObject(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomExceptionObject(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVdomExceptionOid(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomExceptionOid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVdomExceptionScope(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomExceptionScope(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVdomExceptionVdom(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomExceptionVdom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -299,7 +301,8 @@ func expandSystemVdomExceptionVdom(d *schema.ResourceData, v interface{}, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSystemVdomExceptionVdomName(d, i["name"], pre_append)
+
+			tmp["name"], _ = expandSystemVdomExceptionVdomName(d, i["name"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -310,15 +313,16 @@ func expandSystemVdomExceptionVdom(d *schema.ResourceData, v interface{}, pre st
 	return result, nil
 }
 
-func expandSystemVdomExceptionVdomName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomExceptionVdomName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemVdomException(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemVdomException(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-		t, err := expandSystemVdomExceptionId(d, v, "fosid")
+
+		t, err := expandSystemVdomExceptionId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -327,7 +331,8 @@ func getObjectSystemVdomException(d *schema.ResourceData) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("object"); ok {
-		t, err := expandSystemVdomExceptionObject(d, v, "object")
+
+		t, err := expandSystemVdomExceptionObject(d, v, "object", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -336,7 +341,8 @@ func getObjectSystemVdomException(d *schema.ResourceData) (*map[string]interface
 	}
 
 	if v, ok := d.GetOkExists("oid"); ok {
-		t, err := expandSystemVdomExceptionOid(d, v, "oid")
+
+		t, err := expandSystemVdomExceptionOid(d, v, "oid", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -345,7 +351,8 @@ func getObjectSystemVdomException(d *schema.ResourceData) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("scope"); ok {
-		t, err := expandSystemVdomExceptionScope(d, v, "scope")
+
+		t, err := expandSystemVdomExceptionScope(d, v, "scope", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -354,7 +361,8 @@ func getObjectSystemVdomException(d *schema.ResourceData) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("vdom"); ok {
-		t, err := expandSystemVdomExceptionVdom(d, v, "vdom")
+
+		t, err := expandSystemVdomExceptionVdom(d, v, "vdom", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
