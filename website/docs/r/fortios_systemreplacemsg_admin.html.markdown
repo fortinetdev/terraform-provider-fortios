@@ -11,7 +11,6 @@ Replacement messages.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `msg_type` - (Required) Message type.
