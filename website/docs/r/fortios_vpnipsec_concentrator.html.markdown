@@ -20,7 +20,6 @@ resource "fortios_vpnipsec_concentrator" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Concentrator name.
