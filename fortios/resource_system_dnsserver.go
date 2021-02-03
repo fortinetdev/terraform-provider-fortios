@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -55,7 +56,7 @@ func resourceSystemDnsServerCreate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemDnsServer(d)
+	obj, err := getObjectSystemDnsServer(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemDnsServer resource while getting object: %v", err)
 	}
@@ -80,7 +81,7 @@ func resourceSystemDnsServerUpdate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemDnsServer(d)
+	obj, err := getObjectSystemDnsServer(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemDnsServer resource while getting object: %v", err)
 	}
@@ -133,41 +134,41 @@ func resourceSystemDnsServerRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectSystemDnsServer(d, o)
+	err = refreshObjectSystemDnsServer(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemDnsServer resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemDnsServerName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemDnsServerName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemDnsServerMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemDnsServerMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemDnsServerDnsfilterProfile(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemDnsServerDnsfilterProfile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemDnsServer(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemDnsServer(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenSystemDnsServerName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenSystemDnsServerName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("mode", flattenSystemDnsServerMode(o["mode"], d, "mode")); err != nil {
+	if err = d.Set("mode", flattenSystemDnsServerMode(o["mode"], d, "mode", sv)); err != nil {
 		if !fortiAPIPatch(o["mode"]) {
 			return fmt.Errorf("Error reading mode: %v", err)
 		}
 	}
 
-	if err = d.Set("dnsfilter_profile", flattenSystemDnsServerDnsfilterProfile(o["dnsfilter-profile"], d, "dnsfilter_profile")); err != nil {
+	if err = d.Set("dnsfilter_profile", flattenSystemDnsServerDnsfilterProfile(o["dnsfilter-profile"], d, "dnsfilter_profile", sv)); err != nil {
 		if !fortiAPIPatch(o["dnsfilter-profile"]) {
 			return fmt.Errorf("Error reading dnsfilter_profile: %v", err)
 		}
@@ -179,26 +180,27 @@ func refreshObjectSystemDnsServer(d *schema.ResourceData, o map[string]interface
 func flattenSystemDnsServerFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemDnsServerName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemDnsServerName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemDnsServerMode(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemDnsServerMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemDnsServerDnsfilterProfile(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemDnsServerDnsfilterProfile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemDnsServer(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemDnsServer(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandSystemDnsServerName(d, v, "name")
+
+		t, err := expandSystemDnsServerName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -207,7 +209,8 @@ func getObjectSystemDnsServer(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("mode"); ok {
-		t, err := expandSystemDnsServerMode(d, v, "mode")
+
+		t, err := expandSystemDnsServerMode(d, v, "mode", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -216,7 +219,8 @@ func getObjectSystemDnsServer(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("dnsfilter_profile"); ok {
-		t, err := expandSystemDnsServerDnsfilterProfile(d, v, "dnsfilter_profile")
+
+		t, err := expandSystemDnsServerDnsfilterProfile(d, v, "dnsfilter_profile", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
