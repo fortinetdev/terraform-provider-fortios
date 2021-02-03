@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -53,7 +54,7 @@ func resourceFirewallIpmacbindingSettingUpdate(d *schema.ResourceData, m interfa
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectFirewallIpmacbindingSetting(d)
+	obj, err := getObjectFirewallIpmacbindingSetting(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallIpmacbindingSetting resource while getting object: %v", err)
 	}
@@ -106,41 +107,41 @@ func resourceFirewallIpmacbindingSettingRead(d *schema.ResourceData, m interface
 		return nil
 	}
 
-	err = refreshObjectFirewallIpmacbindingSetting(d, o)
+	err = refreshObjectFirewallIpmacbindingSetting(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallIpmacbindingSetting resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenFirewallIpmacbindingSettingBindthroughfw(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallIpmacbindingSettingBindthroughfw(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallIpmacbindingSettingBindtofw(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallIpmacbindingSettingBindtofw(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallIpmacbindingSettingUndefinedhost(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallIpmacbindingSettingUndefinedhost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectFirewallIpmacbindingSetting(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectFirewallIpmacbindingSetting(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("bindthroughfw", flattenFirewallIpmacbindingSettingBindthroughfw(o["bindthroughfw"], d, "bindthroughfw")); err != nil {
+	if err = d.Set("bindthroughfw", flattenFirewallIpmacbindingSettingBindthroughfw(o["bindthroughfw"], d, "bindthroughfw", sv)); err != nil {
 		if !fortiAPIPatch(o["bindthroughfw"]) {
 			return fmt.Errorf("Error reading bindthroughfw: %v", err)
 		}
 	}
 
-	if err = d.Set("bindtofw", flattenFirewallIpmacbindingSettingBindtofw(o["bindtofw"], d, "bindtofw")); err != nil {
+	if err = d.Set("bindtofw", flattenFirewallIpmacbindingSettingBindtofw(o["bindtofw"], d, "bindtofw", sv)); err != nil {
 		if !fortiAPIPatch(o["bindtofw"]) {
 			return fmt.Errorf("Error reading bindtofw: %v", err)
 		}
 	}
 
-	if err = d.Set("undefinedhost", flattenFirewallIpmacbindingSettingUndefinedhost(o["undefinedhost"], d, "undefinedhost")); err != nil {
+	if err = d.Set("undefinedhost", flattenFirewallIpmacbindingSettingUndefinedhost(o["undefinedhost"], d, "undefinedhost", sv)); err != nil {
 		if !fortiAPIPatch(o["undefinedhost"]) {
 			return fmt.Errorf("Error reading undefinedhost: %v", err)
 		}
@@ -152,26 +153,27 @@ func refreshObjectFirewallIpmacbindingSetting(d *schema.ResourceData, o map[stri
 func flattenFirewallIpmacbindingSettingFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandFirewallIpmacbindingSettingBindthroughfw(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallIpmacbindingSettingBindthroughfw(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallIpmacbindingSettingBindtofw(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallIpmacbindingSettingBindtofw(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallIpmacbindingSettingUndefinedhost(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallIpmacbindingSettingUndefinedhost(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectFirewallIpmacbindingSetting(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectFirewallIpmacbindingSetting(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("bindthroughfw"); ok {
-		t, err := expandFirewallIpmacbindingSettingBindthroughfw(d, v, "bindthroughfw")
+
+		t, err := expandFirewallIpmacbindingSettingBindthroughfw(d, v, "bindthroughfw", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -180,7 +182,8 @@ func getObjectFirewallIpmacbindingSetting(d *schema.ResourceData) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("bindtofw"); ok {
-		t, err := expandFirewallIpmacbindingSettingBindtofw(d, v, "bindtofw")
+
+		t, err := expandFirewallIpmacbindingSettingBindtofw(d, v, "bindtofw", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -189,7 +192,8 @@ func getObjectFirewallIpmacbindingSetting(d *schema.ResourceData) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("undefinedhost"); ok {
-		t, err := expandFirewallIpmacbindingSettingUndefinedhost(d, v, "undefinedhost")
+
+		t, err := expandFirewallIpmacbindingSettingUndefinedhost(d, v, "undefinedhost", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
