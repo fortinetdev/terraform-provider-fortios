@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -71,7 +72,7 @@ func resourceWanoptAuthGroupCreate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWanoptAuthGroup(d)
+	obj, err := getObjectWanoptAuthGroup(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WanoptAuthGroup resource while getting object: %v", err)
 	}
@@ -96,7 +97,7 @@ func resourceWanoptAuthGroupUpdate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWanoptAuthGroup(d)
+	obj, err := getObjectWanoptAuthGroup(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WanoptAuthGroup resource while getting object: %v", err)
 	}
@@ -149,65 +150,65 @@ func resourceWanoptAuthGroupRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectWanoptAuthGroup(d, o)
+	err = refreshObjectWanoptAuthGroup(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading WanoptAuthGroup resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenWanoptAuthGroupName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptAuthGroupName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptAuthGroupAuthMethod(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptAuthGroupAuthMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptAuthGroupPsk(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptAuthGroupPsk(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptAuthGroupCert(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptAuthGroupCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptAuthGroupPeerAccept(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptAuthGroupPeerAccept(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptAuthGroupPeer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptAuthGroupPeer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectWanoptAuthGroup(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectWanoptAuthGroup(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenWanoptAuthGroupName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenWanoptAuthGroupName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("auth_method", flattenWanoptAuthGroupAuthMethod(o["auth-method"], d, "auth_method")); err != nil {
+	if err = d.Set("auth_method", flattenWanoptAuthGroupAuthMethod(o["auth-method"], d, "auth_method", sv)); err != nil {
 		if !fortiAPIPatch(o["auth-method"]) {
 			return fmt.Errorf("Error reading auth_method: %v", err)
 		}
 	}
 
-	if err = d.Set("cert", flattenWanoptAuthGroupCert(o["cert"], d, "cert")); err != nil {
+	if err = d.Set("cert", flattenWanoptAuthGroupCert(o["cert"], d, "cert", sv)); err != nil {
 		if !fortiAPIPatch(o["cert"]) {
 			return fmt.Errorf("Error reading cert: %v", err)
 		}
 	}
 
-	if err = d.Set("peer_accept", flattenWanoptAuthGroupPeerAccept(o["peer-accept"], d, "peer_accept")); err != nil {
+	if err = d.Set("peer_accept", flattenWanoptAuthGroupPeerAccept(o["peer-accept"], d, "peer_accept", sv)); err != nil {
 		if !fortiAPIPatch(o["peer-accept"]) {
 			return fmt.Errorf("Error reading peer_accept: %v", err)
 		}
 	}
 
-	if err = d.Set("peer", flattenWanoptAuthGroupPeer(o["peer"], d, "peer")); err != nil {
+	if err = d.Set("peer", flattenWanoptAuthGroupPeer(o["peer"], d, "peer", sv)); err != nil {
 		if !fortiAPIPatch(o["peer"]) {
 			return fmt.Errorf("Error reading peer: %v", err)
 		}
@@ -219,38 +220,39 @@ func refreshObjectWanoptAuthGroup(d *schema.ResourceData, o map[string]interface
 func flattenWanoptAuthGroupFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandWanoptAuthGroupName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptAuthGroupName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptAuthGroupAuthMethod(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptAuthGroupAuthMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptAuthGroupPsk(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptAuthGroupPsk(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptAuthGroupCert(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptAuthGroupCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptAuthGroupPeerAccept(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptAuthGroupPeerAccept(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptAuthGroupPeer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptAuthGroupPeer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectWanoptAuthGroup(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectWanoptAuthGroup(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandWanoptAuthGroupName(d, v, "name")
+
+		t, err := expandWanoptAuthGroupName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -259,7 +261,8 @@ func getObjectWanoptAuthGroup(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("auth_method"); ok {
-		t, err := expandWanoptAuthGroupAuthMethod(d, v, "auth_method")
+
+		t, err := expandWanoptAuthGroupAuthMethod(d, v, "auth_method", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -268,7 +271,8 @@ func getObjectWanoptAuthGroup(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("psk"); ok {
-		t, err := expandWanoptAuthGroupPsk(d, v, "psk")
+
+		t, err := expandWanoptAuthGroupPsk(d, v, "psk", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -277,7 +281,8 @@ func getObjectWanoptAuthGroup(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("cert"); ok {
-		t, err := expandWanoptAuthGroupCert(d, v, "cert")
+
+		t, err := expandWanoptAuthGroupCert(d, v, "cert", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -286,7 +291,8 @@ func getObjectWanoptAuthGroup(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("peer_accept"); ok {
-		t, err := expandWanoptAuthGroupPeerAccept(d, v, "peer_accept")
+
+		t, err := expandWanoptAuthGroupPeerAccept(d, v, "peer_accept", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -295,7 +301,8 @@ func getObjectWanoptAuthGroup(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("peer"); ok {
-		t, err := expandWanoptAuthGroupPeer(d, v, "peer")
+
+		t, err := expandWanoptAuthGroupPeer(d, v, "peer", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
