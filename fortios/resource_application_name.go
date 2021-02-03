@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -89,6 +90,20 @@ func resourceApplicationName() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"parameters": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 31),
+							Optional:     true,
+							Computed:     true,
+						},
+					},
+				},
+			},
 			"parameter": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -131,7 +146,7 @@ func resourceApplicationNameCreate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectApplicationName(d)
+	obj, err := getObjectApplicationName(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating ApplicationName resource while getting object: %v", err)
 	}
@@ -156,7 +171,7 @@ func resourceApplicationNameUpdate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectApplicationName(d)
+	obj, err := getObjectApplicationName(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating ApplicationName resource while getting object: %v", err)
 	}
@@ -209,62 +224,100 @@ func resourceApplicationNameRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectApplicationName(d, o)
+	err = refreshObjectApplicationName(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading ApplicationName resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenApplicationNameName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenApplicationNameName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenApplicationNameId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenApplicationNameId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenApplicationNameCategory(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenApplicationNameCategory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenApplicationNameSubCategory(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenApplicationNameSubCategory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenApplicationNamePopularity(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenApplicationNamePopularity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenApplicationNameRisk(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenApplicationNameRisk(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenApplicationNameWeight(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenApplicationNameWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenApplicationNameProtocol(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenApplicationNameProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenApplicationNameTechnology(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenApplicationNameTechnology(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenApplicationNameBehavior(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenApplicationNameBehavior(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenApplicationNameVendor(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenApplicationNameVendor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenApplicationNameParameter(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenApplicationNameParameters(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+
+			tmp["name"] = flattenApplicationNameParametersName(i["name"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "name", d)
+	return result
+}
+
+func flattenApplicationNameParametersName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenApplicationNameMetadata(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenApplicationNameParameter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenApplicationNameMetadata(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -285,17 +338,20 @@ func flattenApplicationNameMetadata(v interface{}, d *schema.ResourceData, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenApplicationNameMetadataId(i["id"], d, pre_append)
+
+			tmp["id"] = flattenApplicationNameMetadataId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "metaid"
 		if _, ok := i["metaid"]; ok {
-			tmp["metaid"] = flattenApplicationNameMetadataMetaid(i["metaid"], d, pre_append)
+
+			tmp["metaid"] = flattenApplicationNameMetadataMetaid(i["metaid"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "valueid"
 		if _, ok := i["valueid"]; ok {
-			tmp["valueid"] = flattenApplicationNameMetadataValueid(i["valueid"], d, pre_append)
+
+			tmp["valueid"] = flattenApplicationNameMetadataValueid(i["valueid"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -307,102 +363,118 @@ func flattenApplicationNameMetadata(v interface{}, d *schema.ResourceData, pre s
 	return result
 }
 
-func flattenApplicationNameMetadataId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenApplicationNameMetadataId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenApplicationNameMetadataMetaid(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenApplicationNameMetadataMetaid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenApplicationNameMetadataValueid(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenApplicationNameMetadataValueid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectApplicationName(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectApplicationName(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenApplicationNameName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenApplicationNameName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("fosid", flattenApplicationNameId(o["id"], d, "fosid")); err != nil {
+	if err = d.Set("fosid", flattenApplicationNameId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
 			return fmt.Errorf("Error reading fosid: %v", err)
 		}
 	}
 
-	if err = d.Set("category", flattenApplicationNameCategory(o["category"], d, "category")); err != nil {
+	if err = d.Set("category", flattenApplicationNameCategory(o["category"], d, "category", sv)); err != nil {
 		if !fortiAPIPatch(o["category"]) {
 			return fmt.Errorf("Error reading category: %v", err)
 		}
 	}
 
-	if err = d.Set("sub_category", flattenApplicationNameSubCategory(o["sub-category"], d, "sub_category")); err != nil {
+	if err = d.Set("sub_category", flattenApplicationNameSubCategory(o["sub-category"], d, "sub_category", sv)); err != nil {
 		if !fortiAPIPatch(o["sub-category"]) {
 			return fmt.Errorf("Error reading sub_category: %v", err)
 		}
 	}
 
-	if err = d.Set("popularity", flattenApplicationNamePopularity(o["popularity"], d, "popularity")); err != nil {
+	if err = d.Set("popularity", flattenApplicationNamePopularity(o["popularity"], d, "popularity", sv)); err != nil {
 		if !fortiAPIPatch(o["popularity"]) {
 			return fmt.Errorf("Error reading popularity: %v", err)
 		}
 	}
 
-	if err = d.Set("risk", flattenApplicationNameRisk(o["risk"], d, "risk")); err != nil {
+	if err = d.Set("risk", flattenApplicationNameRisk(o["risk"], d, "risk", sv)); err != nil {
 		if !fortiAPIPatch(o["risk"]) {
 			return fmt.Errorf("Error reading risk: %v", err)
 		}
 	}
 
-	if err = d.Set("weight", flattenApplicationNameWeight(o["weight"], d, "weight")); err != nil {
+	if err = d.Set("weight", flattenApplicationNameWeight(o["weight"], d, "weight", sv)); err != nil {
 		if !fortiAPIPatch(o["weight"]) {
 			return fmt.Errorf("Error reading weight: %v", err)
 		}
 	}
 
-	if err = d.Set("protocol", flattenApplicationNameProtocol(o["protocol"], d, "protocol")); err != nil {
+	if err = d.Set("protocol", flattenApplicationNameProtocol(o["protocol"], d, "protocol", sv)); err != nil {
 		if !fortiAPIPatch(o["protocol"]) {
 			return fmt.Errorf("Error reading protocol: %v", err)
 		}
 	}
 
-	if err = d.Set("technology", flattenApplicationNameTechnology(o["technology"], d, "technology")); err != nil {
+	if err = d.Set("technology", flattenApplicationNameTechnology(o["technology"], d, "technology", sv)); err != nil {
 		if !fortiAPIPatch(o["technology"]) {
 			return fmt.Errorf("Error reading technology: %v", err)
 		}
 	}
 
-	if err = d.Set("behavior", flattenApplicationNameBehavior(o["behavior"], d, "behavior")); err != nil {
+	if err = d.Set("behavior", flattenApplicationNameBehavior(o["behavior"], d, "behavior", sv)); err != nil {
 		if !fortiAPIPatch(o["behavior"]) {
 			return fmt.Errorf("Error reading behavior: %v", err)
 		}
 	}
 
-	if err = d.Set("vendor", flattenApplicationNameVendor(o["vendor"], d, "vendor")); err != nil {
+	if err = d.Set("vendor", flattenApplicationNameVendor(o["vendor"], d, "vendor", sv)); err != nil {
 		if !fortiAPIPatch(o["vendor"]) {
 			return fmt.Errorf("Error reading vendor: %v", err)
 		}
 	}
 
-	if err = d.Set("parameter", flattenApplicationNameParameter(o["parameter"], d, "parameter")); err != nil {
+	if isImportTable() {
+		if err = d.Set("parameters", flattenApplicationNameParameters(o["parameters"], d, "parameters", sv)); err != nil {
+			if !fortiAPIPatch(o["parameters"]) {
+				return fmt.Errorf("Error reading parameters: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("parameters"); ok {
+			if err = d.Set("parameters", flattenApplicationNameParameters(o["parameters"], d, "parameters", sv)); err != nil {
+				if !fortiAPIPatch(o["parameters"]) {
+					return fmt.Errorf("Error reading parameters: %v", err)
+				}
+			}
+		}
+	}
+
+	if err = d.Set("parameter", flattenApplicationNameParameter(o["parameter"], d, "parameter", sv)); err != nil {
 		if !fortiAPIPatch(o["parameter"]) {
 			return fmt.Errorf("Error reading parameter: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("metadata", flattenApplicationNameMetadata(o["metadata"], d, "metadata")); err != nil {
+		if err = d.Set("metadata", flattenApplicationNameMetadata(o["metadata"], d, "metadata", sv)); err != nil {
 			if !fortiAPIPatch(o["metadata"]) {
 				return fmt.Errorf("Error reading metadata: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("metadata"); ok {
-			if err = d.Set("metadata", flattenApplicationNameMetadata(o["metadata"], d, "metadata")); err != nil {
+			if err = d.Set("metadata", flattenApplicationNameMetadata(o["metadata"], d, "metadata", sv)); err != nil {
 				if !fortiAPIPatch(o["metadata"]) {
 					return fmt.Errorf("Error reading metadata: %v", err)
 				}
@@ -416,58 +488,90 @@ func refreshObjectApplicationName(d *schema.ResourceData, o map[string]interface
 func flattenApplicationNameFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandApplicationNameName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandApplicationNameName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandApplicationNameId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandApplicationNameId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandApplicationNameCategory(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandApplicationNameCategory(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandApplicationNameSubCategory(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandApplicationNameSubCategory(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandApplicationNamePopularity(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandApplicationNamePopularity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandApplicationNameRisk(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandApplicationNameRisk(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandApplicationNameWeight(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandApplicationNameWeight(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandApplicationNameProtocol(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandApplicationNameProtocol(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandApplicationNameTechnology(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandApplicationNameTechnology(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandApplicationNameBehavior(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandApplicationNameBehavior(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandApplicationNameVendor(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandApplicationNameVendor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandApplicationNameParameter(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandApplicationNameParameters(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["name"], _ = expandApplicationNameParametersName(d, i["name"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandApplicationNameParametersName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandApplicationNameMetadata(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandApplicationNameParameter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandApplicationNameMetadata(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -483,17 +587,20 @@ func expandApplicationNameMetadata(d *schema.ResourceData, v interface{}, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandApplicationNameMetadataId(d, i["id"], pre_append)
+
+			tmp["id"], _ = expandApplicationNameMetadataId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "metaid"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["metaid"], _ = expandApplicationNameMetadataMetaid(d, i["metaid"], pre_append)
+
+			tmp["metaid"], _ = expandApplicationNameMetadataMetaid(d, i["metaid"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "valueid"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["valueid"], _ = expandApplicationNameMetadataValueid(d, i["valueid"], pre_append)
+
+			tmp["valueid"], _ = expandApplicationNameMetadataValueid(d, i["valueid"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -504,23 +611,24 @@ func expandApplicationNameMetadata(d *schema.ResourceData, v interface{}, pre st
 	return result, nil
 }
 
-func expandApplicationNameMetadataId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandApplicationNameMetadataId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandApplicationNameMetadataMetaid(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandApplicationNameMetadataMetaid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandApplicationNameMetadataValueid(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandApplicationNameMetadataValueid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectApplicationName(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectApplicationName(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandApplicationNameName(d, v, "name")
+
+		t, err := expandApplicationNameName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -529,7 +637,8 @@ func getObjectApplicationName(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-		t, err := expandApplicationNameId(d, v, "fosid")
+
+		t, err := expandApplicationNameId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -538,7 +647,8 @@ func getObjectApplicationName(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOkExists("category"); ok {
-		t, err := expandApplicationNameCategory(d, v, "category")
+
+		t, err := expandApplicationNameCategory(d, v, "category", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -547,7 +657,8 @@ func getObjectApplicationName(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOkExists("sub_category"); ok {
-		t, err := expandApplicationNameSubCategory(d, v, "sub_category")
+
+		t, err := expandApplicationNameSubCategory(d, v, "sub_category", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -556,7 +667,8 @@ func getObjectApplicationName(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOkExists("popularity"); ok {
-		t, err := expandApplicationNamePopularity(d, v, "popularity")
+
+		t, err := expandApplicationNamePopularity(d, v, "popularity", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -565,7 +677,8 @@ func getObjectApplicationName(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOkExists("risk"); ok {
-		t, err := expandApplicationNameRisk(d, v, "risk")
+
+		t, err := expandApplicationNameRisk(d, v, "risk", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -574,7 +687,8 @@ func getObjectApplicationName(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOkExists("weight"); ok {
-		t, err := expandApplicationNameWeight(d, v, "weight")
+
+		t, err := expandApplicationNameWeight(d, v, "weight", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -583,7 +697,8 @@ func getObjectApplicationName(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("protocol"); ok {
-		t, err := expandApplicationNameProtocol(d, v, "protocol")
+
+		t, err := expandApplicationNameProtocol(d, v, "protocol", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -592,7 +707,8 @@ func getObjectApplicationName(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("technology"); ok {
-		t, err := expandApplicationNameTechnology(d, v, "technology")
+
+		t, err := expandApplicationNameTechnology(d, v, "technology", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -601,7 +717,8 @@ func getObjectApplicationName(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("behavior"); ok {
-		t, err := expandApplicationNameBehavior(d, v, "behavior")
+
+		t, err := expandApplicationNameBehavior(d, v, "behavior", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -610,7 +727,8 @@ func getObjectApplicationName(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("vendor"); ok {
-		t, err := expandApplicationNameVendor(d, v, "vendor")
+
+		t, err := expandApplicationNameVendor(d, v, "vendor", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -618,8 +736,19 @@ func getObjectApplicationName(d *schema.ResourceData) (*map[string]interface{}, 
 		}
 	}
 
+	if v, ok := d.GetOk("parameters"); ok {
+
+		t, err := expandApplicationNameParameters(d, v, "parameters", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["parameters"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("parameter"); ok {
-		t, err := expandApplicationNameParameter(d, v, "parameter")
+
+		t, err := expandApplicationNameParameter(d, v, "parameter", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -628,7 +757,8 @@ func getObjectApplicationName(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("metadata"); ok {
-		t, err := expandApplicationNameMetadata(d, v, "metadata")
+
+		t, err := expandApplicationNameMetadata(d, v, "metadata", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
