@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -43,7 +44,7 @@ func resourceDlpFpSensitivityCreate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectDlpFpSensitivity(d)
+	obj, err := getObjectDlpFpSensitivity(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating DlpFpSensitivity resource while getting object: %v", err)
 	}
@@ -68,7 +69,7 @@ func resourceDlpFpSensitivityUpdate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectDlpFpSensitivity(d)
+	obj, err := getObjectDlpFpSensitivity(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating DlpFpSensitivity resource while getting object: %v", err)
 	}
@@ -121,21 +122,21 @@ func resourceDlpFpSensitivityRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectDlpFpSensitivity(d, o)
+	err = refreshObjectDlpFpSensitivity(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading DlpFpSensitivity resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenDlpFpSensitivityName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenDlpFpSensitivityName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectDlpFpSensitivity(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectDlpFpSensitivity(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenDlpFpSensitivityName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenDlpFpSensitivityName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
@@ -147,18 +148,19 @@ func refreshObjectDlpFpSensitivity(d *schema.ResourceData, o map[string]interfac
 func flattenDlpFpSensitivityFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandDlpFpSensitivityName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandDlpFpSensitivityName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectDlpFpSensitivity(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectDlpFpSensitivity(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandDlpFpSensitivityName(d, v, "name")
+
+		t, err := expandDlpFpSensitivityName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
