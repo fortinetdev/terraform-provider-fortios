@@ -27,7 +27,6 @@ resource "fortios_system_emailserver" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `type` - Use FortiGuard Message service or custom email server.
