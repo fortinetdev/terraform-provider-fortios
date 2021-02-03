@@ -11,7 +11,6 @@ Configure Virtual Access Points (VAPs).
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - (Required) Virtual AP name.
@@ -34,9 +33,15 @@ The following arguments are supported:
 * `ft_mobility_domain` - Mobility domain identifier in FT (1 - 65535, default = 1000).
 * `ft_r0_key_lifetime` - Lifetime of the PMK-R0 key in FT, 1-65535 minutes.
 * `ft_over_ds` - Enable/disable FT over the Distribution System (DS).
+* `sae_groups` - SAE-Groups.
+* `owe_groups` - OWE-Groups.
+* `owe_transition` - Enable/disable OWE transition mode support.
+* `owe_transition_ssid` - OWE transition mode peer SSID.
+* `additional_akms` - Additional AKMs.
 * `eapol_key_retries` - Enable/disable retransmission of EAPOL-Key frames (message 3/4 and group message 1/2) (default = enable).
 * `tkip_counter_measure` - Enable/disable TKIP counter measure.
 * `external_web` - URL of external authentication web server.
+* `external_web_format` - URL query parameter detection (default = auto-detect).
 * `external_logout` - URL of external authentication logout server.
 * `mac_auth_bypass` - Enable/disable MAC authentication bypass.
 * `radius_mac_auth` - Enable/disable RADIUS-based MAC authentication of clients (default = disable).
@@ -47,6 +52,7 @@ The following arguments are supported:
 * `keyindex` - WEP key index (1 - 4).
 * `key` - WEP Key.
 * `passphrase` - WPA pre-shard key (PSK) to be used to authenticate WiFi users.
+* `sae_password` - WPA3 SAE password to be used to authenticate WiFi users.
 * `radius_server` - RADIUS server to be used to authenticate WiFi users.
 * `acct_interim_interval` - WiFi RADIUS accounting interim interval (60 - 86400 sec, default = 0).
 * `local_standalone` - Enable/disable AP local standalone (default = disable).
@@ -66,6 +72,13 @@ The following arguments are supported:
 * `intra_vap_privacy` - Enable/disable blocking communication between clients on the same SSID (called intra-SSID privacy) (default = disable).
 * `schedule` - VAP schedule name.
 * `ldpc` - VAP low-density parity-check (LDPC) coding configuration.
+* `high_efficiency` - Enable/disable 802.11ax high efficiency (default = enable).
+* `target_wake_time` - Enable/disable 802.11ax target wake time (default = enable).
+* `port_macauth` - Enable/disable LAN port MAC authentication (default = disable).
+* `port_macauth_timeout` - LAN port MAC authentication idle timeout value (default = 600 sec).
+* `port_macauth_reauth_timeout` - LAN port MAC authentication re-authentication timeout value (default = 7200 sec).
+* `bss_color_partial` - Enable/disable 802.11ax partial BSS color (default = enable).
+* `mpsk_profile` - MPSK profile name.
 * `mpsk` - Enable/disable multiple pre-shared keys (PSKs.)
 * `mpsk_concurrent_clients` - Number of pre-shared keys (PSKs) to allow if multiple pre-shared keys are enabled.
 * `mpsk_key` - Pre-shared keys that can be used to connect to this virtual access point. The structure of `mpsk_key` block is documented below.
@@ -78,12 +91,16 @@ The following arguments are supported:
 * `captive_portal_macauth_radius_server` - Captive portal external RADIUS server domain name or IP address.
 * `captive_portal_macauth_radius_secret` - Secret key to access the macauth RADIUS server.
 * `captive_portal_ac_name` - Local-bridging captive portal ac-name.
+* `captive_portal_auth_timeout` - Hard timeout - AP will always clear the session after timeout regardless of traffic (0 - 864000 sec, default = 0).
 * `captive_portal_session_timeout_interval` - Session timeout interval (0 - 864000 sec, default = 0).
 * `alias` - Alias.
 * `multicast_rate` - Multicast rate (0, 6000, 12000, or 24000 kbps, default = 0).
 * `multicast_enhance` - Enable/disable converting multicast to unicast to improve performance (default = disable).
+* `igmp_snooping` - Enable/disable IGMP snooping.
 * `broadcast_suppression` - Optional suppression of broadcast messages. For example, you can keep DHCP messages, ARP broadcasts, and so on off of the wireless network.
+* `ipv6_rules` - Optional rules of IPv6 packets. For example, you can keep RA, RS and so on off of the wireless network.
 * `me_disable_thresh` - Disable multicast enhancement when this many clients are receiving multicast traffic.
+* `mu_mimo` - Enable/disable Multi-user MIMO (default = enable).
 * `probe_resp_suppression` - Enable/disable probe response suppression (to ignore weak signals) (default = disable).
 * `probe_resp_threshold` - Minimum signal level/threshold in dBm required for the AP response to probe requests (-95 to -20, default = -80).
 * `radio_sensitivity` - Enable/disable software radio sensitivity (to ignore weak signals) (default = disable).
@@ -92,6 +109,7 @@ The following arguments are supported:
 * `radio_2g_threshold` - Minimum signal level/threshold in dBm required for the AP response to receive a packet in 2.4G band (-95 to -20, default = -79).
 * `vlan_pooling` - Enable/disable VLAN pooling, to allow grouping of multiple wireless controller VLANs into VLAN pools (default = disable). When set to wtp-group, VLAN pooling occurs with VLAN assignment by wtp-group.
 * `vlan_pool` - VLAN pool. The structure of `vlan_pool` block is documented below.
+* `dhcp_option43_insertion` - Enable/disable insertion of DHCP option 43 (default = enable).
 * `dhcp_option82_insertion` - Enable/disable DHCP option 82 insert (default = disable).
 * `dhcp_option82_circuit_id_insertion` - Enable/disable DHCP option 82 circuit-id insert (default = disable).
 * `dhcp_option82_remote_id_insertion` - Enable/disable DHCP option 82 remote-id insert (default = disable).
@@ -103,6 +121,11 @@ The following arguments are supported:
 * `eap_reauth_intv` - EAP re-authentication interval (1800 - 864000 sec, default = 86400).
 * `qos_profile` - Quality of service profile name.
 * `hotspot20_profile` - Hotspot 2.0 profile name.
+* `access_control_list` - access-control-list profile name.
+* `primary_wag_profile` - Primary wireless access gateway profile name.
+* `secondary_wag_profile` - Secondary wireless access gateway profile name.
+* `tunnel_echo_interval` - The time interval to send echo to both primary and secondary tunnel peers (1 - 65535 sec, default = 300).
+* `tunnel_fallback_interval` - The time interval for secondary tunnel to fall back to primary tunnel (0 - 65535 sec, default = 7200).
 * `rates_11a` - Allowed data rates for 802.11a.
 * `rates_11bg` - Allowed data rates for 802.11b/g.
 * `rates_11n_ss12` - Allowed data rates for 802.11n with 1 or 2 spatial streams.
@@ -110,9 +133,13 @@ The following arguments are supported:
 * `rates_11ac_ss12` - Allowed data rates for 802.11ac with 1 or 2 spatial streams.
 * `rates_11ac_ss34` - Allowed data rates for 802.11ac with 3 or 4 spatial streams.
 * `utm_profile` - UTM profile name.
+* `address_group` - Address group ID.
 * `mac_filter` - Enable/disable MAC filtering to block wireless clients by mac address.
 * `mac_filter_policy_other` - Allow or block clients with MAC addresses that are not in the filter list.
 * `mac_filter_list` - Create a list of MAC addresses for MAC address filtering. The structure of `mac_filter_list` block is documented below.
+* `sticky_client_remove` - Enable/disable sticky client remove to maintain good signal level clients in SSID. (default = disable).
+* `sticky_client_threshold_5g` - Minimum signal level/threshold in dBm required for the 5G client to be serviced by the AP (-95 to -20, default = -76).
+* `sticky_client_threshold_2g` - Minimum signal level/threshold in dBm required for the 2G client to be serviced by the AP (-95 to -20, default = -79).
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `radius_mac_auth_usergroups` block supports:
@@ -140,6 +167,11 @@ The `mpsk_key` block supports:
 * `passphrase` - WPA Pre-shared key.
 * `concurrent_clients` - Number of clients that can connect using this pre-shared key.
 * `comment` - Comment.
+* `mpsk_schedules` - Firewall schedule for MPSK passphrase. The passphrase will be effective only when at least one schedule is valid. The structure of `mpsk_schedules` block is documented below.
+
+The `mpsk_schedules` block supports:
+
+* `name` - Schedule name.
 
 The `vlan_pool` block supports:
 
