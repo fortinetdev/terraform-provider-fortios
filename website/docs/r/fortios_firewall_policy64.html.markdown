@@ -42,10 +42,10 @@ resource "fortios_firewall_policy64" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `policyid` - Policy ID.
+* `name` - Policy name.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `srcintf` - (Required) Source interface name.
 * `dstintf` - (Required) Destination interface name.
@@ -56,6 +56,7 @@ The following arguments are supported:
 * `schedule` - (Required) Schedule name.
 * `service` - Service name. The structure of `service` block is documented below.
 * `logtraffic` - Enable/disable policy log traffic.
+* `logtraffic_start` - Record logs when a session starts and ends.
 * `permit_any_host` - Enable/disable permit any host in.
 * `traffic_shaper` - Traffic shaper.
 * `traffic_shaper_reverse` - Reverse traffic shaper.
