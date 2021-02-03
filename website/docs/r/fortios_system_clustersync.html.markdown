@@ -24,7 +24,6 @@ resource "fortios_system_clustersync" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `sync_id` - Sync ID.
@@ -34,6 +33,7 @@ The following arguments are supported:
 * `down_intfs_before_sess_sync` - List of interfaces to be turned down before session synchronization is complete. The structure of `down_intfs_before_sess_sync` block is documented below.
 * `hb_interval` - Heartbeat interval (1 - 10 sec).
 * `hb_lost_threshold` - Lost heartbeat threshold (1 - 10).
+* `ipsec_tunnel_sync` - Enable/disable IPsec tunnel synchronization.
 * `slave_add_ike_routes` - Enable/disable IKE route announcement on the backup unit.
 * `session_sync_filter` - Add one or more filters if you only want to synchronize some sessions. Use the filter to configure the types of sessions to synchronize. The structure of `session_sync_filter` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
