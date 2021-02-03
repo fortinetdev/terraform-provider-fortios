@@ -24,7 +24,6 @@ resource "fortios_application_group" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Application group name.
@@ -32,6 +31,12 @@ The following arguments are supported:
 * `type` - Application group type.
 * `application` - Application ID list. The structure of `application` block is documented below.
 * `category` - Application category ID list. The structure of `category` block is documented below.
+* `risk` - Risk, or impact, of allowing traffic from this application to occur (1 - 5; Low, Elevated, Medium, High, and Critical). The structure of `risk` block is documented below.
+* `protocols` - Application protocol filter.
+* `vendor` - Application vendor filter.
+* `technology` - Application technology filter.
+* `behavior` - Application behavior filter.
+* `popularity` - Application popularity filter (1 - 5, from least to most popular).
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `application` block supports:
@@ -41,6 +46,10 @@ The `application` block supports:
 The `category` block supports:
 
 * `id` - Category IDs.
+
+The `risk` block supports:
+
+* `level` - Risk, or impact, of allowing traffic from this application to occur (1 - 5; Low, Elevated, Medium, High, and Critical).
 
 
 ## Attribute Reference
