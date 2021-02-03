@@ -25,7 +25,6 @@ resource "fortios_webproxy_forwardserver" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Server name.
@@ -36,6 +35,8 @@ The following arguments are supported:
 * `healthcheck` - Enable/disable forward server health checking. Attempts to connect through the remote forwarding server to a destination to verify that the forwarding server is operating normally.
 * `monitor` - URL for forward server health check monitoring (default = http://www.google.com).
 * `server_down_option` - Action to take when the forward server is found to be down: block sessions until the server is back up or pass sessions to their destination.
+* `username` - HTTP authentication user name.
+* `password` - HTTP authentication password.
 * `comment` - Comment.
 
 
