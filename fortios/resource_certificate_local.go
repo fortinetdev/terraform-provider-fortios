@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -167,7 +168,7 @@ func resourceCertificateLocalCreate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectCertificateLocal(d)
+	obj, err := getObjectCertificateLocal(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating CertificateLocal resource while getting object: %v", err)
 	}
@@ -192,7 +193,7 @@ func resourceCertificateLocalUpdate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectCertificateLocal(d)
+	obj, err := getObjectCertificateLocal(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating CertificateLocal resource while getting object: %v", err)
 	}
@@ -245,233 +246,233 @@ func resourceCertificateLocalRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectCertificateLocal(d, o)
+	err = refreshObjectCertificateLocal(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading CertificateLocal resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenCertificateLocalName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenCertificateLocalName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenCertificateLocalPassword(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenCertificateLocalPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenCertificateLocalComments(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenCertificateLocalComments(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenCertificateLocalPrivateKey(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenCertificateLocalPrivateKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenCertificateLocalCertificate(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenCertificateLocalCertificate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenCertificateLocalCsr(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenCertificateLocalCsr(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenCertificateLocalState(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenCertificateLocalState(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenCertificateLocalScepUrl(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenCertificateLocalScepUrl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenCertificateLocalRange(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenCertificateLocalRange(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenCertificateLocalSource(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenCertificateLocalSource(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenCertificateLocalAutoRegenerateDays(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenCertificateLocalAutoRegenerateDays(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenCertificateLocalAutoRegenerateDaysWarning(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenCertificateLocalAutoRegenerateDaysWarning(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenCertificateLocalScepPassword(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenCertificateLocalScepPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenCertificateLocalCaIdentifier(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenCertificateLocalCaIdentifier(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenCertificateLocalNameEncoding(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenCertificateLocalNameEncoding(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenCertificateLocalSourceIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenCertificateLocalSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenCertificateLocalIkeLocalid(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenCertificateLocalIkeLocalid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenCertificateLocalIkeLocalidType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenCertificateLocalIkeLocalidType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenCertificateLocalLastUpdated(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenCertificateLocalLastUpdated(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenCertificateLocalEnrollProtocol(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenCertificateLocalEnrollProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenCertificateLocalCmpServer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenCertificateLocalCmpServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenCertificateLocalCmpPath(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenCertificateLocalCmpPath(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenCertificateLocalCmpServerCert(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenCertificateLocalCmpServerCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenCertificateLocalCmpRegenerationMethod(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenCertificateLocalCmpRegenerationMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectCertificateLocal(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectCertificateLocal(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenCertificateLocalName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenCertificateLocalName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("comments", flattenCertificateLocalComments(o["comments"], d, "comments")); err != nil {
+	if err = d.Set("comments", flattenCertificateLocalComments(o["comments"], d, "comments", sv)); err != nil {
 		if !fortiAPIPatch(o["comments"]) {
 			return fmt.Errorf("Error reading comments: %v", err)
 		}
 	}
 
-	if err = d.Set("certificate", flattenCertificateLocalCertificate(o["certificate"], d, "certificate")); err != nil {
+	if err = d.Set("certificate", flattenCertificateLocalCertificate(o["certificate"], d, "certificate", sv)); err != nil {
 		if !fortiAPIPatch(o["certificate"]) {
 			return fmt.Errorf("Error reading certificate: %v", err)
 		}
 	}
 
-	if err = d.Set("csr", flattenCertificateLocalCsr(o["csr"], d, "csr")); err != nil {
+	if err = d.Set("csr", flattenCertificateLocalCsr(o["csr"], d, "csr", sv)); err != nil {
 		if !fortiAPIPatch(o["csr"]) {
 			return fmt.Errorf("Error reading csr: %v", err)
 		}
 	}
 
-	if err = d.Set("state", flattenCertificateLocalState(o["state"], d, "state")); err != nil {
+	if err = d.Set("state", flattenCertificateLocalState(o["state"], d, "state", sv)); err != nil {
 		if !fortiAPIPatch(o["state"]) {
 			return fmt.Errorf("Error reading state: %v", err)
 		}
 	}
 
-	if err = d.Set("scep_url", flattenCertificateLocalScepUrl(o["scep-url"], d, "scep_url")); err != nil {
+	if err = d.Set("scep_url", flattenCertificateLocalScepUrl(o["scep-url"], d, "scep_url", sv)); err != nil {
 		if !fortiAPIPatch(o["scep-url"]) {
 			return fmt.Errorf("Error reading scep_url: %v", err)
 		}
 	}
 
-	if err = d.Set("range", flattenCertificateLocalRange(o["range"], d, "range")); err != nil {
+	if err = d.Set("range", flattenCertificateLocalRange(o["range"], d, "range", sv)); err != nil {
 		if !fortiAPIPatch(o["range"]) {
 			return fmt.Errorf("Error reading range: %v", err)
 		}
 	}
 
-	if err = d.Set("source", flattenCertificateLocalSource(o["source"], d, "source")); err != nil {
+	if err = d.Set("source", flattenCertificateLocalSource(o["source"], d, "source", sv)); err != nil {
 		if !fortiAPIPatch(o["source"]) {
 			return fmt.Errorf("Error reading source: %v", err)
 		}
 	}
 
-	if err = d.Set("auto_regenerate_days", flattenCertificateLocalAutoRegenerateDays(o["auto-regenerate-days"], d, "auto_regenerate_days")); err != nil {
+	if err = d.Set("auto_regenerate_days", flattenCertificateLocalAutoRegenerateDays(o["auto-regenerate-days"], d, "auto_regenerate_days", sv)); err != nil {
 		if !fortiAPIPatch(o["auto-regenerate-days"]) {
 			return fmt.Errorf("Error reading auto_regenerate_days: %v", err)
 		}
 	}
 
-	if err = d.Set("auto_regenerate_days_warning", flattenCertificateLocalAutoRegenerateDaysWarning(o["auto-regenerate-days-warning"], d, "auto_regenerate_days_warning")); err != nil {
+	if err = d.Set("auto_regenerate_days_warning", flattenCertificateLocalAutoRegenerateDaysWarning(o["auto-regenerate-days-warning"], d, "auto_regenerate_days_warning", sv)); err != nil {
 		if !fortiAPIPatch(o["auto-regenerate-days-warning"]) {
 			return fmt.Errorf("Error reading auto_regenerate_days_warning: %v", err)
 		}
 	}
 
-	if err = d.Set("ca_identifier", flattenCertificateLocalCaIdentifier(o["ca-identifier"], d, "ca_identifier")); err != nil {
+	if err = d.Set("ca_identifier", flattenCertificateLocalCaIdentifier(o["ca-identifier"], d, "ca_identifier", sv)); err != nil {
 		if !fortiAPIPatch(o["ca-identifier"]) {
 			return fmt.Errorf("Error reading ca_identifier: %v", err)
 		}
 	}
 
-	if err = d.Set("name_encoding", flattenCertificateLocalNameEncoding(o["name-encoding"], d, "name_encoding")); err != nil {
+	if err = d.Set("name_encoding", flattenCertificateLocalNameEncoding(o["name-encoding"], d, "name_encoding", sv)); err != nil {
 		if !fortiAPIPatch(o["name-encoding"]) {
 			return fmt.Errorf("Error reading name_encoding: %v", err)
 		}
 	}
 
-	if err = d.Set("source_ip", flattenCertificateLocalSourceIp(o["source-ip"], d, "source_ip")); err != nil {
+	if err = d.Set("source_ip", flattenCertificateLocalSourceIp(o["source-ip"], d, "source_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["source-ip"]) {
 			return fmt.Errorf("Error reading source_ip: %v", err)
 		}
 	}
 
-	if err = d.Set("ike_localid", flattenCertificateLocalIkeLocalid(o["ike-localid"], d, "ike_localid")); err != nil {
+	if err = d.Set("ike_localid", flattenCertificateLocalIkeLocalid(o["ike-localid"], d, "ike_localid", sv)); err != nil {
 		if !fortiAPIPatch(o["ike-localid"]) {
 			return fmt.Errorf("Error reading ike_localid: %v", err)
 		}
 	}
 
-	if err = d.Set("ike_localid_type", flattenCertificateLocalIkeLocalidType(o["ike-localid-type"], d, "ike_localid_type")); err != nil {
+	if err = d.Set("ike_localid_type", flattenCertificateLocalIkeLocalidType(o["ike-localid-type"], d, "ike_localid_type", sv)); err != nil {
 		if !fortiAPIPatch(o["ike-localid-type"]) {
 			return fmt.Errorf("Error reading ike_localid_type: %v", err)
 		}
 	}
 
-	if err = d.Set("last_updated", flattenCertificateLocalLastUpdated(o["last-updated"], d, "last_updated")); err != nil {
+	if err = d.Set("last_updated", flattenCertificateLocalLastUpdated(o["last-updated"], d, "last_updated", sv)); err != nil {
 		if !fortiAPIPatch(o["last-updated"]) {
 			return fmt.Errorf("Error reading last_updated: %v", err)
 		}
 	}
 
-	if err = d.Set("enroll_protocol", flattenCertificateLocalEnrollProtocol(o["enroll-protocol"], d, "enroll_protocol")); err != nil {
+	if err = d.Set("enroll_protocol", flattenCertificateLocalEnrollProtocol(o["enroll-protocol"], d, "enroll_protocol", sv)); err != nil {
 		if !fortiAPIPatch(o["enroll-protocol"]) {
 			return fmt.Errorf("Error reading enroll_protocol: %v", err)
 		}
 	}
 
-	if err = d.Set("cmp_server", flattenCertificateLocalCmpServer(o["cmp-server"], d, "cmp_server")); err != nil {
+	if err = d.Set("cmp_server", flattenCertificateLocalCmpServer(o["cmp-server"], d, "cmp_server", sv)); err != nil {
 		if !fortiAPIPatch(o["cmp-server"]) {
 			return fmt.Errorf("Error reading cmp_server: %v", err)
 		}
 	}
 
-	if err = d.Set("cmp_path", flattenCertificateLocalCmpPath(o["cmp-path"], d, "cmp_path")); err != nil {
+	if err = d.Set("cmp_path", flattenCertificateLocalCmpPath(o["cmp-path"], d, "cmp_path", sv)); err != nil {
 		if !fortiAPIPatch(o["cmp-path"]) {
 			return fmt.Errorf("Error reading cmp_path: %v", err)
 		}
 	}
 
-	if err = d.Set("cmp_server_cert", flattenCertificateLocalCmpServerCert(o["cmp-server-cert"], d, "cmp_server_cert")); err != nil {
+	if err = d.Set("cmp_server_cert", flattenCertificateLocalCmpServerCert(o["cmp-server-cert"], d, "cmp_server_cert", sv)); err != nil {
 		if !fortiAPIPatch(o["cmp-server-cert"]) {
 			return fmt.Errorf("Error reading cmp_server_cert: %v", err)
 		}
 	}
 
-	if err = d.Set("cmp_regeneration_method", flattenCertificateLocalCmpRegenerationMethod(o["cmp-regeneration-method"], d, "cmp_regeneration_method")); err != nil {
+	if err = d.Set("cmp_regeneration_method", flattenCertificateLocalCmpRegenerationMethod(o["cmp-regeneration-method"], d, "cmp_regeneration_method", sv)); err != nil {
 		if !fortiAPIPatch(o["cmp-regeneration-method"]) {
 			return fmt.Errorf("Error reading cmp_regeneration_method: %v", err)
 		}
@@ -483,110 +484,111 @@ func refreshObjectCertificateLocal(d *schema.ResourceData, o map[string]interfac
 func flattenCertificateLocalFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandCertificateLocalName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandCertificateLocalName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateLocalPassword(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandCertificateLocalPassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateLocalComments(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandCertificateLocalComments(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateLocalPrivateKey(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandCertificateLocalPrivateKey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateLocalCertificate(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandCertificateLocalCertificate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateLocalCsr(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandCertificateLocalCsr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateLocalState(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandCertificateLocalState(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateLocalScepUrl(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandCertificateLocalScepUrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateLocalRange(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandCertificateLocalRange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateLocalSource(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandCertificateLocalSource(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateLocalAutoRegenerateDays(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandCertificateLocalAutoRegenerateDays(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateLocalAutoRegenerateDaysWarning(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandCertificateLocalAutoRegenerateDaysWarning(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateLocalScepPassword(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandCertificateLocalScepPassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateLocalCaIdentifier(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandCertificateLocalCaIdentifier(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateLocalNameEncoding(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandCertificateLocalNameEncoding(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateLocalSourceIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandCertificateLocalSourceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateLocalIkeLocalid(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandCertificateLocalIkeLocalid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateLocalIkeLocalidType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandCertificateLocalIkeLocalidType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateLocalLastUpdated(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandCertificateLocalLastUpdated(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateLocalEnrollProtocol(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandCertificateLocalEnrollProtocol(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateLocalCmpServer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandCertificateLocalCmpServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateLocalCmpPath(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandCertificateLocalCmpPath(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateLocalCmpServerCert(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandCertificateLocalCmpServerCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateLocalCmpRegenerationMethod(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandCertificateLocalCmpRegenerationMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectCertificateLocal(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectCertificateLocal(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandCertificateLocalName(d, v, "name")
+
+		t, err := expandCertificateLocalName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -595,7 +597,8 @@ func getObjectCertificateLocal(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("password"); ok {
-		t, err := expandCertificateLocalPassword(d, v, "password")
+
+		t, err := expandCertificateLocalPassword(d, v, "password", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -604,7 +607,8 @@ func getObjectCertificateLocal(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-		t, err := expandCertificateLocalComments(d, v, "comments")
+
+		t, err := expandCertificateLocalComments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -613,7 +617,8 @@ func getObjectCertificateLocal(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("private_key"); ok {
-		t, err := expandCertificateLocalPrivateKey(d, v, "private_key")
+
+		t, err := expandCertificateLocalPrivateKey(d, v, "private_key", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -622,7 +627,8 @@ func getObjectCertificateLocal(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("certificate"); ok {
-		t, err := expandCertificateLocalCertificate(d, v, "certificate")
+
+		t, err := expandCertificateLocalCertificate(d, v, "certificate", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -631,7 +637,8 @@ func getObjectCertificateLocal(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("csr"); ok {
-		t, err := expandCertificateLocalCsr(d, v, "csr")
+
+		t, err := expandCertificateLocalCsr(d, v, "csr", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -640,7 +647,8 @@ func getObjectCertificateLocal(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("state"); ok {
-		t, err := expandCertificateLocalState(d, v, "state")
+
+		t, err := expandCertificateLocalState(d, v, "state", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -649,7 +657,8 @@ func getObjectCertificateLocal(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("scep_url"); ok {
-		t, err := expandCertificateLocalScepUrl(d, v, "scep_url")
+
+		t, err := expandCertificateLocalScepUrl(d, v, "scep_url", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -658,7 +667,8 @@ func getObjectCertificateLocal(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("range"); ok {
-		t, err := expandCertificateLocalRange(d, v, "range")
+
+		t, err := expandCertificateLocalRange(d, v, "range", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -667,7 +677,8 @@ func getObjectCertificateLocal(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("source"); ok {
-		t, err := expandCertificateLocalSource(d, v, "source")
+
+		t, err := expandCertificateLocalSource(d, v, "source", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -676,7 +687,8 @@ func getObjectCertificateLocal(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOkExists("auto_regenerate_days"); ok {
-		t, err := expandCertificateLocalAutoRegenerateDays(d, v, "auto_regenerate_days")
+
+		t, err := expandCertificateLocalAutoRegenerateDays(d, v, "auto_regenerate_days", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -685,7 +697,8 @@ func getObjectCertificateLocal(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOkExists("auto_regenerate_days_warning"); ok {
-		t, err := expandCertificateLocalAutoRegenerateDaysWarning(d, v, "auto_regenerate_days_warning")
+
+		t, err := expandCertificateLocalAutoRegenerateDaysWarning(d, v, "auto_regenerate_days_warning", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -694,7 +707,8 @@ func getObjectCertificateLocal(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("scep_password"); ok {
-		t, err := expandCertificateLocalScepPassword(d, v, "scep_password")
+
+		t, err := expandCertificateLocalScepPassword(d, v, "scep_password", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -703,7 +717,8 @@ func getObjectCertificateLocal(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("ca_identifier"); ok {
-		t, err := expandCertificateLocalCaIdentifier(d, v, "ca_identifier")
+
+		t, err := expandCertificateLocalCaIdentifier(d, v, "ca_identifier", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -712,7 +727,8 @@ func getObjectCertificateLocal(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("name_encoding"); ok {
-		t, err := expandCertificateLocalNameEncoding(d, v, "name_encoding")
+
+		t, err := expandCertificateLocalNameEncoding(d, v, "name_encoding", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -721,7 +737,8 @@ func getObjectCertificateLocal(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
-		t, err := expandCertificateLocalSourceIp(d, v, "source_ip")
+
+		t, err := expandCertificateLocalSourceIp(d, v, "source_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -730,7 +747,8 @@ func getObjectCertificateLocal(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("ike_localid"); ok {
-		t, err := expandCertificateLocalIkeLocalid(d, v, "ike_localid")
+
+		t, err := expandCertificateLocalIkeLocalid(d, v, "ike_localid", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -739,7 +757,8 @@ func getObjectCertificateLocal(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("ike_localid_type"); ok {
-		t, err := expandCertificateLocalIkeLocalidType(d, v, "ike_localid_type")
+
+		t, err := expandCertificateLocalIkeLocalidType(d, v, "ike_localid_type", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -748,7 +767,8 @@ func getObjectCertificateLocal(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOkExists("last_updated"); ok {
-		t, err := expandCertificateLocalLastUpdated(d, v, "last_updated")
+
+		t, err := expandCertificateLocalLastUpdated(d, v, "last_updated", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -757,7 +777,8 @@ func getObjectCertificateLocal(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("enroll_protocol"); ok {
-		t, err := expandCertificateLocalEnrollProtocol(d, v, "enroll_protocol")
+
+		t, err := expandCertificateLocalEnrollProtocol(d, v, "enroll_protocol", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -766,7 +787,8 @@ func getObjectCertificateLocal(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("cmp_server"); ok {
-		t, err := expandCertificateLocalCmpServer(d, v, "cmp_server")
+
+		t, err := expandCertificateLocalCmpServer(d, v, "cmp_server", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -775,7 +797,8 @@ func getObjectCertificateLocal(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("cmp_path"); ok {
-		t, err := expandCertificateLocalCmpPath(d, v, "cmp_path")
+
+		t, err := expandCertificateLocalCmpPath(d, v, "cmp_path", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -784,7 +807,8 @@ func getObjectCertificateLocal(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("cmp_server_cert"); ok {
-		t, err := expandCertificateLocalCmpServerCert(d, v, "cmp_server_cert")
+
+		t, err := expandCertificateLocalCmpServerCert(d, v, "cmp_server_cert", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -793,7 +817,8 @@ func getObjectCertificateLocal(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("cmp_regeneration_method"); ok {
-		t, err := expandCertificateLocalCmpRegenerationMethod(d, v, "cmp_regeneration_method")
+
+		t, err := expandCertificateLocalCmpRegenerationMethod(d, v, "cmp_regeneration_method", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
