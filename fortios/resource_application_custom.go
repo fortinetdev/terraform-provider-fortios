@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -91,7 +92,7 @@ func resourceApplicationCustomCreate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectApplicationCustom(d)
+	obj, err := getObjectApplicationCustom(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating ApplicationCustom resource while getting object: %v", err)
 	}
@@ -116,7 +117,7 @@ func resourceApplicationCustomUpdate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectApplicationCustom(d)
+	obj, err := getObjectApplicationCustom(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating ApplicationCustom resource while getting object: %v", err)
 	}
@@ -169,111 +170,111 @@ func resourceApplicationCustomRead(d *schema.ResourceData, m interface{}) error 
 		return nil
 	}
 
-	err = refreshObjectApplicationCustom(d, o)
+	err = refreshObjectApplicationCustom(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading ApplicationCustom resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenApplicationCustomTag(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenApplicationCustomTag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenApplicationCustomName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenApplicationCustomName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenApplicationCustomId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenApplicationCustomId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenApplicationCustomComment(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenApplicationCustomComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenApplicationCustomSignature(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenApplicationCustomSignature(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenApplicationCustomCategory(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenApplicationCustomCategory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenApplicationCustomProtocol(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenApplicationCustomProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenApplicationCustomTechnology(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenApplicationCustomTechnology(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenApplicationCustomBehavior(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenApplicationCustomBehavior(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenApplicationCustomVendor(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenApplicationCustomVendor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectApplicationCustom(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectApplicationCustom(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("tag", flattenApplicationCustomTag(o["tag"], d, "tag")); err != nil {
+	if err = d.Set("tag", flattenApplicationCustomTag(o["tag"], d, "tag", sv)); err != nil {
 		if !fortiAPIPatch(o["tag"]) {
 			return fmt.Errorf("Error reading tag: %v", err)
 		}
 	}
 
-	if err = d.Set("name", flattenApplicationCustomName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenApplicationCustomName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("fosid", flattenApplicationCustomId(o["id"], d, "fosid")); err != nil {
+	if err = d.Set("fosid", flattenApplicationCustomId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
 			return fmt.Errorf("Error reading fosid: %v", err)
 		}
 	}
 
-	if err = d.Set("comment", flattenApplicationCustomComment(o["comment"], d, "comment")); err != nil {
+	if err = d.Set("comment", flattenApplicationCustomComment(o["comment"], d, "comment", sv)); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
 		}
 	}
 
-	if err = d.Set("signature", flattenApplicationCustomSignature(o["signature"], d, "signature")); err != nil {
+	if err = d.Set("signature", flattenApplicationCustomSignature(o["signature"], d, "signature", sv)); err != nil {
 		if !fortiAPIPatch(o["signature"]) {
 			return fmt.Errorf("Error reading signature: %v", err)
 		}
 	}
 
-	if err = d.Set("category", flattenApplicationCustomCategory(o["category"], d, "category")); err != nil {
+	if err = d.Set("category", flattenApplicationCustomCategory(o["category"], d, "category", sv)); err != nil {
 		if !fortiAPIPatch(o["category"]) {
 			return fmt.Errorf("Error reading category: %v", err)
 		}
 	}
 
-	if err = d.Set("protocol", flattenApplicationCustomProtocol(o["protocol"], d, "protocol")); err != nil {
+	if err = d.Set("protocol", flattenApplicationCustomProtocol(o["protocol"], d, "protocol", sv)); err != nil {
 		if !fortiAPIPatch(o["protocol"]) {
 			return fmt.Errorf("Error reading protocol: %v", err)
 		}
 	}
 
-	if err = d.Set("technology", flattenApplicationCustomTechnology(o["technology"], d, "technology")); err != nil {
+	if err = d.Set("technology", flattenApplicationCustomTechnology(o["technology"], d, "technology", sv)); err != nil {
 		if !fortiAPIPatch(o["technology"]) {
 			return fmt.Errorf("Error reading technology: %v", err)
 		}
 	}
 
-	if err = d.Set("behavior", flattenApplicationCustomBehavior(o["behavior"], d, "behavior")); err != nil {
+	if err = d.Set("behavior", flattenApplicationCustomBehavior(o["behavior"], d, "behavior", sv)); err != nil {
 		if !fortiAPIPatch(o["behavior"]) {
 			return fmt.Errorf("Error reading behavior: %v", err)
 		}
 	}
 
-	if err = d.Set("vendor", flattenApplicationCustomVendor(o["vendor"], d, "vendor")); err != nil {
+	if err = d.Set("vendor", flattenApplicationCustomVendor(o["vendor"], d, "vendor", sv)); err != nil {
 		if !fortiAPIPatch(o["vendor"]) {
 			return fmt.Errorf("Error reading vendor: %v", err)
 		}
@@ -285,54 +286,55 @@ func refreshObjectApplicationCustom(d *schema.ResourceData, o map[string]interfa
 func flattenApplicationCustomFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandApplicationCustomTag(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandApplicationCustomTag(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandApplicationCustomName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandApplicationCustomName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandApplicationCustomId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandApplicationCustomId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandApplicationCustomComment(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandApplicationCustomComment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandApplicationCustomSignature(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandApplicationCustomSignature(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandApplicationCustomCategory(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandApplicationCustomCategory(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandApplicationCustomProtocol(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandApplicationCustomProtocol(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandApplicationCustomTechnology(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandApplicationCustomTechnology(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandApplicationCustomBehavior(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandApplicationCustomBehavior(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandApplicationCustomVendor(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandApplicationCustomVendor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectApplicationCustom(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectApplicationCustom(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("tag"); ok {
-		t, err := expandApplicationCustomTag(d, v, "tag")
+
+		t, err := expandApplicationCustomTag(d, v, "tag", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -341,7 +343,8 @@ func getObjectApplicationCustom(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandApplicationCustomName(d, v, "name")
+
+		t, err := expandApplicationCustomName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -350,7 +353,8 @@ func getObjectApplicationCustom(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-		t, err := expandApplicationCustomId(d, v, "fosid")
+
+		t, err := expandApplicationCustomId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -359,7 +363,8 @@ func getObjectApplicationCustom(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-		t, err := expandApplicationCustomComment(d, v, "comment")
+
+		t, err := expandApplicationCustomComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -368,7 +373,8 @@ func getObjectApplicationCustom(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("signature"); ok {
-		t, err := expandApplicationCustomSignature(d, v, "signature")
+
+		t, err := expandApplicationCustomSignature(d, v, "signature", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -377,7 +383,8 @@ func getObjectApplicationCustom(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOkExists("category"); ok {
-		t, err := expandApplicationCustomCategory(d, v, "category")
+
+		t, err := expandApplicationCustomCategory(d, v, "category", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -386,7 +393,8 @@ func getObjectApplicationCustom(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("protocol"); ok {
-		t, err := expandApplicationCustomProtocol(d, v, "protocol")
+
+		t, err := expandApplicationCustomProtocol(d, v, "protocol", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -395,7 +403,8 @@ func getObjectApplicationCustom(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("technology"); ok {
-		t, err := expandApplicationCustomTechnology(d, v, "technology")
+
+		t, err := expandApplicationCustomTechnology(d, v, "technology", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -404,7 +413,8 @@ func getObjectApplicationCustom(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("behavior"); ok {
-		t, err := expandApplicationCustomBehavior(d, v, "behavior")
+
+		t, err := expandApplicationCustomBehavior(d, v, "behavior", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -413,7 +423,8 @@ func getObjectApplicationCustom(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("vendor"); ok {
-		t, err := expandApplicationCustomVendor(d, v, "vendor")
+
+		t, err := expandApplicationCustomVendor(d, v, "vendor", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
