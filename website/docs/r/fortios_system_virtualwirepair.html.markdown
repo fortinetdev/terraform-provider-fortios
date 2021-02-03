@@ -11,7 +11,6 @@ Configure virtual wire pairs.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Virtual-wire-pair name. Must be a unique interface name.
