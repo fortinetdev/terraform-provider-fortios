@@ -24,7 +24,6 @@ resource "fortios_user_peer" "trname1" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Peer name.
