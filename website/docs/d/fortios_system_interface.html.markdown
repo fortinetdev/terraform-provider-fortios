@@ -34,9 +34,13 @@ The following attributes are exported:
 * `vrf` - Virtual Routing Forwarding ID.
 * `cli_conn_status` - CLI connection status.
 * `fortilink` - Enable FortiLink to dedicate this interface to manage other Fortinet devices.
+* `switch_controller_source_ip` - Source IP address used in FortiLink over L3 connections.
 * `mode` - Addressing mode (static, DHCP, PPPoE).
+* `client_options` - DHCP client options. The structure of `client_options` block is documented below.
 * `distance` - Distance for routes learned through PPPoE or DHCP, lower distance indicates preferred route.
 * `priority` - Priority of learned routes.
+* `dhcp_relay_interface_select_method` - Specify how to select outgoing interface to reach server.
+* `dhcp_relay_interface` - Specify outgoing interface to reach server.
 * `dhcp_relay_service` - Enable/disable allowing this interface to act as a DHCP relay.
 * `dhcp_relay_ip` - DHCP relay IP address.
 * `dhcp_relay_type` - DHCP relay type (regular or IPsec).
@@ -110,6 +114,8 @@ The following attributes are exported:
 * `trust_ip6_3` - Trusted IPv6 host for dedicated management traffic (::/0 for all hosts).
 * `mtu_override` - Enable to set a custom MTU for this interface.
 * `mtu` - MTU value for this interface.
+* `ring_rx` - RX ring size.
+* `ring_tx` - TX ring size.
 * `wccp` - Enable/disable WCCP on this interface. Used for encapsulated WCCP communication between WCCP clients and servers.
 * `netflow_sampler` - Enable/disable NetFlow on this interface and set the data that NetFlow collects (rx, tx, or both).
 * `sflow_sampler` - Enable/disable sFlow on this interface.
@@ -127,12 +133,14 @@ The following attributes are exported:
 * `inbandwidth` - Bandwidth limit for incoming traffic (0 - 16776000 kbps), 0 means unlimited.
 * `outbandwidth` - Bandwidth limit for outgoing traffic (0 - 16776000 kbps).
 * `egress_shaping_profile` - Outgoing traffic shaping profile.
+* `ingress_shaping_profile` - Incoming traffic shaping profile.
 * `disconnect_threshold` - Time in milliseconds to wait before sending a notification that this interface is down or disconnected.
 * `spillover_threshold` - Egress Spillover threshold (0 - 16776000 kbps), 0 means unlimited.
 * `ingress_spillover_threshold` - Ingress Spillover threshold (0 - 16776000 kbps).
 * `weight` - Default weight for static routes (if route has no weight configured).
 * `interface` - Interface name.
 * `external` - Enable/disable identifying the interface as an external interface (which usually means it's connected to the Internet).
+* `vlan_protocol` - Ethernet protocol of VLAN.
 * `vlanid` - VLAN ID (1 - 4094).
 * `forward_domain` - Transparent mode forward domain.
 * `remote_ip` - Remote IP address of tunnel.
@@ -175,6 +183,10 @@ The following attributes are exported:
 * `endpoint_compliance` - Enable/disable endpoint compliance enforcement.
 * `estimated_upstream_bandwidth` - Estimated maximum upstream bandwidth (kbps). Used to estimate link utilization.
 * `estimated_downstream_bandwidth` - Estimated maximum downstream bandwidth (kbps). Used to estimate link utilization.
+* `measured_upstream_bandwidth` - Measured upstream bandwidth (kbps). 
+* `measured_downstream_bandwidth` - Measured downstream bandwidth (kbps). 
+* `bandwidth_measure_time` - Bandwidth measure time 
+* `monitor_bandwidth` - Enable monitoring bandwidth on this interface.
 * `vrrp_virtual_mac` - Enable/disable use of virtual MAC for VRRP.
 * `vrrp` - VRRP configuration. The structure of `vrrp` block is documented below.
 * `role` - Interface role.
@@ -185,20 +197,40 @@ The following attributes are exported:
 * `auto_auth_extension_device` - Enable/disable automatic authorization of dedicated Fortinet extension device on this interface.
 * `ap_discover` - Enable/disable automatic registration of unknown FortiAP devices.
 * `fortilink_stacking` - Enable/disable FortiLink switch-stacking on this interface.
+* `fortilink_neighbor_detect` - Protocol for FortiGate neighbor discovery.
+* `ip_managed_by_fortiipam` - Enable/disable automatic IP address assignment of this interface by FortiIPAM.
+* `managed_subnetwork_size` - Number of IP addresses to be allocated by FortiIPAM and used by this FortiGate unit's DHCP server settings.
 * `fortilink_split_interface` - Enable/disable FortiLink split interface to connect member link to different FortiSwitch in stack for uplink redundancy.
 * `internal` - Implicitly created.
 * `fortilink_backup_link` - fortilink split interface backup link.
 * `switch_controller_access_vlan` - Block FortiSwitch port-to-port traffic.
 * `switch_controller_traffic_policy` - Switch controller traffic policy for the VLAN.
+* `switch_controller_rspan_mode` - Stop Layer2 MAC learning and interception of BPDUs and other packets on this interface.
+* `switch_controller_mgmt_vlan` - VLAN to use for FortiLink management purposes.
 * `switch_controller_igmp_snooping` - Switch controller IGMP snooping.
+* `switch_controller_igmp_snooping_proxy` - Switch controller IGMP snooping proxy.
+* `switch_controller_igmp_snooping_fast_leave` - Switch controller IGMP snooping fast-leave.
 * `switch_controller_dhcp_snooping` - Switch controller DHCP snooping.
 * `switch_controller_dhcp_snooping_verify_mac` - Switch controller DHCP snooping verify MAC.
 * `switch_controller_dhcp_snooping_option82` - Switch controller DHCP snooping option82.
 * `switch_controller_arp_inspection` - Enable/disable FortiSwitch ARP inspection.
 * `switch_controller_learning_limit` - Limit the number of dynamic MAC addresses on this VLAN (1 - 128, 0 = no limit, default).
+* `switch_controller_nac` - Integrated NAC settings for managed FortiSwitch.
+* `switch_controller_feature` - Interface's purpose when assigning traffic (read only).
+* `switch_controller_iot_scanning` - Enable/disable managed FortiSwitch IoT scanning.
+* `swc_vlan` - Creation status for switch-controller VLANs.
+* `swc_first_create` - Initial create for switch-controller VLANs.
 * `color` - Color of icon on the GUI.
 * `tagging` - Config object tagging. The structure of `tagging` block is documented below.
 * `ipv6` - IPv6 of interface. The structure of `ipv6` block is documented below.
+
+The `client_options` block contains:
+
+* `id` - ID.
+* `code` - DHCP client option code.
+* `type` - DHCP client option type.
+* `value` - DHCP client option value.
+* `ip` - DHCP option IPs.
 
 The `fail_alert_interfaces` block contains:
 
@@ -229,6 +261,7 @@ The `vrrp` block contains:
 * `accept_mode` - Enable/disable accept mode.
 * `vrdst` - Monitor the route to this destination.
 * `vrdst_priority` - Priority of the virtual router when the virtual router destination becomes unreachable (0 - 254).
+* `ignore_default_route` - Enable/disable ignoring of default route when checking destination.
 * `status` - Enable/disable this VRRP configuration.
 * `proxy_arp` - VRRP Proxy ARP configuration. The structure of `proxy_arp` block is documented below.
 
@@ -272,6 +305,7 @@ The `ipv6` block contains:
 * `ip6_extra_addr` - Extra IPv6 address prefixes of interface. The structure of `ip6_extra_addr` block is documented below.
 * `ip6_allowaccess` - Allow management access to the interface.
 * `ip6_send_adv` - Enable/disable sending advertisements about the interface.
+* `icmp6_send_redirect` - Enable/disable sending of ICMPv6 redirects.
 * `ip6_manage_flag` - Enable/disable the managed flag.
 * `ip6_other_flag` - Enable/disable the other IPv6 flag.
 * `ip6_max_interval` - IPv6 maximum interval (4 to 1800 sec).
@@ -282,6 +316,9 @@ The `ipv6` block contains:
 * `ip6_default_life` - Default life (sec).
 * `ip6_hop_limit` - Hop limit (0 means unspecified).
 * `autoconf` - Enable/disable address auto config.
+* `unique_autoconf_addr` - Enable/disable unique auto config address.
+* `interface_identifier` - IPv6 interface identifier.
+* `ip6_prefix_mode` - Assigning a prefix from DHCP or RA.
 * `ip6_upstream_interface` - Interface name providing delegated information.
 * `ip6_subnet` -  Subnet to routing prefix, syntax: xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx/xxx
 * `ip6_prefix_list` - Advertised prefix list. The structure of `ip6_prefix_list` block is documented below.
@@ -295,6 +332,7 @@ The `ipv6` block contains:
 * `dhcp6_prefix_hint` - DHCPv6 prefix that will be used as a hint to the upstream DHCPv6 server.
 * `dhcp6_prefix_hint_plt` - DHCPv6 prefix hint preferred life time (sec), 0 means unlimited lease time.
 * `dhcp6_prefix_hint_vlt` - DHCPv6 prefix hint valid life time (sec).
+* `cli_conn6_status` - CLI IPv6 connection status.
 * `vrrp_virtual_mac6` - Enable/disable virtual MAC for VRRP.
 * `vrip6_link_local` - Link-local IPv6 address of virtual router.
 * `vrrp6` - IPv6 VRRP configuration. The structure of `vrrp6` block is documented below.
