@@ -11,7 +11,6 @@ Configure MAC address tables.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `mac` - (Required) MAC address.
