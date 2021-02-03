@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -29,6 +30,11 @@ func resourceAntivirusSettings() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"use_extreme_db": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"default_db": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -54,7 +60,7 @@ func resourceAntivirusSettingsUpdate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectAntivirusSettings(d)
+	obj, err := getObjectAntivirusSettings(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating AntivirusSettings resource while getting object: %v", err)
 	}
@@ -107,41 +113,51 @@ func resourceAntivirusSettingsRead(d *schema.ResourceData, m interface{}) error 
 		return nil
 	}
 
-	err = refreshObjectAntivirusSettings(d, o)
+	err = refreshObjectAntivirusSettings(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading AntivirusSettings resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenAntivirusSettingsDefaultDb(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAntivirusSettingsUseExtremeDb(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAntivirusSettingsGrayware(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAntivirusSettingsDefaultDb(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAntivirusSettingsOverrideTimeout(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAntivirusSettingsGrayware(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectAntivirusSettings(d *schema.ResourceData, o map[string]interface{}) error {
+func flattenAntivirusSettingsOverrideTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func refreshObjectAntivirusSettings(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("default_db", flattenAntivirusSettingsDefaultDb(o["default-db"], d, "default_db")); err != nil {
+	if err = d.Set("use_extreme_db", flattenAntivirusSettingsUseExtremeDb(o["use-extreme-db"], d, "use_extreme_db", sv)); err != nil {
+		if !fortiAPIPatch(o["use-extreme-db"]) {
+			return fmt.Errorf("Error reading use_extreme_db: %v", err)
+		}
+	}
+
+	if err = d.Set("default_db", flattenAntivirusSettingsDefaultDb(o["default-db"], d, "default_db", sv)); err != nil {
 		if !fortiAPIPatch(o["default-db"]) {
 			return fmt.Errorf("Error reading default_db: %v", err)
 		}
 	}
 
-	if err = d.Set("grayware", flattenAntivirusSettingsGrayware(o["grayware"], d, "grayware")); err != nil {
+	if err = d.Set("grayware", flattenAntivirusSettingsGrayware(o["grayware"], d, "grayware", sv)); err != nil {
 		if !fortiAPIPatch(o["grayware"]) {
 			return fmt.Errorf("Error reading grayware: %v", err)
 		}
 	}
 
-	if err = d.Set("override_timeout", flattenAntivirusSettingsOverrideTimeout(o["override-timeout"], d, "override_timeout")); err != nil {
+	if err = d.Set("override_timeout", flattenAntivirusSettingsOverrideTimeout(o["override-timeout"], d, "override_timeout", sv)); err != nil {
 		if !fortiAPIPatch(o["override-timeout"]) {
 			return fmt.Errorf("Error reading override_timeout: %v", err)
 		}
@@ -153,26 +169,41 @@ func refreshObjectAntivirusSettings(d *schema.ResourceData, o map[string]interfa
 func flattenAntivirusSettingsFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandAntivirusSettingsDefaultDb(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAntivirusSettingsUseExtremeDb(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAntivirusSettingsGrayware(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAntivirusSettingsDefaultDb(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAntivirusSettingsOverrideTimeout(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAntivirusSettingsGrayware(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectAntivirusSettings(d *schema.ResourceData) (*map[string]interface{}, error) {
+func expandAntivirusSettingsOverrideTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func getObjectAntivirusSettings(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
+	if v, ok := d.GetOk("use_extreme_db"); ok {
+
+		t, err := expandAntivirusSettingsUseExtremeDb(d, v, "use_extreme_db", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["use-extreme-db"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("default_db"); ok {
-		t, err := expandAntivirusSettingsDefaultDb(d, v, "default_db")
+
+		t, err := expandAntivirusSettingsDefaultDb(d, v, "default_db", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -181,7 +212,8 @@ func getObjectAntivirusSettings(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("grayware"); ok {
-		t, err := expandAntivirusSettingsGrayware(d, v, "grayware")
+
+		t, err := expandAntivirusSettingsGrayware(d, v, "grayware", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -190,7 +222,8 @@ func getObjectAntivirusSettings(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("override_timeout"); ok {
-		t, err := expandAntivirusSettingsOverrideTimeout(d, v, "override_timeout")
+
+		t, err := expandAntivirusSettingsOverrideTimeout(d, v, "override_timeout", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
