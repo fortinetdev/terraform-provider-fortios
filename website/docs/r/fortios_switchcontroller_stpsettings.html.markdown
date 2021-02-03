@@ -25,7 +25,6 @@ resource "fortios_switchcontroller_stpsettings" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Name of global STP settings configuration.
