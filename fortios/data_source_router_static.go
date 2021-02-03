@@ -69,6 +69,10 @@ func dataSourceRouterStatic() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"sdwan": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"virtual_wan_link": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -198,6 +202,10 @@ func dataSourceFlattenRouterStaticDynamicGateway(v interface{}, d *schema.Resour
 	return v
 }
 
+func dataSourceFlattenRouterStaticSdwan(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenRouterStaticVirtualWanLink(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -298,6 +306,12 @@ func dataSourceRefreshObjectRouterStatic(d *schema.ResourceData, o map[string]in
 	if err = d.Set("dynamic_gateway", dataSourceFlattenRouterStaticDynamicGateway(o["dynamic-gateway"], d, "dynamic_gateway")); err != nil {
 		if !fortiAPIPatch(o["dynamic-gateway"]) {
 			return fmt.Errorf("Error reading dynamic_gateway: %v", err)
+		}
+	}
+
+	if err = d.Set("sdwan", dataSourceFlattenRouterStaticSdwan(o["sdwan"], d, "sdwan")); err != nil {
+		if !fortiAPIPatch(o["sdwan"]) {
+			return fmt.Errorf("Error reading sdwan: %v", err)
 		}
 	}
 
