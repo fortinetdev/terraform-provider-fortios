@@ -29,7 +29,6 @@ resource "fortios_log_eventfilter" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `event` - Enable/disable event logging.
@@ -43,6 +42,11 @@ The following arguments are supported:
 * `ha` - Enable/disable ha event logging.
 * `compliance_check` - Enable/disable PCI DSS compliance check logging.
 * `security_rating` - Enable/disable Security Rating result logging.
+* `fortiextender` - Enable/disable FortiExtender logging.
+* `connector` - Enable/disable SDN connector logging.
+* `sdwan` - Enable/disable SD-WAN logging.
+* `cifs` - Enable/disable CIFS logging.
+* `switch_controller` - Enable/disable Switch-Controller logging.
 
 
 ## Attribute Reference
