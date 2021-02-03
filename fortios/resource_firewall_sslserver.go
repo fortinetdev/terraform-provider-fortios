@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -108,7 +109,7 @@ func resourceFirewallSslServerCreate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectFirewallSslServer(d)
+	obj, err := getObjectFirewallSslServer(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallSslServer resource while getting object: %v", err)
 	}
@@ -133,7 +134,7 @@ func resourceFirewallSslServerUpdate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectFirewallSslServer(d)
+	obj, err := getObjectFirewallSslServer(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallSslServer resource while getting object: %v", err)
 	}
@@ -186,151 +187,151 @@ func resourceFirewallSslServerRead(d *schema.ResourceData, m interface{}) error 
 		return nil
 	}
 
-	err = refreshObjectFirewallSslServer(d, o)
+	err = refreshObjectFirewallSslServer(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallSslServer resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenFirewallSslServerName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSslServerName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallSslServerIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSslServerIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallSslServerPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSslServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallSslServerSslMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSslServerSslMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallSslServerAddHeaderXForwardedProto(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSslServerAddHeaderXForwardedProto(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallSslServerMappedPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSslServerMappedPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallSslServerSslCert(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSslServerSslCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallSslServerSslDhBits(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSslServerSslDhBits(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallSslServerSslAlgorithm(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSslServerSslAlgorithm(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallSslServerSslClientRenegotiation(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSslServerSslClientRenegotiation(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallSslServerSslMinVersion(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSslServerSslMinVersion(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallSslServerSslMaxVersion(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSslServerSslMaxVersion(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallSslServerSslSendEmptyFrags(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSslServerSslSendEmptyFrags(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallSslServerUrlRewrite(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSslServerUrlRewrite(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectFirewallSslServer(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectFirewallSslServer(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenFirewallSslServerName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenFirewallSslServerName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("ip", flattenFirewallSslServerIp(o["ip"], d, "ip")); err != nil {
+	if err = d.Set("ip", flattenFirewallSslServerIp(o["ip"], d, "ip", sv)); err != nil {
 		if !fortiAPIPatch(o["ip"]) {
 			return fmt.Errorf("Error reading ip: %v", err)
 		}
 	}
 
-	if err = d.Set("port", flattenFirewallSslServerPort(o["port"], d, "port")); err != nil {
+	if err = d.Set("port", flattenFirewallSslServerPort(o["port"], d, "port", sv)); err != nil {
 		if !fortiAPIPatch(o["port"]) {
 			return fmt.Errorf("Error reading port: %v", err)
 		}
 	}
 
-	if err = d.Set("ssl_mode", flattenFirewallSslServerSslMode(o["ssl-mode"], d, "ssl_mode")); err != nil {
+	if err = d.Set("ssl_mode", flattenFirewallSslServerSslMode(o["ssl-mode"], d, "ssl_mode", sv)); err != nil {
 		if !fortiAPIPatch(o["ssl-mode"]) {
 			return fmt.Errorf("Error reading ssl_mode: %v", err)
 		}
 	}
 
-	if err = d.Set("add_header_x_forwarded_proto", flattenFirewallSslServerAddHeaderXForwardedProto(o["add-header-x-forwarded-proto"], d, "add_header_x_forwarded_proto")); err != nil {
+	if err = d.Set("add_header_x_forwarded_proto", flattenFirewallSslServerAddHeaderXForwardedProto(o["add-header-x-forwarded-proto"], d, "add_header_x_forwarded_proto", sv)); err != nil {
 		if !fortiAPIPatch(o["add-header-x-forwarded-proto"]) {
 			return fmt.Errorf("Error reading add_header_x_forwarded_proto: %v", err)
 		}
 	}
 
-	if err = d.Set("mapped_port", flattenFirewallSslServerMappedPort(o["mapped-port"], d, "mapped_port")); err != nil {
+	if err = d.Set("mapped_port", flattenFirewallSslServerMappedPort(o["mapped-port"], d, "mapped_port", sv)); err != nil {
 		if !fortiAPIPatch(o["mapped-port"]) {
 			return fmt.Errorf("Error reading mapped_port: %v", err)
 		}
 	}
 
-	if err = d.Set("ssl_cert", flattenFirewallSslServerSslCert(o["ssl-cert"], d, "ssl_cert")); err != nil {
+	if err = d.Set("ssl_cert", flattenFirewallSslServerSslCert(o["ssl-cert"], d, "ssl_cert", sv)); err != nil {
 		if !fortiAPIPatch(o["ssl-cert"]) {
 			return fmt.Errorf("Error reading ssl_cert: %v", err)
 		}
 	}
 
-	if err = d.Set("ssl_dh_bits", flattenFirewallSslServerSslDhBits(o["ssl-dh-bits"], d, "ssl_dh_bits")); err != nil {
+	if err = d.Set("ssl_dh_bits", flattenFirewallSslServerSslDhBits(o["ssl-dh-bits"], d, "ssl_dh_bits", sv)); err != nil {
 		if !fortiAPIPatch(o["ssl-dh-bits"]) {
 			return fmt.Errorf("Error reading ssl_dh_bits: %v", err)
 		}
 	}
 
-	if err = d.Set("ssl_algorithm", flattenFirewallSslServerSslAlgorithm(o["ssl-algorithm"], d, "ssl_algorithm")); err != nil {
+	if err = d.Set("ssl_algorithm", flattenFirewallSslServerSslAlgorithm(o["ssl-algorithm"], d, "ssl_algorithm", sv)); err != nil {
 		if !fortiAPIPatch(o["ssl-algorithm"]) {
 			return fmt.Errorf("Error reading ssl_algorithm: %v", err)
 		}
 	}
 
-	if err = d.Set("ssl_client_renegotiation", flattenFirewallSslServerSslClientRenegotiation(o["ssl-client-renegotiation"], d, "ssl_client_renegotiation")); err != nil {
+	if err = d.Set("ssl_client_renegotiation", flattenFirewallSslServerSslClientRenegotiation(o["ssl-client-renegotiation"], d, "ssl_client_renegotiation", sv)); err != nil {
 		if !fortiAPIPatch(o["ssl-client-renegotiation"]) {
 			return fmt.Errorf("Error reading ssl_client_renegotiation: %v", err)
 		}
 	}
 
-	if err = d.Set("ssl_min_version", flattenFirewallSslServerSslMinVersion(o["ssl-min-version"], d, "ssl_min_version")); err != nil {
+	if err = d.Set("ssl_min_version", flattenFirewallSslServerSslMinVersion(o["ssl-min-version"], d, "ssl_min_version", sv)); err != nil {
 		if !fortiAPIPatch(o["ssl-min-version"]) {
 			return fmt.Errorf("Error reading ssl_min_version: %v", err)
 		}
 	}
 
-	if err = d.Set("ssl_max_version", flattenFirewallSslServerSslMaxVersion(o["ssl-max-version"], d, "ssl_max_version")); err != nil {
+	if err = d.Set("ssl_max_version", flattenFirewallSslServerSslMaxVersion(o["ssl-max-version"], d, "ssl_max_version", sv)); err != nil {
 		if !fortiAPIPatch(o["ssl-max-version"]) {
 			return fmt.Errorf("Error reading ssl_max_version: %v", err)
 		}
 	}
 
-	if err = d.Set("ssl_send_empty_frags", flattenFirewallSslServerSslSendEmptyFrags(o["ssl-send-empty-frags"], d, "ssl_send_empty_frags")); err != nil {
+	if err = d.Set("ssl_send_empty_frags", flattenFirewallSslServerSslSendEmptyFrags(o["ssl-send-empty-frags"], d, "ssl_send_empty_frags", sv)); err != nil {
 		if !fortiAPIPatch(o["ssl-send-empty-frags"]) {
 			return fmt.Errorf("Error reading ssl_send_empty_frags: %v", err)
 		}
 	}
 
-	if err = d.Set("url_rewrite", flattenFirewallSslServerUrlRewrite(o["url-rewrite"], d, "url_rewrite")); err != nil {
+	if err = d.Set("url_rewrite", flattenFirewallSslServerUrlRewrite(o["url-rewrite"], d, "url_rewrite", sv)); err != nil {
 		if !fortiAPIPatch(o["url-rewrite"]) {
 			return fmt.Errorf("Error reading url_rewrite: %v", err)
 		}
@@ -342,70 +343,71 @@ func refreshObjectFirewallSslServer(d *schema.ResourceData, o map[string]interfa
 func flattenFirewallSslServerFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandFirewallSslServerName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSslServerName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallSslServerIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSslServerIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallSslServerPort(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSslServerPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallSslServerSslMode(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSslServerSslMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallSslServerAddHeaderXForwardedProto(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSslServerAddHeaderXForwardedProto(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallSslServerMappedPort(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSslServerMappedPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallSslServerSslCert(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSslServerSslCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallSslServerSslDhBits(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSslServerSslDhBits(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallSslServerSslAlgorithm(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSslServerSslAlgorithm(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallSslServerSslClientRenegotiation(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSslServerSslClientRenegotiation(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallSslServerSslMinVersion(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSslServerSslMinVersion(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallSslServerSslMaxVersion(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSslServerSslMaxVersion(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallSslServerSslSendEmptyFrags(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSslServerSslSendEmptyFrags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallSslServerUrlRewrite(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSslServerUrlRewrite(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectFirewallSslServer(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectFirewallSslServer(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandFirewallSslServerName(d, v, "name")
+
+		t, err := expandFirewallSslServerName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -414,7 +416,8 @@ func getObjectFirewallSslServer(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("ip"); ok {
-		t, err := expandFirewallSslServerIp(d, v, "ip")
+
+		t, err := expandFirewallSslServerIp(d, v, "ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -423,7 +426,8 @@ func getObjectFirewallSslServer(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("port"); ok {
-		t, err := expandFirewallSslServerPort(d, v, "port")
+
+		t, err := expandFirewallSslServerPort(d, v, "port", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -432,7 +436,8 @@ func getObjectFirewallSslServer(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("ssl_mode"); ok {
-		t, err := expandFirewallSslServerSslMode(d, v, "ssl_mode")
+
+		t, err := expandFirewallSslServerSslMode(d, v, "ssl_mode", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -441,7 +446,8 @@ func getObjectFirewallSslServer(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("add_header_x_forwarded_proto"); ok {
-		t, err := expandFirewallSslServerAddHeaderXForwardedProto(d, v, "add_header_x_forwarded_proto")
+
+		t, err := expandFirewallSslServerAddHeaderXForwardedProto(d, v, "add_header_x_forwarded_proto", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -450,7 +456,8 @@ func getObjectFirewallSslServer(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("mapped_port"); ok {
-		t, err := expandFirewallSslServerMappedPort(d, v, "mapped_port")
+
+		t, err := expandFirewallSslServerMappedPort(d, v, "mapped_port", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -459,7 +466,8 @@ func getObjectFirewallSslServer(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("ssl_cert"); ok {
-		t, err := expandFirewallSslServerSslCert(d, v, "ssl_cert")
+
+		t, err := expandFirewallSslServerSslCert(d, v, "ssl_cert", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -468,7 +476,8 @@ func getObjectFirewallSslServer(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("ssl_dh_bits"); ok {
-		t, err := expandFirewallSslServerSslDhBits(d, v, "ssl_dh_bits")
+
+		t, err := expandFirewallSslServerSslDhBits(d, v, "ssl_dh_bits", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -477,7 +486,8 @@ func getObjectFirewallSslServer(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("ssl_algorithm"); ok {
-		t, err := expandFirewallSslServerSslAlgorithm(d, v, "ssl_algorithm")
+
+		t, err := expandFirewallSslServerSslAlgorithm(d, v, "ssl_algorithm", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -486,7 +496,8 @@ func getObjectFirewallSslServer(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("ssl_client_renegotiation"); ok {
-		t, err := expandFirewallSslServerSslClientRenegotiation(d, v, "ssl_client_renegotiation")
+
+		t, err := expandFirewallSslServerSslClientRenegotiation(d, v, "ssl_client_renegotiation", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -495,7 +506,8 @@ func getObjectFirewallSslServer(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("ssl_min_version"); ok {
-		t, err := expandFirewallSslServerSslMinVersion(d, v, "ssl_min_version")
+
+		t, err := expandFirewallSslServerSslMinVersion(d, v, "ssl_min_version", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -504,7 +516,8 @@ func getObjectFirewallSslServer(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("ssl_max_version"); ok {
-		t, err := expandFirewallSslServerSslMaxVersion(d, v, "ssl_max_version")
+
+		t, err := expandFirewallSslServerSslMaxVersion(d, v, "ssl_max_version", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -513,7 +526,8 @@ func getObjectFirewallSslServer(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("ssl_send_empty_frags"); ok {
-		t, err := expandFirewallSslServerSslSendEmptyFrags(d, v, "ssl_send_empty_frags")
+
+		t, err := expandFirewallSslServerSslSendEmptyFrags(d, v, "ssl_send_empty_frags", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -522,7 +536,8 @@ func getObjectFirewallSslServer(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("url_rewrite"); ok {
-		t, err := expandFirewallSslServerUrlRewrite(d, v, "url_rewrite")
+
+		t, err := expandFirewallSslServerUrlRewrite(d, v, "url_rewrite", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
