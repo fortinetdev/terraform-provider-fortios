@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -55,7 +56,7 @@ func resourceWirelessControllerHotspot20AnqpNetworkAuthTypeCreate(d *schema.Reso
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWirelessControllerHotspot20AnqpNetworkAuthType(d)
+	obj, err := getObjectWirelessControllerHotspot20AnqpNetworkAuthType(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WirelessControllerHotspot20AnqpNetworkAuthType resource while getting object: %v", err)
 	}
@@ -80,7 +81,7 @@ func resourceWirelessControllerHotspot20AnqpNetworkAuthTypeUpdate(d *schema.Reso
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWirelessControllerHotspot20AnqpNetworkAuthType(d)
+	obj, err := getObjectWirelessControllerHotspot20AnqpNetworkAuthType(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerHotspot20AnqpNetworkAuthType resource while getting object: %v", err)
 	}
@@ -133,41 +134,41 @@ func resourceWirelessControllerHotspot20AnqpNetworkAuthTypeRead(d *schema.Resour
 		return nil
 	}
 
-	err = refreshObjectWirelessControllerHotspot20AnqpNetworkAuthType(d, o)
+	err = refreshObjectWirelessControllerHotspot20AnqpNetworkAuthType(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading WirelessControllerHotspot20AnqpNetworkAuthType resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenWirelessControllerHotspot20AnqpNetworkAuthTypeName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerHotspot20AnqpNetworkAuthTypeName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerHotspot20AnqpNetworkAuthTypeAuthType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerHotspot20AnqpNetworkAuthTypeAuthType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerHotspot20AnqpNetworkAuthTypeUrl(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerHotspot20AnqpNetworkAuthTypeUrl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectWirelessControllerHotspot20AnqpNetworkAuthType(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectWirelessControllerHotspot20AnqpNetworkAuthType(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenWirelessControllerHotspot20AnqpNetworkAuthTypeName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenWirelessControllerHotspot20AnqpNetworkAuthTypeName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("auth_type", flattenWirelessControllerHotspot20AnqpNetworkAuthTypeAuthType(o["auth-type"], d, "auth_type")); err != nil {
+	if err = d.Set("auth_type", flattenWirelessControllerHotspot20AnqpNetworkAuthTypeAuthType(o["auth-type"], d, "auth_type", sv)); err != nil {
 		if !fortiAPIPatch(o["auth-type"]) {
 			return fmt.Errorf("Error reading auth_type: %v", err)
 		}
 	}
 
-	if err = d.Set("url", flattenWirelessControllerHotspot20AnqpNetworkAuthTypeUrl(o["url"], d, "url")); err != nil {
+	if err = d.Set("url", flattenWirelessControllerHotspot20AnqpNetworkAuthTypeUrl(o["url"], d, "url", sv)); err != nil {
 		if !fortiAPIPatch(o["url"]) {
 			return fmt.Errorf("Error reading url: %v", err)
 		}
@@ -179,26 +180,27 @@ func refreshObjectWirelessControllerHotspot20AnqpNetworkAuthType(d *schema.Resou
 func flattenWirelessControllerHotspot20AnqpNetworkAuthTypeFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandWirelessControllerHotspot20AnqpNetworkAuthTypeName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerHotspot20AnqpNetworkAuthTypeName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerHotspot20AnqpNetworkAuthTypeAuthType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerHotspot20AnqpNetworkAuthTypeAuthType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerHotspot20AnqpNetworkAuthTypeUrl(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerHotspot20AnqpNetworkAuthTypeUrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectWirelessControllerHotspot20AnqpNetworkAuthType(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectWirelessControllerHotspot20AnqpNetworkAuthType(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandWirelessControllerHotspot20AnqpNetworkAuthTypeName(d, v, "name")
+
+		t, err := expandWirelessControllerHotspot20AnqpNetworkAuthTypeName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -207,7 +209,8 @@ func getObjectWirelessControllerHotspot20AnqpNetworkAuthType(d *schema.ResourceD
 	}
 
 	if v, ok := d.GetOk("auth_type"); ok {
-		t, err := expandWirelessControllerHotspot20AnqpNetworkAuthTypeAuthType(d, v, "auth_type")
+
+		t, err := expandWirelessControllerHotspot20AnqpNetworkAuthTypeAuthType(d, v, "auth_type", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -216,7 +219,8 @@ func getObjectWirelessControllerHotspot20AnqpNetworkAuthType(d *schema.ResourceD
 	}
 
 	if v, ok := d.GetOk("url"); ok {
-		t, err := expandWirelessControllerHotspot20AnqpNetworkAuthTypeUrl(d, v, "url")
+
+		t, err := expandWirelessControllerHotspot20AnqpNetworkAuthTypeUrl(d, v, "url", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
