@@ -237,6 +237,23 @@ func dataSourceRouterOspf() *schema.Resource {
 										Type:     schema.TypeString,
 										Computed: true,
 									},
+									"md5_keys": &schema.Schema{
+										Type:     schema.TypeList,
+										Computed: true,
+										Elem: &schema.Resource{
+											Schema: map[string]*schema.Schema{
+												"id": &schema.Schema{
+													Type:     schema.TypeInt,
+													Computed: true,
+												},
+												"key_string": &schema.Schema{
+													Type:      schema.TypeString,
+													Sensitive: true,
+													Computed:  true,
+												},
+											},
+										},
+									},
 								},
 							},
 						},
@@ -357,6 +374,23 @@ func dataSourceRouterOspf() *schema.Resource {
 						"resync_timeout": &schema.Schema{
 							Type:     schema.TypeInt,
 							Computed: true,
+						},
+						"md5_keys": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"id": &schema.Schema{
+										Type:     schema.TypeInt,
+										Computed: true,
+									},
+									"key_string": &schema.Schema{
+										Type:      schema.TypeString,
+										Sensitive: true,
+										Computed:  true,
+									},
+								},
+							},
 						},
 					},
 				},
@@ -923,6 +957,11 @@ func dataSourceFlattenRouterOspfAreaVirtualLink(v interface{}, d *schema.Resourc
 			tmp["peer"] = dataSourceFlattenRouterOspfAreaVirtualLinkPeer(i["peer"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_keys"
+		if _, ok := i["md5-keys"]; ok {
+			tmp["md5_keys"] = dataSourceFlattenRouterOspfAreaVirtualLinkMd5Keys(i["md5-keys"], d, pre_append)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -968,6 +1007,55 @@ func dataSourceFlattenRouterOspfAreaVirtualLinkTransmitDelay(v interface{}, d *s
 }
 
 func dataSourceFlattenRouterOspfAreaVirtualLinkPeer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterOspfAreaVirtualLinkMd5Keys(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := i["id"]; ok {
+			tmp["id"] = dataSourceFlattenRouterOspfAreaVirtualLinkMd5KeysId(i["id"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_string"
+		if _, ok := i["key-string"]; ok {
+			tmp["key_string"] = dataSourceFlattenRouterOspfAreaVirtualLinkMd5KeysKeyString(i["key-string"], d, pre_append)
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["key_string"] = c
+			}
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenRouterOspfAreaVirtualLinkMd5KeysId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterOspfAreaVirtualLinkMd5KeysKeyString(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1162,6 +1250,11 @@ func dataSourceFlattenRouterOspfOspfInterface(v interface{}, d *schema.ResourceD
 			tmp["resync_timeout"] = dataSourceFlattenRouterOspfOspfInterfaceResyncTimeout(i["resync-timeout"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "md5_keys"
+		if _, ok := i["md5-keys"]; ok {
+			tmp["md5_keys"] = dataSourceFlattenRouterOspfOspfInterfaceMd5Keys(i["md5-keys"], d, pre_append)
+		}
+
 		result = append(result, tmp)
 
 		con += 1
@@ -1255,6 +1348,55 @@ func dataSourceFlattenRouterOspfOspfInterfaceStatus(v interface{}, d *schema.Res
 }
 
 func dataSourceFlattenRouterOspfOspfInterfaceResyncTimeout(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterOspfOspfInterfaceMd5Keys(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := i["id"]; ok {
+			tmp["id"] = dataSourceFlattenRouterOspfOspfInterfaceMd5KeysId(i["id"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "key_string"
+		if _, ok := i["key-string"]; ok {
+			tmp["key_string"] = dataSourceFlattenRouterOspfOspfInterfaceMd5KeysKeyString(i["key-string"], d, pre_append)
+			c := d.Get(pre_append).(string)
+			if c != "" {
+				tmp["key_string"] = c
+			}
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenRouterOspfOspfInterfaceMd5KeysId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterOspfOspfInterfaceMd5KeysKeyString(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
