@@ -154,7 +154,6 @@ resource "fortios_system_ipsecaggregate" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - IPsec aggregate name.
