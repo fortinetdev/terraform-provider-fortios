@@ -11,7 +11,6 @@ SSH proxy local CA.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - SSH proxy local CA name.
