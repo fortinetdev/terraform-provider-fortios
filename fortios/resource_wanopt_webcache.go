@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -128,7 +129,7 @@ func resourceWanoptWebcacheUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWanoptWebcache(d)
+	obj, err := getObjectWanoptWebcache(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WanoptWebcache resource while getting object: %v", err)
 	}
@@ -181,181 +182,181 @@ func resourceWanoptWebcacheRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectWanoptWebcache(d, o)
+	err = refreshObjectWanoptWebcache(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading WanoptWebcache resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenWanoptWebcacheMaxObjectSize(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptWebcacheMaxObjectSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptWebcacheNegRespTime(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptWebcacheNegRespTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptWebcacheFreshFactor(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptWebcacheFreshFactor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptWebcacheMaxTtl(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptWebcacheMaxTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptWebcacheMinTtl(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptWebcacheMinTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptWebcacheDefaultTtl(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptWebcacheDefaultTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptWebcacheIgnoreIms(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptWebcacheIgnoreIms(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptWebcacheIgnoreConditional(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptWebcacheIgnoreConditional(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptWebcacheIgnorePnc(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptWebcacheIgnorePnc(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptWebcacheIgnoreIeReload(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptWebcacheIgnoreIeReload(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptWebcacheCacheExpired(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptWebcacheCacheExpired(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptWebcacheCacheCookie(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptWebcacheCacheCookie(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptWebcacheRevalPnc(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptWebcacheRevalPnc(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptWebcacheAlwaysRevalidate(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptWebcacheAlwaysRevalidate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptWebcacheCacheByDefault(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptWebcacheCacheByDefault(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptWebcacheHostValidate(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptWebcacheHostValidate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptWebcacheExternal(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptWebcacheExternal(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectWanoptWebcache(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectWanoptWebcache(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("max_object_size", flattenWanoptWebcacheMaxObjectSize(o["max-object-size"], d, "max_object_size")); err != nil {
+	if err = d.Set("max_object_size", flattenWanoptWebcacheMaxObjectSize(o["max-object-size"], d, "max_object_size", sv)); err != nil {
 		if !fortiAPIPatch(o["max-object-size"]) {
 			return fmt.Errorf("Error reading max_object_size: %v", err)
 		}
 	}
 
-	if err = d.Set("neg_resp_time", flattenWanoptWebcacheNegRespTime(o["neg-resp-time"], d, "neg_resp_time")); err != nil {
+	if err = d.Set("neg_resp_time", flattenWanoptWebcacheNegRespTime(o["neg-resp-time"], d, "neg_resp_time", sv)); err != nil {
 		if !fortiAPIPatch(o["neg-resp-time"]) {
 			return fmt.Errorf("Error reading neg_resp_time: %v", err)
 		}
 	}
 
-	if err = d.Set("fresh_factor", flattenWanoptWebcacheFreshFactor(o["fresh-factor"], d, "fresh_factor")); err != nil {
+	if err = d.Set("fresh_factor", flattenWanoptWebcacheFreshFactor(o["fresh-factor"], d, "fresh_factor", sv)); err != nil {
 		if !fortiAPIPatch(o["fresh-factor"]) {
 			return fmt.Errorf("Error reading fresh_factor: %v", err)
 		}
 	}
 
-	if err = d.Set("max_ttl", flattenWanoptWebcacheMaxTtl(o["max-ttl"], d, "max_ttl")); err != nil {
+	if err = d.Set("max_ttl", flattenWanoptWebcacheMaxTtl(o["max-ttl"], d, "max_ttl", sv)); err != nil {
 		if !fortiAPIPatch(o["max-ttl"]) {
 			return fmt.Errorf("Error reading max_ttl: %v", err)
 		}
 	}
 
-	if err = d.Set("min_ttl", flattenWanoptWebcacheMinTtl(o["min-ttl"], d, "min_ttl")); err != nil {
+	if err = d.Set("min_ttl", flattenWanoptWebcacheMinTtl(o["min-ttl"], d, "min_ttl", sv)); err != nil {
 		if !fortiAPIPatch(o["min-ttl"]) {
 			return fmt.Errorf("Error reading min_ttl: %v", err)
 		}
 	}
 
-	if err = d.Set("default_ttl", flattenWanoptWebcacheDefaultTtl(o["default-ttl"], d, "default_ttl")); err != nil {
+	if err = d.Set("default_ttl", flattenWanoptWebcacheDefaultTtl(o["default-ttl"], d, "default_ttl", sv)); err != nil {
 		if !fortiAPIPatch(o["default-ttl"]) {
 			return fmt.Errorf("Error reading default_ttl: %v", err)
 		}
 	}
 
-	if err = d.Set("ignore_ims", flattenWanoptWebcacheIgnoreIms(o["ignore-ims"], d, "ignore_ims")); err != nil {
+	if err = d.Set("ignore_ims", flattenWanoptWebcacheIgnoreIms(o["ignore-ims"], d, "ignore_ims", sv)); err != nil {
 		if !fortiAPIPatch(o["ignore-ims"]) {
 			return fmt.Errorf("Error reading ignore_ims: %v", err)
 		}
 	}
 
-	if err = d.Set("ignore_conditional", flattenWanoptWebcacheIgnoreConditional(o["ignore-conditional"], d, "ignore_conditional")); err != nil {
+	if err = d.Set("ignore_conditional", flattenWanoptWebcacheIgnoreConditional(o["ignore-conditional"], d, "ignore_conditional", sv)); err != nil {
 		if !fortiAPIPatch(o["ignore-conditional"]) {
 			return fmt.Errorf("Error reading ignore_conditional: %v", err)
 		}
 	}
 
-	if err = d.Set("ignore_pnc", flattenWanoptWebcacheIgnorePnc(o["ignore-pnc"], d, "ignore_pnc")); err != nil {
+	if err = d.Set("ignore_pnc", flattenWanoptWebcacheIgnorePnc(o["ignore-pnc"], d, "ignore_pnc", sv)); err != nil {
 		if !fortiAPIPatch(o["ignore-pnc"]) {
 			return fmt.Errorf("Error reading ignore_pnc: %v", err)
 		}
 	}
 
-	if err = d.Set("ignore_ie_reload", flattenWanoptWebcacheIgnoreIeReload(o["ignore-ie-reload"], d, "ignore_ie_reload")); err != nil {
+	if err = d.Set("ignore_ie_reload", flattenWanoptWebcacheIgnoreIeReload(o["ignore-ie-reload"], d, "ignore_ie_reload", sv)); err != nil {
 		if !fortiAPIPatch(o["ignore-ie-reload"]) {
 			return fmt.Errorf("Error reading ignore_ie_reload: %v", err)
 		}
 	}
 
-	if err = d.Set("cache_expired", flattenWanoptWebcacheCacheExpired(o["cache-expired"], d, "cache_expired")); err != nil {
+	if err = d.Set("cache_expired", flattenWanoptWebcacheCacheExpired(o["cache-expired"], d, "cache_expired", sv)); err != nil {
 		if !fortiAPIPatch(o["cache-expired"]) {
 			return fmt.Errorf("Error reading cache_expired: %v", err)
 		}
 	}
 
-	if err = d.Set("cache_cookie", flattenWanoptWebcacheCacheCookie(o["cache-cookie"], d, "cache_cookie")); err != nil {
+	if err = d.Set("cache_cookie", flattenWanoptWebcacheCacheCookie(o["cache-cookie"], d, "cache_cookie", sv)); err != nil {
 		if !fortiAPIPatch(o["cache-cookie"]) {
 			return fmt.Errorf("Error reading cache_cookie: %v", err)
 		}
 	}
 
-	if err = d.Set("reval_pnc", flattenWanoptWebcacheRevalPnc(o["reval-pnc"], d, "reval_pnc")); err != nil {
+	if err = d.Set("reval_pnc", flattenWanoptWebcacheRevalPnc(o["reval-pnc"], d, "reval_pnc", sv)); err != nil {
 		if !fortiAPIPatch(o["reval-pnc"]) {
 			return fmt.Errorf("Error reading reval_pnc: %v", err)
 		}
 	}
 
-	if err = d.Set("always_revalidate", flattenWanoptWebcacheAlwaysRevalidate(o["always-revalidate"], d, "always_revalidate")); err != nil {
+	if err = d.Set("always_revalidate", flattenWanoptWebcacheAlwaysRevalidate(o["always-revalidate"], d, "always_revalidate", sv)); err != nil {
 		if !fortiAPIPatch(o["always-revalidate"]) {
 			return fmt.Errorf("Error reading always_revalidate: %v", err)
 		}
 	}
 
-	if err = d.Set("cache_by_default", flattenWanoptWebcacheCacheByDefault(o["cache-by-default"], d, "cache_by_default")); err != nil {
+	if err = d.Set("cache_by_default", flattenWanoptWebcacheCacheByDefault(o["cache-by-default"], d, "cache_by_default", sv)); err != nil {
 		if !fortiAPIPatch(o["cache-by-default"]) {
 			return fmt.Errorf("Error reading cache_by_default: %v", err)
 		}
 	}
 
-	if err = d.Set("host_validate", flattenWanoptWebcacheHostValidate(o["host-validate"], d, "host_validate")); err != nil {
+	if err = d.Set("host_validate", flattenWanoptWebcacheHostValidate(o["host-validate"], d, "host_validate", sv)); err != nil {
 		if !fortiAPIPatch(o["host-validate"]) {
 			return fmt.Errorf("Error reading host_validate: %v", err)
 		}
 	}
 
-	if err = d.Set("external", flattenWanoptWebcacheExternal(o["external"], d, "external")); err != nil {
+	if err = d.Set("external", flattenWanoptWebcacheExternal(o["external"], d, "external", sv)); err != nil {
 		if !fortiAPIPatch(o["external"]) {
 			return fmt.Errorf("Error reading external: %v", err)
 		}
@@ -367,82 +368,83 @@ func refreshObjectWanoptWebcache(d *schema.ResourceData, o map[string]interface{
 func flattenWanoptWebcacheFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandWanoptWebcacheMaxObjectSize(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptWebcacheMaxObjectSize(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptWebcacheNegRespTime(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptWebcacheNegRespTime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptWebcacheFreshFactor(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptWebcacheFreshFactor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptWebcacheMaxTtl(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptWebcacheMaxTtl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptWebcacheMinTtl(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptWebcacheMinTtl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptWebcacheDefaultTtl(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptWebcacheDefaultTtl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptWebcacheIgnoreIms(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptWebcacheIgnoreIms(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptWebcacheIgnoreConditional(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptWebcacheIgnoreConditional(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptWebcacheIgnorePnc(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptWebcacheIgnorePnc(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptWebcacheIgnoreIeReload(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptWebcacheIgnoreIeReload(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptWebcacheCacheExpired(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptWebcacheCacheExpired(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptWebcacheCacheCookie(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptWebcacheCacheCookie(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptWebcacheRevalPnc(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptWebcacheRevalPnc(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptWebcacheAlwaysRevalidate(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptWebcacheAlwaysRevalidate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptWebcacheCacheByDefault(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptWebcacheCacheByDefault(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptWebcacheHostValidate(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptWebcacheHostValidate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptWebcacheExternal(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptWebcacheExternal(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectWanoptWebcache(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectWanoptWebcache(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("max_object_size"); ok {
-		t, err := expandWanoptWebcacheMaxObjectSize(d, v, "max_object_size")
+
+		t, err := expandWanoptWebcacheMaxObjectSize(d, v, "max_object_size", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -451,7 +453,8 @@ func getObjectWanoptWebcache(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOkExists("neg_resp_time"); ok {
-		t, err := expandWanoptWebcacheNegRespTime(d, v, "neg_resp_time")
+
+		t, err := expandWanoptWebcacheNegRespTime(d, v, "neg_resp_time", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -460,7 +463,8 @@ func getObjectWanoptWebcache(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("fresh_factor"); ok {
-		t, err := expandWanoptWebcacheFreshFactor(d, v, "fresh_factor")
+
+		t, err := expandWanoptWebcacheFreshFactor(d, v, "fresh_factor", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -469,7 +473,8 @@ func getObjectWanoptWebcache(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("max_ttl"); ok {
-		t, err := expandWanoptWebcacheMaxTtl(d, v, "max_ttl")
+
+		t, err := expandWanoptWebcacheMaxTtl(d, v, "max_ttl", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -478,7 +483,8 @@ func getObjectWanoptWebcache(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("min_ttl"); ok {
-		t, err := expandWanoptWebcacheMinTtl(d, v, "min_ttl")
+
+		t, err := expandWanoptWebcacheMinTtl(d, v, "min_ttl", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -487,7 +493,8 @@ func getObjectWanoptWebcache(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("default_ttl"); ok {
-		t, err := expandWanoptWebcacheDefaultTtl(d, v, "default_ttl")
+
+		t, err := expandWanoptWebcacheDefaultTtl(d, v, "default_ttl", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -496,7 +503,8 @@ func getObjectWanoptWebcache(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("ignore_ims"); ok {
-		t, err := expandWanoptWebcacheIgnoreIms(d, v, "ignore_ims")
+
+		t, err := expandWanoptWebcacheIgnoreIms(d, v, "ignore_ims", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -505,7 +513,8 @@ func getObjectWanoptWebcache(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("ignore_conditional"); ok {
-		t, err := expandWanoptWebcacheIgnoreConditional(d, v, "ignore_conditional")
+
+		t, err := expandWanoptWebcacheIgnoreConditional(d, v, "ignore_conditional", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -514,7 +523,8 @@ func getObjectWanoptWebcache(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("ignore_pnc"); ok {
-		t, err := expandWanoptWebcacheIgnorePnc(d, v, "ignore_pnc")
+
+		t, err := expandWanoptWebcacheIgnorePnc(d, v, "ignore_pnc", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -523,7 +533,8 @@ func getObjectWanoptWebcache(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("ignore_ie_reload"); ok {
-		t, err := expandWanoptWebcacheIgnoreIeReload(d, v, "ignore_ie_reload")
+
+		t, err := expandWanoptWebcacheIgnoreIeReload(d, v, "ignore_ie_reload", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -532,7 +543,8 @@ func getObjectWanoptWebcache(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("cache_expired"); ok {
-		t, err := expandWanoptWebcacheCacheExpired(d, v, "cache_expired")
+
+		t, err := expandWanoptWebcacheCacheExpired(d, v, "cache_expired", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -541,7 +553,8 @@ func getObjectWanoptWebcache(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("cache_cookie"); ok {
-		t, err := expandWanoptWebcacheCacheCookie(d, v, "cache_cookie")
+
+		t, err := expandWanoptWebcacheCacheCookie(d, v, "cache_cookie", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -550,7 +563,8 @@ func getObjectWanoptWebcache(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("reval_pnc"); ok {
-		t, err := expandWanoptWebcacheRevalPnc(d, v, "reval_pnc")
+
+		t, err := expandWanoptWebcacheRevalPnc(d, v, "reval_pnc", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -559,7 +573,8 @@ func getObjectWanoptWebcache(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("always_revalidate"); ok {
-		t, err := expandWanoptWebcacheAlwaysRevalidate(d, v, "always_revalidate")
+
+		t, err := expandWanoptWebcacheAlwaysRevalidate(d, v, "always_revalidate", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -568,7 +583,8 @@ func getObjectWanoptWebcache(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("cache_by_default"); ok {
-		t, err := expandWanoptWebcacheCacheByDefault(d, v, "cache_by_default")
+
+		t, err := expandWanoptWebcacheCacheByDefault(d, v, "cache_by_default", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -577,7 +593,8 @@ func getObjectWanoptWebcache(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("host_validate"); ok {
-		t, err := expandWanoptWebcacheHostValidate(d, v, "host_validate")
+
+		t, err := expandWanoptWebcacheHostValidate(d, v, "host_validate", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -586,7 +603,8 @@ func getObjectWanoptWebcache(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("external"); ok {
-		t, err := expandWanoptWebcacheExternal(d, v, "external")
+
+		t, err := expandWanoptWebcacheExternal(d, v, "external", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
