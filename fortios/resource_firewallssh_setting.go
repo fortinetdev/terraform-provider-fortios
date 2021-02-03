@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -91,7 +92,7 @@ func resourceFirewallSshSettingUpdate(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectFirewallSshSetting(d)
+	obj, err := getObjectFirewallSshSetting(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallSshSetting resource while getting object: %v", err)
 	}
@@ -144,101 +145,101 @@ func resourceFirewallSshSettingRead(d *schema.ResourceData, m interface{}) error
 		return nil
 	}
 
-	err = refreshObjectFirewallSshSetting(d, o)
+	err = refreshObjectFirewallSshSetting(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallSshSetting resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenFirewallSshSettingCaname(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSshSettingCaname(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallSshSettingUntrustedCaname(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSshSettingUntrustedCaname(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallSshSettingHostkeyRsa2048(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSshSettingHostkeyRsa2048(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallSshSettingHostkeyDsa1024(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSshSettingHostkeyDsa1024(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallSshSettingHostkeyEcdsa256(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSshSettingHostkeyEcdsa256(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallSshSettingHostkeyEcdsa384(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSshSettingHostkeyEcdsa384(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallSshSettingHostkeyEcdsa521(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSshSettingHostkeyEcdsa521(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallSshSettingHostkeyEd25519(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSshSettingHostkeyEd25519(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallSshSettingHostTrustedChecking(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSshSettingHostTrustedChecking(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectFirewallSshSetting(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectFirewallSshSetting(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("caname", flattenFirewallSshSettingCaname(o["caname"], d, "caname")); err != nil {
+	if err = d.Set("caname", flattenFirewallSshSettingCaname(o["caname"], d, "caname", sv)); err != nil {
 		if !fortiAPIPatch(o["caname"]) {
 			return fmt.Errorf("Error reading caname: %v", err)
 		}
 	}
 
-	if err = d.Set("untrusted_caname", flattenFirewallSshSettingUntrustedCaname(o["untrusted-caname"], d, "untrusted_caname")); err != nil {
+	if err = d.Set("untrusted_caname", flattenFirewallSshSettingUntrustedCaname(o["untrusted-caname"], d, "untrusted_caname", sv)); err != nil {
 		if !fortiAPIPatch(o["untrusted-caname"]) {
 			return fmt.Errorf("Error reading untrusted_caname: %v", err)
 		}
 	}
 
-	if err = d.Set("hostkey_rsa2048", flattenFirewallSshSettingHostkeyRsa2048(o["hostkey-rsa2048"], d, "hostkey_rsa2048")); err != nil {
+	if err = d.Set("hostkey_rsa2048", flattenFirewallSshSettingHostkeyRsa2048(o["hostkey-rsa2048"], d, "hostkey_rsa2048", sv)); err != nil {
 		if !fortiAPIPatch(o["hostkey-rsa2048"]) {
 			return fmt.Errorf("Error reading hostkey_rsa2048: %v", err)
 		}
 	}
 
-	if err = d.Set("hostkey_dsa1024", flattenFirewallSshSettingHostkeyDsa1024(o["hostkey-dsa1024"], d, "hostkey_dsa1024")); err != nil {
+	if err = d.Set("hostkey_dsa1024", flattenFirewallSshSettingHostkeyDsa1024(o["hostkey-dsa1024"], d, "hostkey_dsa1024", sv)); err != nil {
 		if !fortiAPIPatch(o["hostkey-dsa1024"]) {
 			return fmt.Errorf("Error reading hostkey_dsa1024: %v", err)
 		}
 	}
 
-	if err = d.Set("hostkey_ecdsa256", flattenFirewallSshSettingHostkeyEcdsa256(o["hostkey-ecdsa256"], d, "hostkey_ecdsa256")); err != nil {
+	if err = d.Set("hostkey_ecdsa256", flattenFirewallSshSettingHostkeyEcdsa256(o["hostkey-ecdsa256"], d, "hostkey_ecdsa256", sv)); err != nil {
 		if !fortiAPIPatch(o["hostkey-ecdsa256"]) {
 			return fmt.Errorf("Error reading hostkey_ecdsa256: %v", err)
 		}
 	}
 
-	if err = d.Set("hostkey_ecdsa384", flattenFirewallSshSettingHostkeyEcdsa384(o["hostkey-ecdsa384"], d, "hostkey_ecdsa384")); err != nil {
+	if err = d.Set("hostkey_ecdsa384", flattenFirewallSshSettingHostkeyEcdsa384(o["hostkey-ecdsa384"], d, "hostkey_ecdsa384", sv)); err != nil {
 		if !fortiAPIPatch(o["hostkey-ecdsa384"]) {
 			return fmt.Errorf("Error reading hostkey_ecdsa384: %v", err)
 		}
 	}
 
-	if err = d.Set("hostkey_ecdsa521", flattenFirewallSshSettingHostkeyEcdsa521(o["hostkey-ecdsa521"], d, "hostkey_ecdsa521")); err != nil {
+	if err = d.Set("hostkey_ecdsa521", flattenFirewallSshSettingHostkeyEcdsa521(o["hostkey-ecdsa521"], d, "hostkey_ecdsa521", sv)); err != nil {
 		if !fortiAPIPatch(o["hostkey-ecdsa521"]) {
 			return fmt.Errorf("Error reading hostkey_ecdsa521: %v", err)
 		}
 	}
 
-	if err = d.Set("hostkey_ed25519", flattenFirewallSshSettingHostkeyEd25519(o["hostkey-ed25519"], d, "hostkey_ed25519")); err != nil {
+	if err = d.Set("hostkey_ed25519", flattenFirewallSshSettingHostkeyEd25519(o["hostkey-ed25519"], d, "hostkey_ed25519", sv)); err != nil {
 		if !fortiAPIPatch(o["hostkey-ed25519"]) {
 			return fmt.Errorf("Error reading hostkey_ed25519: %v", err)
 		}
 	}
 
-	if err = d.Set("host_trusted_checking", flattenFirewallSshSettingHostTrustedChecking(o["host-trusted-checking"], d, "host_trusted_checking")); err != nil {
+	if err = d.Set("host_trusted_checking", flattenFirewallSshSettingHostTrustedChecking(o["host-trusted-checking"], d, "host_trusted_checking", sv)); err != nil {
 		if !fortiAPIPatch(o["host-trusted-checking"]) {
 			return fmt.Errorf("Error reading host_trusted_checking: %v", err)
 		}
@@ -250,50 +251,51 @@ func refreshObjectFirewallSshSetting(d *schema.ResourceData, o map[string]interf
 func flattenFirewallSshSettingFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandFirewallSshSettingCaname(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSshSettingCaname(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallSshSettingUntrustedCaname(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSshSettingUntrustedCaname(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallSshSettingHostkeyRsa2048(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSshSettingHostkeyRsa2048(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallSshSettingHostkeyDsa1024(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSshSettingHostkeyDsa1024(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallSshSettingHostkeyEcdsa256(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSshSettingHostkeyEcdsa256(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallSshSettingHostkeyEcdsa384(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSshSettingHostkeyEcdsa384(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallSshSettingHostkeyEcdsa521(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSshSettingHostkeyEcdsa521(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallSshSettingHostkeyEd25519(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSshSettingHostkeyEd25519(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallSshSettingHostTrustedChecking(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSshSettingHostTrustedChecking(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectFirewallSshSetting(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectFirewallSshSetting(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("caname"); ok {
-		t, err := expandFirewallSshSettingCaname(d, v, "caname")
+
+		t, err := expandFirewallSshSettingCaname(d, v, "caname", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -302,7 +304,8 @@ func getObjectFirewallSshSetting(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("untrusted_caname"); ok {
-		t, err := expandFirewallSshSettingUntrustedCaname(d, v, "untrusted_caname")
+
+		t, err := expandFirewallSshSettingUntrustedCaname(d, v, "untrusted_caname", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -311,7 +314,8 @@ func getObjectFirewallSshSetting(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("hostkey_rsa2048"); ok {
-		t, err := expandFirewallSshSettingHostkeyRsa2048(d, v, "hostkey_rsa2048")
+
+		t, err := expandFirewallSshSettingHostkeyRsa2048(d, v, "hostkey_rsa2048", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -320,7 +324,8 @@ func getObjectFirewallSshSetting(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("hostkey_dsa1024"); ok {
-		t, err := expandFirewallSshSettingHostkeyDsa1024(d, v, "hostkey_dsa1024")
+
+		t, err := expandFirewallSshSettingHostkeyDsa1024(d, v, "hostkey_dsa1024", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -329,7 +334,8 @@ func getObjectFirewallSshSetting(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("hostkey_ecdsa256"); ok {
-		t, err := expandFirewallSshSettingHostkeyEcdsa256(d, v, "hostkey_ecdsa256")
+
+		t, err := expandFirewallSshSettingHostkeyEcdsa256(d, v, "hostkey_ecdsa256", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -338,7 +344,8 @@ func getObjectFirewallSshSetting(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("hostkey_ecdsa384"); ok {
-		t, err := expandFirewallSshSettingHostkeyEcdsa384(d, v, "hostkey_ecdsa384")
+
+		t, err := expandFirewallSshSettingHostkeyEcdsa384(d, v, "hostkey_ecdsa384", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -347,7 +354,8 @@ func getObjectFirewallSshSetting(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("hostkey_ecdsa521"); ok {
-		t, err := expandFirewallSshSettingHostkeyEcdsa521(d, v, "hostkey_ecdsa521")
+
+		t, err := expandFirewallSshSettingHostkeyEcdsa521(d, v, "hostkey_ecdsa521", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -356,7 +364,8 @@ func getObjectFirewallSshSetting(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("hostkey_ed25519"); ok {
-		t, err := expandFirewallSshSettingHostkeyEd25519(d, v, "hostkey_ed25519")
+
+		t, err := expandFirewallSshSettingHostkeyEd25519(d, v, "hostkey_ed25519", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -365,7 +374,8 @@ func getObjectFirewallSshSetting(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("host_trusted_checking"); ok {
-		t, err := expandFirewallSshSettingHostTrustedChecking(d, v, "host_trusted_checking")
+
+		t, err := expandFirewallSshSettingHostTrustedChecking(d, v, "host_trusted_checking", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
