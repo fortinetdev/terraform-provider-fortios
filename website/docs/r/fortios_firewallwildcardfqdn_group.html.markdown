@@ -32,7 +32,6 @@ resource "fortios_firewallwildcardfqdn_group" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Address group name.
