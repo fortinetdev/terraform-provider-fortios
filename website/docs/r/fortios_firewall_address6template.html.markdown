@@ -34,7 +34,6 @@ resource "fortios_firewall_address6template" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - (Required) IPv6 address template name.
