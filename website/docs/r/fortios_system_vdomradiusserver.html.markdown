@@ -11,7 +11,6 @@ Configure a RADIUS server to use as a RADIUS Single Sign On (RSSO) server for th
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Name of the VDOM that you are adding the RADIUS server to.
