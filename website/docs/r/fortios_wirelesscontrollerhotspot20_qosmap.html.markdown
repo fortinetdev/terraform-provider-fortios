@@ -11,7 +11,6 @@ Configure QoS map set.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - QOS-MAP name.
