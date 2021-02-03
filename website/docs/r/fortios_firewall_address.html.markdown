@@ -27,13 +27,16 @@ resource "fortios_firewall_address" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Address name.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `subnet` - IP address and subnet mask of address.
 * `type` - Type of address.
+* `sub_type` - Sub-type of address.
+* `clearpass_spt` - SPT (System Posture Token) value.
+* `start_mac` - First MAC address in the range.
+* `end_mac` - Last MAC address in the range.
 * `start_ip` - First IP address (inclusive) in the range for the address.
 * `end_ip` - Final IP address (inclusive) in the range for the address.
 * `fqdn` - Fully Qualified Domain Name address.
@@ -42,22 +45,32 @@ The following arguments are supported:
 * `cache_ttl` - Defines the minimal TTL of individual IP addresses in FQDN cache measured in seconds.
 * `wildcard` - IP address and wildcard netmask.
 * `sdn` - SDN.
+* `fsso_group` - FSSO group(s). The structure of `fsso_group` block is documented below.
+* `interface` - Name of interface whose IP address is to be used.
 * `tenant` - Tenant.
 * `organization` - Organization domain name (Syntax: organization/domain).
 * `epg_name` - Endpoint group name.
 * `subnet_name` - Subnet name.
 * `sdn_tag` - SDN Tag.
 * `policy_group` - Policy group name.
+* `obj_tag` - Tag of dynamic address object.
+* `obj_type` - Object type.
 * `comment` - Comment.
 * `visibility` - Enable/disable address visibility in the GUI.
 * `associated_interface` - Network interface associated with address.
 * `color` - Color of icon on the GUI.
 * `filter` - Match criteria filter.
+* `sdn_addr_type` - Type of addresses to collect.
+* `node_ip_only` - Enable/disable collection of node addresses only in Kubernetes.
 * `obj_id` - Object ID for NSX.
 * `list` - IP address list. The structure of `list` block is documented below.
 * `tagging` - Config object tagging. The structure of `tagging` block is documented below.
 * `allow_routing` - Enable/disable use of this address in the static route configuration.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
+The `fsso_group` block supports:
+
+* `name` - FSSO group name.
 
 The `list` block supports:
 
