@@ -11,11 +11,11 @@ Configure IPv4 DoS policies.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `policyid` - Policy ID.
 * `status` - Enable/disable this policy.
+* `name` - Policy name.
 * `comments` - Comment.
 * `interface` - (Required) Incoming interface name from available interfaces.
 * `srcaddr` - (Required) Source address name from available addresses. The structure of `srcaddr` block is documented below.
