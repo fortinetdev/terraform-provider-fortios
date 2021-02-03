@@ -11,13 +11,13 @@ Configure WTP profiles or FortiAP profiles that define radio settings for manage
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - WTP (or FortiAP or AP) profile name.
 * `comment` - Comment.
 * `platform` - WTP, FortiAP, or AP platform. The structure of `platform` block is documented below.
 * `control_message_offload` - Enable/disable CAPWAP control message data channel offload.
+* `apcfg_profile` - AP local configuration profile name.
 * `ble_profile` - Bluetooth Low Energy profile name.
 * `wan_port_mode` - Enable/disable using a WAN port as a LAN port.
 * `lan` - WTP LAN port mapping. The structure of `lan` block is documented below.
@@ -43,8 +43,12 @@ The following arguments are supported:
 * `login_passwd` - Set the managed WTP, FortiAP, or AP's administrator password.
 * `lldp` - Enable/disable Link Layer Discovery Protocol (LLDP) for the WTP, FortiAP, or AP (default = disable).
 * `poe_mode` - Set the WTP, FortiAP, or AP's PoE mode.
+* `frequency_handoff` - Enable/disable frequency handoff of clients to other channels (default = disable).
+* `ap_handoff` - Enable/disable AP handoff of clients to other APs (default = disable).
 * `radio_1` - Configuration options for radio 1. The structure of `radio_1` block is documented below.
 * `radio_2` - Configuration options for radio 2. The structure of `radio_2` block is documented below.
+* `radio_3` - Configuration options for radio 3. The structure of `radio_3` block is documented below.
+* `radio_4` - Configuration options for radio 4. The structure of `radio_4` block is documented below.
 * `lbs` - Set various location based service (LBS) options. The structure of `lbs` block is documented below.
 * `ext_info_enable` - Enable/disable station/VAP/radio extension information.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
@@ -52,6 +56,8 @@ The following arguments are supported:
 The `platform` block supports:
 
 * `type` - WTP, FortiAP or AP platform type. There are built-in WTP profiles for all supported FortiAP models. You can select a built-in profile and customize it or create a new profile.
+* `mode` - Configure operation mode of 5G radios (default = single-5G).
+* `ddscan` - Enable/disable use of one radio for dedicated dual-band scanning to detect RF characterization and wireless threat management.
 
 The `lan` block supports:
 
@@ -73,6 +79,8 @@ The `lan` block supports:
 * `port7_ssid` - Bridge LAN port 7 to SSID.
 * `port8_mode` - LAN port 8 mode.
 * `port8_ssid` - Bridge LAN port 8 to SSID.
+* `port_esl_mode` - ESL port mode.
+* `port_esl_ssid` - Bridge ESL port to SSID.
 
 The `led_schedules` block supports:
 
@@ -93,17 +101,23 @@ The `radio_1` block supports:
 * `radio_id` - radio-id
 * `mode` - Mode of radio 1. Radio 1 can be disabled, configured as an access point, a rogue AP monitor, or a sniffer.
 * `band` - WiFi band that Radio 1 operates on.
+* `band_5g_type` - WiFi 5G band type.
+* `drma` - Enable/disable dynamic radio mode assignment (DRMA) (default = disable).
+* `drma_sensitivity` - Network Coverage Factor (NCF) percentage required to consider a radio as redundant (default = low).
 * `airtime_fairness` - Enable/disable airtime fairness (default = disable).
 * `protection_mode` - Enable/disable 802.11g protection modes to support backwards compatibility with older clients (rtscts, ctsonly, disable).
 * `powersave_optimize` - Enable client power-saving features such as TIM, AC VO, and OBSS etc.
 * `transmit_optimize` - Packet transmission optimization options including power saving, aggregation limiting, retry limiting, etc. All are enabled by default.
 * `amsdu` - Enable/disable 802.11n AMSDU support. AMSDU can improve performance if supported by your WiFi clients (default = enable).
 * `coexistence` - Enable/disable allowing both HT20 and HT40 on the same radio (default = enable).
+* `zero_wait_dfs` - Enable/disable zero wait DFS on radio (default = enable).
+* `bss_color` - BSS color value for this 11ax radio (0 - 63, 0 means disable. default = 0).
 * `short_guard_interval` - Use either the short guard interval (Short GI) of 400 ns or the long guard interval (Long GI) of 800 ns.
 * `channel_bonding` - Channel bandwidth: 80, 40, or 20MHz. Channels may use both 20 and 40 by enabling coexistence.
 * `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference (default = disable).
 * `auto_power_high` - Automatic transmit power high limit in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_low` - Automatic transmission power low limit in dBm (the actual range of transmit power depends on the AP platform type).
+* `auto_power_target` - The target of automatic transmit power adjustment in dBm. (-95 to -20, default = -70).
 * `power_level` - Radio power level as a percentage of the maximum transmit power (0 - 100, default = 100).
 * `dtim` - DTIM interval. The frequency to transmit Delivery Traffic Indication Message (or Map) (DTIM) messages (1 - 255, default = 1). Set higher to save client battery life.
 * `beacon_interval` - Beacon interval. The time between beacon frames in msec (the actual range of beacon interval depends on the AP platform type, default = 100).
@@ -146,19 +160,141 @@ The `radio_2` block supports:
 * `radio_id` - radio-id
 * `mode` - Mode of radio 2. Radio 2 can be disabled, configured as an access point, a rogue AP monitor, or a sniffer.
 * `band` - WiFi band that Radio 2 operates on.
+* `band_5g_type` - WiFi 5G band type.
+* `drma` - Enable/disable dynamic radio mode assignment (DRMA) (default = disable).
+* `drma_sensitivity` - Network Coverage Factor (NCF) percentage required to consider a radio as redundant (default = low).
 * `airtime_fairness` - Enable/disable airtime fairness (default = disable).
 * `protection_mode` - Enable/disable 802.11g protection modes to support backwards compatibility with older clients (rtscts, ctsonly, disable).
 * `powersave_optimize` - Enable client power-saving features such as TIM, AC VO, and OBSS etc.
 * `transmit_optimize` - Packet transmission optimization options including power saving, aggregation limiting, retry limiting, etc. All are enabled by default.
 * `amsdu` - Enable/disable 802.11n AMSDU support. AMSDU can improve performance if supported by your WiFi clients (default = enable).
 * `coexistence` - Enable/disable allowing both HT20 and HT40 on the same radio (default = enable).
+* `zero_wait_dfs` - Enable/disable zero wait DFS on radio (default = enable).
+* `bss_color` - BSS color value for this 11ax radio (0 - 63, 0 means disable. default = 0).
 * `short_guard_interval` - Use either the short guard interval (Short GI) of 400 ns or the long guard interval (Long GI) of 800 ns.
 * `channel_bonding` - Channel bandwidth: 80, 40, or 20MHz. Channels may use both 20 and 40 by enabling coexistence.
 * `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference (default = disable).
 * `auto_power_high` - Automatic transmit power high limit in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_low` - Automatic transmission power low limit in dBm (the actual range of transmit power depends on the AP platform type).
+* `auto_power_target` - The target of automatic transmit power adjustment in dBm. (-95 to -20, default = -70).
 * `power_level` - Radio power level as a percentage of the maximum transmit power (0 - 100, default = 100).
 * `dtim` - DTIM interval. The frequency to transmit Delivery Traffic Indication Message (or Map) (DTIM) messages (1 - 255, default = 1). Set higher to save client battery life.
+* `beacon_interval` - Beacon interval. The time between beacon frames in msec (the actual range of beacon interval depends on the AP platform type, default = 100).
+* `rts_threshold` - Maximum packet size for RTS transmissions, specifying the maximum size of a data packet before RTS/CTS (256 - 2346 bytes, default = 2346).
+* `frag_threshold` - Maximum packet size that can be sent without fragmentation (800 - 2346 bytes, default = 2346).
+* `ap_sniffer_bufsize` - Sniffer buffer size (1 - 32 MB, default = 16).
+* `ap_sniffer_chan` - Channel on which to operate the sniffer (default = 6).
+* `ap_sniffer_addr` - MAC address to monitor.
+* `ap_sniffer_mgmt_beacon` - Enable/disable sniffer on WiFi management Beacon frames (default = enable).
+* `ap_sniffer_mgmt_probe` - Enable/disable sniffer on WiFi management probe frames (default = enable).
+* `ap_sniffer_mgmt_other` - Enable/disable sniffer on WiFi management other frames  (default = enable).
+* `ap_sniffer_ctl` - Enable/disable sniffer on WiFi control frame (default = enable).
+* `ap_sniffer_data` - Enable/disable sniffer on WiFi data frame (default = enable).
+* `channel_utilization` - Enable/disable measuring channel utilization.
+* `spectrum_analysis` - Enable/disable spectrum analysis to find interference that would negatively impact wireless performance.
+* `wids_profile` - Wireless Intrusion Detection System (WIDS) profile name to assign to the radio.
+* `darrp` - Enable/disable Distributed Automatic Radio Resource Provisioning (DARRP) to make sure the radio is always using the most optimal channel (default = disable).
+* `max_clients` - Maximum number of stations (STAs) or WiFi clients supported by the radio. Range depends on the hardware.
+* `max_distance` - Maximum expected distance between the AP and clients (0 - 54000 m, default = 0).
+* `frequency_handoff` - Enable/disable frequency handoff of clients to other channels (default = disable).
+* `ap_handoff` - Enable/disable AP handoff of clients to other APs (default = disable).
+* `vap_all` - Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable).
+* `vaps` - Manually selected list of Virtual Access Points (VAPs). The structure of `vaps` block is documented below.
+* `channel` - Selected list of wireless radio channels. The structure of `channel` block is documented below.
+* `call_admission_control` - Enable/disable WiFi multimedia (WMM) call admission control to optimize WiFi bandwidth use for VoIP calls. New VoIP calls are only accepted if there is enough bandwidth available to support them.
+* `call_capacity` - Maximum number of Voice over WLAN (VoWLAN) phones supported by the radio (0 - 60, default = 10).
+* `bandwidth_admission_control` - Enable/disable WiFi multimedia (WMM) bandwidth admission control to optimize WiFi bandwidth use. A request to join the wireless network is only allowed if the access point has enough bandwidth to support it.
+* `bandwidth_capacity` - Maximum bandwidth capacity allowed (1 - 600000 Kbps, default = 2000).
+
+The `vaps` block supports:
+
+* `name` - Virtual Access Point (VAP) name.
+
+The `channel` block supports:
+
+* `chan` - Channel number.
+
+The `radio_3` block supports:
+
+* `mode` - Mode of radio 3. Radio 3 can be disabled, configured as an access point, a rogue AP monitor, or a sniffer.
+* `band` - WiFi band that Radio 3 operates on.
+* `band_5g_type` - WiFi 5G band type.
+* `drma` - Enable/disable dynamic radio mode assignment (DRMA) (default = disable).
+* `drma_sensitivity` - Network Coverage Factor (NCF) percentage required to consider a radio as redundant (default = low).
+* `airtime_fairness` - Enable/disable airtime fairness (default = disable).
+* `protection_mode` - Enable/disable 802.11g protection modes to support backwards compatibility with older clients (rtscts, ctsonly, disable).
+* `powersave_optimize` - Enable client power-saving features such as TIM, AC VO, and OBSS etc.
+* `transmit_optimize` - Packet transmission optimization options including power saving, aggregation limiting, retry limiting, etc. All are enabled by default.
+* `amsdu` - Enable/disable 802.11n AMSDU support. AMSDU can improve performance if supported by your WiFi clients (default = enable).
+* `coexistence` - Enable/disable allowing both HT20 and HT40 on the same radio (default = enable).
+* `zero_wait_dfs` - Enable/disable zero wait DFS on radio (default = enable).
+* `bss_color` - BSS color value for this 11ax radio (0 - 63, 0 means disable. default = 0).
+* `short_guard_interval` - Use either the short guard interval (Short GI) of 400 ns or the long guard interval (Long GI) of 800 ns.
+* `channel_bonding` - Channel bandwidth: 160,80, 40, or 20MHz. Channels may use both 20 and 40 by enabling coexistence.
+* `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference (default = enable).
+* `auto_power_high` - The upper bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
+* `auto_power_low` - The lower bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
+* `auto_power_target` - The target of automatic transmit power adjustment in dBm. (-95 to -20, default = -70).
+* `power_level` - Radio power level as a percentage of the maximum transmit power (0 - 100, default = 100).
+* `dtim` - Delivery Traffic Indication Map (DTIM) period (1 - 255, default = 1). Set higher to save battery life of WiFi client in power-save mode.
+* `beacon_interval` - Beacon interval. The time between beacon frames in msec (the actual range of beacon interval depends on the AP platform type, default = 100).
+* `rts_threshold` - Maximum packet size for RTS transmissions, specifying the maximum size of a data packet before RTS/CTS (256 - 2346 bytes, default = 2346).
+* `frag_threshold` - Maximum packet size that can be sent without fragmentation (800 - 2346 bytes, default = 2346).
+* `ap_sniffer_bufsize` - Sniffer buffer size (1 - 32 MB, default = 16).
+* `ap_sniffer_chan` - Channel on which to operate the sniffer (default = 6).
+* `ap_sniffer_addr` - MAC address to monitor.
+* `ap_sniffer_mgmt_beacon` - Enable/disable sniffer on WiFi management Beacon frames (default = enable).
+* `ap_sniffer_mgmt_probe` - Enable/disable sniffer on WiFi management probe frames (default = enable).
+* `ap_sniffer_mgmt_other` - Enable/disable sniffer on WiFi management other frames  (default = enable).
+* `ap_sniffer_ctl` - Enable/disable sniffer on WiFi control frame (default = enable).
+* `ap_sniffer_data` - Enable/disable sniffer on WiFi data frame (default = enable).
+* `channel_utilization` - Enable/disable measuring channel utilization.
+* `spectrum_analysis` - Enable/disable spectrum analysis to find interference that would negatively impact wireless performance.
+* `wids_profile` - Wireless Intrusion Detection System (WIDS) profile name to assign to the radio.
+* `darrp` - Enable/disable Distributed Automatic Radio Resource Provisioning (DARRP) to make sure the radio is always using the most optimal channel (default = disable).
+* `max_clients` - Maximum number of stations (STAs) or WiFi clients supported by the radio. Range depends on the hardware.
+* `max_distance` - Maximum expected distance between the AP and clients (0 - 54000 m, default = 0).
+* `frequency_handoff` - Enable/disable frequency handoff of clients to other channels (default = disable).
+* `ap_handoff` - Enable/disable AP handoff of clients to other APs (default = disable).
+* `vap_all` - Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable).
+* `vaps` - Manually selected list of Virtual Access Points (VAPs). The structure of `vaps` block is documented below.
+* `channel` - Selected list of wireless radio channels. The structure of `channel` block is documented below.
+* `call_admission_control` - Enable/disable WiFi multimedia (WMM) call admission control to optimize WiFi bandwidth use for VoIP calls. New VoIP calls are only accepted if there is enough bandwidth available to support them.
+* `call_capacity` - Maximum number of Voice over WLAN (VoWLAN) phones supported by the radio (0 - 60, default = 10).
+* `bandwidth_admission_control` - Enable/disable WiFi multimedia (WMM) bandwidth admission control to optimize WiFi bandwidth use. A request to join the wireless network is only allowed if the access point has enough bandwidth to support it.
+* `bandwidth_capacity` - Maximum bandwidth capacity allowed (1 - 600000 Kbps, default = 2000).
+
+The `vaps` block supports:
+
+* `name` - Virtual Access Point (VAP) name.
+
+The `channel` block supports:
+
+* `chan` - Channel number.
+
+The `radio_4` block supports:
+
+* `mode` - Mode of radio 3. Radio 3 can be disabled, configured as an access point, a rogue AP monitor, or a sniffer.
+* `band` - WiFi band that Radio 3 operates on.
+* `band_5g_type` - WiFi 5G band type.
+* `drma` - Enable/disable dynamic radio mode assignment (DRMA) (default = disable).
+* `drma_sensitivity` - Network Coverage Factor (NCF) percentage required to consider a radio as redundant (default = low).
+* `airtime_fairness` - Enable/disable airtime fairness (default = disable).
+* `protection_mode` - Enable/disable 802.11g protection modes to support backwards compatibility with older clients (rtscts, ctsonly, disable).
+* `powersave_optimize` - Enable client power-saving features such as TIM, AC VO, and OBSS etc.
+* `transmit_optimize` - Packet transmission optimization options including power saving, aggregation limiting, retry limiting, etc. All are enabled by default.
+* `amsdu` - Enable/disable 802.11n AMSDU support. AMSDU can improve performance if supported by your WiFi clients (default = enable).
+* `coexistence` - Enable/disable allowing both HT20 and HT40 on the same radio (default = enable).
+* `zero_wait_dfs` - Enable/disable zero wait DFS on radio (default = enable).
+* `bss_color` - BSS color value for this 11ax radio (0 - 63, 0 means disable. default = 0).
+* `short_guard_interval` - Use either the short guard interval (Short GI) of 400 ns or the long guard interval (Long GI) of 800 ns.
+* `channel_bonding` - Channel bandwidth: 160,80, 40, or 20MHz. Channels may use both 20 and 40 by enabling coexistence.
+* `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference (default = enable).
+* `auto_power_high` - The upper bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
+* `auto_power_low` - The lower bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
+* `auto_power_target` - The target of automatic transmit power adjustment in dBm. (-95 to -20, default = -70).
+* `power_level` - Radio power level as a percentage of the maximum transmit power (0 - 100, default = 100).
+* `dtim` - Delivery Traffic Indication Map (DTIM) period (1 - 255, default = 1). Set higher to save battery life of WiFi client in power-save mode.
 * `beacon_interval` - Beacon interval. The time between beacon frames in msec (the actual range of beacon interval depends on the AP platform type, default = 100).
 * `rts_threshold` - Maximum packet size for RTS transmissions, specifying the maximum size of a data packet before RTS/CTS (256 - 2346 bytes, default = 2346).
 * `frag_threshold` - Maximum packet size that can be sent without fragmentation (800 - 2346 bytes, default = 2346).
@@ -216,6 +352,7 @@ The `lbs` block supports:
 * `fortipresence_frequency` - FortiPresence report transmit frequency (5 - 65535 sec, default = 30).
 * `fortipresence_rogue` - Enable/disable FortiPresence finding and reporting rogue APs.
 * `fortipresence_unassoc` - Enable/disable FortiPresence finding and reporting unassociated stations.
+* `fortipresence_ble` - Enable/disable FortiPresence finding and reporting BLE devices.
 * `station_locate` - Enable/disable client station locating services for all clients, whether associated or not (default = disable).
 
 
