@@ -23,7 +23,6 @@ resource "fortios_user_tacacs" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - TACACS+ server entry name.
@@ -37,6 +36,8 @@ The following arguments are supported:
 * `authen_type` - Allowed authentication protocols/methods.
 * `authorization` - Enable/disable TACACS+ authorization.
 * `source_ip` - source IP for communications to TACACS+ server.
+* `interface_select_method` - Specify how to select outgoing interface to reach server.
+* `interface` - Specify outgoing interface to reach server.
 
 
 ## Attribute Reference
