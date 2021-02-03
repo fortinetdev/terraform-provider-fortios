@@ -35,22 +35,35 @@ The following attributes are exported:
 * `tos_mask` - Non-zero bit positions are used for comparison while zero bit positions are ignored.
 * `tos_negate` - Enable negated TOS match.
 * `tcp_session_without_syn` - Enable/disable creation of TCP session without SYN flag.
+* `anti_replay` - Enable/disable anti-replay check.
 * `utm_status` - Enable AV/web/ips protection profile.
+* `inspection_mode` - Policy inspection mode (Flow/proxy). Default is Flow mode.
+* `webcache` - Enable/disable web cache.
+* `webcache_https` - Enable/disable web cache for HTTPS.
+* `http_policy_redirect` - Redirect HTTP(S) traffic to matching transparent web proxy policy.
+* `ssh_policy_redirect` - Redirect SSH traffic to matching transparent proxy policy.
+* `webproxy_profile` - Webproxy profile name.
 * `profile_type` - Determine whether the firewall policy allows security profile groups or single profiles only.
 * `profile_group` - Name of profile group.
 * `av_profile` - Name of an existing Antivirus profile.
 * `webfilter_profile` - Name of an existing Web filter profile.
+* `dnsfilter_profile` - Name of an existing DNS filter profile.
+* `emailfilter_profile` - Name of an existing email filter profile.
 * `spamfilter_profile` - Name of an existing Spam filter profile.
 * `dlp_sensor` - Name of an existing DLP sensor.
 * `ips_sensor` - Name of an existing IPS sensor.
 * `application_list` - Name of an existing Application list.
 * `voip_profile` - Name of an existing VoIP profile.
 * `icap_profile` - Name of an existing ICAP profile.
+* `cifs_profile` - Name of an existing CIFS profile.
+* `waf_profile` - Name of an existing Web application firewall profile.
 * `ssh_filter_profile` - Name of an existing SSH filter profile.
 * `profile_protocol_options` - Name of an existing Protocol options profile.
 * `ssl_ssh_profile` - Name of an existing SSL SSH profile.
 * `logtraffic` - Enable or disable logging. Log all sessions or security profile sessions.
 * `logtraffic_start` - Record logs when a session starts.
+* `auto_asic_offload` - Enable/disable policy traffic ASIC offloading.
+* `webproxy_forward_server` - Web proxy forward server name.
 * `traffic_shaper` - Reverse traffic shaper.
 * `traffic_shaper_reverse` - Reverse traffic shaper.
 * `per_ip_shaper` - Per-IP traffic shaper.
@@ -88,10 +101,12 @@ The following attributes are exported:
 * `users` - Names of individual users that can authenticate with this policy. The structure of `users` block is documented below.
 * `devices` - Names of devices or device groups that can be matched by the policy. The structure of `devices` block is documented below.
 * `timeout_send_rst` - Enable/disable sending RST packets when TCP sessions expire.
+* `decrypted_traffic_mirror` - Decrypted traffic mirror.
 * `ssl_mirror` - Enable to copy decrypted SSL traffic to a FortiGate interface (called SSL mirroring).
 * `ssl_mirror_intf` - SSL mirror interface name. The structure of `ssl_mirror_intf` block is documented below.
 * `dsri` - Enable DSRI to ignore HTTP server responses.
 * `vlan_filter` - Set VLAN filters.
+* `fsso_groups` - Names of FSSO groups. The structure of `fsso_groups` block is documented below.
 
 The `srcintf` block contains:
 
@@ -152,4 +167,8 @@ The `devices` block contains:
 The `ssl_mirror_intf` block contains:
 
 * `name` - Interface name.
+
+The `fsso_groups` block contains:
+
+* `name` - Names of FSSO groups.
 
