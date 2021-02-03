@@ -73,7 +73,6 @@ resource "fortios_system_accprofile" "test12" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - (Required) Profile name.
@@ -97,6 +96,7 @@ The following arguments are supported:
 * `utmgrp_permission` - Custom Security Profile permissions. The structure of `utmgrp_permission` block is documented below.
 * `admintimeout_override` - Enable/disable overriding the global administrator idle timeout.
 * `admintimeout` - Administrator timeout for this access profile (0 - 480 min, default = 10, 0 means never timeout).
+* `system_diagnostics` - Enable/disable permission to run system diagnostic commands.
 
 The `netgrp_permission` block supports:
 
@@ -130,8 +130,10 @@ The `utmgrp_permission` block supports:
 * `antivirus` - Antivirus profiles and settings.
 * `ips` - IPS profiles and settings.
 * `webfilter` - Web Filter profiles and settings.
+* `emailfilter` - AntiSpam filter and settings.
 * `spamfilter` - AntiSpam filter and settings.
 * `data_loss_prevention` - DLP profiles and settings.
+* `file_filter` - File-filter profiles and settings.
 * `application_control` - Application Control profiles and settings.
 * `icap` - ICAP profiles and settings.
 * `voip` - VoIP profiles and settings.
