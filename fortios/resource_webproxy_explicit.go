@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -252,7 +253,7 @@ func resourceWebProxyExplicitUpdate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWebProxyExplicit(d)
+	obj, err := getObjectWebProxyExplicit(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WebProxyExplicit resource while getting object: %v", err)
 	}
@@ -305,110 +306,110 @@ func resourceWebProxyExplicitRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectWebProxyExplicit(d, o)
+	err = refreshObjectWebProxyExplicit(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading WebProxyExplicit resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenWebProxyExplicitStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyExplicitStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyExplicitFtpOverHttp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyExplicitFtpOverHttp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyExplicitSocks(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyExplicitSocks(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyExplicitHttpIncomingPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyExplicitHttpIncomingPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyExplicitHttpsIncomingPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyExplicitHttpsIncomingPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyExplicitFtpIncomingPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyExplicitFtpIncomingPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyExplicitSocksIncomingPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyExplicitSocksIncomingPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyExplicitIncomingIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyExplicitIncomingIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyExplicitOutgoingIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyExplicitOutgoingIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyExplicitIpv6Status(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyExplicitIpv6Status(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyExplicitIncomingIp6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyExplicitIncomingIp6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyExplicitOutgoingIp6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyExplicitOutgoingIp6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyExplicitStrictGuest(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyExplicitStrictGuest(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyExplicitPrefDnsResult(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyExplicitPrefDnsResult(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyExplicitUnknownHttpVersion(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyExplicitUnknownHttpVersion(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyExplicitRealm(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyExplicitRealm(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyExplicitSecDefaultAction(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyExplicitSecDefaultAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyExplicitHttpsReplacementMessage(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyExplicitHttpsReplacementMessage(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyExplicitMessageUponServerError(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyExplicitMessageUponServerError(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyExplicitPacFileServerStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyExplicitPacFileServerStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyExplicitPacFileUrl(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyExplicitPacFileUrl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyExplicitPacFileServerPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyExplicitPacFileServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyExplicitPacFileName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyExplicitPacFileName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyExplicitPacFileData(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyExplicitPacFileData(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyExplicitPacPolicy(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenWebProxyExplicitPacPolicy(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -429,42 +430,50 @@ func flattenWebProxyExplicitPacPolicy(v interface{}, d *schema.ResourceData, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "policyid"
 		if _, ok := i["policyid"]; ok {
-			tmp["policyid"] = flattenWebProxyExplicitPacPolicyPolicyid(i["policyid"], d, pre_append)
+
+			tmp["policyid"] = flattenWebProxyExplicitPacPolicyPolicyid(i["policyid"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenWebProxyExplicitPacPolicyStatus(i["status"], d, pre_append)
+
+			tmp["status"] = flattenWebProxyExplicitPacPolicyStatus(i["status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcaddr"
 		if _, ok := i["srcaddr"]; ok {
-			tmp["srcaddr"] = flattenWebProxyExplicitPacPolicySrcaddr(i["srcaddr"], d, pre_append)
+
+			tmp["srcaddr"] = flattenWebProxyExplicitPacPolicySrcaddr(i["srcaddr"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcaddr6"
 		if _, ok := i["srcaddr6"]; ok {
-			tmp["srcaddr6"] = flattenWebProxyExplicitPacPolicySrcaddr6(i["srcaddr6"], d, pre_append)
+
+			tmp["srcaddr6"] = flattenWebProxyExplicitPacPolicySrcaddr6(i["srcaddr6"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr"
 		if _, ok := i["dstaddr"]; ok {
-			tmp["dstaddr"] = flattenWebProxyExplicitPacPolicyDstaddr(i["dstaddr"], d, pre_append)
+
+			tmp["dstaddr"] = flattenWebProxyExplicitPacPolicyDstaddr(i["dstaddr"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pac_file_name"
 		if _, ok := i["pac-file-name"]; ok {
-			tmp["pac_file_name"] = flattenWebProxyExplicitPacPolicyPacFileName(i["pac-file-name"], d, pre_append)
+
+			tmp["pac_file_name"] = flattenWebProxyExplicitPacPolicyPacFileName(i["pac-file-name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pac_file_data"
 		if _, ok := i["pac-file-data"]; ok {
-			tmp["pac_file_data"] = flattenWebProxyExplicitPacPolicyPacFileData(i["pac-file-data"], d, pre_append)
+
+			tmp["pac_file_data"] = flattenWebProxyExplicitPacPolicyPacFileData(i["pac-file-data"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comments"
 		if _, ok := i["comments"]; ok {
-			tmp["comments"] = flattenWebProxyExplicitPacPolicyComments(i["comments"], d, pre_append)
+
+			tmp["comments"] = flattenWebProxyExplicitPacPolicyComments(i["comments"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -476,15 +485,15 @@ func flattenWebProxyExplicitPacPolicy(v interface{}, d *schema.ResourceData, pre
 	return result
 }
 
-func flattenWebProxyExplicitPacPolicyPolicyid(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyExplicitPacPolicyPolicyid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyExplicitPacPolicyStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyExplicitPacPolicyStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyExplicitPacPolicySrcaddr(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenWebProxyExplicitPacPolicySrcaddr(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -505,7 +514,8 @@ func flattenWebProxyExplicitPacPolicySrcaddr(v interface{}, d *schema.ResourceDa
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWebProxyExplicitPacPolicySrcaddrName(i["name"], d, pre_append)
+
+			tmp["name"] = flattenWebProxyExplicitPacPolicySrcaddrName(i["name"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -516,11 +526,11 @@ func flattenWebProxyExplicitPacPolicySrcaddr(v interface{}, d *schema.ResourceDa
 	return result
 }
 
-func flattenWebProxyExplicitPacPolicySrcaddrName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyExplicitPacPolicySrcaddrName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyExplicitPacPolicySrcaddr6(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenWebProxyExplicitPacPolicySrcaddr6(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -541,7 +551,8 @@ func flattenWebProxyExplicitPacPolicySrcaddr6(v interface{}, d *schema.ResourceD
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWebProxyExplicitPacPolicySrcaddr6Name(i["name"], d, pre_append)
+
+			tmp["name"] = flattenWebProxyExplicitPacPolicySrcaddr6Name(i["name"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -552,11 +563,11 @@ func flattenWebProxyExplicitPacPolicySrcaddr6(v interface{}, d *schema.ResourceD
 	return result
 }
 
-func flattenWebProxyExplicitPacPolicySrcaddr6Name(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyExplicitPacPolicySrcaddr6Name(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyExplicitPacPolicyDstaddr(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenWebProxyExplicitPacPolicyDstaddr(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -577,7 +588,8 @@ func flattenWebProxyExplicitPacPolicyDstaddr(v interface{}, d *schema.ResourceDa
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWebProxyExplicitPacPolicyDstaddrName(i["name"], d, pre_append)
+
+			tmp["name"] = flattenWebProxyExplicitPacPolicyDstaddrName(i["name"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -588,186 +600,186 @@ func flattenWebProxyExplicitPacPolicyDstaddr(v interface{}, d *schema.ResourceDa
 	return result
 }
 
-func flattenWebProxyExplicitPacPolicyDstaddrName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyExplicitPacPolicyDstaddrName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyExplicitPacPolicyPacFileName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyExplicitPacPolicyPacFileName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyExplicitPacPolicyPacFileData(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyExplicitPacPolicyPacFileData(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyExplicitPacPolicyComments(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyExplicitPacPolicyComments(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyExplicitSslAlgorithm(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyExplicitSslAlgorithm(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyExplicitTraceAuthNoRsp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyExplicitTraceAuthNoRsp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectWebProxyExplicit(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectWebProxyExplicit(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("status", flattenWebProxyExplicitStatus(o["status"], d, "status")); err != nil {
+	if err = d.Set("status", flattenWebProxyExplicitStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
 		}
 	}
 
-	if err = d.Set("ftp_over_http", flattenWebProxyExplicitFtpOverHttp(o["ftp-over-http"], d, "ftp_over_http")); err != nil {
+	if err = d.Set("ftp_over_http", flattenWebProxyExplicitFtpOverHttp(o["ftp-over-http"], d, "ftp_over_http", sv)); err != nil {
 		if !fortiAPIPatch(o["ftp-over-http"]) {
 			return fmt.Errorf("Error reading ftp_over_http: %v", err)
 		}
 	}
 
-	if err = d.Set("socks", flattenWebProxyExplicitSocks(o["socks"], d, "socks")); err != nil {
+	if err = d.Set("socks", flattenWebProxyExplicitSocks(o["socks"], d, "socks", sv)); err != nil {
 		if !fortiAPIPatch(o["socks"]) {
 			return fmt.Errorf("Error reading socks: %v", err)
 		}
 	}
 
-	if err = d.Set("http_incoming_port", flattenWebProxyExplicitHttpIncomingPort(o["http-incoming-port"], d, "http_incoming_port")); err != nil {
+	if err = d.Set("http_incoming_port", flattenWebProxyExplicitHttpIncomingPort(o["http-incoming-port"], d, "http_incoming_port", sv)); err != nil {
 		if !fortiAPIPatch(o["http-incoming-port"]) {
 			return fmt.Errorf("Error reading http_incoming_port: %v", err)
 		}
 	}
 
-	if err = d.Set("https_incoming_port", flattenWebProxyExplicitHttpsIncomingPort(o["https-incoming-port"], d, "https_incoming_port")); err != nil {
+	if err = d.Set("https_incoming_port", flattenWebProxyExplicitHttpsIncomingPort(o["https-incoming-port"], d, "https_incoming_port", sv)); err != nil {
 		if !fortiAPIPatch(o["https-incoming-port"]) {
 			return fmt.Errorf("Error reading https_incoming_port: %v", err)
 		}
 	}
 
-	if err = d.Set("ftp_incoming_port", flattenWebProxyExplicitFtpIncomingPort(o["ftp-incoming-port"], d, "ftp_incoming_port")); err != nil {
+	if err = d.Set("ftp_incoming_port", flattenWebProxyExplicitFtpIncomingPort(o["ftp-incoming-port"], d, "ftp_incoming_port", sv)); err != nil {
 		if !fortiAPIPatch(o["ftp-incoming-port"]) {
 			return fmt.Errorf("Error reading ftp_incoming_port: %v", err)
 		}
 	}
 
-	if err = d.Set("socks_incoming_port", flattenWebProxyExplicitSocksIncomingPort(o["socks-incoming-port"], d, "socks_incoming_port")); err != nil {
+	if err = d.Set("socks_incoming_port", flattenWebProxyExplicitSocksIncomingPort(o["socks-incoming-port"], d, "socks_incoming_port", sv)); err != nil {
 		if !fortiAPIPatch(o["socks-incoming-port"]) {
 			return fmt.Errorf("Error reading socks_incoming_port: %v", err)
 		}
 	}
 
-	if err = d.Set("incoming_ip", flattenWebProxyExplicitIncomingIp(o["incoming-ip"], d, "incoming_ip")); err != nil {
+	if err = d.Set("incoming_ip", flattenWebProxyExplicitIncomingIp(o["incoming-ip"], d, "incoming_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["incoming-ip"]) {
 			return fmt.Errorf("Error reading incoming_ip: %v", err)
 		}
 	}
 
-	if err = d.Set("outgoing_ip", flattenWebProxyExplicitOutgoingIp(o["outgoing-ip"], d, "outgoing_ip")); err != nil {
+	if err = d.Set("outgoing_ip", flattenWebProxyExplicitOutgoingIp(o["outgoing-ip"], d, "outgoing_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["outgoing-ip"]) {
 			return fmt.Errorf("Error reading outgoing_ip: %v", err)
 		}
 	}
 
-	if err = d.Set("ipv6_status", flattenWebProxyExplicitIpv6Status(o["ipv6-status"], d, "ipv6_status")); err != nil {
+	if err = d.Set("ipv6_status", flattenWebProxyExplicitIpv6Status(o["ipv6-status"], d, "ipv6_status", sv)); err != nil {
 		if !fortiAPIPatch(o["ipv6-status"]) {
 			return fmt.Errorf("Error reading ipv6_status: %v", err)
 		}
 	}
 
-	if err = d.Set("incoming_ip6", flattenWebProxyExplicitIncomingIp6(o["incoming-ip6"], d, "incoming_ip6")); err != nil {
+	if err = d.Set("incoming_ip6", flattenWebProxyExplicitIncomingIp6(o["incoming-ip6"], d, "incoming_ip6", sv)); err != nil {
 		if !fortiAPIPatch(o["incoming-ip6"]) {
 			return fmt.Errorf("Error reading incoming_ip6: %v", err)
 		}
 	}
 
-	if err = d.Set("outgoing_ip6", flattenWebProxyExplicitOutgoingIp6(o["outgoing-ip6"], d, "outgoing_ip6")); err != nil {
+	if err = d.Set("outgoing_ip6", flattenWebProxyExplicitOutgoingIp6(o["outgoing-ip6"], d, "outgoing_ip6", sv)); err != nil {
 		if !fortiAPIPatch(o["outgoing-ip6"]) {
 			return fmt.Errorf("Error reading outgoing_ip6: %v", err)
 		}
 	}
 
-	if err = d.Set("strict_guest", flattenWebProxyExplicitStrictGuest(o["strict-guest"], d, "strict_guest")); err != nil {
+	if err = d.Set("strict_guest", flattenWebProxyExplicitStrictGuest(o["strict-guest"], d, "strict_guest", sv)); err != nil {
 		if !fortiAPIPatch(o["strict-guest"]) {
 			return fmt.Errorf("Error reading strict_guest: %v", err)
 		}
 	}
 
-	if err = d.Set("pref_dns_result", flattenWebProxyExplicitPrefDnsResult(o["pref-dns-result"], d, "pref_dns_result")); err != nil {
+	if err = d.Set("pref_dns_result", flattenWebProxyExplicitPrefDnsResult(o["pref-dns-result"], d, "pref_dns_result", sv)); err != nil {
 		if !fortiAPIPatch(o["pref-dns-result"]) {
 			return fmt.Errorf("Error reading pref_dns_result: %v", err)
 		}
 	}
 
-	if err = d.Set("unknown_http_version", flattenWebProxyExplicitUnknownHttpVersion(o["unknown-http-version"], d, "unknown_http_version")); err != nil {
+	if err = d.Set("unknown_http_version", flattenWebProxyExplicitUnknownHttpVersion(o["unknown-http-version"], d, "unknown_http_version", sv)); err != nil {
 		if !fortiAPIPatch(o["unknown-http-version"]) {
 			return fmt.Errorf("Error reading unknown_http_version: %v", err)
 		}
 	}
 
-	if err = d.Set("realm", flattenWebProxyExplicitRealm(o["realm"], d, "realm")); err != nil {
+	if err = d.Set("realm", flattenWebProxyExplicitRealm(o["realm"], d, "realm", sv)); err != nil {
 		if !fortiAPIPatch(o["realm"]) {
 			return fmt.Errorf("Error reading realm: %v", err)
 		}
 	}
 
-	if err = d.Set("sec_default_action", flattenWebProxyExplicitSecDefaultAction(o["sec-default-action"], d, "sec_default_action")); err != nil {
+	if err = d.Set("sec_default_action", flattenWebProxyExplicitSecDefaultAction(o["sec-default-action"], d, "sec_default_action", sv)); err != nil {
 		if !fortiAPIPatch(o["sec-default-action"]) {
 			return fmt.Errorf("Error reading sec_default_action: %v", err)
 		}
 	}
 
-	if err = d.Set("https_replacement_message", flattenWebProxyExplicitHttpsReplacementMessage(o["https-replacement-message"], d, "https_replacement_message")); err != nil {
+	if err = d.Set("https_replacement_message", flattenWebProxyExplicitHttpsReplacementMessage(o["https-replacement-message"], d, "https_replacement_message", sv)); err != nil {
 		if !fortiAPIPatch(o["https-replacement-message"]) {
 			return fmt.Errorf("Error reading https_replacement_message: %v", err)
 		}
 	}
 
-	if err = d.Set("message_upon_server_error", flattenWebProxyExplicitMessageUponServerError(o["message-upon-server-error"], d, "message_upon_server_error")); err != nil {
+	if err = d.Set("message_upon_server_error", flattenWebProxyExplicitMessageUponServerError(o["message-upon-server-error"], d, "message_upon_server_error", sv)); err != nil {
 		if !fortiAPIPatch(o["message-upon-server-error"]) {
 			return fmt.Errorf("Error reading message_upon_server_error: %v", err)
 		}
 	}
 
-	if err = d.Set("pac_file_server_status", flattenWebProxyExplicitPacFileServerStatus(o["pac-file-server-status"], d, "pac_file_server_status")); err != nil {
+	if err = d.Set("pac_file_server_status", flattenWebProxyExplicitPacFileServerStatus(o["pac-file-server-status"], d, "pac_file_server_status", sv)); err != nil {
 		if !fortiAPIPatch(o["pac-file-server-status"]) {
 			return fmt.Errorf("Error reading pac_file_server_status: %v", err)
 		}
 	}
 
-	if err = d.Set("pac_file_url", flattenWebProxyExplicitPacFileUrl(o["pac-file-url"], d, "pac_file_url")); err != nil {
+	if err = d.Set("pac_file_url", flattenWebProxyExplicitPacFileUrl(o["pac-file-url"], d, "pac_file_url", sv)); err != nil {
 		if !fortiAPIPatch(o["pac-file-url"]) {
 			return fmt.Errorf("Error reading pac_file_url: %v", err)
 		}
 	}
 
-	if err = d.Set("pac_file_server_port", flattenWebProxyExplicitPacFileServerPort(o["pac-file-server-port"], d, "pac_file_server_port")); err != nil {
+	if err = d.Set("pac_file_server_port", flattenWebProxyExplicitPacFileServerPort(o["pac-file-server-port"], d, "pac_file_server_port", sv)); err != nil {
 		if !fortiAPIPatch(o["pac-file-server-port"]) {
 			return fmt.Errorf("Error reading pac_file_server_port: %v", err)
 		}
 	}
 
-	if err = d.Set("pac_file_name", flattenWebProxyExplicitPacFileName(o["pac-file-name"], d, "pac_file_name")); err != nil {
+	if err = d.Set("pac_file_name", flattenWebProxyExplicitPacFileName(o["pac-file-name"], d, "pac_file_name", sv)); err != nil {
 		if !fortiAPIPatch(o["pac-file-name"]) {
 			return fmt.Errorf("Error reading pac_file_name: %v", err)
 		}
 	}
 
-	if err = d.Set("pac_file_data", flattenWebProxyExplicitPacFileData(o["pac-file-data"], d, "pac_file_data")); err != nil {
+	if err = d.Set("pac_file_data", flattenWebProxyExplicitPacFileData(o["pac-file-data"], d, "pac_file_data", sv)); err != nil {
 		if !fortiAPIPatch(o["pac-file-data"]) {
 			return fmt.Errorf("Error reading pac_file_data: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("pac_policy", flattenWebProxyExplicitPacPolicy(o["pac-policy"], d, "pac_policy")); err != nil {
+		if err = d.Set("pac_policy", flattenWebProxyExplicitPacPolicy(o["pac-policy"], d, "pac_policy", sv)); err != nil {
 			if !fortiAPIPatch(o["pac-policy"]) {
 				return fmt.Errorf("Error reading pac_policy: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("pac_policy"); ok {
-			if err = d.Set("pac_policy", flattenWebProxyExplicitPacPolicy(o["pac-policy"], d, "pac_policy")); err != nil {
+			if err = d.Set("pac_policy", flattenWebProxyExplicitPacPolicy(o["pac-policy"], d, "pac_policy", sv)); err != nil {
 				if !fortiAPIPatch(o["pac-policy"]) {
 					return fmt.Errorf("Error reading pac_policy: %v", err)
 				}
@@ -775,13 +787,13 @@ func refreshObjectWebProxyExplicit(d *schema.ResourceData, o map[string]interfac
 		}
 	}
 
-	if err = d.Set("ssl_algorithm", flattenWebProxyExplicitSslAlgorithm(o["ssl-algorithm"], d, "ssl_algorithm")); err != nil {
+	if err = d.Set("ssl_algorithm", flattenWebProxyExplicitSslAlgorithm(o["ssl-algorithm"], d, "ssl_algorithm", sv)); err != nil {
 		if !fortiAPIPatch(o["ssl-algorithm"]) {
 			return fmt.Errorf("Error reading ssl_algorithm: %v", err)
 		}
 	}
 
-	if err = d.Set("trace_auth_no_rsp", flattenWebProxyExplicitTraceAuthNoRsp(o["trace-auth-no-rsp"], d, "trace_auth_no_rsp")); err != nil {
+	if err = d.Set("trace_auth_no_rsp", flattenWebProxyExplicitTraceAuthNoRsp(o["trace-auth-no-rsp"], d, "trace_auth_no_rsp", sv)); err != nil {
 		if !fortiAPIPatch(o["trace-auth-no-rsp"]) {
 			return fmt.Errorf("Error reading trace_auth_no_rsp: %v", err)
 		}
@@ -793,106 +805,106 @@ func refreshObjectWebProxyExplicit(d *schema.ResourceData, o map[string]interfac
 func flattenWebProxyExplicitFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandWebProxyExplicitStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyExplicitFtpOverHttp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitFtpOverHttp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyExplicitSocks(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitSocks(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyExplicitHttpIncomingPort(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitHttpIncomingPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyExplicitHttpsIncomingPort(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitHttpsIncomingPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyExplicitFtpIncomingPort(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitFtpIncomingPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyExplicitSocksIncomingPort(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitSocksIncomingPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyExplicitIncomingIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitIncomingIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyExplicitOutgoingIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitOutgoingIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyExplicitIpv6Status(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitIpv6Status(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyExplicitIncomingIp6(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitIncomingIp6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyExplicitOutgoingIp6(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitOutgoingIp6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyExplicitStrictGuest(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitStrictGuest(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyExplicitPrefDnsResult(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitPrefDnsResult(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyExplicitUnknownHttpVersion(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitUnknownHttpVersion(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyExplicitRealm(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitRealm(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyExplicitSecDefaultAction(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitSecDefaultAction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyExplicitHttpsReplacementMessage(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitHttpsReplacementMessage(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyExplicitMessageUponServerError(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitMessageUponServerError(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyExplicitPacFileServerStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitPacFileServerStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyExplicitPacFileUrl(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitPacFileUrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyExplicitPacFileServerPort(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitPacFileServerPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyExplicitPacFileName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitPacFileName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyExplicitPacFileData(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitPacFileData(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyExplicitPacPolicy(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitPacPolicy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -908,48 +920,56 @@ func expandWebProxyExplicitPacPolicy(d *schema.ResourceData, v interface{}, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "policyid"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["policyid"], _ = expandWebProxyExplicitPacPolicyPolicyid(d, i["policyid"], pre_append)
+
+			tmp["policyid"], _ = expandWebProxyExplicitPacPolicyPolicyid(d, i["policyid"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["status"], _ = expandWebProxyExplicitPacPolicyStatus(d, i["status"], pre_append)
+
+			tmp["status"], _ = expandWebProxyExplicitPacPolicyStatus(d, i["status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcaddr"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["srcaddr"], _ = expandWebProxyExplicitPacPolicySrcaddr(d, i["srcaddr"], pre_append)
+
+			tmp["srcaddr"], _ = expandWebProxyExplicitPacPolicySrcaddr(d, i["srcaddr"], pre_append, sv)
 		} else {
 			tmp["srcaddr"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "srcaddr6"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["srcaddr6"], _ = expandWebProxyExplicitPacPolicySrcaddr6(d, i["srcaddr6"], pre_append)
+
+			tmp["srcaddr6"], _ = expandWebProxyExplicitPacPolicySrcaddr6(d, i["srcaddr6"], pre_append, sv)
 		} else {
 			tmp["srcaddr6"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dstaddr"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["dstaddr"], _ = expandWebProxyExplicitPacPolicyDstaddr(d, i["dstaddr"], pre_append)
+
+			tmp["dstaddr"], _ = expandWebProxyExplicitPacPolicyDstaddr(d, i["dstaddr"], pre_append, sv)
 		} else {
 			tmp["dstaddr"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pac_file_name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["pac-file-name"], _ = expandWebProxyExplicitPacPolicyPacFileName(d, i["pac_file_name"], pre_append)
+
+			tmp["pac-file-name"], _ = expandWebProxyExplicitPacPolicyPacFileName(d, i["pac_file_name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pac_file_data"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["pac-file-data"], _ = expandWebProxyExplicitPacPolicyPacFileData(d, i["pac_file_data"], pre_append)
+
+			tmp["pac-file-data"], _ = expandWebProxyExplicitPacPolicyPacFileData(d, i["pac_file_data"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comments"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["comments"], _ = expandWebProxyExplicitPacPolicyComments(d, i["comments"], pre_append)
+
+			tmp["comments"], _ = expandWebProxyExplicitPacPolicyComments(d, i["comments"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -960,15 +980,15 @@ func expandWebProxyExplicitPacPolicy(d *schema.ResourceData, v interface{}, pre 
 	return result, nil
 }
 
-func expandWebProxyExplicitPacPolicyPolicyid(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitPacPolicyPolicyid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyExplicitPacPolicyStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitPacPolicyStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyExplicitPacPolicySrcaddr(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitPacPolicySrcaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -984,7 +1004,8 @@ func expandWebProxyExplicitPacPolicySrcaddr(d *schema.ResourceData, v interface{
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandWebProxyExplicitPacPolicySrcaddrName(d, i["name"], pre_append)
+
+			tmp["name"], _ = expandWebProxyExplicitPacPolicySrcaddrName(d, i["name"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -995,11 +1016,11 @@ func expandWebProxyExplicitPacPolicySrcaddr(d *schema.ResourceData, v interface{
 	return result, nil
 }
 
-func expandWebProxyExplicitPacPolicySrcaddrName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitPacPolicySrcaddrName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyExplicitPacPolicySrcaddr6(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitPacPolicySrcaddr6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1015,7 +1036,8 @@ func expandWebProxyExplicitPacPolicySrcaddr6(d *schema.ResourceData, v interface
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandWebProxyExplicitPacPolicySrcaddr6Name(d, i["name"], pre_append)
+
+			tmp["name"], _ = expandWebProxyExplicitPacPolicySrcaddr6Name(d, i["name"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1026,11 +1048,11 @@ func expandWebProxyExplicitPacPolicySrcaddr6(d *schema.ResourceData, v interface
 	return result, nil
 }
 
-func expandWebProxyExplicitPacPolicySrcaddr6Name(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitPacPolicySrcaddr6Name(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyExplicitPacPolicyDstaddr(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitPacPolicyDstaddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1046,7 +1068,8 @@ func expandWebProxyExplicitPacPolicyDstaddr(d *schema.ResourceData, v interface{
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandWebProxyExplicitPacPolicyDstaddrName(d, i["name"], pre_append)
+
+			tmp["name"], _ = expandWebProxyExplicitPacPolicyDstaddrName(d, i["name"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1057,35 +1080,36 @@ func expandWebProxyExplicitPacPolicyDstaddr(d *schema.ResourceData, v interface{
 	return result, nil
 }
 
-func expandWebProxyExplicitPacPolicyDstaddrName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitPacPolicyDstaddrName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyExplicitPacPolicyPacFileName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitPacPolicyPacFileName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyExplicitPacPolicyPacFileData(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitPacPolicyPacFileData(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyExplicitPacPolicyComments(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitPacPolicyComments(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyExplicitSslAlgorithm(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitSslAlgorithm(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyExplicitTraceAuthNoRsp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyExplicitTraceAuthNoRsp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectWebProxyExplicit(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectWebProxyExplicit(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
-		t, err := expandWebProxyExplicitStatus(d, v, "status")
+
+		t, err := expandWebProxyExplicitStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1094,7 +1118,8 @@ func getObjectWebProxyExplicit(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("ftp_over_http"); ok {
-		t, err := expandWebProxyExplicitFtpOverHttp(d, v, "ftp_over_http")
+
+		t, err := expandWebProxyExplicitFtpOverHttp(d, v, "ftp_over_http", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1103,7 +1128,8 @@ func getObjectWebProxyExplicit(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("socks"); ok {
-		t, err := expandWebProxyExplicitSocks(d, v, "socks")
+
+		t, err := expandWebProxyExplicitSocks(d, v, "socks", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1112,7 +1138,8 @@ func getObjectWebProxyExplicit(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("http_incoming_port"); ok {
-		t, err := expandWebProxyExplicitHttpIncomingPort(d, v, "http_incoming_port")
+
+		t, err := expandWebProxyExplicitHttpIncomingPort(d, v, "http_incoming_port", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1121,7 +1148,8 @@ func getObjectWebProxyExplicit(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("https_incoming_port"); ok {
-		t, err := expandWebProxyExplicitHttpsIncomingPort(d, v, "https_incoming_port")
+
+		t, err := expandWebProxyExplicitHttpsIncomingPort(d, v, "https_incoming_port", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1130,7 +1158,8 @@ func getObjectWebProxyExplicit(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("ftp_incoming_port"); ok {
-		t, err := expandWebProxyExplicitFtpIncomingPort(d, v, "ftp_incoming_port")
+
+		t, err := expandWebProxyExplicitFtpIncomingPort(d, v, "ftp_incoming_port", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1139,7 +1168,8 @@ func getObjectWebProxyExplicit(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("socks_incoming_port"); ok {
-		t, err := expandWebProxyExplicitSocksIncomingPort(d, v, "socks_incoming_port")
+
+		t, err := expandWebProxyExplicitSocksIncomingPort(d, v, "socks_incoming_port", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1148,7 +1178,8 @@ func getObjectWebProxyExplicit(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("incoming_ip"); ok {
-		t, err := expandWebProxyExplicitIncomingIp(d, v, "incoming_ip")
+
+		t, err := expandWebProxyExplicitIncomingIp(d, v, "incoming_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1157,7 +1188,8 @@ func getObjectWebProxyExplicit(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("outgoing_ip"); ok {
-		t, err := expandWebProxyExplicitOutgoingIp(d, v, "outgoing_ip")
+
+		t, err := expandWebProxyExplicitOutgoingIp(d, v, "outgoing_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1166,7 +1198,8 @@ func getObjectWebProxyExplicit(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("ipv6_status"); ok {
-		t, err := expandWebProxyExplicitIpv6Status(d, v, "ipv6_status")
+
+		t, err := expandWebProxyExplicitIpv6Status(d, v, "ipv6_status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1175,7 +1208,8 @@ func getObjectWebProxyExplicit(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("incoming_ip6"); ok {
-		t, err := expandWebProxyExplicitIncomingIp6(d, v, "incoming_ip6")
+
+		t, err := expandWebProxyExplicitIncomingIp6(d, v, "incoming_ip6", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1184,7 +1218,8 @@ func getObjectWebProxyExplicit(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("outgoing_ip6"); ok {
-		t, err := expandWebProxyExplicitOutgoingIp6(d, v, "outgoing_ip6")
+
+		t, err := expandWebProxyExplicitOutgoingIp6(d, v, "outgoing_ip6", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1193,7 +1228,8 @@ func getObjectWebProxyExplicit(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("strict_guest"); ok {
-		t, err := expandWebProxyExplicitStrictGuest(d, v, "strict_guest")
+
+		t, err := expandWebProxyExplicitStrictGuest(d, v, "strict_guest", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1202,7 +1238,8 @@ func getObjectWebProxyExplicit(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("pref_dns_result"); ok {
-		t, err := expandWebProxyExplicitPrefDnsResult(d, v, "pref_dns_result")
+
+		t, err := expandWebProxyExplicitPrefDnsResult(d, v, "pref_dns_result", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1211,7 +1248,8 @@ func getObjectWebProxyExplicit(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("unknown_http_version"); ok {
-		t, err := expandWebProxyExplicitUnknownHttpVersion(d, v, "unknown_http_version")
+
+		t, err := expandWebProxyExplicitUnknownHttpVersion(d, v, "unknown_http_version", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1220,7 +1258,8 @@ func getObjectWebProxyExplicit(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("realm"); ok {
-		t, err := expandWebProxyExplicitRealm(d, v, "realm")
+
+		t, err := expandWebProxyExplicitRealm(d, v, "realm", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1229,7 +1268,8 @@ func getObjectWebProxyExplicit(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("sec_default_action"); ok {
-		t, err := expandWebProxyExplicitSecDefaultAction(d, v, "sec_default_action")
+
+		t, err := expandWebProxyExplicitSecDefaultAction(d, v, "sec_default_action", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1238,7 +1278,8 @@ func getObjectWebProxyExplicit(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("https_replacement_message"); ok {
-		t, err := expandWebProxyExplicitHttpsReplacementMessage(d, v, "https_replacement_message")
+
+		t, err := expandWebProxyExplicitHttpsReplacementMessage(d, v, "https_replacement_message", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1247,7 +1288,8 @@ func getObjectWebProxyExplicit(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("message_upon_server_error"); ok {
-		t, err := expandWebProxyExplicitMessageUponServerError(d, v, "message_upon_server_error")
+
+		t, err := expandWebProxyExplicitMessageUponServerError(d, v, "message_upon_server_error", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1256,7 +1298,8 @@ func getObjectWebProxyExplicit(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("pac_file_server_status"); ok {
-		t, err := expandWebProxyExplicitPacFileServerStatus(d, v, "pac_file_server_status")
+
+		t, err := expandWebProxyExplicitPacFileServerStatus(d, v, "pac_file_server_status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1265,7 +1308,8 @@ func getObjectWebProxyExplicit(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("pac_file_url"); ok {
-		t, err := expandWebProxyExplicitPacFileUrl(d, v, "pac_file_url")
+
+		t, err := expandWebProxyExplicitPacFileUrl(d, v, "pac_file_url", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1274,7 +1318,8 @@ func getObjectWebProxyExplicit(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("pac_file_server_port"); ok {
-		t, err := expandWebProxyExplicitPacFileServerPort(d, v, "pac_file_server_port")
+
+		t, err := expandWebProxyExplicitPacFileServerPort(d, v, "pac_file_server_port", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1283,7 +1328,8 @@ func getObjectWebProxyExplicit(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("pac_file_name"); ok {
-		t, err := expandWebProxyExplicitPacFileName(d, v, "pac_file_name")
+
+		t, err := expandWebProxyExplicitPacFileName(d, v, "pac_file_name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1292,7 +1338,8 @@ func getObjectWebProxyExplicit(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("pac_file_data"); ok {
-		t, err := expandWebProxyExplicitPacFileData(d, v, "pac_file_data")
+
+		t, err := expandWebProxyExplicitPacFileData(d, v, "pac_file_data", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1301,7 +1348,8 @@ func getObjectWebProxyExplicit(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("pac_policy"); ok {
-		t, err := expandWebProxyExplicitPacPolicy(d, v, "pac_policy")
+
+		t, err := expandWebProxyExplicitPacPolicy(d, v, "pac_policy", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1310,7 +1358,8 @@ func getObjectWebProxyExplicit(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("ssl_algorithm"); ok {
-		t, err := expandWebProxyExplicitSslAlgorithm(d, v, "ssl_algorithm")
+
+		t, err := expandWebProxyExplicitSslAlgorithm(d, v, "ssl_algorithm", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1319,7 +1368,8 @@ func getObjectWebProxyExplicit(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("trace_auth_no_rsp"); ok {
-		t, err := expandWebProxyExplicitTraceAuthNoRsp(d, v, "trace_auth_no_rsp")
+
+		t, err := expandWebProxyExplicitTraceAuthNoRsp(d, v, "trace_auth_no_rsp", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
