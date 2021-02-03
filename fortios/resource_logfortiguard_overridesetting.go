@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -59,6 +60,17 @@ func resourceLogFortiguardOverrideSetting() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"priority": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"max_log_rate": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 100000),
+				Optional:     true,
+				Computed:     true,
+			},
 		},
 	}
 }
@@ -68,7 +80,7 @@ func resourceLogFortiguardOverrideSettingUpdate(d *schema.ResourceData, m interf
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectLogFortiguardOverrideSetting(d)
+	obj, err := getObjectLogFortiguardOverrideSetting(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogFortiguardOverrideSetting resource while getting object: %v", err)
 	}
@@ -121,73 +133,93 @@ func resourceLogFortiguardOverrideSettingRead(d *schema.ResourceData, m interfac
 		return nil
 	}
 
-	err = refreshObjectLogFortiguardOverrideSetting(d, o)
+	err = refreshObjectLogFortiguardOverrideSetting(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading LogFortiguardOverrideSetting resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenLogFortiguardOverrideSettingOverride(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogFortiguardOverrideSettingOverride(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogFortiguardOverrideSettingStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogFortiguardOverrideSettingStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogFortiguardOverrideSettingUploadOption(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogFortiguardOverrideSettingUploadOption(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogFortiguardOverrideSettingUploadInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogFortiguardOverrideSettingUploadInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogFortiguardOverrideSettingUploadDay(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogFortiguardOverrideSettingUploadDay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogFortiguardOverrideSettingUploadTime(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogFortiguardOverrideSettingUploadTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectLogFortiguardOverrideSetting(d *schema.ResourceData, o map[string]interface{}) error {
+func flattenLogFortiguardOverrideSettingPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenLogFortiguardOverrideSettingMaxLogRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func refreshObjectLogFortiguardOverrideSetting(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("override", flattenLogFortiguardOverrideSettingOverride(o["override"], d, "override")); err != nil {
+	if err = d.Set("override", flattenLogFortiguardOverrideSettingOverride(o["override"], d, "override", sv)); err != nil {
 		if !fortiAPIPatch(o["override"]) {
 			return fmt.Errorf("Error reading override: %v", err)
 		}
 	}
 
-	if err = d.Set("status", flattenLogFortiguardOverrideSettingStatus(o["status"], d, "status")); err != nil {
+	if err = d.Set("status", flattenLogFortiguardOverrideSettingStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
 		}
 	}
 
-	if err = d.Set("upload_option", flattenLogFortiguardOverrideSettingUploadOption(o["upload-option"], d, "upload_option")); err != nil {
+	if err = d.Set("upload_option", flattenLogFortiguardOverrideSettingUploadOption(o["upload-option"], d, "upload_option", sv)); err != nil {
 		if !fortiAPIPatch(o["upload-option"]) {
 			return fmt.Errorf("Error reading upload_option: %v", err)
 		}
 	}
 
-	if err = d.Set("upload_interval", flattenLogFortiguardOverrideSettingUploadInterval(o["upload-interval"], d, "upload_interval")); err != nil {
+	if err = d.Set("upload_interval", flattenLogFortiguardOverrideSettingUploadInterval(o["upload-interval"], d, "upload_interval", sv)); err != nil {
 		if !fortiAPIPatch(o["upload-interval"]) {
 			return fmt.Errorf("Error reading upload_interval: %v", err)
 		}
 	}
 
-	if err = d.Set("upload_day", flattenLogFortiguardOverrideSettingUploadDay(o["upload-day"], d, "upload_day")); err != nil {
+	if err = d.Set("upload_day", flattenLogFortiguardOverrideSettingUploadDay(o["upload-day"], d, "upload_day", sv)); err != nil {
 		if !fortiAPIPatch(o["upload-day"]) {
 			return fmt.Errorf("Error reading upload_day: %v", err)
 		}
 	}
 
-	if err = d.Set("upload_time", flattenLogFortiguardOverrideSettingUploadTime(o["upload-time"], d, "upload_time")); err != nil {
+	if err = d.Set("upload_time", flattenLogFortiguardOverrideSettingUploadTime(o["upload-time"], d, "upload_time", sv)); err != nil {
 		if !fortiAPIPatch(o["upload-time"]) {
 			return fmt.Errorf("Error reading upload_time: %v", err)
+		}
+	}
+
+	if err = d.Set("priority", flattenLogFortiguardOverrideSettingPriority(o["priority"], d, "priority", sv)); err != nil {
+		if !fortiAPIPatch(o["priority"]) {
+			return fmt.Errorf("Error reading priority: %v", err)
+		}
+	}
+
+	if err = d.Set("max_log_rate", flattenLogFortiguardOverrideSettingMaxLogRate(o["max-log-rate"], d, "max_log_rate", sv)); err != nil {
+		if !fortiAPIPatch(o["max-log-rate"]) {
+			return fmt.Errorf("Error reading max_log_rate: %v", err)
 		}
 	}
 
@@ -197,38 +229,47 @@ func refreshObjectLogFortiguardOverrideSetting(d *schema.ResourceData, o map[str
 func flattenLogFortiguardOverrideSettingFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandLogFortiguardOverrideSettingOverride(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogFortiguardOverrideSettingOverride(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogFortiguardOverrideSettingStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogFortiguardOverrideSettingStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogFortiguardOverrideSettingUploadOption(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogFortiguardOverrideSettingUploadOption(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogFortiguardOverrideSettingUploadInterval(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogFortiguardOverrideSettingUploadInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogFortiguardOverrideSettingUploadDay(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogFortiguardOverrideSettingUploadDay(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogFortiguardOverrideSettingUploadTime(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogFortiguardOverrideSettingUploadTime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectLogFortiguardOverrideSetting(d *schema.ResourceData) (*map[string]interface{}, error) {
+func expandLogFortiguardOverrideSettingPriority(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogFortiguardOverrideSettingMaxLogRate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func getObjectLogFortiguardOverrideSetting(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("override"); ok {
-		t, err := expandLogFortiguardOverrideSettingOverride(d, v, "override")
+
+		t, err := expandLogFortiguardOverrideSettingOverride(d, v, "override", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -237,7 +278,8 @@ func getObjectLogFortiguardOverrideSetting(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-		t, err := expandLogFortiguardOverrideSettingStatus(d, v, "status")
+
+		t, err := expandLogFortiguardOverrideSettingStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -246,7 +288,8 @@ func getObjectLogFortiguardOverrideSetting(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("upload_option"); ok {
-		t, err := expandLogFortiguardOverrideSettingUploadOption(d, v, "upload_option")
+
+		t, err := expandLogFortiguardOverrideSettingUploadOption(d, v, "upload_option", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -255,7 +298,8 @@ func getObjectLogFortiguardOverrideSetting(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("upload_interval"); ok {
-		t, err := expandLogFortiguardOverrideSettingUploadInterval(d, v, "upload_interval")
+
+		t, err := expandLogFortiguardOverrideSettingUploadInterval(d, v, "upload_interval", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -264,7 +308,8 @@ func getObjectLogFortiguardOverrideSetting(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("upload_day"); ok {
-		t, err := expandLogFortiguardOverrideSettingUploadDay(d, v, "upload_day")
+
+		t, err := expandLogFortiguardOverrideSettingUploadDay(d, v, "upload_day", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -273,11 +318,32 @@ func getObjectLogFortiguardOverrideSetting(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("upload_time"); ok {
-		t, err := expandLogFortiguardOverrideSettingUploadTime(d, v, "upload_time")
+
+		t, err := expandLogFortiguardOverrideSettingUploadTime(d, v, "upload_time", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
 			obj["upload-time"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("priority"); ok {
+
+		t, err := expandLogFortiguardOverrideSettingPriority(d, v, "priority", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["priority"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("max_log_rate"); ok {
+
+		t, err := expandLogFortiguardOverrideSettingMaxLogRate(d, v, "max_log_rate", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["max-log-rate"] = t
 		}
 	}
 
