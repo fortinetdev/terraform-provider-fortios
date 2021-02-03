@@ -35,7 +35,6 @@ resource "fortios_wanopt_webcache" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `max_object_size` - Maximum cacheable object size in kB (1 - 2147483 kb (2GB). All objects that exceed this are delivered to the client but not stored in the web cache.
