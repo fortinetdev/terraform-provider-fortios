@@ -30,7 +30,6 @@ resource "fortios_alertemail_setting" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `username` - Name that appears in the From: field of alert emails (max. 36 characters).
