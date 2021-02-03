@@ -11,7 +11,6 @@ Hidden table for datasource.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Signature subclass name.
