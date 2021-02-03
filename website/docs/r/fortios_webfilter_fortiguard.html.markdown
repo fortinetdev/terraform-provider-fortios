@@ -29,7 +29,6 @@ resource "fortios_webfilter_fortiguard" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `cache_mode` - Cache entry expiration mode.
