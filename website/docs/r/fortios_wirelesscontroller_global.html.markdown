@@ -33,7 +33,6 @@ resource "fortios_wirelesscontroller_global" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Name of the wireless controller.
