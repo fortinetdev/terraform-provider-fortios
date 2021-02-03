@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -75,7 +76,7 @@ func resourceSystemFmUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemFm(d)
+	obj, err := getObjectSystemFm(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemFm resource while getting object: %v", err)
 	}
@@ -128,81 +129,81 @@ func resourceSystemFmRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectSystemFm(d, o)
+	err = refreshObjectSystemFm(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemFm resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemFmStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemFmStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemFmId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemFmId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemFmIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemFmIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemFmVdom(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemFmVdom(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemFmAutoBackup(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemFmAutoBackup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemFmScheduledConfigRestore(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemFmScheduledConfigRestore(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemFmIpsec(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemFmIpsec(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemFm(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemFm(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("status", flattenSystemFmStatus(o["status"], d, "status")); err != nil {
+	if err = d.Set("status", flattenSystemFmStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
 		}
 	}
 
-	if err = d.Set("fosid", flattenSystemFmId(o["id"], d, "fosid")); err != nil {
+	if err = d.Set("fosid", flattenSystemFmId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
 			return fmt.Errorf("Error reading fosid: %v", err)
 		}
 	}
 
-	if err = d.Set("ip", flattenSystemFmIp(o["ip"], d, "ip")); err != nil {
+	if err = d.Set("ip", flattenSystemFmIp(o["ip"], d, "ip", sv)); err != nil {
 		if !fortiAPIPatch(o["ip"]) {
 			return fmt.Errorf("Error reading ip: %v", err)
 		}
 	}
 
-	if err = d.Set("vdom", flattenSystemFmVdom(o["vdom"], d, "vdom")); err != nil {
+	if err = d.Set("vdom", flattenSystemFmVdom(o["vdom"], d, "vdom", sv)); err != nil {
 		if !fortiAPIPatch(o["vdom"]) {
 			return fmt.Errorf("Error reading vdom: %v", err)
 		}
 	}
 
-	if err = d.Set("auto_backup", flattenSystemFmAutoBackup(o["auto-backup"], d, "auto_backup")); err != nil {
+	if err = d.Set("auto_backup", flattenSystemFmAutoBackup(o["auto-backup"], d, "auto_backup", sv)); err != nil {
 		if !fortiAPIPatch(o["auto-backup"]) {
 			return fmt.Errorf("Error reading auto_backup: %v", err)
 		}
 	}
 
-	if err = d.Set("scheduled_config_restore", flattenSystemFmScheduledConfigRestore(o["scheduled-config-restore"], d, "scheduled_config_restore")); err != nil {
+	if err = d.Set("scheduled_config_restore", flattenSystemFmScheduledConfigRestore(o["scheduled-config-restore"], d, "scheduled_config_restore", sv)); err != nil {
 		if !fortiAPIPatch(o["scheduled-config-restore"]) {
 			return fmt.Errorf("Error reading scheduled_config_restore: %v", err)
 		}
 	}
 
-	if err = d.Set("ipsec", flattenSystemFmIpsec(o["ipsec"], d, "ipsec")); err != nil {
+	if err = d.Set("ipsec", flattenSystemFmIpsec(o["ipsec"], d, "ipsec", sv)); err != nil {
 		if !fortiAPIPatch(o["ipsec"]) {
 			return fmt.Errorf("Error reading ipsec: %v", err)
 		}
@@ -214,42 +215,43 @@ func refreshObjectSystemFm(d *schema.ResourceData, o map[string]interface{}) err
 func flattenSystemFmFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemFmStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemFmStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemFmId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemFmId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemFmIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemFmIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemFmVdom(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemFmVdom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemFmAutoBackup(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemFmAutoBackup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemFmScheduledConfigRestore(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemFmScheduledConfigRestore(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemFmIpsec(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemFmIpsec(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemFm(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemFm(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
-		t, err := expandSystemFmStatus(d, v, "status")
+
+		t, err := expandSystemFmStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -258,7 +260,8 @@ func getObjectSystemFm(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("fosid"); ok {
-		t, err := expandSystemFmId(d, v, "fosid")
+
+		t, err := expandSystemFmId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -267,7 +270,8 @@ func getObjectSystemFm(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("ip"); ok {
-		t, err := expandSystemFmIp(d, v, "ip")
+
+		t, err := expandSystemFmIp(d, v, "ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -276,7 +280,8 @@ func getObjectSystemFm(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("vdom"); ok {
-		t, err := expandSystemFmVdom(d, v, "vdom")
+
+		t, err := expandSystemFmVdom(d, v, "vdom", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -285,7 +290,8 @@ func getObjectSystemFm(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("auto_backup"); ok {
-		t, err := expandSystemFmAutoBackup(d, v, "auto_backup")
+
+		t, err := expandSystemFmAutoBackup(d, v, "auto_backup", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -294,7 +300,8 @@ func getObjectSystemFm(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("scheduled_config_restore"); ok {
-		t, err := expandSystemFmScheduledConfigRestore(d, v, "scheduled_config_restore")
+
+		t, err := expandSystemFmScheduledConfigRestore(d, v, "scheduled_config_restore", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -303,7 +310,8 @@ func getObjectSystemFm(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("ipsec"); ok {
-		t, err := expandSystemFmIpsec(d, v, "ipsec")
+
+		t, err := expandSystemFmIpsec(d, v, "ipsec", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
