@@ -24,17 +24,23 @@ resource "fortios_switchcontroller_global" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `mac_aging_interval` - Time after which an inactive MAC is aged out (10 - 1000000 sec, default = 300, 0 = disable).
 * `allow_multiple_interfaces` - Enable/disable multiple FortiLink interfaces for redundant connections between a managed FortiSwitch and FortiGate.
 * `https_image_push` - Enable/disable image push to FortiSwitch using HTTPS.
+* `vlan_all_mode` - VLAN configuration mode, user-defined-vlans or all-possible-vlans.
+* `vlan_optimization` - FortiLink VLAN optimization.
 * `disable_discovery` - Prevent this FortiSwitch from discovering. The structure of `disable_discovery` block is documented below.
 * `mac_retention_period` - Time in hours after which an inactive MAC is removed from client DB.
 * `default_virtual_switch_vlan` - Default VLAN for ports when added to the virtual-switch.
 * `log_mac_limit_violations` - Enable/disable logs for Learning Limit Violations.
 * `mac_violation_timer` - Set timeout for Learning Limit Violations (0 = disabled).
+* `sn_dns_resolution` - Enable/disable DNS resolution of the FortiSwitch unit's IP address by use of its serial number.
+* `mac_event_logging` - Enable/disable MAC address event logging.
+* `bounce_quarantined_link` - Enable/disable bouncing (administratively bring the link down, up) of a switch port where a quarantined device was seen last. Helps to re-initiate the DHCP process for a device.
+* `quarantine_mode` - Quarantine mode.
+* `update_user_device` - Control which sources update the device user list.
 * `custom_command` - List of custom commands to be pushed to all FortiSwitches in the VDOM. The structure of `custom_command` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
