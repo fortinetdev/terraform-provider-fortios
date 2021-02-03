@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -54,7 +55,7 @@ func resourceSystemVdomLinkCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemVdomLink(d)
+	obj, err := getObjectSystemVdomLink(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemVdomLink resource while getting object: %v", err)
 	}
@@ -79,7 +80,7 @@ func resourceSystemVdomLinkUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemVdomLink(d)
+	obj, err := getObjectSystemVdomLink(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemVdomLink resource while getting object: %v", err)
 	}
@@ -132,41 +133,41 @@ func resourceSystemVdomLinkRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectSystemVdomLink(d, o)
+	err = refreshObjectSystemVdomLink(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemVdomLink resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemVdomLinkName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomLinkName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVdomLinkVcluster(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomLinkVcluster(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVdomLinkType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomLinkType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemVdomLink(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemVdomLink(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenSystemVdomLinkName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenSystemVdomLinkName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("vcluster", flattenSystemVdomLinkVcluster(o["vcluster"], d, "vcluster")); err != nil {
+	if err = d.Set("vcluster", flattenSystemVdomLinkVcluster(o["vcluster"], d, "vcluster", sv)); err != nil {
 		if !fortiAPIPatch(o["vcluster"]) {
 			return fmt.Errorf("Error reading vcluster: %v", err)
 		}
 	}
 
-	if err = d.Set("type", flattenSystemVdomLinkType(o["type"], d, "type")); err != nil {
+	if err = d.Set("type", flattenSystemVdomLinkType(o["type"], d, "type", sv)); err != nil {
 		if !fortiAPIPatch(o["type"]) {
 			return fmt.Errorf("Error reading type: %v", err)
 		}
@@ -178,26 +179,27 @@ func refreshObjectSystemVdomLink(d *schema.ResourceData, o map[string]interface{
 func flattenSystemVdomLinkFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemVdomLinkName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomLinkName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVdomLinkVcluster(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomLinkVcluster(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVdomLinkType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomLinkType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemVdomLink(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemVdomLink(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandSystemVdomLinkName(d, v, "name")
+
+		t, err := expandSystemVdomLinkName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -206,7 +208,8 @@ func getObjectSystemVdomLink(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("vcluster"); ok {
-		t, err := expandSystemVdomLinkVcluster(d, v, "vcluster")
+
+		t, err := expandSystemVdomLinkVcluster(d, v, "vcluster", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -215,7 +218,8 @@ func getObjectSystemVdomLink(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("type"); ok {
-		t, err := expandSystemVdomLinkType(d, v, "type")
+
+		t, err := expandSystemVdomLinkType(d, v, "type", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
