@@ -26,7 +26,6 @@ resource "fortios_system_vxlan" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - VXLAN device or interface name. Must be a unique interface name.
