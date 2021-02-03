@@ -26,7 +26,6 @@ resource "fortios_switchcontrollerqos_ipdscpmap" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - (Required) Dscp map name.
