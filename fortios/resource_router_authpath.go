@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -53,7 +54,7 @@ func resourceRouterAuthPathCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectRouterAuthPath(d)
+	obj, err := getObjectRouterAuthPath(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating RouterAuthPath resource while getting object: %v", err)
 	}
@@ -78,7 +79,7 @@ func resourceRouterAuthPathUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectRouterAuthPath(d)
+	obj, err := getObjectRouterAuthPath(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterAuthPath resource while getting object: %v", err)
 	}
@@ -131,41 +132,41 @@ func resourceRouterAuthPathRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectRouterAuthPath(d, o)
+	err = refreshObjectRouterAuthPath(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading RouterAuthPath resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenRouterAuthPathName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterAuthPathName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterAuthPathDevice(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterAuthPathDevice(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterAuthPathGateway(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterAuthPathGateway(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectRouterAuthPath(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectRouterAuthPath(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenRouterAuthPathName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenRouterAuthPathName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("device", flattenRouterAuthPathDevice(o["device"], d, "device")); err != nil {
+	if err = d.Set("device", flattenRouterAuthPathDevice(o["device"], d, "device", sv)); err != nil {
 		if !fortiAPIPatch(o["device"]) {
 			return fmt.Errorf("Error reading device: %v", err)
 		}
 	}
 
-	if err = d.Set("gateway", flattenRouterAuthPathGateway(o["gateway"], d, "gateway")); err != nil {
+	if err = d.Set("gateway", flattenRouterAuthPathGateway(o["gateway"], d, "gateway", sv)); err != nil {
 		if !fortiAPIPatch(o["gateway"]) {
 			return fmt.Errorf("Error reading gateway: %v", err)
 		}
@@ -177,26 +178,27 @@ func refreshObjectRouterAuthPath(d *schema.ResourceData, o map[string]interface{
 func flattenRouterAuthPathFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandRouterAuthPathName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterAuthPathName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandRouterAuthPathDevice(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterAuthPathDevice(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandRouterAuthPathGateway(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterAuthPathGateway(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectRouterAuthPath(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectRouterAuthPath(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandRouterAuthPathName(d, v, "name")
+
+		t, err := expandRouterAuthPathName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -205,7 +207,8 @@ func getObjectRouterAuthPath(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("device"); ok {
-		t, err := expandRouterAuthPathDevice(d, v, "device")
+
+		t, err := expandRouterAuthPathDevice(d, v, "device", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -214,7 +217,8 @@ func getObjectRouterAuthPath(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("gateway"); ok {
-		t, err := expandRouterAuthPathGateway(d, v, "gateway")
+
+		t, err := expandRouterAuthPathGateway(d, v, "gateway", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
