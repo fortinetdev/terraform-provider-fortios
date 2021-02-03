@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -86,7 +87,7 @@ func resourceSpamfilterDnsblCreate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSpamfilterDnsbl(d)
+	obj, err := getObjectSpamfilterDnsbl(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SpamfilterDnsbl resource while getting object: %v", err)
 	}
@@ -111,7 +112,7 @@ func resourceSpamfilterDnsblUpdate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSpamfilterDnsbl(d)
+	obj, err := getObjectSpamfilterDnsbl(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SpamfilterDnsbl resource while getting object: %v", err)
 	}
@@ -164,26 +165,26 @@ func resourceSpamfilterDnsblRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectSpamfilterDnsbl(d, o)
+	err = refreshObjectSpamfilterDnsbl(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SpamfilterDnsbl resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSpamfilterDnsblId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSpamfilterDnsblId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSpamfilterDnsblName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSpamfilterDnsblName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSpamfilterDnsblComment(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSpamfilterDnsblComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSpamfilterDnsblEntries(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSpamfilterDnsblEntries(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -204,22 +205,26 @@ func flattenSpamfilterDnsblEntries(v interface{}, d *schema.ResourceData, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenSpamfilterDnsblEntriesStatus(i["status"], d, pre_append)
+
+			tmp["status"] = flattenSpamfilterDnsblEntriesStatus(i["status"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSpamfilterDnsblEntriesId(i["id"], d, pre_append)
+
+			tmp["id"] = flattenSpamfilterDnsblEntriesId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server"
 		if _, ok := i["server"]; ok {
-			tmp["server"] = flattenSpamfilterDnsblEntriesServer(i["server"], d, pre_append)
+
+			tmp["server"] = flattenSpamfilterDnsblEntriesServer(i["server"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenSpamfilterDnsblEntriesAction(i["action"], d, pre_append)
+
+			tmp["action"] = flattenSpamfilterDnsblEntriesAction(i["action"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -231,52 +236,52 @@ func flattenSpamfilterDnsblEntries(v interface{}, d *schema.ResourceData, pre st
 	return result
 }
 
-func flattenSpamfilterDnsblEntriesStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSpamfilterDnsblEntriesStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSpamfilterDnsblEntriesId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSpamfilterDnsblEntriesId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSpamfilterDnsblEntriesServer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSpamfilterDnsblEntriesServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSpamfilterDnsblEntriesAction(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSpamfilterDnsblEntriesAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSpamfilterDnsbl(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSpamfilterDnsbl(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("fosid", flattenSpamfilterDnsblId(o["id"], d, "fosid")); err != nil {
+	if err = d.Set("fosid", flattenSpamfilterDnsblId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
 			return fmt.Errorf("Error reading fosid: %v", err)
 		}
 	}
 
-	if err = d.Set("name", flattenSpamfilterDnsblName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenSpamfilterDnsblName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("comment", flattenSpamfilterDnsblComment(o["comment"], d, "comment")); err != nil {
+	if err = d.Set("comment", flattenSpamfilterDnsblComment(o["comment"], d, "comment", sv)); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("entries", flattenSpamfilterDnsblEntries(o["entries"], d, "entries")); err != nil {
+		if err = d.Set("entries", flattenSpamfilterDnsblEntries(o["entries"], d, "entries", sv)); err != nil {
 			if !fortiAPIPatch(o["entries"]) {
 				return fmt.Errorf("Error reading entries: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("entries"); ok {
-			if err = d.Set("entries", flattenSpamfilterDnsblEntries(o["entries"], d, "entries")); err != nil {
+			if err = d.Set("entries", flattenSpamfilterDnsblEntries(o["entries"], d, "entries", sv)); err != nil {
 				if !fortiAPIPatch(o["entries"]) {
 					return fmt.Errorf("Error reading entries: %v", err)
 				}
@@ -290,22 +295,22 @@ func refreshObjectSpamfilterDnsbl(d *schema.ResourceData, o map[string]interface
 func flattenSpamfilterDnsblFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSpamfilterDnsblId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSpamfilterDnsblId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSpamfilterDnsblName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSpamfilterDnsblName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSpamfilterDnsblComment(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSpamfilterDnsblComment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSpamfilterDnsblEntries(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSpamfilterDnsblEntries(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -321,22 +326,26 @@ func expandSpamfilterDnsblEntries(d *schema.ResourceData, v interface{}, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["status"], _ = expandSpamfilterDnsblEntriesStatus(d, i["status"], pre_append)
+
+			tmp["status"], _ = expandSpamfilterDnsblEntriesStatus(d, i["status"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandSpamfilterDnsblEntriesId(d, i["id"], pre_append)
+
+			tmp["id"], _ = expandSpamfilterDnsblEntriesId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["server"], _ = expandSpamfilterDnsblEntriesServer(d, i["server"], pre_append)
+
+			tmp["server"], _ = expandSpamfilterDnsblEntriesServer(d, i["server"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["action"], _ = expandSpamfilterDnsblEntriesAction(d, i["action"], pre_append)
+
+			tmp["action"], _ = expandSpamfilterDnsblEntriesAction(d, i["action"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -347,27 +356,28 @@ func expandSpamfilterDnsblEntries(d *schema.ResourceData, v interface{}, pre str
 	return result, nil
 }
 
-func expandSpamfilterDnsblEntriesStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSpamfilterDnsblEntriesStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSpamfilterDnsblEntriesId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSpamfilterDnsblEntriesId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSpamfilterDnsblEntriesServer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSpamfilterDnsblEntriesServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSpamfilterDnsblEntriesAction(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSpamfilterDnsblEntriesAction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSpamfilterDnsbl(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSpamfilterDnsbl(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-		t, err := expandSpamfilterDnsblId(d, v, "fosid")
+
+		t, err := expandSpamfilterDnsblId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -376,7 +386,8 @@ func getObjectSpamfilterDnsbl(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandSpamfilterDnsblName(d, v, "name")
+
+		t, err := expandSpamfilterDnsblName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -385,7 +396,8 @@ func getObjectSpamfilterDnsbl(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-		t, err := expandSpamfilterDnsblComment(d, v, "comment")
+
+		t, err := expandSpamfilterDnsblComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -394,7 +406,8 @@ func getObjectSpamfilterDnsbl(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("entries"); ok {
-		t, err := expandSpamfilterDnsblEntries(d, v, "entries")
+
+		t, err := expandSpamfilterDnsblEntries(d, v, "entries", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
