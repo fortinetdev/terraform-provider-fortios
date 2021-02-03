@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
@@ -93,6 +94,26 @@ func convintflist2i(v interface{}) interface{} {
 		return t[0]
 	}
 	return v
+}
+
+func i2ss2arrFortiAPIUpgrade(v string, splitv string) bool {
+	splitv = strings.ReplaceAll(splitv, "v", "")
+
+	v1, err := version.NewVersion(v)
+	if err != nil {
+		return false
+	}
+
+	v2, err := version.NewVersion(splitv)
+	if err != nil {
+		return false
+	}
+
+	if v1.GreaterThanOrEqual(v2) {
+		return true
+	}
+
+	return false
 }
 
 func intBetweenWithZero(min, max int) schema.SchemaValidateFunc {
