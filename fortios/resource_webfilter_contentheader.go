@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -81,7 +82,7 @@ func resourceWebfilterContentHeaderCreate(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWebfilterContentHeader(d)
+	obj, err := getObjectWebfilterContentHeader(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WebfilterContentHeader resource while getting object: %v", err)
 	}
@@ -106,7 +107,7 @@ func resourceWebfilterContentHeaderUpdate(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWebfilterContentHeader(d)
+	obj, err := getObjectWebfilterContentHeader(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WebfilterContentHeader resource while getting object: %v", err)
 	}
@@ -159,26 +160,26 @@ func resourceWebfilterContentHeaderRead(d *schema.ResourceData, m interface{}) e
 		return nil
 	}
 
-	err = refreshObjectWebfilterContentHeader(d, o)
+	err = refreshObjectWebfilterContentHeader(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading WebfilterContentHeader resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenWebfilterContentHeaderId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebfilterContentHeaderId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebfilterContentHeaderName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebfilterContentHeaderName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebfilterContentHeaderComment(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebfilterContentHeaderComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebfilterContentHeaderEntries(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenWebfilterContentHeaderEntries(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -199,17 +200,20 @@ func flattenWebfilterContentHeaderEntries(v interface{}, d *schema.ResourceData,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
 		if _, ok := i["pattern"]; ok {
-			tmp["pattern"] = flattenWebfilterContentHeaderEntriesPattern(i["pattern"], d, pre_append)
+
+			tmp["pattern"] = flattenWebfilterContentHeaderEntriesPattern(i["pattern"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenWebfilterContentHeaderEntriesAction(i["action"], d, pre_append)
+
+			tmp["action"] = flattenWebfilterContentHeaderEntriesAction(i["action"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := i["category"]; ok {
-			tmp["category"] = flattenWebfilterContentHeaderEntriesCategory(i["category"], d, pre_append)
+
+			tmp["category"] = flattenWebfilterContentHeaderEntriesCategory(i["category"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -221,48 +225,48 @@ func flattenWebfilterContentHeaderEntries(v interface{}, d *schema.ResourceData,
 	return result
 }
 
-func flattenWebfilterContentHeaderEntriesPattern(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebfilterContentHeaderEntriesPattern(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebfilterContentHeaderEntriesAction(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebfilterContentHeaderEntriesAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebfilterContentHeaderEntriesCategory(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebfilterContentHeaderEntriesCategory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectWebfilterContentHeader(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectWebfilterContentHeader(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("fosid", flattenWebfilterContentHeaderId(o["id"], d, "fosid")); err != nil {
+	if err = d.Set("fosid", flattenWebfilterContentHeaderId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
 			return fmt.Errorf("Error reading fosid: %v", err)
 		}
 	}
 
-	if err = d.Set("name", flattenWebfilterContentHeaderName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenWebfilterContentHeaderName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("comment", flattenWebfilterContentHeaderComment(o["comment"], d, "comment")); err != nil {
+	if err = d.Set("comment", flattenWebfilterContentHeaderComment(o["comment"], d, "comment", sv)); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("entries", flattenWebfilterContentHeaderEntries(o["entries"], d, "entries")); err != nil {
+		if err = d.Set("entries", flattenWebfilterContentHeaderEntries(o["entries"], d, "entries", sv)); err != nil {
 			if !fortiAPIPatch(o["entries"]) {
 				return fmt.Errorf("Error reading entries: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("entries"); ok {
-			if err = d.Set("entries", flattenWebfilterContentHeaderEntries(o["entries"], d, "entries")); err != nil {
+			if err = d.Set("entries", flattenWebfilterContentHeaderEntries(o["entries"], d, "entries", sv)); err != nil {
 				if !fortiAPIPatch(o["entries"]) {
 					return fmt.Errorf("Error reading entries: %v", err)
 				}
@@ -276,22 +280,22 @@ func refreshObjectWebfilterContentHeader(d *schema.ResourceData, o map[string]in
 func flattenWebfilterContentHeaderFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandWebfilterContentHeaderId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebfilterContentHeaderId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebfilterContentHeaderName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebfilterContentHeaderName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebfilterContentHeaderComment(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebfilterContentHeaderComment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebfilterContentHeaderEntries(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebfilterContentHeaderEntries(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -307,17 +311,20 @@ func expandWebfilterContentHeaderEntries(d *schema.ResourceData, v interface{}, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["pattern"], _ = expandWebfilterContentHeaderEntriesPattern(d, i["pattern"], pre_append)
+
+			tmp["pattern"], _ = expandWebfilterContentHeaderEntriesPattern(d, i["pattern"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["action"], _ = expandWebfilterContentHeaderEntriesAction(d, i["action"], pre_append)
+
+			tmp["action"], _ = expandWebfilterContentHeaderEntriesAction(d, i["action"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["category"], _ = expandWebfilterContentHeaderEntriesCategory(d, i["category"], pre_append)
+
+			tmp["category"], _ = expandWebfilterContentHeaderEntriesCategory(d, i["category"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -328,23 +335,24 @@ func expandWebfilterContentHeaderEntries(d *schema.ResourceData, v interface{}, 
 	return result, nil
 }
 
-func expandWebfilterContentHeaderEntriesPattern(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebfilterContentHeaderEntriesPattern(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebfilterContentHeaderEntriesAction(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebfilterContentHeaderEntriesAction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebfilterContentHeaderEntriesCategory(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebfilterContentHeaderEntriesCategory(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectWebfilterContentHeader(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectWebfilterContentHeader(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-		t, err := expandWebfilterContentHeaderId(d, v, "fosid")
+
+		t, err := expandWebfilterContentHeaderId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -353,7 +361,8 @@ func getObjectWebfilterContentHeader(d *schema.ResourceData) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandWebfilterContentHeaderName(d, v, "name")
+
+		t, err := expandWebfilterContentHeaderName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -362,7 +371,8 @@ func getObjectWebfilterContentHeader(d *schema.ResourceData) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-		t, err := expandWebfilterContentHeaderComment(d, v, "comment")
+
+		t, err := expandWebfilterContentHeaderComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -371,7 +381,8 @@ func getObjectWebfilterContentHeader(d *schema.ResourceData) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("entries"); ok {
-		t, err := expandWebfilterContentHeaderEntries(d, v, "entries")
+
+		t, err := expandWebfilterContentHeaderEntries(d, v, "entries", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
