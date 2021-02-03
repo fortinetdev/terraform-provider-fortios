@@ -11,7 +11,6 @@ Configure Bonjour profiles. Bonjour is Apple's zero configuration networking pro
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Bonjour profile name.
