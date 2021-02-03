@@ -21,7 +21,6 @@ resource "fortios_log_guidisplay" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `resolve_hosts` - Enable/disable resolving IP addresses to hostname in log messages on the GUI using reverse DNS lookup
