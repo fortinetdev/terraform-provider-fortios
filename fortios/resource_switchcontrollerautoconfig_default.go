@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -56,7 +57,7 @@ func resourceSwitchControllerAutoConfigDefaultUpdate(d *schema.ResourceData, m i
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSwitchControllerAutoConfigDefault(d)
+	obj, err := getObjectSwitchControllerAutoConfigDefault(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerAutoConfigDefault resource while getting object: %v", err)
 	}
@@ -109,41 +110,41 @@ func resourceSwitchControllerAutoConfigDefaultRead(d *schema.ResourceData, m int
 		return nil
 	}
 
-	err = refreshObjectSwitchControllerAutoConfigDefault(d, o)
+	err = refreshObjectSwitchControllerAutoConfigDefault(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerAutoConfigDefault resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSwitchControllerAutoConfigDefaultFgtPolicy(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerAutoConfigDefaultFgtPolicy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerAutoConfigDefaultIslPolicy(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerAutoConfigDefaultIslPolicy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerAutoConfigDefaultIclPolicy(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerAutoConfigDefaultIclPolicy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSwitchControllerAutoConfigDefault(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSwitchControllerAutoConfigDefault(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("fgt_policy", flattenSwitchControllerAutoConfigDefaultFgtPolicy(o["fgt-policy"], d, "fgt_policy")); err != nil {
+	if err = d.Set("fgt_policy", flattenSwitchControllerAutoConfigDefaultFgtPolicy(o["fgt-policy"], d, "fgt_policy", sv)); err != nil {
 		if !fortiAPIPatch(o["fgt-policy"]) {
 			return fmt.Errorf("Error reading fgt_policy: %v", err)
 		}
 	}
 
-	if err = d.Set("isl_policy", flattenSwitchControllerAutoConfigDefaultIslPolicy(o["isl-policy"], d, "isl_policy")); err != nil {
+	if err = d.Set("isl_policy", flattenSwitchControllerAutoConfigDefaultIslPolicy(o["isl-policy"], d, "isl_policy", sv)); err != nil {
 		if !fortiAPIPatch(o["isl-policy"]) {
 			return fmt.Errorf("Error reading isl_policy: %v", err)
 		}
 	}
 
-	if err = d.Set("icl_policy", flattenSwitchControllerAutoConfigDefaultIclPolicy(o["icl-policy"], d, "icl_policy")); err != nil {
+	if err = d.Set("icl_policy", flattenSwitchControllerAutoConfigDefaultIclPolicy(o["icl-policy"], d, "icl_policy", sv)); err != nil {
 		if !fortiAPIPatch(o["icl-policy"]) {
 			return fmt.Errorf("Error reading icl_policy: %v", err)
 		}
@@ -155,26 +156,27 @@ func refreshObjectSwitchControllerAutoConfigDefault(d *schema.ResourceData, o ma
 func flattenSwitchControllerAutoConfigDefaultFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSwitchControllerAutoConfigDefaultFgtPolicy(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerAutoConfigDefaultFgtPolicy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerAutoConfigDefaultIslPolicy(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerAutoConfigDefaultIslPolicy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerAutoConfigDefaultIclPolicy(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerAutoConfigDefaultIclPolicy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSwitchControllerAutoConfigDefault(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSwitchControllerAutoConfigDefault(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("fgt_policy"); ok {
-		t, err := expandSwitchControllerAutoConfigDefaultFgtPolicy(d, v, "fgt_policy")
+
+		t, err := expandSwitchControllerAutoConfigDefaultFgtPolicy(d, v, "fgt_policy", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -183,7 +185,8 @@ func getObjectSwitchControllerAutoConfigDefault(d *schema.ResourceData) (*map[st
 	}
 
 	if v, ok := d.GetOk("isl_policy"); ok {
-		t, err := expandSwitchControllerAutoConfigDefaultIslPolicy(d, v, "isl_policy")
+
+		t, err := expandSwitchControllerAutoConfigDefaultIslPolicy(d, v, "isl_policy", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -192,7 +195,8 @@ func getObjectSwitchControllerAutoConfigDefault(d *schema.ResourceData) (*map[st
 	}
 
 	if v, ok := d.GetOk("icl_policy"); ok {
-		t, err := expandSwitchControllerAutoConfigDefaultIclPolicy(d, v, "icl_policy")
+
+		t, err := expandSwitchControllerAutoConfigDefaultIclPolicy(d, v, "icl_policy", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
