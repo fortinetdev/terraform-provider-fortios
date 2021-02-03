@@ -20,7 +20,6 @@ resource "fortios_systemautoupdate_tunneling" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `status` - Enable/disable web proxy tunnelling.
