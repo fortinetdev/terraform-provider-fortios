@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -94,7 +95,7 @@ func resourceAuthenticationSettingUpdate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectAuthenticationSetting(d)
+	obj, err := getObjectAuthenticationSetting(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating AuthenticationSetting resource while getting object: %v", err)
 	}
@@ -147,111 +148,111 @@ func resourceAuthenticationSettingRead(d *schema.ResourceData, m interface{}) er
 		return nil
 	}
 
-	err = refreshObjectAuthenticationSetting(d, o)
+	err = refreshObjectAuthenticationSetting(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading AuthenticationSetting resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenAuthenticationSettingActiveAuthScheme(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAuthenticationSettingActiveAuthScheme(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAuthenticationSettingSsoAuthScheme(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAuthenticationSettingSsoAuthScheme(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAuthenticationSettingCaptivePortalType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAuthenticationSettingCaptivePortalType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAuthenticationSettingCaptivePortalIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAuthenticationSettingCaptivePortalIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAuthenticationSettingCaptivePortalIp6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAuthenticationSettingCaptivePortalIp6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAuthenticationSettingCaptivePortal(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAuthenticationSettingCaptivePortal(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAuthenticationSettingCaptivePortal6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAuthenticationSettingCaptivePortal6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAuthenticationSettingCaptivePortalPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAuthenticationSettingCaptivePortalPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAuthenticationSettingAuthHttps(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAuthenticationSettingAuthHttps(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAuthenticationSettingCaptivePortalSslPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAuthenticationSettingCaptivePortalSslPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectAuthenticationSetting(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectAuthenticationSetting(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("active_auth_scheme", flattenAuthenticationSettingActiveAuthScheme(o["active-auth-scheme"], d, "active_auth_scheme")); err != nil {
+	if err = d.Set("active_auth_scheme", flattenAuthenticationSettingActiveAuthScheme(o["active-auth-scheme"], d, "active_auth_scheme", sv)); err != nil {
 		if !fortiAPIPatch(o["active-auth-scheme"]) {
 			return fmt.Errorf("Error reading active_auth_scheme: %v", err)
 		}
 	}
 
-	if err = d.Set("sso_auth_scheme", flattenAuthenticationSettingSsoAuthScheme(o["sso-auth-scheme"], d, "sso_auth_scheme")); err != nil {
+	if err = d.Set("sso_auth_scheme", flattenAuthenticationSettingSsoAuthScheme(o["sso-auth-scheme"], d, "sso_auth_scheme", sv)); err != nil {
 		if !fortiAPIPatch(o["sso-auth-scheme"]) {
 			return fmt.Errorf("Error reading sso_auth_scheme: %v", err)
 		}
 	}
 
-	if err = d.Set("captive_portal_type", flattenAuthenticationSettingCaptivePortalType(o["captive-portal-type"], d, "captive_portal_type")); err != nil {
+	if err = d.Set("captive_portal_type", flattenAuthenticationSettingCaptivePortalType(o["captive-portal-type"], d, "captive_portal_type", sv)); err != nil {
 		if !fortiAPIPatch(o["captive-portal-type"]) {
 			return fmt.Errorf("Error reading captive_portal_type: %v", err)
 		}
 	}
 
-	if err = d.Set("captive_portal_ip", flattenAuthenticationSettingCaptivePortalIp(o["captive-portal-ip"], d, "captive_portal_ip")); err != nil {
+	if err = d.Set("captive_portal_ip", flattenAuthenticationSettingCaptivePortalIp(o["captive-portal-ip"], d, "captive_portal_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["captive-portal-ip"]) {
 			return fmt.Errorf("Error reading captive_portal_ip: %v", err)
 		}
 	}
 
-	if err = d.Set("captive_portal_ip6", flattenAuthenticationSettingCaptivePortalIp6(o["captive-portal-ip6"], d, "captive_portal_ip6")); err != nil {
+	if err = d.Set("captive_portal_ip6", flattenAuthenticationSettingCaptivePortalIp6(o["captive-portal-ip6"], d, "captive_portal_ip6", sv)); err != nil {
 		if !fortiAPIPatch(o["captive-portal-ip6"]) {
 			return fmt.Errorf("Error reading captive_portal_ip6: %v", err)
 		}
 	}
 
-	if err = d.Set("captive_portal", flattenAuthenticationSettingCaptivePortal(o["captive-portal"], d, "captive_portal")); err != nil {
+	if err = d.Set("captive_portal", flattenAuthenticationSettingCaptivePortal(o["captive-portal"], d, "captive_portal", sv)); err != nil {
 		if !fortiAPIPatch(o["captive-portal"]) {
 			return fmt.Errorf("Error reading captive_portal: %v", err)
 		}
 	}
 
-	if err = d.Set("captive_portal6", flattenAuthenticationSettingCaptivePortal6(o["captive-portal6"], d, "captive_portal6")); err != nil {
+	if err = d.Set("captive_portal6", flattenAuthenticationSettingCaptivePortal6(o["captive-portal6"], d, "captive_portal6", sv)); err != nil {
 		if !fortiAPIPatch(o["captive-portal6"]) {
 			return fmt.Errorf("Error reading captive_portal6: %v", err)
 		}
 	}
 
-	if err = d.Set("captive_portal_port", flattenAuthenticationSettingCaptivePortalPort(o["captive-portal-port"], d, "captive_portal_port")); err != nil {
+	if err = d.Set("captive_portal_port", flattenAuthenticationSettingCaptivePortalPort(o["captive-portal-port"], d, "captive_portal_port", sv)); err != nil {
 		if !fortiAPIPatch(o["captive-portal-port"]) {
 			return fmt.Errorf("Error reading captive_portal_port: %v", err)
 		}
 	}
 
-	if err = d.Set("auth_https", flattenAuthenticationSettingAuthHttps(o["auth-https"], d, "auth_https")); err != nil {
+	if err = d.Set("auth_https", flattenAuthenticationSettingAuthHttps(o["auth-https"], d, "auth_https", sv)); err != nil {
 		if !fortiAPIPatch(o["auth-https"]) {
 			return fmt.Errorf("Error reading auth_https: %v", err)
 		}
 	}
 
-	if err = d.Set("captive_portal_ssl_port", flattenAuthenticationSettingCaptivePortalSslPort(o["captive-portal-ssl-port"], d, "captive_portal_ssl_port")); err != nil {
+	if err = d.Set("captive_portal_ssl_port", flattenAuthenticationSettingCaptivePortalSslPort(o["captive-portal-ssl-port"], d, "captive_portal_ssl_port", sv)); err != nil {
 		if !fortiAPIPatch(o["captive-portal-ssl-port"]) {
 			return fmt.Errorf("Error reading captive_portal_ssl_port: %v", err)
 		}
@@ -263,54 +264,55 @@ func refreshObjectAuthenticationSetting(d *schema.ResourceData, o map[string]int
 func flattenAuthenticationSettingFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandAuthenticationSettingActiveAuthScheme(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAuthenticationSettingActiveAuthScheme(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAuthenticationSettingSsoAuthScheme(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAuthenticationSettingSsoAuthScheme(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAuthenticationSettingCaptivePortalType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAuthenticationSettingCaptivePortalType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAuthenticationSettingCaptivePortalIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAuthenticationSettingCaptivePortalIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAuthenticationSettingCaptivePortalIp6(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAuthenticationSettingCaptivePortalIp6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAuthenticationSettingCaptivePortal(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAuthenticationSettingCaptivePortal(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAuthenticationSettingCaptivePortal6(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAuthenticationSettingCaptivePortal6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAuthenticationSettingCaptivePortalPort(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAuthenticationSettingCaptivePortalPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAuthenticationSettingAuthHttps(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAuthenticationSettingAuthHttps(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAuthenticationSettingCaptivePortalSslPort(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAuthenticationSettingCaptivePortalSslPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectAuthenticationSetting(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectAuthenticationSetting(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("active_auth_scheme"); ok {
-		t, err := expandAuthenticationSettingActiveAuthScheme(d, v, "active_auth_scheme")
+
+		t, err := expandAuthenticationSettingActiveAuthScheme(d, v, "active_auth_scheme", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -319,7 +321,8 @@ func getObjectAuthenticationSetting(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("sso_auth_scheme"); ok {
-		t, err := expandAuthenticationSettingSsoAuthScheme(d, v, "sso_auth_scheme")
+
+		t, err := expandAuthenticationSettingSsoAuthScheme(d, v, "sso_auth_scheme", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -328,7 +331,8 @@ func getObjectAuthenticationSetting(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("captive_portal_type"); ok {
-		t, err := expandAuthenticationSettingCaptivePortalType(d, v, "captive_portal_type")
+
+		t, err := expandAuthenticationSettingCaptivePortalType(d, v, "captive_portal_type", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -337,7 +341,8 @@ func getObjectAuthenticationSetting(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("captive_portal_ip"); ok {
-		t, err := expandAuthenticationSettingCaptivePortalIp(d, v, "captive_portal_ip")
+
+		t, err := expandAuthenticationSettingCaptivePortalIp(d, v, "captive_portal_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -346,7 +351,8 @@ func getObjectAuthenticationSetting(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("captive_portal_ip6"); ok {
-		t, err := expandAuthenticationSettingCaptivePortalIp6(d, v, "captive_portal_ip6")
+
+		t, err := expandAuthenticationSettingCaptivePortalIp6(d, v, "captive_portal_ip6", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -355,7 +361,8 @@ func getObjectAuthenticationSetting(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("captive_portal"); ok {
-		t, err := expandAuthenticationSettingCaptivePortal(d, v, "captive_portal")
+
+		t, err := expandAuthenticationSettingCaptivePortal(d, v, "captive_portal", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -364,7 +371,8 @@ func getObjectAuthenticationSetting(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("captive_portal6"); ok {
-		t, err := expandAuthenticationSettingCaptivePortal6(d, v, "captive_portal6")
+
+		t, err := expandAuthenticationSettingCaptivePortal6(d, v, "captive_portal6", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -373,7 +381,8 @@ func getObjectAuthenticationSetting(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("captive_portal_port"); ok {
-		t, err := expandAuthenticationSettingCaptivePortalPort(d, v, "captive_portal_port")
+
+		t, err := expandAuthenticationSettingCaptivePortalPort(d, v, "captive_portal_port", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -382,7 +391,8 @@ func getObjectAuthenticationSetting(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("auth_https"); ok {
-		t, err := expandAuthenticationSettingAuthHttps(d, v, "auth_https")
+
+		t, err := expandAuthenticationSettingAuthHttps(d, v, "auth_https", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -391,7 +401,8 @@ func getObjectAuthenticationSetting(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("captive_portal_ssl_port"); ok {
-		t, err := expandAuthenticationSettingCaptivePortalSslPort(d, v, "captive_portal_ssl_port")
+
+		t, err := expandAuthenticationSettingCaptivePortalSslPort(d, v, "captive_portal_ssl_port", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
