@@ -91,7 +91,6 @@ resource "fortios_router_bgp" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `as` - (Required) Router AS number, valid from 1 to 4294967295, 0 to disable BGP.
@@ -116,6 +115,8 @@ The following arguments are supported:
 * `ignore_optional_capability` - Don't send unknown optional capability notification message
 * `additional_path` - Enable/disable selection of BGP IPv4 additional paths.
 * `additional_path6` - Enable/disable selection of BGP IPv6 additional paths.
+* `multipath_recursive_distance` - Enable/disable use of recursive distance to select multipath.
+* `recursive_next_hop` - Enable/disable recursive resolution of next-hop using BGP route.
 * `cluster_id` - Route reflector cluster ID.
 * `confederation_identifier` - Confederation identifier.
 * `confederation_peers` - Confederation peers. The structure of `confederation_peers` block is documented below.
@@ -149,6 +150,7 @@ The following arguments are supported:
 * `redistribute` - BGP IPv4 redistribute table. The structure of `redistribute` block is documented below.
 * `redistribute6` - BGP IPv6 redistribute table. The structure of `redistribute6` block is documented below.
 * `admin_distance` - Administrative distance modifications. The structure of `admin_distance` block is documented below.
+* `vrf_leak` - BGP VRF leaking table. The structure of `vrf_leak` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `confederation_peers` block supports:
@@ -196,6 +198,8 @@ The `neighbor` block supports:
 * `stale_route` - Enable/disable stale route after neighbor down.
 * `next_hop_self` - Enable/disable IPv4 next-hop calculation for this neighbor.
 * `next_hop_self6` - Enable/disable IPv6 next-hop calculation for this neighbor.
+* `next_hop_self_rr` - Enable/disable setting nexthop's address to interface's IPv4 address for route-reflector routes.
+* `next_hop_self_rr6` - Enable/disable setting nexthop's address to interface's IPv6 address for route-reflector routes.
 * `override_capability` - Enable/disable override result of capability negotiation.
 * `passive` - Enable/disable sending of open messages to this neighbor.
 * `remove_private_as` - Enable/disable remove private AS number from IPv4 outbound updates.
@@ -241,7 +245,9 @@ The `neighbor` block supports:
 * `route_map_in` - IPv4 Inbound route map filter.
 * `route_map_in6` - IPv6 Inbound route map filter.
 * `route_map_out` - IPv4 Outbound route map filter.
+* `route_map_out_preferable` - IPv4 outbound route map filter if the peer is preferred.
 * `route_map_out6` - IPv6 Outbound route map filter.
+* `route_map_out6_preferable` - IPv6 outbound route map filter if the peer is preferred.
 * `send_community` - IPv4 Send community attribute to neighbor.
 * `send_community6` - IPv6 Send community attribute to neighbor.
 * `keep_alive_timer` - Keep alive timer interval (sec).
@@ -292,6 +298,8 @@ The `neighbor_group` block supports:
 * `stale_route` - Enable/disable stale route after neighbor down.
 * `next_hop_self` - Enable/disable IPv4 next-hop calculation for this neighbor.
 * `next_hop_self6` - Enable/disable IPv6 next-hop calculation for this neighbor.
+* `next_hop_self_rr` - Enable/disable setting nexthop's address to interface's IPv4 address for route-reflector routes.
+* `next_hop_self_rr6` - Enable/disable setting nexthop's address to interface's IPv6 address for route-reflector routes.
 * `override_capability` - Enable/disable override result of capability negotiation.
 * `passive` - Enable/disable sending of open messages to this neighbor.
 * `remove_private_as` - Enable/disable remove private AS number from IPv4 outbound updates.
@@ -337,7 +345,9 @@ The `neighbor_group` block supports:
 * `route_map_in` - IPv4 Inbound route map filter.
 * `route_map_in6` - IPv6 Inbound route map filter.
 * `route_map_out` - IPv4 Outbound route map filter.
+* `route_map_out_preferable` - IPv4 outbound route map filter if the peer is preferred.
 * `route_map_out6` - IPv6 Outbound route map filter.
+* `route_map_out6_preferable` - IPv6 outbound route map filter if the peer is preferred.
 * `send_community` - IPv4 Send community attribute to neighbor.
 * `send_community6` - IPv6 Send community attribute to neighbor.
 * `keep_alive_timer` - Keep alive timer interval (sec).
@@ -399,6 +409,17 @@ The `admin_distance` block supports:
 * `neighbour_prefix` - Neighbor address prefix.
 * `route_list` - Access list of routes to apply new distance to.
 * `distance` - Administrative distance to apply (1 - 255).
+
+The `vrf_leak` block supports:
+
+* `vrf` - Origin VRF ID <0 - 31>.
+* `target` - Target VRF table. The structure of `target` block is documented below.
+
+The `target` block supports:
+
+* `vrf` - Target VRF ID <0 - 31>.
+* `route_map` - Route map of VRF leaking.
+* `interface` - Interface which is used to leak routes to target VRF.
 
 
 ## Attribute Reference
