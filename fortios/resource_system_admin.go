@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -411,6 +412,16 @@ func resourceSystemAdmin() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"two_factor_authentication": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"two_factor_notification": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"fortitoken": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 16),
@@ -556,7 +567,7 @@ func resourceSystemAdminCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemAdmin(d)
+	obj, err := getObjectSystemAdmin(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemAdmin resource while getting object: %v", err)
 	}
@@ -581,7 +592,7 @@ func resourceSystemAdminUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemAdmin(d)
+	obj, err := getObjectSystemAdmin(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAdmin resource while getting object: %v", err)
 	}
@@ -634,42 +645,42 @@ func resourceSystemAdminRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectSystemAdmin(d, o)
+	err = refreshObjectSystemAdmin(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemAdmin resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemAdminName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminWildcard(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminWildcard(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminRemoteAuth(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminRemoteAuth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminRemoteGroup(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminRemoteGroup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminPassword(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminPeerAuth(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminPeerAuth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminPeerGroup(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminPeerGroup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminTrusthost1(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminTrusthost1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	if v1, ok := d.GetOkExists(pre); ok && v != nil {
 		if s, ok := v1.(string); ok {
 			v = validateConvIPMask2CIDR(s, v.(string))
@@ -680,7 +691,7 @@ func flattenSystemAdminTrusthost1(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
-func flattenSystemAdminTrusthost2(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminTrusthost2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	if v1, ok := d.GetOkExists(pre); ok && v != nil {
 		if s, ok := v1.(string); ok {
 			v = validateConvIPMask2CIDR(s, v.(string))
@@ -691,7 +702,7 @@ func flattenSystemAdminTrusthost2(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
-func flattenSystemAdminTrusthost3(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminTrusthost3(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	if v1, ok := d.GetOkExists(pre); ok && v != nil {
 		if s, ok := v1.(string); ok {
 			v = validateConvIPMask2CIDR(s, v.(string))
@@ -702,7 +713,7 @@ func flattenSystemAdminTrusthost3(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
-func flattenSystemAdminTrusthost4(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminTrusthost4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	if v1, ok := d.GetOkExists(pre); ok && v != nil {
 		if s, ok := v1.(string); ok {
 			v = validateConvIPMask2CIDR(s, v.(string))
@@ -713,7 +724,7 @@ func flattenSystemAdminTrusthost4(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
-func flattenSystemAdminTrusthost5(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminTrusthost5(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	if v1, ok := d.GetOkExists(pre); ok && v != nil {
 		if s, ok := v1.(string); ok {
 			v = validateConvIPMask2CIDR(s, v.(string))
@@ -724,7 +735,7 @@ func flattenSystemAdminTrusthost5(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
-func flattenSystemAdminTrusthost6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminTrusthost6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	if v1, ok := d.GetOkExists(pre); ok && v != nil {
 		if s, ok := v1.(string); ok {
 			v = validateConvIPMask2CIDR(s, v.(string))
@@ -735,7 +746,7 @@ func flattenSystemAdminTrusthost6(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
-func flattenSystemAdminTrusthost7(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminTrusthost7(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	if v1, ok := d.GetOkExists(pre); ok && v != nil {
 		if s, ok := v1.(string); ok {
 			v = validateConvIPMask2CIDR(s, v.(string))
@@ -746,7 +757,7 @@ func flattenSystemAdminTrusthost7(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
-func flattenSystemAdminTrusthost8(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminTrusthost8(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	if v1, ok := d.GetOkExists(pre); ok && v != nil {
 		if s, ok := v1.(string); ok {
 			v = validateConvIPMask2CIDR(s, v.(string))
@@ -757,7 +768,7 @@ func flattenSystemAdminTrusthost8(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
-func flattenSystemAdminTrusthost9(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminTrusthost9(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	if v1, ok := d.GetOkExists(pre); ok && v != nil {
 		if s, ok := v1.(string); ok {
 			v = validateConvIPMask2CIDR(s, v.(string))
@@ -768,7 +779,7 @@ func flattenSystemAdminTrusthost9(v interface{}, d *schema.ResourceData, pre str
 	return v
 }
 
-func flattenSystemAdminTrusthost10(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminTrusthost10(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	if v1, ok := d.GetOkExists(pre); ok && v != nil {
 		if s, ok := v1.(string); ok {
 			v = validateConvIPMask2CIDR(s, v.(string))
@@ -779,63 +790,63 @@ func flattenSystemAdminTrusthost10(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
-func flattenSystemAdminIp6Trusthost1(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminIp6Trusthost1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminIp6Trusthost2(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminIp6Trusthost2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminIp6Trusthost3(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminIp6Trusthost3(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminIp6Trusthost4(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminIp6Trusthost4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminIp6Trusthost5(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminIp6Trusthost5(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminIp6Trusthost6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminIp6Trusthost6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminIp6Trusthost7(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminIp6Trusthost7(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminIp6Trusthost8(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminIp6Trusthost8(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminIp6Trusthost9(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminIp6Trusthost9(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminIp6Trusthost10(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminIp6Trusthost10(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminAccprofile(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminAccprofile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminAllowRemoveAdminSession(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminAllowRemoveAdminSession(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminComments(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminComments(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminHidden(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminHidden(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminVdom(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSystemAdminVdom(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -856,7 +867,8 @@ func flattenSystemAdminVdom(v interface{}, d *schema.ResourceData, pre string) [
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemAdminVdomName(i["name"], d, pre_append)
+
+			tmp["name"] = flattenSystemAdminVdomName(i["name"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -868,47 +880,47 @@ func flattenSystemAdminVdom(v interface{}, d *schema.ResourceData, pre string) [
 	return result
 }
 
-func flattenSystemAdminVdomName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminVdomName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminSshPublicKey1(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminSshPublicKey1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminSshPublicKey2(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminSshPublicKey2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminSshPublicKey3(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminSshPublicKey3(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminSshCertificate(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminSshCertificate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminSchedule(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminSchedule(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminAccprofileOverride(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminAccprofileOverride(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminRadiusVdomOverride(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminRadiusVdomOverride(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminPasswordExpire(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminPasswordExpire(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminForcePasswordChange(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminForcePasswordChange(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminGuiDashboard(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSystemAdminGuiDashboard(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -929,32 +941,38 @@ func flattenSystemAdminGuiDashboard(v interface{}, d *schema.ResourceData, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemAdminGuiDashboardId(i["id"], d, pre_append)
+
+			tmp["id"] = flattenSystemAdminGuiDashboardId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemAdminGuiDashboardName(i["name"], d, pre_append)
+
+			tmp["name"] = flattenSystemAdminGuiDashboardName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "scope"
 		if _, ok := i["scope"]; ok {
-			tmp["scope"] = flattenSystemAdminGuiDashboardScope(i["scope"], d, pre_append)
+
+			tmp["scope"] = flattenSystemAdminGuiDashboardScope(i["scope"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "layout_type"
 		if _, ok := i["layout-type"]; ok {
-			tmp["layout_type"] = flattenSystemAdminGuiDashboardLayoutType(i["layout-type"], d, pre_append)
+
+			tmp["layout_type"] = flattenSystemAdminGuiDashboardLayoutType(i["layout-type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "columns"
 		if _, ok := i["columns"]; ok {
-			tmp["columns"] = flattenSystemAdminGuiDashboardColumns(i["columns"], d, pre_append)
+
+			tmp["columns"] = flattenSystemAdminGuiDashboardColumns(i["columns"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "widget"
 		if _, ok := i["widget"]; ok {
-			tmp["widget"] = flattenSystemAdminGuiDashboardWidget(i["widget"], d, pre_append)
+
+			tmp["widget"] = flattenSystemAdminGuiDashboardWidget(i["widget"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -966,27 +984,27 @@ func flattenSystemAdminGuiDashboard(v interface{}, d *schema.ResourceData, pre s
 	return result
 }
 
-func flattenSystemAdminGuiDashboardId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminGuiDashboardId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminGuiDashboardName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminGuiDashboardName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminGuiDashboardScope(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminGuiDashboardScope(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminGuiDashboardLayoutType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminGuiDashboardLayoutType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminGuiDashboardColumns(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminGuiDashboardColumns(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminGuiDashboardWidget(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSystemAdminGuiDashboardWidget(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -1007,82 +1025,98 @@ func flattenSystemAdminGuiDashboardWidget(v interface{}, d *schema.ResourceData,
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemAdminGuiDashboardWidgetId(i["id"], d, pre_append)
+
+			tmp["id"] = flattenSystemAdminGuiDashboardWidgetId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenSystemAdminGuiDashboardWidgetType(i["type"], d, pre_append)
+
+			tmp["type"] = flattenSystemAdminGuiDashboardWidgetType(i["type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "x_pos"
 		if _, ok := i["x-pos"]; ok {
-			tmp["x_pos"] = flattenSystemAdminGuiDashboardWidgetXPos(i["x-pos"], d, pre_append)
+
+			tmp["x_pos"] = flattenSystemAdminGuiDashboardWidgetXPos(i["x-pos"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "y_pos"
 		if _, ok := i["y-pos"]; ok {
-			tmp["y_pos"] = flattenSystemAdminGuiDashboardWidgetYPos(i["y-pos"], d, pre_append)
+
+			tmp["y_pos"] = flattenSystemAdminGuiDashboardWidgetYPos(i["y-pos"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "width"
 		if _, ok := i["width"]; ok {
-			tmp["width"] = flattenSystemAdminGuiDashboardWidgetWidth(i["width"], d, pre_append)
+
+			tmp["width"] = flattenSystemAdminGuiDashboardWidgetWidth(i["width"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "height"
 		if _, ok := i["height"]; ok {
-			tmp["height"] = flattenSystemAdminGuiDashboardWidgetHeight(i["height"], d, pre_append)
+
+			tmp["height"] = flattenSystemAdminGuiDashboardWidgetHeight(i["height"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := i["interface"]; ok {
-			tmp["interface"] = flattenSystemAdminGuiDashboardWidgetInterface(i["interface"], d, pre_append)
+
+			tmp["interface"] = flattenSystemAdminGuiDashboardWidgetInterface(i["interface"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "region"
 		if _, ok := i["region"]; ok {
-			tmp["region"] = flattenSystemAdminGuiDashboardWidgetRegion(i["region"], d, pre_append)
+
+			tmp["region"] = flattenSystemAdminGuiDashboardWidgetRegion(i["region"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "industry"
 		if _, ok := i["industry"]; ok {
-			tmp["industry"] = flattenSystemAdminGuiDashboardWidgetIndustry(i["industry"], d, pre_append)
+
+			tmp["industry"] = flattenSystemAdminGuiDashboardWidgetIndustry(i["industry"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fabric_device"
 		if _, ok := i["fabric-device"]; ok {
-			tmp["fabric_device"] = flattenSystemAdminGuiDashboardWidgetFabricDevice(i["fabric-device"], d, pre_append)
+
+			tmp["fabric_device"] = flattenSystemAdminGuiDashboardWidgetFabricDevice(i["fabric-device"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "title"
 		if _, ok := i["title"]; ok {
-			tmp["title"] = flattenSystemAdminGuiDashboardWidgetTitle(i["title"], d, pre_append)
+
+			tmp["title"] = flattenSystemAdminGuiDashboardWidgetTitle(i["title"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "report_by"
 		if _, ok := i["report-by"]; ok {
-			tmp["report_by"] = flattenSystemAdminGuiDashboardWidgetReportBy(i["report-by"], d, pre_append)
+
+			tmp["report_by"] = flattenSystemAdminGuiDashboardWidgetReportBy(i["report-by"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "timeframe"
 		if _, ok := i["timeframe"]; ok {
-			tmp["timeframe"] = flattenSystemAdminGuiDashboardWidgetTimeframe(i["timeframe"], d, pre_append)
+
+			tmp["timeframe"] = flattenSystemAdminGuiDashboardWidgetTimeframe(i["timeframe"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sort_by"
 		if _, ok := i["sort-by"]; ok {
-			tmp["sort_by"] = flattenSystemAdminGuiDashboardWidgetSortBy(i["sort-by"], d, pre_append)
+
+			tmp["sort_by"] = flattenSystemAdminGuiDashboardWidgetSortBy(i["sort-by"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "visualization"
 		if _, ok := i["visualization"]; ok {
-			tmp["visualization"] = flattenSystemAdminGuiDashboardWidgetVisualization(i["visualization"], d, pre_append)
+
+			tmp["visualization"] = flattenSystemAdminGuiDashboardWidgetVisualization(i["visualization"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filters"
 		if _, ok := i["filters"]; ok {
-			tmp["filters"] = flattenSystemAdminGuiDashboardWidgetFilters(i["filters"], d, pre_append)
+
+			tmp["filters"] = flattenSystemAdminGuiDashboardWidgetFilters(i["filters"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1093,67 +1127,67 @@ func flattenSystemAdminGuiDashboardWidget(v interface{}, d *schema.ResourceData,
 	return result
 }
 
-func flattenSystemAdminGuiDashboardWidgetId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminGuiDashboardWidgetId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminGuiDashboardWidgetType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminGuiDashboardWidgetType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminGuiDashboardWidgetXPos(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminGuiDashboardWidgetXPos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminGuiDashboardWidgetYPos(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminGuiDashboardWidgetYPos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminGuiDashboardWidgetWidth(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminGuiDashboardWidgetWidth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminGuiDashboardWidgetHeight(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminGuiDashboardWidgetHeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminGuiDashboardWidgetInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminGuiDashboardWidgetInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminGuiDashboardWidgetRegion(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminGuiDashboardWidgetRegion(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminGuiDashboardWidgetIndustry(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminGuiDashboardWidgetIndustry(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminGuiDashboardWidgetFabricDevice(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminGuiDashboardWidgetFabricDevice(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminGuiDashboardWidgetTitle(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminGuiDashboardWidgetTitle(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminGuiDashboardWidgetReportBy(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminGuiDashboardWidgetReportBy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminGuiDashboardWidgetTimeframe(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminGuiDashboardWidgetTimeframe(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminGuiDashboardWidgetSortBy(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminGuiDashboardWidgetSortBy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminGuiDashboardWidgetVisualization(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminGuiDashboardWidgetVisualization(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminGuiDashboardWidgetFilters(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSystemAdminGuiDashboardWidgetFilters(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -1174,17 +1208,20 @@ func flattenSystemAdminGuiDashboardWidgetFilters(v interface{}, d *schema.Resour
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemAdminGuiDashboardWidgetFiltersId(i["id"], d, pre_append)
+
+			tmp["id"] = flattenSystemAdminGuiDashboardWidgetFiltersId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key"
 		if _, ok := i["key"]; ok {
-			tmp["key"] = flattenSystemAdminGuiDashboardWidgetFiltersKey(i["key"], d, pre_append)
+
+			tmp["key"] = flattenSystemAdminGuiDashboardWidgetFiltersKey(i["key"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := i["value"]; ok {
-			tmp["value"] = flattenSystemAdminGuiDashboardWidgetFiltersValue(i["value"], d, pre_append)
+
+			tmp["value"] = flattenSystemAdminGuiDashboardWidgetFiltersValue(i["value"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1195,47 +1232,55 @@ func flattenSystemAdminGuiDashboardWidgetFilters(v interface{}, d *schema.Resour
 	return result
 }
 
-func flattenSystemAdminGuiDashboardWidgetFiltersId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminGuiDashboardWidgetFiltersId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminGuiDashboardWidgetFiltersKey(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminGuiDashboardWidgetFiltersKey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminGuiDashboardWidgetFiltersValue(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminGuiDashboardWidgetFiltersValue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminTwoFactor(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminTwoFactor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminFortitoken(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminTwoFactorAuthentication(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminEmailTo(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminTwoFactorNotification(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminSmsServer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminFortitoken(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminSmsCustomServer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminEmailTo(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminSmsPhone(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminSmsServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminGuestAuth(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminSmsCustomServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminGuestUsergroups(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSystemAdminSmsPhone(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAdminGuestAuth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSystemAdminGuestUsergroups(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -1256,7 +1301,8 @@ func flattenSystemAdminGuestUsergroups(v interface{}, d *schema.ResourceData, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemAdminGuestUsergroupsName(i["name"], d, pre_append)
+
+			tmp["name"] = flattenSystemAdminGuestUsergroupsName(i["name"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1268,23 +1314,23 @@ func flattenSystemAdminGuestUsergroups(v interface{}, d *schema.ResourceData, pr
 	return result
 }
 
-func flattenSystemAdminGuestUsergroupsName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminGuestUsergroupsName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminGuestLang(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminGuestLang(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminHistory0(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminHistory0(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminHistory1(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminHistory1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminLoginTime(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSystemAdminLoginTime(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -1305,17 +1351,20 @@ func flattenSystemAdminLoginTime(v interface{}, d *schema.ResourceData, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "usr_name"
 		if _, ok := i["usr-name"]; ok {
-			tmp["usr_name"] = flattenSystemAdminLoginTimeUsrName(i["usr-name"], d, pre_append)
+
+			tmp["usr_name"] = flattenSystemAdminLoginTimeUsrName(i["usr-name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "last_login"
 		if _, ok := i["last-login"]; ok {
-			tmp["last_login"] = flattenSystemAdminLoginTimeLastLogin(i["last-login"], d, pre_append)
+
+			tmp["last_login"] = flattenSystemAdminLoginTimeLastLogin(i["last-login"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "last_failed_login"
 		if _, ok := i["last-failed-login"]; ok {
-			tmp["last_failed_login"] = flattenSystemAdminLoginTimeLastFailedLogin(i["last-failed-login"], d, pre_append)
+
+			tmp["last_failed_login"] = flattenSystemAdminLoginTimeLastFailedLogin(i["last-failed-login"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1327,19 +1376,19 @@ func flattenSystemAdminLoginTime(v interface{}, d *schema.ResourceData, pre stri
 	return result
 }
 
-func flattenSystemAdminLoginTimeUsrName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminLoginTimeUsrName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminLoginTimeLastLogin(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminLoginTimeLastLogin(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminLoginTimeLastFailedLogin(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminLoginTimeLastFailedLogin(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminGuiGlobalMenuFavorites(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSystemAdminGuiGlobalMenuFavorites(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -1360,7 +1409,8 @@ func flattenSystemAdminGuiGlobalMenuFavorites(v interface{}, d *schema.ResourceD
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemAdminGuiGlobalMenuFavoritesId(i["id"], d, pre_append)
+
+			tmp["id"] = flattenSystemAdminGuiGlobalMenuFavoritesId(i["id"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1372,11 +1422,11 @@ func flattenSystemAdminGuiGlobalMenuFavorites(v interface{}, d *schema.ResourceD
 	return result
 }
 
-func flattenSystemAdminGuiGlobalMenuFavoritesId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminGuiGlobalMenuFavoritesId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminGuiVdomMenuFavorites(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSystemAdminGuiVdomMenuFavorites(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -1397,7 +1447,8 @@ func flattenSystemAdminGuiVdomMenuFavorites(v interface{}, d *schema.ResourceDat
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemAdminGuiVdomMenuFavoritesId(i["id"], d, pre_append)
+
+			tmp["id"] = flattenSystemAdminGuiVdomMenuFavoritesId(i["id"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1409,11 +1460,11 @@ func flattenSystemAdminGuiVdomMenuFavorites(v interface{}, d *schema.ResourceDat
 	return result
 }
 
-func flattenSystemAdminGuiVdomMenuFavoritesId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminGuiVdomMenuFavoritesId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAdminGuiNewFeatureAcknowledge(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSystemAdminGuiNewFeatureAcknowledge(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -1434,7 +1485,8 @@ func flattenSystemAdminGuiNewFeatureAcknowledge(v interface{}, d *schema.Resourc
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenSystemAdminGuiNewFeatureAcknowledgeId(i["id"], d, pre_append)
+
+			tmp["id"] = flattenSystemAdminGuiNewFeatureAcknowledgeId(i["id"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1446,202 +1498,202 @@ func flattenSystemAdminGuiNewFeatureAcknowledge(v interface{}, d *schema.Resourc
 	return result
 }
 
-func flattenSystemAdminGuiNewFeatureAcknowledgeId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAdminGuiNewFeatureAcknowledgeId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemAdmin(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemAdmin(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenSystemAdminName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenSystemAdminName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("wildcard", flattenSystemAdminWildcard(o["wildcard"], d, "wildcard")); err != nil {
+	if err = d.Set("wildcard", flattenSystemAdminWildcard(o["wildcard"], d, "wildcard", sv)); err != nil {
 		if !fortiAPIPatch(o["wildcard"]) {
 			return fmt.Errorf("Error reading wildcard: %v", err)
 		}
 	}
 
-	if err = d.Set("remote_auth", flattenSystemAdminRemoteAuth(o["remote-auth"], d, "remote_auth")); err != nil {
+	if err = d.Set("remote_auth", flattenSystemAdminRemoteAuth(o["remote-auth"], d, "remote_auth", sv)); err != nil {
 		if !fortiAPIPatch(o["remote-auth"]) {
 			return fmt.Errorf("Error reading remote_auth: %v", err)
 		}
 	}
 
-	if err = d.Set("remote_group", flattenSystemAdminRemoteGroup(o["remote-group"], d, "remote_group")); err != nil {
+	if err = d.Set("remote_group", flattenSystemAdminRemoteGroup(o["remote-group"], d, "remote_group", sv)); err != nil {
 		if !fortiAPIPatch(o["remote-group"]) {
 			return fmt.Errorf("Error reading remote_group: %v", err)
 		}
 	}
 
-	if err = d.Set("peer_auth", flattenSystemAdminPeerAuth(o["peer-auth"], d, "peer_auth")); err != nil {
+	if err = d.Set("peer_auth", flattenSystemAdminPeerAuth(o["peer-auth"], d, "peer_auth", sv)); err != nil {
 		if !fortiAPIPatch(o["peer-auth"]) {
 			return fmt.Errorf("Error reading peer_auth: %v", err)
 		}
 	}
 
-	if err = d.Set("peer_group", flattenSystemAdminPeerGroup(o["peer-group"], d, "peer_group")); err != nil {
+	if err = d.Set("peer_group", flattenSystemAdminPeerGroup(o["peer-group"], d, "peer_group", sv)); err != nil {
 		if !fortiAPIPatch(o["peer-group"]) {
 			return fmt.Errorf("Error reading peer_group: %v", err)
 		}
 	}
 
-	if err = d.Set("trusthost1", flattenSystemAdminTrusthost1(o["trusthost1"], d, "trusthost1")); err != nil {
+	if err = d.Set("trusthost1", flattenSystemAdminTrusthost1(o["trusthost1"], d, "trusthost1", sv)); err != nil {
 		if !fortiAPIPatch(o["trusthost1"]) {
 			return fmt.Errorf("Error reading trusthost1: %v", err)
 		}
 	}
 
-	if err = d.Set("trusthost2", flattenSystemAdminTrusthost2(o["trusthost2"], d, "trusthost2")); err != nil {
+	if err = d.Set("trusthost2", flattenSystemAdminTrusthost2(o["trusthost2"], d, "trusthost2", sv)); err != nil {
 		if !fortiAPIPatch(o["trusthost2"]) {
 			return fmt.Errorf("Error reading trusthost2: %v", err)
 		}
 	}
 
-	if err = d.Set("trusthost3", flattenSystemAdminTrusthost3(o["trusthost3"], d, "trusthost3")); err != nil {
+	if err = d.Set("trusthost3", flattenSystemAdminTrusthost3(o["trusthost3"], d, "trusthost3", sv)); err != nil {
 		if !fortiAPIPatch(o["trusthost3"]) {
 			return fmt.Errorf("Error reading trusthost3: %v", err)
 		}
 	}
 
-	if err = d.Set("trusthost4", flattenSystemAdminTrusthost4(o["trusthost4"], d, "trusthost4")); err != nil {
+	if err = d.Set("trusthost4", flattenSystemAdminTrusthost4(o["trusthost4"], d, "trusthost4", sv)); err != nil {
 		if !fortiAPIPatch(o["trusthost4"]) {
 			return fmt.Errorf("Error reading trusthost4: %v", err)
 		}
 	}
 
-	if err = d.Set("trusthost5", flattenSystemAdminTrusthost5(o["trusthost5"], d, "trusthost5")); err != nil {
+	if err = d.Set("trusthost5", flattenSystemAdminTrusthost5(o["trusthost5"], d, "trusthost5", sv)); err != nil {
 		if !fortiAPIPatch(o["trusthost5"]) {
 			return fmt.Errorf("Error reading trusthost5: %v", err)
 		}
 	}
 
-	if err = d.Set("trusthost6", flattenSystemAdminTrusthost6(o["trusthost6"], d, "trusthost6")); err != nil {
+	if err = d.Set("trusthost6", flattenSystemAdminTrusthost6(o["trusthost6"], d, "trusthost6", sv)); err != nil {
 		if !fortiAPIPatch(o["trusthost6"]) {
 			return fmt.Errorf("Error reading trusthost6: %v", err)
 		}
 	}
 
-	if err = d.Set("trusthost7", flattenSystemAdminTrusthost7(o["trusthost7"], d, "trusthost7")); err != nil {
+	if err = d.Set("trusthost7", flattenSystemAdminTrusthost7(o["trusthost7"], d, "trusthost7", sv)); err != nil {
 		if !fortiAPIPatch(o["trusthost7"]) {
 			return fmt.Errorf("Error reading trusthost7: %v", err)
 		}
 	}
 
-	if err = d.Set("trusthost8", flattenSystemAdminTrusthost8(o["trusthost8"], d, "trusthost8")); err != nil {
+	if err = d.Set("trusthost8", flattenSystemAdminTrusthost8(o["trusthost8"], d, "trusthost8", sv)); err != nil {
 		if !fortiAPIPatch(o["trusthost8"]) {
 			return fmt.Errorf("Error reading trusthost8: %v", err)
 		}
 	}
 
-	if err = d.Set("trusthost9", flattenSystemAdminTrusthost9(o["trusthost9"], d, "trusthost9")); err != nil {
+	if err = d.Set("trusthost9", flattenSystemAdminTrusthost9(o["trusthost9"], d, "trusthost9", sv)); err != nil {
 		if !fortiAPIPatch(o["trusthost9"]) {
 			return fmt.Errorf("Error reading trusthost9: %v", err)
 		}
 	}
 
-	if err = d.Set("trusthost10", flattenSystemAdminTrusthost10(o["trusthost10"], d, "trusthost10")); err != nil {
+	if err = d.Set("trusthost10", flattenSystemAdminTrusthost10(o["trusthost10"], d, "trusthost10", sv)); err != nil {
 		if !fortiAPIPatch(o["trusthost10"]) {
 			return fmt.Errorf("Error reading trusthost10: %v", err)
 		}
 	}
 
-	if err = d.Set("ip6_trusthost1", flattenSystemAdminIp6Trusthost1(o["ip6-trusthost1"], d, "ip6_trusthost1")); err != nil {
+	if err = d.Set("ip6_trusthost1", flattenSystemAdminIp6Trusthost1(o["ip6-trusthost1"], d, "ip6_trusthost1", sv)); err != nil {
 		if !fortiAPIPatch(o["ip6-trusthost1"]) {
 			return fmt.Errorf("Error reading ip6_trusthost1: %v", err)
 		}
 	}
 
-	if err = d.Set("ip6_trusthost2", flattenSystemAdminIp6Trusthost2(o["ip6-trusthost2"], d, "ip6_trusthost2")); err != nil {
+	if err = d.Set("ip6_trusthost2", flattenSystemAdminIp6Trusthost2(o["ip6-trusthost2"], d, "ip6_trusthost2", sv)); err != nil {
 		if !fortiAPIPatch(o["ip6-trusthost2"]) {
 			return fmt.Errorf("Error reading ip6_trusthost2: %v", err)
 		}
 	}
 
-	if err = d.Set("ip6_trusthost3", flattenSystemAdminIp6Trusthost3(o["ip6-trusthost3"], d, "ip6_trusthost3")); err != nil {
+	if err = d.Set("ip6_trusthost3", flattenSystemAdminIp6Trusthost3(o["ip6-trusthost3"], d, "ip6_trusthost3", sv)); err != nil {
 		if !fortiAPIPatch(o["ip6-trusthost3"]) {
 			return fmt.Errorf("Error reading ip6_trusthost3: %v", err)
 		}
 	}
 
-	if err = d.Set("ip6_trusthost4", flattenSystemAdminIp6Trusthost4(o["ip6-trusthost4"], d, "ip6_trusthost4")); err != nil {
+	if err = d.Set("ip6_trusthost4", flattenSystemAdminIp6Trusthost4(o["ip6-trusthost4"], d, "ip6_trusthost4", sv)); err != nil {
 		if !fortiAPIPatch(o["ip6-trusthost4"]) {
 			return fmt.Errorf("Error reading ip6_trusthost4: %v", err)
 		}
 	}
 
-	if err = d.Set("ip6_trusthost5", flattenSystemAdminIp6Trusthost5(o["ip6-trusthost5"], d, "ip6_trusthost5")); err != nil {
+	if err = d.Set("ip6_trusthost5", flattenSystemAdminIp6Trusthost5(o["ip6-trusthost5"], d, "ip6_trusthost5", sv)); err != nil {
 		if !fortiAPIPatch(o["ip6-trusthost5"]) {
 			return fmt.Errorf("Error reading ip6_trusthost5: %v", err)
 		}
 	}
 
-	if err = d.Set("ip6_trusthost6", flattenSystemAdminIp6Trusthost6(o["ip6-trusthost6"], d, "ip6_trusthost6")); err != nil {
+	if err = d.Set("ip6_trusthost6", flattenSystemAdminIp6Trusthost6(o["ip6-trusthost6"], d, "ip6_trusthost6", sv)); err != nil {
 		if !fortiAPIPatch(o["ip6-trusthost6"]) {
 			return fmt.Errorf("Error reading ip6_trusthost6: %v", err)
 		}
 	}
 
-	if err = d.Set("ip6_trusthost7", flattenSystemAdminIp6Trusthost7(o["ip6-trusthost7"], d, "ip6_trusthost7")); err != nil {
+	if err = d.Set("ip6_trusthost7", flattenSystemAdminIp6Trusthost7(o["ip6-trusthost7"], d, "ip6_trusthost7", sv)); err != nil {
 		if !fortiAPIPatch(o["ip6-trusthost7"]) {
 			return fmt.Errorf("Error reading ip6_trusthost7: %v", err)
 		}
 	}
 
-	if err = d.Set("ip6_trusthost8", flattenSystemAdminIp6Trusthost8(o["ip6-trusthost8"], d, "ip6_trusthost8")); err != nil {
+	if err = d.Set("ip6_trusthost8", flattenSystemAdminIp6Trusthost8(o["ip6-trusthost8"], d, "ip6_trusthost8", sv)); err != nil {
 		if !fortiAPIPatch(o["ip6-trusthost8"]) {
 			return fmt.Errorf("Error reading ip6_trusthost8: %v", err)
 		}
 	}
 
-	if err = d.Set("ip6_trusthost9", flattenSystemAdminIp6Trusthost9(o["ip6-trusthost9"], d, "ip6_trusthost9")); err != nil {
+	if err = d.Set("ip6_trusthost9", flattenSystemAdminIp6Trusthost9(o["ip6-trusthost9"], d, "ip6_trusthost9", sv)); err != nil {
 		if !fortiAPIPatch(o["ip6-trusthost9"]) {
 			return fmt.Errorf("Error reading ip6_trusthost9: %v", err)
 		}
 	}
 
-	if err = d.Set("ip6_trusthost10", flattenSystemAdminIp6Trusthost10(o["ip6-trusthost10"], d, "ip6_trusthost10")); err != nil {
+	if err = d.Set("ip6_trusthost10", flattenSystemAdminIp6Trusthost10(o["ip6-trusthost10"], d, "ip6_trusthost10", sv)); err != nil {
 		if !fortiAPIPatch(o["ip6-trusthost10"]) {
 			return fmt.Errorf("Error reading ip6_trusthost10: %v", err)
 		}
 	}
 
-	if err = d.Set("accprofile", flattenSystemAdminAccprofile(o["accprofile"], d, "accprofile")); err != nil {
+	if err = d.Set("accprofile", flattenSystemAdminAccprofile(o["accprofile"], d, "accprofile", sv)); err != nil {
 		if !fortiAPIPatch(o["accprofile"]) {
 			return fmt.Errorf("Error reading accprofile: %v", err)
 		}
 	}
 
-	if err = d.Set("allow_remove_admin_session", flattenSystemAdminAllowRemoveAdminSession(o["allow-remove-admin-session"], d, "allow_remove_admin_session")); err != nil {
+	if err = d.Set("allow_remove_admin_session", flattenSystemAdminAllowRemoveAdminSession(o["allow-remove-admin-session"], d, "allow_remove_admin_session", sv)); err != nil {
 		if !fortiAPIPatch(o["allow-remove-admin-session"]) {
 			return fmt.Errorf("Error reading allow_remove_admin_session: %v", err)
 		}
 	}
 
-	if err = d.Set("comments", flattenSystemAdminComments(o["comments"], d, "comments")); err != nil {
+	if err = d.Set("comments", flattenSystemAdminComments(o["comments"], d, "comments", sv)); err != nil {
 		if !fortiAPIPatch(o["comments"]) {
 			return fmt.Errorf("Error reading comments: %v", err)
 		}
 	}
 
-	if err = d.Set("hidden", flattenSystemAdminHidden(o["hidden"], d, "hidden")); err != nil {
+	if err = d.Set("hidden", flattenSystemAdminHidden(o["hidden"], d, "hidden", sv)); err != nil {
 		if !fortiAPIPatch(o["hidden"]) {
 			return fmt.Errorf("Error reading hidden: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("vdom", flattenSystemAdminVdom(o["vdom"], d, "vdom")); err != nil {
+		if err = d.Set("vdom", flattenSystemAdminVdom(o["vdom"], d, "vdom", sv)); err != nil {
 			if !fortiAPIPatch(o["vdom"]) {
 				return fmt.Errorf("Error reading vdom: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("vdom"); ok {
-			if err = d.Set("vdom", flattenSystemAdminVdom(o["vdom"], d, "vdom")); err != nil {
+			if err = d.Set("vdom", flattenSystemAdminVdom(o["vdom"], d, "vdom", sv)); err != nil {
 				if !fortiAPIPatch(o["vdom"]) {
 					return fmt.Errorf("Error reading vdom: %v", err)
 				}
@@ -1649,51 +1701,51 @@ func refreshObjectSystemAdmin(d *schema.ResourceData, o map[string]interface{}) 
 		}
 	}
 
-	if err = d.Set("ssh_certificate", flattenSystemAdminSshCertificate(o["ssh-certificate"], d, "ssh_certificate")); err != nil {
+	if err = d.Set("ssh_certificate", flattenSystemAdminSshCertificate(o["ssh-certificate"], d, "ssh_certificate", sv)); err != nil {
 		if !fortiAPIPatch(o["ssh-certificate"]) {
 			return fmt.Errorf("Error reading ssh_certificate: %v", err)
 		}
 	}
 
-	if err = d.Set("schedule", flattenSystemAdminSchedule(o["schedule"], d, "schedule")); err != nil {
+	if err = d.Set("schedule", flattenSystemAdminSchedule(o["schedule"], d, "schedule", sv)); err != nil {
 		if !fortiAPIPatch(o["schedule"]) {
 			return fmt.Errorf("Error reading schedule: %v", err)
 		}
 	}
 
-	if err = d.Set("accprofile_override", flattenSystemAdminAccprofileOverride(o["accprofile-override"], d, "accprofile_override")); err != nil {
+	if err = d.Set("accprofile_override", flattenSystemAdminAccprofileOverride(o["accprofile-override"], d, "accprofile_override", sv)); err != nil {
 		if !fortiAPIPatch(o["accprofile-override"]) {
 			return fmt.Errorf("Error reading accprofile_override: %v", err)
 		}
 	}
 
-	if err = d.Set("radius_vdom_override", flattenSystemAdminRadiusVdomOverride(o["radius-vdom-override"], d, "radius_vdom_override")); err != nil {
+	if err = d.Set("radius_vdom_override", flattenSystemAdminRadiusVdomOverride(o["radius-vdom-override"], d, "radius_vdom_override", sv)); err != nil {
 		if !fortiAPIPatch(o["radius-vdom-override"]) {
 			return fmt.Errorf("Error reading radius_vdom_override: %v", err)
 		}
 	}
 
-	if err = d.Set("password_expire", flattenSystemAdminPasswordExpire(o["password-expire"], d, "password_expire")); err != nil {
+	if err = d.Set("password_expire", flattenSystemAdminPasswordExpire(o["password-expire"], d, "password_expire", sv)); err != nil {
 		if !fortiAPIPatch(o["password-expire"]) {
 			return fmt.Errorf("Error reading password_expire: %v", err)
 		}
 	}
 
-	if err = d.Set("force_password_change", flattenSystemAdminForcePasswordChange(o["force-password-change"], d, "force_password_change")); err != nil {
+	if err = d.Set("force_password_change", flattenSystemAdminForcePasswordChange(o["force-password-change"], d, "force_password_change", sv)); err != nil {
 		if !fortiAPIPatch(o["force-password-change"]) {
 			return fmt.Errorf("Error reading force_password_change: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("gui_dashboard", flattenSystemAdminGuiDashboard(o["gui-dashboard"], d, "gui_dashboard")); err != nil {
+		if err = d.Set("gui_dashboard", flattenSystemAdminGuiDashboard(o["gui-dashboard"], d, "gui_dashboard", sv)); err != nil {
 			if !fortiAPIPatch(o["gui-dashboard"]) {
 				return fmt.Errorf("Error reading gui_dashboard: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("gui_dashboard"); ok {
-			if err = d.Set("gui_dashboard", flattenSystemAdminGuiDashboard(o["gui-dashboard"], d, "gui_dashboard")); err != nil {
+			if err = d.Set("gui_dashboard", flattenSystemAdminGuiDashboard(o["gui-dashboard"], d, "gui_dashboard", sv)); err != nil {
 				if !fortiAPIPatch(o["gui-dashboard"]) {
 					return fmt.Errorf("Error reading gui_dashboard: %v", err)
 				}
@@ -1701,57 +1753,69 @@ func refreshObjectSystemAdmin(d *schema.ResourceData, o map[string]interface{}) 
 		}
 	}
 
-	if err = d.Set("two_factor", flattenSystemAdminTwoFactor(o["two-factor"], d, "two_factor")); err != nil {
+	if err = d.Set("two_factor", flattenSystemAdminTwoFactor(o["two-factor"], d, "two_factor", sv)); err != nil {
 		if !fortiAPIPatch(o["two-factor"]) {
 			return fmt.Errorf("Error reading two_factor: %v", err)
 		}
 	}
 
-	if err = d.Set("fortitoken", flattenSystemAdminFortitoken(o["fortitoken"], d, "fortitoken")); err != nil {
+	if err = d.Set("two_factor_authentication", flattenSystemAdminTwoFactorAuthentication(o["two-factor-authentication"], d, "two_factor_authentication", sv)); err != nil {
+		if !fortiAPIPatch(o["two-factor-authentication"]) {
+			return fmt.Errorf("Error reading two_factor_authentication: %v", err)
+		}
+	}
+
+	if err = d.Set("two_factor_notification", flattenSystemAdminTwoFactorNotification(o["two-factor-notification"], d, "two_factor_notification", sv)); err != nil {
+		if !fortiAPIPatch(o["two-factor-notification"]) {
+			return fmt.Errorf("Error reading two_factor_notification: %v", err)
+		}
+	}
+
+	if err = d.Set("fortitoken", flattenSystemAdminFortitoken(o["fortitoken"], d, "fortitoken", sv)); err != nil {
 		if !fortiAPIPatch(o["fortitoken"]) {
 			return fmt.Errorf("Error reading fortitoken: %v", err)
 		}
 	}
 
-	if err = d.Set("email_to", flattenSystemAdminEmailTo(o["email-to"], d, "email_to")); err != nil {
+	if err = d.Set("email_to", flattenSystemAdminEmailTo(o["email-to"], d, "email_to", sv)); err != nil {
 		if !fortiAPIPatch(o["email-to"]) {
 			return fmt.Errorf("Error reading email_to: %v", err)
 		}
 	}
 
-	if err = d.Set("sms_server", flattenSystemAdminSmsServer(o["sms-server"], d, "sms_server")); err != nil {
+	if err = d.Set("sms_server", flattenSystemAdminSmsServer(o["sms-server"], d, "sms_server", sv)); err != nil {
 		if !fortiAPIPatch(o["sms-server"]) {
 			return fmt.Errorf("Error reading sms_server: %v", err)
 		}
 	}
 
-	if err = d.Set("sms_custom_server", flattenSystemAdminSmsCustomServer(o["sms-custom-server"], d, "sms_custom_server")); err != nil {
+	if err = d.Set("sms_custom_server", flattenSystemAdminSmsCustomServer(o["sms-custom-server"], d, "sms_custom_server", sv)); err != nil {
 		if !fortiAPIPatch(o["sms-custom-server"]) {
 			return fmt.Errorf("Error reading sms_custom_server: %v", err)
 		}
 	}
 
-	if err = d.Set("sms_phone", flattenSystemAdminSmsPhone(o["sms-phone"], d, "sms_phone")); err != nil {
+	if err = d.Set("sms_phone", flattenSystemAdminSmsPhone(o["sms-phone"], d, "sms_phone", sv)); err != nil {
 		if !fortiAPIPatch(o["sms-phone"]) {
 			return fmt.Errorf("Error reading sms_phone: %v", err)
 		}
 	}
 
-	if err = d.Set("guest_auth", flattenSystemAdminGuestAuth(o["guest-auth"], d, "guest_auth")); err != nil {
+	if err = d.Set("guest_auth", flattenSystemAdminGuestAuth(o["guest-auth"], d, "guest_auth", sv)); err != nil {
 		if !fortiAPIPatch(o["guest-auth"]) {
 			return fmt.Errorf("Error reading guest_auth: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("guest_usergroups", flattenSystemAdminGuestUsergroups(o["guest-usergroups"], d, "guest_usergroups")); err != nil {
+		if err = d.Set("guest_usergroups", flattenSystemAdminGuestUsergroups(o["guest-usergroups"], d, "guest_usergroups", sv)); err != nil {
 			if !fortiAPIPatch(o["guest-usergroups"]) {
 				return fmt.Errorf("Error reading guest_usergroups: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("guest_usergroups"); ok {
-			if err = d.Set("guest_usergroups", flattenSystemAdminGuestUsergroups(o["guest-usergroups"], d, "guest_usergroups")); err != nil {
+			if err = d.Set("guest_usergroups", flattenSystemAdminGuestUsergroups(o["guest-usergroups"], d, "guest_usergroups", sv)); err != nil {
 				if !fortiAPIPatch(o["guest-usergroups"]) {
 					return fmt.Errorf("Error reading guest_usergroups: %v", err)
 				}
@@ -1759,21 +1823,21 @@ func refreshObjectSystemAdmin(d *schema.ResourceData, o map[string]interface{}) 
 		}
 	}
 
-	if err = d.Set("guest_lang", flattenSystemAdminGuestLang(o["guest-lang"], d, "guest_lang")); err != nil {
+	if err = d.Set("guest_lang", flattenSystemAdminGuestLang(o["guest-lang"], d, "guest_lang", sv)); err != nil {
 		if !fortiAPIPatch(o["guest-lang"]) {
 			return fmt.Errorf("Error reading guest_lang: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("login_time", flattenSystemAdminLoginTime(o["login-time"], d, "login_time")); err != nil {
+		if err = d.Set("login_time", flattenSystemAdminLoginTime(o["login-time"], d, "login_time", sv)); err != nil {
 			if !fortiAPIPatch(o["login-time"]) {
 				return fmt.Errorf("Error reading login_time: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("login_time"); ok {
-			if err = d.Set("login_time", flattenSystemAdminLoginTime(o["login-time"], d, "login_time")); err != nil {
+			if err = d.Set("login_time", flattenSystemAdminLoginTime(o["login-time"], d, "login_time", sv)); err != nil {
 				if !fortiAPIPatch(o["login-time"]) {
 					return fmt.Errorf("Error reading login_time: %v", err)
 				}
@@ -1782,14 +1846,14 @@ func refreshObjectSystemAdmin(d *schema.ResourceData, o map[string]interface{}) 
 	}
 
 	if isImportTable() {
-		if err = d.Set("gui_global_menu_favorites", flattenSystemAdminGuiGlobalMenuFavorites(o["gui-global-menu-favorites"], d, "gui_global_menu_favorites")); err != nil {
+		if err = d.Set("gui_global_menu_favorites", flattenSystemAdminGuiGlobalMenuFavorites(o["gui-global-menu-favorites"], d, "gui_global_menu_favorites", sv)); err != nil {
 			if !fortiAPIPatch(o["gui-global-menu-favorites"]) {
 				return fmt.Errorf("Error reading gui_global_menu_favorites: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("gui_global_menu_favorites"); ok {
-			if err = d.Set("gui_global_menu_favorites", flattenSystemAdminGuiGlobalMenuFavorites(o["gui-global-menu-favorites"], d, "gui_global_menu_favorites")); err != nil {
+			if err = d.Set("gui_global_menu_favorites", flattenSystemAdminGuiGlobalMenuFavorites(o["gui-global-menu-favorites"], d, "gui_global_menu_favorites", sv)); err != nil {
 				if !fortiAPIPatch(o["gui-global-menu-favorites"]) {
 					return fmt.Errorf("Error reading gui_global_menu_favorites: %v", err)
 				}
@@ -1798,14 +1862,14 @@ func refreshObjectSystemAdmin(d *schema.ResourceData, o map[string]interface{}) 
 	}
 
 	if isImportTable() {
-		if err = d.Set("gui_vdom_menu_favorites", flattenSystemAdminGuiVdomMenuFavorites(o["gui-vdom-menu-favorites"], d, "gui_vdom_menu_favorites")); err != nil {
+		if err = d.Set("gui_vdom_menu_favorites", flattenSystemAdminGuiVdomMenuFavorites(o["gui-vdom-menu-favorites"], d, "gui_vdom_menu_favorites", sv)); err != nil {
 			if !fortiAPIPatch(o["gui-vdom-menu-favorites"]) {
 				return fmt.Errorf("Error reading gui_vdom_menu_favorites: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("gui_vdom_menu_favorites"); ok {
-			if err = d.Set("gui_vdom_menu_favorites", flattenSystemAdminGuiVdomMenuFavorites(o["gui-vdom-menu-favorites"], d, "gui_vdom_menu_favorites")); err != nil {
+			if err = d.Set("gui_vdom_menu_favorites", flattenSystemAdminGuiVdomMenuFavorites(o["gui-vdom-menu-favorites"], d, "gui_vdom_menu_favorites", sv)); err != nil {
 				if !fortiAPIPatch(o["gui-vdom-menu-favorites"]) {
 					return fmt.Errorf("Error reading gui_vdom_menu_favorites: %v", err)
 				}
@@ -1814,14 +1878,14 @@ func refreshObjectSystemAdmin(d *schema.ResourceData, o map[string]interface{}) 
 	}
 
 	if isImportTable() {
-		if err = d.Set("gui_new_feature_acknowledge", flattenSystemAdminGuiNewFeatureAcknowledge(o["gui-new-feature-acknowledge"], d, "gui_new_feature_acknowledge")); err != nil {
+		if err = d.Set("gui_new_feature_acknowledge", flattenSystemAdminGuiNewFeatureAcknowledge(o["gui-new-feature-acknowledge"], d, "gui_new_feature_acknowledge", sv)); err != nil {
 			if !fortiAPIPatch(o["gui-new-feature-acknowledge"]) {
 				return fmt.Errorf("Error reading gui_new_feature_acknowledge: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("gui_new_feature_acknowledge"); ok {
-			if err = d.Set("gui_new_feature_acknowledge", flattenSystemAdminGuiNewFeatureAcknowledge(o["gui-new-feature-acknowledge"], d, "gui_new_feature_acknowledge")); err != nil {
+			if err = d.Set("gui_new_feature_acknowledge", flattenSystemAdminGuiNewFeatureAcknowledge(o["gui-new-feature-acknowledge"], d, "gui_new_feature_acknowledge", sv)); err != nil {
 				if !fortiAPIPatch(o["gui-new-feature-acknowledge"]) {
 					return fmt.Errorf("Error reading gui_new_feature_acknowledge: %v", err)
 				}
@@ -1835,134 +1899,134 @@ func refreshObjectSystemAdmin(d *schema.ResourceData, o map[string]interface{}) 
 func flattenSystemAdminFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemAdminName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminWildcard(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminWildcard(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminRemoteAuth(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminRemoteAuth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminRemoteGroup(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminRemoteGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminPassword(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminPassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminPeerAuth(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminPeerAuth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminPeerGroup(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminPeerGroup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminTrusthost1(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminTrusthost1(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminTrusthost2(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminTrusthost2(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminTrusthost3(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminTrusthost3(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminTrusthost4(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminTrusthost4(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminTrusthost5(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminTrusthost5(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminTrusthost6(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminTrusthost6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminTrusthost7(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminTrusthost7(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminTrusthost8(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminTrusthost8(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminTrusthost9(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminTrusthost9(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminTrusthost10(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminTrusthost10(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminIp6Trusthost1(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminIp6Trusthost1(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminIp6Trusthost2(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminIp6Trusthost2(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminIp6Trusthost3(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminIp6Trusthost3(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminIp6Trusthost4(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminIp6Trusthost4(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminIp6Trusthost5(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminIp6Trusthost5(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminIp6Trusthost6(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminIp6Trusthost6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminIp6Trusthost7(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminIp6Trusthost7(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminIp6Trusthost8(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminIp6Trusthost8(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminIp6Trusthost9(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminIp6Trusthost9(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminIp6Trusthost10(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminIp6Trusthost10(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminAccprofile(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminAccprofile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminAllowRemoveAdminSession(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminAllowRemoveAdminSession(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminComments(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminComments(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminHidden(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminHidden(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminVdom(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminVdom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -1978,7 +2042,8 @@ func expandSystemAdminVdom(d *schema.ResourceData, v interface{}, pre string) (i
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSystemAdminVdomName(d, i["name"], pre_append)
+
+			tmp["name"], _ = expandSystemAdminVdomName(d, i["name"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1989,47 +2054,47 @@ func expandSystemAdminVdom(d *schema.ResourceData, v interface{}, pre string) (i
 	return result, nil
 }
 
-func expandSystemAdminVdomName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminVdomName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminSshPublicKey1(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminSshPublicKey1(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminSshPublicKey2(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminSshPublicKey2(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminSshPublicKey3(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminSshPublicKey3(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminSshCertificate(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminSshCertificate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminSchedule(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminSchedule(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminAccprofileOverride(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminAccprofileOverride(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminRadiusVdomOverride(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminRadiusVdomOverride(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminPasswordExpire(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminPasswordExpire(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminForcePasswordChange(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminForcePasswordChange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminGuiDashboard(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminGuiDashboard(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2045,32 +2110,38 @@ func expandSystemAdminGuiDashboard(d *schema.ResourceData, v interface{}, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandSystemAdminGuiDashboardId(d, i["id"], pre_append)
+
+			tmp["id"], _ = expandSystemAdminGuiDashboardId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSystemAdminGuiDashboardName(d, i["name"], pre_append)
+
+			tmp["name"], _ = expandSystemAdminGuiDashboardName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "scope"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["scope"], _ = expandSystemAdminGuiDashboardScope(d, i["scope"], pre_append)
+
+			tmp["scope"], _ = expandSystemAdminGuiDashboardScope(d, i["scope"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "layout_type"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["layout-type"], _ = expandSystemAdminGuiDashboardLayoutType(d, i["layout_type"], pre_append)
+
+			tmp["layout-type"], _ = expandSystemAdminGuiDashboardLayoutType(d, i["layout_type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "columns"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["columns"], _ = expandSystemAdminGuiDashboardColumns(d, i["columns"], pre_append)
+
+			tmp["columns"], _ = expandSystemAdminGuiDashboardColumns(d, i["columns"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "widget"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["widget"], _ = expandSystemAdminGuiDashboardWidget(d, i["widget"], pre_append)
+
+			tmp["widget"], _ = expandSystemAdminGuiDashboardWidget(d, i["widget"], pre_append, sv)
 		} else {
 			tmp["widget"] = make([]string, 0)
 		}
@@ -2083,27 +2154,27 @@ func expandSystemAdminGuiDashboard(d *schema.ResourceData, v interface{}, pre st
 	return result, nil
 }
 
-func expandSystemAdminGuiDashboardId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminGuiDashboardId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminGuiDashboardName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminGuiDashboardName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminGuiDashboardScope(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminGuiDashboardScope(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminGuiDashboardLayoutType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminGuiDashboardLayoutType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminGuiDashboardColumns(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminGuiDashboardColumns(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminGuiDashboardWidget(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminGuiDashboardWidget(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2119,82 +2190,98 @@ func expandSystemAdminGuiDashboardWidget(d *schema.ResourceData, v interface{}, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandSystemAdminGuiDashboardWidgetId(d, i["id"], pre_append)
+
+			tmp["id"], _ = expandSystemAdminGuiDashboardWidgetId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["type"], _ = expandSystemAdminGuiDashboardWidgetType(d, i["type"], pre_append)
+
+			tmp["type"], _ = expandSystemAdminGuiDashboardWidgetType(d, i["type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "x_pos"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["x-pos"], _ = expandSystemAdminGuiDashboardWidgetXPos(d, i["x_pos"], pre_append)
+
+			tmp["x-pos"], _ = expandSystemAdminGuiDashboardWidgetXPos(d, i["x_pos"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "y_pos"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["y-pos"], _ = expandSystemAdminGuiDashboardWidgetYPos(d, i["y_pos"], pre_append)
+
+			tmp["y-pos"], _ = expandSystemAdminGuiDashboardWidgetYPos(d, i["y_pos"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "width"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["width"], _ = expandSystemAdminGuiDashboardWidgetWidth(d, i["width"], pre_append)
+
+			tmp["width"], _ = expandSystemAdminGuiDashboardWidgetWidth(d, i["width"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "height"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["height"], _ = expandSystemAdminGuiDashboardWidgetHeight(d, i["height"], pre_append)
+
+			tmp["height"], _ = expandSystemAdminGuiDashboardWidgetHeight(d, i["height"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["interface"], _ = expandSystemAdminGuiDashboardWidgetInterface(d, i["interface"], pre_append)
+
+			tmp["interface"], _ = expandSystemAdminGuiDashboardWidgetInterface(d, i["interface"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "region"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["region"], _ = expandSystemAdminGuiDashboardWidgetRegion(d, i["region"], pre_append)
+
+			tmp["region"], _ = expandSystemAdminGuiDashboardWidgetRegion(d, i["region"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "industry"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["industry"], _ = expandSystemAdminGuiDashboardWidgetIndustry(d, i["industry"], pre_append)
+
+			tmp["industry"], _ = expandSystemAdminGuiDashboardWidgetIndustry(d, i["industry"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "fabric_device"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["fabric-device"], _ = expandSystemAdminGuiDashboardWidgetFabricDevice(d, i["fabric_device"], pre_append)
+
+			tmp["fabric-device"], _ = expandSystemAdminGuiDashboardWidgetFabricDevice(d, i["fabric_device"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "title"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["title"], _ = expandSystemAdminGuiDashboardWidgetTitle(d, i["title"], pre_append)
+
+			tmp["title"], _ = expandSystemAdminGuiDashboardWidgetTitle(d, i["title"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "report_by"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["report-by"], _ = expandSystemAdminGuiDashboardWidgetReportBy(d, i["report_by"], pre_append)
+
+			tmp["report-by"], _ = expandSystemAdminGuiDashboardWidgetReportBy(d, i["report_by"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "timeframe"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["timeframe"], _ = expandSystemAdminGuiDashboardWidgetTimeframe(d, i["timeframe"], pre_append)
+
+			tmp["timeframe"], _ = expandSystemAdminGuiDashboardWidgetTimeframe(d, i["timeframe"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sort_by"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["sort-by"], _ = expandSystemAdminGuiDashboardWidgetSortBy(d, i["sort_by"], pre_append)
+
+			tmp["sort-by"], _ = expandSystemAdminGuiDashboardWidgetSortBy(d, i["sort_by"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "visualization"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["visualization"], _ = expandSystemAdminGuiDashboardWidgetVisualization(d, i["visualization"], pre_append)
+
+			tmp["visualization"], _ = expandSystemAdminGuiDashboardWidgetVisualization(d, i["visualization"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filters"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["filters"], _ = expandSystemAdminGuiDashboardWidgetFilters(d, i["filters"], pre_append)
+
+			tmp["filters"], _ = expandSystemAdminGuiDashboardWidgetFilters(d, i["filters"], pre_append, sv)
 		} else {
 			tmp["filters"] = make([]string, 0)
 		}
@@ -2207,67 +2294,67 @@ func expandSystemAdminGuiDashboardWidget(d *schema.ResourceData, v interface{}, 
 	return result, nil
 }
 
-func expandSystemAdminGuiDashboardWidgetId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminGuiDashboardWidgetId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminGuiDashboardWidgetType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminGuiDashboardWidgetType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminGuiDashboardWidgetXPos(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminGuiDashboardWidgetXPos(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminGuiDashboardWidgetYPos(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminGuiDashboardWidgetYPos(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminGuiDashboardWidgetWidth(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminGuiDashboardWidgetWidth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminGuiDashboardWidgetHeight(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminGuiDashboardWidgetHeight(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminGuiDashboardWidgetInterface(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminGuiDashboardWidgetInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminGuiDashboardWidgetRegion(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminGuiDashboardWidgetRegion(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminGuiDashboardWidgetIndustry(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminGuiDashboardWidgetIndustry(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminGuiDashboardWidgetFabricDevice(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminGuiDashboardWidgetFabricDevice(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminGuiDashboardWidgetTitle(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminGuiDashboardWidgetTitle(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminGuiDashboardWidgetReportBy(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminGuiDashboardWidgetReportBy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminGuiDashboardWidgetTimeframe(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminGuiDashboardWidgetTimeframe(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminGuiDashboardWidgetSortBy(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminGuiDashboardWidgetSortBy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminGuiDashboardWidgetVisualization(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminGuiDashboardWidgetVisualization(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminGuiDashboardWidgetFilters(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminGuiDashboardWidgetFilters(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2283,17 +2370,20 @@ func expandSystemAdminGuiDashboardWidgetFilters(d *schema.ResourceData, v interf
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandSystemAdminGuiDashboardWidgetFiltersId(d, i["id"], pre_append)
+
+			tmp["id"], _ = expandSystemAdminGuiDashboardWidgetFiltersId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "key"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["key"], _ = expandSystemAdminGuiDashboardWidgetFiltersKey(d, i["key"], pre_append)
+
+			tmp["key"], _ = expandSystemAdminGuiDashboardWidgetFiltersKey(d, i["key"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["value"], _ = expandSystemAdminGuiDashboardWidgetFiltersValue(d, i["value"], pre_append)
+
+			tmp["value"], _ = expandSystemAdminGuiDashboardWidgetFiltersValue(d, i["value"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2304,47 +2394,55 @@ func expandSystemAdminGuiDashboardWidgetFilters(d *schema.ResourceData, v interf
 	return result, nil
 }
 
-func expandSystemAdminGuiDashboardWidgetFiltersId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminGuiDashboardWidgetFiltersId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminGuiDashboardWidgetFiltersKey(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminGuiDashboardWidgetFiltersKey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminGuiDashboardWidgetFiltersValue(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminGuiDashboardWidgetFiltersValue(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminTwoFactor(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminTwoFactor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminFortitoken(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminTwoFactorAuthentication(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminEmailTo(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminTwoFactorNotification(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminSmsServer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminFortitoken(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminSmsCustomServer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminEmailTo(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminSmsPhone(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminSmsServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminGuestAuth(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminSmsCustomServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminGuestUsergroups(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminSmsPhone(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAdminGuestAuth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSystemAdminGuestUsergroups(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2360,7 +2458,8 @@ func expandSystemAdminGuestUsergroups(d *schema.ResourceData, v interface{}, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSystemAdminGuestUsergroupsName(d, i["name"], pre_append)
+
+			tmp["name"], _ = expandSystemAdminGuestUsergroupsName(d, i["name"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2371,23 +2470,23 @@ func expandSystemAdminGuestUsergroups(d *schema.ResourceData, v interface{}, pre
 	return result, nil
 }
 
-func expandSystemAdminGuestUsergroupsName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminGuestUsergroupsName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminGuestLang(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminGuestLang(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminHistory0(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminHistory0(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminHistory1(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminHistory1(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminLoginTime(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminLoginTime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2403,17 +2502,20 @@ func expandSystemAdminLoginTime(d *schema.ResourceData, v interface{}, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "usr_name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["usr-name"], _ = expandSystemAdminLoginTimeUsrName(d, i["usr_name"], pre_append)
+
+			tmp["usr-name"], _ = expandSystemAdminLoginTimeUsrName(d, i["usr_name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "last_login"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["last-login"], _ = expandSystemAdminLoginTimeLastLogin(d, i["last_login"], pre_append)
+
+			tmp["last-login"], _ = expandSystemAdminLoginTimeLastLogin(d, i["last_login"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "last_failed_login"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["last-failed-login"], _ = expandSystemAdminLoginTimeLastFailedLogin(d, i["last_failed_login"], pre_append)
+
+			tmp["last-failed-login"], _ = expandSystemAdminLoginTimeLastFailedLogin(d, i["last_failed_login"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2424,19 +2526,19 @@ func expandSystemAdminLoginTime(d *schema.ResourceData, v interface{}, pre strin
 	return result, nil
 }
 
-func expandSystemAdminLoginTimeUsrName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminLoginTimeUsrName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminLoginTimeLastLogin(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminLoginTimeLastLogin(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminLoginTimeLastFailedLogin(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminLoginTimeLastFailedLogin(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminGuiGlobalMenuFavorites(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminGuiGlobalMenuFavorites(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2452,7 +2554,8 @@ func expandSystemAdminGuiGlobalMenuFavorites(d *schema.ResourceData, v interface
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandSystemAdminGuiGlobalMenuFavoritesId(d, i["id"], pre_append)
+
+			tmp["id"], _ = expandSystemAdminGuiGlobalMenuFavoritesId(d, i["id"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2463,11 +2566,11 @@ func expandSystemAdminGuiGlobalMenuFavorites(d *schema.ResourceData, v interface
 	return result, nil
 }
 
-func expandSystemAdminGuiGlobalMenuFavoritesId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminGuiGlobalMenuFavoritesId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminGuiVdomMenuFavorites(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminGuiVdomMenuFavorites(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2483,7 +2586,8 @@ func expandSystemAdminGuiVdomMenuFavorites(d *schema.ResourceData, v interface{}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandSystemAdminGuiVdomMenuFavoritesId(d, i["id"], pre_append)
+
+			tmp["id"], _ = expandSystemAdminGuiVdomMenuFavoritesId(d, i["id"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2494,11 +2598,11 @@ func expandSystemAdminGuiVdomMenuFavorites(d *schema.ResourceData, v interface{}
 	return result, nil
 }
 
-func expandSystemAdminGuiVdomMenuFavoritesId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminGuiVdomMenuFavoritesId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAdminGuiNewFeatureAcknowledge(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminGuiNewFeatureAcknowledge(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -2514,7 +2618,8 @@ func expandSystemAdminGuiNewFeatureAcknowledge(d *schema.ResourceData, v interfa
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandSystemAdminGuiNewFeatureAcknowledgeId(d, i["id"], pre_append)
+
+			tmp["id"], _ = expandSystemAdminGuiNewFeatureAcknowledgeId(d, i["id"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -2525,15 +2630,16 @@ func expandSystemAdminGuiNewFeatureAcknowledge(d *schema.ResourceData, v interfa
 	return result, nil
 }
 
-func expandSystemAdminGuiNewFeatureAcknowledgeId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAdminGuiNewFeatureAcknowledgeId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemAdmin(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandSystemAdminName(d, v, "name")
+
+		t, err := expandSystemAdminName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2542,7 +2648,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("wildcard"); ok {
-		t, err := expandSystemAdminWildcard(d, v, "wildcard")
+
+		t, err := expandSystemAdminWildcard(d, v, "wildcard", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2551,7 +2658,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("remote_auth"); ok {
-		t, err := expandSystemAdminRemoteAuth(d, v, "remote_auth")
+
+		t, err := expandSystemAdminRemoteAuth(d, v, "remote_auth", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2560,7 +2668,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("remote_group"); ok {
-		t, err := expandSystemAdminRemoteGroup(d, v, "remote_group")
+
+		t, err := expandSystemAdminRemoteGroup(d, v, "remote_group", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2569,7 +2678,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("password"); ok {
-		t, err := expandSystemAdminPassword(d, v, "password")
+
+		t, err := expandSystemAdminPassword(d, v, "password", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2578,7 +2688,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("peer_auth"); ok {
-		t, err := expandSystemAdminPeerAuth(d, v, "peer_auth")
+
+		t, err := expandSystemAdminPeerAuth(d, v, "peer_auth", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2587,7 +2698,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("peer_group"); ok {
-		t, err := expandSystemAdminPeerGroup(d, v, "peer_group")
+
+		t, err := expandSystemAdminPeerGroup(d, v, "peer_group", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2596,7 +2708,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("trusthost1"); ok {
-		t, err := expandSystemAdminTrusthost1(d, v, "trusthost1")
+
+		t, err := expandSystemAdminTrusthost1(d, v, "trusthost1", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2605,7 +2718,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("trusthost2"); ok {
-		t, err := expandSystemAdminTrusthost2(d, v, "trusthost2")
+
+		t, err := expandSystemAdminTrusthost2(d, v, "trusthost2", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2614,7 +2728,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("trusthost3"); ok {
-		t, err := expandSystemAdminTrusthost3(d, v, "trusthost3")
+
+		t, err := expandSystemAdminTrusthost3(d, v, "trusthost3", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2623,7 +2738,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("trusthost4"); ok {
-		t, err := expandSystemAdminTrusthost4(d, v, "trusthost4")
+
+		t, err := expandSystemAdminTrusthost4(d, v, "trusthost4", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2632,7 +2748,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("trusthost5"); ok {
-		t, err := expandSystemAdminTrusthost5(d, v, "trusthost5")
+
+		t, err := expandSystemAdminTrusthost5(d, v, "trusthost5", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2641,7 +2758,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("trusthost6"); ok {
-		t, err := expandSystemAdminTrusthost6(d, v, "trusthost6")
+
+		t, err := expandSystemAdminTrusthost6(d, v, "trusthost6", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2650,7 +2768,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("trusthost7"); ok {
-		t, err := expandSystemAdminTrusthost7(d, v, "trusthost7")
+
+		t, err := expandSystemAdminTrusthost7(d, v, "trusthost7", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2659,7 +2778,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("trusthost8"); ok {
-		t, err := expandSystemAdminTrusthost8(d, v, "trusthost8")
+
+		t, err := expandSystemAdminTrusthost8(d, v, "trusthost8", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2668,7 +2788,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("trusthost9"); ok {
-		t, err := expandSystemAdminTrusthost9(d, v, "trusthost9")
+
+		t, err := expandSystemAdminTrusthost9(d, v, "trusthost9", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2677,7 +2798,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("trusthost10"); ok {
-		t, err := expandSystemAdminTrusthost10(d, v, "trusthost10")
+
+		t, err := expandSystemAdminTrusthost10(d, v, "trusthost10", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2686,7 +2808,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("ip6_trusthost1"); ok {
-		t, err := expandSystemAdminIp6Trusthost1(d, v, "ip6_trusthost1")
+
+		t, err := expandSystemAdminIp6Trusthost1(d, v, "ip6_trusthost1", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2695,7 +2818,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("ip6_trusthost2"); ok {
-		t, err := expandSystemAdminIp6Trusthost2(d, v, "ip6_trusthost2")
+
+		t, err := expandSystemAdminIp6Trusthost2(d, v, "ip6_trusthost2", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2704,7 +2828,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("ip6_trusthost3"); ok {
-		t, err := expandSystemAdminIp6Trusthost3(d, v, "ip6_trusthost3")
+
+		t, err := expandSystemAdminIp6Trusthost3(d, v, "ip6_trusthost3", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2713,7 +2838,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("ip6_trusthost4"); ok {
-		t, err := expandSystemAdminIp6Trusthost4(d, v, "ip6_trusthost4")
+
+		t, err := expandSystemAdminIp6Trusthost4(d, v, "ip6_trusthost4", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2722,7 +2848,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("ip6_trusthost5"); ok {
-		t, err := expandSystemAdminIp6Trusthost5(d, v, "ip6_trusthost5")
+
+		t, err := expandSystemAdminIp6Trusthost5(d, v, "ip6_trusthost5", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2731,7 +2858,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("ip6_trusthost6"); ok {
-		t, err := expandSystemAdminIp6Trusthost6(d, v, "ip6_trusthost6")
+
+		t, err := expandSystemAdminIp6Trusthost6(d, v, "ip6_trusthost6", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2740,7 +2868,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("ip6_trusthost7"); ok {
-		t, err := expandSystemAdminIp6Trusthost7(d, v, "ip6_trusthost7")
+
+		t, err := expandSystemAdminIp6Trusthost7(d, v, "ip6_trusthost7", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2749,7 +2878,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("ip6_trusthost8"); ok {
-		t, err := expandSystemAdminIp6Trusthost8(d, v, "ip6_trusthost8")
+
+		t, err := expandSystemAdminIp6Trusthost8(d, v, "ip6_trusthost8", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2758,7 +2888,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("ip6_trusthost9"); ok {
-		t, err := expandSystemAdminIp6Trusthost9(d, v, "ip6_trusthost9")
+
+		t, err := expandSystemAdminIp6Trusthost9(d, v, "ip6_trusthost9", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2767,7 +2898,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("ip6_trusthost10"); ok {
-		t, err := expandSystemAdminIp6Trusthost10(d, v, "ip6_trusthost10")
+
+		t, err := expandSystemAdminIp6Trusthost10(d, v, "ip6_trusthost10", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2776,7 +2908,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("accprofile"); ok {
-		t, err := expandSystemAdminAccprofile(d, v, "accprofile")
+
+		t, err := expandSystemAdminAccprofile(d, v, "accprofile", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2785,7 +2918,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("allow_remove_admin_session"); ok {
-		t, err := expandSystemAdminAllowRemoveAdminSession(d, v, "allow_remove_admin_session")
+
+		t, err := expandSystemAdminAllowRemoveAdminSession(d, v, "allow_remove_admin_session", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2794,7 +2928,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-		t, err := expandSystemAdminComments(d, v, "comments")
+
+		t, err := expandSystemAdminComments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2803,7 +2938,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOkExists("hidden"); ok {
-		t, err := expandSystemAdminHidden(d, v, "hidden")
+
+		t, err := expandSystemAdminHidden(d, v, "hidden", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2812,7 +2948,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("vdom"); ok {
-		t, err := expandSystemAdminVdom(d, v, "vdom")
+
+		t, err := expandSystemAdminVdom(d, v, "vdom", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2821,7 +2958,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("ssh_public_key1"); ok {
-		t, err := expandSystemAdminSshPublicKey1(d, v, "ssh_public_key1")
+
+		t, err := expandSystemAdminSshPublicKey1(d, v, "ssh_public_key1", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2830,7 +2968,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("ssh_public_key2"); ok {
-		t, err := expandSystemAdminSshPublicKey2(d, v, "ssh_public_key2")
+
+		t, err := expandSystemAdminSshPublicKey2(d, v, "ssh_public_key2", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2839,7 +2978,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("ssh_public_key3"); ok {
-		t, err := expandSystemAdminSshPublicKey3(d, v, "ssh_public_key3")
+
+		t, err := expandSystemAdminSshPublicKey3(d, v, "ssh_public_key3", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2848,7 +2988,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("ssh_certificate"); ok {
-		t, err := expandSystemAdminSshCertificate(d, v, "ssh_certificate")
+
+		t, err := expandSystemAdminSshCertificate(d, v, "ssh_certificate", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2857,7 +2998,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("schedule"); ok {
-		t, err := expandSystemAdminSchedule(d, v, "schedule")
+
+		t, err := expandSystemAdminSchedule(d, v, "schedule", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2866,7 +3008,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("accprofile_override"); ok {
-		t, err := expandSystemAdminAccprofileOverride(d, v, "accprofile_override")
+
+		t, err := expandSystemAdminAccprofileOverride(d, v, "accprofile_override", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2875,7 +3018,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("radius_vdom_override"); ok {
-		t, err := expandSystemAdminRadiusVdomOverride(d, v, "radius_vdom_override")
+
+		t, err := expandSystemAdminRadiusVdomOverride(d, v, "radius_vdom_override", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2884,7 +3028,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("password_expire"); ok {
-		t, err := expandSystemAdminPasswordExpire(d, v, "password_expire")
+
+		t, err := expandSystemAdminPasswordExpire(d, v, "password_expire", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2893,7 +3038,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("force_password_change"); ok {
-		t, err := expandSystemAdminForcePasswordChange(d, v, "force_password_change")
+
+		t, err := expandSystemAdminForcePasswordChange(d, v, "force_password_change", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2902,7 +3048,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("gui_dashboard"); ok {
-		t, err := expandSystemAdminGuiDashboard(d, v, "gui_dashboard")
+
+		t, err := expandSystemAdminGuiDashboard(d, v, "gui_dashboard", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2911,7 +3058,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("two_factor"); ok {
-		t, err := expandSystemAdminTwoFactor(d, v, "two_factor")
+
+		t, err := expandSystemAdminTwoFactor(d, v, "two_factor", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2919,8 +3067,29 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 		}
 	}
 
+	if v, ok := d.GetOk("two_factor_authentication"); ok {
+
+		t, err := expandSystemAdminTwoFactorAuthentication(d, v, "two_factor_authentication", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["two-factor-authentication"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("two_factor_notification"); ok {
+
+		t, err := expandSystemAdminTwoFactorNotification(d, v, "two_factor_notification", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["two-factor-notification"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("fortitoken"); ok {
-		t, err := expandSystemAdminFortitoken(d, v, "fortitoken")
+
+		t, err := expandSystemAdminFortitoken(d, v, "fortitoken", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2929,7 +3098,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("email_to"); ok {
-		t, err := expandSystemAdminEmailTo(d, v, "email_to")
+
+		t, err := expandSystemAdminEmailTo(d, v, "email_to", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2938,7 +3108,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("sms_server"); ok {
-		t, err := expandSystemAdminSmsServer(d, v, "sms_server")
+
+		t, err := expandSystemAdminSmsServer(d, v, "sms_server", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2947,7 +3118,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("sms_custom_server"); ok {
-		t, err := expandSystemAdminSmsCustomServer(d, v, "sms_custom_server")
+
+		t, err := expandSystemAdminSmsCustomServer(d, v, "sms_custom_server", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2956,7 +3128,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("sms_phone"); ok {
-		t, err := expandSystemAdminSmsPhone(d, v, "sms_phone")
+
+		t, err := expandSystemAdminSmsPhone(d, v, "sms_phone", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2965,7 +3138,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("guest_auth"); ok {
-		t, err := expandSystemAdminGuestAuth(d, v, "guest_auth")
+
+		t, err := expandSystemAdminGuestAuth(d, v, "guest_auth", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2974,7 +3148,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("guest_usergroups"); ok {
-		t, err := expandSystemAdminGuestUsergroups(d, v, "guest_usergroups")
+
+		t, err := expandSystemAdminGuestUsergroups(d, v, "guest_usergroups", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2983,7 +3158,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("guest_lang"); ok {
-		t, err := expandSystemAdminGuestLang(d, v, "guest_lang")
+
+		t, err := expandSystemAdminGuestLang(d, v, "guest_lang", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -2992,7 +3168,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("history0"); ok {
-		t, err := expandSystemAdminHistory0(d, v, "history0")
+
+		t, err := expandSystemAdminHistory0(d, v, "history0", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -3001,7 +3178,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("history1"); ok {
-		t, err := expandSystemAdminHistory1(d, v, "history1")
+
+		t, err := expandSystemAdminHistory1(d, v, "history1", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -3010,7 +3188,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("login_time"); ok {
-		t, err := expandSystemAdminLoginTime(d, v, "login_time")
+
+		t, err := expandSystemAdminLoginTime(d, v, "login_time", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -3019,7 +3198,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("gui_global_menu_favorites"); ok {
-		t, err := expandSystemAdminGuiGlobalMenuFavorites(d, v, "gui_global_menu_favorites")
+
+		t, err := expandSystemAdminGuiGlobalMenuFavorites(d, v, "gui_global_menu_favorites", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -3028,7 +3208,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("gui_vdom_menu_favorites"); ok {
-		t, err := expandSystemAdminGuiVdomMenuFavorites(d, v, "gui_vdom_menu_favorites")
+
+		t, err := expandSystemAdminGuiVdomMenuFavorites(d, v, "gui_vdom_menu_favorites", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -3037,7 +3218,8 @@ func getObjectSystemAdmin(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("gui_new_feature_acknowledge"); ok {
-		t, err := expandSystemAdminGuiNewFeatureAcknowledge(d, v, "gui_new_feature_acknowledge")
+
+		t, err := expandSystemAdminGuiNewFeatureAcknowledge(d, v, "gui_new_feature_acknowledge", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
