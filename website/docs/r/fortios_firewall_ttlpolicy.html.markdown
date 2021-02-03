@@ -32,7 +32,6 @@ resource "fortios_firewall_ttlpolicy" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `fosid` - (Required) ID.
