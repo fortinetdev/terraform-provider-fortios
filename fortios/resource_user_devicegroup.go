@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -101,7 +102,7 @@ func resourceUserDeviceGroupCreate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectUserDeviceGroup(d)
+	obj, err := getObjectUserDeviceGroup(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating UserDeviceGroup resource while getting object: %v", err)
 	}
@@ -126,7 +127,7 @@ func resourceUserDeviceGroupUpdate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectUserDeviceGroup(d)
+	obj, err := getObjectUserDeviceGroup(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating UserDeviceGroup resource while getting object: %v", err)
 	}
@@ -179,18 +180,18 @@ func resourceUserDeviceGroupRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectUserDeviceGroup(d, o)
+	err = refreshObjectUserDeviceGroup(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading UserDeviceGroup resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenUserDeviceGroupName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserDeviceGroupName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserDeviceGroupMember(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenUserDeviceGroupMember(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -211,7 +212,8 @@ func flattenUserDeviceGroupMember(v interface{}, d *schema.ResourceData, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenUserDeviceGroupMemberName(i["name"], d, pre_append)
+
+			tmp["name"] = flattenUserDeviceGroupMemberName(i["name"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -223,11 +225,11 @@ func flattenUserDeviceGroupMember(v interface{}, d *schema.ResourceData, pre str
 	return result
 }
 
-func flattenUserDeviceGroupMemberName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserDeviceGroupMemberName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserDeviceGroupTagging(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenUserDeviceGroupTagging(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -248,17 +250,20 @@ func flattenUserDeviceGroupTagging(v interface{}, d *schema.ResourceData, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenUserDeviceGroupTaggingName(i["name"], d, pre_append)
+
+			tmp["name"] = flattenUserDeviceGroupTaggingName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := i["category"]; ok {
-			tmp["category"] = flattenUserDeviceGroupTaggingCategory(i["category"], d, pre_append)
+
+			tmp["category"] = flattenUserDeviceGroupTaggingCategory(i["category"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
 		if _, ok := i["tags"]; ok {
-			tmp["tags"] = flattenUserDeviceGroupTaggingTags(i["tags"], d, pre_append)
+
+			tmp["tags"] = flattenUserDeviceGroupTaggingTags(i["tags"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -270,15 +275,15 @@ func flattenUserDeviceGroupTagging(v interface{}, d *schema.ResourceData, pre st
 	return result
 }
 
-func flattenUserDeviceGroupTaggingName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserDeviceGroupTaggingName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserDeviceGroupTaggingCategory(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserDeviceGroupTaggingCategory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserDeviceGroupTaggingTags(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenUserDeviceGroupTaggingTags(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -299,7 +304,8 @@ func flattenUserDeviceGroupTaggingTags(v interface{}, d *schema.ResourceData, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenUserDeviceGroupTaggingTagsName(i["name"], d, pre_append)
+
+			tmp["name"] = flattenUserDeviceGroupTaggingTagsName(i["name"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -310,32 +316,32 @@ func flattenUserDeviceGroupTaggingTags(v interface{}, d *schema.ResourceData, pr
 	return result
 }
 
-func flattenUserDeviceGroupTaggingTagsName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserDeviceGroupTaggingTagsName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserDeviceGroupComment(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserDeviceGroupComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectUserDeviceGroup(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectUserDeviceGroup(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenUserDeviceGroupName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenUserDeviceGroupName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("member", flattenUserDeviceGroupMember(o["member"], d, "member")); err != nil {
+		if err = d.Set("member", flattenUserDeviceGroupMember(o["member"], d, "member", sv)); err != nil {
 			if !fortiAPIPatch(o["member"]) {
 				return fmt.Errorf("Error reading member: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("member"); ok {
-			if err = d.Set("member", flattenUserDeviceGroupMember(o["member"], d, "member")); err != nil {
+			if err = d.Set("member", flattenUserDeviceGroupMember(o["member"], d, "member", sv)); err != nil {
 				if !fortiAPIPatch(o["member"]) {
 					return fmt.Errorf("Error reading member: %v", err)
 				}
@@ -344,14 +350,14 @@ func refreshObjectUserDeviceGroup(d *schema.ResourceData, o map[string]interface
 	}
 
 	if isImportTable() {
-		if err = d.Set("tagging", flattenUserDeviceGroupTagging(o["tagging"], d, "tagging")); err != nil {
+		if err = d.Set("tagging", flattenUserDeviceGroupTagging(o["tagging"], d, "tagging", sv)); err != nil {
 			if !fortiAPIPatch(o["tagging"]) {
 				return fmt.Errorf("Error reading tagging: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("tagging"); ok {
-			if err = d.Set("tagging", flattenUserDeviceGroupTagging(o["tagging"], d, "tagging")); err != nil {
+			if err = d.Set("tagging", flattenUserDeviceGroupTagging(o["tagging"], d, "tagging", sv)); err != nil {
 				if !fortiAPIPatch(o["tagging"]) {
 					return fmt.Errorf("Error reading tagging: %v", err)
 				}
@@ -359,7 +365,7 @@ func refreshObjectUserDeviceGroup(d *schema.ResourceData, o map[string]interface
 		}
 	}
 
-	if err = d.Set("comment", flattenUserDeviceGroupComment(o["comment"], d, "comment")); err != nil {
+	if err = d.Set("comment", flattenUserDeviceGroupComment(o["comment"], d, "comment", sv)); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
 		}
@@ -371,14 +377,14 @@ func refreshObjectUserDeviceGroup(d *schema.ResourceData, o map[string]interface
 func flattenUserDeviceGroupFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandUserDeviceGroupName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserDeviceGroupName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserDeviceGroupMember(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserDeviceGroupMember(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -394,7 +400,8 @@ func expandUserDeviceGroupMember(d *schema.ResourceData, v interface{}, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandUserDeviceGroupMemberName(d, i["name"], pre_append)
+
+			tmp["name"], _ = expandUserDeviceGroupMemberName(d, i["name"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -405,11 +412,11 @@ func expandUserDeviceGroupMember(d *schema.ResourceData, v interface{}, pre stri
 	return result, nil
 }
 
-func expandUserDeviceGroupMemberName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserDeviceGroupMemberName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserDeviceGroupTagging(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserDeviceGroupTagging(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -425,17 +432,20 @@ func expandUserDeviceGroupTagging(d *schema.ResourceData, v interface{}, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandUserDeviceGroupTaggingName(d, i["name"], pre_append)
+
+			tmp["name"], _ = expandUserDeviceGroupTaggingName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["category"], _ = expandUserDeviceGroupTaggingCategory(d, i["category"], pre_append)
+
+			tmp["category"], _ = expandUserDeviceGroupTaggingCategory(d, i["category"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["tags"], _ = expandUserDeviceGroupTaggingTags(d, i["tags"], pre_append)
+
+			tmp["tags"], _ = expandUserDeviceGroupTaggingTags(d, i["tags"], pre_append, sv)
 		} else {
 			tmp["tags"] = make([]string, 0)
 		}
@@ -448,15 +458,15 @@ func expandUserDeviceGroupTagging(d *schema.ResourceData, v interface{}, pre str
 	return result, nil
 }
 
-func expandUserDeviceGroupTaggingName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserDeviceGroupTaggingName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserDeviceGroupTaggingCategory(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserDeviceGroupTaggingCategory(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserDeviceGroupTaggingTags(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserDeviceGroupTaggingTags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -472,7 +482,8 @@ func expandUserDeviceGroupTaggingTags(d *schema.ResourceData, v interface{}, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandUserDeviceGroupTaggingTagsName(d, i["name"], pre_append)
+
+			tmp["name"], _ = expandUserDeviceGroupTaggingTagsName(d, i["name"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -483,19 +494,20 @@ func expandUserDeviceGroupTaggingTags(d *schema.ResourceData, v interface{}, pre
 	return result, nil
 }
 
-func expandUserDeviceGroupTaggingTagsName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserDeviceGroupTaggingTagsName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserDeviceGroupComment(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserDeviceGroupComment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectUserDeviceGroup(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectUserDeviceGroup(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandUserDeviceGroupName(d, v, "name")
+
+		t, err := expandUserDeviceGroupName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -504,7 +516,8 @@ func getObjectUserDeviceGroup(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("member"); ok {
-		t, err := expandUserDeviceGroupMember(d, v, "member")
+
+		t, err := expandUserDeviceGroupMember(d, v, "member", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -513,7 +526,8 @@ func getObjectUserDeviceGroup(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("tagging"); ok {
-		t, err := expandUserDeviceGroupTagging(d, v, "tagging")
+
+		t, err := expandUserDeviceGroupTagging(d, v, "tagging", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -522,7 +536,8 @@ func getObjectUserDeviceGroup(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-		t, err := expandUserDeviceGroupComment(d, v, "comment")
+
+		t, err := expandUserDeviceGroupComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
