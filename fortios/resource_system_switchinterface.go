@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -85,6 +86,12 @@ func resourceSystemSwitchInterface() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"mac_ttl": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(300, 8640000),
+				Optional:     true,
+				Computed:     true,
+			},
 			"span": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -108,7 +115,7 @@ func resourceSystemSwitchInterfaceCreate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemSwitchInterface(d)
+	obj, err := getObjectSystemSwitchInterface(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemSwitchInterface resource while getting object: %v", err)
 	}
@@ -133,7 +140,7 @@ func resourceSystemSwitchInterfaceUpdate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemSwitchInterface(d)
+	obj, err := getObjectSystemSwitchInterface(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSwitchInterface resource while getting object: %v", err)
 	}
@@ -186,26 +193,26 @@ func resourceSystemSwitchInterfaceRead(d *schema.ResourceData, m interface{}) er
 		return nil
 	}
 
-	err = refreshObjectSystemSwitchInterface(d, o)
+	err = refreshObjectSystemSwitchInterface(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemSwitchInterface resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemSwitchInterfaceName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSwitchInterfaceName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSwitchInterfaceVdom(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSwitchInterfaceVdom(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSwitchInterfaceSpanDestPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSwitchInterfaceSpanDestPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSwitchInterfaceSpanSourcePort(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSystemSwitchInterfaceSpanSourcePort(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -226,7 +233,8 @@ func flattenSystemSwitchInterfaceSpanSourcePort(v interface{}, d *schema.Resourc
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
 		if _, ok := i["interface-name"]; ok {
-			tmp["interface_name"] = flattenSystemSwitchInterfaceSpanSourcePortInterfaceName(i["interface-name"], d, pre_append)
+
+			tmp["interface_name"] = flattenSystemSwitchInterfaceSpanSourcePortInterfaceName(i["interface-name"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -238,11 +246,11 @@ func flattenSystemSwitchInterfaceSpanSourcePort(v interface{}, d *schema.Resourc
 	return result
 }
 
-func flattenSystemSwitchInterfaceSpanSourcePortInterfaceName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSwitchInterfaceSpanSourcePortInterfaceName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSwitchInterfaceMember(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSystemSwitchInterfaceMember(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -263,7 +271,8 @@ func flattenSystemSwitchInterfaceMember(v interface{}, d *schema.ResourceData, p
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
 		if _, ok := i["interface-name"]; ok {
-			tmp["interface_name"] = flattenSystemSwitchInterfaceMemberInterfaceName(i["interface-name"], d, pre_append)
+
+			tmp["interface_name"] = flattenSystemSwitchInterfaceMemberInterfaceName(i["interface-name"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -275,56 +284,60 @@ func flattenSystemSwitchInterfaceMember(v interface{}, d *schema.ResourceData, p
 	return result
 }
 
-func flattenSystemSwitchInterfaceMemberInterfaceName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSwitchInterfaceMemberInterfaceName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSwitchInterfaceType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSwitchInterfaceType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSwitchInterfaceIntraSwitchPolicy(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSwitchInterfaceIntraSwitchPolicy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSwitchInterfaceSpan(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSwitchInterfaceMacTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSwitchInterfaceSpanDirection(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSwitchInterfaceSpan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemSwitchInterface(d *schema.ResourceData, o map[string]interface{}) error {
+func flattenSystemSwitchInterfaceSpanDirection(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func refreshObjectSystemSwitchInterface(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenSystemSwitchInterfaceName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenSystemSwitchInterfaceName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("vdom", flattenSystemSwitchInterfaceVdom(o["vdom"], d, "vdom")); err != nil {
+	if err = d.Set("vdom", flattenSystemSwitchInterfaceVdom(o["vdom"], d, "vdom", sv)); err != nil {
 		if !fortiAPIPatch(o["vdom"]) {
 			return fmt.Errorf("Error reading vdom: %v", err)
 		}
 	}
 
-	if err = d.Set("span_dest_port", flattenSystemSwitchInterfaceSpanDestPort(o["span-dest-port"], d, "span_dest_port")); err != nil {
+	if err = d.Set("span_dest_port", flattenSystemSwitchInterfaceSpanDestPort(o["span-dest-port"], d, "span_dest_port", sv)); err != nil {
 		if !fortiAPIPatch(o["span-dest-port"]) {
 			return fmt.Errorf("Error reading span_dest_port: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("span_source_port", flattenSystemSwitchInterfaceSpanSourcePort(o["span-source-port"], d, "span_source_port")); err != nil {
+		if err = d.Set("span_source_port", flattenSystemSwitchInterfaceSpanSourcePort(o["span-source-port"], d, "span_source_port", sv)); err != nil {
 			if !fortiAPIPatch(o["span-source-port"]) {
 				return fmt.Errorf("Error reading span_source_port: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("span_source_port"); ok {
-			if err = d.Set("span_source_port", flattenSystemSwitchInterfaceSpanSourcePort(o["span-source-port"], d, "span_source_port")); err != nil {
+			if err = d.Set("span_source_port", flattenSystemSwitchInterfaceSpanSourcePort(o["span-source-port"], d, "span_source_port", sv)); err != nil {
 				if !fortiAPIPatch(o["span-source-port"]) {
 					return fmt.Errorf("Error reading span_source_port: %v", err)
 				}
@@ -333,14 +346,14 @@ func refreshObjectSystemSwitchInterface(d *schema.ResourceData, o map[string]int
 	}
 
 	if isImportTable() {
-		if err = d.Set("member", flattenSystemSwitchInterfaceMember(o["member"], d, "member")); err != nil {
+		if err = d.Set("member", flattenSystemSwitchInterfaceMember(o["member"], d, "member", sv)); err != nil {
 			if !fortiAPIPatch(o["member"]) {
 				return fmt.Errorf("Error reading member: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("member"); ok {
-			if err = d.Set("member", flattenSystemSwitchInterfaceMember(o["member"], d, "member")); err != nil {
+			if err = d.Set("member", flattenSystemSwitchInterfaceMember(o["member"], d, "member", sv)); err != nil {
 				if !fortiAPIPatch(o["member"]) {
 					return fmt.Errorf("Error reading member: %v", err)
 				}
@@ -348,25 +361,31 @@ func refreshObjectSystemSwitchInterface(d *schema.ResourceData, o map[string]int
 		}
 	}
 
-	if err = d.Set("type", flattenSystemSwitchInterfaceType(o["type"], d, "type")); err != nil {
+	if err = d.Set("type", flattenSystemSwitchInterfaceType(o["type"], d, "type", sv)); err != nil {
 		if !fortiAPIPatch(o["type"]) {
 			return fmt.Errorf("Error reading type: %v", err)
 		}
 	}
 
-	if err = d.Set("intra_switch_policy", flattenSystemSwitchInterfaceIntraSwitchPolicy(o["intra-switch-policy"], d, "intra_switch_policy")); err != nil {
+	if err = d.Set("intra_switch_policy", flattenSystemSwitchInterfaceIntraSwitchPolicy(o["intra-switch-policy"], d, "intra_switch_policy", sv)); err != nil {
 		if !fortiAPIPatch(o["intra-switch-policy"]) {
 			return fmt.Errorf("Error reading intra_switch_policy: %v", err)
 		}
 	}
 
-	if err = d.Set("span", flattenSystemSwitchInterfaceSpan(o["span"], d, "span")); err != nil {
+	if err = d.Set("mac_ttl", flattenSystemSwitchInterfaceMacTtl(o["mac-ttl"], d, "mac_ttl", sv)); err != nil {
+		if !fortiAPIPatch(o["mac-ttl"]) {
+			return fmt.Errorf("Error reading mac_ttl: %v", err)
+		}
+	}
+
+	if err = d.Set("span", flattenSystemSwitchInterfaceSpan(o["span"], d, "span", sv)); err != nil {
 		if !fortiAPIPatch(o["span"]) {
 			return fmt.Errorf("Error reading span: %v", err)
 		}
 	}
 
-	if err = d.Set("span_direction", flattenSystemSwitchInterfaceSpanDirection(o["span-direction"], d, "span_direction")); err != nil {
+	if err = d.Set("span_direction", flattenSystemSwitchInterfaceSpanDirection(o["span-direction"], d, "span_direction", sv)); err != nil {
 		if !fortiAPIPatch(o["span-direction"]) {
 			return fmt.Errorf("Error reading span_direction: %v", err)
 		}
@@ -378,22 +397,22 @@ func refreshObjectSystemSwitchInterface(d *schema.ResourceData, o map[string]int
 func flattenSystemSwitchInterfaceFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemSwitchInterfaceName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSwitchInterfaceName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemSwitchInterfaceVdom(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSwitchInterfaceVdom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemSwitchInterfaceSpanDestPort(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSwitchInterfaceSpanDestPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemSwitchInterfaceSpanSourcePort(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSwitchInterfaceSpanSourcePort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -409,7 +428,8 @@ func expandSystemSwitchInterfaceSpanSourcePort(d *schema.ResourceData, v interfa
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["interface-name"], _ = expandSystemSwitchInterfaceSpanSourcePortInterfaceName(d, i["interface_name"], pre_append)
+
+			tmp["interface-name"], _ = expandSystemSwitchInterfaceSpanSourcePortInterfaceName(d, i["interface_name"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -420,11 +440,11 @@ func expandSystemSwitchInterfaceSpanSourcePort(d *schema.ResourceData, v interfa
 	return result, nil
 }
 
-func expandSystemSwitchInterfaceSpanSourcePortInterfaceName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSwitchInterfaceSpanSourcePortInterfaceName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemSwitchInterfaceMember(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSwitchInterfaceMember(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -440,7 +460,8 @@ func expandSystemSwitchInterfaceMember(d *schema.ResourceData, v interface{}, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["interface-name"], _ = expandSystemSwitchInterfaceMemberInterfaceName(d, i["interface_name"], pre_append)
+
+			tmp["interface-name"], _ = expandSystemSwitchInterfaceMemberInterfaceName(d, i["interface_name"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -451,31 +472,36 @@ func expandSystemSwitchInterfaceMember(d *schema.ResourceData, v interface{}, pr
 	return result, nil
 }
 
-func expandSystemSwitchInterfaceMemberInterfaceName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSwitchInterfaceMemberInterfaceName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemSwitchInterfaceType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSwitchInterfaceType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemSwitchInterfaceIntraSwitchPolicy(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSwitchInterfaceIntraSwitchPolicy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemSwitchInterfaceSpan(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSwitchInterfaceMacTtl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemSwitchInterfaceSpanDirection(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSwitchInterfaceSpan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemSwitchInterface(d *schema.ResourceData) (*map[string]interface{}, error) {
+func expandSystemSwitchInterfaceSpanDirection(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func getObjectSystemSwitchInterface(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandSystemSwitchInterfaceName(d, v, "name")
+
+		t, err := expandSystemSwitchInterfaceName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -484,7 +510,8 @@ func getObjectSystemSwitchInterface(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("vdom"); ok {
-		t, err := expandSystemSwitchInterfaceVdom(d, v, "vdom")
+
+		t, err := expandSystemSwitchInterfaceVdom(d, v, "vdom", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -493,7 +520,8 @@ func getObjectSystemSwitchInterface(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("span_dest_port"); ok {
-		t, err := expandSystemSwitchInterfaceSpanDestPort(d, v, "span_dest_port")
+
+		t, err := expandSystemSwitchInterfaceSpanDestPort(d, v, "span_dest_port", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -502,7 +530,8 @@ func getObjectSystemSwitchInterface(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("span_source_port"); ok {
-		t, err := expandSystemSwitchInterfaceSpanSourcePort(d, v, "span_source_port")
+
+		t, err := expandSystemSwitchInterfaceSpanSourcePort(d, v, "span_source_port", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -511,7 +540,8 @@ func getObjectSystemSwitchInterface(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("member"); ok {
-		t, err := expandSystemSwitchInterfaceMember(d, v, "member")
+
+		t, err := expandSystemSwitchInterfaceMember(d, v, "member", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -520,7 +550,8 @@ func getObjectSystemSwitchInterface(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("type"); ok {
-		t, err := expandSystemSwitchInterfaceType(d, v, "type")
+
+		t, err := expandSystemSwitchInterfaceType(d, v, "type", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -529,7 +560,8 @@ func getObjectSystemSwitchInterface(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("intra_switch_policy"); ok {
-		t, err := expandSystemSwitchInterfaceIntraSwitchPolicy(d, v, "intra_switch_policy")
+
+		t, err := expandSystemSwitchInterfaceIntraSwitchPolicy(d, v, "intra_switch_policy", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -537,8 +569,19 @@ func getObjectSystemSwitchInterface(d *schema.ResourceData) (*map[string]interfa
 		}
 	}
 
+	if v, ok := d.GetOk("mac_ttl"); ok {
+
+		t, err := expandSystemSwitchInterfaceMacTtl(d, v, "mac_ttl", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["mac-ttl"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("span"); ok {
-		t, err := expandSystemSwitchInterfaceSpan(d, v, "span")
+
+		t, err := expandSystemSwitchInterfaceSpan(d, v, "span", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -547,7 +590,8 @@ func getObjectSystemSwitchInterface(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("span_direction"); ok {
-		t, err := expandSystemSwitchInterfaceSpanDirection(d, v, "span_direction")
+
+		t, err := expandSystemSwitchInterfaceSpanDirection(d, v, "span_direction", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
