@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -53,7 +54,7 @@ func resourceWanoptSettingsUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWanoptSettings(d)
+	obj, err := getObjectWanoptSettings(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WanoptSettings resource while getting object: %v", err)
 	}
@@ -106,41 +107,41 @@ func resourceWanoptSettingsRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectWanoptSettings(d, o)
+	err = refreshObjectWanoptSettings(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading WanoptSettings resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenWanoptSettingsHostId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptSettingsHostId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptSettingsTunnelSslAlgorithm(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptSettingsTunnelSslAlgorithm(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWanoptSettingsAutoDetectAlgorithm(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWanoptSettingsAutoDetectAlgorithm(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectWanoptSettings(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectWanoptSettings(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("host_id", flattenWanoptSettingsHostId(o["host-id"], d, "host_id")); err != nil {
+	if err = d.Set("host_id", flattenWanoptSettingsHostId(o["host-id"], d, "host_id", sv)); err != nil {
 		if !fortiAPIPatch(o["host-id"]) {
 			return fmt.Errorf("Error reading host_id: %v", err)
 		}
 	}
 
-	if err = d.Set("tunnel_ssl_algorithm", flattenWanoptSettingsTunnelSslAlgorithm(o["tunnel-ssl-algorithm"], d, "tunnel_ssl_algorithm")); err != nil {
+	if err = d.Set("tunnel_ssl_algorithm", flattenWanoptSettingsTunnelSslAlgorithm(o["tunnel-ssl-algorithm"], d, "tunnel_ssl_algorithm", sv)); err != nil {
 		if !fortiAPIPatch(o["tunnel-ssl-algorithm"]) {
 			return fmt.Errorf("Error reading tunnel_ssl_algorithm: %v", err)
 		}
 	}
 
-	if err = d.Set("auto_detect_algorithm", flattenWanoptSettingsAutoDetectAlgorithm(o["auto-detect-algorithm"], d, "auto_detect_algorithm")); err != nil {
+	if err = d.Set("auto_detect_algorithm", flattenWanoptSettingsAutoDetectAlgorithm(o["auto-detect-algorithm"], d, "auto_detect_algorithm", sv)); err != nil {
 		if !fortiAPIPatch(o["auto-detect-algorithm"]) {
 			return fmt.Errorf("Error reading auto_detect_algorithm: %v", err)
 		}
@@ -152,26 +153,27 @@ func refreshObjectWanoptSettings(d *schema.ResourceData, o map[string]interface{
 func flattenWanoptSettingsFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandWanoptSettingsHostId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptSettingsHostId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptSettingsTunnelSslAlgorithm(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptSettingsTunnelSslAlgorithm(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWanoptSettingsAutoDetectAlgorithm(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWanoptSettingsAutoDetectAlgorithm(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectWanoptSettings(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectWanoptSettings(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("host_id"); ok {
-		t, err := expandWanoptSettingsHostId(d, v, "host_id")
+
+		t, err := expandWanoptSettingsHostId(d, v, "host_id", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -180,7 +182,8 @@ func getObjectWanoptSettings(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("tunnel_ssl_algorithm"); ok {
-		t, err := expandWanoptSettingsTunnelSslAlgorithm(d, v, "tunnel_ssl_algorithm")
+
+		t, err := expandWanoptSettingsTunnelSslAlgorithm(d, v, "tunnel_ssl_algorithm", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -189,7 +192,8 @@ func getObjectWanoptSettings(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("auto_detect_algorithm"); ok {
-		t, err := expandWanoptSettingsAutoDetectAlgorithm(d, v, "auto_detect_algorithm")
+
+		t, err := expandWanoptSettingsAutoDetectAlgorithm(d, v, "auto_detect_algorithm", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
