@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -62,7 +63,7 @@ func resourceSystemNdProxyUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemNdProxy(d)
+	obj, err := getObjectSystemNdProxy(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemNdProxy resource while getting object: %v", err)
 	}
@@ -115,18 +116,18 @@ func resourceSystemNdProxyRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectSystemNdProxy(d, o)
+	err = refreshObjectSystemNdProxy(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemNdProxy resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemNdProxyStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemNdProxyStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemNdProxyMember(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSystemNdProxyMember(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -147,7 +148,8 @@ func flattenSystemNdProxyMember(v interface{}, d *schema.ResourceData, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
 		if _, ok := i["interface-name"]; ok {
-			tmp["interface_name"] = flattenSystemNdProxyMemberInterfaceName(i["interface-name"], d, pre_append)
+
+			tmp["interface_name"] = flattenSystemNdProxyMemberInterfaceName(i["interface-name"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -159,28 +161,28 @@ func flattenSystemNdProxyMember(v interface{}, d *schema.ResourceData, pre strin
 	return result
 }
 
-func flattenSystemNdProxyMemberInterfaceName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemNdProxyMemberInterfaceName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemNdProxy(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemNdProxy(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("status", flattenSystemNdProxyStatus(o["status"], d, "status")); err != nil {
+	if err = d.Set("status", flattenSystemNdProxyStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("member", flattenSystemNdProxyMember(o["member"], d, "member")); err != nil {
+		if err = d.Set("member", flattenSystemNdProxyMember(o["member"], d, "member", sv)); err != nil {
 			if !fortiAPIPatch(o["member"]) {
 				return fmt.Errorf("Error reading member: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("member"); ok {
-			if err = d.Set("member", flattenSystemNdProxyMember(o["member"], d, "member")); err != nil {
+			if err = d.Set("member", flattenSystemNdProxyMember(o["member"], d, "member", sv)); err != nil {
 				if !fortiAPIPatch(o["member"]) {
 					return fmt.Errorf("Error reading member: %v", err)
 				}
@@ -194,14 +196,14 @@ func refreshObjectSystemNdProxy(d *schema.ResourceData, o map[string]interface{}
 func flattenSystemNdProxyFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemNdProxyStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemNdProxyStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemNdProxyMember(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemNdProxyMember(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -217,7 +219,8 @@ func expandSystemNdProxyMember(d *schema.ResourceData, v interface{}, pre string
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface_name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["interface-name"], _ = expandSystemNdProxyMemberInterfaceName(d, i["interface_name"], pre_append)
+
+			tmp["interface-name"], _ = expandSystemNdProxyMemberInterfaceName(d, i["interface_name"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -228,15 +231,16 @@ func expandSystemNdProxyMember(d *schema.ResourceData, v interface{}, pre string
 	return result, nil
 }
 
-func expandSystemNdProxyMemberInterfaceName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemNdProxyMemberInterfaceName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemNdProxy(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemNdProxy(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
-		t, err := expandSystemNdProxyStatus(d, v, "status")
+
+		t, err := expandSystemNdProxyStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -245,7 +249,8 @@ func getObjectSystemNdProxy(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOk("member"); ok {
-		t, err := expandSystemNdProxyMember(d, v, "member")
+
+		t, err := expandSystemNdProxyMember(d, v, "member", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
