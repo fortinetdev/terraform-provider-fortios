@@ -20,7 +20,6 @@ resource "fortios_system_customlanguage" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - (Required) Name.
