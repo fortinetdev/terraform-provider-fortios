@@ -48,7 +48,6 @@ resource "fortios_firewall_shapingpolicy" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `fosid` - Shaping policy ID.
@@ -61,11 +60,13 @@ The following arguments are supported:
 * `srcaddr6` - IPv6 source address and address group names. The structure of `srcaddr6` block is documented below.
 * `dstaddr6` - IPv6 destination address and address group names. The structure of `dstaddr6` block is documented below.
 * `internet_service` - Enable/disable use of Internet Services for this policy. If enabled, destination address and service are not used. 
+* `internet_service_name` - Internet Service ID. The structure of `internet_service_name` block is documented below.
 * `internet_service_id` - Internet Service ID. The structure of `internet_service_id` block is documented below.
 * `internet_service_group` - Internet Service group name. The structure of `internet_service_group` block is documented below.
 * `internet_service_custom` - Custom Internet Service name. The structure of `internet_service_custom` block is documented below.
 * `internet_service_custom_group` - Custom Internet Service group name. The structure of `internet_service_custom_group` block is documented below.
 * `internet_service_src` - Enable/disable use of Internet Services in source for this policy. If enabled, source address is not used. 
+* `internet_service_src_name` - Internet Service source name. The structure of `internet_service_src_name` block is documented below.
 * `internet_service_src_id` - Internet Service source ID. The structure of `internet_service_src_id` block is documented below.
 * `internet_service_src_group` - Internet Service source group name. The structure of `internet_service_src_group` block is documented below.
 * `internet_service_src_custom` - Custom Internet Service source name. The structure of `internet_service_src_custom` block is documented below.
@@ -78,6 +79,7 @@ The following arguments are supported:
 * `app_category` - IDs of one or more application categories that this shaper applies application control traffic shaping to. The structure of `app_category` block is documented below.
 * `app_group` - One or more application group names. The structure of `app_group` block is documented below.
 * `url_category` - IDs of one or more FortiGuard Web Filtering categories that this shaper applies traffic shaping to. The structure of `url_category` block is documented below.
+* `srcintf` - One or more incoming (ingress) interfaces. The structure of `srcintf` block is documented below.
 * `dstintf` - (Required) One or more outgoing (egress) interfaces. The structure of `dstintf` block is documented below.
 * `tos` - ToS (Type of Service) value used for comparison.
 * `tos_mask` - Non-zero bit positions are used for comparison while zero bit positions are ignored.
@@ -108,6 +110,10 @@ The `dstaddr6` block supports:
 
 * `name` - Address name.
 
+The `internet_service_name` block supports:
+
+* `name` - Internet Service name.
+
 The `internet_service_id` block supports:
 
 * `id` - Internet Service ID.
@@ -123,6 +129,10 @@ The `internet_service_custom` block supports:
 The `internet_service_custom_group` block supports:
 
 * `name` - Custom Internet Service group name.
+
+The `internet_service_src_name` block supports:
+
+* `name` - Internet Service name.
 
 The `internet_service_src_id` block supports:
 
@@ -167,6 +177,10 @@ The `app_group` block supports:
 The `url_category` block supports:
 
 * `id` - URL category ID.
+
+The `srcintf` block supports:
+
+* `name` - Interface name.
 
 The `dstintf` block supports:
 
