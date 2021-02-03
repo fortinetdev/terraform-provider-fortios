@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -59,7 +60,7 @@ func resourceFirewallIpTranslationCreate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectFirewallIpTranslation(d)
+	obj, err := getObjectFirewallIpTranslation(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallIpTranslation resource while getting object: %v", err)
 	}
@@ -84,7 +85,7 @@ func resourceFirewallIpTranslationUpdate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectFirewallIpTranslation(d)
+	obj, err := getObjectFirewallIpTranslation(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallIpTranslation resource while getting object: %v", err)
 	}
@@ -137,61 +138,61 @@ func resourceFirewallIpTranslationRead(d *schema.ResourceData, m interface{}) er
 		return nil
 	}
 
-	err = refreshObjectFirewallIpTranslation(d, o)
+	err = refreshObjectFirewallIpTranslation(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallIpTranslation resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenFirewallIpTranslationTransid(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallIpTranslationTransid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallIpTranslationType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallIpTranslationType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallIpTranslationStartip(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallIpTranslationStartip(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallIpTranslationEndip(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallIpTranslationEndip(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallIpTranslationMapStartip(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallIpTranslationMapStartip(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectFirewallIpTranslation(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectFirewallIpTranslation(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("transid", flattenFirewallIpTranslationTransid(o["transid"], d, "transid")); err != nil {
+	if err = d.Set("transid", flattenFirewallIpTranslationTransid(o["transid"], d, "transid", sv)); err != nil {
 		if !fortiAPIPatch(o["transid"]) {
 			return fmt.Errorf("Error reading transid: %v", err)
 		}
 	}
 
-	if err = d.Set("type", flattenFirewallIpTranslationType(o["type"], d, "type")); err != nil {
+	if err = d.Set("type", flattenFirewallIpTranslationType(o["type"], d, "type", sv)); err != nil {
 		if !fortiAPIPatch(o["type"]) {
 			return fmt.Errorf("Error reading type: %v", err)
 		}
 	}
 
-	if err = d.Set("startip", flattenFirewallIpTranslationStartip(o["startip"], d, "startip")); err != nil {
+	if err = d.Set("startip", flattenFirewallIpTranslationStartip(o["startip"], d, "startip", sv)); err != nil {
 		if !fortiAPIPatch(o["startip"]) {
 			return fmt.Errorf("Error reading startip: %v", err)
 		}
 	}
 
-	if err = d.Set("endip", flattenFirewallIpTranslationEndip(o["endip"], d, "endip")); err != nil {
+	if err = d.Set("endip", flattenFirewallIpTranslationEndip(o["endip"], d, "endip", sv)); err != nil {
 		if !fortiAPIPatch(o["endip"]) {
 			return fmt.Errorf("Error reading endip: %v", err)
 		}
 	}
 
-	if err = d.Set("map_startip", flattenFirewallIpTranslationMapStartip(o["map-startip"], d, "map_startip")); err != nil {
+	if err = d.Set("map_startip", flattenFirewallIpTranslationMapStartip(o["map-startip"], d, "map_startip", sv)); err != nil {
 		if !fortiAPIPatch(o["map-startip"]) {
 			return fmt.Errorf("Error reading map_startip: %v", err)
 		}
@@ -203,34 +204,35 @@ func refreshObjectFirewallIpTranslation(d *schema.ResourceData, o map[string]int
 func flattenFirewallIpTranslationFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandFirewallIpTranslationTransid(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallIpTranslationTransid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallIpTranslationType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallIpTranslationType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallIpTranslationStartip(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallIpTranslationStartip(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallIpTranslationEndip(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallIpTranslationEndip(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallIpTranslationMapStartip(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallIpTranslationMapStartip(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectFirewallIpTranslation(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectFirewallIpTranslation(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("transid"); ok {
-		t, err := expandFirewallIpTranslationTransid(d, v, "transid")
+
+		t, err := expandFirewallIpTranslationTransid(d, v, "transid", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -239,7 +241,8 @@ func getObjectFirewallIpTranslation(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("type"); ok {
-		t, err := expandFirewallIpTranslationType(d, v, "type")
+
+		t, err := expandFirewallIpTranslationType(d, v, "type", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -248,7 +251,8 @@ func getObjectFirewallIpTranslation(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("startip"); ok {
-		t, err := expandFirewallIpTranslationStartip(d, v, "startip")
+
+		t, err := expandFirewallIpTranslationStartip(d, v, "startip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -257,7 +261,8 @@ func getObjectFirewallIpTranslation(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("endip"); ok {
-		t, err := expandFirewallIpTranslationEndip(d, v, "endip")
+
+		t, err := expandFirewallIpTranslationEndip(d, v, "endip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -266,7 +271,8 @@ func getObjectFirewallIpTranslation(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("map_startip"); ok {
-		t, err := expandFirewallIpTranslationMapStartip(d, v, "map_startip")
+
+		t, err := expandFirewallIpTranslationMapStartip(d, v, "map_startip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
