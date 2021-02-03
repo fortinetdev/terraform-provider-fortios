@@ -29,7 +29,6 @@ resource "fortios_logmemory_filter" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `severity` - Log every message above and including this severity level.
@@ -42,6 +41,7 @@ The following arguments are supported:
 * `netscan_vulnerability` - Enable/disable netscan vulnerability event logging.
 * `voip` - Enable/disable VoIP logging.
 * `gtp` - Enable/disable GTP messages logging.
+* `free_style` - Free Style Filters The structure of `free_style` block is documented below.
 * `dns` - Enable/disable detailed DNS event logging.
 * `ssh` - Enable/disable SSH logging.
 * `event` - Enable/disable event logging.
@@ -63,6 +63,14 @@ The following arguments are supported:
 * `wireless_activity` - Enable/disable wireless activity event logging.
 * `cpu_memory_usage` - Enable/disable CPU & memory usage logging every 5 minutes.
 * `filter` - Memory log filter.
+* `filter_type` - Include/exclude logs that match the filter.
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
+The `free_style` block supports:
+
+* `id` - Entry ID.
+* `category` - Log category.
+* `filter` - Free style filter string.
 * `filter_type` - Include/exclude logs that match the filter.
 
 
