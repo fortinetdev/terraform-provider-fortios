@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -66,7 +67,7 @@ func resourceSwitchControllerQosQosPolicyCreate(d *schema.ResourceData, m interf
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSwitchControllerQosQosPolicy(d)
+	obj, err := getObjectSwitchControllerQosQosPolicy(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerQosQosPolicy resource while getting object: %v", err)
 	}
@@ -91,7 +92,7 @@ func resourceSwitchControllerQosQosPolicyUpdate(d *schema.ResourceData, m interf
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSwitchControllerQosQosPolicy(d)
+	obj, err := getObjectSwitchControllerQosQosPolicy(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerQosQosPolicy resource while getting object: %v", err)
 	}
@@ -144,61 +145,61 @@ func resourceSwitchControllerQosQosPolicyRead(d *schema.ResourceData, m interfac
 		return nil
 	}
 
-	err = refreshObjectSwitchControllerQosQosPolicy(d, o)
+	err = refreshObjectSwitchControllerQosQosPolicy(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerQosQosPolicy resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSwitchControllerQosQosPolicyName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerQosQosPolicyName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerQosQosPolicyDefaultCos(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerQosQosPolicyDefaultCos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerQosQosPolicyTrustDot1PMap(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerQosQosPolicyTrustDot1PMap(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerQosQosPolicyTrustIpDscpMap(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerQosQosPolicyTrustIpDscpMap(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerQosQosPolicyQueuePolicy(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerQosQosPolicyQueuePolicy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSwitchControllerQosQosPolicy(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSwitchControllerQosQosPolicy(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenSwitchControllerQosQosPolicyName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenSwitchControllerQosQosPolicyName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("default_cos", flattenSwitchControllerQosQosPolicyDefaultCos(o["default-cos"], d, "default_cos")); err != nil {
+	if err = d.Set("default_cos", flattenSwitchControllerQosQosPolicyDefaultCos(o["default-cos"], d, "default_cos", sv)); err != nil {
 		if !fortiAPIPatch(o["default-cos"]) {
 			return fmt.Errorf("Error reading default_cos: %v", err)
 		}
 	}
 
-	if err = d.Set("trust_dot1p_map", flattenSwitchControllerQosQosPolicyTrustDot1PMap(o["trust-dot1p-map"], d, "trust_dot1p_map")); err != nil {
+	if err = d.Set("trust_dot1p_map", flattenSwitchControllerQosQosPolicyTrustDot1PMap(o["trust-dot1p-map"], d, "trust_dot1p_map", sv)); err != nil {
 		if !fortiAPIPatch(o["trust-dot1p-map"]) {
 			return fmt.Errorf("Error reading trust_dot1p_map: %v", err)
 		}
 	}
 
-	if err = d.Set("trust_ip_dscp_map", flattenSwitchControllerQosQosPolicyTrustIpDscpMap(o["trust-ip-dscp-map"], d, "trust_ip_dscp_map")); err != nil {
+	if err = d.Set("trust_ip_dscp_map", flattenSwitchControllerQosQosPolicyTrustIpDscpMap(o["trust-ip-dscp-map"], d, "trust_ip_dscp_map", sv)); err != nil {
 		if !fortiAPIPatch(o["trust-ip-dscp-map"]) {
 			return fmt.Errorf("Error reading trust_ip_dscp_map: %v", err)
 		}
 	}
 
-	if err = d.Set("queue_policy", flattenSwitchControllerQosQosPolicyQueuePolicy(o["queue-policy"], d, "queue_policy")); err != nil {
+	if err = d.Set("queue_policy", flattenSwitchControllerQosQosPolicyQueuePolicy(o["queue-policy"], d, "queue_policy", sv)); err != nil {
 		if !fortiAPIPatch(o["queue-policy"]) {
 			return fmt.Errorf("Error reading queue_policy: %v", err)
 		}
@@ -210,34 +211,35 @@ func refreshObjectSwitchControllerQosQosPolicy(d *schema.ResourceData, o map[str
 func flattenSwitchControllerQosQosPolicyFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSwitchControllerQosQosPolicyName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerQosQosPolicyName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerQosQosPolicyDefaultCos(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerQosQosPolicyDefaultCos(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerQosQosPolicyTrustDot1PMap(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerQosQosPolicyTrustDot1PMap(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerQosQosPolicyTrustIpDscpMap(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerQosQosPolicyTrustIpDscpMap(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerQosQosPolicyQueuePolicy(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerQosQosPolicyQueuePolicy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSwitchControllerQosQosPolicy(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSwitchControllerQosQosPolicy(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandSwitchControllerQosQosPolicyName(d, v, "name")
+
+		t, err := expandSwitchControllerQosQosPolicyName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -246,7 +248,8 @@ func getObjectSwitchControllerQosQosPolicy(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOkExists("default_cos"); ok {
-		t, err := expandSwitchControllerQosQosPolicyDefaultCos(d, v, "default_cos")
+
+		t, err := expandSwitchControllerQosQosPolicyDefaultCos(d, v, "default_cos", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -255,7 +258,8 @@ func getObjectSwitchControllerQosQosPolicy(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("trust_dot1p_map"); ok {
-		t, err := expandSwitchControllerQosQosPolicyTrustDot1PMap(d, v, "trust_dot1p_map")
+
+		t, err := expandSwitchControllerQosQosPolicyTrustDot1PMap(d, v, "trust_dot1p_map", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -264,7 +268,8 @@ func getObjectSwitchControllerQosQosPolicy(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("trust_ip_dscp_map"); ok {
-		t, err := expandSwitchControllerQosQosPolicyTrustIpDscpMap(d, v, "trust_ip_dscp_map")
+
+		t, err := expandSwitchControllerQosQosPolicyTrustIpDscpMap(d, v, "trust_ip_dscp_map", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -273,7 +278,8 @@ func getObjectSwitchControllerQosQosPolicy(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("queue_policy"); ok {
-		t, err := expandSwitchControllerQosQosPolicyQueuePolicy(d, v, "queue_policy")
+
+		t, err := expandSwitchControllerQosQosPolicyQueuePolicy(d, v, "queue_policy", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
