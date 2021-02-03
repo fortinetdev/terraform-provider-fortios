@@ -25,6 +25,10 @@ func dataSourceFirewallAddrgrp() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"type": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"uuid": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -141,6 +145,10 @@ func dataSourceFirewallAddrgrpRead(d *schema.ResourceData, m interface{}) error 
 }
 
 func dataSourceFlattenFirewallAddrgrpName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddrgrpType(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -332,6 +340,12 @@ func dataSourceRefreshObjectFirewallAddrgrp(d *schema.ResourceData, o map[string
 	if err = d.Set("name", dataSourceFlattenFirewallAddrgrpName(o["name"], d, "name")); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
+		}
+	}
+
+	if err = d.Set("type", dataSourceFlattenFirewallAddrgrpType(o["type"], d, "type")); err != nil {
+		if !fortiAPIPatch(o["type"]) {
+			return fmt.Errorf("Error reading type: %v", err)
 		}
 	}
 
