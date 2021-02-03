@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -67,7 +68,7 @@ func resourceWirelessControllerVapGroupCreate(d *schema.ResourceData, m interfac
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWirelessControllerVapGroup(d)
+	obj, err := getObjectWirelessControllerVapGroup(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WirelessControllerVapGroup resource while getting object: %v", err)
 	}
@@ -92,7 +93,7 @@ func resourceWirelessControllerVapGroupUpdate(d *schema.ResourceData, m interfac
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWirelessControllerVapGroup(d)
+	obj, err := getObjectWirelessControllerVapGroup(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerVapGroup resource while getting object: %v", err)
 	}
@@ -145,22 +146,22 @@ func resourceWirelessControllerVapGroupRead(d *schema.ResourceData, m interface{
 		return nil
 	}
 
-	err = refreshObjectWirelessControllerVapGroup(d, o)
+	err = refreshObjectWirelessControllerVapGroup(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading WirelessControllerVapGroup resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenWirelessControllerVapGroupName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerVapGroupName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerVapGroupComment(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerVapGroupComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerVapGroupVaps(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenWirelessControllerVapGroupVaps(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -181,7 +182,8 @@ func flattenWirelessControllerVapGroupVaps(v interface{}, d *schema.ResourceData
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenWirelessControllerVapGroupVapsName(i["name"], d, pre_append)
+
+			tmp["name"] = flattenWirelessControllerVapGroupVapsName(i["name"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -193,34 +195,34 @@ func flattenWirelessControllerVapGroupVaps(v interface{}, d *schema.ResourceData
 	return result
 }
 
-func flattenWirelessControllerVapGroupVapsName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerVapGroupVapsName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectWirelessControllerVapGroup(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectWirelessControllerVapGroup(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenWirelessControllerVapGroupName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenWirelessControllerVapGroupName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("comment", flattenWirelessControllerVapGroupComment(o["comment"], d, "comment")); err != nil {
+	if err = d.Set("comment", flattenWirelessControllerVapGroupComment(o["comment"], d, "comment", sv)); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("vaps", flattenWirelessControllerVapGroupVaps(o["vaps"], d, "vaps")); err != nil {
+		if err = d.Set("vaps", flattenWirelessControllerVapGroupVaps(o["vaps"], d, "vaps", sv)); err != nil {
 			if !fortiAPIPatch(o["vaps"]) {
 				return fmt.Errorf("Error reading vaps: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("vaps"); ok {
-			if err = d.Set("vaps", flattenWirelessControllerVapGroupVaps(o["vaps"], d, "vaps")); err != nil {
+			if err = d.Set("vaps", flattenWirelessControllerVapGroupVaps(o["vaps"], d, "vaps", sv)); err != nil {
 				if !fortiAPIPatch(o["vaps"]) {
 					return fmt.Errorf("Error reading vaps: %v", err)
 				}
@@ -234,18 +236,18 @@ func refreshObjectWirelessControllerVapGroup(d *schema.ResourceData, o map[strin
 func flattenWirelessControllerVapGroupFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandWirelessControllerVapGroupName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerVapGroupName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerVapGroupComment(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerVapGroupComment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerVapGroupVaps(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerVapGroupVaps(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -261,7 +263,8 @@ func expandWirelessControllerVapGroupVaps(d *schema.ResourceData, v interface{},
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandWirelessControllerVapGroupVapsName(d, i["name"], pre_append)
+
+			tmp["name"], _ = expandWirelessControllerVapGroupVapsName(d, i["name"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -272,15 +275,16 @@ func expandWirelessControllerVapGroupVaps(d *schema.ResourceData, v interface{},
 	return result, nil
 }
 
-func expandWirelessControllerVapGroupVapsName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerVapGroupVapsName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectWirelessControllerVapGroup(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectWirelessControllerVapGroup(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandWirelessControllerVapGroupName(d, v, "name")
+
+		t, err := expandWirelessControllerVapGroupName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -289,7 +293,8 @@ func getObjectWirelessControllerVapGroup(d *schema.ResourceData) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-		t, err := expandWirelessControllerVapGroupComment(d, v, "comment")
+
+		t, err := expandWirelessControllerVapGroupComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -298,7 +303,8 @@ func getObjectWirelessControllerVapGroup(d *schema.ResourceData) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("vaps"); ok {
-		t, err := expandWirelessControllerVapGroupVaps(d, v, "vaps")
+
+		t, err := expandWirelessControllerVapGroupVaps(d, v, "vaps", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
