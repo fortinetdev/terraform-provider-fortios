@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -54,7 +55,7 @@ func resourceSystemVdomRadiusServerCreate(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemVdomRadiusServer(d)
+	obj, err := getObjectSystemVdomRadiusServer(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemVdomRadiusServer resource while getting object: %v", err)
 	}
@@ -79,7 +80,7 @@ func resourceSystemVdomRadiusServerUpdate(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemVdomRadiusServer(d)
+	obj, err := getObjectSystemVdomRadiusServer(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemVdomRadiusServer resource while getting object: %v", err)
 	}
@@ -132,41 +133,41 @@ func resourceSystemVdomRadiusServerRead(d *schema.ResourceData, m interface{}) e
 		return nil
 	}
 
-	err = refreshObjectSystemVdomRadiusServer(d, o)
+	err = refreshObjectSystemVdomRadiusServer(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemVdomRadiusServer resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemVdomRadiusServerName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomRadiusServerName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVdomRadiusServerStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomRadiusServerStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVdomRadiusServerRadiusServerVdom(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomRadiusServerRadiusServerVdom(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemVdomRadiusServer(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemVdomRadiusServer(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenSystemVdomRadiusServerName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenSystemVdomRadiusServerName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("status", flattenSystemVdomRadiusServerStatus(o["status"], d, "status")); err != nil {
+	if err = d.Set("status", flattenSystemVdomRadiusServerStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
 		}
 	}
 
-	if err = d.Set("radius_server_vdom", flattenSystemVdomRadiusServerRadiusServerVdom(o["radius-server-vdom"], d, "radius_server_vdom")); err != nil {
+	if err = d.Set("radius_server_vdom", flattenSystemVdomRadiusServerRadiusServerVdom(o["radius-server-vdom"], d, "radius_server_vdom", sv)); err != nil {
 		if !fortiAPIPatch(o["radius-server-vdom"]) {
 			return fmt.Errorf("Error reading radius_server_vdom: %v", err)
 		}
@@ -178,26 +179,27 @@ func refreshObjectSystemVdomRadiusServer(d *schema.ResourceData, o map[string]in
 func flattenSystemVdomRadiusServerFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemVdomRadiusServerName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomRadiusServerName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVdomRadiusServerStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomRadiusServerStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVdomRadiusServerRadiusServerVdom(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomRadiusServerRadiusServerVdom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemVdomRadiusServer(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemVdomRadiusServer(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandSystemVdomRadiusServerName(d, v, "name")
+
+		t, err := expandSystemVdomRadiusServerName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -206,7 +208,8 @@ func getObjectSystemVdomRadiusServer(d *schema.ResourceData) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-		t, err := expandSystemVdomRadiusServerStatus(d, v, "status")
+
+		t, err := expandSystemVdomRadiusServerStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -215,7 +218,8 @@ func getObjectSystemVdomRadiusServer(d *schema.ResourceData) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("radius_server_vdom"); ok {
-		t, err := expandSystemVdomRadiusServerRadiusServerVdom(d, v, "radius_server_vdom")
+
+		t, err := expandSystemVdomRadiusServerRadiusServerVdom(d, v, "radius_server_vdom", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
