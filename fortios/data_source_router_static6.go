@@ -61,7 +61,15 @@ func dataSourceRouterStatic6() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"sdwan": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"virtual_wan_link": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"link_monitor_exempt": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -148,7 +156,15 @@ func dataSourceFlattenRouterStatic6Blackhole(v interface{}, d *schema.ResourceDa
 	return v
 }
 
+func dataSourceFlattenRouterStatic6Sdwan(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenRouterStatic6VirtualWanLink(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterStatic6LinkMonitorExempt(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -219,9 +235,21 @@ func dataSourceRefreshObjectRouterStatic6(d *schema.ResourceData, o map[string]i
 		}
 	}
 
+	if err = d.Set("sdwan", dataSourceFlattenRouterStatic6Sdwan(o["sdwan"], d, "sdwan")); err != nil {
+		if !fortiAPIPatch(o["sdwan"]) {
+			return fmt.Errorf("Error reading sdwan: %v", err)
+		}
+	}
+
 	if err = d.Set("virtual_wan_link", dataSourceFlattenRouterStatic6VirtualWanLink(o["virtual-wan-link"], d, "virtual_wan_link")); err != nil {
 		if !fortiAPIPatch(o["virtual-wan-link"]) {
 			return fmt.Errorf("Error reading virtual_wan_link: %v", err)
+		}
+	}
+
+	if err = d.Set("link_monitor_exempt", dataSourceFlattenRouterStatic6LinkMonitorExempt(o["link-monitor-exempt"], d, "link_monitor_exempt")); err != nil {
+		if !fortiAPIPatch(o["link-monitor-exempt"]) {
+			return fmt.Errorf("Error reading link_monitor_exempt: %v", err)
 		}
 	}
 
