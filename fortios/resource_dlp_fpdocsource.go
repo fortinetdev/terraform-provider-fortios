@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -135,7 +136,7 @@ func resourceDlpFpDocSourceCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectDlpFpDocSource(d)
+	obj, err := getObjectDlpFpDocSource(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating DlpFpDocSource resource while getting object: %v", err)
 	}
@@ -160,7 +161,7 @@ func resourceDlpFpDocSourceUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectDlpFpDocSource(d)
+	obj, err := getObjectDlpFpDocSource(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating DlpFpDocSource resource while getting object: %v", err)
 	}
@@ -213,185 +214,185 @@ func resourceDlpFpDocSourceRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectDlpFpDocSource(d, o)
+	err = refreshObjectDlpFpDocSource(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading DlpFpDocSource resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenDlpFpDocSourceName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenDlpFpDocSourceName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenDlpFpDocSourceServerType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenDlpFpDocSourceServerType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenDlpFpDocSourceServer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenDlpFpDocSourceServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenDlpFpDocSourcePeriod(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenDlpFpDocSourcePeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenDlpFpDocSourceVdom(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenDlpFpDocSourceVdom(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenDlpFpDocSourceScanSubdirectories(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenDlpFpDocSourceScanSubdirectories(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenDlpFpDocSourceScanOnCreation(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenDlpFpDocSourceScanOnCreation(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenDlpFpDocSourceRemoveDeleted(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenDlpFpDocSourceRemoveDeleted(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenDlpFpDocSourceKeepModified(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenDlpFpDocSourceKeepModified(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenDlpFpDocSourceUsername(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenDlpFpDocSourceUsername(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenDlpFpDocSourcePassword(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenDlpFpDocSourcePassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenDlpFpDocSourceFilePath(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenDlpFpDocSourceFilePath(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenDlpFpDocSourceFilePattern(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenDlpFpDocSourceFilePattern(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenDlpFpDocSourceSensitivity(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenDlpFpDocSourceSensitivity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenDlpFpDocSourceTodHour(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenDlpFpDocSourceTodHour(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenDlpFpDocSourceTodMin(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenDlpFpDocSourceTodMin(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenDlpFpDocSourceWeekday(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenDlpFpDocSourceWeekday(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenDlpFpDocSourceDate(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenDlpFpDocSourceDate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectDlpFpDocSource(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectDlpFpDocSource(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenDlpFpDocSourceName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenDlpFpDocSourceName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("server_type", flattenDlpFpDocSourceServerType(o["server-type"], d, "server_type")); err != nil {
+	if err = d.Set("server_type", flattenDlpFpDocSourceServerType(o["server-type"], d, "server_type", sv)); err != nil {
 		if !fortiAPIPatch(o["server-type"]) {
 			return fmt.Errorf("Error reading server_type: %v", err)
 		}
 	}
 
-	if err = d.Set("server", flattenDlpFpDocSourceServer(o["server"], d, "server")); err != nil {
+	if err = d.Set("server", flattenDlpFpDocSourceServer(o["server"], d, "server", sv)); err != nil {
 		if !fortiAPIPatch(o["server"]) {
 			return fmt.Errorf("Error reading server: %v", err)
 		}
 	}
 
-	if err = d.Set("period", flattenDlpFpDocSourcePeriod(o["period"], d, "period")); err != nil {
+	if err = d.Set("period", flattenDlpFpDocSourcePeriod(o["period"], d, "period", sv)); err != nil {
 		if !fortiAPIPatch(o["period"]) {
 			return fmt.Errorf("Error reading period: %v", err)
 		}
 	}
 
-	if err = d.Set("vdom", flattenDlpFpDocSourceVdom(o["vdom"], d, "vdom")); err != nil {
+	if err = d.Set("vdom", flattenDlpFpDocSourceVdom(o["vdom"], d, "vdom", sv)); err != nil {
 		if !fortiAPIPatch(o["vdom"]) {
 			return fmt.Errorf("Error reading vdom: %v", err)
 		}
 	}
 
-	if err = d.Set("scan_subdirectories", flattenDlpFpDocSourceScanSubdirectories(o["scan-subdirectories"], d, "scan_subdirectories")); err != nil {
+	if err = d.Set("scan_subdirectories", flattenDlpFpDocSourceScanSubdirectories(o["scan-subdirectories"], d, "scan_subdirectories", sv)); err != nil {
 		if !fortiAPIPatch(o["scan-subdirectories"]) {
 			return fmt.Errorf("Error reading scan_subdirectories: %v", err)
 		}
 	}
 
-	if err = d.Set("scan_on_creation", flattenDlpFpDocSourceScanOnCreation(o["scan-on-creation"], d, "scan_on_creation")); err != nil {
+	if err = d.Set("scan_on_creation", flattenDlpFpDocSourceScanOnCreation(o["scan-on-creation"], d, "scan_on_creation", sv)); err != nil {
 		if !fortiAPIPatch(o["scan-on-creation"]) {
 			return fmt.Errorf("Error reading scan_on_creation: %v", err)
 		}
 	}
 
-	if err = d.Set("remove_deleted", flattenDlpFpDocSourceRemoveDeleted(o["remove-deleted"], d, "remove_deleted")); err != nil {
+	if err = d.Set("remove_deleted", flattenDlpFpDocSourceRemoveDeleted(o["remove-deleted"], d, "remove_deleted", sv)); err != nil {
 		if !fortiAPIPatch(o["remove-deleted"]) {
 			return fmt.Errorf("Error reading remove_deleted: %v", err)
 		}
 	}
 
-	if err = d.Set("keep_modified", flattenDlpFpDocSourceKeepModified(o["keep-modified"], d, "keep_modified")); err != nil {
+	if err = d.Set("keep_modified", flattenDlpFpDocSourceKeepModified(o["keep-modified"], d, "keep_modified", sv)); err != nil {
 		if !fortiAPIPatch(o["keep-modified"]) {
 			return fmt.Errorf("Error reading keep_modified: %v", err)
 		}
 	}
 
-	if err = d.Set("username", flattenDlpFpDocSourceUsername(o["username"], d, "username")); err != nil {
+	if err = d.Set("username", flattenDlpFpDocSourceUsername(o["username"], d, "username", sv)); err != nil {
 		if !fortiAPIPatch(o["username"]) {
 			return fmt.Errorf("Error reading username: %v", err)
 		}
 	}
 
-	if err = d.Set("file_path", flattenDlpFpDocSourceFilePath(o["file-path"], d, "file_path")); err != nil {
+	if err = d.Set("file_path", flattenDlpFpDocSourceFilePath(o["file-path"], d, "file_path", sv)); err != nil {
 		if !fortiAPIPatch(o["file-path"]) {
 			return fmt.Errorf("Error reading file_path: %v", err)
 		}
 	}
 
-	if err = d.Set("file_pattern", flattenDlpFpDocSourceFilePattern(o["file-pattern"], d, "file_pattern")); err != nil {
+	if err = d.Set("file_pattern", flattenDlpFpDocSourceFilePattern(o["file-pattern"], d, "file_pattern", sv)); err != nil {
 		if !fortiAPIPatch(o["file-pattern"]) {
 			return fmt.Errorf("Error reading file_pattern: %v", err)
 		}
 	}
 
-	if err = d.Set("sensitivity", flattenDlpFpDocSourceSensitivity(o["sensitivity"], d, "sensitivity")); err != nil {
+	if err = d.Set("sensitivity", flattenDlpFpDocSourceSensitivity(o["sensitivity"], d, "sensitivity", sv)); err != nil {
 		if !fortiAPIPatch(o["sensitivity"]) {
 			return fmt.Errorf("Error reading sensitivity: %v", err)
 		}
 	}
 
-	if err = d.Set("tod_hour", flattenDlpFpDocSourceTodHour(o["tod-hour"], d, "tod_hour")); err != nil {
+	if err = d.Set("tod_hour", flattenDlpFpDocSourceTodHour(o["tod-hour"], d, "tod_hour", sv)); err != nil {
 		if !fortiAPIPatch(o["tod-hour"]) {
 			return fmt.Errorf("Error reading tod_hour: %v", err)
 		}
 	}
 
-	if err = d.Set("tod_min", flattenDlpFpDocSourceTodMin(o["tod-min"], d, "tod_min")); err != nil {
+	if err = d.Set("tod_min", flattenDlpFpDocSourceTodMin(o["tod-min"], d, "tod_min", sv)); err != nil {
 		if !fortiAPIPatch(o["tod-min"]) {
 			return fmt.Errorf("Error reading tod_min: %v", err)
 		}
 	}
 
-	if err = d.Set("weekday", flattenDlpFpDocSourceWeekday(o["weekday"], d, "weekday")); err != nil {
+	if err = d.Set("weekday", flattenDlpFpDocSourceWeekday(o["weekday"], d, "weekday", sv)); err != nil {
 		if !fortiAPIPatch(o["weekday"]) {
 			return fmt.Errorf("Error reading weekday: %v", err)
 		}
 	}
 
-	if err = d.Set("date", flattenDlpFpDocSourceDate(o["date"], d, "date")); err != nil {
+	if err = d.Set("date", flattenDlpFpDocSourceDate(o["date"], d, "date", sv)); err != nil {
 		if !fortiAPIPatch(o["date"]) {
 			return fmt.Errorf("Error reading date: %v", err)
 		}
@@ -403,86 +404,87 @@ func refreshObjectDlpFpDocSource(d *schema.ResourceData, o map[string]interface{
 func flattenDlpFpDocSourceFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandDlpFpDocSourceName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandDlpFpDocSourceName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandDlpFpDocSourceServerType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandDlpFpDocSourceServerType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandDlpFpDocSourceServer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandDlpFpDocSourceServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandDlpFpDocSourcePeriod(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandDlpFpDocSourcePeriod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandDlpFpDocSourceVdom(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandDlpFpDocSourceVdom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandDlpFpDocSourceScanSubdirectories(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandDlpFpDocSourceScanSubdirectories(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandDlpFpDocSourceScanOnCreation(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandDlpFpDocSourceScanOnCreation(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandDlpFpDocSourceRemoveDeleted(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandDlpFpDocSourceRemoveDeleted(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandDlpFpDocSourceKeepModified(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandDlpFpDocSourceKeepModified(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandDlpFpDocSourceUsername(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandDlpFpDocSourceUsername(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandDlpFpDocSourcePassword(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandDlpFpDocSourcePassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandDlpFpDocSourceFilePath(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandDlpFpDocSourceFilePath(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandDlpFpDocSourceFilePattern(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandDlpFpDocSourceFilePattern(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandDlpFpDocSourceSensitivity(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandDlpFpDocSourceSensitivity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandDlpFpDocSourceTodHour(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandDlpFpDocSourceTodHour(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandDlpFpDocSourceTodMin(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandDlpFpDocSourceTodMin(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandDlpFpDocSourceWeekday(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandDlpFpDocSourceWeekday(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandDlpFpDocSourceDate(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandDlpFpDocSourceDate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectDlpFpDocSource(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectDlpFpDocSource(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandDlpFpDocSourceName(d, v, "name")
+
+		t, err := expandDlpFpDocSourceName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -491,7 +493,8 @@ func getObjectDlpFpDocSource(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("server_type"); ok {
-		t, err := expandDlpFpDocSourceServerType(d, v, "server_type")
+
+		t, err := expandDlpFpDocSourceServerType(d, v, "server_type", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -500,7 +503,8 @@ func getObjectDlpFpDocSource(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("server"); ok {
-		t, err := expandDlpFpDocSourceServer(d, v, "server")
+
+		t, err := expandDlpFpDocSourceServer(d, v, "server", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -509,7 +513,8 @@ func getObjectDlpFpDocSource(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("period"); ok {
-		t, err := expandDlpFpDocSourcePeriod(d, v, "period")
+
+		t, err := expandDlpFpDocSourcePeriod(d, v, "period", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -518,7 +523,8 @@ func getObjectDlpFpDocSource(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("vdom"); ok {
-		t, err := expandDlpFpDocSourceVdom(d, v, "vdom")
+
+		t, err := expandDlpFpDocSourceVdom(d, v, "vdom", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -527,7 +533,8 @@ func getObjectDlpFpDocSource(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("scan_subdirectories"); ok {
-		t, err := expandDlpFpDocSourceScanSubdirectories(d, v, "scan_subdirectories")
+
+		t, err := expandDlpFpDocSourceScanSubdirectories(d, v, "scan_subdirectories", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -536,7 +543,8 @@ func getObjectDlpFpDocSource(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("scan_on_creation"); ok {
-		t, err := expandDlpFpDocSourceScanOnCreation(d, v, "scan_on_creation")
+
+		t, err := expandDlpFpDocSourceScanOnCreation(d, v, "scan_on_creation", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -545,7 +553,8 @@ func getObjectDlpFpDocSource(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("remove_deleted"); ok {
-		t, err := expandDlpFpDocSourceRemoveDeleted(d, v, "remove_deleted")
+
+		t, err := expandDlpFpDocSourceRemoveDeleted(d, v, "remove_deleted", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -554,7 +563,8 @@ func getObjectDlpFpDocSource(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("keep_modified"); ok {
-		t, err := expandDlpFpDocSourceKeepModified(d, v, "keep_modified")
+
+		t, err := expandDlpFpDocSourceKeepModified(d, v, "keep_modified", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -563,7 +573,8 @@ func getObjectDlpFpDocSource(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("username"); ok {
-		t, err := expandDlpFpDocSourceUsername(d, v, "username")
+
+		t, err := expandDlpFpDocSourceUsername(d, v, "username", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -572,7 +583,8 @@ func getObjectDlpFpDocSource(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("password"); ok {
-		t, err := expandDlpFpDocSourcePassword(d, v, "password")
+
+		t, err := expandDlpFpDocSourcePassword(d, v, "password", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -581,7 +593,8 @@ func getObjectDlpFpDocSource(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("file_path"); ok {
-		t, err := expandDlpFpDocSourceFilePath(d, v, "file_path")
+
+		t, err := expandDlpFpDocSourceFilePath(d, v, "file_path", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -590,7 +603,8 @@ func getObjectDlpFpDocSource(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("file_pattern"); ok {
-		t, err := expandDlpFpDocSourceFilePattern(d, v, "file_pattern")
+
+		t, err := expandDlpFpDocSourceFilePattern(d, v, "file_pattern", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -599,7 +613,8 @@ func getObjectDlpFpDocSource(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("sensitivity"); ok {
-		t, err := expandDlpFpDocSourceSensitivity(d, v, "sensitivity")
+
+		t, err := expandDlpFpDocSourceSensitivity(d, v, "sensitivity", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -608,7 +623,8 @@ func getObjectDlpFpDocSource(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOkExists("tod_hour"); ok {
-		t, err := expandDlpFpDocSourceTodHour(d, v, "tod_hour")
+
+		t, err := expandDlpFpDocSourceTodHour(d, v, "tod_hour", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -617,7 +633,8 @@ func getObjectDlpFpDocSource(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOkExists("tod_min"); ok {
-		t, err := expandDlpFpDocSourceTodMin(d, v, "tod_min")
+
+		t, err := expandDlpFpDocSourceTodMin(d, v, "tod_min", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -626,7 +643,8 @@ func getObjectDlpFpDocSource(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("weekday"); ok {
-		t, err := expandDlpFpDocSourceWeekday(d, v, "weekday")
+
+		t, err := expandDlpFpDocSourceWeekday(d, v, "weekday", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -635,7 +653,8 @@ func getObjectDlpFpDocSource(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("date"); ok {
-		t, err := expandDlpFpDocSourceDate(d, v, "date")
+
+		t, err := expandDlpFpDocSourceDate(d, v, "date", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
