@@ -7,10 +7,9 @@ description: |-
 ---
 
 # fortios_switchcontroller_macsyncsettings
-Configure global MAC synchronization settings.
+Configure global MAC synchronization settings. Applies to FortiOS Version `<= 6.2.0`.
 
 ## Argument Reference
-
 
 The following arguments are supported:
 
