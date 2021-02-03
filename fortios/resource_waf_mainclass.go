@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -49,7 +50,7 @@ func resourceWafMainClassCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWafMainClass(d)
+	obj, err := getObjectWafMainClass(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WafMainClass resource while getting object: %v", err)
 	}
@@ -74,7 +75,7 @@ func resourceWafMainClassUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWafMainClass(d)
+	obj, err := getObjectWafMainClass(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WafMainClass resource while getting object: %v", err)
 	}
@@ -127,31 +128,31 @@ func resourceWafMainClassRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectWafMainClass(d, o)
+	err = refreshObjectWafMainClass(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading WafMainClass resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenWafMainClassName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWafMainClassName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWafMainClassId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWafMainClassId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectWafMainClass(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectWafMainClass(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenWafMainClassName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenWafMainClassName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("fosid", flattenWafMainClassId(o["id"], d, "fosid")); err != nil {
+	if err = d.Set("fosid", flattenWafMainClassId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
 			return fmt.Errorf("Error reading fosid: %v", err)
 		}
@@ -163,22 +164,23 @@ func refreshObjectWafMainClass(d *schema.ResourceData, o map[string]interface{})
 func flattenWafMainClassFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandWafMainClassName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWafMainClassName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWafMainClassId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWafMainClassId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectWafMainClass(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectWafMainClass(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandWafMainClassName(d, v, "name")
+
+		t, err := expandWafMainClassName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -187,7 +189,8 @@ func getObjectWafMainClass(d *schema.ResourceData) (*map[string]interface{}, err
 	}
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-		t, err := expandWafMainClassId(d, v, "fosid")
+
+		t, err := expandWafMainClassId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
