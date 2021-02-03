@@ -25,7 +25,6 @@ resource "fortios_system_netflow" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `collector_ip` - Collector IP.
