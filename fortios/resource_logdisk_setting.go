@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -177,6 +178,17 @@ func resourceLogDiskSetting() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"interface_select_method": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"interface": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 15),
+				Optional:     true,
+				Computed:     true,
+			},
 		},
 	}
 }
@@ -186,7 +198,7 @@ func resourceLogDiskSettingUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectLogDiskSetting(d)
+	obj, err := getObjectLogDiskSetting(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogDiskSetting resource while getting object: %v", err)
 	}
@@ -239,287 +251,307 @@ func resourceLogDiskSettingRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectLogDiskSetting(d, o)
+	err = refreshObjectLogDiskSetting(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading LogDiskSetting resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenLogDiskSettingStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogDiskSettingStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogDiskSettingIpsArchive(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogDiskSettingIpsArchive(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogDiskSettingMaxLogFileSize(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogDiskSettingMaxLogFileSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogDiskSettingMaxPolicyPacketCaptureSize(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogDiskSettingMaxPolicyPacketCaptureSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogDiskSettingRollSchedule(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogDiskSettingRollSchedule(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogDiskSettingRollDay(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogDiskSettingRollDay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogDiskSettingRollTime(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogDiskSettingRollTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogDiskSettingDiskfull(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogDiskSettingDiskfull(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogDiskSettingLogQuota(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogDiskSettingLogQuota(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogDiskSettingDlpArchiveQuota(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogDiskSettingDlpArchiveQuota(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogDiskSettingReportQuota(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogDiskSettingReportQuota(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogDiskSettingMaximumLogAge(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogDiskSettingMaximumLogAge(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogDiskSettingUpload(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogDiskSettingUpload(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogDiskSettingUploadDestination(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogDiskSettingUploadDestination(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogDiskSettingUploadip(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogDiskSettingUploadip(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogDiskSettingUploadport(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogDiskSettingUploadport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogDiskSettingSourceIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogDiskSettingSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogDiskSettingUploaduser(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogDiskSettingUploaduser(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogDiskSettingUploadpass(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogDiskSettingUploadpass(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogDiskSettingUploaddir(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogDiskSettingUploaddir(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogDiskSettingUploadtype(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogDiskSettingUploadtype(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogDiskSettingUploadsched(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogDiskSettingUploadsched(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogDiskSettingUploadtime(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogDiskSettingUploadtime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogDiskSettingUploadDeleteFiles(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogDiskSettingUploadDeleteFiles(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogDiskSettingUploadSslConn(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogDiskSettingUploadSslConn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogDiskSettingFullFirstWarningThreshold(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogDiskSettingFullFirstWarningThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogDiskSettingFullSecondWarningThreshold(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogDiskSettingFullSecondWarningThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogDiskSettingFullFinalWarningThreshold(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogDiskSettingFullFinalWarningThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectLogDiskSetting(d *schema.ResourceData, o map[string]interface{}) error {
+func flattenLogDiskSettingInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenLogDiskSettingInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func refreshObjectLogDiskSetting(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("status", flattenLogDiskSettingStatus(o["status"], d, "status")); err != nil {
+	if err = d.Set("status", flattenLogDiskSettingStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
 		}
 	}
 
-	if err = d.Set("ips_archive", flattenLogDiskSettingIpsArchive(o["ips-archive"], d, "ips_archive")); err != nil {
+	if err = d.Set("ips_archive", flattenLogDiskSettingIpsArchive(o["ips-archive"], d, "ips_archive", sv)); err != nil {
 		if !fortiAPIPatch(o["ips-archive"]) {
 			return fmt.Errorf("Error reading ips_archive: %v", err)
 		}
 	}
 
-	if err = d.Set("max_log_file_size", flattenLogDiskSettingMaxLogFileSize(o["max-log-file-size"], d, "max_log_file_size")); err != nil {
+	if err = d.Set("max_log_file_size", flattenLogDiskSettingMaxLogFileSize(o["max-log-file-size"], d, "max_log_file_size", sv)); err != nil {
 		if !fortiAPIPatch(o["max-log-file-size"]) {
 			return fmt.Errorf("Error reading max_log_file_size: %v", err)
 		}
 	}
 
-	if err = d.Set("max_policy_packet_capture_size", flattenLogDiskSettingMaxPolicyPacketCaptureSize(o["max-policy-packet-capture-size"], d, "max_policy_packet_capture_size")); err != nil {
+	if err = d.Set("max_policy_packet_capture_size", flattenLogDiskSettingMaxPolicyPacketCaptureSize(o["max-policy-packet-capture-size"], d, "max_policy_packet_capture_size", sv)); err != nil {
 		if !fortiAPIPatch(o["max-policy-packet-capture-size"]) {
 			return fmt.Errorf("Error reading max_policy_packet_capture_size: %v", err)
 		}
 	}
 
-	if err = d.Set("roll_schedule", flattenLogDiskSettingRollSchedule(o["roll-schedule"], d, "roll_schedule")); err != nil {
+	if err = d.Set("roll_schedule", flattenLogDiskSettingRollSchedule(o["roll-schedule"], d, "roll_schedule", sv)); err != nil {
 		if !fortiAPIPatch(o["roll-schedule"]) {
 			return fmt.Errorf("Error reading roll_schedule: %v", err)
 		}
 	}
 
-	if err = d.Set("roll_day", flattenLogDiskSettingRollDay(o["roll-day"], d, "roll_day")); err != nil {
+	if err = d.Set("roll_day", flattenLogDiskSettingRollDay(o["roll-day"], d, "roll_day", sv)); err != nil {
 		if !fortiAPIPatch(o["roll-day"]) {
 			return fmt.Errorf("Error reading roll_day: %v", err)
 		}
 	}
 
-	if err = d.Set("roll_time", flattenLogDiskSettingRollTime(o["roll-time"], d, "roll_time")); err != nil {
+	if err = d.Set("roll_time", flattenLogDiskSettingRollTime(o["roll-time"], d, "roll_time", sv)); err != nil {
 		if !fortiAPIPatch(o["roll-time"]) {
 			return fmt.Errorf("Error reading roll_time: %v", err)
 		}
 	}
 
-	if err = d.Set("diskfull", flattenLogDiskSettingDiskfull(o["diskfull"], d, "diskfull")); err != nil {
+	if err = d.Set("diskfull", flattenLogDiskSettingDiskfull(o["diskfull"], d, "diskfull", sv)); err != nil {
 		if !fortiAPIPatch(o["diskfull"]) {
 			return fmt.Errorf("Error reading diskfull: %v", err)
 		}
 	}
 
-	if err = d.Set("log_quota", flattenLogDiskSettingLogQuota(o["log-quota"], d, "log_quota")); err != nil {
+	if err = d.Set("log_quota", flattenLogDiskSettingLogQuota(o["log-quota"], d, "log_quota", sv)); err != nil {
 		if !fortiAPIPatch(o["log-quota"]) {
 			return fmt.Errorf("Error reading log_quota: %v", err)
 		}
 	}
 
-	if err = d.Set("dlp_archive_quota", flattenLogDiskSettingDlpArchiveQuota(o["dlp-archive-quota"], d, "dlp_archive_quota")); err != nil {
+	if err = d.Set("dlp_archive_quota", flattenLogDiskSettingDlpArchiveQuota(o["dlp-archive-quota"], d, "dlp_archive_quota", sv)); err != nil {
 		if !fortiAPIPatch(o["dlp-archive-quota"]) {
 			return fmt.Errorf("Error reading dlp_archive_quota: %v", err)
 		}
 	}
 
-	if err = d.Set("report_quota", flattenLogDiskSettingReportQuota(o["report-quota"], d, "report_quota")); err != nil {
+	if err = d.Set("report_quota", flattenLogDiskSettingReportQuota(o["report-quota"], d, "report_quota", sv)); err != nil {
 		if !fortiAPIPatch(o["report-quota"]) {
 			return fmt.Errorf("Error reading report_quota: %v", err)
 		}
 	}
 
-	if err = d.Set("maximum_log_age", flattenLogDiskSettingMaximumLogAge(o["maximum-log-age"], d, "maximum_log_age")); err != nil {
+	if err = d.Set("maximum_log_age", flattenLogDiskSettingMaximumLogAge(o["maximum-log-age"], d, "maximum_log_age", sv)); err != nil {
 		if !fortiAPIPatch(o["maximum-log-age"]) {
 			return fmt.Errorf("Error reading maximum_log_age: %v", err)
 		}
 	}
 
-	if err = d.Set("upload", flattenLogDiskSettingUpload(o["upload"], d, "upload")); err != nil {
+	if err = d.Set("upload", flattenLogDiskSettingUpload(o["upload"], d, "upload", sv)); err != nil {
 		if !fortiAPIPatch(o["upload"]) {
 			return fmt.Errorf("Error reading upload: %v", err)
 		}
 	}
 
-	if err = d.Set("upload_destination", flattenLogDiskSettingUploadDestination(o["upload-destination"], d, "upload_destination")); err != nil {
+	if err = d.Set("upload_destination", flattenLogDiskSettingUploadDestination(o["upload-destination"], d, "upload_destination", sv)); err != nil {
 		if !fortiAPIPatch(o["upload-destination"]) {
 			return fmt.Errorf("Error reading upload_destination: %v", err)
 		}
 	}
 
-	if err = d.Set("uploadip", flattenLogDiskSettingUploadip(o["uploadip"], d, "uploadip")); err != nil {
+	if err = d.Set("uploadip", flattenLogDiskSettingUploadip(o["uploadip"], d, "uploadip", sv)); err != nil {
 		if !fortiAPIPatch(o["uploadip"]) {
 			return fmt.Errorf("Error reading uploadip: %v", err)
 		}
 	}
 
-	if err = d.Set("uploadport", flattenLogDiskSettingUploadport(o["uploadport"], d, "uploadport")); err != nil {
+	if err = d.Set("uploadport", flattenLogDiskSettingUploadport(o["uploadport"], d, "uploadport", sv)); err != nil {
 		if !fortiAPIPatch(o["uploadport"]) {
 			return fmt.Errorf("Error reading uploadport: %v", err)
 		}
 	}
 
-	if err = d.Set("source_ip", flattenLogDiskSettingSourceIp(o["source-ip"], d, "source_ip")); err != nil {
+	if err = d.Set("source_ip", flattenLogDiskSettingSourceIp(o["source-ip"], d, "source_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["source-ip"]) {
 			return fmt.Errorf("Error reading source_ip: %v", err)
 		}
 	}
 
-	if err = d.Set("uploaduser", flattenLogDiskSettingUploaduser(o["uploaduser"], d, "uploaduser")); err != nil {
+	if err = d.Set("uploaduser", flattenLogDiskSettingUploaduser(o["uploaduser"], d, "uploaduser", sv)); err != nil {
 		if !fortiAPIPatch(o["uploaduser"]) {
 			return fmt.Errorf("Error reading uploaduser: %v", err)
 		}
 	}
 
-	if err = d.Set("uploaddir", flattenLogDiskSettingUploaddir(o["uploaddir"], d, "uploaddir")); err != nil {
+	if err = d.Set("uploaddir", flattenLogDiskSettingUploaddir(o["uploaddir"], d, "uploaddir", sv)); err != nil {
 		if !fortiAPIPatch(o["uploaddir"]) {
 			return fmt.Errorf("Error reading uploaddir: %v", err)
 		}
 	}
 
-	if err = d.Set("uploadtype", flattenLogDiskSettingUploadtype(o["uploadtype"], d, "uploadtype")); err != nil {
+	if err = d.Set("uploadtype", flattenLogDiskSettingUploadtype(o["uploadtype"], d, "uploadtype", sv)); err != nil {
 		if !fortiAPIPatch(o["uploadtype"]) {
 			return fmt.Errorf("Error reading uploadtype: %v", err)
 		}
 	}
 
-	if err = d.Set("uploadsched", flattenLogDiskSettingUploadsched(o["uploadsched"], d, "uploadsched")); err != nil {
+	if err = d.Set("uploadsched", flattenLogDiskSettingUploadsched(o["uploadsched"], d, "uploadsched", sv)); err != nil {
 		if !fortiAPIPatch(o["uploadsched"]) {
 			return fmt.Errorf("Error reading uploadsched: %v", err)
 		}
 	}
 
-	if err = d.Set("uploadtime", flattenLogDiskSettingUploadtime(o["uploadtime"], d, "uploadtime")); err != nil {
+	if err = d.Set("uploadtime", flattenLogDiskSettingUploadtime(o["uploadtime"], d, "uploadtime", sv)); err != nil {
 		if !fortiAPIPatch(o["uploadtime"]) {
 			return fmt.Errorf("Error reading uploadtime: %v", err)
 		}
 	}
 
-	if err = d.Set("upload_delete_files", flattenLogDiskSettingUploadDeleteFiles(o["upload-delete-files"], d, "upload_delete_files")); err != nil {
+	if err = d.Set("upload_delete_files", flattenLogDiskSettingUploadDeleteFiles(o["upload-delete-files"], d, "upload_delete_files", sv)); err != nil {
 		if !fortiAPIPatch(o["upload-delete-files"]) {
 			return fmt.Errorf("Error reading upload_delete_files: %v", err)
 		}
 	}
 
-	if err = d.Set("upload_ssl_conn", flattenLogDiskSettingUploadSslConn(o["upload-ssl-conn"], d, "upload_ssl_conn")); err != nil {
+	if err = d.Set("upload_ssl_conn", flattenLogDiskSettingUploadSslConn(o["upload-ssl-conn"], d, "upload_ssl_conn", sv)); err != nil {
 		if !fortiAPIPatch(o["upload-ssl-conn"]) {
 			return fmt.Errorf("Error reading upload_ssl_conn: %v", err)
 		}
 	}
 
-	if err = d.Set("full_first_warning_threshold", flattenLogDiskSettingFullFirstWarningThreshold(o["full-first-warning-threshold"], d, "full_first_warning_threshold")); err != nil {
+	if err = d.Set("full_first_warning_threshold", flattenLogDiskSettingFullFirstWarningThreshold(o["full-first-warning-threshold"], d, "full_first_warning_threshold", sv)); err != nil {
 		if !fortiAPIPatch(o["full-first-warning-threshold"]) {
 			return fmt.Errorf("Error reading full_first_warning_threshold: %v", err)
 		}
 	}
 
-	if err = d.Set("full_second_warning_threshold", flattenLogDiskSettingFullSecondWarningThreshold(o["full-second-warning-threshold"], d, "full_second_warning_threshold")); err != nil {
+	if err = d.Set("full_second_warning_threshold", flattenLogDiskSettingFullSecondWarningThreshold(o["full-second-warning-threshold"], d, "full_second_warning_threshold", sv)); err != nil {
 		if !fortiAPIPatch(o["full-second-warning-threshold"]) {
 			return fmt.Errorf("Error reading full_second_warning_threshold: %v", err)
 		}
 	}
 
-	if err = d.Set("full_final_warning_threshold", flattenLogDiskSettingFullFinalWarningThreshold(o["full-final-warning-threshold"], d, "full_final_warning_threshold")); err != nil {
+	if err = d.Set("full_final_warning_threshold", flattenLogDiskSettingFullFinalWarningThreshold(o["full-final-warning-threshold"], d, "full_final_warning_threshold", sv)); err != nil {
 		if !fortiAPIPatch(o["full-final-warning-threshold"]) {
 			return fmt.Errorf("Error reading full_final_warning_threshold: %v", err)
+		}
+	}
+
+	if err = d.Set("interface_select_method", flattenLogDiskSettingInterfaceSelectMethod(o["interface-select-method"], d, "interface_select_method", sv)); err != nil {
+		if !fortiAPIPatch(o["interface-select-method"]) {
+			return fmt.Errorf("Error reading interface_select_method: %v", err)
+		}
+	}
+
+	if err = d.Set("interface", flattenLogDiskSettingInterface(o["interface"], d, "interface", sv)); err != nil {
+		if !fortiAPIPatch(o["interface"]) {
+			return fmt.Errorf("Error reading interface: %v", err)
 		}
 	}
 
@@ -529,126 +561,135 @@ func refreshObjectLogDiskSetting(d *schema.ResourceData, o map[string]interface{
 func flattenLogDiskSettingFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandLogDiskSettingStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogDiskSettingStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogDiskSettingIpsArchive(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogDiskSettingIpsArchive(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogDiskSettingMaxLogFileSize(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogDiskSettingMaxLogFileSize(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogDiskSettingMaxPolicyPacketCaptureSize(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogDiskSettingMaxPolicyPacketCaptureSize(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogDiskSettingRollSchedule(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogDiskSettingRollSchedule(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogDiskSettingRollDay(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogDiskSettingRollDay(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogDiskSettingRollTime(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogDiskSettingRollTime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogDiskSettingDiskfull(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogDiskSettingDiskfull(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogDiskSettingLogQuota(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogDiskSettingLogQuota(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogDiskSettingDlpArchiveQuota(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogDiskSettingDlpArchiveQuota(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogDiskSettingReportQuota(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogDiskSettingReportQuota(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogDiskSettingMaximumLogAge(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogDiskSettingMaximumLogAge(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogDiskSettingUpload(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogDiskSettingUpload(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogDiskSettingUploadDestination(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogDiskSettingUploadDestination(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogDiskSettingUploadip(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogDiskSettingUploadip(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogDiskSettingUploadport(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogDiskSettingUploadport(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogDiskSettingSourceIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogDiskSettingSourceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogDiskSettingUploaduser(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogDiskSettingUploaduser(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogDiskSettingUploadpass(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogDiskSettingUploadpass(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogDiskSettingUploaddir(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogDiskSettingUploaddir(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogDiskSettingUploadtype(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogDiskSettingUploadtype(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogDiskSettingUploadsched(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogDiskSettingUploadsched(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogDiskSettingUploadtime(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogDiskSettingUploadtime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogDiskSettingUploadDeleteFiles(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogDiskSettingUploadDeleteFiles(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogDiskSettingUploadSslConn(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogDiskSettingUploadSslConn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogDiskSettingFullFirstWarningThreshold(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogDiskSettingFullFirstWarningThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogDiskSettingFullSecondWarningThreshold(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogDiskSettingFullSecondWarningThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogDiskSettingFullFinalWarningThreshold(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogDiskSettingFullFinalWarningThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectLogDiskSetting(d *schema.ResourceData) (*map[string]interface{}, error) {
+func expandLogDiskSettingInterfaceSelectMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogDiskSettingInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func getObjectLogDiskSetting(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
-		t, err := expandLogDiskSettingStatus(d, v, "status")
+
+		t, err := expandLogDiskSettingStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -657,7 +698,8 @@ func getObjectLogDiskSetting(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("ips_archive"); ok {
-		t, err := expandLogDiskSettingIpsArchive(d, v, "ips_archive")
+
+		t, err := expandLogDiskSettingIpsArchive(d, v, "ips_archive", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -666,7 +708,8 @@ func getObjectLogDiskSetting(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("max_log_file_size"); ok {
-		t, err := expandLogDiskSettingMaxLogFileSize(d, v, "max_log_file_size")
+
+		t, err := expandLogDiskSettingMaxLogFileSize(d, v, "max_log_file_size", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -675,7 +718,8 @@ func getObjectLogDiskSetting(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOkExists("max_policy_packet_capture_size"); ok {
-		t, err := expandLogDiskSettingMaxPolicyPacketCaptureSize(d, v, "max_policy_packet_capture_size")
+
+		t, err := expandLogDiskSettingMaxPolicyPacketCaptureSize(d, v, "max_policy_packet_capture_size", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -684,7 +728,8 @@ func getObjectLogDiskSetting(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("roll_schedule"); ok {
-		t, err := expandLogDiskSettingRollSchedule(d, v, "roll_schedule")
+
+		t, err := expandLogDiskSettingRollSchedule(d, v, "roll_schedule", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -693,7 +738,8 @@ func getObjectLogDiskSetting(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("roll_day"); ok {
-		t, err := expandLogDiskSettingRollDay(d, v, "roll_day")
+
+		t, err := expandLogDiskSettingRollDay(d, v, "roll_day", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -702,7 +748,8 @@ func getObjectLogDiskSetting(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("roll_time"); ok {
-		t, err := expandLogDiskSettingRollTime(d, v, "roll_time")
+
+		t, err := expandLogDiskSettingRollTime(d, v, "roll_time", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -711,7 +758,8 @@ func getObjectLogDiskSetting(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("diskfull"); ok {
-		t, err := expandLogDiskSettingDiskfull(d, v, "diskfull")
+
+		t, err := expandLogDiskSettingDiskfull(d, v, "diskfull", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -720,7 +768,8 @@ func getObjectLogDiskSetting(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOkExists("log_quota"); ok {
-		t, err := expandLogDiskSettingLogQuota(d, v, "log_quota")
+
+		t, err := expandLogDiskSettingLogQuota(d, v, "log_quota", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -729,7 +778,8 @@ func getObjectLogDiskSetting(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOkExists("dlp_archive_quota"); ok {
-		t, err := expandLogDiskSettingDlpArchiveQuota(d, v, "dlp_archive_quota")
+
+		t, err := expandLogDiskSettingDlpArchiveQuota(d, v, "dlp_archive_quota", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -738,7 +788,8 @@ func getObjectLogDiskSetting(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOkExists("report_quota"); ok {
-		t, err := expandLogDiskSettingReportQuota(d, v, "report_quota")
+
+		t, err := expandLogDiskSettingReportQuota(d, v, "report_quota", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -747,7 +798,8 @@ func getObjectLogDiskSetting(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOkExists("maximum_log_age"); ok {
-		t, err := expandLogDiskSettingMaximumLogAge(d, v, "maximum_log_age")
+
+		t, err := expandLogDiskSettingMaximumLogAge(d, v, "maximum_log_age", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -756,7 +808,8 @@ func getObjectLogDiskSetting(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("upload"); ok {
-		t, err := expandLogDiskSettingUpload(d, v, "upload")
+
+		t, err := expandLogDiskSettingUpload(d, v, "upload", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -765,7 +818,8 @@ func getObjectLogDiskSetting(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("upload_destination"); ok {
-		t, err := expandLogDiskSettingUploadDestination(d, v, "upload_destination")
+
+		t, err := expandLogDiskSettingUploadDestination(d, v, "upload_destination", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -774,7 +828,8 @@ func getObjectLogDiskSetting(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("uploadip"); ok {
-		t, err := expandLogDiskSettingUploadip(d, v, "uploadip")
+
+		t, err := expandLogDiskSettingUploadip(d, v, "uploadip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -783,7 +838,8 @@ func getObjectLogDiskSetting(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOkExists("uploadport"); ok {
-		t, err := expandLogDiskSettingUploadport(d, v, "uploadport")
+
+		t, err := expandLogDiskSettingUploadport(d, v, "uploadport", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -792,7 +848,8 @@ func getObjectLogDiskSetting(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
-		t, err := expandLogDiskSettingSourceIp(d, v, "source_ip")
+
+		t, err := expandLogDiskSettingSourceIp(d, v, "source_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -801,7 +858,8 @@ func getObjectLogDiskSetting(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("uploaduser"); ok {
-		t, err := expandLogDiskSettingUploaduser(d, v, "uploaduser")
+
+		t, err := expandLogDiskSettingUploaduser(d, v, "uploaduser", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -810,7 +868,8 @@ func getObjectLogDiskSetting(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("uploadpass"); ok {
-		t, err := expandLogDiskSettingUploadpass(d, v, "uploadpass")
+
+		t, err := expandLogDiskSettingUploadpass(d, v, "uploadpass", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -819,7 +878,8 @@ func getObjectLogDiskSetting(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("uploaddir"); ok {
-		t, err := expandLogDiskSettingUploaddir(d, v, "uploaddir")
+
+		t, err := expandLogDiskSettingUploaddir(d, v, "uploaddir", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -828,7 +888,8 @@ func getObjectLogDiskSetting(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("uploadtype"); ok {
-		t, err := expandLogDiskSettingUploadtype(d, v, "uploadtype")
+
+		t, err := expandLogDiskSettingUploadtype(d, v, "uploadtype", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -837,7 +898,8 @@ func getObjectLogDiskSetting(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("uploadsched"); ok {
-		t, err := expandLogDiskSettingUploadsched(d, v, "uploadsched")
+
+		t, err := expandLogDiskSettingUploadsched(d, v, "uploadsched", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -846,7 +908,8 @@ func getObjectLogDiskSetting(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("uploadtime"); ok {
-		t, err := expandLogDiskSettingUploadtime(d, v, "uploadtime")
+
+		t, err := expandLogDiskSettingUploadtime(d, v, "uploadtime", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -855,7 +918,8 @@ func getObjectLogDiskSetting(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("upload_delete_files"); ok {
-		t, err := expandLogDiskSettingUploadDeleteFiles(d, v, "upload_delete_files")
+
+		t, err := expandLogDiskSettingUploadDeleteFiles(d, v, "upload_delete_files", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -864,7 +928,8 @@ func getObjectLogDiskSetting(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("upload_ssl_conn"); ok {
-		t, err := expandLogDiskSettingUploadSslConn(d, v, "upload_ssl_conn")
+
+		t, err := expandLogDiskSettingUploadSslConn(d, v, "upload_ssl_conn", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -873,7 +938,8 @@ func getObjectLogDiskSetting(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("full_first_warning_threshold"); ok {
-		t, err := expandLogDiskSettingFullFirstWarningThreshold(d, v, "full_first_warning_threshold")
+
+		t, err := expandLogDiskSettingFullFirstWarningThreshold(d, v, "full_first_warning_threshold", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -882,7 +948,8 @@ func getObjectLogDiskSetting(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("full_second_warning_threshold"); ok {
-		t, err := expandLogDiskSettingFullSecondWarningThreshold(d, v, "full_second_warning_threshold")
+
+		t, err := expandLogDiskSettingFullSecondWarningThreshold(d, v, "full_second_warning_threshold", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -891,11 +958,32 @@ func getObjectLogDiskSetting(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("full_final_warning_threshold"); ok {
-		t, err := expandLogDiskSettingFullFinalWarningThreshold(d, v, "full_final_warning_threshold")
+
+		t, err := expandLogDiskSettingFullFinalWarningThreshold(d, v, "full_final_warning_threshold", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
 			obj["full-final-warning-threshold"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("interface_select_method"); ok {
+
+		t, err := expandLogDiskSettingInterfaceSelectMethod(d, v, "interface_select_method", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["interface-select-method"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("interface"); ok {
+
+		t, err := expandLogDiskSettingInterface(d, v, "interface", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["interface"] = t
 		}
 	}
 
