@@ -276,7 +276,9 @@ The following arguments are supported:
 
 * `fmg_cabundlefile` - (Optional) The path of a custom CA bundle file. You can specify a path to the file, or you can specify it by the `FORTIOS_FMG_CABUNDLE` environment variable.
 
+## Release
+Check out the FortiOS provider release notes and additional information from: [the FortiOS provider releases](https://github.com/fortinetdev/terraform-provider-fortios/releases).
 
 ## Versioning
 
-The provider can cover both FortiOS 6.0 and 6.2 versions. The provider can cover both FortiManager 6.0 and 6.2 versions. When using FortiManager, make sure the versions of FortiManager and the FortiGates controlled by it are the same.
+The provider can cover FortiOS 6.0, 6.2, 6.4, 6.6 versions, the configuration of all parameters should be based on the relevant FortiOS version manual. The provider can cover FortiManager 6.0 and 6.2 versions. When using FortiManager, make sure the versions of FortiManager and the FortiGates controlled by it are the same.
