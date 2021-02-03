@@ -30,7 +30,6 @@ resource "fortios_endpointcontrol_settings" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `forticlient_reg_key_enforce` - Enable/disable requiring or enforcing FortiClient registration keys.
@@ -45,6 +44,7 @@ The following arguments are supported:
 * `forticlient_avdb_update_interval` - Period of time between FortiClient AntiVirus database updates (0 - 24 hours, default = 8).
 * `forticlient_warning_interval` - Period of time between FortiClient portal warnings (0 - 24 hours, default = 1).
 * `forticlient_user_avatar` - Enable/disable uploading FortiClient user avatars.
+* `forticlient_disconnect_unsupported_client` - Enable/disable disconnecting of unsupported FortiClient endpoints.
 * `forticlient_dereg_unsupported_client` - Enable/disable deregistering unsupported FortiClient endpoints.
 * `forticlient_ems_rest_api_call_timeout` - FortiClient EMS call timeout in milliseconds (500 - 30000 milliseconds, default = 5000).
 
