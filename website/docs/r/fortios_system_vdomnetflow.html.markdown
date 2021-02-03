@@ -22,7 +22,6 @@ resource "fortios_system_vdomnetflow" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `vdom_netflow` - Enable/disable NetFlow per VDOM.
