@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -35,6 +36,11 @@ func resourceUserKrbKeytab() *schema.Resource {
 				ForceNew:     true,
 				Optional:     true,
 				Computed:     true,
+			},
+			"pac_data": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
 			},
 			"principal": &schema.Schema{
 				Type:         schema.TypeString,
@@ -60,7 +66,7 @@ func resourceUserKrbKeytabCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectUserKrbKeytab(d)
+	obj, err := getObjectUserKrbKeytab(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating UserKrbKeytab resource while getting object: %v", err)
 	}
@@ -85,7 +91,7 @@ func resourceUserKrbKeytabUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectUserKrbKeytab(d)
+	obj, err := getObjectUserKrbKeytab(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating UserKrbKeytab resource while getting object: %v", err)
 	}
@@ -138,47 +144,87 @@ func resourceUserKrbKeytabRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectUserKrbKeytab(d, o)
+	err = refreshObjectUserKrbKeytab(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading UserKrbKeytab resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenUserKrbKeytabName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserKrbKeytabName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserKrbKeytabPrincipal(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserKrbKeytabPacData(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserKrbKeytabLdapServer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserKrbKeytabPrincipal(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserKrbKeytabKeytab(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserKrbKeytabLdapServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectUserKrbKeytab(d *schema.ResourceData, o map[string]interface{}) error {
+func flattenUserKrbKeytabKeytab(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func refreshObjectUserKrbKeytab(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenUserKrbKeytabName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenUserKrbKeytabName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("principal", flattenUserKrbKeytabPrincipal(o["principal"], d, "principal")); err != nil {
+	if err = d.Set("pac_data", flattenUserKrbKeytabPacData(o["pac-data"], d, "pac_data", sv)); err != nil {
+		if !fortiAPIPatch(o["pac-data"]) {
+			return fmt.Errorf("Error reading pac_data: %v", err)
+		}
+	}
+
+	if err = d.Set("principal", flattenUserKrbKeytabPrincipal(o["principal"], d, "principal", sv)); err != nil {
 		if !fortiAPIPatch(o["principal"]) {
 			return fmt.Errorf("Error reading principal: %v", err)
 		}
 	}
 
-	if err = d.Set("ldap_server", flattenUserKrbKeytabLdapServer(o["ldap-server"], d, "ldap_server")); err != nil {
-		if !fortiAPIPatch(o["ldap-server"]) {
-			return fmt.Errorf("Error reading ldap_server: %v", err)
+	{
+		v := flattenUserKrbKeytabLdapServer(o["ldap-server"], d, "ldap_server", sv)
+		vx := ""
+		bstring := false
+		if i2ss2arrFortiAPIUpgrade(sv, "6.6.0") == true {
+			l := v.([]interface{})
+			if len(l) > 0 {
+				for k, r := range l {
+					i := r.(map[string]interface{})
+					if _, ok := i["name"]; ok {
+						if xv, ok := i["name"].(string); ok {
+							vx += "\"" + xv + "\""
+							if k < len(l)-1 {
+								vx += " "
+							}
+						}
+					}
+				}
+				bstring = true
+			}
+		}
+		if bstring == true {
+			if err = d.Set("ldap_server", vx); err != nil {
+				if !fortiAPIPatch(o["ldap-server"]) {
+					return fmt.Errorf("Error reading ldap_server: %v", err)
+				}
+			}
+		} else {
+			if err = d.Set("ldap_server", v); err != nil {
+				if !fortiAPIPatch(o["ldap-server"]) {
+					return fmt.Errorf("Error reading ldap_server: %v", err)
+				}
+			}
 		}
 	}
 
@@ -188,30 +234,35 @@ func refreshObjectUserKrbKeytab(d *schema.ResourceData, o map[string]interface{}
 func flattenUserKrbKeytabFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandUserKrbKeytabName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserKrbKeytabName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserKrbKeytabPrincipal(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserKrbKeytabPacData(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserKrbKeytabLdapServer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserKrbKeytabPrincipal(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserKrbKeytabKeytab(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserKrbKeytabLdapServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectUserKrbKeytab(d *schema.ResourceData) (*map[string]interface{}, error) {
+func expandUserKrbKeytabKeytab(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func getObjectUserKrbKeytab(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandUserKrbKeytabName(d, v, "name")
+
+		t, err := expandUserKrbKeytabName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -219,8 +270,19 @@ func getObjectUserKrbKeytab(d *schema.ResourceData) (*map[string]interface{}, er
 		}
 	}
 
+	if v, ok := d.GetOk("pac_data"); ok {
+
+		t, err := expandUserKrbKeytabPacData(d, v, "pac_data", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["pac-data"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("principal"); ok {
-		t, err := expandUserKrbKeytabPrincipal(d, v, "principal")
+
+		t, err := expandUserKrbKeytabPrincipal(d, v, "principal", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -229,16 +291,34 @@ func getObjectUserKrbKeytab(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOk("ldap_server"); ok {
-		t, err := expandUserKrbKeytabLdapServer(d, v, "ldap_server")
+
+		t, err := expandUserKrbKeytabLdapServer(d, v, "ldap_server", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
-			obj["ldap-server"] = t
+			if i2ss2arrFortiAPIUpgrade(sv, "6.6.0") == true {
+				vx := fmt.Sprintf("%v", t)
+				vx = strings.Replace(vx, "\"", "", -1)
+				vxx := strings.Split(vx, " ")
+
+				tmps := make([]map[string]interface{}, 0, len(vxx))
+
+				for _, xv := range vxx {
+					xtmp := make(map[string]interface{})
+					xtmp["name"] = xv
+
+					tmps = append(tmps, xtmp)
+				}
+				obj["ldap-server"] = tmps
+			} else {
+				obj["ldap-server"] = t
+			}
 		}
 	}
 
 	if v, ok := d.GetOk("keytab"); ok {
-		t, err := expandUserKrbKeytabKeytab(d, v, "keytab")
+
+		t, err := expandUserKrbKeytabKeytab(d, v, "keytab", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
