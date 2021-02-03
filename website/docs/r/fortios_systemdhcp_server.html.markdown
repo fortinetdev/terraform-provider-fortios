@@ -31,7 +31,6 @@ resource "fortios_systemdhcp_server" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `fosid` - (Required) ID.
@@ -43,6 +42,8 @@ The following arguments are supported:
 * `dns_server1` - DNS server 1.
 * `dns_server2` - DNS server 2.
 * `dns_server3` - DNS server 3.
+* `dns_server4` - DNS server 4.
+* `wifi_ac_service` - Options for assigning WiFi Access Controllers to DHCP clients
 * `wifi_ac1` - WiFi Access Controller 1 IP address (DHCP option 138, RFC 5417).
 * `wifi_ac2` - WiFi Access Controller 2 IP address (DHCP option 138, RFC 5417).
 * `wifi_ac3` - WiFi Access Controller 3 IP address (DHCP option 138, RFC 5417).
@@ -68,6 +69,8 @@ The following arguments are supported:
 * `conflicted_ip_timeout` - Time in seconds to wait after a conflicted IP address is removed from the DHCP range before it can be reused.
 * `ipsec_lease_hold` - DHCP over IPsec leases expire this many seconds after tunnel down (0 to disable forced-expiry).
 * `auto_configuration` - Enable/disable auto configuration.
+* `dhcp_settings_from_fortiipam` - Enable/disable populating of DHCP server settings from FortiIPAM.
+* `auto_managed_status` - Enable/disable use of this DHCP server once this interface has been assigned an IP address from FortiIPAM.
 * `ddns_update` - Enable/disable DDNS update for DHCP.
 * `ddns_update_override` - Enable/disable DDNS update override for DHCP.
 * `ddns_server_ip` - DDNS server IP.
@@ -117,7 +120,9 @@ The `reserved_address` block supports:
 * `ip` - IP address to be reserved for the MAC address.
 * `mac` - MAC address of the client that will get the reserved IP address.
 * `action` - Options for the DHCP server to configure the client with the reserved MAC address.
+* `circuit_id_type` - DHCP option type.
 * `circuit_id` - Option 82 circuit-ID of the client that will get the reserved IP address.
+* `remote_id_type` - DHCP option type.
 * `remote_id` - Option 82 remote-ID of the client that will get the reserved IP address.
 * `description` - Description.
 
