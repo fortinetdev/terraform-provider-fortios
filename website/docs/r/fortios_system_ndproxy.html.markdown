@@ -19,7 +19,6 @@ resource "fortios_system_ndproxy" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `status` - Enable/disable neighbor discovery proxy.
