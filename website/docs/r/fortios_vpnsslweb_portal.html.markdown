@@ -70,7 +70,6 @@ resource "fortios_vpnsslweb_portal" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Portal name.
@@ -83,6 +82,7 @@ The following arguments are supported:
 * `exclusive_routing` - Enable/disable all traffic go through tunnel only.
 * `service_restriction` - Enable/disable tunnel service restriction.
 * `split_tunneling` - Enable/disable IPv4 split tunneling.
+* `split_tunneling_routing_negate` - Enable to negate split tunneling routing address.
 * `split_tunneling_routing_address` - IPv4 SSL-VPN tunnel mode firewall address objects that override firewall policy destination addresses to control split-tunneling access. The structure of `split_tunneling_routing_address` block is documented below.
 * `dns_server1` - IPv4 DNS server 1.
 * `dns_server2` - IPv4 DNS server 2.
@@ -94,6 +94,7 @@ The following arguments are supported:
 * `ipv6_exclusive_routing` - Enable/disable all IPv6 traffic go through tunnel only.
 * `ipv6_service_restriction` - Enable/disable IPv6 tunnel service restriction.
 * `ipv6_split_tunneling` - Enable/disable IPv6 split tunneling.
+* `ipv6_split_tunneling_routing_negate` - Enable to negate IPv6 split tunneling routing address.
 * `ipv6_split_tunneling_routing_address` - IPv6 SSL-VPN tunnel mode firewall address objects that override firewall policy destination addresses to control split-tunneling access. The structure of `ipv6_split_tunneling_routing_address` block is documented below.
 * `ipv6_dns_server1` - IPv6 DNS server 1.
 * `ipv6_dns_server2` - IPv6 DNS server 2.
@@ -114,6 +115,10 @@ The following arguments are supported:
 * `custom_lang` - Change the web portal display language. Overrides config system global set language. You can use config system custom-language and execute system custom-language to add custom language files.
 * `smb_ntlmv1_auth` - Enable support of NTLMv1 for Samba authentication.
 * `smbv1` - Enable/disable support of SMBv1 for Samba.
+* `smb_min_version` - SMB minimum client protocol version.
+* `smb_max_version` - SMB maximum client protocol version.
+* `transform_backward_slashes` - Transform backward slashes to forward slashes in URLs.
+* `use_sdwan` - Use SD-WAN rules to get output interface.
 * `host_check` - Type of host checking performed on endpoints.
 * `host_check_interval` - Periodic host check interval. Value of 0 means disabled and host checking only happens when the endpoint connects.
 * `host_check_policy` - One or more policies to require the endpoint to have specific security software. The structure of `host_check_policy` block is documented below.
@@ -162,6 +167,7 @@ The `bookmarks` block supports:
 * `url` - URL parameter.
 * `host` - Host name/IP parameter.
 * `folder` - Network shared file folder parameter.
+* `domain` - Login domain.
 * `additional_params` - Additional parameters.
 * `listening_port` - Listening port (0 - 65535).
 * `remote_port` - Remote port (0 - 65535).
