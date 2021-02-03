@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -57,7 +58,7 @@ func resourceFirewallDnstranslationCreate(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectFirewallDnstranslation(d)
+	obj, err := getObjectFirewallDnstranslation(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallDnstranslation resource while getting object: %v", err)
 	}
@@ -82,7 +83,7 @@ func resourceFirewallDnstranslationUpdate(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectFirewallDnstranslation(d)
+	obj, err := getObjectFirewallDnstranslation(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallDnstranslation resource while getting object: %v", err)
 	}
@@ -135,51 +136,51 @@ func resourceFirewallDnstranslationRead(d *schema.ResourceData, m interface{}) e
 		return nil
 	}
 
-	err = refreshObjectFirewallDnstranslation(d, o)
+	err = refreshObjectFirewallDnstranslation(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallDnstranslation resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenFirewallDnstranslationId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallDnstranslationId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallDnstranslationSrc(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallDnstranslationSrc(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallDnstranslationDst(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallDnstranslationDst(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallDnstranslationNetmask(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallDnstranslationNetmask(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectFirewallDnstranslation(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectFirewallDnstranslation(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("fosid", flattenFirewallDnstranslationId(o["id"], d, "fosid")); err != nil {
+	if err = d.Set("fosid", flattenFirewallDnstranslationId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
 			return fmt.Errorf("Error reading fosid: %v", err)
 		}
 	}
 
-	if err = d.Set("src", flattenFirewallDnstranslationSrc(o["src"], d, "src")); err != nil {
+	if err = d.Set("src", flattenFirewallDnstranslationSrc(o["src"], d, "src", sv)); err != nil {
 		if !fortiAPIPatch(o["src"]) {
 			return fmt.Errorf("Error reading src: %v", err)
 		}
 	}
 
-	if err = d.Set("dst", flattenFirewallDnstranslationDst(o["dst"], d, "dst")); err != nil {
+	if err = d.Set("dst", flattenFirewallDnstranslationDst(o["dst"], d, "dst", sv)); err != nil {
 		if !fortiAPIPatch(o["dst"]) {
 			return fmt.Errorf("Error reading dst: %v", err)
 		}
 	}
 
-	if err = d.Set("netmask", flattenFirewallDnstranslationNetmask(o["netmask"], d, "netmask")); err != nil {
+	if err = d.Set("netmask", flattenFirewallDnstranslationNetmask(o["netmask"], d, "netmask", sv)); err != nil {
 		if !fortiAPIPatch(o["netmask"]) {
 			return fmt.Errorf("Error reading netmask: %v", err)
 		}
@@ -191,30 +192,31 @@ func refreshObjectFirewallDnstranslation(d *schema.ResourceData, o map[string]in
 func flattenFirewallDnstranslationFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandFirewallDnstranslationId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallDnstranslationId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallDnstranslationSrc(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallDnstranslationSrc(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallDnstranslationDst(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallDnstranslationDst(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallDnstranslationNetmask(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallDnstranslationNetmask(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectFirewallDnstranslation(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectFirewallDnstranslation(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-		t, err := expandFirewallDnstranslationId(d, v, "fosid")
+
+		t, err := expandFirewallDnstranslationId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -223,7 +225,8 @@ func getObjectFirewallDnstranslation(d *schema.ResourceData) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("src"); ok {
-		t, err := expandFirewallDnstranslationSrc(d, v, "src")
+
+		t, err := expandFirewallDnstranslationSrc(d, v, "src", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -232,7 +235,8 @@ func getObjectFirewallDnstranslation(d *schema.ResourceData) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("dst"); ok {
-		t, err := expandFirewallDnstranslationDst(d, v, "dst")
+
+		t, err := expandFirewallDnstranslationDst(d, v, "dst", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -241,7 +245,8 @@ func getObjectFirewallDnstranslation(d *schema.ResourceData) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("netmask"); ok {
-		t, err := expandFirewallDnstranslationNetmask(d, v, "netmask")
+
+		t, err := expandFirewallDnstranslationNetmask(d, v, "netmask", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
