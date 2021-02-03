@@ -11,7 +11,6 @@ Configure online sign up (OSU) provider list.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - OSU provider ID.
