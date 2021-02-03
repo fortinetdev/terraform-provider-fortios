@@ -11,7 +11,6 @@ Configure custom application signatures.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `tag` - Signature tag.
