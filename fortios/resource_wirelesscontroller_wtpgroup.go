@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -68,7 +69,7 @@ func resourceWirelessControllerWtpGroupCreate(d *schema.ResourceData, m interfac
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWirelessControllerWtpGroup(d)
+	obj, err := getObjectWirelessControllerWtpGroup(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WirelessControllerWtpGroup resource while getting object: %v", err)
 	}
@@ -93,7 +94,7 @@ func resourceWirelessControllerWtpGroupUpdate(d *schema.ResourceData, m interfac
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWirelessControllerWtpGroup(d)
+	obj, err := getObjectWirelessControllerWtpGroup(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerWtpGroup resource while getting object: %v", err)
 	}
@@ -146,22 +147,22 @@ func resourceWirelessControllerWtpGroupRead(d *schema.ResourceData, m interface{
 		return nil
 	}
 
-	err = refreshObjectWirelessControllerWtpGroup(d, o)
+	err = refreshObjectWirelessControllerWtpGroup(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading WirelessControllerWtpGroup resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenWirelessControllerWtpGroupName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerWtpGroupName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerWtpGroupPlatformType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerWtpGroupPlatformType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerWtpGroupWtps(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenWirelessControllerWtpGroupWtps(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -182,7 +183,8 @@ func flattenWirelessControllerWtpGroupWtps(v interface{}, d *schema.ResourceData
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "wtp_id"
 		if _, ok := i["wtp-id"]; ok {
-			tmp["wtp_id"] = flattenWirelessControllerWtpGroupWtpsWtpId(i["wtp-id"], d, pre_append)
+
+			tmp["wtp_id"] = flattenWirelessControllerWtpGroupWtpsWtpId(i["wtp-id"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -194,34 +196,34 @@ func flattenWirelessControllerWtpGroupWtps(v interface{}, d *schema.ResourceData
 	return result
 }
 
-func flattenWirelessControllerWtpGroupWtpsWtpId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerWtpGroupWtpsWtpId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectWirelessControllerWtpGroup(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectWirelessControllerWtpGroup(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenWirelessControllerWtpGroupName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenWirelessControllerWtpGroupName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("platform_type", flattenWirelessControllerWtpGroupPlatformType(o["platform-type"], d, "platform_type")); err != nil {
+	if err = d.Set("platform_type", flattenWirelessControllerWtpGroupPlatformType(o["platform-type"], d, "platform_type", sv)); err != nil {
 		if !fortiAPIPatch(o["platform-type"]) {
 			return fmt.Errorf("Error reading platform_type: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("wtps", flattenWirelessControllerWtpGroupWtps(o["wtps"], d, "wtps")); err != nil {
+		if err = d.Set("wtps", flattenWirelessControllerWtpGroupWtps(o["wtps"], d, "wtps", sv)); err != nil {
 			if !fortiAPIPatch(o["wtps"]) {
 				return fmt.Errorf("Error reading wtps: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("wtps"); ok {
-			if err = d.Set("wtps", flattenWirelessControllerWtpGroupWtps(o["wtps"], d, "wtps")); err != nil {
+			if err = d.Set("wtps", flattenWirelessControllerWtpGroupWtps(o["wtps"], d, "wtps", sv)); err != nil {
 				if !fortiAPIPatch(o["wtps"]) {
 					return fmt.Errorf("Error reading wtps: %v", err)
 				}
@@ -235,18 +237,18 @@ func refreshObjectWirelessControllerWtpGroup(d *schema.ResourceData, o map[strin
 func flattenWirelessControllerWtpGroupFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandWirelessControllerWtpGroupName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerWtpGroupName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerWtpGroupPlatformType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerWtpGroupPlatformType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerWtpGroupWtps(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerWtpGroupWtps(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -262,7 +264,8 @@ func expandWirelessControllerWtpGroupWtps(d *schema.ResourceData, v interface{},
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "wtp_id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["wtp-id"], _ = expandWirelessControllerWtpGroupWtpsWtpId(d, i["wtp_id"], pre_append)
+
+			tmp["wtp-id"], _ = expandWirelessControllerWtpGroupWtpsWtpId(d, i["wtp_id"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -273,15 +276,16 @@ func expandWirelessControllerWtpGroupWtps(d *schema.ResourceData, v interface{},
 	return result, nil
 }
 
-func expandWirelessControllerWtpGroupWtpsWtpId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerWtpGroupWtpsWtpId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectWirelessControllerWtpGroup(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectWirelessControllerWtpGroup(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandWirelessControllerWtpGroupName(d, v, "name")
+
+		t, err := expandWirelessControllerWtpGroupName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -290,7 +294,8 @@ func getObjectWirelessControllerWtpGroup(d *schema.ResourceData) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("platform_type"); ok {
-		t, err := expandWirelessControllerWtpGroupPlatformType(d, v, "platform_type")
+
+		t, err := expandWirelessControllerWtpGroupPlatformType(d, v, "platform_type", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -299,7 +304,8 @@ func getObjectWirelessControllerWtpGroup(d *schema.ResourceData) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("wtps"); ok {
-		t, err := expandWirelessControllerWtpGroupWtps(d, v, "wtps")
+
+		t, err := expandWirelessControllerWtpGroupWtps(d, v, "wtps", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
