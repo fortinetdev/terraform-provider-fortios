@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -48,6 +49,18 @@ func resourceFirewallIppool() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"startport": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(5117, 65533),
+				Optional:     true,
+				Computed:     true,
+			},
+			"endport": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(5117, 65533),
+				Optional:     true,
+				Computed:     true,
+			},
 			"source_startip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -63,6 +76,11 @@ func resourceFirewallIppool() *schema.Resource {
 				ValidateFunc: validation.IntBetween(64, 4096),
 				Optional:     true,
 				Computed:     true,
+			},
+			"port_per_user": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
 			},
 			"num_blocks_per_user": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -111,7 +129,7 @@ func resourceFirewallIppoolCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectFirewallIppool(d)
+	obj, err := getObjectFirewallIppool(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallIppool resource while getting object: %v", err)
 	}
@@ -136,7 +154,7 @@ func resourceFirewallIppoolUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectFirewallIppool(d)
+	obj, err := getObjectFirewallIppool(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallIppool resource while getting object: %v", err)
 	}
@@ -189,151 +207,181 @@ func resourceFirewallIppoolRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectFirewallIppool(d, o)
+	err = refreshObjectFirewallIppool(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallIppool resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenFirewallIppoolName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallIppoolName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallIppoolType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallIppoolType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallIppoolStartip(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallIppoolStartip(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallIppoolEndip(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallIppoolEndip(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallIppoolSourceStartip(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallIppoolStartport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallIppoolSourceEndip(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallIppoolEndport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallIppoolBlockSize(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallIppoolSourceStartip(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallIppoolNumBlocksPerUser(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallIppoolSourceEndip(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallIppoolPbaTimeout(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallIppoolBlockSize(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallIppoolPermitAnyHost(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallIppoolPortPerUser(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallIppoolArpReply(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallIppoolNumBlocksPerUser(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallIppoolArpIntf(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallIppoolPbaTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallIppoolAssociatedInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallIppoolPermitAnyHost(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallIppoolComments(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallIppoolArpReply(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectFirewallIppool(d *schema.ResourceData, o map[string]interface{}) error {
+func flattenFirewallIppoolArpIntf(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallIppoolAssociatedInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenFirewallIppoolComments(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func refreshObjectFirewallIppool(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenFirewallIppoolName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenFirewallIppoolName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("type", flattenFirewallIppoolType(o["type"], d, "type")); err != nil {
+	if err = d.Set("type", flattenFirewallIppoolType(o["type"], d, "type", sv)); err != nil {
 		if !fortiAPIPatch(o["type"]) {
 			return fmt.Errorf("Error reading type: %v", err)
 		}
 	}
 
-	if err = d.Set("startip", flattenFirewallIppoolStartip(o["startip"], d, "startip")); err != nil {
+	if err = d.Set("startip", flattenFirewallIppoolStartip(o["startip"], d, "startip", sv)); err != nil {
 		if !fortiAPIPatch(o["startip"]) {
 			return fmt.Errorf("Error reading startip: %v", err)
 		}
 	}
 
-	if err = d.Set("endip", flattenFirewallIppoolEndip(o["endip"], d, "endip")); err != nil {
+	if err = d.Set("endip", flattenFirewallIppoolEndip(o["endip"], d, "endip", sv)); err != nil {
 		if !fortiAPIPatch(o["endip"]) {
 			return fmt.Errorf("Error reading endip: %v", err)
 		}
 	}
 
-	if err = d.Set("source_startip", flattenFirewallIppoolSourceStartip(o["source-startip"], d, "source_startip")); err != nil {
+	if err = d.Set("startport", flattenFirewallIppoolStartport(o["startport"], d, "startport", sv)); err != nil {
+		if !fortiAPIPatch(o["startport"]) {
+			return fmt.Errorf("Error reading startport: %v", err)
+		}
+	}
+
+	if err = d.Set("endport", flattenFirewallIppoolEndport(o["endport"], d, "endport", sv)); err != nil {
+		if !fortiAPIPatch(o["endport"]) {
+			return fmt.Errorf("Error reading endport: %v", err)
+		}
+	}
+
+	if err = d.Set("source_startip", flattenFirewallIppoolSourceStartip(o["source-startip"], d, "source_startip", sv)); err != nil {
 		if !fortiAPIPatch(o["source-startip"]) {
 			return fmt.Errorf("Error reading source_startip: %v", err)
 		}
 	}
 
-	if err = d.Set("source_endip", flattenFirewallIppoolSourceEndip(o["source-endip"], d, "source_endip")); err != nil {
+	if err = d.Set("source_endip", flattenFirewallIppoolSourceEndip(o["source-endip"], d, "source_endip", sv)); err != nil {
 		if !fortiAPIPatch(o["source-endip"]) {
 			return fmt.Errorf("Error reading source_endip: %v", err)
 		}
 	}
 
-	if err = d.Set("block_size", flattenFirewallIppoolBlockSize(o["block-size"], d, "block_size")); err != nil {
+	if err = d.Set("block_size", flattenFirewallIppoolBlockSize(o["block-size"], d, "block_size", sv)); err != nil {
 		if !fortiAPIPatch(o["block-size"]) {
 			return fmt.Errorf("Error reading block_size: %v", err)
 		}
 	}
 
-	if err = d.Set("num_blocks_per_user", flattenFirewallIppoolNumBlocksPerUser(o["num-blocks-per-user"], d, "num_blocks_per_user")); err != nil {
+	if err = d.Set("port_per_user", flattenFirewallIppoolPortPerUser(o["port-per-user"], d, "port_per_user", sv)); err != nil {
+		if !fortiAPIPatch(o["port-per-user"]) {
+			return fmt.Errorf("Error reading port_per_user: %v", err)
+		}
+	}
+
+	if err = d.Set("num_blocks_per_user", flattenFirewallIppoolNumBlocksPerUser(o["num-blocks-per-user"], d, "num_blocks_per_user", sv)); err != nil {
 		if !fortiAPIPatch(o["num-blocks-per-user"]) {
 			return fmt.Errorf("Error reading num_blocks_per_user: %v", err)
 		}
 	}
 
-	if err = d.Set("pba_timeout", flattenFirewallIppoolPbaTimeout(o["pba-timeout"], d, "pba_timeout")); err != nil {
+	if err = d.Set("pba_timeout", flattenFirewallIppoolPbaTimeout(o["pba-timeout"], d, "pba_timeout", sv)); err != nil {
 		if !fortiAPIPatch(o["pba-timeout"]) {
 			return fmt.Errorf("Error reading pba_timeout: %v", err)
 		}
 	}
 
-	if err = d.Set("permit_any_host", flattenFirewallIppoolPermitAnyHost(o["permit-any-host"], d, "permit_any_host")); err != nil {
+	if err = d.Set("permit_any_host", flattenFirewallIppoolPermitAnyHost(o["permit-any-host"], d, "permit_any_host", sv)); err != nil {
 		if !fortiAPIPatch(o["permit-any-host"]) {
 			return fmt.Errorf("Error reading permit_any_host: %v", err)
 		}
 	}
 
-	if err = d.Set("arp_reply", flattenFirewallIppoolArpReply(o["arp-reply"], d, "arp_reply")); err != nil {
+	if err = d.Set("arp_reply", flattenFirewallIppoolArpReply(o["arp-reply"], d, "arp_reply", sv)); err != nil {
 		if !fortiAPIPatch(o["arp-reply"]) {
 			return fmt.Errorf("Error reading arp_reply: %v", err)
 		}
 	}
 
-	if err = d.Set("arp_intf", flattenFirewallIppoolArpIntf(o["arp-intf"], d, "arp_intf")); err != nil {
+	if err = d.Set("arp_intf", flattenFirewallIppoolArpIntf(o["arp-intf"], d, "arp_intf", sv)); err != nil {
 		if !fortiAPIPatch(o["arp-intf"]) {
 			return fmt.Errorf("Error reading arp_intf: %v", err)
 		}
 	}
 
-	if err = d.Set("associated_interface", flattenFirewallIppoolAssociatedInterface(o["associated-interface"], d, "associated_interface")); err != nil {
+	if err = d.Set("associated_interface", flattenFirewallIppoolAssociatedInterface(o["associated-interface"], d, "associated_interface", sv)); err != nil {
 		if !fortiAPIPatch(o["associated-interface"]) {
 			return fmt.Errorf("Error reading associated_interface: %v", err)
 		}
 	}
 
-	if err = d.Set("comments", flattenFirewallIppoolComments(o["comments"], d, "comments")); err != nil {
+	if err = d.Set("comments", flattenFirewallIppoolComments(o["comments"], d, "comments", sv)); err != nil {
 		if !fortiAPIPatch(o["comments"]) {
 			return fmt.Errorf("Error reading comments: %v", err)
 		}
@@ -345,70 +393,83 @@ func refreshObjectFirewallIppool(d *schema.ResourceData, o map[string]interface{
 func flattenFirewallIppoolFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandFirewallIppoolName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallIppoolName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallIppoolType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallIppoolType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallIppoolStartip(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallIppoolStartip(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallIppoolEndip(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallIppoolEndip(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallIppoolSourceStartip(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallIppoolStartport(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallIppoolSourceEndip(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallIppoolEndport(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallIppoolBlockSize(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallIppoolSourceStartip(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallIppoolNumBlocksPerUser(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallIppoolSourceEndip(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallIppoolPbaTimeout(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallIppoolBlockSize(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallIppoolPermitAnyHost(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallIppoolPortPerUser(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallIppoolArpReply(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallIppoolNumBlocksPerUser(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallIppoolArpIntf(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallIppoolPbaTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallIppoolAssociatedInterface(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallIppoolPermitAnyHost(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallIppoolComments(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallIppoolArpReply(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectFirewallIppool(d *schema.ResourceData) (*map[string]interface{}, error) {
+func expandFirewallIppoolArpIntf(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallIppoolAssociatedInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandFirewallIppoolComments(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func getObjectFirewallIppool(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandFirewallIppoolName(d, v, "name")
+
+		t, err := expandFirewallIppoolName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -417,7 +478,8 @@ func getObjectFirewallIppool(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("type"); ok {
-		t, err := expandFirewallIppoolType(d, v, "type")
+
+		t, err := expandFirewallIppoolType(d, v, "type", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -426,7 +488,8 @@ func getObjectFirewallIppool(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("startip"); ok {
-		t, err := expandFirewallIppoolStartip(d, v, "startip")
+
+		t, err := expandFirewallIppoolStartip(d, v, "startip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -435,7 +498,8 @@ func getObjectFirewallIppool(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("endip"); ok {
-		t, err := expandFirewallIppoolEndip(d, v, "endip")
+
+		t, err := expandFirewallIppoolEndip(d, v, "endip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -443,8 +507,29 @@ func getObjectFirewallIppool(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
+	if v, ok := d.GetOk("startport"); ok {
+
+		t, err := expandFirewallIppoolStartport(d, v, "startport", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["startport"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("endport"); ok {
+
+		t, err := expandFirewallIppoolEndport(d, v, "endport", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["endport"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("source_startip"); ok {
-		t, err := expandFirewallIppoolSourceStartip(d, v, "source_startip")
+
+		t, err := expandFirewallIppoolSourceStartip(d, v, "source_startip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -453,7 +538,8 @@ func getObjectFirewallIppool(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("source_endip"); ok {
-		t, err := expandFirewallIppoolSourceEndip(d, v, "source_endip")
+
+		t, err := expandFirewallIppoolSourceEndip(d, v, "source_endip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -462,7 +548,8 @@ func getObjectFirewallIppool(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("block_size"); ok {
-		t, err := expandFirewallIppoolBlockSize(d, v, "block_size")
+
+		t, err := expandFirewallIppoolBlockSize(d, v, "block_size", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -470,8 +557,19 @@ func getObjectFirewallIppool(d *schema.ResourceData) (*map[string]interface{}, e
 		}
 	}
 
+	if v, ok := d.GetOkExists("port_per_user"); ok {
+
+		t, err := expandFirewallIppoolPortPerUser(d, v, "port_per_user", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["port-per-user"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("num_blocks_per_user"); ok {
-		t, err := expandFirewallIppoolNumBlocksPerUser(d, v, "num_blocks_per_user")
+
+		t, err := expandFirewallIppoolNumBlocksPerUser(d, v, "num_blocks_per_user", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -480,7 +578,8 @@ func getObjectFirewallIppool(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("pba_timeout"); ok {
-		t, err := expandFirewallIppoolPbaTimeout(d, v, "pba_timeout")
+
+		t, err := expandFirewallIppoolPbaTimeout(d, v, "pba_timeout", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -489,7 +588,8 @@ func getObjectFirewallIppool(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("permit_any_host"); ok {
-		t, err := expandFirewallIppoolPermitAnyHost(d, v, "permit_any_host")
+
+		t, err := expandFirewallIppoolPermitAnyHost(d, v, "permit_any_host", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -498,7 +598,8 @@ func getObjectFirewallIppool(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("arp_reply"); ok {
-		t, err := expandFirewallIppoolArpReply(d, v, "arp_reply")
+
+		t, err := expandFirewallIppoolArpReply(d, v, "arp_reply", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -507,7 +608,8 @@ func getObjectFirewallIppool(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("arp_intf"); ok {
-		t, err := expandFirewallIppoolArpIntf(d, v, "arp_intf")
+
+		t, err := expandFirewallIppoolArpIntf(d, v, "arp_intf", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -516,7 +618,8 @@ func getObjectFirewallIppool(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("associated_interface"); ok {
-		t, err := expandFirewallIppoolAssociatedInterface(d, v, "associated_interface")
+
+		t, err := expandFirewallIppoolAssociatedInterface(d, v, "associated_interface", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -525,7 +628,8 @@ func getObjectFirewallIppool(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-		t, err := expandFirewallIppoolComments(d, v, "comments")
+
+		t, err := expandFirewallIppoolComments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
