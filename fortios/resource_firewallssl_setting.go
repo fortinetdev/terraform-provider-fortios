@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -92,7 +93,7 @@ func resourceFirewallSslSettingUpdate(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectFirewallSslSetting(d)
+	obj, err := getObjectFirewallSslSetting(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallSslSetting resource while getting object: %v", err)
 	}
@@ -145,121 +146,121 @@ func resourceFirewallSslSettingRead(d *schema.ResourceData, m interface{}) error
 		return nil
 	}
 
-	err = refreshObjectFirewallSslSetting(d, o)
+	err = refreshObjectFirewallSslSetting(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallSslSetting resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenFirewallSslSettingProxyConnectTimeout(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSslSettingProxyConnectTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallSslSettingSslDhBits(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSslSettingSslDhBits(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallSslSettingSslSendEmptyFrags(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSslSettingSslSendEmptyFrags(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallSslSettingNoMatchingCipherAction(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSslSettingNoMatchingCipherAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallSslSettingCertCacheCapacity(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSslSettingCertCacheCapacity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallSslSettingCertCacheTimeout(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSslSettingCertCacheTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallSslSettingSessionCacheCapacity(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSslSettingSessionCacheCapacity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallSslSettingSessionCacheTimeout(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSslSettingSessionCacheTimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallSslSettingKxpQueueThreshold(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSslSettingKxpQueueThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallSslSettingSslQueueThreshold(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSslSettingSslQueueThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallSslSettingAbbreviateHandshake(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallSslSettingAbbreviateHandshake(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectFirewallSslSetting(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectFirewallSslSetting(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("proxy_connect_timeout", flattenFirewallSslSettingProxyConnectTimeout(o["proxy-connect-timeout"], d, "proxy_connect_timeout")); err != nil {
+	if err = d.Set("proxy_connect_timeout", flattenFirewallSslSettingProxyConnectTimeout(o["proxy-connect-timeout"], d, "proxy_connect_timeout", sv)); err != nil {
 		if !fortiAPIPatch(o["proxy-connect-timeout"]) {
 			return fmt.Errorf("Error reading proxy_connect_timeout: %v", err)
 		}
 	}
 
-	if err = d.Set("ssl_dh_bits", flattenFirewallSslSettingSslDhBits(o["ssl-dh-bits"], d, "ssl_dh_bits")); err != nil {
+	if err = d.Set("ssl_dh_bits", flattenFirewallSslSettingSslDhBits(o["ssl-dh-bits"], d, "ssl_dh_bits", sv)); err != nil {
 		if !fortiAPIPatch(o["ssl-dh-bits"]) {
 			return fmt.Errorf("Error reading ssl_dh_bits: %v", err)
 		}
 	}
 
-	if err = d.Set("ssl_send_empty_frags", flattenFirewallSslSettingSslSendEmptyFrags(o["ssl-send-empty-frags"], d, "ssl_send_empty_frags")); err != nil {
+	if err = d.Set("ssl_send_empty_frags", flattenFirewallSslSettingSslSendEmptyFrags(o["ssl-send-empty-frags"], d, "ssl_send_empty_frags", sv)); err != nil {
 		if !fortiAPIPatch(o["ssl-send-empty-frags"]) {
 			return fmt.Errorf("Error reading ssl_send_empty_frags: %v", err)
 		}
 	}
 
-	if err = d.Set("no_matching_cipher_action", flattenFirewallSslSettingNoMatchingCipherAction(o["no-matching-cipher-action"], d, "no_matching_cipher_action")); err != nil {
+	if err = d.Set("no_matching_cipher_action", flattenFirewallSslSettingNoMatchingCipherAction(o["no-matching-cipher-action"], d, "no_matching_cipher_action", sv)); err != nil {
 		if !fortiAPIPatch(o["no-matching-cipher-action"]) {
 			return fmt.Errorf("Error reading no_matching_cipher_action: %v", err)
 		}
 	}
 
-	if err = d.Set("cert_cache_capacity", flattenFirewallSslSettingCertCacheCapacity(o["cert-cache-capacity"], d, "cert_cache_capacity")); err != nil {
+	if err = d.Set("cert_cache_capacity", flattenFirewallSslSettingCertCacheCapacity(o["cert-cache-capacity"], d, "cert_cache_capacity", sv)); err != nil {
 		if !fortiAPIPatch(o["cert-cache-capacity"]) {
 			return fmt.Errorf("Error reading cert_cache_capacity: %v", err)
 		}
 	}
 
-	if err = d.Set("cert_cache_timeout", flattenFirewallSslSettingCertCacheTimeout(o["cert-cache-timeout"], d, "cert_cache_timeout")); err != nil {
+	if err = d.Set("cert_cache_timeout", flattenFirewallSslSettingCertCacheTimeout(o["cert-cache-timeout"], d, "cert_cache_timeout", sv)); err != nil {
 		if !fortiAPIPatch(o["cert-cache-timeout"]) {
 			return fmt.Errorf("Error reading cert_cache_timeout: %v", err)
 		}
 	}
 
-	if err = d.Set("session_cache_capacity", flattenFirewallSslSettingSessionCacheCapacity(o["session-cache-capacity"], d, "session_cache_capacity")); err != nil {
+	if err = d.Set("session_cache_capacity", flattenFirewallSslSettingSessionCacheCapacity(o["session-cache-capacity"], d, "session_cache_capacity", sv)); err != nil {
 		if !fortiAPIPatch(o["session-cache-capacity"]) {
 			return fmt.Errorf("Error reading session_cache_capacity: %v", err)
 		}
 	}
 
-	if err = d.Set("session_cache_timeout", flattenFirewallSslSettingSessionCacheTimeout(o["session-cache-timeout"], d, "session_cache_timeout")); err != nil {
+	if err = d.Set("session_cache_timeout", flattenFirewallSslSettingSessionCacheTimeout(o["session-cache-timeout"], d, "session_cache_timeout", sv)); err != nil {
 		if !fortiAPIPatch(o["session-cache-timeout"]) {
 			return fmt.Errorf("Error reading session_cache_timeout: %v", err)
 		}
 	}
 
-	if err = d.Set("kxp_queue_threshold", flattenFirewallSslSettingKxpQueueThreshold(o["kxp-queue-threshold"], d, "kxp_queue_threshold")); err != nil {
+	if err = d.Set("kxp_queue_threshold", flattenFirewallSslSettingKxpQueueThreshold(o["kxp-queue-threshold"], d, "kxp_queue_threshold", sv)); err != nil {
 		if !fortiAPIPatch(o["kxp-queue-threshold"]) {
 			return fmt.Errorf("Error reading kxp_queue_threshold: %v", err)
 		}
 	}
 
-	if err = d.Set("ssl_queue_threshold", flattenFirewallSslSettingSslQueueThreshold(o["ssl-queue-threshold"], d, "ssl_queue_threshold")); err != nil {
+	if err = d.Set("ssl_queue_threshold", flattenFirewallSslSettingSslQueueThreshold(o["ssl-queue-threshold"], d, "ssl_queue_threshold", sv)); err != nil {
 		if !fortiAPIPatch(o["ssl-queue-threshold"]) {
 			return fmt.Errorf("Error reading ssl_queue_threshold: %v", err)
 		}
 	}
 
-	if err = d.Set("abbreviate_handshake", flattenFirewallSslSettingAbbreviateHandshake(o["abbreviate-handshake"], d, "abbreviate_handshake")); err != nil {
+	if err = d.Set("abbreviate_handshake", flattenFirewallSslSettingAbbreviateHandshake(o["abbreviate-handshake"], d, "abbreviate_handshake", sv)); err != nil {
 		if !fortiAPIPatch(o["abbreviate-handshake"]) {
 			return fmt.Errorf("Error reading abbreviate_handshake: %v", err)
 		}
@@ -271,58 +272,59 @@ func refreshObjectFirewallSslSetting(d *schema.ResourceData, o map[string]interf
 func flattenFirewallSslSettingFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandFirewallSslSettingProxyConnectTimeout(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSslSettingProxyConnectTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallSslSettingSslDhBits(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSslSettingSslDhBits(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallSslSettingSslSendEmptyFrags(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSslSettingSslSendEmptyFrags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallSslSettingNoMatchingCipherAction(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSslSettingNoMatchingCipherAction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallSslSettingCertCacheCapacity(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSslSettingCertCacheCapacity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallSslSettingCertCacheTimeout(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSslSettingCertCacheTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallSslSettingSessionCacheCapacity(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSslSettingSessionCacheCapacity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallSslSettingSessionCacheTimeout(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSslSettingSessionCacheTimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallSslSettingKxpQueueThreshold(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSslSettingKxpQueueThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallSslSettingSslQueueThreshold(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSslSettingSslQueueThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallSslSettingAbbreviateHandshake(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallSslSettingAbbreviateHandshake(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectFirewallSslSetting(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectFirewallSslSetting(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("proxy_connect_timeout"); ok {
-		t, err := expandFirewallSslSettingProxyConnectTimeout(d, v, "proxy_connect_timeout")
+
+		t, err := expandFirewallSslSettingProxyConnectTimeout(d, v, "proxy_connect_timeout", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -331,7 +333,8 @@ func getObjectFirewallSslSetting(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("ssl_dh_bits"); ok {
-		t, err := expandFirewallSslSettingSslDhBits(d, v, "ssl_dh_bits")
+
+		t, err := expandFirewallSslSettingSslDhBits(d, v, "ssl_dh_bits", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -340,7 +343,8 @@ func getObjectFirewallSslSetting(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("ssl_send_empty_frags"); ok {
-		t, err := expandFirewallSslSettingSslSendEmptyFrags(d, v, "ssl_send_empty_frags")
+
+		t, err := expandFirewallSslSettingSslSendEmptyFrags(d, v, "ssl_send_empty_frags", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -349,7 +353,8 @@ func getObjectFirewallSslSetting(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("no_matching_cipher_action"); ok {
-		t, err := expandFirewallSslSettingNoMatchingCipherAction(d, v, "no_matching_cipher_action")
+
+		t, err := expandFirewallSslSettingNoMatchingCipherAction(d, v, "no_matching_cipher_action", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -358,7 +363,8 @@ func getObjectFirewallSslSetting(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOkExists("cert_cache_capacity"); ok {
-		t, err := expandFirewallSslSettingCertCacheCapacity(d, v, "cert_cache_capacity")
+
+		t, err := expandFirewallSslSettingCertCacheCapacity(d, v, "cert_cache_capacity", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -367,7 +373,8 @@ func getObjectFirewallSslSetting(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("cert_cache_timeout"); ok {
-		t, err := expandFirewallSslSettingCertCacheTimeout(d, v, "cert_cache_timeout")
+
+		t, err := expandFirewallSslSettingCertCacheTimeout(d, v, "cert_cache_timeout", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -376,7 +383,8 @@ func getObjectFirewallSslSetting(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOkExists("session_cache_capacity"); ok {
-		t, err := expandFirewallSslSettingSessionCacheCapacity(d, v, "session_cache_capacity")
+
+		t, err := expandFirewallSslSettingSessionCacheCapacity(d, v, "session_cache_capacity", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -385,7 +393,8 @@ func getObjectFirewallSslSetting(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("session_cache_timeout"); ok {
-		t, err := expandFirewallSslSettingSessionCacheTimeout(d, v, "session_cache_timeout")
+
+		t, err := expandFirewallSslSettingSessionCacheTimeout(d, v, "session_cache_timeout", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -394,7 +403,8 @@ func getObjectFirewallSslSetting(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOkExists("kxp_queue_threshold"); ok {
-		t, err := expandFirewallSslSettingKxpQueueThreshold(d, v, "kxp_queue_threshold")
+
+		t, err := expandFirewallSslSettingKxpQueueThreshold(d, v, "kxp_queue_threshold", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -403,7 +413,8 @@ func getObjectFirewallSslSetting(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOkExists("ssl_queue_threshold"); ok {
-		t, err := expandFirewallSslSettingSslQueueThreshold(d, v, "ssl_queue_threshold")
+
+		t, err := expandFirewallSslSettingSslQueueThreshold(d, v, "ssl_queue_threshold", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -412,7 +423,8 @@ func getObjectFirewallSslSetting(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("abbreviate_handshake"); ok {
-		t, err := expandFirewallSslSettingAbbreviateHandshake(d, v, "abbreviate_handshake")
+
+		t, err := expandFirewallSslSettingAbbreviateHandshake(d, v, "abbreviate_handshake", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
