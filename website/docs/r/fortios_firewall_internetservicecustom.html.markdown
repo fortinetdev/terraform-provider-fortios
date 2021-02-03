@@ -11,7 +11,6 @@ Configure custom Internet Services.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Internet Service name.
