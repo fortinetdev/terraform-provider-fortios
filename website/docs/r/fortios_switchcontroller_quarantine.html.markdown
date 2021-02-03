@@ -11,7 +11,6 @@ Configure FortiSwitch quarantine support.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `quarantine` - Enable/disable quarantine.
