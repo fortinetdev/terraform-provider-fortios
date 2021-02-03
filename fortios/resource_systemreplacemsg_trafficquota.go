@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -58,7 +59,7 @@ func resourceSystemReplacemsgTrafficQuotaCreate(d *schema.ResourceData, m interf
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemReplacemsgTrafficQuota(d)
+	obj, err := getObjectSystemReplacemsgTrafficQuota(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemReplacemsgTrafficQuota resource while getting object: %v", err)
 	}
@@ -83,7 +84,7 @@ func resourceSystemReplacemsgTrafficQuotaUpdate(d *schema.ResourceData, m interf
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemReplacemsgTrafficQuota(d)
+	obj, err := getObjectSystemReplacemsgTrafficQuota(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemReplacemsgTrafficQuota resource while getting object: %v", err)
 	}
@@ -136,51 +137,51 @@ func resourceSystemReplacemsgTrafficQuotaRead(d *schema.ResourceData, m interfac
 		return nil
 	}
 
-	err = refreshObjectSystemReplacemsgTrafficQuota(d, o)
+	err = refreshObjectSystemReplacemsgTrafficQuota(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemReplacemsgTrafficQuota resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemReplacemsgTrafficQuotaMsgType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemReplacemsgTrafficQuotaMsgType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemReplacemsgTrafficQuotaBuffer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemReplacemsgTrafficQuotaBuffer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemReplacemsgTrafficQuotaHeader(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemReplacemsgTrafficQuotaHeader(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemReplacemsgTrafficQuotaFormat(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemReplacemsgTrafficQuotaFormat(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemReplacemsgTrafficQuota(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemReplacemsgTrafficQuota(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("msg_type", flattenSystemReplacemsgTrafficQuotaMsgType(o["msg-type"], d, "msg_type")); err != nil {
+	if err = d.Set("msg_type", flattenSystemReplacemsgTrafficQuotaMsgType(o["msg-type"], d, "msg_type", sv)); err != nil {
 		if !fortiAPIPatch(o["msg-type"]) {
 			return fmt.Errorf("Error reading msg_type: %v", err)
 		}
 	}
 
-	if err = d.Set("buffer", flattenSystemReplacemsgTrafficQuotaBuffer(o["buffer"], d, "buffer")); err != nil {
+	if err = d.Set("buffer", flattenSystemReplacemsgTrafficQuotaBuffer(o["buffer"], d, "buffer", sv)); err != nil {
 		if !fortiAPIPatch(o["buffer"]) {
 			return fmt.Errorf("Error reading buffer: %v", err)
 		}
 	}
 
-	if err = d.Set("header", flattenSystemReplacemsgTrafficQuotaHeader(o["header"], d, "header")); err != nil {
+	if err = d.Set("header", flattenSystemReplacemsgTrafficQuotaHeader(o["header"], d, "header", sv)); err != nil {
 		if !fortiAPIPatch(o["header"]) {
 			return fmt.Errorf("Error reading header: %v", err)
 		}
 	}
 
-	if err = d.Set("format", flattenSystemReplacemsgTrafficQuotaFormat(o["format"], d, "format")); err != nil {
+	if err = d.Set("format", flattenSystemReplacemsgTrafficQuotaFormat(o["format"], d, "format", sv)); err != nil {
 		if !fortiAPIPatch(o["format"]) {
 			return fmt.Errorf("Error reading format: %v", err)
 		}
@@ -192,30 +193,31 @@ func refreshObjectSystemReplacemsgTrafficQuota(d *schema.ResourceData, o map[str
 func flattenSystemReplacemsgTrafficQuotaFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemReplacemsgTrafficQuotaMsgType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemReplacemsgTrafficQuotaMsgType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemReplacemsgTrafficQuotaBuffer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemReplacemsgTrafficQuotaBuffer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemReplacemsgTrafficQuotaHeader(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemReplacemsgTrafficQuotaHeader(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemReplacemsgTrafficQuotaFormat(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemReplacemsgTrafficQuotaFormat(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemReplacemsgTrafficQuota(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemReplacemsgTrafficQuota(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("msg_type"); ok {
-		t, err := expandSystemReplacemsgTrafficQuotaMsgType(d, v, "msg_type")
+
+		t, err := expandSystemReplacemsgTrafficQuotaMsgType(d, v, "msg_type", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -224,7 +226,8 @@ func getObjectSystemReplacemsgTrafficQuota(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("buffer"); ok {
-		t, err := expandSystemReplacemsgTrafficQuotaBuffer(d, v, "buffer")
+
+		t, err := expandSystemReplacemsgTrafficQuotaBuffer(d, v, "buffer", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -233,7 +236,8 @@ func getObjectSystemReplacemsgTrafficQuota(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("header"); ok {
-		t, err := expandSystemReplacemsgTrafficQuotaHeader(d, v, "header")
+
+		t, err := expandSystemReplacemsgTrafficQuotaHeader(d, v, "header", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -242,7 +246,8 @@ func getObjectSystemReplacemsgTrafficQuota(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("format"); ok {
-		t, err := expandSystemReplacemsgTrafficQuotaFormat(d, v, "format")
+
+		t, err := expandSystemReplacemsgTrafficQuotaFormat(d, v, "format", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
