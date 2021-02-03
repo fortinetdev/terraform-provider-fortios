@@ -11,7 +11,6 @@ Configure custom Internet Service group.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Custom Internet Service group name.
