@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -89,7 +90,7 @@ func resourceSwitchControllerQosIpDscpMapCreate(d *schema.ResourceData, m interf
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSwitchControllerQosIpDscpMap(d)
+	obj, err := getObjectSwitchControllerQosIpDscpMap(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerQosIpDscpMap resource while getting object: %v", err)
 	}
@@ -114,7 +115,7 @@ func resourceSwitchControllerQosIpDscpMapUpdate(d *schema.ResourceData, m interf
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSwitchControllerQosIpDscpMap(d)
+	obj, err := getObjectSwitchControllerQosIpDscpMap(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerQosIpDscpMap resource while getting object: %v", err)
 	}
@@ -167,22 +168,22 @@ func resourceSwitchControllerQosIpDscpMapRead(d *schema.ResourceData, m interfac
 		return nil
 	}
 
-	err = refreshObjectSwitchControllerQosIpDscpMap(d, o)
+	err = refreshObjectSwitchControllerQosIpDscpMap(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerQosIpDscpMap resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSwitchControllerQosIpDscpMapName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerQosIpDscpMapName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerQosIpDscpMapDescription(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerQosIpDscpMapDescription(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerQosIpDscpMapMap(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSwitchControllerQosIpDscpMapMap(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -203,27 +204,32 @@ func flattenSwitchControllerQosIpDscpMapMap(v interface{}, d *schema.ResourceDat
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSwitchControllerQosIpDscpMapMapName(i["name"], d, pre_append)
+
+			tmp["name"] = flattenSwitchControllerQosIpDscpMapMapName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cos_queue"
 		if _, ok := i["cos-queue"]; ok {
-			tmp["cos_queue"] = flattenSwitchControllerQosIpDscpMapMapCosQueue(i["cos-queue"], d, pre_append)
+
+			tmp["cos_queue"] = flattenSwitchControllerQosIpDscpMapMapCosQueue(i["cos-queue"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "diffserv"
 		if _, ok := i["diffserv"]; ok {
-			tmp["diffserv"] = flattenSwitchControllerQosIpDscpMapMapDiffserv(i["diffserv"], d, pre_append)
+
+			tmp["diffserv"] = flattenSwitchControllerQosIpDscpMapMapDiffserv(i["diffserv"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip_precedence"
 		if _, ok := i["ip-precedence"]; ok {
-			tmp["ip_precedence"] = flattenSwitchControllerQosIpDscpMapMapIpPrecedence(i["ip-precedence"], d, pre_append)
+
+			tmp["ip_precedence"] = flattenSwitchControllerQosIpDscpMapMapIpPrecedence(i["ip-precedence"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := i["value"]; ok {
-			tmp["value"] = flattenSwitchControllerQosIpDscpMapMapValue(i["value"], d, pre_append)
+
+			tmp["value"] = flattenSwitchControllerQosIpDscpMapMapValue(i["value"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -235,50 +241,50 @@ func flattenSwitchControllerQosIpDscpMapMap(v interface{}, d *schema.ResourceDat
 	return result
 }
 
-func flattenSwitchControllerQosIpDscpMapMapName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerQosIpDscpMapMapName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerQosIpDscpMapMapCosQueue(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerQosIpDscpMapMapCosQueue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerQosIpDscpMapMapDiffserv(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerQosIpDscpMapMapDiffserv(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerQosIpDscpMapMapIpPrecedence(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerQosIpDscpMapMapIpPrecedence(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerQosIpDscpMapMapValue(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerQosIpDscpMapMapValue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSwitchControllerQosIpDscpMap(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSwitchControllerQosIpDscpMap(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenSwitchControllerQosIpDscpMapName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenSwitchControllerQosIpDscpMapName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("description", flattenSwitchControllerQosIpDscpMapDescription(o["description"], d, "description")); err != nil {
+	if err = d.Set("description", flattenSwitchControllerQosIpDscpMapDescription(o["description"], d, "description", sv)); err != nil {
 		if !fortiAPIPatch(o["description"]) {
 			return fmt.Errorf("Error reading description: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("map", flattenSwitchControllerQosIpDscpMapMap(o["map"], d, "map")); err != nil {
+		if err = d.Set("map", flattenSwitchControllerQosIpDscpMapMap(o["map"], d, "map", sv)); err != nil {
 			if !fortiAPIPatch(o["map"]) {
 				return fmt.Errorf("Error reading map: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("map"); ok {
-			if err = d.Set("map", flattenSwitchControllerQosIpDscpMapMap(o["map"], d, "map")); err != nil {
+			if err = d.Set("map", flattenSwitchControllerQosIpDscpMapMap(o["map"], d, "map", sv)); err != nil {
 				if !fortiAPIPatch(o["map"]) {
 					return fmt.Errorf("Error reading map: %v", err)
 				}
@@ -292,18 +298,18 @@ func refreshObjectSwitchControllerQosIpDscpMap(d *schema.ResourceData, o map[str
 func flattenSwitchControllerQosIpDscpMapFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSwitchControllerQosIpDscpMapName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerQosIpDscpMapName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerQosIpDscpMapDescription(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerQosIpDscpMapDescription(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerQosIpDscpMapMap(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerQosIpDscpMapMap(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -319,27 +325,32 @@ func expandSwitchControllerQosIpDscpMapMap(d *schema.ResourceData, v interface{}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSwitchControllerQosIpDscpMapMapName(d, i["name"], pre_append)
+
+			tmp["name"], _ = expandSwitchControllerQosIpDscpMapMapName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "cos_queue"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["cos-queue"], _ = expandSwitchControllerQosIpDscpMapMapCosQueue(d, i["cos_queue"], pre_append)
+
+			tmp["cos-queue"], _ = expandSwitchControllerQosIpDscpMapMapCosQueue(d, i["cos_queue"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "diffserv"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["diffserv"], _ = expandSwitchControllerQosIpDscpMapMapDiffserv(d, i["diffserv"], pre_append)
+
+			tmp["diffserv"], _ = expandSwitchControllerQosIpDscpMapMapDiffserv(d, i["diffserv"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip_precedence"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["ip-precedence"], _ = expandSwitchControllerQosIpDscpMapMapIpPrecedence(d, i["ip_precedence"], pre_append)
+
+			tmp["ip-precedence"], _ = expandSwitchControllerQosIpDscpMapMapIpPrecedence(d, i["ip_precedence"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["value"], _ = expandSwitchControllerQosIpDscpMapMapValue(d, i["value"], pre_append)
+
+			tmp["value"], _ = expandSwitchControllerQosIpDscpMapMapValue(d, i["value"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -350,31 +361,32 @@ func expandSwitchControllerQosIpDscpMapMap(d *schema.ResourceData, v interface{}
 	return result, nil
 }
 
-func expandSwitchControllerQosIpDscpMapMapName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerQosIpDscpMapMapName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerQosIpDscpMapMapCosQueue(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerQosIpDscpMapMapCosQueue(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerQosIpDscpMapMapDiffserv(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerQosIpDscpMapMapDiffserv(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerQosIpDscpMapMapIpPrecedence(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerQosIpDscpMapMapIpPrecedence(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerQosIpDscpMapMapValue(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerQosIpDscpMapMapValue(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSwitchControllerQosIpDscpMap(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSwitchControllerQosIpDscpMap(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandSwitchControllerQosIpDscpMapName(d, v, "name")
+
+		t, err := expandSwitchControllerQosIpDscpMapName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -383,7 +395,8 @@ func getObjectSwitchControllerQosIpDscpMap(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("description"); ok {
-		t, err := expandSwitchControllerQosIpDscpMapDescription(d, v, "description")
+
+		t, err := expandSwitchControllerQosIpDscpMapDescription(d, v, "description", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -392,7 +405,8 @@ func getObjectSwitchControllerQosIpDscpMap(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("map"); ok {
-		t, err := expandSwitchControllerQosIpDscpMapMap(d, v, "map")
+
+		t, err := expandSwitchControllerQosIpDscpMapMap(d, v, "map", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
