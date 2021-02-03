@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -54,7 +55,7 @@ func resourceSystemTosBasedPriorityCreate(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemTosBasedPriority(d)
+	obj, err := getObjectSystemTosBasedPriority(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemTosBasedPriority resource while getting object: %v", err)
 	}
@@ -79,7 +80,7 @@ func resourceSystemTosBasedPriorityUpdate(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemTosBasedPriority(d)
+	obj, err := getObjectSystemTosBasedPriority(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemTosBasedPriority resource while getting object: %v", err)
 	}
@@ -132,41 +133,41 @@ func resourceSystemTosBasedPriorityRead(d *schema.ResourceData, m interface{}) e
 		return nil
 	}
 
-	err = refreshObjectSystemTosBasedPriority(d, o)
+	err = refreshObjectSystemTosBasedPriority(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemTosBasedPriority resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemTosBasedPriorityId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemTosBasedPriorityId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemTosBasedPriorityTos(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemTosBasedPriorityTos(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemTosBasedPriorityPriority(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemTosBasedPriorityPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemTosBasedPriority(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemTosBasedPriority(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("fosid", flattenSystemTosBasedPriorityId(o["id"], d, "fosid")); err != nil {
+	if err = d.Set("fosid", flattenSystemTosBasedPriorityId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
 			return fmt.Errorf("Error reading fosid: %v", err)
 		}
 	}
 
-	if err = d.Set("tos", flattenSystemTosBasedPriorityTos(o["tos"], d, "tos")); err != nil {
+	if err = d.Set("tos", flattenSystemTosBasedPriorityTos(o["tos"], d, "tos", sv)); err != nil {
 		if !fortiAPIPatch(o["tos"]) {
 			return fmt.Errorf("Error reading tos: %v", err)
 		}
 	}
 
-	if err = d.Set("priority", flattenSystemTosBasedPriorityPriority(o["priority"], d, "priority")); err != nil {
+	if err = d.Set("priority", flattenSystemTosBasedPriorityPriority(o["priority"], d, "priority", sv)); err != nil {
 		if !fortiAPIPatch(o["priority"]) {
 			return fmt.Errorf("Error reading priority: %v", err)
 		}
@@ -178,26 +179,27 @@ func refreshObjectSystemTosBasedPriority(d *schema.ResourceData, o map[string]in
 func flattenSystemTosBasedPriorityFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemTosBasedPriorityId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemTosBasedPriorityId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemTosBasedPriorityTos(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemTosBasedPriorityTos(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemTosBasedPriorityPriority(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemTosBasedPriorityPriority(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemTosBasedPriority(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemTosBasedPriority(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-		t, err := expandSystemTosBasedPriorityId(d, v, "fosid")
+
+		t, err := expandSystemTosBasedPriorityId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -206,7 +208,8 @@ func getObjectSystemTosBasedPriority(d *schema.ResourceData) (*map[string]interf
 	}
 
 	if v, ok := d.GetOkExists("tos"); ok {
-		t, err := expandSystemTosBasedPriorityTos(d, v, "tos")
+
+		t, err := expandSystemTosBasedPriorityTos(d, v, "tos", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -215,7 +218,8 @@ func getObjectSystemTosBasedPriority(d *schema.ResourceData) (*map[string]interf
 	}
 
 	if v, ok := d.GetOk("priority"); ok {
-		t, err := expandSystemTosBasedPriorityPriority(d, v, "priority")
+
+		t, err := expandSystemTosBasedPriorityPriority(d, v, "priority", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
