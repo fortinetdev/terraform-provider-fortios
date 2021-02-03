@@ -32,7 +32,6 @@ resource "fortios_report_chart" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - (Required) Chart Widget Name
