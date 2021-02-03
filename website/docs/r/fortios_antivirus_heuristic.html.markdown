@@ -19,7 +19,6 @@ resource "fortios_antivirus_heuristic" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `mode` - Enable/disable heuristics and determine how the system behaves if heuristics detects a problem.
