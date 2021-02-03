@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -69,7 +70,7 @@ func resourceIpsDecoderCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectIpsDecoder(d)
+	obj, err := getObjectIpsDecoder(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating IpsDecoder resource while getting object: %v", err)
 	}
@@ -94,7 +95,7 @@ func resourceIpsDecoderUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectIpsDecoder(d)
+	obj, err := getObjectIpsDecoder(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating IpsDecoder resource while getting object: %v", err)
 	}
@@ -147,18 +148,18 @@ func resourceIpsDecoderRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectIpsDecoder(d, o)
+	err = refreshObjectIpsDecoder(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading IpsDecoder resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenIpsDecoderName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenIpsDecoderName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenIpsDecoderParameter(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenIpsDecoderParameter(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -179,12 +180,14 @@ func flattenIpsDecoderParameter(v interface{}, d *schema.ResourceData, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenIpsDecoderParameterName(i["name"], d, pre_append)
+
+			tmp["name"] = flattenIpsDecoderParameterName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := i["value"]; ok {
-			tmp["value"] = flattenIpsDecoderParameterValue(i["value"], d, pre_append)
+
+			tmp["value"] = flattenIpsDecoderParameterValue(i["value"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -196,32 +199,32 @@ func flattenIpsDecoderParameter(v interface{}, d *schema.ResourceData, pre strin
 	return result
 }
 
-func flattenIpsDecoderParameterName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenIpsDecoderParameterName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenIpsDecoderParameterValue(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenIpsDecoderParameterValue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectIpsDecoder(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectIpsDecoder(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenIpsDecoderName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenIpsDecoderName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("parameter", flattenIpsDecoderParameter(o["parameter"], d, "parameter")); err != nil {
+		if err = d.Set("parameter", flattenIpsDecoderParameter(o["parameter"], d, "parameter", sv)); err != nil {
 			if !fortiAPIPatch(o["parameter"]) {
 				return fmt.Errorf("Error reading parameter: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("parameter"); ok {
-			if err = d.Set("parameter", flattenIpsDecoderParameter(o["parameter"], d, "parameter")); err != nil {
+			if err = d.Set("parameter", flattenIpsDecoderParameter(o["parameter"], d, "parameter", sv)); err != nil {
 				if !fortiAPIPatch(o["parameter"]) {
 					return fmt.Errorf("Error reading parameter: %v", err)
 				}
@@ -235,14 +238,14 @@ func refreshObjectIpsDecoder(d *schema.ResourceData, o map[string]interface{}) e
 func flattenIpsDecoderFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandIpsDecoderName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandIpsDecoderName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandIpsDecoderParameter(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandIpsDecoderParameter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -258,12 +261,14 @@ func expandIpsDecoderParameter(d *schema.ResourceData, v interface{}, pre string
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandIpsDecoderParameterName(d, i["name"], pre_append)
+
+			tmp["name"], _ = expandIpsDecoderParameterName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["value"], _ = expandIpsDecoderParameterValue(d, i["value"], pre_append)
+
+			tmp["value"], _ = expandIpsDecoderParameterValue(d, i["value"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -274,19 +279,20 @@ func expandIpsDecoderParameter(d *schema.ResourceData, v interface{}, pre string
 	return result, nil
 }
 
-func expandIpsDecoderParameterName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandIpsDecoderParameterName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandIpsDecoderParameterValue(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandIpsDecoderParameterValue(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectIpsDecoder(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectIpsDecoder(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandIpsDecoderName(d, v, "name")
+
+		t, err := expandIpsDecoderName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -295,7 +301,8 @@ func getObjectIpsDecoder(d *schema.ResourceData) (*map[string]interface{}, error
 	}
 
 	if v, ok := d.GetOk("parameter"); ok {
-		t, err := expandIpsDecoderParameter(d, v, "parameter")
+
+		t, err := expandIpsDecoderParameter(d, v, "parameter", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
