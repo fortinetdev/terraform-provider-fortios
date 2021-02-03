@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -49,7 +50,7 @@ func resourceWafSignatureCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWafSignature(d)
+	obj, err := getObjectWafSignature(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WafSignature resource while getting object: %v", err)
 	}
@@ -74,7 +75,7 @@ func resourceWafSignatureUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWafSignature(d)
+	obj, err := getObjectWafSignature(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WafSignature resource while getting object: %v", err)
 	}
@@ -127,31 +128,31 @@ func resourceWafSignatureRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectWafSignature(d, o)
+	err = refreshObjectWafSignature(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading WafSignature resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenWafSignatureDesc(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWafSignatureDesc(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWafSignatureId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWafSignatureId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectWafSignature(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectWafSignature(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("desc", flattenWafSignatureDesc(o["desc"], d, "desc")); err != nil {
+	if err = d.Set("desc", flattenWafSignatureDesc(o["desc"], d, "desc", sv)); err != nil {
 		if !fortiAPIPatch(o["desc"]) {
 			return fmt.Errorf("Error reading desc: %v", err)
 		}
 	}
 
-	if err = d.Set("fosid", flattenWafSignatureId(o["id"], d, "fosid")); err != nil {
+	if err = d.Set("fosid", flattenWafSignatureId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
 			return fmt.Errorf("Error reading fosid: %v", err)
 		}
@@ -163,22 +164,23 @@ func refreshObjectWafSignature(d *schema.ResourceData, o map[string]interface{})
 func flattenWafSignatureFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandWafSignatureDesc(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWafSignatureDesc(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWafSignatureId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWafSignatureId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectWafSignature(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectWafSignature(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("desc"); ok {
-		t, err := expandWafSignatureDesc(d, v, "desc")
+
+		t, err := expandWafSignatureDesc(d, v, "desc", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -187,7 +189,8 @@ func getObjectWafSignature(d *schema.ResourceData) (*map[string]interface{}, err
 	}
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-		t, err := expandWafSignatureId(d, v, "fosid")
+
+		t, err := expandWafSignatureId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
