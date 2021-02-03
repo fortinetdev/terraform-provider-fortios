@@ -28,11 +28,13 @@ resource "fortios_system_dns" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `primary` - (Required) Primary DNS server IP address.
 * `secondary` - Secondary DNS server IP address.
+* `dns_over_tls` - Enable/disable/enforce DNS over TLS.
+* `ssl_certificate` - Name of local certificate for SSL connections.
+* `server_hostname` - DNS server host name list. The structure of `server_hostname` block is documented below.
 * `domain` - Search suffix list for hostname lookup. The structure of `domain` block is documented below.
 * `ip6_primary` - Primary DNS server IPv6 address.
 * `ip6_secondary` - Secondary DNS server IPv6 address.
@@ -42,7 +44,13 @@ The following arguments are supported:
 * `dns_cache_ttl` - Duration in seconds that the DNS cache retains information.
 * `cache_notfound_responses` - Enable/disable response from the DNS server when a record is not in cache.
 * `source_ip` - IP address used by the DNS server as its source IP.
+* `interface_select_method` - Specify how to select outgoing interface to reach server.
+* `interface` - Specify outgoing interface to reach server.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
+The `server_hostname` block supports:
+
+* `hostname` - DNS server host name list separated by space (maximum 4 domains).
 
 The `domain` block supports:
 
