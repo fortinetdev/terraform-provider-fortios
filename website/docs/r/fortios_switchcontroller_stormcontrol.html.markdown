@@ -11,7 +11,6 @@ Configure FortiSwitch storm control.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `rate` - Rate in packets per second at which storm traffic is controlled (1 - 10000000, default = 500). Storm control drops excess traffic data rates beyond this threshold.
