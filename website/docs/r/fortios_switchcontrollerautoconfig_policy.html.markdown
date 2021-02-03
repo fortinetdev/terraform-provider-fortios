@@ -11,12 +11,14 @@ Configure FortiSwitch Auto-Config QoS policy.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - (Required) Auto-Config QoS policy name
 * `qos_policy` - Auto-Config QoS policy.
+* `storm_control_policy` - Auto-Config storm control policy.
 * `poe_status` - Enable/disable PoE status.
+* `igmp_flood_report` - Enable/disable IGMP flood report.
+* `igmp_flood_traffic` - Enable/disable IGMP flood traffic.
 
 
 ## Attribute Reference
