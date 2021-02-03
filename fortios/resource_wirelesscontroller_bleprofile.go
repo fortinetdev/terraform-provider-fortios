@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -113,7 +114,7 @@ func resourceWirelessControllerBleProfileCreate(d *schema.ResourceData, m interf
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWirelessControllerBleProfile(d)
+	obj, err := getObjectWirelessControllerBleProfile(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WirelessControllerBleProfile resource while getting object: %v", err)
 	}
@@ -138,7 +139,7 @@ func resourceWirelessControllerBleProfileUpdate(d *schema.ResourceData, m interf
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWirelessControllerBleProfile(d)
+	obj, err := getObjectWirelessControllerBleProfile(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerBleProfile resource while getting object: %v", err)
 	}
@@ -191,141 +192,141 @@ func resourceWirelessControllerBleProfileRead(d *schema.ResourceData, m interfac
 		return nil
 	}
 
-	err = refreshObjectWirelessControllerBleProfile(d, o)
+	err = refreshObjectWirelessControllerBleProfile(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading WirelessControllerBleProfile resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenWirelessControllerBleProfileName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerBleProfileName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerBleProfileComment(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerBleProfileComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerBleProfileAdvertising(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerBleProfileAdvertising(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerBleProfileIbeaconUuid(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerBleProfileIbeaconUuid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerBleProfileMajorId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerBleProfileMajorId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerBleProfileMinorId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerBleProfileMinorId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerBleProfileEddystoneNamespace(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerBleProfileEddystoneNamespace(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerBleProfileEddystoneInstance(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerBleProfileEddystoneInstance(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerBleProfileEddystoneUrl(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerBleProfileEddystoneUrl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerBleProfileEddystoneUrlEncodeHex(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerBleProfileEddystoneUrlEncodeHex(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerBleProfileTxpower(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerBleProfileTxpower(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerBleProfileBeaconInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerBleProfileBeaconInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerBleProfileBleScanning(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerBleProfileBleScanning(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectWirelessControllerBleProfile(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectWirelessControllerBleProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenWirelessControllerBleProfileName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenWirelessControllerBleProfileName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("comment", flattenWirelessControllerBleProfileComment(o["comment"], d, "comment")); err != nil {
+	if err = d.Set("comment", flattenWirelessControllerBleProfileComment(o["comment"], d, "comment", sv)); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
 		}
 	}
 
-	if err = d.Set("advertising", flattenWirelessControllerBleProfileAdvertising(o["advertising"], d, "advertising")); err != nil {
+	if err = d.Set("advertising", flattenWirelessControllerBleProfileAdvertising(o["advertising"], d, "advertising", sv)); err != nil {
 		if !fortiAPIPatch(o["advertising"]) {
 			return fmt.Errorf("Error reading advertising: %v", err)
 		}
 	}
 
-	if err = d.Set("ibeacon_uuid", flattenWirelessControllerBleProfileIbeaconUuid(o["ibeacon-uuid"], d, "ibeacon_uuid")); err != nil {
+	if err = d.Set("ibeacon_uuid", flattenWirelessControllerBleProfileIbeaconUuid(o["ibeacon-uuid"], d, "ibeacon_uuid", sv)); err != nil {
 		if !fortiAPIPatch(o["ibeacon-uuid"]) {
 			return fmt.Errorf("Error reading ibeacon_uuid: %v", err)
 		}
 	}
 
-	if err = d.Set("major_id", flattenWirelessControllerBleProfileMajorId(o["major-id"], d, "major_id")); err != nil {
+	if err = d.Set("major_id", flattenWirelessControllerBleProfileMajorId(o["major-id"], d, "major_id", sv)); err != nil {
 		if !fortiAPIPatch(o["major-id"]) {
 			return fmt.Errorf("Error reading major_id: %v", err)
 		}
 	}
 
-	if err = d.Set("minor_id", flattenWirelessControllerBleProfileMinorId(o["minor-id"], d, "minor_id")); err != nil {
+	if err = d.Set("minor_id", flattenWirelessControllerBleProfileMinorId(o["minor-id"], d, "minor_id", sv)); err != nil {
 		if !fortiAPIPatch(o["minor-id"]) {
 			return fmt.Errorf("Error reading minor_id: %v", err)
 		}
 	}
 
-	if err = d.Set("eddystone_namespace", flattenWirelessControllerBleProfileEddystoneNamespace(o["eddystone-namespace"], d, "eddystone_namespace")); err != nil {
+	if err = d.Set("eddystone_namespace", flattenWirelessControllerBleProfileEddystoneNamespace(o["eddystone-namespace"], d, "eddystone_namespace", sv)); err != nil {
 		if !fortiAPIPatch(o["eddystone-namespace"]) {
 			return fmt.Errorf("Error reading eddystone_namespace: %v", err)
 		}
 	}
 
-	if err = d.Set("eddystone_instance", flattenWirelessControllerBleProfileEddystoneInstance(o["eddystone-instance"], d, "eddystone_instance")); err != nil {
+	if err = d.Set("eddystone_instance", flattenWirelessControllerBleProfileEddystoneInstance(o["eddystone-instance"], d, "eddystone_instance", sv)); err != nil {
 		if !fortiAPIPatch(o["eddystone-instance"]) {
 			return fmt.Errorf("Error reading eddystone_instance: %v", err)
 		}
 	}
 
-	if err = d.Set("eddystone_url", flattenWirelessControllerBleProfileEddystoneUrl(o["eddystone-url"], d, "eddystone_url")); err != nil {
+	if err = d.Set("eddystone_url", flattenWirelessControllerBleProfileEddystoneUrl(o["eddystone-url"], d, "eddystone_url", sv)); err != nil {
 		if !fortiAPIPatch(o["eddystone-url"]) {
 			return fmt.Errorf("Error reading eddystone_url: %v", err)
 		}
 	}
 
-	if err = d.Set("eddystone_url_encode_hex", flattenWirelessControllerBleProfileEddystoneUrlEncodeHex(o["eddystone-url-encode-hex"], d, "eddystone_url_encode_hex")); err != nil {
+	if err = d.Set("eddystone_url_encode_hex", flattenWirelessControllerBleProfileEddystoneUrlEncodeHex(o["eddystone-url-encode-hex"], d, "eddystone_url_encode_hex", sv)); err != nil {
 		if !fortiAPIPatch(o["eddystone-url-encode-hex"]) {
 			return fmt.Errorf("Error reading eddystone_url_encode_hex: %v", err)
 		}
 	}
 
-	if err = d.Set("txpower", flattenWirelessControllerBleProfileTxpower(o["txpower"], d, "txpower")); err != nil {
+	if err = d.Set("txpower", flattenWirelessControllerBleProfileTxpower(o["txpower"], d, "txpower", sv)); err != nil {
 		if !fortiAPIPatch(o["txpower"]) {
 			return fmt.Errorf("Error reading txpower: %v", err)
 		}
 	}
 
-	if err = d.Set("beacon_interval", flattenWirelessControllerBleProfileBeaconInterval(o["beacon-interval"], d, "beacon_interval")); err != nil {
+	if err = d.Set("beacon_interval", flattenWirelessControllerBleProfileBeaconInterval(o["beacon-interval"], d, "beacon_interval", sv)); err != nil {
 		if !fortiAPIPatch(o["beacon-interval"]) {
 			return fmt.Errorf("Error reading beacon_interval: %v", err)
 		}
 	}
 
-	if err = d.Set("ble_scanning", flattenWirelessControllerBleProfileBleScanning(o["ble-scanning"], d, "ble_scanning")); err != nil {
+	if err = d.Set("ble_scanning", flattenWirelessControllerBleProfileBleScanning(o["ble-scanning"], d, "ble_scanning", sv)); err != nil {
 		if !fortiAPIPatch(o["ble-scanning"]) {
 			return fmt.Errorf("Error reading ble_scanning: %v", err)
 		}
@@ -337,66 +338,67 @@ func refreshObjectWirelessControllerBleProfile(d *schema.ResourceData, o map[str
 func flattenWirelessControllerBleProfileFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandWirelessControllerBleProfileName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerBleProfileName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerBleProfileComment(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerBleProfileComment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerBleProfileAdvertising(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerBleProfileAdvertising(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerBleProfileIbeaconUuid(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerBleProfileIbeaconUuid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerBleProfileMajorId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerBleProfileMajorId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerBleProfileMinorId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerBleProfileMinorId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerBleProfileEddystoneNamespace(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerBleProfileEddystoneNamespace(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerBleProfileEddystoneInstance(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerBleProfileEddystoneInstance(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerBleProfileEddystoneUrl(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerBleProfileEddystoneUrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerBleProfileEddystoneUrlEncodeHex(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerBleProfileEddystoneUrlEncodeHex(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerBleProfileTxpower(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerBleProfileTxpower(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerBleProfileBeaconInterval(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerBleProfileBeaconInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerBleProfileBleScanning(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerBleProfileBleScanning(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectWirelessControllerBleProfile(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectWirelessControllerBleProfile(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandWirelessControllerBleProfileName(d, v, "name")
+
+		t, err := expandWirelessControllerBleProfileName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -405,7 +407,8 @@ func getObjectWirelessControllerBleProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-		t, err := expandWirelessControllerBleProfileComment(d, v, "comment")
+
+		t, err := expandWirelessControllerBleProfileComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -414,7 +417,8 @@ func getObjectWirelessControllerBleProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("advertising"); ok {
-		t, err := expandWirelessControllerBleProfileAdvertising(d, v, "advertising")
+
+		t, err := expandWirelessControllerBleProfileAdvertising(d, v, "advertising", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -423,7 +427,8 @@ func getObjectWirelessControllerBleProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("ibeacon_uuid"); ok {
-		t, err := expandWirelessControllerBleProfileIbeaconUuid(d, v, "ibeacon_uuid")
+
+		t, err := expandWirelessControllerBleProfileIbeaconUuid(d, v, "ibeacon_uuid", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -432,7 +437,8 @@ func getObjectWirelessControllerBleProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOkExists("major_id"); ok {
-		t, err := expandWirelessControllerBleProfileMajorId(d, v, "major_id")
+
+		t, err := expandWirelessControllerBleProfileMajorId(d, v, "major_id", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -441,7 +447,8 @@ func getObjectWirelessControllerBleProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOkExists("minor_id"); ok {
-		t, err := expandWirelessControllerBleProfileMinorId(d, v, "minor_id")
+
+		t, err := expandWirelessControllerBleProfileMinorId(d, v, "minor_id", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -450,7 +457,8 @@ func getObjectWirelessControllerBleProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("eddystone_namespace"); ok {
-		t, err := expandWirelessControllerBleProfileEddystoneNamespace(d, v, "eddystone_namespace")
+
+		t, err := expandWirelessControllerBleProfileEddystoneNamespace(d, v, "eddystone_namespace", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -459,7 +467,8 @@ func getObjectWirelessControllerBleProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("eddystone_instance"); ok {
-		t, err := expandWirelessControllerBleProfileEddystoneInstance(d, v, "eddystone_instance")
+
+		t, err := expandWirelessControllerBleProfileEddystoneInstance(d, v, "eddystone_instance", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -468,7 +477,8 @@ func getObjectWirelessControllerBleProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("eddystone_url"); ok {
-		t, err := expandWirelessControllerBleProfileEddystoneUrl(d, v, "eddystone_url")
+
+		t, err := expandWirelessControllerBleProfileEddystoneUrl(d, v, "eddystone_url", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -477,7 +487,8 @@ func getObjectWirelessControllerBleProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("eddystone_url_encode_hex"); ok {
-		t, err := expandWirelessControllerBleProfileEddystoneUrlEncodeHex(d, v, "eddystone_url_encode_hex")
+
+		t, err := expandWirelessControllerBleProfileEddystoneUrlEncodeHex(d, v, "eddystone_url_encode_hex", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -486,7 +497,8 @@ func getObjectWirelessControllerBleProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("txpower"); ok {
-		t, err := expandWirelessControllerBleProfileTxpower(d, v, "txpower")
+
+		t, err := expandWirelessControllerBleProfileTxpower(d, v, "txpower", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -495,7 +507,8 @@ func getObjectWirelessControllerBleProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("beacon_interval"); ok {
-		t, err := expandWirelessControllerBleProfileBeaconInterval(d, v, "beacon_interval")
+
+		t, err := expandWirelessControllerBleProfileBeaconInterval(d, v, "beacon_interval", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -504,7 +517,8 @@ func getObjectWirelessControllerBleProfile(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("ble_scanning"); ok {
-		t, err := expandWirelessControllerBleProfileBleScanning(d, v, "ble_scanning")
+
+		t, err := expandWirelessControllerBleProfileBleScanning(d, v, "ble_scanning", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
