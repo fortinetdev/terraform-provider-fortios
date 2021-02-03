@@ -86,6 +86,12 @@ The `virtual_link` block contains:
 * `retransmit_interval` - Retransmit interval.
 * `transmit_delay` - Transmit delay.
 * `peer` - Peer IP.
+* `md5_keys` - MD5 key. The structure of `md5_keys` block is documented below.
+
+The `md5_keys` block contains:
+
+* `id` - Key ID (1 - 255).
+* `key_string` - Password for the key.
 
 The `filter_list` block contains:
 
@@ -117,6 +123,12 @@ The `ospf_interface` block contains:
 * `bfd` - Bidirectional Forwarding Detection (BFD).
 * `status` - Enable/disable status.
 * `resync_timeout` - Graceful restart neighbor resynchronization timeout.
+* `md5_keys` - MD5 key. The structure of `md5_keys` block is documented below.
+
+The `md5_keys` block contains:
+
+* `id` - Key ID (1 - 255).
+* `key_string` - Password for the key.
 
 The `network` block contains:
 
