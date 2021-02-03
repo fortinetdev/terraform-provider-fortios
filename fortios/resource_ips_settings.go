@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -61,7 +62,7 @@ func resourceIpsSettingsUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectIpsSettings(d)
+	obj, err := getObjectIpsSettings(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating IpsSettings resource while getting object: %v", err)
 	}
@@ -114,51 +115,51 @@ func resourceIpsSettingsRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectIpsSettings(d, o)
+	err = refreshObjectIpsSettings(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading IpsSettings resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenIpsSettingsPacketLogHistory(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenIpsSettingsPacketLogHistory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenIpsSettingsPacketLogPostAttack(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenIpsSettingsPacketLogPostAttack(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenIpsSettingsPacketLogMemory(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenIpsSettingsPacketLogMemory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenIpsSettingsIpsPacketQuota(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenIpsSettingsIpsPacketQuota(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectIpsSettings(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectIpsSettings(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("packet_log_history", flattenIpsSettingsPacketLogHistory(o["packet-log-history"], d, "packet_log_history")); err != nil {
+	if err = d.Set("packet_log_history", flattenIpsSettingsPacketLogHistory(o["packet-log-history"], d, "packet_log_history", sv)); err != nil {
 		if !fortiAPIPatch(o["packet-log-history"]) {
 			return fmt.Errorf("Error reading packet_log_history: %v", err)
 		}
 	}
 
-	if err = d.Set("packet_log_post_attack", flattenIpsSettingsPacketLogPostAttack(o["packet-log-post-attack"], d, "packet_log_post_attack")); err != nil {
+	if err = d.Set("packet_log_post_attack", flattenIpsSettingsPacketLogPostAttack(o["packet-log-post-attack"], d, "packet_log_post_attack", sv)); err != nil {
 		if !fortiAPIPatch(o["packet-log-post-attack"]) {
 			return fmt.Errorf("Error reading packet_log_post_attack: %v", err)
 		}
 	}
 
-	if err = d.Set("packet_log_memory", flattenIpsSettingsPacketLogMemory(o["packet-log-memory"], d, "packet_log_memory")); err != nil {
+	if err = d.Set("packet_log_memory", flattenIpsSettingsPacketLogMemory(o["packet-log-memory"], d, "packet_log_memory", sv)); err != nil {
 		if !fortiAPIPatch(o["packet-log-memory"]) {
 			return fmt.Errorf("Error reading packet_log_memory: %v", err)
 		}
 	}
 
-	if err = d.Set("ips_packet_quota", flattenIpsSettingsIpsPacketQuota(o["ips-packet-quota"], d, "ips_packet_quota")); err != nil {
+	if err = d.Set("ips_packet_quota", flattenIpsSettingsIpsPacketQuota(o["ips-packet-quota"], d, "ips_packet_quota", sv)); err != nil {
 		if !fortiAPIPatch(o["ips-packet-quota"]) {
 			return fmt.Errorf("Error reading ips_packet_quota: %v", err)
 		}
@@ -170,30 +171,31 @@ func refreshObjectIpsSettings(d *schema.ResourceData, o map[string]interface{}) 
 func flattenIpsSettingsFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandIpsSettingsPacketLogHistory(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandIpsSettingsPacketLogHistory(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandIpsSettingsPacketLogPostAttack(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandIpsSettingsPacketLogPostAttack(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandIpsSettingsPacketLogMemory(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandIpsSettingsPacketLogMemory(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandIpsSettingsIpsPacketQuota(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandIpsSettingsIpsPacketQuota(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectIpsSettings(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectIpsSettings(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("packet_log_history"); ok {
-		t, err := expandIpsSettingsPacketLogHistory(d, v, "packet_log_history")
+
+		t, err := expandIpsSettingsPacketLogHistory(d, v, "packet_log_history", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -202,7 +204,8 @@ func getObjectIpsSettings(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOkExists("packet_log_post_attack"); ok {
-		t, err := expandIpsSettingsPacketLogPostAttack(d, v, "packet_log_post_attack")
+
+		t, err := expandIpsSettingsPacketLogPostAttack(d, v, "packet_log_post_attack", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -211,7 +214,8 @@ func getObjectIpsSettings(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("packet_log_memory"); ok {
-		t, err := expandIpsSettingsPacketLogMemory(d, v, "packet_log_memory")
+
+		t, err := expandIpsSettingsPacketLogMemory(d, v, "packet_log_memory", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -220,7 +224,8 @@ func getObjectIpsSettings(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOkExists("ips_packet_quota"); ok {
-		t, err := expandIpsSettingsIpsPacketQuota(d, v, "ips_packet_quota")
+
+		t, err := expandIpsSettingsIpsPacketQuota(d, v, "ips_packet_quota", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
