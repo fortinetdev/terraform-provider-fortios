@@ -26,7 +26,6 @@ resource "fortios_firewallshaper_trafficshaper" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Traffic shaper name.
@@ -37,6 +36,12 @@ The following arguments are supported:
 * `per_policy` - Enable/disable applying a separate shaper for each policy. For example, if enabled the guaranteed bandwidth is applied separately for each policy.
 * `diffserv` - Enable/disable changing the DiffServ setting applied to traffic accepted by this shaper.
 * `diffservcode` - DiffServ setting to be applied to traffic accepted by this shaper.
+* `dscp_marking_method` - Select DSCP marking method.
+* `exceed_bandwidth` - Exceed bandwidth used for DSCP multi-stage marking. Units depend on the bandwidth-unit setting.
+* `exceed_dscp` - DSCP mark for traffic in [guaranteed-bandwidth, exceed-bandwidth].
+* `maximum_dscp` - DSCP mark for traffic in [exceed-bandwidth, maximum-bandwidth].
+* `overhead` - Per-packet size overhead used in rate computations.
+* `exceed_class_id` - Class ID for traffic in [guaranteed-bandwidth, maximum-bandwidth].
 
 
 ## Attribute Reference
