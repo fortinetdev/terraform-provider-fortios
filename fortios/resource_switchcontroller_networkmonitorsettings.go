@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -43,7 +44,7 @@ func resourceSwitchControllerNetworkMonitorSettingsUpdate(d *schema.ResourceData
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSwitchControllerNetworkMonitorSettings(d)
+	obj, err := getObjectSwitchControllerNetworkMonitorSettings(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerNetworkMonitorSettings resource while getting object: %v", err)
 	}
@@ -96,21 +97,21 @@ func resourceSwitchControllerNetworkMonitorSettingsRead(d *schema.ResourceData, 
 		return nil
 	}
 
-	err = refreshObjectSwitchControllerNetworkMonitorSettings(d, o)
+	err = refreshObjectSwitchControllerNetworkMonitorSettings(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerNetworkMonitorSettings resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSwitchControllerNetworkMonitorSettingsNetworkMonitoring(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerNetworkMonitorSettingsNetworkMonitoring(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSwitchControllerNetworkMonitorSettings(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSwitchControllerNetworkMonitorSettings(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("network_monitoring", flattenSwitchControllerNetworkMonitorSettingsNetworkMonitoring(o["network-monitoring"], d, "network_monitoring")); err != nil {
+	if err = d.Set("network_monitoring", flattenSwitchControllerNetworkMonitorSettingsNetworkMonitoring(o["network-monitoring"], d, "network_monitoring", sv)); err != nil {
 		if !fortiAPIPatch(o["network-monitoring"]) {
 			return fmt.Errorf("Error reading network_monitoring: %v", err)
 		}
@@ -122,18 +123,19 @@ func refreshObjectSwitchControllerNetworkMonitorSettings(d *schema.ResourceData,
 func flattenSwitchControllerNetworkMonitorSettingsFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSwitchControllerNetworkMonitorSettingsNetworkMonitoring(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerNetworkMonitorSettingsNetworkMonitoring(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSwitchControllerNetworkMonitorSettings(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSwitchControllerNetworkMonitorSettings(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("network_monitoring"); ok {
-		t, err := expandSwitchControllerNetworkMonitorSettingsNetworkMonitoring(d, v, "network_monitoring")
+
+		t, err := expandSwitchControllerNetworkMonitorSettingsNetworkMonitoring(d, v, "network_monitoring", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
