@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -92,7 +93,7 @@ func resourceWirelessControllerBonjourProfileCreate(d *schema.ResourceData, m in
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWirelessControllerBonjourProfile(d)
+	obj, err := getObjectWirelessControllerBonjourProfile(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WirelessControllerBonjourProfile resource while getting object: %v", err)
 	}
@@ -117,7 +118,7 @@ func resourceWirelessControllerBonjourProfileUpdate(d *schema.ResourceData, m in
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWirelessControllerBonjourProfile(d)
+	obj, err := getObjectWirelessControllerBonjourProfile(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerBonjourProfile resource while getting object: %v", err)
 	}
@@ -170,22 +171,22 @@ func resourceWirelessControllerBonjourProfileRead(d *schema.ResourceData, m inte
 		return nil
 	}
 
-	err = refreshObjectWirelessControllerBonjourProfile(d, o)
+	err = refreshObjectWirelessControllerBonjourProfile(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading WirelessControllerBonjourProfile resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenWirelessControllerBonjourProfileName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerBonjourProfileName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerBonjourProfileComment(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerBonjourProfileComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerBonjourProfilePolicyList(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenWirelessControllerBonjourProfilePolicyList(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -206,27 +207,32 @@ func flattenWirelessControllerBonjourProfilePolicyList(v interface{}, d *schema.
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "policy_id"
 		if _, ok := i["policy-id"]; ok {
-			tmp["policy_id"] = flattenWirelessControllerBonjourProfilePolicyListPolicyId(i["policy-id"], d, pre_append)
+
+			tmp["policy_id"] = flattenWirelessControllerBonjourProfilePolicyListPolicyId(i["policy-id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := i["description"]; ok {
-			tmp["description"] = flattenWirelessControllerBonjourProfilePolicyListDescription(i["description"], d, pre_append)
+
+			tmp["description"] = flattenWirelessControllerBonjourProfilePolicyListDescription(i["description"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "from_vlan"
 		if _, ok := i["from-vlan"]; ok {
-			tmp["from_vlan"] = flattenWirelessControllerBonjourProfilePolicyListFromVlan(i["from-vlan"], d, pre_append)
+
+			tmp["from_vlan"] = flattenWirelessControllerBonjourProfilePolicyListFromVlan(i["from-vlan"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "to_vlan"
 		if _, ok := i["to-vlan"]; ok {
-			tmp["to_vlan"] = flattenWirelessControllerBonjourProfilePolicyListToVlan(i["to-vlan"], d, pre_append)
+
+			tmp["to_vlan"] = flattenWirelessControllerBonjourProfilePolicyListToVlan(i["to-vlan"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "services"
 		if _, ok := i["services"]; ok {
-			tmp["services"] = flattenWirelessControllerBonjourProfilePolicyListServices(i["services"], d, pre_append)
+
+			tmp["services"] = flattenWirelessControllerBonjourProfilePolicyListServices(i["services"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -238,50 +244,50 @@ func flattenWirelessControllerBonjourProfilePolicyList(v interface{}, d *schema.
 	return result
 }
 
-func flattenWirelessControllerBonjourProfilePolicyListPolicyId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerBonjourProfilePolicyListPolicyId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerBonjourProfilePolicyListDescription(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerBonjourProfilePolicyListDescription(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerBonjourProfilePolicyListFromVlan(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerBonjourProfilePolicyListFromVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerBonjourProfilePolicyListToVlan(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerBonjourProfilePolicyListToVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerBonjourProfilePolicyListServices(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerBonjourProfilePolicyListServices(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectWirelessControllerBonjourProfile(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectWirelessControllerBonjourProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenWirelessControllerBonjourProfileName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenWirelessControllerBonjourProfileName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("comment", flattenWirelessControllerBonjourProfileComment(o["comment"], d, "comment")); err != nil {
+	if err = d.Set("comment", flattenWirelessControllerBonjourProfileComment(o["comment"], d, "comment", sv)); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("policy_list", flattenWirelessControllerBonjourProfilePolicyList(o["policy-list"], d, "policy_list")); err != nil {
+		if err = d.Set("policy_list", flattenWirelessControllerBonjourProfilePolicyList(o["policy-list"], d, "policy_list", sv)); err != nil {
 			if !fortiAPIPatch(o["policy-list"]) {
 				return fmt.Errorf("Error reading policy_list: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("policy_list"); ok {
-			if err = d.Set("policy_list", flattenWirelessControllerBonjourProfilePolicyList(o["policy-list"], d, "policy_list")); err != nil {
+			if err = d.Set("policy_list", flattenWirelessControllerBonjourProfilePolicyList(o["policy-list"], d, "policy_list", sv)); err != nil {
 				if !fortiAPIPatch(o["policy-list"]) {
 					return fmt.Errorf("Error reading policy_list: %v", err)
 				}
@@ -295,18 +301,18 @@ func refreshObjectWirelessControllerBonjourProfile(d *schema.ResourceData, o map
 func flattenWirelessControllerBonjourProfileFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandWirelessControllerBonjourProfileName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerBonjourProfileName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerBonjourProfileComment(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerBonjourProfileComment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerBonjourProfilePolicyList(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerBonjourProfilePolicyList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -322,27 +328,32 @@ func expandWirelessControllerBonjourProfilePolicyList(d *schema.ResourceData, v 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "policy_id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["policy-id"], _ = expandWirelessControllerBonjourProfilePolicyListPolicyId(d, i["policy_id"], pre_append)
+
+			tmp["policy-id"], _ = expandWirelessControllerBonjourProfilePolicyListPolicyId(d, i["policy_id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["description"], _ = expandWirelessControllerBonjourProfilePolicyListDescription(d, i["description"], pre_append)
+
+			tmp["description"], _ = expandWirelessControllerBonjourProfilePolicyListDescription(d, i["description"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "from_vlan"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["from-vlan"], _ = expandWirelessControllerBonjourProfilePolicyListFromVlan(d, i["from_vlan"], pre_append)
+
+			tmp["from-vlan"], _ = expandWirelessControllerBonjourProfilePolicyListFromVlan(d, i["from_vlan"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "to_vlan"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["to-vlan"], _ = expandWirelessControllerBonjourProfilePolicyListToVlan(d, i["to_vlan"], pre_append)
+
+			tmp["to-vlan"], _ = expandWirelessControllerBonjourProfilePolicyListToVlan(d, i["to_vlan"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "services"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["services"], _ = expandWirelessControllerBonjourProfilePolicyListServices(d, i["services"], pre_append)
+
+			tmp["services"], _ = expandWirelessControllerBonjourProfilePolicyListServices(d, i["services"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -353,31 +364,32 @@ func expandWirelessControllerBonjourProfilePolicyList(d *schema.ResourceData, v 
 	return result, nil
 }
 
-func expandWirelessControllerBonjourProfilePolicyListPolicyId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerBonjourProfilePolicyListPolicyId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerBonjourProfilePolicyListDescription(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerBonjourProfilePolicyListDescription(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerBonjourProfilePolicyListFromVlan(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerBonjourProfilePolicyListFromVlan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerBonjourProfilePolicyListToVlan(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerBonjourProfilePolicyListToVlan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerBonjourProfilePolicyListServices(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerBonjourProfilePolicyListServices(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectWirelessControllerBonjourProfile(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectWirelessControllerBonjourProfile(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandWirelessControllerBonjourProfileName(d, v, "name")
+
+		t, err := expandWirelessControllerBonjourProfileName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -386,7 +398,8 @@ func getObjectWirelessControllerBonjourProfile(d *schema.ResourceData) (*map[str
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-		t, err := expandWirelessControllerBonjourProfileComment(d, v, "comment")
+
+		t, err := expandWirelessControllerBonjourProfileComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -395,7 +408,8 @@ func getObjectWirelessControllerBonjourProfile(d *schema.ResourceData) (*map[str
 	}
 
 	if v, ok := d.GetOk("policy_list"); ok {
-		t, err := expandWirelessControllerBonjourProfilePolicyList(d, v, "policy_list")
+
+		t, err := expandWirelessControllerBonjourProfilePolicyList(d, v, "policy_list", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
