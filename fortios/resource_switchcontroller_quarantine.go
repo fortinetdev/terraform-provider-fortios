@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -86,7 +87,7 @@ func resourceSwitchControllerQuarantineUpdate(d *schema.ResourceData, m interfac
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSwitchControllerQuarantine(d)
+	obj, err := getObjectSwitchControllerQuarantine(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerQuarantine resource while getting object: %v", err)
 	}
@@ -139,18 +140,18 @@ func resourceSwitchControllerQuarantineRead(d *schema.ResourceData, m interface{
 		return nil
 	}
 
-	err = refreshObjectSwitchControllerQuarantine(d, o)
+	err = refreshObjectSwitchControllerQuarantine(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerQuarantine resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSwitchControllerQuarantineQuarantine(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerQuarantineQuarantine(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerQuarantineTargets(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSwitchControllerQuarantineTargets(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -171,22 +172,26 @@ func flattenSwitchControllerQuarantineTargets(v interface{}, d *schema.ResourceD
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
 		if _, ok := i["mac"]; ok {
-			tmp["mac"] = flattenSwitchControllerQuarantineTargetsMac(i["mac"], d, pre_append)
+
+			tmp["mac"] = flattenSwitchControllerQuarantineTargetsMac(i["mac"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "entry_id"
 		if _, ok := i["entry-id"]; ok {
-			tmp["entry_id"] = flattenSwitchControllerQuarantineTargetsEntryId(i["entry-id"], d, pre_append)
+
+			tmp["entry_id"] = flattenSwitchControllerQuarantineTargetsEntryId(i["entry-id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := i["description"]; ok {
-			tmp["description"] = flattenSwitchControllerQuarantineTargetsDescription(i["description"], d, pre_append)
+
+			tmp["description"] = flattenSwitchControllerQuarantineTargetsDescription(i["description"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tag"
 		if _, ok := i["tag"]; ok {
-			tmp["tag"] = flattenSwitchControllerQuarantineTargetsTag(i["tag"], d, pre_append)
+
+			tmp["tag"] = flattenSwitchControllerQuarantineTargetsTag(i["tag"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -198,19 +203,19 @@ func flattenSwitchControllerQuarantineTargets(v interface{}, d *schema.ResourceD
 	return result
 }
 
-func flattenSwitchControllerQuarantineTargetsMac(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerQuarantineTargetsMac(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerQuarantineTargetsEntryId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerQuarantineTargetsEntryId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerQuarantineTargetsDescription(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerQuarantineTargetsDescription(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerQuarantineTargetsTag(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSwitchControllerQuarantineTargetsTag(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -231,7 +236,8 @@ func flattenSwitchControllerQuarantineTargetsTag(v interface{}, d *schema.Resour
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
 		if _, ok := i["tags"]; ok {
-			tmp["tags"] = flattenSwitchControllerQuarantineTargetsTagTags(i["tags"], d, pre_append)
+
+			tmp["tags"] = flattenSwitchControllerQuarantineTargetsTagTags(i["tags"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -242,28 +248,28 @@ func flattenSwitchControllerQuarantineTargetsTag(v interface{}, d *schema.Resour
 	return result
 }
 
-func flattenSwitchControllerQuarantineTargetsTagTags(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerQuarantineTargetsTagTags(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSwitchControllerQuarantine(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSwitchControllerQuarantine(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("quarantine", flattenSwitchControllerQuarantineQuarantine(o["quarantine"], d, "quarantine")); err != nil {
+	if err = d.Set("quarantine", flattenSwitchControllerQuarantineQuarantine(o["quarantine"], d, "quarantine", sv)); err != nil {
 		if !fortiAPIPatch(o["quarantine"]) {
 			return fmt.Errorf("Error reading quarantine: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("targets", flattenSwitchControllerQuarantineTargets(o["targets"], d, "targets")); err != nil {
+		if err = d.Set("targets", flattenSwitchControllerQuarantineTargets(o["targets"], d, "targets", sv)); err != nil {
 			if !fortiAPIPatch(o["targets"]) {
 				return fmt.Errorf("Error reading targets: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("targets"); ok {
-			if err = d.Set("targets", flattenSwitchControllerQuarantineTargets(o["targets"], d, "targets")); err != nil {
+			if err = d.Set("targets", flattenSwitchControllerQuarantineTargets(o["targets"], d, "targets", sv)); err != nil {
 				if !fortiAPIPatch(o["targets"]) {
 					return fmt.Errorf("Error reading targets: %v", err)
 				}
@@ -277,14 +283,14 @@ func refreshObjectSwitchControllerQuarantine(d *schema.ResourceData, o map[strin
 func flattenSwitchControllerQuarantineFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSwitchControllerQuarantineQuarantine(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerQuarantineQuarantine(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerQuarantineTargets(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerQuarantineTargets(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -300,22 +306,26 @@ func expandSwitchControllerQuarantineTargets(d *schema.ResourceData, v interface
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mac"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["mac"], _ = expandSwitchControllerQuarantineTargetsMac(d, i["mac"], pre_append)
+
+			tmp["mac"], _ = expandSwitchControllerQuarantineTargetsMac(d, i["mac"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "entry_id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["entry-id"], _ = expandSwitchControllerQuarantineTargetsEntryId(d, i["entry_id"], pre_append)
+
+			tmp["entry-id"], _ = expandSwitchControllerQuarantineTargetsEntryId(d, i["entry_id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "description"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["description"], _ = expandSwitchControllerQuarantineTargetsDescription(d, i["description"], pre_append)
+
+			tmp["description"], _ = expandSwitchControllerQuarantineTargetsDescription(d, i["description"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tag"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["tag"], _ = expandSwitchControllerQuarantineTargetsTag(d, i["tag"], pre_append)
+
+			tmp["tag"], _ = expandSwitchControllerQuarantineTargetsTag(d, i["tag"], pre_append, sv)
 		} else {
 			tmp["tag"] = make([]string, 0)
 		}
@@ -328,19 +338,19 @@ func expandSwitchControllerQuarantineTargets(d *schema.ResourceData, v interface
 	return result, nil
 }
 
-func expandSwitchControllerQuarantineTargetsMac(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerQuarantineTargetsMac(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerQuarantineTargetsEntryId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerQuarantineTargetsEntryId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerQuarantineTargetsDescription(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerQuarantineTargetsDescription(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerQuarantineTargetsTag(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerQuarantineTargetsTag(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -356,7 +366,8 @@ func expandSwitchControllerQuarantineTargetsTag(d *schema.ResourceData, v interf
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "tags"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["tags"], _ = expandSwitchControllerQuarantineTargetsTagTags(d, i["tags"], pre_append)
+
+			tmp["tags"], _ = expandSwitchControllerQuarantineTargetsTagTags(d, i["tags"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -367,15 +378,16 @@ func expandSwitchControllerQuarantineTargetsTag(d *schema.ResourceData, v interf
 	return result, nil
 }
 
-func expandSwitchControllerQuarantineTargetsTagTags(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerQuarantineTargetsTagTags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSwitchControllerQuarantine(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSwitchControllerQuarantine(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("quarantine"); ok {
-		t, err := expandSwitchControllerQuarantineQuarantine(d, v, "quarantine")
+
+		t, err := expandSwitchControllerQuarantineQuarantine(d, v, "quarantine", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -384,7 +396,8 @@ func getObjectSwitchControllerQuarantine(d *schema.ResourceData) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("targets"); ok {
-		t, err := expandSwitchControllerQuarantineTargets(d, v, "targets")
+
+		t, err := expandSwitchControllerQuarantineTargets(d, v, "targets", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
