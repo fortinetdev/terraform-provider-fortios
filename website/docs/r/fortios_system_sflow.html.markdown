@@ -21,7 +21,6 @@ resource "fortios_system_sflow" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `collector_ip` - (Required) IP address of the sFlow collector that sFlow agents added to interfaces in this VDOM send sFlow datagrams to (default = 0.0.0.0).
