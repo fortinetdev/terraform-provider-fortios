@@ -1,4 +1,731 @@
-## 1.9.0 (Unreleased)
+## 1.10.0 (Unreleased)
+
+## 1.9.0 (Feb 3, 2021)
+
+FEATURES:
+
+* **New Data Source:** `data_source_firewall_DoSpolicy`
+* **New Data Source:** `data_source_firewall_DoSpolicy6`
+* **New Data Source:** `data_source_firewall_DoSpolicy6list`
+* **New Data Source:** `data_source_firewall_DoSpolicylist`
+* **New Data Source:** `data_source_firewall_address6template`
+* **New Data Source:** `data_source_firewall_address6templatelist`
+* **New Data Source:** `data_source_firewall_internetservice`
+* **New Data Source:** `data_source_firewall_internetservicecustom`
+* **New Data Source:** `data_source_firewall_internetservicecustomgroup`
+* **New Data Source:** `data_source_firewall_internetservicecustomgrouplist`
+* **New Data Source:** `data_source_firewall_internetservicecustomlist`
+* **New Data Source:** `data_source_firewall_internetservicedefinition`
+* **New Data Source:** `data_source_firewall_internetservicedefinitionlist`
+* **New Data Source:** `data_source_firewall_internetserviceextension`
+* **New Data Source:** `data_source_firewall_internetserviceextensionlist`
+* **New Data Source:** `data_source_firewall_internetservicegroup`
+* **New Data Source:** `data_source_firewall_internetservicegrouplist`
+* **New Data Source:** `data_source_firewall_internetservicelist`
+* **New Data Source:** `data_source_firewall_ipv6ehfilter`
+* **New Data Source:** `data_source_firewall_multicastaddress`
+* **New Data Source:** `data_source_firewall_multicastaddress6`
+* **New Data Source:** `data_source_firewall_multicastaddress6list`
+* **New Data Source:** `data_source_firewall_multicastaddresslist`
+* **New Data Source:** `data_source_firewall_policy46`
+* **New Data Source:** `data_source_firewall_policy46list`
+* **New Data Source:** `data_source_firewall_profileprotocoloptions`
+* **New Data Source:** `data_source_firewall_profileprotocoloptionslist`
+* **New Data Source:** `data_source_firewall_proxyaddress`
+* **New Data Source:** `data_source_firewall_proxyaddresslist`
+* **New Data Source:** `data_source_firewall_proxyaddrgrp`
+* **New Data Source:** `data_source_firewall_proxyaddrgrplist`
+* **New Data Source:** `data_source_firewallconsolidated_policy`
+* **New Data Source:** `data_source_firewallconsolidated_policylist`
+* **New Data Source:** `data_source_firewallschedule_group`
+* **New Data Source:** `data_source_firewallschedule_grouplist`
+* **New Data Source:** `data_source_firewallschedule_onetime`
+* **New Data Source:** `data_source_firewallschedule_onetimelist`
+* **New Data Source:** `data_source_firewallschedule_recurring`
+* **New Data Source:** `data_source_firewallschedule_recurringlist`
+* **New Data Source:** `data_source_firewallservice_category`
+* **New Data Source:** `data_source_firewallservice_categorylist`
+* **New Data Source:** `data_source_firewallservice_custom`
+* **New Data Source:** `data_source_firewallservice_customlist`
+* **New Data Source:** `data_source_firewallservice_group`
+* **New Data Source:** `data_source_firewallservice_grouplist`
+* **New Data Source:** `data_source_firewallshaper_peripshaper`
+* **New Data Source:** `data_source_firewallshaper_peripshaperlist`
+* **New Data Source:** `data_source_firewallshaper_trafficshaper`
+* **New Data Source:** `data_source_firewallshaper_trafficshaperlist`
+* **New Data Source:** `data_source_firewallwildcardfqdn_custom`
+* **New Data Source:** `data_source_firewallwildcardfqdn_customlist`
+* **New Data Source:** `data_source_firewallwildcardfqdn_group`
+* **New Data Source:** `data_source_firewallwildcardfqdn_grouplist`
+* **New Data Source:** `data_source_system_accprofile`
+* **New Data Source:** `data_source_system_accprofilelist`
+* **New Data Source:** `data_source_system_admin`
+* **New Data Source:** `data_source_system_adminlist`
+* **New Data Source:** `data_source_system_alias`
+* **New Data Source:** `data_source_system_aliaslist`
+* **New Data Source:** `data_source_system_apiuser`
+* **New Data Source:** `data_source_system_apiuserlist`
+* **New Data Source:** `data_source_system_arptable`
+* **New Data Source:** `data_source_system_arptablelist`
+* **New Data Source:** `data_source_system_autoinstall`
+* **New Data Source:** `data_source_system_automationaction`
+* **New Data Source:** `data_source_system_automationactionlist`
+* **New Data Source:** `data_source_system_automationdestination`
+* **New Data Source:** `data_source_system_automationdestinationlist`
+* **New Data Source:** `data_source_system_automationtrigger`
+* **New Data Source:** `data_source_system_automationtriggerlist`
+* **New Data Source:** `data_source_system_autoscript`
+* **New Data Source:** `data_source_system_autoscriptlist`
+* **New Data Source:** `data_source_system_centralmanagement`
+* **New Data Source:** `data_source_system_clustersync`
+* **New Data Source:** `data_source_system_clustersynclist`
+* **New Data Source:** `data_source_system_console`
+* **New Data Source:** `data_source_system_csf`
+* **New Data Source:** `data_source_system_ddns`
+* **New Data Source:** `data_source_system_ddnslist`
+* **New Data Source:** `data_source_system_dns`
+* **New Data Source:** `data_source_system_dnsdatabase`
+* **New Data Source:** `data_source_system_dnsdatabaselist`
+* **New Data Source:** `data_source_system_dnsserver`
+* **New Data Source:** `data_source_system_dnsserverlist`
+* **New Data Source:** `data_source_system_dscpbasedpriority`
+* **New Data Source:** `data_source_system_dscpbasedprioritylist`
+* **New Data Source:** `data_source_system_emailserver`
+* **New Data Source:** `data_source_system_externalresource`
+* **New Data Source:** `data_source_system_externalresourcelist`
+* **New Data Source:** `data_source_system_fipscc`
+* **New Data Source:** `data_source_system_fm`
+* **New Data Source:** `data_source_system_fortiguard`
+* **New Data Source:** `data_source_system_fortimanager`
+* **New Data Source:** `data_source_system_fortisandbox`
+* **New Data Source:** `data_source_system_fssopolling`
+* **New Data Source:** `data_source_system_ftmpush`
+* **New Data Source:** `data_source_system_gretunnel`
+* **New Data Source:** `data_source_system_gretunnellist`
+* **New Data Source:** `data_source_system_ha`
+* **New Data Source:** `data_source_system_hamonitor`
+* **New Data Source:** `data_source_system_ipiptunnel`
+* **New Data Source:** `data_source_system_ipiptunnellist`
+* **New Data Source:** `data_source_system_ipv6neighborcache`
+* **New Data Source:** `data_source_system_ipv6neighborcachelist`
+* **New Data Source:** `data_source_system_ipv6tunnel`
+* **New Data Source:** `data_source_system_ipv6tunnellist`
+* **New Data Source:** `data_source_system_linkmonitor`
+* **New Data Source:** `data_source_system_linkmonitorlist`
+* **New Data Source:** `data_source_system_managementtunnel`
+* **New Data Source:** `data_source_system_mobiletunnel`
+* **New Data Source:** `data_source_system_mobiletunnellist`
+* **New Data Source:** `data_source_system_nat64`
+* **New Data Source:** `data_source_system_ndproxy`
+* **New Data Source:** `data_source_system_netflow`
+* **New Data Source:** `data_source_system_networkvisibility`
+* **New Data Source:** `data_source_system_ntp`
+* **New Data Source:** `data_source_system_objecttagging`
+* **New Data Source:** `data_source_system_objecttagginglist`
+* **New Data Source:** `data_source_system_passwordpolicy`
+* **New Data Source:** `data_source_system_passwordpolicyguestadmin`
+* **New Data Source:** `data_source_system_pppoeinterface`
+* **New Data Source:** `data_source_system_pppoeinterfacelist`
+* **New Data Source:** `data_source_system_proberesponse`
+* **New Data Source:** `data_source_system_proxyarp`
+* **New Data Source:** `data_source_system_proxyarplist`
+* **New Data Source:** `data_source_system_replacemsggroup`
+* **New Data Source:** `data_source_system_replacemsggrouplist`
+* **New Data Source:** `data_source_system_replacemsgimage`
+* **New Data Source:** `data_source_system_replacemsgimagelist`
+* **New Data Source:** `data_source_system_resourcelimits`
+* **New Data Source:** `data_source_system_sdnconnector`
+* **New Data Source:** `data_source_system_sdnconnectorlist`
+* **New Data Source:** `data_source_system_sessionhelper`
+* **New Data Source:** `data_source_system_sessionhelperlist`
+* **New Data Source:** `data_source_system_sessionttl`
+* **New Data Source:** `data_source_system_sflow`
+* **New Data Source:** `data_source_system_sittunnel`
+* **New Data Source:** `data_source_system_sittunnellist`
+* **New Data Source:** `data_source_system_smsserver`
+* **New Data Source:** `data_source_system_smsserverlist`
+* **New Data Source:** `data_source_system_tosbasedpriority`
+* **New Data Source:** `data_source_system_tosbasedprioritylist`
+* **New Data Source:** `data_source_system_vdomexception`
+* **New Data Source:** `data_source_system_vdomexceptionlist`
+* **New Data Source:** `data_source_system_vdomnetflow`
+* **New Data Source:** `data_source_system_vdomsflow`
+* **New Data Source:** `data_source_system_virtualwanlink`
+* **New Data Source:** `data_source_system_vxlan`
+* **New Data Source:** `data_source_system_vxlanlist`
+* **New Data Source:** `data_source_system_wccp`
+* **New Data Source:** `data_source_system_wccplist`
+* **New Data Source:** `data_source_system_zone`
+* **New Data Source:** `data_source_system_zonelist`
+* **New Data Source:** `data_source_systemautoupdate_pushupdate`
+* **New Data Source:** `data_source_systemautoupdate_schedule`
+* **New Data Source:** `data_source_systemautoupdate_tunneling`
+* **New Data Source:** `data_source_systemdhcp_server`
+* **New Data Source:** `data_source_systemdhcp_serverlist`
+* **New Data Source:** `data_source_systemlldp_networkpolicy`
+* **New Data Source:** `data_source_systemlldp_networkpolicylist`
+* **New Data Source:** `data_source_systemsnmp_community`
+* **New Data Source:** `data_source_systemsnmp_communitylist`
+* **New Data Source:** `data_source_systemsnmp_sysinfo`
+* **New Data Source:** `data_source_systemsnmp_user`
+* **New Data Source:** `data_source_systemsnmp_userlist`
+* **New Data Source:** `data_source_user_saml`
+* **New Data Source:** `data_source_user_samllist`
+* **New Resource:** `resource_certificate_remote`
+* **New Resource:** `resource_cifs_domaincontroller`
+* **New Resource:** `resource_cifs_profile`
+* **New Resource:** `resource_credentialstore_domaincontroller`
+* **New Resource:** `resource_dlp_sensitivity`
+* **New Resource:** `resource_dpdk_cpus`
+* **New Resource:** `resource_dpdk_global`
+* **New Resource:** `resource_emailfilter_blockallowlist`
+* **New Resource:** `resource_emailfilter_bwl`
+* **New Resource:** `resource_emailfilter_bword`
+* **New Resource:** `resource_emailfilter_dnsbl`
+* **New Resource:** `resource_emailfilter_fortishield`
+* **New Resource:** `resource_emailfilter_iptrust`
+* **New Resource:** `resource_emailfilter_mheader`
+* **New Resource:** `resource_emailfilter_options`
+* **New Resource:** `resource_emailfilter_profile`
+* **New Resource:** `resource_endpointcontrol_fctems`
+* **New Resource:** `resource_extendercontroller_dataplan`
+* **New Resource:** `resource_filefilter_profile`
+* **New Resource:** `resource_firewall_city`
+* **New Resource:** `resource_firewall_country`
+* **New Resource:** `resource_firewall_decryptedtrafficmirror`
+* **New Resource:** `resource_firewall_internetserviceaddition`
+* **New Resource:** `resource_firewall_internetserviceappend`
+* **New Resource:** `resource_firewall_internetservicebotnet`
+* **New Resource:** `resource_firewall_internetserviceipblreason`
+* **New Resource:** `resource_firewall_internetserviceipblvendor`
+* **New Resource:** `resource_firewall_internetservicelist`
+* **New Resource:** `resource_firewall_internetservicename`
+* **New Resource:** `resource_firewall_internetserviceowner`
+* **New Resource:** `resource_firewall_internetservicereputation`
+* **New Resource:** `resource_firewall_region`
+* **New Resource:** `resource_firewall_trafficclass`
+* **New Resource:** `resource_firewall_vendormac`
+* **New Resource:** `resource_ips_viewmap`
+* **New Resource:** `resource_logfortianalyzercloud_filter`
+* **New Resource:** `resource_logfortianalyzercloud_overridefilter`
+* **New Resource:** `resource_logfortianalyzercloud_overridesetting`
+* **New Resource:** `resource_logfortianalyzercloud_setting`
+* **New Resource:** `resource_nsxt_servicechain`
+* **New Resource:** `resource_nsxt_setting`
+* **New Resource:** `resource_switchcontroller_flowtracking`
+* **New Resource:** `resource_switchcontroller_location`
+* **New Resource:** `resource_switchcontroller_nacdevice`
+* **New Resource:** `resource_switchcontroller_nacsettings`
+* **New Resource:** `resource_switchcontroller_portpolicy`
+* **New Resource:** `resource_switchcontroller_remotelog`
+* **New Resource:** `resource_switchcontroller_snmpcommunity`
+* **New Resource:** `resource_switchcontroller_snmpsysinfo`
+* **New Resource:** `resource_switchcontroller_snmptrapthreshold`
+* **New Resource:** `resource_switchcontroller_snmpuser`
+* **New Resource:** `resource_switchcontroller_stormcontrolpolicy`
+* **New Resource:** `resource_switchcontroller_stpinstance`
+* **New Resource:** `resource_switchcontroller_trafficsniffer`
+* **New Resource:** `resource_switchcontroller_vlanpolicy`
+* **New Resource:** `resource_switchcontrollerinitialconfig_template`
+* **New Resource:** `resource_switchcontrollerinitialconfig_vlans`
+* **New Resource:** `resource_switchcontrollerptp_policy`
+* **New Resource:** `resource_switchcontrollerptp_settings`
+* **New Resource:** `resource_switchcontrollersecuritypolicy_localaccess`
+* **New Resource:** `resource_system_federatedupgrade`
+* **New Resource:** `resource_system_geoipcountry`
+* **New Resource:** `resource_system_ips`
+* **New Resource:** `resource_system_ipsurlfilterdns`
+* **New Resource:** `resource_system_ipsurlfilterdns6`
+* **New Resource:** `resource_system_sdwan`
+* **New Resource:** `resource_system_speedtestschedule`
+* **New Resource:** `resource_system_speedtestserver`
+* **New Resource:** `resource_system_standalonecluster`
+* **New Resource:** `resource_system_vnetunnel`
+* **New Resource:** `resource_systemreplacemsg_automation`
+* **New Resource:** `resource_user_exchange`
+* **New Resource:** `resource_user_nacpolicy`
+* **New Resource:** `resource_vpn_ocvpn`
+* **New Resource:** `resource_wirelesscontroller_accesscontrollist`
+* **New Resource:** `resource_wirelesscontroller_address`
+* **New Resource:** `resource_wirelesscontroller_addrgrp`
+* **New Resource:** `resource_wirelesscontroller_apcfgprofile`
+* **New Resource:** `resource_wirelesscontroller_arrpprofile`
+* **New Resource:** `resource_wirelesscontroller_log`
+* **New Resource:** `resource_wirelesscontroller_mpskprofile`
+* **New Resource:** `resource_wirelesscontroller_snmp`
+* **New Resource:** `resource_wirelesscontroller_wagprofile`
+
+IMPROVEMENTS:
+
+* Update data_source_firewall_address to support FortiOS 6.0 6.2 6.4 6.6.
+* Update data_source_firewall_address6 to support FortiOS 6.0 6.2 6.4 6.6.
+* Update data_source_firewall_addrgrp to support FortiOS 6.0 6.2 6.4 6.6.
+* Update data_source_firewall_policy to support FortiOS 6.0 6.2 6.4 6.6.
+* Update data_source_firewall_policy6 to support FortiOS 6.0 6.2 6.4 6.6.
+* Update data_source_firewall_policy64 to support FortiOS 6.0 6.2 6.4 6.6.
+* Update data_source_router_bgp to support FortiOS 6.0 6.2 6.4 6.6.
+* Update data_source_router_multicast to support FortiOS 6.0 6.2 6.4 6.6.
+* Update data_source_router_ospf to support FortiOS 6.0 6.2 6.4 6.6.
+* Update data_source_router_ospf6 to support FortiOS 6.0 6.2 6.4 6.6.
+* Update data_source_router_policy to support FortiOS 6.0 6.2 6.4 6.6.
+* Update data_source_router_routemap to support FortiOS 6.0 6.2 6.4 6.6.
+* Update data_source_router_static to support FortiOS 6.0 6.2 6.4 6.6.
+* Update data_source_router_static6 to support FortiOS 6.0 6.2 6.4 6.6.
+* Update data_source_routerbgp_neighbor to support FortiOS 6.0 6.2 6.4 6.6.
+* Update data_source_system_global to support FortiOS 6.0 6.2 6.4 6.6.
+* Update data_source_system_interface to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_alertemail_setting to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_antivirus_heuristic to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_antivirus_profile to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_antivirus_quarantine to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_antivirus_settings to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_application_custom to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_application_group to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_application_list to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_application_name to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_application_rulesettings to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_authentication_rule to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_authentication_scheme to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_authentication_setting to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_certificate_ca to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_certificate_crl to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_certificate_local to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_dlp_filepattern to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_dlp_fpdocsource to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_dlp_fpsensitivity to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_dlp_sensor to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_dlp_settings to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_dnsfilter_domainfilter to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_dnsfilter_profile to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_endpointcontrol_client to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_endpointcontrol_forticlientems to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_endpointcontrol_forticlientregistrationsync to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_endpointcontrol_profile to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_endpointcontrol_registeredforticlient to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_endpointcontrol_settings to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_extendercontroller_extender to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_extendercontroller_extender1 to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_DoSpolicy to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_DoSpolicy6 to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_address to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_address6 to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_address6template to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_addrgrp to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_addrgrp6 to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_authportal to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_centralsnatmap to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_dnstranslation to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_identitybasedroute to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_interfacepolicy to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_interfacepolicy6 to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_internetservice to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_internetservicecustom to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_internetservicecustomgroup to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_internetservicedefinition to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_internetserviceextension to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_internetservicegroup to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_ippool to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_ippool6 to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_iptranslation to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_ipv6ehfilter to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_ldbmonitor to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_localinpolicy to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_localinpolicy6 to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_multicastaddress to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_multicastaddress6 to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_multicastpolicy to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_multicastpolicy6 to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_policy to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_policy46 to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_policy6 to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_policy64 to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_profilegroup to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_profileprotocoloptions to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_proxyaddress to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_proxyaddrgrp to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_proxypolicy to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_shapingpolicy to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_shapingprofile to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_sniffer to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_sslserver to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_sslsshprofile to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_ttlpolicy to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_vip to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_vip46 to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_vip6 to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_vip64 to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_vipgrp to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_vipgrp46 to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_vipgrp6 to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewall_vipgrp64 to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewallconsolidated_policy to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewallipmacbinding_setting to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewallipmacbinding_table to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewallschedule_group to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewallschedule_onetime to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewallschedule_recurring to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewallservice_category to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewallservice_custom to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewallservice_group to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewallshaper_peripshaper to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewallshaper_trafficshaper to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewallssh_hostkey to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewallssh_localca to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewallssh_localkey to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewallssh_setting to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewallssl_setting to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewallwildcardfqdn_custom to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_firewallwildcardfqdn_group to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_ftpproxy_explicit to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_icap_profile to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_icap_server to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_ips_custom to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_ips_decoder to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_ips_global to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_ips_rule to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_ips_rulesettings to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_ips_sensor to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_ips_settings to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_log_customfield to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_log_eventfilter to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_log_guidisplay to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_log_setting to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_log_threatweight to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logdisk_filter to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logdisk_setting to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logfortianalyzer2_filter to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logfortianalyzer2_overridefilter to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logfortianalyzer2_overridesetting to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logfortianalyzer2_setting to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logfortianalyzer3_filter to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logfortianalyzer3_overridefilter to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logfortianalyzer3_overridesetting to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logfortianalyzer3_setting to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logfortianalyzer_filter to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logfortianalyzer_overridefilter to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logfortianalyzer_overridesetting to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logfortianalyzer_setting to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logfortiguard_filter to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logfortiguard_overridefilter to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logfortiguard_overridesetting to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logfortiguard_setting to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logmemory_filter to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logmemory_globalsetting to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logmemory_setting to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_lognulldevice_filter to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_lognulldevice_setting to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logsyslogd2_filter to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logsyslogd2_overridefilter to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logsyslogd2_overridesetting to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logsyslogd2_setting to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logsyslogd3_filter to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logsyslogd3_overridefilter to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logsyslogd3_overridesetting to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logsyslogd3_setting to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logsyslogd4_filter to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logsyslogd4_overridefilter to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logsyslogd4_overridesetting to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logsyslogd4_setting to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logsyslogd_filter to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logsyslogd_overridefilter to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logsyslogd_overridesetting to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logsyslogd_setting to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logwebtrends_filter to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_logwebtrends_setting to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_report_chart to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_report_dataset to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_report_layout to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_report_setting to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_report_style to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_report_theme to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_router_accesslist to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_router_accesslist6 to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_router_aspathlist to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_router_authpath to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_router_bfd to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_router_bfd6 to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_router_bgp to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_router_communitylist to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_router_isis to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_router_keychain to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_router_multicast to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_router_multicast6 to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_router_multicastflow to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_router_ospf to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_router_ospf6 to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_router_policy to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_router_policy6 to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_router_prefixlist to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_router_prefixlist6 to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_router_rip to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_router_ripng to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_router_routemap to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_router_setting to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_router_static to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_router_static6 to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_routerbgp_neighbor to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_spamfilter_bwl to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_spamfilter_bword to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_spamfilter_dnsbl to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_spamfilter_fortishield to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_spamfilter_iptrust to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_spamfilter_mheader to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_spamfilter_options to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_spamfilter_profile to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_sshfilter_profile to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_switchcontroller_8021Xsettings to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_switchcontroller_customcommand to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_switchcontroller_global to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_switchcontroller_igmpsnooping to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_switchcontroller_lldpprofile to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_switchcontroller_lldpsettings to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_switchcontroller_macsyncsettings to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_switchcontroller_managedswitch to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_switchcontroller_networkmonitorsettings to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_switchcontroller_quarantine to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_switchcontroller_sflow to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_switchcontroller_stormcontrol to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_switchcontroller_stpsettings to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_switchcontroller_switchgroup to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_switchcontroller_switchinterfacetag to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_switchcontroller_switchlog to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_switchcontroller_switchprofile to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_switchcontroller_system to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_switchcontroller_trafficpolicy to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_switchcontroller_virtualportpool to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_switchcontroller_vlan to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_switchcontrollerautoconfig_custom to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_switchcontrollerautoconfig_default to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_switchcontrollerautoconfig_policy to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_switchcontrollerqos_dot1pmap to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_switchcontrollerqos_ipdscpmap to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_switchcontrollerqos_qospolicy to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_switchcontrollerqos_queuepolicy to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_switchcontrollersecuritypolicy_8021X to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_switchcontrollersecuritypolicy_captiveportal to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_accprofile to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_admin to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_affinityinterrupt to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_affinitypacketredistribution to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_alarm to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_alias to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_apiuser to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_arptable to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_autoinstall to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_automationaction to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_automationdestination to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_automationstitch to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_automationtrigger to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_autoscript to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_centralmanagement to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_clustersync to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_console to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_csf to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_customlanguage to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_ddns to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_dedicatedmgmt to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_dns to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_dnsdatabase to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_dnsserver to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_dscpbasedpriority to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_emailserver to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_externalresource to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_fipscc to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_fm to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_fortiguard to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_fortimanager to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_fortisandbox to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_fssopolling to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_ftmpush to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_geneve to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_geoipoverride to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_global to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_gretunnel to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_ha to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_hamonitor to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_interface to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_ipiptunnel to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_ipsecaggregate to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_ipv6neighborcache to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_ipv6tunnel to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_linkmonitor to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_macaddresstable to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_managementtunnel to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_mobiletunnel to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_nat64 to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_ndproxy to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_netflow to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_networkvisibility to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_ntp to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_objecttagging to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_passwordpolicy to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_passwordpolicyguestadmin to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_pppoeinterface to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_proberesponse to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_proxyarp to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_ptp to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_replacemsggroup to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_replacemsgimage to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_resourcelimits to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_saml to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_sdnconnector to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_sessionhelper to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_sessionttl to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_settings to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_sflow to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_sittunnel to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_smsserver to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_ssoadmin to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_storage to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_switchinterface to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_tosbasedpriority to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_vdom to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_vdomdns to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_vdomexception to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_vdomlink to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_vdomnetflow to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_vdomproperty to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_vdomradiusserver to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_vdomsflow to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_virtualwanlink to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_virtualwirepair to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_vxlan to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_wccp to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_system_zone to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_systemautoupdate_pushupdate to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_systemautoupdate_schedule to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_systemautoupdate_tunneling to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_systemdhcp6_server to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_systemdhcp_server to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_systemlldp_networkpolicy to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_systemreplacemsg_admin to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_systemreplacemsg_alertmail to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_systemreplacemsg_auth to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_systemreplacemsg_devicedetectionportal to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_systemreplacemsg_ec to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_systemreplacemsg_fortiguardwf to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_systemreplacemsg_ftp to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_systemreplacemsg_http to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_systemreplacemsg_icap to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_systemreplacemsg_mail to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_systemreplacemsg_nacquar to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_systemreplacemsg_nntp to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_systemreplacemsg_spam to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_systemreplacemsg_sslvpn to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_systemreplacemsg_trafficquota to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_systemreplacemsg_utm to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_systemreplacemsg_webproxy to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_systemsnmp_community to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_systemsnmp_sysinfo to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_systemsnmp_user to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_user_adgrp to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_user_device to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_user_deviceaccesslist to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_user_devicecategory to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_user_devicegroup to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_user_domaincontroller to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_user_fortitoken to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_user_fsso to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_user_fssopolling to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_user_group to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_user_krbkeytab to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_user_ldap to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_user_local to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_user_passwordpolicy to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_user_peer to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_user_peergrp to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_user_pop3 to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_user_quarantine to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_user_radius to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_user_saml to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_user_securityexemptlist to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_user_setting to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_user_tacacs to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_voip_profile to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_vpn_l2tp to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_vpn_pptp to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_vpncertificate_ca to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_vpncertificate_crl to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_vpncertificate_local to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_vpncertificate_ocspserver to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_vpncertificate_remote to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_vpncertificate_setting to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_vpnipsec_concentrator to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_vpnipsec_forticlient to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_vpnipsec_manualkey to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_vpnipsec_manualkeyinterface to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_vpnipsec_phase1 to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_vpnipsec_phase1interface to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_vpnipsec_phase2 to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_vpnipsec_phase2interface to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_vpnssl_settings to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_vpnsslweb_hostchecksoftware to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_vpnsslweb_portal to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_vpnsslweb_realm to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_vpnsslweb_userbookmark to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_vpnsslweb_usergroupbookmark to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_waf_mainclass to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_waf_profile to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_waf_signature to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_waf_subclass to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wanopt_authgroup to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wanopt_cacheservice to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wanopt_contentdeliverynetworkrule to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wanopt_peer to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wanopt_profile to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wanopt_remotestorage to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wanopt_settings to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wanopt_webcache to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_webfilter_content to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_webfilter_contentheader to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_webfilter_fortiguard to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_webfilter_ftgdlocalcat to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_webfilter_ftgdlocalrating to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_webfilter_ipsurlfiltercachesetting to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_webfilter_ipsurlfiltersetting to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_webfilter_ipsurlfiltersetting6 to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_webfilter_override to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_webfilter_profile to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_webfilter_searchengine to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_webfilter_urlfilter to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_webproxy_debugurl to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_webproxy_explicit to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_webproxy_forwardserver to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_webproxy_forwardservergroup to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_webproxy_global to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_webproxy_profile to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_webproxy_urlmatch to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_webproxy_wisp to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wirelesscontroller_apstatus to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wirelesscontroller_bleprofile to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wirelesscontroller_bonjourprofile to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wirelesscontroller_global to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wirelesscontroller_intercontroller to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wirelesscontroller_qosprofile to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wirelesscontroller_region to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wirelesscontroller_setting to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wirelesscontroller_timers to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wirelesscontroller_utmprofile to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wirelesscontroller_vap to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wirelesscontroller_vapgroup to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wirelesscontroller_widsprofile to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wirelesscontroller_wtp to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wirelesscontroller_wtpgroup to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wirelesscontroller_wtpprofile to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wirelesscontrollerhotspot20_anqp3gppcellular to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wirelesscontrollerhotspot20_anqpipaddresstype to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wirelesscontrollerhotspot20_anqpnairealm to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wirelesscontrollerhotspot20_anqpnetworkauthtype to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wirelesscontrollerhotspot20_anqproamingconsortium to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wirelesscontrollerhotspot20_anqpvenuename to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wirelesscontrollerhotspot20_h2qpconncapability to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wirelesscontrollerhotspot20_h2qpoperatorname to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wirelesscontrollerhotspot20_h2qposuprovider to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wirelesscontrollerhotspot20_h2qpwanmetric to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wirelesscontrollerhotspot20_hsprofile to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wirelesscontrollerhotspot20_icon to support FortiOS 6.0 6.2 6.4 6.6.
+* Update resource_wirelesscontrollerhotspot20_qosmap to support FortiOS 6.0 6.2 6.4 6.6.
+* Support vdom_mode for resource fortios_system_global.
 
 ## 1.8.0 (Jan 25, 2021)
 
