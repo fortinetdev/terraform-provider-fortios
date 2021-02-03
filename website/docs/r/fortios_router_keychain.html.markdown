@@ -25,7 +25,6 @@ resource "fortios_router_keychain" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - (Required) Key-chain name.
