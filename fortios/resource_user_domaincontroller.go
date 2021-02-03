@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -95,7 +96,7 @@ func resourceUserDomainControllerCreate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectUserDomainController(d)
+	obj, err := getObjectUserDomainController(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating UserDomainController resource while getting object: %v", err)
 	}
@@ -120,7 +121,7 @@ func resourceUserDomainControllerUpdate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectUserDomainController(d)
+	obj, err := getObjectUserDomainController(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating UserDomainController resource while getting object: %v", err)
 	}
@@ -173,26 +174,26 @@ func resourceUserDomainControllerRead(d *schema.ResourceData, m interface{}) err
 		return nil
 	}
 
-	err = refreshObjectUserDomainController(d, o)
+	err = refreshObjectUserDomainController(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading UserDomainController resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenUserDomainControllerName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserDomainControllerName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserDomainControllerIpAddress(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserDomainControllerIpAddress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserDomainControllerPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserDomainControllerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserDomainControllerExtraServer(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenUserDomainControllerExtraServer(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -213,17 +214,20 @@ func flattenUserDomainControllerExtraServer(v interface{}, d *schema.ResourceDat
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenUserDomainControllerExtraServerId(i["id"], d, pre_append)
+
+			tmp["id"] = flattenUserDomainControllerExtraServerId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip_address"
 		if _, ok := i["ip-address"]; ok {
-			tmp["ip_address"] = flattenUserDomainControllerExtraServerIpAddress(i["ip-address"], d, pre_append)
+
+			tmp["ip_address"] = flattenUserDomainControllerExtraServerIpAddress(i["ip-address"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if _, ok := i["port"]; ok {
-			tmp["port"] = flattenUserDomainControllerExtraServerPort(i["port"], d, pre_append)
+
+			tmp["port"] = flattenUserDomainControllerExtraServerPort(i["port"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -235,56 +239,56 @@ func flattenUserDomainControllerExtraServer(v interface{}, d *schema.ResourceDat
 	return result
 }
 
-func flattenUserDomainControllerExtraServerId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserDomainControllerExtraServerId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserDomainControllerExtraServerIpAddress(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserDomainControllerExtraServerIpAddress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserDomainControllerExtraServerPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserDomainControllerExtraServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserDomainControllerDomainName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserDomainControllerDomainName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserDomainControllerLdapServer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserDomainControllerLdapServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectUserDomainController(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectUserDomainController(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenUserDomainControllerName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenUserDomainControllerName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("ip_address", flattenUserDomainControllerIpAddress(o["ip-address"], d, "ip_address")); err != nil {
+	if err = d.Set("ip_address", flattenUserDomainControllerIpAddress(o["ip-address"], d, "ip_address", sv)); err != nil {
 		if !fortiAPIPatch(o["ip-address"]) {
 			return fmt.Errorf("Error reading ip_address: %v", err)
 		}
 	}
 
-	if err = d.Set("port", flattenUserDomainControllerPort(o["port"], d, "port")); err != nil {
+	if err = d.Set("port", flattenUserDomainControllerPort(o["port"], d, "port", sv)); err != nil {
 		if !fortiAPIPatch(o["port"]) {
 			return fmt.Errorf("Error reading port: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("extra_server", flattenUserDomainControllerExtraServer(o["extra-server"], d, "extra_server")); err != nil {
+		if err = d.Set("extra_server", flattenUserDomainControllerExtraServer(o["extra-server"], d, "extra_server", sv)); err != nil {
 			if !fortiAPIPatch(o["extra-server"]) {
 				return fmt.Errorf("Error reading extra_server: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("extra_server"); ok {
-			if err = d.Set("extra_server", flattenUserDomainControllerExtraServer(o["extra-server"], d, "extra_server")); err != nil {
+			if err = d.Set("extra_server", flattenUserDomainControllerExtraServer(o["extra-server"], d, "extra_server", sv)); err != nil {
 				if !fortiAPIPatch(o["extra-server"]) {
 					return fmt.Errorf("Error reading extra_server: %v", err)
 				}
@@ -292,15 +296,45 @@ func refreshObjectUserDomainController(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
-	if err = d.Set("domain_name", flattenUserDomainControllerDomainName(o["domain-name"], d, "domain_name")); err != nil {
+	if err = d.Set("domain_name", flattenUserDomainControllerDomainName(o["domain-name"], d, "domain_name", sv)); err != nil {
 		if !fortiAPIPatch(o["domain-name"]) {
 			return fmt.Errorf("Error reading domain_name: %v", err)
 		}
 	}
 
-	if err = d.Set("ldap_server", flattenUserDomainControllerLdapServer(o["ldap-server"], d, "ldap_server")); err != nil {
-		if !fortiAPIPatch(o["ldap-server"]) {
-			return fmt.Errorf("Error reading ldap_server: %v", err)
+	{
+		v := flattenUserDomainControllerLdapServer(o["ldap-server"], d, "ldap_server", sv)
+		vx := ""
+		bstring := false
+		if i2ss2arrFortiAPIUpgrade(sv, "6.6.0") == true {
+			l := v.([]interface{})
+			if len(l) > 0 {
+				for k, r := range l {
+					i := r.(map[string]interface{})
+					if _, ok := i["name"]; ok {
+						if xv, ok := i["name"].(string); ok {
+							vx += "\"" + xv + "\""
+							if k < len(l)-1 {
+								vx += " "
+							}
+						}
+					}
+				}
+				bstring = true
+			}
+		}
+		if bstring == true {
+			if err = d.Set("ldap_server", vx); err != nil {
+				if !fortiAPIPatch(o["ldap-server"]) {
+					return fmt.Errorf("Error reading ldap_server: %v", err)
+				}
+			}
+		} else {
+			if err = d.Set("ldap_server", v); err != nil {
+				if !fortiAPIPatch(o["ldap-server"]) {
+					return fmt.Errorf("Error reading ldap_server: %v", err)
+				}
+			}
 		}
 	}
 
@@ -310,22 +344,22 @@ func refreshObjectUserDomainController(d *schema.ResourceData, o map[string]inte
 func flattenUserDomainControllerFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandUserDomainControllerName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserDomainControllerName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserDomainControllerIpAddress(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserDomainControllerIpAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserDomainControllerPort(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserDomainControllerPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserDomainControllerExtraServer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserDomainControllerExtraServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -341,17 +375,20 @@ func expandUserDomainControllerExtraServer(d *schema.ResourceData, v interface{}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandUserDomainControllerExtraServerId(d, i["id"], pre_append)
+
+			tmp["id"], _ = expandUserDomainControllerExtraServerId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip_address"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["ip-address"], _ = expandUserDomainControllerExtraServerIpAddress(d, i["ip_address"], pre_append)
+
+			tmp["ip-address"], _ = expandUserDomainControllerExtraServerIpAddress(d, i["ip_address"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["port"], _ = expandUserDomainControllerExtraServerPort(d, i["port"], pre_append)
+
+			tmp["port"], _ = expandUserDomainControllerExtraServerPort(d, i["port"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -362,31 +399,32 @@ func expandUserDomainControllerExtraServer(d *schema.ResourceData, v interface{}
 	return result, nil
 }
 
-func expandUserDomainControllerExtraServerId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserDomainControllerExtraServerId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserDomainControllerExtraServerIpAddress(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserDomainControllerExtraServerIpAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserDomainControllerExtraServerPort(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserDomainControllerExtraServerPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserDomainControllerDomainName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserDomainControllerDomainName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserDomainControllerLdapServer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserDomainControllerLdapServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectUserDomainController(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectUserDomainController(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandUserDomainControllerName(d, v, "name")
+
+		t, err := expandUserDomainControllerName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -395,7 +433,8 @@ func getObjectUserDomainController(d *schema.ResourceData) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("ip_address"); ok {
-		t, err := expandUserDomainControllerIpAddress(d, v, "ip_address")
+
+		t, err := expandUserDomainControllerIpAddress(d, v, "ip_address", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -404,7 +443,8 @@ func getObjectUserDomainController(d *schema.ResourceData) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOkExists("port"); ok {
-		t, err := expandUserDomainControllerPort(d, v, "port")
+
+		t, err := expandUserDomainControllerPort(d, v, "port", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -413,7 +453,8 @@ func getObjectUserDomainController(d *schema.ResourceData) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("extra_server"); ok {
-		t, err := expandUserDomainControllerExtraServer(d, v, "extra_server")
+
+		t, err := expandUserDomainControllerExtraServer(d, v, "extra_server", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -422,7 +463,8 @@ func getObjectUserDomainController(d *schema.ResourceData) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("domain_name"); ok {
-		t, err := expandUserDomainControllerDomainName(d, v, "domain_name")
+
+		t, err := expandUserDomainControllerDomainName(d, v, "domain_name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -431,11 +473,28 @@ func getObjectUserDomainController(d *schema.ResourceData) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("ldap_server"); ok {
-		t, err := expandUserDomainControllerLdapServer(d, v, "ldap_server")
+
+		t, err := expandUserDomainControllerLdapServer(d, v, "ldap_server", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
-			obj["ldap-server"] = t
+			if i2ss2arrFortiAPIUpgrade(sv, "6.6.0") == true {
+				vx := fmt.Sprintf("%v", t)
+				vx = strings.Replace(vx, "\"", "", -1)
+				vxx := strings.Split(vx, " ")
+
+				tmps := make([]map[string]interface{}, 0, len(vxx))
+
+				for _, xv := range vxx {
+					xtmp := make(map[string]interface{})
+					xtmp["name"] = xv
+
+					tmps = append(tmps, xtmp)
+				}
+				obj["ldap-server"] = tmps
+			} else {
+				obj["ldap-server"] = t
+			}
 		}
 	}
 
