@@ -30,11 +30,10 @@ resource "fortios_router_policy6" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `seq_num` - Sequence number.
-* `input_device` - (Required) Incoming interface name.
+* `input_device` - (Required) Incoming interface name. Configuration examples: for FortiOS Version <= "6.2.4": `input_device  = "port2"`, for FortiOS Version >= "6.2.4": `input_device  = "\"fortilink\" \"port1\""`.
 * `src` - Source IPv6 prefix.
 * `dst` - Destination IPv6 prefix.
 * `protocol` - Protocol number (0 - 255).
