@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -233,7 +234,7 @@ func resourceAlertemailSettingUpdate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectAlertemailSetting(d)
+	obj, err := getObjectAlertemailSetting(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating AlertemailSetting resource while getting object: %v", err)
 	}
@@ -286,371 +287,371 @@ func resourceAlertemailSettingRead(d *schema.ResourceData, m interface{}) error 
 		return nil
 	}
 
-	err = refreshObjectAlertemailSetting(d, o)
+	err = refreshObjectAlertemailSetting(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading AlertemailSetting resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenAlertemailSettingUsername(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingUsername(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAlertemailSettingMailto1(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingMailto1(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAlertemailSettingMailto2(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingMailto2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAlertemailSettingMailto3(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingMailto3(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAlertemailSettingFilterMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingFilterMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAlertemailSettingEmailInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingEmailInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAlertemailSettingIpsLogs(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingIpsLogs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAlertemailSettingFirewallAuthenticationFailureLogs(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingFirewallAuthenticationFailureLogs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAlertemailSettingHaLogs(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingHaLogs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAlertemailSettingIpsecErrorsLogs(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingIpsecErrorsLogs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAlertemailSettingFdsUpdateLogs(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingFdsUpdateLogs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAlertemailSettingPppErrorsLogs(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingPppErrorsLogs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAlertemailSettingSslvpnAuthenticationErrorsLogs(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingSslvpnAuthenticationErrorsLogs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAlertemailSettingAntivirusLogs(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingAntivirusLogs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAlertemailSettingWebfilterLogs(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingWebfilterLogs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAlertemailSettingConfigurationChangesLogs(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingConfigurationChangesLogs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAlertemailSettingViolationTrafficLogs(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingViolationTrafficLogs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAlertemailSettingAdminLoginLogs(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingAdminLoginLogs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAlertemailSettingFdsLicenseExpiringWarning(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingFdsLicenseExpiringWarning(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAlertemailSettingLogDiskUsageWarning(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingLogDiskUsageWarning(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAlertemailSettingFortiguardLogQuotaWarning(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingFortiguardLogQuotaWarning(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAlertemailSettingAmcInterfaceBypassMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingAmcInterfaceBypassMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAlertemailSettingFipsCcErrors(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingFipsCcErrors(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAlertemailSettingFssoDisconnectLogs(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingFssoDisconnectLogs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAlertemailSettingSshLogs(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingSshLogs(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAlertemailSettingFdsLicenseExpiringDays(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingFdsLicenseExpiringDays(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAlertemailSettingLocalDiskUsage(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingLocalDiskUsage(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAlertemailSettingEmergencyInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingEmergencyInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAlertemailSettingAlertInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingAlertInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAlertemailSettingCriticalInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingCriticalInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAlertemailSettingErrorInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingErrorInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAlertemailSettingWarningInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingWarningInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAlertemailSettingNotificationInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingNotificationInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAlertemailSettingInformationInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingInformationInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAlertemailSettingDebugInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingDebugInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenAlertemailSettingSeverity(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAlertemailSettingSeverity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectAlertemailSetting(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectAlertemailSetting(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("username", flattenAlertemailSettingUsername(o["username"], d, "username")); err != nil {
+	if err = d.Set("username", flattenAlertemailSettingUsername(o["username"], d, "username", sv)); err != nil {
 		if !fortiAPIPatch(o["username"]) {
 			return fmt.Errorf("Error reading username: %v", err)
 		}
 	}
 
-	if err = d.Set("mailto1", flattenAlertemailSettingMailto1(o["mailto1"], d, "mailto1")); err != nil {
+	if err = d.Set("mailto1", flattenAlertemailSettingMailto1(o["mailto1"], d, "mailto1", sv)); err != nil {
 		if !fortiAPIPatch(o["mailto1"]) {
 			return fmt.Errorf("Error reading mailto1: %v", err)
 		}
 	}
 
-	if err = d.Set("mailto2", flattenAlertemailSettingMailto2(o["mailto2"], d, "mailto2")); err != nil {
+	if err = d.Set("mailto2", flattenAlertemailSettingMailto2(o["mailto2"], d, "mailto2", sv)); err != nil {
 		if !fortiAPIPatch(o["mailto2"]) {
 			return fmt.Errorf("Error reading mailto2: %v", err)
 		}
 	}
 
-	if err = d.Set("mailto3", flattenAlertemailSettingMailto3(o["mailto3"], d, "mailto3")); err != nil {
+	if err = d.Set("mailto3", flattenAlertemailSettingMailto3(o["mailto3"], d, "mailto3", sv)); err != nil {
 		if !fortiAPIPatch(o["mailto3"]) {
 			return fmt.Errorf("Error reading mailto3: %v", err)
 		}
 	}
 
-	if err = d.Set("filter_mode", flattenAlertemailSettingFilterMode(o["filter-mode"], d, "filter_mode")); err != nil {
+	if err = d.Set("filter_mode", flattenAlertemailSettingFilterMode(o["filter-mode"], d, "filter_mode", sv)); err != nil {
 		if !fortiAPIPatch(o["filter-mode"]) {
 			return fmt.Errorf("Error reading filter_mode: %v", err)
 		}
 	}
 
-	if err = d.Set("email_interval", flattenAlertemailSettingEmailInterval(o["email-interval"], d, "email_interval")); err != nil {
+	if err = d.Set("email_interval", flattenAlertemailSettingEmailInterval(o["email-interval"], d, "email_interval", sv)); err != nil {
 		if !fortiAPIPatch(o["email-interval"]) {
 			return fmt.Errorf("Error reading email_interval: %v", err)
 		}
 	}
 
-	if err = d.Set("ips_logs", flattenAlertemailSettingIpsLogs(o["IPS-logs"], d, "ips_logs")); err != nil {
+	if err = d.Set("ips_logs", flattenAlertemailSettingIpsLogs(o["IPS-logs"], d, "ips_logs", sv)); err != nil {
 		if !fortiAPIPatch(o["IPS-logs"]) {
 			return fmt.Errorf("Error reading ips_logs: %v", err)
 		}
 	}
 
-	if err = d.Set("firewall_authentication_failure_logs", flattenAlertemailSettingFirewallAuthenticationFailureLogs(o["firewall-authentication-failure-logs"], d, "firewall_authentication_failure_logs")); err != nil {
+	if err = d.Set("firewall_authentication_failure_logs", flattenAlertemailSettingFirewallAuthenticationFailureLogs(o["firewall-authentication-failure-logs"], d, "firewall_authentication_failure_logs", sv)); err != nil {
 		if !fortiAPIPatch(o["firewall-authentication-failure-logs"]) {
 			return fmt.Errorf("Error reading firewall_authentication_failure_logs: %v", err)
 		}
 	}
 
-	if err = d.Set("ha_logs", flattenAlertemailSettingHaLogs(o["HA-logs"], d, "ha_logs")); err != nil {
+	if err = d.Set("ha_logs", flattenAlertemailSettingHaLogs(o["HA-logs"], d, "ha_logs", sv)); err != nil {
 		if !fortiAPIPatch(o["HA-logs"]) {
 			return fmt.Errorf("Error reading ha_logs: %v", err)
 		}
 	}
 
-	if err = d.Set("ipsec_errors_logs", flattenAlertemailSettingIpsecErrorsLogs(o["IPsec-errors-logs"], d, "ipsec_errors_logs")); err != nil {
+	if err = d.Set("ipsec_errors_logs", flattenAlertemailSettingIpsecErrorsLogs(o["IPsec-errors-logs"], d, "ipsec_errors_logs", sv)); err != nil {
 		if !fortiAPIPatch(o["IPsec-errors-logs"]) {
 			return fmt.Errorf("Error reading ipsec_errors_logs: %v", err)
 		}
 	}
 
-	if err = d.Set("fds_update_logs", flattenAlertemailSettingFdsUpdateLogs(o["FDS-update-logs"], d, "fds_update_logs")); err != nil {
+	if err = d.Set("fds_update_logs", flattenAlertemailSettingFdsUpdateLogs(o["FDS-update-logs"], d, "fds_update_logs", sv)); err != nil {
 		if !fortiAPIPatch(o["FDS-update-logs"]) {
 			return fmt.Errorf("Error reading fds_update_logs: %v", err)
 		}
 	}
 
-	if err = d.Set("ppp_errors_logs", flattenAlertemailSettingPppErrorsLogs(o["PPP-errors-logs"], d, "ppp_errors_logs")); err != nil {
+	if err = d.Set("ppp_errors_logs", flattenAlertemailSettingPppErrorsLogs(o["PPP-errors-logs"], d, "ppp_errors_logs", sv)); err != nil {
 		if !fortiAPIPatch(o["PPP-errors-logs"]) {
 			return fmt.Errorf("Error reading ppp_errors_logs: %v", err)
 		}
 	}
 
-	if err = d.Set("sslvpn_authentication_errors_logs", flattenAlertemailSettingSslvpnAuthenticationErrorsLogs(o["sslvpn-authentication-errors-logs"], d, "sslvpn_authentication_errors_logs")); err != nil {
+	if err = d.Set("sslvpn_authentication_errors_logs", flattenAlertemailSettingSslvpnAuthenticationErrorsLogs(o["sslvpn-authentication-errors-logs"], d, "sslvpn_authentication_errors_logs", sv)); err != nil {
 		if !fortiAPIPatch(o["sslvpn-authentication-errors-logs"]) {
 			return fmt.Errorf("Error reading sslvpn_authentication_errors_logs: %v", err)
 		}
 	}
 
-	if err = d.Set("antivirus_logs", flattenAlertemailSettingAntivirusLogs(o["antivirus-logs"], d, "antivirus_logs")); err != nil {
+	if err = d.Set("antivirus_logs", flattenAlertemailSettingAntivirusLogs(o["antivirus-logs"], d, "antivirus_logs", sv)); err != nil {
 		if !fortiAPIPatch(o["antivirus-logs"]) {
 			return fmt.Errorf("Error reading antivirus_logs: %v", err)
 		}
 	}
 
-	if err = d.Set("webfilter_logs", flattenAlertemailSettingWebfilterLogs(o["webfilter-logs"], d, "webfilter_logs")); err != nil {
+	if err = d.Set("webfilter_logs", flattenAlertemailSettingWebfilterLogs(o["webfilter-logs"], d, "webfilter_logs", sv)); err != nil {
 		if !fortiAPIPatch(o["webfilter-logs"]) {
 			return fmt.Errorf("Error reading webfilter_logs: %v", err)
 		}
 	}
 
-	if err = d.Set("configuration_changes_logs", flattenAlertemailSettingConfigurationChangesLogs(o["configuration-changes-logs"], d, "configuration_changes_logs")); err != nil {
+	if err = d.Set("configuration_changes_logs", flattenAlertemailSettingConfigurationChangesLogs(o["configuration-changes-logs"], d, "configuration_changes_logs", sv)); err != nil {
 		if !fortiAPIPatch(o["configuration-changes-logs"]) {
 			return fmt.Errorf("Error reading configuration_changes_logs: %v", err)
 		}
 	}
 
-	if err = d.Set("violation_traffic_logs", flattenAlertemailSettingViolationTrafficLogs(o["violation-traffic-logs"], d, "violation_traffic_logs")); err != nil {
+	if err = d.Set("violation_traffic_logs", flattenAlertemailSettingViolationTrafficLogs(o["violation-traffic-logs"], d, "violation_traffic_logs", sv)); err != nil {
 		if !fortiAPIPatch(o["violation-traffic-logs"]) {
 			return fmt.Errorf("Error reading violation_traffic_logs: %v", err)
 		}
 	}
 
-	if err = d.Set("admin_login_logs", flattenAlertemailSettingAdminLoginLogs(o["admin-login-logs"], d, "admin_login_logs")); err != nil {
+	if err = d.Set("admin_login_logs", flattenAlertemailSettingAdminLoginLogs(o["admin-login-logs"], d, "admin_login_logs", sv)); err != nil {
 		if !fortiAPIPatch(o["admin-login-logs"]) {
 			return fmt.Errorf("Error reading admin_login_logs: %v", err)
 		}
 	}
 
-	if err = d.Set("fds_license_expiring_warning", flattenAlertemailSettingFdsLicenseExpiringWarning(o["FDS-license-expiring-warning"], d, "fds_license_expiring_warning")); err != nil {
+	if err = d.Set("fds_license_expiring_warning", flattenAlertemailSettingFdsLicenseExpiringWarning(o["FDS-license-expiring-warning"], d, "fds_license_expiring_warning", sv)); err != nil {
 		if !fortiAPIPatch(o["FDS-license-expiring-warning"]) {
 			return fmt.Errorf("Error reading fds_license_expiring_warning: %v", err)
 		}
 	}
 
-	if err = d.Set("log_disk_usage_warning", flattenAlertemailSettingLogDiskUsageWarning(o["log-disk-usage-warning"], d, "log_disk_usage_warning")); err != nil {
+	if err = d.Set("log_disk_usage_warning", flattenAlertemailSettingLogDiskUsageWarning(o["log-disk-usage-warning"], d, "log_disk_usage_warning", sv)); err != nil {
 		if !fortiAPIPatch(o["log-disk-usage-warning"]) {
 			return fmt.Errorf("Error reading log_disk_usage_warning: %v", err)
 		}
 	}
 
-	if err = d.Set("fortiguard_log_quota_warning", flattenAlertemailSettingFortiguardLogQuotaWarning(o["fortiguard-log-quota-warning"], d, "fortiguard_log_quota_warning")); err != nil {
+	if err = d.Set("fortiguard_log_quota_warning", flattenAlertemailSettingFortiguardLogQuotaWarning(o["fortiguard-log-quota-warning"], d, "fortiguard_log_quota_warning", sv)); err != nil {
 		if !fortiAPIPatch(o["fortiguard-log-quota-warning"]) {
 			return fmt.Errorf("Error reading fortiguard_log_quota_warning: %v", err)
 		}
 	}
 
-	if err = d.Set("amc_interface_bypass_mode", flattenAlertemailSettingAmcInterfaceBypassMode(o["amc-interface-bypass-mode"], d, "amc_interface_bypass_mode")); err != nil {
+	if err = d.Set("amc_interface_bypass_mode", flattenAlertemailSettingAmcInterfaceBypassMode(o["amc-interface-bypass-mode"], d, "amc_interface_bypass_mode", sv)); err != nil {
 		if !fortiAPIPatch(o["amc-interface-bypass-mode"]) {
 			return fmt.Errorf("Error reading amc_interface_bypass_mode: %v", err)
 		}
 	}
 
-	if err = d.Set("fips_cc_errors", flattenAlertemailSettingFipsCcErrors(o["FIPS-CC-errors"], d, "fips_cc_errors")); err != nil {
+	if err = d.Set("fips_cc_errors", flattenAlertemailSettingFipsCcErrors(o["FIPS-CC-errors"], d, "fips_cc_errors", sv)); err != nil {
 		if !fortiAPIPatch(o["FIPS-CC-errors"]) {
 			return fmt.Errorf("Error reading fips_cc_errors: %v", err)
 		}
 	}
 
-	if err = d.Set("fsso_disconnect_logs", flattenAlertemailSettingFssoDisconnectLogs(o["FSSO-disconnect-logs"], d, "fsso_disconnect_logs")); err != nil {
+	if err = d.Set("fsso_disconnect_logs", flattenAlertemailSettingFssoDisconnectLogs(o["FSSO-disconnect-logs"], d, "fsso_disconnect_logs", sv)); err != nil {
 		if !fortiAPIPatch(o["FSSO-disconnect-logs"]) {
 			return fmt.Errorf("Error reading fsso_disconnect_logs: %v", err)
 		}
 	}
 
-	if err = d.Set("ssh_logs", flattenAlertemailSettingSshLogs(o["ssh-logs"], d, "ssh_logs")); err != nil {
+	if err = d.Set("ssh_logs", flattenAlertemailSettingSshLogs(o["ssh-logs"], d, "ssh_logs", sv)); err != nil {
 		if !fortiAPIPatch(o["ssh-logs"]) {
 			return fmt.Errorf("Error reading ssh_logs: %v", err)
 		}
 	}
 
-	if err = d.Set("fds_license_expiring_days", flattenAlertemailSettingFdsLicenseExpiringDays(o["FDS-license-expiring-days"], d, "fds_license_expiring_days")); err != nil {
+	if err = d.Set("fds_license_expiring_days", flattenAlertemailSettingFdsLicenseExpiringDays(o["FDS-license-expiring-days"], d, "fds_license_expiring_days", sv)); err != nil {
 		if !fortiAPIPatch(o["FDS-license-expiring-days"]) {
 			return fmt.Errorf("Error reading fds_license_expiring_days: %v", err)
 		}
 	}
 
-	if err = d.Set("local_disk_usage", flattenAlertemailSettingLocalDiskUsage(o["local-disk-usage"], d, "local_disk_usage")); err != nil {
+	if err = d.Set("local_disk_usage", flattenAlertemailSettingLocalDiskUsage(o["local-disk-usage"], d, "local_disk_usage", sv)); err != nil {
 		if !fortiAPIPatch(o["local-disk-usage"]) {
 			return fmt.Errorf("Error reading local_disk_usage: %v", err)
 		}
 	}
 
-	if err = d.Set("emergency_interval", flattenAlertemailSettingEmergencyInterval(o["emergency-interval"], d, "emergency_interval")); err != nil {
+	if err = d.Set("emergency_interval", flattenAlertemailSettingEmergencyInterval(o["emergency-interval"], d, "emergency_interval", sv)); err != nil {
 		if !fortiAPIPatch(o["emergency-interval"]) {
 			return fmt.Errorf("Error reading emergency_interval: %v", err)
 		}
 	}
 
-	if err = d.Set("alert_interval", flattenAlertemailSettingAlertInterval(o["alert-interval"], d, "alert_interval")); err != nil {
+	if err = d.Set("alert_interval", flattenAlertemailSettingAlertInterval(o["alert-interval"], d, "alert_interval", sv)); err != nil {
 		if !fortiAPIPatch(o["alert-interval"]) {
 			return fmt.Errorf("Error reading alert_interval: %v", err)
 		}
 	}
 
-	if err = d.Set("critical_interval", flattenAlertemailSettingCriticalInterval(o["critical-interval"], d, "critical_interval")); err != nil {
+	if err = d.Set("critical_interval", flattenAlertemailSettingCriticalInterval(o["critical-interval"], d, "critical_interval", sv)); err != nil {
 		if !fortiAPIPatch(o["critical-interval"]) {
 			return fmt.Errorf("Error reading critical_interval: %v", err)
 		}
 	}
 
-	if err = d.Set("error_interval", flattenAlertemailSettingErrorInterval(o["error-interval"], d, "error_interval")); err != nil {
+	if err = d.Set("error_interval", flattenAlertemailSettingErrorInterval(o["error-interval"], d, "error_interval", sv)); err != nil {
 		if !fortiAPIPatch(o["error-interval"]) {
 			return fmt.Errorf("Error reading error_interval: %v", err)
 		}
 	}
 
-	if err = d.Set("warning_interval", flattenAlertemailSettingWarningInterval(o["warning-interval"], d, "warning_interval")); err != nil {
+	if err = d.Set("warning_interval", flattenAlertemailSettingWarningInterval(o["warning-interval"], d, "warning_interval", sv)); err != nil {
 		if !fortiAPIPatch(o["warning-interval"]) {
 			return fmt.Errorf("Error reading warning_interval: %v", err)
 		}
 	}
 
-	if err = d.Set("notification_interval", flattenAlertemailSettingNotificationInterval(o["notification-interval"], d, "notification_interval")); err != nil {
+	if err = d.Set("notification_interval", flattenAlertemailSettingNotificationInterval(o["notification-interval"], d, "notification_interval", sv)); err != nil {
 		if !fortiAPIPatch(o["notification-interval"]) {
 			return fmt.Errorf("Error reading notification_interval: %v", err)
 		}
 	}
 
-	if err = d.Set("information_interval", flattenAlertemailSettingInformationInterval(o["information-interval"], d, "information_interval")); err != nil {
+	if err = d.Set("information_interval", flattenAlertemailSettingInformationInterval(o["information-interval"], d, "information_interval", sv)); err != nil {
 		if !fortiAPIPatch(o["information-interval"]) {
 			return fmt.Errorf("Error reading information_interval: %v", err)
 		}
 	}
 
-	if err = d.Set("debug_interval", flattenAlertemailSettingDebugInterval(o["debug-interval"], d, "debug_interval")); err != nil {
+	if err = d.Set("debug_interval", flattenAlertemailSettingDebugInterval(o["debug-interval"], d, "debug_interval", sv)); err != nil {
 		if !fortiAPIPatch(o["debug-interval"]) {
 			return fmt.Errorf("Error reading debug_interval: %v", err)
 		}
 	}
 
-	if err = d.Set("severity", flattenAlertemailSettingSeverity(o["severity"], d, "severity")); err != nil {
+	if err = d.Set("severity", flattenAlertemailSettingSeverity(o["severity"], d, "severity", sv)); err != nil {
 		if !fortiAPIPatch(o["severity"]) {
 			return fmt.Errorf("Error reading severity: %v", err)
 		}
@@ -662,158 +663,159 @@ func refreshObjectAlertemailSetting(d *schema.ResourceData, o map[string]interfa
 func flattenAlertemailSettingFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandAlertemailSettingUsername(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingUsername(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlertemailSettingMailto1(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingMailto1(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlertemailSettingMailto2(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingMailto2(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlertemailSettingMailto3(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingMailto3(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlertemailSettingFilterMode(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingFilterMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlertemailSettingEmailInterval(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingEmailInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlertemailSettingIpsLogs(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingIpsLogs(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlertemailSettingFirewallAuthenticationFailureLogs(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingFirewallAuthenticationFailureLogs(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlertemailSettingHaLogs(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingHaLogs(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlertemailSettingIpsecErrorsLogs(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingIpsecErrorsLogs(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlertemailSettingFdsUpdateLogs(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingFdsUpdateLogs(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlertemailSettingPppErrorsLogs(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingPppErrorsLogs(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlertemailSettingSslvpnAuthenticationErrorsLogs(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingSslvpnAuthenticationErrorsLogs(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlertemailSettingAntivirusLogs(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingAntivirusLogs(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlertemailSettingWebfilterLogs(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingWebfilterLogs(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlertemailSettingConfigurationChangesLogs(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingConfigurationChangesLogs(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlertemailSettingViolationTrafficLogs(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingViolationTrafficLogs(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlertemailSettingAdminLoginLogs(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingAdminLoginLogs(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlertemailSettingFdsLicenseExpiringWarning(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingFdsLicenseExpiringWarning(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlertemailSettingLogDiskUsageWarning(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingLogDiskUsageWarning(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlertemailSettingFortiguardLogQuotaWarning(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingFortiguardLogQuotaWarning(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlertemailSettingAmcInterfaceBypassMode(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingAmcInterfaceBypassMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlertemailSettingFipsCcErrors(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingFipsCcErrors(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlertemailSettingFssoDisconnectLogs(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingFssoDisconnectLogs(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlertemailSettingSshLogs(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingSshLogs(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlertemailSettingFdsLicenseExpiringDays(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingFdsLicenseExpiringDays(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlertemailSettingLocalDiskUsage(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingLocalDiskUsage(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlertemailSettingEmergencyInterval(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingEmergencyInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlertemailSettingAlertInterval(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingAlertInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlertemailSettingCriticalInterval(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingCriticalInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlertemailSettingErrorInterval(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingErrorInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlertemailSettingWarningInterval(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingWarningInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlertemailSettingNotificationInterval(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingNotificationInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlertemailSettingInformationInterval(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingInformationInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlertemailSettingDebugInterval(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingDebugInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandAlertemailSettingSeverity(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAlertemailSettingSeverity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectAlertemailSetting(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("username"); ok {
-		t, err := expandAlertemailSettingUsername(d, v, "username")
+
+		t, err := expandAlertemailSettingUsername(d, v, "username", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -822,7 +824,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("mailto1"); ok {
-		t, err := expandAlertemailSettingMailto1(d, v, "mailto1")
+
+		t, err := expandAlertemailSettingMailto1(d, v, "mailto1", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -831,7 +834,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("mailto2"); ok {
-		t, err := expandAlertemailSettingMailto2(d, v, "mailto2")
+
+		t, err := expandAlertemailSettingMailto2(d, v, "mailto2", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -840,7 +844,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("mailto3"); ok {
-		t, err := expandAlertemailSettingMailto3(d, v, "mailto3")
+
+		t, err := expandAlertemailSettingMailto3(d, v, "mailto3", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -849,7 +854,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("filter_mode"); ok {
-		t, err := expandAlertemailSettingFilterMode(d, v, "filter_mode")
+
+		t, err := expandAlertemailSettingFilterMode(d, v, "filter_mode", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -858,7 +864,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("email_interval"); ok {
-		t, err := expandAlertemailSettingEmailInterval(d, v, "email_interval")
+
+		t, err := expandAlertemailSettingEmailInterval(d, v, "email_interval", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -867,7 +874,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("ips_logs"); ok {
-		t, err := expandAlertemailSettingIpsLogs(d, v, "ips_logs")
+
+		t, err := expandAlertemailSettingIpsLogs(d, v, "ips_logs", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -876,7 +884,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("firewall_authentication_failure_logs"); ok {
-		t, err := expandAlertemailSettingFirewallAuthenticationFailureLogs(d, v, "firewall_authentication_failure_logs")
+
+		t, err := expandAlertemailSettingFirewallAuthenticationFailureLogs(d, v, "firewall_authentication_failure_logs", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -885,7 +894,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("ha_logs"); ok {
-		t, err := expandAlertemailSettingHaLogs(d, v, "ha_logs")
+
+		t, err := expandAlertemailSettingHaLogs(d, v, "ha_logs", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -894,7 +904,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("ipsec_errors_logs"); ok {
-		t, err := expandAlertemailSettingIpsecErrorsLogs(d, v, "ipsec_errors_logs")
+
+		t, err := expandAlertemailSettingIpsecErrorsLogs(d, v, "ipsec_errors_logs", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -903,7 +914,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("fds_update_logs"); ok {
-		t, err := expandAlertemailSettingFdsUpdateLogs(d, v, "fds_update_logs")
+
+		t, err := expandAlertemailSettingFdsUpdateLogs(d, v, "fds_update_logs", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -912,7 +924,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("ppp_errors_logs"); ok {
-		t, err := expandAlertemailSettingPppErrorsLogs(d, v, "ppp_errors_logs")
+
+		t, err := expandAlertemailSettingPppErrorsLogs(d, v, "ppp_errors_logs", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -921,7 +934,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("sslvpn_authentication_errors_logs"); ok {
-		t, err := expandAlertemailSettingSslvpnAuthenticationErrorsLogs(d, v, "sslvpn_authentication_errors_logs")
+
+		t, err := expandAlertemailSettingSslvpnAuthenticationErrorsLogs(d, v, "sslvpn_authentication_errors_logs", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -930,7 +944,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("antivirus_logs"); ok {
-		t, err := expandAlertemailSettingAntivirusLogs(d, v, "antivirus_logs")
+
+		t, err := expandAlertemailSettingAntivirusLogs(d, v, "antivirus_logs", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -939,7 +954,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("webfilter_logs"); ok {
-		t, err := expandAlertemailSettingWebfilterLogs(d, v, "webfilter_logs")
+
+		t, err := expandAlertemailSettingWebfilterLogs(d, v, "webfilter_logs", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -948,7 +964,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("configuration_changes_logs"); ok {
-		t, err := expandAlertemailSettingConfigurationChangesLogs(d, v, "configuration_changes_logs")
+
+		t, err := expandAlertemailSettingConfigurationChangesLogs(d, v, "configuration_changes_logs", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -957,7 +974,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("violation_traffic_logs"); ok {
-		t, err := expandAlertemailSettingViolationTrafficLogs(d, v, "violation_traffic_logs")
+
+		t, err := expandAlertemailSettingViolationTrafficLogs(d, v, "violation_traffic_logs", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -966,7 +984,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("admin_login_logs"); ok {
-		t, err := expandAlertemailSettingAdminLoginLogs(d, v, "admin_login_logs")
+
+		t, err := expandAlertemailSettingAdminLoginLogs(d, v, "admin_login_logs", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -975,7 +994,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("fds_license_expiring_warning"); ok {
-		t, err := expandAlertemailSettingFdsLicenseExpiringWarning(d, v, "fds_license_expiring_warning")
+
+		t, err := expandAlertemailSettingFdsLicenseExpiringWarning(d, v, "fds_license_expiring_warning", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -984,7 +1004,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("log_disk_usage_warning"); ok {
-		t, err := expandAlertemailSettingLogDiskUsageWarning(d, v, "log_disk_usage_warning")
+
+		t, err := expandAlertemailSettingLogDiskUsageWarning(d, v, "log_disk_usage_warning", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -993,7 +1014,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("fortiguard_log_quota_warning"); ok {
-		t, err := expandAlertemailSettingFortiguardLogQuotaWarning(d, v, "fortiguard_log_quota_warning")
+
+		t, err := expandAlertemailSettingFortiguardLogQuotaWarning(d, v, "fortiguard_log_quota_warning", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1002,7 +1024,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("amc_interface_bypass_mode"); ok {
-		t, err := expandAlertemailSettingAmcInterfaceBypassMode(d, v, "amc_interface_bypass_mode")
+
+		t, err := expandAlertemailSettingAmcInterfaceBypassMode(d, v, "amc_interface_bypass_mode", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1011,7 +1034,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("fips_cc_errors"); ok {
-		t, err := expandAlertemailSettingFipsCcErrors(d, v, "fips_cc_errors")
+
+		t, err := expandAlertemailSettingFipsCcErrors(d, v, "fips_cc_errors", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1020,7 +1044,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("fsso_disconnect_logs"); ok {
-		t, err := expandAlertemailSettingFssoDisconnectLogs(d, v, "fsso_disconnect_logs")
+
+		t, err := expandAlertemailSettingFssoDisconnectLogs(d, v, "fsso_disconnect_logs", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1029,7 +1054,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("ssh_logs"); ok {
-		t, err := expandAlertemailSettingSshLogs(d, v, "ssh_logs")
+
+		t, err := expandAlertemailSettingSshLogs(d, v, "ssh_logs", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1038,7 +1064,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("fds_license_expiring_days"); ok {
-		t, err := expandAlertemailSettingFdsLicenseExpiringDays(d, v, "fds_license_expiring_days")
+
+		t, err := expandAlertemailSettingFdsLicenseExpiringDays(d, v, "fds_license_expiring_days", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1047,7 +1074,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("local_disk_usage"); ok {
-		t, err := expandAlertemailSettingLocalDiskUsage(d, v, "local_disk_usage")
+
+		t, err := expandAlertemailSettingLocalDiskUsage(d, v, "local_disk_usage", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1056,7 +1084,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("emergency_interval"); ok {
-		t, err := expandAlertemailSettingEmergencyInterval(d, v, "emergency_interval")
+
+		t, err := expandAlertemailSettingEmergencyInterval(d, v, "emergency_interval", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1065,7 +1094,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("alert_interval"); ok {
-		t, err := expandAlertemailSettingAlertInterval(d, v, "alert_interval")
+
+		t, err := expandAlertemailSettingAlertInterval(d, v, "alert_interval", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1074,7 +1104,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("critical_interval"); ok {
-		t, err := expandAlertemailSettingCriticalInterval(d, v, "critical_interval")
+
+		t, err := expandAlertemailSettingCriticalInterval(d, v, "critical_interval", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1083,7 +1114,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("error_interval"); ok {
-		t, err := expandAlertemailSettingErrorInterval(d, v, "error_interval")
+
+		t, err := expandAlertemailSettingErrorInterval(d, v, "error_interval", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1092,7 +1124,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("warning_interval"); ok {
-		t, err := expandAlertemailSettingWarningInterval(d, v, "warning_interval")
+
+		t, err := expandAlertemailSettingWarningInterval(d, v, "warning_interval", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1101,7 +1134,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("notification_interval"); ok {
-		t, err := expandAlertemailSettingNotificationInterval(d, v, "notification_interval")
+
+		t, err := expandAlertemailSettingNotificationInterval(d, v, "notification_interval", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1110,7 +1144,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("information_interval"); ok {
-		t, err := expandAlertemailSettingInformationInterval(d, v, "information_interval")
+
+		t, err := expandAlertemailSettingInformationInterval(d, v, "information_interval", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1119,7 +1154,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("debug_interval"); ok {
-		t, err := expandAlertemailSettingDebugInterval(d, v, "debug_interval")
+
+		t, err := expandAlertemailSettingDebugInterval(d, v, "debug_interval", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1128,7 +1164,8 @@ func getObjectAlertemailSetting(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("severity"); ok {
-		t, err := expandAlertemailSettingSeverity(d, v, "severity")
+
+		t, err := expandAlertemailSettingSeverity(d, v, "severity", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
