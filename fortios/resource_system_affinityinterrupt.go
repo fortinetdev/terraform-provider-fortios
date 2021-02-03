@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -52,7 +53,7 @@ func resourceSystemAffinityInterruptCreate(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemAffinityInterrupt(d)
+	obj, err := getObjectSystemAffinityInterrupt(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemAffinityInterrupt resource while getting object: %v", err)
 	}
@@ -77,7 +78,7 @@ func resourceSystemAffinityInterruptUpdate(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemAffinityInterrupt(d)
+	obj, err := getObjectSystemAffinityInterrupt(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAffinityInterrupt resource while getting object: %v", err)
 	}
@@ -130,41 +131,41 @@ func resourceSystemAffinityInterruptRead(d *schema.ResourceData, m interface{}) 
 		return nil
 	}
 
-	err = refreshObjectSystemAffinityInterrupt(d, o)
+	err = refreshObjectSystemAffinityInterrupt(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemAffinityInterrupt resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemAffinityInterruptId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAffinityInterruptId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAffinityInterruptInterrupt(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAffinityInterruptInterrupt(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAffinityInterruptAffinityCpumask(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAffinityInterruptAffinityCpumask(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemAffinityInterrupt(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemAffinityInterrupt(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("fosid", flattenSystemAffinityInterruptId(o["id"], d, "fosid")); err != nil {
+	if err = d.Set("fosid", flattenSystemAffinityInterruptId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
 			return fmt.Errorf("Error reading fosid: %v", err)
 		}
 	}
 
-	if err = d.Set("interrupt", flattenSystemAffinityInterruptInterrupt(o["interrupt"], d, "interrupt")); err != nil {
+	if err = d.Set("interrupt", flattenSystemAffinityInterruptInterrupt(o["interrupt"], d, "interrupt", sv)); err != nil {
 		if !fortiAPIPatch(o["interrupt"]) {
 			return fmt.Errorf("Error reading interrupt: %v", err)
 		}
 	}
 
-	if err = d.Set("affinity_cpumask", flattenSystemAffinityInterruptAffinityCpumask(o["affinity-cpumask"], d, "affinity_cpumask")); err != nil {
+	if err = d.Set("affinity_cpumask", flattenSystemAffinityInterruptAffinityCpumask(o["affinity-cpumask"], d, "affinity_cpumask", sv)); err != nil {
 		if !fortiAPIPatch(o["affinity-cpumask"]) {
 			return fmt.Errorf("Error reading affinity_cpumask: %v", err)
 		}
@@ -176,26 +177,27 @@ func refreshObjectSystemAffinityInterrupt(d *schema.ResourceData, o map[string]i
 func flattenSystemAffinityInterruptFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemAffinityInterruptId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAffinityInterruptId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAffinityInterruptInterrupt(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAffinityInterruptInterrupt(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAffinityInterruptAffinityCpumask(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAffinityInterruptAffinityCpumask(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemAffinityInterrupt(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemAffinityInterrupt(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-		t, err := expandSystemAffinityInterruptId(d, v, "fosid")
+
+		t, err := expandSystemAffinityInterruptId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -204,7 +206,8 @@ func getObjectSystemAffinityInterrupt(d *schema.ResourceData) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("interrupt"); ok {
-		t, err := expandSystemAffinityInterruptInterrupt(d, v, "interrupt")
+
+		t, err := expandSystemAffinityInterruptInterrupt(d, v, "interrupt", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -213,7 +216,8 @@ func getObjectSystemAffinityInterrupt(d *schema.ResourceData) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("affinity_cpumask"); ok {
-		t, err := expandSystemAffinityInterruptAffinityCpumask(d, v, "affinity_cpumask")
+
+		t, err := expandSystemAffinityInterruptAffinityCpumask(d, v, "affinity_cpumask", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
