@@ -30,7 +30,6 @@ resource "fortios_report_layout" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Report layout name.
