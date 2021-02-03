@@ -32,7 +32,6 @@ resource "fortios_firewall_sslserver" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Server name.
