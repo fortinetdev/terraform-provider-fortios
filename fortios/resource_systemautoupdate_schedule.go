@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -55,7 +56,7 @@ func resourceSystemAutoupdateScheduleUpdate(d *schema.ResourceData, m interface{
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemAutoupdateSchedule(d)
+	obj, err := getObjectSystemAutoupdateSchedule(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAutoupdateSchedule resource while getting object: %v", err)
 	}
@@ -108,51 +109,51 @@ func resourceSystemAutoupdateScheduleRead(d *schema.ResourceData, m interface{})
 		return nil
 	}
 
-	err = refreshObjectSystemAutoupdateSchedule(d, o)
+	err = refreshObjectSystemAutoupdateSchedule(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemAutoupdateSchedule resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemAutoupdateScheduleStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAutoupdateScheduleStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAutoupdateScheduleFrequency(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAutoupdateScheduleFrequency(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAutoupdateScheduleTime(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAutoupdateScheduleTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAutoupdateScheduleDay(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAutoupdateScheduleDay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemAutoupdateSchedule(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemAutoupdateSchedule(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("status", flattenSystemAutoupdateScheduleStatus(o["status"], d, "status")); err != nil {
+	if err = d.Set("status", flattenSystemAutoupdateScheduleStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
 		}
 	}
 
-	if err = d.Set("frequency", flattenSystemAutoupdateScheduleFrequency(o["frequency"], d, "frequency")); err != nil {
+	if err = d.Set("frequency", flattenSystemAutoupdateScheduleFrequency(o["frequency"], d, "frequency", sv)); err != nil {
 		if !fortiAPIPatch(o["frequency"]) {
 			return fmt.Errorf("Error reading frequency: %v", err)
 		}
 	}
 
-	if err = d.Set("time", flattenSystemAutoupdateScheduleTime(o["time"], d, "time")); err != nil {
+	if err = d.Set("time", flattenSystemAutoupdateScheduleTime(o["time"], d, "time", sv)); err != nil {
 		if !fortiAPIPatch(o["time"]) {
 			return fmt.Errorf("Error reading time: %v", err)
 		}
 	}
 
-	if err = d.Set("day", flattenSystemAutoupdateScheduleDay(o["day"], d, "day")); err != nil {
+	if err = d.Set("day", flattenSystemAutoupdateScheduleDay(o["day"], d, "day", sv)); err != nil {
 		if !fortiAPIPatch(o["day"]) {
 			return fmt.Errorf("Error reading day: %v", err)
 		}
@@ -164,30 +165,31 @@ func refreshObjectSystemAutoupdateSchedule(d *schema.ResourceData, o map[string]
 func flattenSystemAutoupdateScheduleFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemAutoupdateScheduleStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAutoupdateScheduleStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAutoupdateScheduleFrequency(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAutoupdateScheduleFrequency(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAutoupdateScheduleTime(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAutoupdateScheduleTime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAutoupdateScheduleDay(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAutoupdateScheduleDay(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemAutoupdateSchedule(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemAutoupdateSchedule(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
-		t, err := expandSystemAutoupdateScheduleStatus(d, v, "status")
+
+		t, err := expandSystemAutoupdateScheduleStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -196,7 +198,8 @@ func getObjectSystemAutoupdateSchedule(d *schema.ResourceData) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("frequency"); ok {
-		t, err := expandSystemAutoupdateScheduleFrequency(d, v, "frequency")
+
+		t, err := expandSystemAutoupdateScheduleFrequency(d, v, "frequency", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -205,7 +208,8 @@ func getObjectSystemAutoupdateSchedule(d *schema.ResourceData) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("time"); ok {
-		t, err := expandSystemAutoupdateScheduleTime(d, v, "time")
+
+		t, err := expandSystemAutoupdateScheduleTime(d, v, "time", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -214,7 +218,8 @@ func getObjectSystemAutoupdateSchedule(d *schema.ResourceData) (*map[string]inte
 	}
 
 	if v, ok := d.GetOk("day"); ok {
-		t, err := expandSystemAutoupdateScheduleDay(d, v, "day")
+
+		t, err := expandSystemAutoupdateScheduleDay(d, v, "day", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
