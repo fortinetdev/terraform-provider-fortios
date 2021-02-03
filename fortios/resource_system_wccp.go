@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -158,7 +159,7 @@ func resourceSystemWccpCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemWccp(d)
+	obj, err := getObjectSystemWccp(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemWccp resource while getting object: %v", err)
 	}
@@ -183,7 +184,7 @@ func resourceSystemWccpUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemWccp(d)
+	obj, err := getObjectSystemWccp(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemWccp resource while getting object: %v", err)
 	}
@@ -236,235 +237,235 @@ func resourceSystemWccpRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectSystemWccp(d, o)
+	err = refreshObjectSystemWccp(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemWccp resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemWccpServiceId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemWccpServiceId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemWccpRouterId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemWccpRouterId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemWccpCacheId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemWccpCacheId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemWccpGroupAddress(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemWccpGroupAddress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemWccpServerList(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemWccpServerList(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemWccpRouterList(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemWccpRouterList(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemWccpPortsDefined(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemWccpPortsDefined(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemWccpServerType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemWccpServerType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemWccpPorts(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemWccpPorts(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemWccpAuthentication(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemWccpAuthentication(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemWccpPassword(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemWccpPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemWccpForwardMethod(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemWccpForwardMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemWccpCacheEngineMethod(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemWccpCacheEngineMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemWccpServiceType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemWccpServiceType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemWccpPrimaryHash(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemWccpPrimaryHash(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemWccpPriority(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemWccpPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemWccpProtocol(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemWccpProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemWccpAssignmentWeight(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemWccpAssignmentWeight(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemWccpAssignmentBucketFormat(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemWccpAssignmentBucketFormat(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemWccpReturnMethod(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemWccpReturnMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemWccpAssignmentMethod(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemWccpAssignmentMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemWccpAssignmentSrcaddrMask(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemWccpAssignmentSrcaddrMask(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemWccpAssignmentDstaddrMask(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemWccpAssignmentDstaddrMask(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemWccp(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemWccp(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("service_id", flattenSystemWccpServiceId(o["service-id"], d, "service_id")); err != nil {
+	if err = d.Set("service_id", flattenSystemWccpServiceId(o["service-id"], d, "service_id", sv)); err != nil {
 		if !fortiAPIPatch(o["service-id"]) {
 			return fmt.Errorf("Error reading service_id: %v", err)
 		}
 	}
 
-	if err = d.Set("router_id", flattenSystemWccpRouterId(o["router-id"], d, "router_id")); err != nil {
+	if err = d.Set("router_id", flattenSystemWccpRouterId(o["router-id"], d, "router_id", sv)); err != nil {
 		if !fortiAPIPatch(o["router-id"]) {
 			return fmt.Errorf("Error reading router_id: %v", err)
 		}
 	}
 
-	if err = d.Set("cache_id", flattenSystemWccpCacheId(o["cache-id"], d, "cache_id")); err != nil {
+	if err = d.Set("cache_id", flattenSystemWccpCacheId(o["cache-id"], d, "cache_id", sv)); err != nil {
 		if !fortiAPIPatch(o["cache-id"]) {
 			return fmt.Errorf("Error reading cache_id: %v", err)
 		}
 	}
 
-	if err = d.Set("group_address", flattenSystemWccpGroupAddress(o["group-address"], d, "group_address")); err != nil {
+	if err = d.Set("group_address", flattenSystemWccpGroupAddress(o["group-address"], d, "group_address", sv)); err != nil {
 		if !fortiAPIPatch(o["group-address"]) {
 			return fmt.Errorf("Error reading group_address: %v", err)
 		}
 	}
 
-	if err = d.Set("server_list", flattenSystemWccpServerList(o["server-list"], d, "server_list")); err != nil {
+	if err = d.Set("server_list", flattenSystemWccpServerList(o["server-list"], d, "server_list", sv)); err != nil {
 		if !fortiAPIPatch(o["server-list"]) {
 			return fmt.Errorf("Error reading server_list: %v", err)
 		}
 	}
 
-	if err = d.Set("router_list", flattenSystemWccpRouterList(o["router-list"], d, "router_list")); err != nil {
+	if err = d.Set("router_list", flattenSystemWccpRouterList(o["router-list"], d, "router_list", sv)); err != nil {
 		if !fortiAPIPatch(o["router-list"]) {
 			return fmt.Errorf("Error reading router_list: %v", err)
 		}
 	}
 
-	if err = d.Set("ports_defined", flattenSystemWccpPortsDefined(o["ports-defined"], d, "ports_defined")); err != nil {
+	if err = d.Set("ports_defined", flattenSystemWccpPortsDefined(o["ports-defined"], d, "ports_defined", sv)); err != nil {
 		if !fortiAPIPatch(o["ports-defined"]) {
 			return fmt.Errorf("Error reading ports_defined: %v", err)
 		}
 	}
 
-	if err = d.Set("server_type", flattenSystemWccpServerType(o["server-type"], d, "server_type")); err != nil {
+	if err = d.Set("server_type", flattenSystemWccpServerType(o["server-type"], d, "server_type", sv)); err != nil {
 		if !fortiAPIPatch(o["server-type"]) {
 			return fmt.Errorf("Error reading server_type: %v", err)
 		}
 	}
 
-	if err = d.Set("ports", flattenSystemWccpPorts(o["ports"], d, "ports")); err != nil {
+	if err = d.Set("ports", flattenSystemWccpPorts(o["ports"], d, "ports", sv)); err != nil {
 		if !fortiAPIPatch(o["ports"]) {
 			return fmt.Errorf("Error reading ports: %v", err)
 		}
 	}
 
-	if err = d.Set("authentication", flattenSystemWccpAuthentication(o["authentication"], d, "authentication")); err != nil {
+	if err = d.Set("authentication", flattenSystemWccpAuthentication(o["authentication"], d, "authentication", sv)); err != nil {
 		if !fortiAPIPatch(o["authentication"]) {
 			return fmt.Errorf("Error reading authentication: %v", err)
 		}
 	}
 
-	if err = d.Set("forward_method", flattenSystemWccpForwardMethod(o["forward-method"], d, "forward_method")); err != nil {
+	if err = d.Set("forward_method", flattenSystemWccpForwardMethod(o["forward-method"], d, "forward_method", sv)); err != nil {
 		if !fortiAPIPatch(o["forward-method"]) {
 			return fmt.Errorf("Error reading forward_method: %v", err)
 		}
 	}
 
-	if err = d.Set("cache_engine_method", flattenSystemWccpCacheEngineMethod(o["cache-engine-method"], d, "cache_engine_method")); err != nil {
+	if err = d.Set("cache_engine_method", flattenSystemWccpCacheEngineMethod(o["cache-engine-method"], d, "cache_engine_method", sv)); err != nil {
 		if !fortiAPIPatch(o["cache-engine-method"]) {
 			return fmt.Errorf("Error reading cache_engine_method: %v", err)
 		}
 	}
 
-	if err = d.Set("service_type", flattenSystemWccpServiceType(o["service-type"], d, "service_type")); err != nil {
+	if err = d.Set("service_type", flattenSystemWccpServiceType(o["service-type"], d, "service_type", sv)); err != nil {
 		if !fortiAPIPatch(o["service-type"]) {
 			return fmt.Errorf("Error reading service_type: %v", err)
 		}
 	}
 
-	if err = d.Set("primary_hash", flattenSystemWccpPrimaryHash(o["primary-hash"], d, "primary_hash")); err != nil {
+	if err = d.Set("primary_hash", flattenSystemWccpPrimaryHash(o["primary-hash"], d, "primary_hash", sv)); err != nil {
 		if !fortiAPIPatch(o["primary-hash"]) {
 			return fmt.Errorf("Error reading primary_hash: %v", err)
 		}
 	}
 
-	if err = d.Set("priority", flattenSystemWccpPriority(o["priority"], d, "priority")); err != nil {
+	if err = d.Set("priority", flattenSystemWccpPriority(o["priority"], d, "priority", sv)); err != nil {
 		if !fortiAPIPatch(o["priority"]) {
 			return fmt.Errorf("Error reading priority: %v", err)
 		}
 	}
 
-	if err = d.Set("protocol", flattenSystemWccpProtocol(o["protocol"], d, "protocol")); err != nil {
+	if err = d.Set("protocol", flattenSystemWccpProtocol(o["protocol"], d, "protocol", sv)); err != nil {
 		if !fortiAPIPatch(o["protocol"]) {
 			return fmt.Errorf("Error reading protocol: %v", err)
 		}
 	}
 
-	if err = d.Set("assignment_weight", flattenSystemWccpAssignmentWeight(o["assignment-weight"], d, "assignment_weight")); err != nil {
+	if err = d.Set("assignment_weight", flattenSystemWccpAssignmentWeight(o["assignment-weight"], d, "assignment_weight", sv)); err != nil {
 		if !fortiAPIPatch(o["assignment-weight"]) {
 			return fmt.Errorf("Error reading assignment_weight: %v", err)
 		}
 	}
 
-	if err = d.Set("assignment_bucket_format", flattenSystemWccpAssignmentBucketFormat(o["assignment-bucket-format"], d, "assignment_bucket_format")); err != nil {
+	if err = d.Set("assignment_bucket_format", flattenSystemWccpAssignmentBucketFormat(o["assignment-bucket-format"], d, "assignment_bucket_format", sv)); err != nil {
 		if !fortiAPIPatch(o["assignment-bucket-format"]) {
 			return fmt.Errorf("Error reading assignment_bucket_format: %v", err)
 		}
 	}
 
-	if err = d.Set("return_method", flattenSystemWccpReturnMethod(o["return-method"], d, "return_method")); err != nil {
+	if err = d.Set("return_method", flattenSystemWccpReturnMethod(o["return-method"], d, "return_method", sv)); err != nil {
 		if !fortiAPIPatch(o["return-method"]) {
 			return fmt.Errorf("Error reading return_method: %v", err)
 		}
 	}
 
-	if err = d.Set("assignment_method", flattenSystemWccpAssignmentMethod(o["assignment-method"], d, "assignment_method")); err != nil {
+	if err = d.Set("assignment_method", flattenSystemWccpAssignmentMethod(o["assignment-method"], d, "assignment_method", sv)); err != nil {
 		if !fortiAPIPatch(o["assignment-method"]) {
 			return fmt.Errorf("Error reading assignment_method: %v", err)
 		}
 	}
 
-	if err = d.Set("assignment_srcaddr_mask", flattenSystemWccpAssignmentSrcaddrMask(o["assignment-srcaddr-mask"], d, "assignment_srcaddr_mask")); err != nil {
+	if err = d.Set("assignment_srcaddr_mask", flattenSystemWccpAssignmentSrcaddrMask(o["assignment-srcaddr-mask"], d, "assignment_srcaddr_mask", sv)); err != nil {
 		if !fortiAPIPatch(o["assignment-srcaddr-mask"]) {
 			return fmt.Errorf("Error reading assignment_srcaddr_mask: %v", err)
 		}
 	}
 
-	if err = d.Set("assignment_dstaddr_mask", flattenSystemWccpAssignmentDstaddrMask(o["assignment-dstaddr-mask"], d, "assignment_dstaddr_mask")); err != nil {
+	if err = d.Set("assignment_dstaddr_mask", flattenSystemWccpAssignmentDstaddrMask(o["assignment-dstaddr-mask"], d, "assignment_dstaddr_mask", sv)); err != nil {
 		if !fortiAPIPatch(o["assignment-dstaddr-mask"]) {
 			return fmt.Errorf("Error reading assignment_dstaddr_mask: %v", err)
 		}
@@ -476,106 +477,107 @@ func refreshObjectSystemWccp(d *schema.ResourceData, o map[string]interface{}) e
 func flattenSystemWccpFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemWccpServiceId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemWccpServiceId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemWccpRouterId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemWccpRouterId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemWccpCacheId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemWccpCacheId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemWccpGroupAddress(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemWccpGroupAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemWccpServerList(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemWccpServerList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemWccpRouterList(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemWccpRouterList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemWccpPortsDefined(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemWccpPortsDefined(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemWccpServerType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemWccpServerType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemWccpPorts(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemWccpPorts(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemWccpAuthentication(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemWccpAuthentication(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemWccpPassword(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemWccpPassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemWccpForwardMethod(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemWccpForwardMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemWccpCacheEngineMethod(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemWccpCacheEngineMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemWccpServiceType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemWccpServiceType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemWccpPrimaryHash(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemWccpPrimaryHash(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemWccpPriority(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemWccpPriority(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemWccpProtocol(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemWccpProtocol(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemWccpAssignmentWeight(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemWccpAssignmentWeight(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemWccpAssignmentBucketFormat(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemWccpAssignmentBucketFormat(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemWccpReturnMethod(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemWccpReturnMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemWccpAssignmentMethod(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemWccpAssignmentMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemWccpAssignmentSrcaddrMask(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemWccpAssignmentSrcaddrMask(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemWccpAssignmentDstaddrMask(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemWccpAssignmentDstaddrMask(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemWccp(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemWccp(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("service_id"); ok {
-		t, err := expandSystemWccpServiceId(d, v, "service_id")
+
+		t, err := expandSystemWccpServiceId(d, v, "service_id", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -584,7 +586,8 @@ func getObjectSystemWccp(d *schema.ResourceData) (*map[string]interface{}, error
 	}
 
 	if v, ok := d.GetOk("router_id"); ok {
-		t, err := expandSystemWccpRouterId(d, v, "router_id")
+
+		t, err := expandSystemWccpRouterId(d, v, "router_id", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -593,7 +596,8 @@ func getObjectSystemWccp(d *schema.ResourceData) (*map[string]interface{}, error
 	}
 
 	if v, ok := d.GetOk("cache_id"); ok {
-		t, err := expandSystemWccpCacheId(d, v, "cache_id")
+
+		t, err := expandSystemWccpCacheId(d, v, "cache_id", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -602,7 +606,8 @@ func getObjectSystemWccp(d *schema.ResourceData) (*map[string]interface{}, error
 	}
 
 	if v, ok := d.GetOk("group_address"); ok {
-		t, err := expandSystemWccpGroupAddress(d, v, "group_address")
+
+		t, err := expandSystemWccpGroupAddress(d, v, "group_address", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -611,7 +616,8 @@ func getObjectSystemWccp(d *schema.ResourceData) (*map[string]interface{}, error
 	}
 
 	if v, ok := d.GetOk("server_list"); ok {
-		t, err := expandSystemWccpServerList(d, v, "server_list")
+
+		t, err := expandSystemWccpServerList(d, v, "server_list", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -620,7 +626,8 @@ func getObjectSystemWccp(d *schema.ResourceData) (*map[string]interface{}, error
 	}
 
 	if v, ok := d.GetOk("router_list"); ok {
-		t, err := expandSystemWccpRouterList(d, v, "router_list")
+
+		t, err := expandSystemWccpRouterList(d, v, "router_list", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -629,7 +636,8 @@ func getObjectSystemWccp(d *schema.ResourceData) (*map[string]interface{}, error
 	}
 
 	if v, ok := d.GetOk("ports_defined"); ok {
-		t, err := expandSystemWccpPortsDefined(d, v, "ports_defined")
+
+		t, err := expandSystemWccpPortsDefined(d, v, "ports_defined", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -638,7 +646,8 @@ func getObjectSystemWccp(d *schema.ResourceData) (*map[string]interface{}, error
 	}
 
 	if v, ok := d.GetOk("server_type"); ok {
-		t, err := expandSystemWccpServerType(d, v, "server_type")
+
+		t, err := expandSystemWccpServerType(d, v, "server_type", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -647,7 +656,8 @@ func getObjectSystemWccp(d *schema.ResourceData) (*map[string]interface{}, error
 	}
 
 	if v, ok := d.GetOk("ports"); ok {
-		t, err := expandSystemWccpPorts(d, v, "ports")
+
+		t, err := expandSystemWccpPorts(d, v, "ports", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -656,7 +666,8 @@ func getObjectSystemWccp(d *schema.ResourceData) (*map[string]interface{}, error
 	}
 
 	if v, ok := d.GetOk("authentication"); ok {
-		t, err := expandSystemWccpAuthentication(d, v, "authentication")
+
+		t, err := expandSystemWccpAuthentication(d, v, "authentication", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -665,7 +676,8 @@ func getObjectSystemWccp(d *schema.ResourceData) (*map[string]interface{}, error
 	}
 
 	if v, ok := d.GetOk("password"); ok {
-		t, err := expandSystemWccpPassword(d, v, "password")
+
+		t, err := expandSystemWccpPassword(d, v, "password", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -674,7 +686,8 @@ func getObjectSystemWccp(d *schema.ResourceData) (*map[string]interface{}, error
 	}
 
 	if v, ok := d.GetOk("forward_method"); ok {
-		t, err := expandSystemWccpForwardMethod(d, v, "forward_method")
+
+		t, err := expandSystemWccpForwardMethod(d, v, "forward_method", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -683,7 +696,8 @@ func getObjectSystemWccp(d *schema.ResourceData) (*map[string]interface{}, error
 	}
 
 	if v, ok := d.GetOk("cache_engine_method"); ok {
-		t, err := expandSystemWccpCacheEngineMethod(d, v, "cache_engine_method")
+
+		t, err := expandSystemWccpCacheEngineMethod(d, v, "cache_engine_method", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -692,7 +706,8 @@ func getObjectSystemWccp(d *schema.ResourceData) (*map[string]interface{}, error
 	}
 
 	if v, ok := d.GetOk("service_type"); ok {
-		t, err := expandSystemWccpServiceType(d, v, "service_type")
+
+		t, err := expandSystemWccpServiceType(d, v, "service_type", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -701,7 +716,8 @@ func getObjectSystemWccp(d *schema.ResourceData) (*map[string]interface{}, error
 	}
 
 	if v, ok := d.GetOk("primary_hash"); ok {
-		t, err := expandSystemWccpPrimaryHash(d, v, "primary_hash")
+
+		t, err := expandSystemWccpPrimaryHash(d, v, "primary_hash", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -710,7 +726,8 @@ func getObjectSystemWccp(d *schema.ResourceData) (*map[string]interface{}, error
 	}
 
 	if v, ok := d.GetOkExists("priority"); ok {
-		t, err := expandSystemWccpPriority(d, v, "priority")
+
+		t, err := expandSystemWccpPriority(d, v, "priority", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -719,7 +736,8 @@ func getObjectSystemWccp(d *schema.ResourceData) (*map[string]interface{}, error
 	}
 
 	if v, ok := d.GetOkExists("protocol"); ok {
-		t, err := expandSystemWccpProtocol(d, v, "protocol")
+
+		t, err := expandSystemWccpProtocol(d, v, "protocol", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -728,7 +746,8 @@ func getObjectSystemWccp(d *schema.ResourceData) (*map[string]interface{}, error
 	}
 
 	if v, ok := d.GetOkExists("assignment_weight"); ok {
-		t, err := expandSystemWccpAssignmentWeight(d, v, "assignment_weight")
+
+		t, err := expandSystemWccpAssignmentWeight(d, v, "assignment_weight", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -737,7 +756,8 @@ func getObjectSystemWccp(d *schema.ResourceData) (*map[string]interface{}, error
 	}
 
 	if v, ok := d.GetOk("assignment_bucket_format"); ok {
-		t, err := expandSystemWccpAssignmentBucketFormat(d, v, "assignment_bucket_format")
+
+		t, err := expandSystemWccpAssignmentBucketFormat(d, v, "assignment_bucket_format", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -746,7 +766,8 @@ func getObjectSystemWccp(d *schema.ResourceData) (*map[string]interface{}, error
 	}
 
 	if v, ok := d.GetOk("return_method"); ok {
-		t, err := expandSystemWccpReturnMethod(d, v, "return_method")
+
+		t, err := expandSystemWccpReturnMethod(d, v, "return_method", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -755,7 +776,8 @@ func getObjectSystemWccp(d *schema.ResourceData) (*map[string]interface{}, error
 	}
 
 	if v, ok := d.GetOk("assignment_method"); ok {
-		t, err := expandSystemWccpAssignmentMethod(d, v, "assignment_method")
+
+		t, err := expandSystemWccpAssignmentMethod(d, v, "assignment_method", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -764,7 +786,8 @@ func getObjectSystemWccp(d *schema.ResourceData) (*map[string]interface{}, error
 	}
 
 	if v, ok := d.GetOk("assignment_srcaddr_mask"); ok {
-		t, err := expandSystemWccpAssignmentSrcaddrMask(d, v, "assignment_srcaddr_mask")
+
+		t, err := expandSystemWccpAssignmentSrcaddrMask(d, v, "assignment_srcaddr_mask", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -773,7 +796,8 @@ func getObjectSystemWccp(d *schema.ResourceData) (*map[string]interface{}, error
 	}
 
 	if v, ok := d.GetOk("assignment_dstaddr_mask"); ok {
-		t, err := expandSystemWccpAssignmentDstaddrMask(d, v, "assignment_dstaddr_mask")
+
+		t, err := expandSystemWccpAssignmentDstaddrMask(d, v, "assignment_dstaddr_mask", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
