@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -48,7 +49,7 @@ func resourceSwitchControllerSwitchLogUpdate(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSwitchControllerSwitchLog(d)
+	obj, err := getObjectSwitchControllerSwitchLog(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerSwitchLog resource while getting object: %v", err)
 	}
@@ -101,31 +102,31 @@ func resourceSwitchControllerSwitchLogRead(d *schema.ResourceData, m interface{}
 		return nil
 	}
 
-	err = refreshObjectSwitchControllerSwitchLog(d, o)
+	err = refreshObjectSwitchControllerSwitchLog(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerSwitchLog resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSwitchControllerSwitchLogStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerSwitchLogStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerSwitchLogSeverity(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerSwitchLogSeverity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSwitchControllerSwitchLog(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSwitchControllerSwitchLog(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("status", flattenSwitchControllerSwitchLogStatus(o["status"], d, "status")); err != nil {
+	if err = d.Set("status", flattenSwitchControllerSwitchLogStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
 		}
 	}
 
-	if err = d.Set("severity", flattenSwitchControllerSwitchLogSeverity(o["severity"], d, "severity")); err != nil {
+	if err = d.Set("severity", flattenSwitchControllerSwitchLogSeverity(o["severity"], d, "severity", sv)); err != nil {
 		if !fortiAPIPatch(o["severity"]) {
 			return fmt.Errorf("Error reading severity: %v", err)
 		}
@@ -137,22 +138,23 @@ func refreshObjectSwitchControllerSwitchLog(d *schema.ResourceData, o map[string
 func flattenSwitchControllerSwitchLogFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSwitchControllerSwitchLogStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerSwitchLogStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerSwitchLogSeverity(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerSwitchLogSeverity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSwitchControllerSwitchLog(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSwitchControllerSwitchLog(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
-		t, err := expandSwitchControllerSwitchLogStatus(d, v, "status")
+
+		t, err := expandSwitchControllerSwitchLogStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -161,7 +163,8 @@ func getObjectSwitchControllerSwitchLog(d *schema.ResourceData) (*map[string]int
 	}
 
 	if v, ok := d.GetOk("severity"); ok {
-		t, err := expandSwitchControllerSwitchLogSeverity(d, v, "severity")
+
+		t, err := expandSwitchControllerSwitchLogSeverity(d, v, "severity", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
