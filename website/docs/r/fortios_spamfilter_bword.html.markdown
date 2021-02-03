@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_spamfilter_bword
-Configure AntiSpam banned word list.
+Configure AntiSpam banned word list. Applies to FortiOS Version `<= 6.2.0`.
 
 ## Example Usage
 
@@ -30,7 +30,6 @@ resource "fortios_spamfilter_bword" "trname" {
 ```
 
 ## Argument Reference
-
 
 The following arguments are supported:
 
