@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -187,6 +188,11 @@ func resourceUserGroup() *schema.Resource {
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
+						},
 						"user_id": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
@@ -255,7 +261,7 @@ func resourceUserGroupCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectUserGroup(d)
+	obj, err := getObjectUserGroup(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating UserGroup resource while getting object: %v", err)
 	}
@@ -280,7 +286,7 @@ func resourceUserGroupUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectUserGroup(d)
+	obj, err := getObjectUserGroup(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating UserGroup resource while getting object: %v", err)
 	}
@@ -333,46 +339,46 @@ func resourceUserGroupRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectUserGroup(d, o)
+	err = refreshObjectUserGroup(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading UserGroup resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenUserGroupName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserGroupName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserGroupId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserGroupId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserGroupGroupType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserGroupGroupType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserGroupAuthtimeout(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserGroupAuthtimeout(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserGroupAuthConcurrentOverride(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserGroupAuthConcurrentOverride(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserGroupAuthConcurrentValue(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserGroupAuthConcurrentValue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserGroupHttpDigestRealm(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserGroupHttpDigestRealm(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserGroupSsoAttributeValue(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserGroupSsoAttributeValue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserGroupMember(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenUserGroupMember(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -393,7 +399,8 @@ func flattenUserGroupMember(v interface{}, d *schema.ResourceData, pre string) [
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenUserGroupMemberName(i["name"], d, pre_append)
+
+			tmp["name"] = flattenUserGroupMemberName(i["name"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -405,11 +412,11 @@ func flattenUserGroupMember(v interface{}, d *schema.ResourceData, pre string) [
 	return result
 }
 
-func flattenUserGroupMemberName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserGroupMemberName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserGroupMatch(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenUserGroupMatch(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -430,17 +437,20 @@ func flattenUserGroupMatch(v interface{}, d *schema.ResourceData, pre string) []
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenUserGroupMatchId(i["id"], d, pre_append)
+
+			tmp["id"] = flattenUserGroupMatchId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server_name"
 		if _, ok := i["server-name"]; ok {
-			tmp["server_name"] = flattenUserGroupMatchServerName(i["server-name"], d, pre_append)
+
+			tmp["server_name"] = flattenUserGroupMatchServerName(i["server-name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "group_name"
 		if _, ok := i["group-name"]; ok {
-			tmp["group_name"] = flattenUserGroupMatchGroupName(i["group-name"], d, pre_append)
+
+			tmp["group_name"] = flattenUserGroupMatchGroupName(i["group-name"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -452,71 +462,71 @@ func flattenUserGroupMatch(v interface{}, d *schema.ResourceData, pre string) []
 	return result
 }
 
-func flattenUserGroupMatchId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserGroupMatchId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserGroupMatchServerName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserGroupMatchServerName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserGroupMatchGroupName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserGroupMatchGroupName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserGroupUserId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserGroupUserId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserGroupPassword(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserGroupPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserGroupUserName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserGroupUserName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserGroupSponsor(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserGroupSponsor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserGroupCompany(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserGroupCompany(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserGroupEmail(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserGroupEmail(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserGroupMobilePhone(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserGroupMobilePhone(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserGroupSmsServer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserGroupSmsServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserGroupSmsCustomServer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserGroupSmsCustomServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserGroupExpireType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserGroupExpireType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserGroupExpire(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserGroupExpire(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserGroupMaxAccounts(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserGroupMaxAccounts(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserGroupMultipleGuestAdd(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserGroupMultipleGuestAdd(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserGroupGuest(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenUserGroupGuest(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -535,19 +545,28 @@ func flattenUserGroupGuest(v interface{}, d *schema.ResourceData, pre string) []
 
 		pre_append := "" // table
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := i["id"]; ok {
+
+			tmp["id"] = flattenUserGroupGuestId(i["id"], d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "user_id"
 		if _, ok := i["user-id"]; ok {
-			tmp["user_id"] = flattenUserGroupGuestUserId(i["user-id"], d, pre_append)
+
+			tmp["user_id"] = flattenUserGroupGuestUserId(i["user-id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenUserGroupGuestName(i["name"], d, pre_append)
+
+			tmp["name"] = flattenUserGroupGuestName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "password"
 		if _, ok := i["password"]; ok {
-			tmp["password"] = flattenUserGroupGuestPassword(i["password"], d, pre_append)
+
+			tmp["password"] = flattenUserGroupGuestPassword(i["password"], d, pre_append, sv)
 			c := d.Get(pre_append).(string)
 			if c != "" {
 				tmp["password"] = c
@@ -556,32 +575,38 @@ func flattenUserGroupGuest(v interface{}, d *schema.ResourceData, pre string) []
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mobile_phone"
 		if _, ok := i["mobile-phone"]; ok {
-			tmp["mobile_phone"] = flattenUserGroupGuestMobilePhone(i["mobile-phone"], d, pre_append)
+
+			tmp["mobile_phone"] = flattenUserGroupGuestMobilePhone(i["mobile-phone"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sponsor"
 		if _, ok := i["sponsor"]; ok {
-			tmp["sponsor"] = flattenUserGroupGuestSponsor(i["sponsor"], d, pre_append)
+
+			tmp["sponsor"] = flattenUserGroupGuestSponsor(i["sponsor"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "company"
 		if _, ok := i["company"]; ok {
-			tmp["company"] = flattenUserGroupGuestCompany(i["company"], d, pre_append)
+
+			tmp["company"] = flattenUserGroupGuestCompany(i["company"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "email"
 		if _, ok := i["email"]; ok {
-			tmp["email"] = flattenUserGroupGuestEmail(i["email"], d, pre_append)
+
+			tmp["email"] = flattenUserGroupGuestEmail(i["email"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "expiration"
 		if _, ok := i["expiration"]; ok {
-			tmp["expiration"] = flattenUserGroupGuestExpiration(i["expiration"], d, pre_append)
+
+			tmp["expiration"] = flattenUserGroupGuestExpiration(i["expiration"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := i["comment"]; ok {
-			tmp["comment"] = flattenUserGroupGuestComment(i["comment"], d, pre_append)
+
+			tmp["comment"] = flattenUserGroupGuestComment(i["comment"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -593,102 +618,106 @@ func flattenUserGroupGuest(v interface{}, d *schema.ResourceData, pre string) []
 	return result
 }
 
-func flattenUserGroupGuestUserId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserGroupGuestId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserGroupGuestName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserGroupGuestUserId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserGroupGuestPassword(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserGroupGuestName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserGroupGuestMobilePhone(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserGroupGuestPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserGroupGuestSponsor(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserGroupGuestMobilePhone(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserGroupGuestCompany(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserGroupGuestSponsor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserGroupGuestEmail(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserGroupGuestCompany(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserGroupGuestExpiration(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserGroupGuestEmail(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserGroupGuestComment(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserGroupGuestExpiration(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectUserGroup(d *schema.ResourceData, o map[string]interface{}) error {
+func flattenUserGroupGuestComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func refreshObjectUserGroup(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenUserGroupName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenUserGroupName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("fosid", flattenUserGroupId(o["id"], d, "fosid")); err != nil {
+	if err = d.Set("fosid", flattenUserGroupId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
 			return fmt.Errorf("Error reading fosid: %v", err)
 		}
 	}
 
-	if err = d.Set("group_type", flattenUserGroupGroupType(o["group-type"], d, "group_type")); err != nil {
+	if err = d.Set("group_type", flattenUserGroupGroupType(o["group-type"], d, "group_type", sv)); err != nil {
 		if !fortiAPIPatch(o["group-type"]) {
 			return fmt.Errorf("Error reading group_type: %v", err)
 		}
 	}
 
-	if err = d.Set("authtimeout", flattenUserGroupAuthtimeout(o["authtimeout"], d, "authtimeout")); err != nil {
+	if err = d.Set("authtimeout", flattenUserGroupAuthtimeout(o["authtimeout"], d, "authtimeout", sv)); err != nil {
 		if !fortiAPIPatch(o["authtimeout"]) {
 			return fmt.Errorf("Error reading authtimeout: %v", err)
 		}
 	}
 
-	if err = d.Set("auth_concurrent_override", flattenUserGroupAuthConcurrentOverride(o["auth-concurrent-override"], d, "auth_concurrent_override")); err != nil {
+	if err = d.Set("auth_concurrent_override", flattenUserGroupAuthConcurrentOverride(o["auth-concurrent-override"], d, "auth_concurrent_override", sv)); err != nil {
 		if !fortiAPIPatch(o["auth-concurrent-override"]) {
 			return fmt.Errorf("Error reading auth_concurrent_override: %v", err)
 		}
 	}
 
-	if err = d.Set("auth_concurrent_value", flattenUserGroupAuthConcurrentValue(o["auth-concurrent-value"], d, "auth_concurrent_value")); err != nil {
+	if err = d.Set("auth_concurrent_value", flattenUserGroupAuthConcurrentValue(o["auth-concurrent-value"], d, "auth_concurrent_value", sv)); err != nil {
 		if !fortiAPIPatch(o["auth-concurrent-value"]) {
 			return fmt.Errorf("Error reading auth_concurrent_value: %v", err)
 		}
 	}
 
-	if err = d.Set("http_digest_realm", flattenUserGroupHttpDigestRealm(o["http-digest-realm"], d, "http_digest_realm")); err != nil {
+	if err = d.Set("http_digest_realm", flattenUserGroupHttpDigestRealm(o["http-digest-realm"], d, "http_digest_realm", sv)); err != nil {
 		if !fortiAPIPatch(o["http-digest-realm"]) {
 			return fmt.Errorf("Error reading http_digest_realm: %v", err)
 		}
 	}
 
-	if err = d.Set("sso_attribute_value", flattenUserGroupSsoAttributeValue(o["sso-attribute-value"], d, "sso_attribute_value")); err != nil {
+	if err = d.Set("sso_attribute_value", flattenUserGroupSsoAttributeValue(o["sso-attribute-value"], d, "sso_attribute_value", sv)); err != nil {
 		if !fortiAPIPatch(o["sso-attribute-value"]) {
 			return fmt.Errorf("Error reading sso_attribute_value: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("member", flattenUserGroupMember(o["member"], d, "member")); err != nil {
+		if err = d.Set("member", flattenUserGroupMember(o["member"], d, "member", sv)); err != nil {
 			if !fortiAPIPatch(o["member"]) {
 				return fmt.Errorf("Error reading member: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("member"); ok {
-			if err = d.Set("member", flattenUserGroupMember(o["member"], d, "member")); err != nil {
+			if err = d.Set("member", flattenUserGroupMember(o["member"], d, "member", sv)); err != nil {
 				if !fortiAPIPatch(o["member"]) {
 					return fmt.Errorf("Error reading member: %v", err)
 				}
@@ -697,14 +726,14 @@ func refreshObjectUserGroup(d *schema.ResourceData, o map[string]interface{}) er
 	}
 
 	if isImportTable() {
-		if err = d.Set("match", flattenUserGroupMatch(o["match"], d, "match")); err != nil {
+		if err = d.Set("match", flattenUserGroupMatch(o["match"], d, "match", sv)); err != nil {
 			if !fortiAPIPatch(o["match"]) {
 				return fmt.Errorf("Error reading match: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("match"); ok {
-			if err = d.Set("match", flattenUserGroupMatch(o["match"], d, "match")); err != nil {
+			if err = d.Set("match", flattenUserGroupMatch(o["match"], d, "match", sv)); err != nil {
 				if !fortiAPIPatch(o["match"]) {
 					return fmt.Errorf("Error reading match: %v", err)
 				}
@@ -712,93 +741,93 @@ func refreshObjectUserGroup(d *schema.ResourceData, o map[string]interface{}) er
 		}
 	}
 
-	if err = d.Set("user_id", flattenUserGroupUserId(o["user-id"], d, "user_id")); err != nil {
+	if err = d.Set("user_id", flattenUserGroupUserId(o["user-id"], d, "user_id", sv)); err != nil {
 		if !fortiAPIPatch(o["user-id"]) {
 			return fmt.Errorf("Error reading user_id: %v", err)
 		}
 	}
 
-	if err = d.Set("password", flattenUserGroupPassword(o["password"], d, "password")); err != nil {
+	if err = d.Set("password", flattenUserGroupPassword(o["password"], d, "password", sv)); err != nil {
 		if !fortiAPIPatch(o["password"]) {
 			return fmt.Errorf("Error reading password: %v", err)
 		}
 	}
 
-	if err = d.Set("user_name", flattenUserGroupUserName(o["user-name"], d, "user_name")); err != nil {
+	if err = d.Set("user_name", flattenUserGroupUserName(o["user-name"], d, "user_name", sv)); err != nil {
 		if !fortiAPIPatch(o["user-name"]) {
 			return fmt.Errorf("Error reading user_name: %v", err)
 		}
 	}
 
-	if err = d.Set("sponsor", flattenUserGroupSponsor(o["sponsor"], d, "sponsor")); err != nil {
+	if err = d.Set("sponsor", flattenUserGroupSponsor(o["sponsor"], d, "sponsor", sv)); err != nil {
 		if !fortiAPIPatch(o["sponsor"]) {
 			return fmt.Errorf("Error reading sponsor: %v", err)
 		}
 	}
 
-	if err = d.Set("company", flattenUserGroupCompany(o["company"], d, "company")); err != nil {
+	if err = d.Set("company", flattenUserGroupCompany(o["company"], d, "company", sv)); err != nil {
 		if !fortiAPIPatch(o["company"]) {
 			return fmt.Errorf("Error reading company: %v", err)
 		}
 	}
 
-	if err = d.Set("email", flattenUserGroupEmail(o["email"], d, "email")); err != nil {
+	if err = d.Set("email", flattenUserGroupEmail(o["email"], d, "email", sv)); err != nil {
 		if !fortiAPIPatch(o["email"]) {
 			return fmt.Errorf("Error reading email: %v", err)
 		}
 	}
 
-	if err = d.Set("mobile_phone", flattenUserGroupMobilePhone(o["mobile-phone"], d, "mobile_phone")); err != nil {
+	if err = d.Set("mobile_phone", flattenUserGroupMobilePhone(o["mobile-phone"], d, "mobile_phone", sv)); err != nil {
 		if !fortiAPIPatch(o["mobile-phone"]) {
 			return fmt.Errorf("Error reading mobile_phone: %v", err)
 		}
 	}
 
-	if err = d.Set("sms_server", flattenUserGroupSmsServer(o["sms-server"], d, "sms_server")); err != nil {
+	if err = d.Set("sms_server", flattenUserGroupSmsServer(o["sms-server"], d, "sms_server", sv)); err != nil {
 		if !fortiAPIPatch(o["sms-server"]) {
 			return fmt.Errorf("Error reading sms_server: %v", err)
 		}
 	}
 
-	if err = d.Set("sms_custom_server", flattenUserGroupSmsCustomServer(o["sms-custom-server"], d, "sms_custom_server")); err != nil {
+	if err = d.Set("sms_custom_server", flattenUserGroupSmsCustomServer(o["sms-custom-server"], d, "sms_custom_server", sv)); err != nil {
 		if !fortiAPIPatch(o["sms-custom-server"]) {
 			return fmt.Errorf("Error reading sms_custom_server: %v", err)
 		}
 	}
 
-	if err = d.Set("expire_type", flattenUserGroupExpireType(o["expire-type"], d, "expire_type")); err != nil {
+	if err = d.Set("expire_type", flattenUserGroupExpireType(o["expire-type"], d, "expire_type", sv)); err != nil {
 		if !fortiAPIPatch(o["expire-type"]) {
 			return fmt.Errorf("Error reading expire_type: %v", err)
 		}
 	}
 
-	if err = d.Set("expire", flattenUserGroupExpire(o["expire"], d, "expire")); err != nil {
+	if err = d.Set("expire", flattenUserGroupExpire(o["expire"], d, "expire", sv)); err != nil {
 		if !fortiAPIPatch(o["expire"]) {
 			return fmt.Errorf("Error reading expire: %v", err)
 		}
 	}
 
-	if err = d.Set("max_accounts", flattenUserGroupMaxAccounts(o["max-accounts"], d, "max_accounts")); err != nil {
+	if err = d.Set("max_accounts", flattenUserGroupMaxAccounts(o["max-accounts"], d, "max_accounts", sv)); err != nil {
 		if !fortiAPIPatch(o["max-accounts"]) {
 			return fmt.Errorf("Error reading max_accounts: %v", err)
 		}
 	}
 
-	if err = d.Set("multiple_guest_add", flattenUserGroupMultipleGuestAdd(o["multiple-guest-add"], d, "multiple_guest_add")); err != nil {
+	if err = d.Set("multiple_guest_add", flattenUserGroupMultipleGuestAdd(o["multiple-guest-add"], d, "multiple_guest_add", sv)); err != nil {
 		if !fortiAPIPatch(o["multiple-guest-add"]) {
 			return fmt.Errorf("Error reading multiple_guest_add: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("guest", flattenUserGroupGuest(o["guest"], d, "guest")); err != nil {
+		if err = d.Set("guest", flattenUserGroupGuest(o["guest"], d, "guest", sv)); err != nil {
 			if !fortiAPIPatch(o["guest"]) {
 				return fmt.Errorf("Error reading guest: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("guest"); ok {
-			if err = d.Set("guest", flattenUserGroupGuest(o["guest"], d, "guest")); err != nil {
+			if err = d.Set("guest", flattenUserGroupGuest(o["guest"], d, "guest", sv)); err != nil {
 				if !fortiAPIPatch(o["guest"]) {
 					return fmt.Errorf("Error reading guest: %v", err)
 				}
@@ -812,42 +841,42 @@ func refreshObjectUserGroup(d *schema.ResourceData, o map[string]interface{}) er
 func flattenUserGroupFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandUserGroupName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserGroupId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserGroupGroupType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupGroupType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserGroupAuthtimeout(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupAuthtimeout(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserGroupAuthConcurrentOverride(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupAuthConcurrentOverride(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserGroupAuthConcurrentValue(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupAuthConcurrentValue(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserGroupHttpDigestRealm(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupHttpDigestRealm(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserGroupSsoAttributeValue(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupSsoAttributeValue(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserGroupMember(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupMember(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -863,7 +892,8 @@ func expandUserGroupMember(d *schema.ResourceData, v interface{}, pre string) (i
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandUserGroupMemberName(d, i["name"], pre_append)
+
+			tmp["name"], _ = expandUserGroupMemberName(d, i["name"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -874,11 +904,11 @@ func expandUserGroupMember(d *schema.ResourceData, v interface{}, pre string) (i
 	return result, nil
 }
 
-func expandUserGroupMemberName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupMemberName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserGroupMatch(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupMatch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -894,17 +924,20 @@ func expandUserGroupMatch(d *schema.ResourceData, v interface{}, pre string) (in
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandUserGroupMatchId(d, i["id"], pre_append)
+
+			tmp["id"], _ = expandUserGroupMatchId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "server_name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["server-name"], _ = expandUserGroupMatchServerName(d, i["server_name"], pre_append)
+
+			tmp["server-name"], _ = expandUserGroupMatchServerName(d, i["server_name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "group_name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["group-name"], _ = expandUserGroupMatchGroupName(d, i["group_name"], pre_append)
+
+			tmp["group-name"], _ = expandUserGroupMatchGroupName(d, i["group_name"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -915,71 +948,71 @@ func expandUserGroupMatch(d *schema.ResourceData, v interface{}, pre string) (in
 	return result, nil
 }
 
-func expandUserGroupMatchId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupMatchId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserGroupMatchServerName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupMatchServerName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserGroupMatchGroupName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupMatchGroupName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserGroupUserId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupUserId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserGroupPassword(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupPassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserGroupUserName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupUserName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserGroupSponsor(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupSponsor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserGroupCompany(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupCompany(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserGroupEmail(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupEmail(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserGroupMobilePhone(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupMobilePhone(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserGroupSmsServer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupSmsServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserGroupSmsCustomServer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupSmsCustomServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserGroupExpireType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupExpireType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserGroupExpire(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupExpire(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserGroupMaxAccounts(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupMaxAccounts(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserGroupMultipleGuestAdd(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupMultipleGuestAdd(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserGroupGuest(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupGuest(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -993,49 +1026,64 @@ func expandUserGroupGuest(d *schema.ResourceData, v interface{}, pre string) (in
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["id"], _ = expandUserGroupGuestId(d, i["id"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "user_id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["user-id"], _ = expandUserGroupGuestUserId(d, i["user_id"], pre_append)
+
+			tmp["user-id"], _ = expandUserGroupGuestUserId(d, i["user_id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandUserGroupGuestName(d, i["name"], pre_append)
+
+			tmp["name"], _ = expandUserGroupGuestName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "password"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["password"], _ = expandUserGroupGuestPassword(d, i["password"], pre_append)
+
+			tmp["password"], _ = expandUserGroupGuestPassword(d, i["password"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "mobile_phone"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["mobile-phone"], _ = expandUserGroupGuestMobilePhone(d, i["mobile_phone"], pre_append)
+
+			tmp["mobile-phone"], _ = expandUserGroupGuestMobilePhone(d, i["mobile_phone"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "sponsor"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["sponsor"], _ = expandUserGroupGuestSponsor(d, i["sponsor"], pre_append)
+
+			tmp["sponsor"], _ = expandUserGroupGuestSponsor(d, i["sponsor"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "company"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["company"], _ = expandUserGroupGuestCompany(d, i["company"], pre_append)
+
+			tmp["company"], _ = expandUserGroupGuestCompany(d, i["company"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "email"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["email"], _ = expandUserGroupGuestEmail(d, i["email"], pre_append)
+
+			tmp["email"], _ = expandUserGroupGuestEmail(d, i["email"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "expiration"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["expiration"], _ = expandUserGroupGuestExpiration(d, i["expiration"], pre_append)
+
+			tmp["expiration"], _ = expandUserGroupGuestExpiration(d, i["expiration"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "comment"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["comment"], _ = expandUserGroupGuestComment(d, i["comment"], pre_append)
+
+			tmp["comment"], _ = expandUserGroupGuestComment(d, i["comment"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -1046,47 +1094,52 @@ func expandUserGroupGuest(d *schema.ResourceData, v interface{}, pre string) (in
 	return result, nil
 }
 
-func expandUserGroupGuestUserId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupGuestId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserGroupGuestName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupGuestUserId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserGroupGuestPassword(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupGuestName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserGroupGuestMobilePhone(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupGuestPassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserGroupGuestSponsor(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupGuestMobilePhone(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserGroupGuestCompany(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupGuestSponsor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserGroupGuestEmail(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupGuestCompany(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserGroupGuestExpiration(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupGuestEmail(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserGroupGuestComment(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserGroupGuestExpiration(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectUserGroup(d *schema.ResourceData) (*map[string]interface{}, error) {
+func expandUserGroupGuestComment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func getObjectUserGroup(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandUserGroupName(d, v, "name")
+
+		t, err := expandUserGroupName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1095,7 +1148,8 @@ func getObjectUserGroup(d *schema.ResourceData) (*map[string]interface{}, error)
 	}
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-		t, err := expandUserGroupId(d, v, "fosid")
+
+		t, err := expandUserGroupId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1104,7 +1158,8 @@ func getObjectUserGroup(d *schema.ResourceData) (*map[string]interface{}, error)
 	}
 
 	if v, ok := d.GetOk("group_type"); ok {
-		t, err := expandUserGroupGroupType(d, v, "group_type")
+
+		t, err := expandUserGroupGroupType(d, v, "group_type", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1113,7 +1168,8 @@ func getObjectUserGroup(d *schema.ResourceData) (*map[string]interface{}, error)
 	}
 
 	if v, ok := d.GetOkExists("authtimeout"); ok {
-		t, err := expandUserGroupAuthtimeout(d, v, "authtimeout")
+
+		t, err := expandUserGroupAuthtimeout(d, v, "authtimeout", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1122,7 +1178,8 @@ func getObjectUserGroup(d *schema.ResourceData) (*map[string]interface{}, error)
 	}
 
 	if v, ok := d.GetOk("auth_concurrent_override"); ok {
-		t, err := expandUserGroupAuthConcurrentOverride(d, v, "auth_concurrent_override")
+
+		t, err := expandUserGroupAuthConcurrentOverride(d, v, "auth_concurrent_override", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1131,7 +1188,8 @@ func getObjectUserGroup(d *schema.ResourceData) (*map[string]interface{}, error)
 	}
 
 	if v, ok := d.GetOkExists("auth_concurrent_value"); ok {
-		t, err := expandUserGroupAuthConcurrentValue(d, v, "auth_concurrent_value")
+
+		t, err := expandUserGroupAuthConcurrentValue(d, v, "auth_concurrent_value", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1140,7 +1198,8 @@ func getObjectUserGroup(d *schema.ResourceData) (*map[string]interface{}, error)
 	}
 
 	if v, ok := d.GetOk("http_digest_realm"); ok {
-		t, err := expandUserGroupHttpDigestRealm(d, v, "http_digest_realm")
+
+		t, err := expandUserGroupHttpDigestRealm(d, v, "http_digest_realm", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1149,7 +1208,8 @@ func getObjectUserGroup(d *schema.ResourceData) (*map[string]interface{}, error)
 	}
 
 	if v, ok := d.GetOk("sso_attribute_value"); ok {
-		t, err := expandUserGroupSsoAttributeValue(d, v, "sso_attribute_value")
+
+		t, err := expandUserGroupSsoAttributeValue(d, v, "sso_attribute_value", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1158,7 +1218,8 @@ func getObjectUserGroup(d *schema.ResourceData) (*map[string]interface{}, error)
 	}
 
 	if v, ok := d.GetOk("member"); ok {
-		t, err := expandUserGroupMember(d, v, "member")
+
+		t, err := expandUserGroupMember(d, v, "member", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1167,7 +1228,8 @@ func getObjectUserGroup(d *schema.ResourceData) (*map[string]interface{}, error)
 	}
 
 	if v, ok := d.GetOk("match"); ok {
-		t, err := expandUserGroupMatch(d, v, "match")
+
+		t, err := expandUserGroupMatch(d, v, "match", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1176,7 +1238,8 @@ func getObjectUserGroup(d *schema.ResourceData) (*map[string]interface{}, error)
 	}
 
 	if v, ok := d.GetOk("user_id"); ok {
-		t, err := expandUserGroupUserId(d, v, "user_id")
+
+		t, err := expandUserGroupUserId(d, v, "user_id", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1185,7 +1248,8 @@ func getObjectUserGroup(d *schema.ResourceData) (*map[string]interface{}, error)
 	}
 
 	if v, ok := d.GetOk("password"); ok {
-		t, err := expandUserGroupPassword(d, v, "password")
+
+		t, err := expandUserGroupPassword(d, v, "password", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1194,7 +1258,8 @@ func getObjectUserGroup(d *schema.ResourceData) (*map[string]interface{}, error)
 	}
 
 	if v, ok := d.GetOk("user_name"); ok {
-		t, err := expandUserGroupUserName(d, v, "user_name")
+
+		t, err := expandUserGroupUserName(d, v, "user_name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1203,7 +1268,8 @@ func getObjectUserGroup(d *schema.ResourceData) (*map[string]interface{}, error)
 	}
 
 	if v, ok := d.GetOk("sponsor"); ok {
-		t, err := expandUserGroupSponsor(d, v, "sponsor")
+
+		t, err := expandUserGroupSponsor(d, v, "sponsor", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1212,7 +1278,8 @@ func getObjectUserGroup(d *schema.ResourceData) (*map[string]interface{}, error)
 	}
 
 	if v, ok := d.GetOk("company"); ok {
-		t, err := expandUserGroupCompany(d, v, "company")
+
+		t, err := expandUserGroupCompany(d, v, "company", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1221,7 +1288,8 @@ func getObjectUserGroup(d *schema.ResourceData) (*map[string]interface{}, error)
 	}
 
 	if v, ok := d.GetOk("email"); ok {
-		t, err := expandUserGroupEmail(d, v, "email")
+
+		t, err := expandUserGroupEmail(d, v, "email", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1230,7 +1298,8 @@ func getObjectUserGroup(d *schema.ResourceData) (*map[string]interface{}, error)
 	}
 
 	if v, ok := d.GetOk("mobile_phone"); ok {
-		t, err := expandUserGroupMobilePhone(d, v, "mobile_phone")
+
+		t, err := expandUserGroupMobilePhone(d, v, "mobile_phone", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1239,7 +1308,8 @@ func getObjectUserGroup(d *schema.ResourceData) (*map[string]interface{}, error)
 	}
 
 	if v, ok := d.GetOk("sms_server"); ok {
-		t, err := expandUserGroupSmsServer(d, v, "sms_server")
+
+		t, err := expandUserGroupSmsServer(d, v, "sms_server", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1248,7 +1318,8 @@ func getObjectUserGroup(d *schema.ResourceData) (*map[string]interface{}, error)
 	}
 
 	if v, ok := d.GetOk("sms_custom_server"); ok {
-		t, err := expandUserGroupSmsCustomServer(d, v, "sms_custom_server")
+
+		t, err := expandUserGroupSmsCustomServer(d, v, "sms_custom_server", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1257,7 +1328,8 @@ func getObjectUserGroup(d *schema.ResourceData) (*map[string]interface{}, error)
 	}
 
 	if v, ok := d.GetOk("expire_type"); ok {
-		t, err := expandUserGroupExpireType(d, v, "expire_type")
+
+		t, err := expandUserGroupExpireType(d, v, "expire_type", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1266,7 +1338,8 @@ func getObjectUserGroup(d *schema.ResourceData) (*map[string]interface{}, error)
 	}
 
 	if v, ok := d.GetOk("expire"); ok {
-		t, err := expandUserGroupExpire(d, v, "expire")
+
+		t, err := expandUserGroupExpire(d, v, "expire", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1275,7 +1348,8 @@ func getObjectUserGroup(d *schema.ResourceData) (*map[string]interface{}, error)
 	}
 
 	if v, ok := d.GetOkExists("max_accounts"); ok {
-		t, err := expandUserGroupMaxAccounts(d, v, "max_accounts")
+
+		t, err := expandUserGroupMaxAccounts(d, v, "max_accounts", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1284,7 +1358,8 @@ func getObjectUserGroup(d *schema.ResourceData) (*map[string]interface{}, error)
 	}
 
 	if v, ok := d.GetOk("multiple_guest_add"); ok {
-		t, err := expandUserGroupMultipleGuestAdd(d, v, "multiple_guest_add")
+
+		t, err := expandUserGroupMultipleGuestAdd(d, v, "multiple_guest_add", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -1293,7 +1368,8 @@ func getObjectUserGroup(d *schema.ResourceData) (*map[string]interface{}, error)
 	}
 
 	if v, ok := d.GetOk("guest"); ok {
-		t, err := expandUserGroupGuest(d, v, "guest")
+
+		t, err := expandUserGroupGuest(d, v, "guest", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
