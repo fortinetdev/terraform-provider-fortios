@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -68,7 +69,7 @@ func resourceSystemSsoAdminCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemSsoAdmin(d)
+	obj, err := getObjectSystemSsoAdmin(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemSsoAdmin resource while getting object: %v", err)
 	}
@@ -93,7 +94,7 @@ func resourceSystemSsoAdminUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemSsoAdmin(d)
+	obj, err := getObjectSystemSsoAdmin(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSsoAdmin resource while getting object: %v", err)
 	}
@@ -146,22 +147,22 @@ func resourceSystemSsoAdminRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectSystemSsoAdmin(d, o)
+	err = refreshObjectSystemSsoAdmin(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemSsoAdmin resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemSsoAdminName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSsoAdminName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSsoAdminAccprofile(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSsoAdminAccprofile(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSsoAdminVdom(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSystemSsoAdminVdom(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -182,7 +183,8 @@ func flattenSystemSsoAdminVdom(v interface{}, d *schema.ResourceData, pre string
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemSsoAdminVdomName(i["name"], d, pre_append)
+
+			tmp["name"] = flattenSystemSsoAdminVdomName(i["name"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -194,34 +196,34 @@ func flattenSystemSsoAdminVdom(v interface{}, d *schema.ResourceData, pre string
 	return result
 }
 
-func flattenSystemSsoAdminVdomName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSsoAdminVdomName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemSsoAdmin(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemSsoAdmin(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenSystemSsoAdminName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenSystemSsoAdminName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("accprofile", flattenSystemSsoAdminAccprofile(o["accprofile"], d, "accprofile")); err != nil {
+	if err = d.Set("accprofile", flattenSystemSsoAdminAccprofile(o["accprofile"], d, "accprofile", sv)); err != nil {
 		if !fortiAPIPatch(o["accprofile"]) {
 			return fmt.Errorf("Error reading accprofile: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("vdom", flattenSystemSsoAdminVdom(o["vdom"], d, "vdom")); err != nil {
+		if err = d.Set("vdom", flattenSystemSsoAdminVdom(o["vdom"], d, "vdom", sv)); err != nil {
 			if !fortiAPIPatch(o["vdom"]) {
 				return fmt.Errorf("Error reading vdom: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("vdom"); ok {
-			if err = d.Set("vdom", flattenSystemSsoAdminVdom(o["vdom"], d, "vdom")); err != nil {
+			if err = d.Set("vdom", flattenSystemSsoAdminVdom(o["vdom"], d, "vdom", sv)); err != nil {
 				if !fortiAPIPatch(o["vdom"]) {
 					return fmt.Errorf("Error reading vdom: %v", err)
 				}
@@ -235,18 +237,18 @@ func refreshObjectSystemSsoAdmin(d *schema.ResourceData, o map[string]interface{
 func flattenSystemSsoAdminFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemSsoAdminName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSsoAdminName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemSsoAdminAccprofile(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSsoAdminAccprofile(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemSsoAdminVdom(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSsoAdminVdom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -262,7 +264,8 @@ func expandSystemSsoAdminVdom(d *schema.ResourceData, v interface{}, pre string)
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSystemSsoAdminVdomName(d, i["name"], pre_append)
+
+			tmp["name"], _ = expandSystemSsoAdminVdomName(d, i["name"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -273,15 +276,16 @@ func expandSystemSsoAdminVdom(d *schema.ResourceData, v interface{}, pre string)
 	return result, nil
 }
 
-func expandSystemSsoAdminVdomName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSsoAdminVdomName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemSsoAdmin(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemSsoAdmin(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandSystemSsoAdminName(d, v, "name")
+
+		t, err := expandSystemSsoAdminName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -290,7 +294,8 @@ func getObjectSystemSsoAdmin(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("accprofile"); ok {
-		t, err := expandSystemSsoAdminAccprofile(d, v, "accprofile")
+
+		t, err := expandSystemSsoAdminAccprofile(d, v, "accprofile", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -299,7 +304,8 @@ func getObjectSystemSsoAdmin(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("vdom"); ok {
-		t, err := expandSystemSsoAdminVdom(d, v, "vdom")
+
+		t, err := expandSystemSsoAdminVdom(d, v, "vdom", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
