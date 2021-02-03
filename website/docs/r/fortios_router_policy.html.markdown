@@ -36,11 +36,11 @@ resource "fortios_router_policy" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `seq_num` - Sequence number.
 * `input_device` - Incoming interface name. The structure of `input_device` block is documented below.
+* `input_device_negate` - Enable/disable negation of input device match.
 * `src` - Source IP and mask (x.x.x.x/x). The structure of `src` block is documented below.
 * `srcaddr` - Source address name. The structure of `srcaddr` block is documented below.
 * `src_negate` - Enable/disable negating source address match.
@@ -59,6 +59,8 @@ The following arguments are supported:
 * `tos_mask` - Type of service evaluated bits.
 * `status` - Enable/disable this policy route.
 * `comments` - Optional comments.
+* `internet_service_id` - Destination Internet Service ID. The structure of `internet_service_id` block is documented below.
+* `internet_service_custom` - Custom Destination Internet Service name. The structure of `internet_service_custom` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `input_device` block supports:
@@ -80,6 +82,14 @@ The `dst` block supports:
 The `dstaddr` block supports:
 
 * `name` - Address/group name.
+
+The `internet_service_id` block supports:
+
+* `id` - Destination Internet Service ID.
+
+The `internet_service_custom` block supports:
+
+* `name` - Custom Destination Internet Service name.
 
 
 ## Attribute Reference
