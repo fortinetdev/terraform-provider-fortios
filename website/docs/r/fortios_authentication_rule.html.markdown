@@ -24,23 +24,33 @@ resource "fortios_authentication_rule" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Authentication rule name.
 * `status` - Enable/disable this authentication rule.
 * `protocol` - Select the protocol to use for authentication (default = http). Users connect to the FortiGate using this protocol and are asked to authenticate.
+* `srcintf` - Incoming (ingress) interface. The structure of `srcintf` block is documented below.
 * `srcaddr` - Select an IPv4 source address from available options. Required for web proxy authentication. The structure of `srcaddr` block is documented below.
+* `dstaddr` - Select an IPv4 destination address from available options. Required for web proxy authentication. The structure of `dstaddr` block is documented below.
 * `srcaddr6` - Select an IPv6 source address. Required for web proxy authentication. The structure of `srcaddr6` block is documented below.
 * `ip_based` - Enable/disable IP-based authentication. Once a user authenticates all traffic from the IP address the user authenticated from is allowed.
 * `active_auth_method` - Select an active authentication method.
 * `sso_auth_method` - Select a single-sign on (SSO) authentication method.
 * `web_auth_cookie` - Enable/disable Web authentication cookies (default = disable).
 * `transaction_based` - Enable/disable transaction based authentication (default = disable).
+* `web_portal` - Enable/disable web portal for proxy transparent policy (default = enable).
 * `comments` - Comment.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
+The `srcintf` block supports:
+
+* `name` - Interface name.
+
 The `srcaddr` block supports:
+
+* `name` - Address name.
+
+The `dstaddr` block supports:
 
 * `name` - Address name.
 
