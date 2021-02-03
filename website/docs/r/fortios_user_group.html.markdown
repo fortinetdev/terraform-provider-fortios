@@ -31,7 +31,6 @@ resource "fortios_user_group" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Group name.
@@ -72,6 +71,7 @@ The `match` block supports:
 
 The `guest` block supports:
 
+* `id` - Guest ID.
 * `user_id` - Guest ID.
 * `name` - Guest name.
 * `password` - Guest password.
