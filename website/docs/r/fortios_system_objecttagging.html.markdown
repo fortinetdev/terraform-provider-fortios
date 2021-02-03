@@ -24,7 +24,6 @@ resource "fortios_system_objecttagging" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `category` - Tag Category.
