@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -55,7 +56,7 @@ func resourceSystemArpTableCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemArpTable(d)
+	obj, err := getObjectSystemArpTable(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemArpTable resource while getting object: %v", err)
 	}
@@ -80,7 +81,7 @@ func resourceSystemArpTableUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemArpTable(d)
+	obj, err := getObjectSystemArpTable(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemArpTable resource while getting object: %v", err)
 	}
@@ -133,51 +134,51 @@ func resourceSystemArpTableRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectSystemArpTable(d, o)
+	err = refreshObjectSystemArpTable(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemArpTable resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemArpTableId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemArpTableId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemArpTableInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemArpTableInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemArpTableIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemArpTableIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemArpTableMac(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemArpTableMac(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemArpTable(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemArpTable(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("fosid", flattenSystemArpTableId(o["id"], d, "fosid")); err != nil {
+	if err = d.Set("fosid", flattenSystemArpTableId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
 			return fmt.Errorf("Error reading fosid: %v", err)
 		}
 	}
 
-	if err = d.Set("interface", flattenSystemArpTableInterface(o["interface"], d, "interface")); err != nil {
+	if err = d.Set("interface", flattenSystemArpTableInterface(o["interface"], d, "interface", sv)); err != nil {
 		if !fortiAPIPatch(o["interface"]) {
 			return fmt.Errorf("Error reading interface: %v", err)
 		}
 	}
 
-	if err = d.Set("ip", flattenSystemArpTableIp(o["ip"], d, "ip")); err != nil {
+	if err = d.Set("ip", flattenSystemArpTableIp(o["ip"], d, "ip", sv)); err != nil {
 		if !fortiAPIPatch(o["ip"]) {
 			return fmt.Errorf("Error reading ip: %v", err)
 		}
 	}
 
-	if err = d.Set("mac", flattenSystemArpTableMac(o["mac"], d, "mac")); err != nil {
+	if err = d.Set("mac", flattenSystemArpTableMac(o["mac"], d, "mac", sv)); err != nil {
 		if !fortiAPIPatch(o["mac"]) {
 			return fmt.Errorf("Error reading mac: %v", err)
 		}
@@ -189,30 +190,31 @@ func refreshObjectSystemArpTable(d *schema.ResourceData, o map[string]interface{
 func flattenSystemArpTableFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemArpTableId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemArpTableId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemArpTableInterface(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemArpTableInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemArpTableIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemArpTableIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemArpTableMac(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemArpTableMac(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemArpTable(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemArpTable(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-		t, err := expandSystemArpTableId(d, v, "fosid")
+
+		t, err := expandSystemArpTableId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -221,7 +223,8 @@ func getObjectSystemArpTable(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
-		t, err := expandSystemArpTableInterface(d, v, "interface")
+
+		t, err := expandSystemArpTableInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -230,7 +233,8 @@ func getObjectSystemArpTable(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("ip"); ok {
-		t, err := expandSystemArpTableIp(d, v, "ip")
+
+		t, err := expandSystemArpTableIp(d, v, "ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -239,7 +243,8 @@ func getObjectSystemArpTable(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("mac"); ok {
-		t, err := expandSystemArpTableMac(d, v, "mac")
+
+		t, err := expandSystemArpTableMac(d, v, "mac", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
