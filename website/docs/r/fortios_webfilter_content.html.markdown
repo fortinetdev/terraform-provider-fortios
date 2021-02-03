@@ -20,7 +20,6 @@ resource "fortios_webfilter_content" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `fosid` - (Required) ID.
