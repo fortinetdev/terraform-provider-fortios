@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -35,6 +36,11 @@ func resourceUserFsso() *schema.Resource {
 				ForceNew:     true,
 				Required:     true,
 			},
+			"type": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"server": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -43,7 +49,8 @@ func resourceUserFsso() *schema.Resource {
 			"port": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
-				Required:     true,
+				Optional:     true,
+				Computed:     true,
 			},
 			"password": &schema.Schema{
 				Type:         schema.TypeString,
@@ -129,6 +136,46 @@ func resourceUserFsso() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"group_poll_interval": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 2880),
+				Optional:     true,
+				Computed:     true,
+			},
+			"ldap_poll": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"ldap_poll_interval": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(1, 2880),
+				Optional:     true,
+				Computed:     true,
+			},
+			"ldap_poll_filter": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 2047),
+				Optional:     true,
+				Computed:     true,
+			},
+			"user_info_server": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
+			"ssl": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"ssl_trusted_cert": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 79),
+				Optional:     true,
+				Computed:     true,
+			},
 			"source_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -139,6 +186,17 @@ func resourceUserFsso() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"interface_select_method": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"interface": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 15),
+				Optional:     true,
+				Computed:     true,
+			},
 		},
 	}
 }
@@ -147,7 +205,7 @@ func resourceUserFssoCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectUserFsso(d)
+	obj, err := getObjectUserFsso(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating UserFsso resource while getting object: %v", err)
 	}
@@ -172,7 +230,7 @@ func resourceUserFssoUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectUserFsso(d)
+	obj, err := getObjectUserFsso(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating UserFsso resource while getting object: %v", err)
 	}
@@ -225,173 +283,273 @@ func resourceUserFssoRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectUserFsso(d, o)
+	err = refreshObjectUserFsso(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading UserFsso resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenUserFssoName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserFssoName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserFssoServer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserFssoType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserFssoPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserFssoServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserFssoPassword(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserFssoPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserFssoServer2(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserFssoPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserFssoPort2(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserFssoServer2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserFssoPassword2(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserFssoPort2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserFssoServer3(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserFssoPassword2(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserFssoPort3(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserFssoServer3(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserFssoPassword3(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserFssoPort3(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserFssoServer4(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserFssoPassword3(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserFssoPort4(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserFssoServer4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserFssoPassword4(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserFssoPort4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserFssoServer5(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserFssoPassword4(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserFssoPort5(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserFssoServer5(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserFssoPassword5(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserFssoPort5(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserFssoLdapServer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserFssoPassword5(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserFssoSourceIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserFssoLdapServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserFssoSourceIp6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserFssoGroupPollInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectUserFsso(d *schema.ResourceData, o map[string]interface{}) error {
+func flattenUserFssoLdapPoll(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserFssoLdapPollInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserFssoLdapPollFilter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserFssoUserInfoServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserFssoSsl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserFssoSslTrustedCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserFssoSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserFssoSourceIp6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserFssoInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserFssoInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func refreshObjectUserFsso(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenUserFssoName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenUserFssoName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("server", flattenUserFssoServer(o["server"], d, "server")); err != nil {
+	if err = d.Set("type", flattenUserFssoType(o["type"], d, "type", sv)); err != nil {
+		if !fortiAPIPatch(o["type"]) {
+			return fmt.Errorf("Error reading type: %v", err)
+		}
+	}
+
+	if err = d.Set("server", flattenUserFssoServer(o["server"], d, "server", sv)); err != nil {
 		if !fortiAPIPatch(o["server"]) {
 			return fmt.Errorf("Error reading server: %v", err)
 		}
 	}
 
-	if err = d.Set("port", flattenUserFssoPort(o["port"], d, "port")); err != nil {
+	if err = d.Set("port", flattenUserFssoPort(o["port"], d, "port", sv)); err != nil {
 		if !fortiAPIPatch(o["port"]) {
 			return fmt.Errorf("Error reading port: %v", err)
 		}
 	}
 
-	if err = d.Set("server2", flattenUserFssoServer2(o["server2"], d, "server2")); err != nil {
+	if err = d.Set("server2", flattenUserFssoServer2(o["server2"], d, "server2", sv)); err != nil {
 		if !fortiAPIPatch(o["server2"]) {
 			return fmt.Errorf("Error reading server2: %v", err)
 		}
 	}
 
-	if err = d.Set("port2", flattenUserFssoPort2(o["port2"], d, "port2")); err != nil {
+	if err = d.Set("port2", flattenUserFssoPort2(o["port2"], d, "port2", sv)); err != nil {
 		if !fortiAPIPatch(o["port2"]) {
 			return fmt.Errorf("Error reading port2: %v", err)
 		}
 	}
 
-	if err = d.Set("server3", flattenUserFssoServer3(o["server3"], d, "server3")); err != nil {
+	if err = d.Set("server3", flattenUserFssoServer3(o["server3"], d, "server3", sv)); err != nil {
 		if !fortiAPIPatch(o["server3"]) {
 			return fmt.Errorf("Error reading server3: %v", err)
 		}
 	}
 
-	if err = d.Set("port3", flattenUserFssoPort3(o["port3"], d, "port3")); err != nil {
+	if err = d.Set("port3", flattenUserFssoPort3(o["port3"], d, "port3", sv)); err != nil {
 		if !fortiAPIPatch(o["port3"]) {
 			return fmt.Errorf("Error reading port3: %v", err)
 		}
 	}
 
-	if err = d.Set("server4", flattenUserFssoServer4(o["server4"], d, "server4")); err != nil {
+	if err = d.Set("server4", flattenUserFssoServer4(o["server4"], d, "server4", sv)); err != nil {
 		if !fortiAPIPatch(o["server4"]) {
 			return fmt.Errorf("Error reading server4: %v", err)
 		}
 	}
 
-	if err = d.Set("port4", flattenUserFssoPort4(o["port4"], d, "port4")); err != nil {
+	if err = d.Set("port4", flattenUserFssoPort4(o["port4"], d, "port4", sv)); err != nil {
 		if !fortiAPIPatch(o["port4"]) {
 			return fmt.Errorf("Error reading port4: %v", err)
 		}
 	}
 
-	if err = d.Set("server5", flattenUserFssoServer5(o["server5"], d, "server5")); err != nil {
+	if err = d.Set("server5", flattenUserFssoServer5(o["server5"], d, "server5", sv)); err != nil {
 		if !fortiAPIPatch(o["server5"]) {
 			return fmt.Errorf("Error reading server5: %v", err)
 		}
 	}
 
-	if err = d.Set("port5", flattenUserFssoPort5(o["port5"], d, "port5")); err != nil {
+	if err = d.Set("port5", flattenUserFssoPort5(o["port5"], d, "port5", sv)); err != nil {
 		if !fortiAPIPatch(o["port5"]) {
 			return fmt.Errorf("Error reading port5: %v", err)
 		}
 	}
 
-	if err = d.Set("ldap_server", flattenUserFssoLdapServer(o["ldap-server"], d, "ldap_server")); err != nil {
+	if err = d.Set("ldap_server", flattenUserFssoLdapServer(o["ldap-server"], d, "ldap_server", sv)); err != nil {
 		if !fortiAPIPatch(o["ldap-server"]) {
 			return fmt.Errorf("Error reading ldap_server: %v", err)
 		}
 	}
 
-	if err = d.Set("source_ip", flattenUserFssoSourceIp(o["source-ip"], d, "source_ip")); err != nil {
+	if err = d.Set("group_poll_interval", flattenUserFssoGroupPollInterval(o["group-poll-interval"], d, "group_poll_interval", sv)); err != nil {
+		if !fortiAPIPatch(o["group-poll-interval"]) {
+			return fmt.Errorf("Error reading group_poll_interval: %v", err)
+		}
+	}
+
+	if err = d.Set("ldap_poll", flattenUserFssoLdapPoll(o["ldap-poll"], d, "ldap_poll", sv)); err != nil {
+		if !fortiAPIPatch(o["ldap-poll"]) {
+			return fmt.Errorf("Error reading ldap_poll: %v", err)
+		}
+	}
+
+	if err = d.Set("ldap_poll_interval", flattenUserFssoLdapPollInterval(o["ldap-poll-interval"], d, "ldap_poll_interval", sv)); err != nil {
+		if !fortiAPIPatch(o["ldap-poll-interval"]) {
+			return fmt.Errorf("Error reading ldap_poll_interval: %v", err)
+		}
+	}
+
+	if err = d.Set("ldap_poll_filter", flattenUserFssoLdapPollFilter(o["ldap-poll-filter"], d, "ldap_poll_filter", sv)); err != nil {
+		if !fortiAPIPatch(o["ldap-poll-filter"]) {
+			return fmt.Errorf("Error reading ldap_poll_filter: %v", err)
+		}
+	}
+
+	if err = d.Set("user_info_server", flattenUserFssoUserInfoServer(o["user-info-server"], d, "user_info_server", sv)); err != nil {
+		if !fortiAPIPatch(o["user-info-server"]) {
+			return fmt.Errorf("Error reading user_info_server: %v", err)
+		}
+	}
+
+	if err = d.Set("ssl", flattenUserFssoSsl(o["ssl"], d, "ssl", sv)); err != nil {
+		if !fortiAPIPatch(o["ssl"]) {
+			return fmt.Errorf("Error reading ssl: %v", err)
+		}
+	}
+
+	if err = d.Set("ssl_trusted_cert", flattenUserFssoSslTrustedCert(o["ssl-trusted-cert"], d, "ssl_trusted_cert", sv)); err != nil {
+		if !fortiAPIPatch(o["ssl-trusted-cert"]) {
+			return fmt.Errorf("Error reading ssl_trusted_cert: %v", err)
+		}
+	}
+
+	if err = d.Set("source_ip", flattenUserFssoSourceIp(o["source-ip"], d, "source_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["source-ip"]) {
 			return fmt.Errorf("Error reading source_ip: %v", err)
 		}
 	}
 
-	if err = d.Set("source_ip6", flattenUserFssoSourceIp6(o["source-ip6"], d, "source_ip6")); err != nil {
+	if err = d.Set("source_ip6", flattenUserFssoSourceIp6(o["source-ip6"], d, "source_ip6", sv)); err != nil {
 		if !fortiAPIPatch(o["source-ip6"]) {
 			return fmt.Errorf("Error reading source_ip6: %v", err)
+		}
+	}
+
+	if err = d.Set("interface_select_method", flattenUserFssoInterfaceSelectMethod(o["interface-select-method"], d, "interface_select_method", sv)); err != nil {
+		if !fortiAPIPatch(o["interface-select-method"]) {
+			return fmt.Errorf("Error reading interface_select_method: %v", err)
+		}
+	}
+
+	if err = d.Set("interface", flattenUserFssoInterface(o["interface"], d, "interface", sv)); err != nil {
+		if !fortiAPIPatch(o["interface"]) {
+			return fmt.Errorf("Error reading interface: %v", err)
 		}
 	}
 
@@ -401,90 +559,131 @@ func refreshObjectUserFsso(d *schema.ResourceData, o map[string]interface{}) err
 func flattenUserFssoFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandUserFssoName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserFssoName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserFssoServer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserFssoType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserFssoPort(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserFssoServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserFssoPassword(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserFssoPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserFssoServer2(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserFssoPassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserFssoPort2(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserFssoServer2(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserFssoPassword2(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserFssoPort2(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserFssoServer3(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserFssoPassword2(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserFssoPort3(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserFssoServer3(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserFssoPassword3(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserFssoPort3(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserFssoServer4(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserFssoPassword3(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserFssoPort4(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserFssoServer4(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserFssoPassword4(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserFssoPort4(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserFssoServer5(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserFssoPassword4(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserFssoPort5(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserFssoServer5(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserFssoPassword5(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserFssoPort5(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserFssoLdapServer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserFssoPassword5(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserFssoSourceIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserFssoLdapServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserFssoSourceIp6(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserFssoGroupPollInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectUserFsso(d *schema.ResourceData) (*map[string]interface{}, error) {
+func expandUserFssoLdapPoll(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserFssoLdapPollInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserFssoLdapPollFilter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserFssoUserInfoServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserFssoSsl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserFssoSslTrustedCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserFssoSourceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserFssoSourceIp6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserFssoInterfaceSelectMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserFssoInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func getObjectUserFsso(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandUserFssoName(d, v, "name")
+
+		t, err := expandUserFssoName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -492,8 +691,19 @@ func getObjectUserFsso(d *schema.ResourceData) (*map[string]interface{}, error) 
 		}
 	}
 
+	if v, ok := d.GetOk("type"); ok {
+
+		t, err := expandUserFssoType(d, v, "type", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["type"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("server"); ok {
-		t, err := expandUserFssoServer(d, v, "server")
+
+		t, err := expandUserFssoServer(d, v, "server", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -502,7 +712,8 @@ func getObjectUserFsso(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("port"); ok {
-		t, err := expandUserFssoPort(d, v, "port")
+
+		t, err := expandUserFssoPort(d, v, "port", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -511,7 +722,8 @@ func getObjectUserFsso(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("password"); ok {
-		t, err := expandUserFssoPassword(d, v, "password")
+
+		t, err := expandUserFssoPassword(d, v, "password", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -520,7 +732,8 @@ func getObjectUserFsso(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("server2"); ok {
-		t, err := expandUserFssoServer2(d, v, "server2")
+
+		t, err := expandUserFssoServer2(d, v, "server2", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -529,7 +742,8 @@ func getObjectUserFsso(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("port2"); ok {
-		t, err := expandUserFssoPort2(d, v, "port2")
+
+		t, err := expandUserFssoPort2(d, v, "port2", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -538,7 +752,8 @@ func getObjectUserFsso(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("password2"); ok {
-		t, err := expandUserFssoPassword2(d, v, "password2")
+
+		t, err := expandUserFssoPassword2(d, v, "password2", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -547,7 +762,8 @@ func getObjectUserFsso(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("server3"); ok {
-		t, err := expandUserFssoServer3(d, v, "server3")
+
+		t, err := expandUserFssoServer3(d, v, "server3", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -556,7 +772,8 @@ func getObjectUserFsso(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("port3"); ok {
-		t, err := expandUserFssoPort3(d, v, "port3")
+
+		t, err := expandUserFssoPort3(d, v, "port3", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -565,7 +782,8 @@ func getObjectUserFsso(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("password3"); ok {
-		t, err := expandUserFssoPassword3(d, v, "password3")
+
+		t, err := expandUserFssoPassword3(d, v, "password3", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -574,7 +792,8 @@ func getObjectUserFsso(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("server4"); ok {
-		t, err := expandUserFssoServer4(d, v, "server4")
+
+		t, err := expandUserFssoServer4(d, v, "server4", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -583,7 +802,8 @@ func getObjectUserFsso(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("port4"); ok {
-		t, err := expandUserFssoPort4(d, v, "port4")
+
+		t, err := expandUserFssoPort4(d, v, "port4", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -592,7 +812,8 @@ func getObjectUserFsso(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("password4"); ok {
-		t, err := expandUserFssoPassword4(d, v, "password4")
+
+		t, err := expandUserFssoPassword4(d, v, "password4", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -601,7 +822,8 @@ func getObjectUserFsso(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("server5"); ok {
-		t, err := expandUserFssoServer5(d, v, "server5")
+
+		t, err := expandUserFssoServer5(d, v, "server5", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -610,7 +832,8 @@ func getObjectUserFsso(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("port5"); ok {
-		t, err := expandUserFssoPort5(d, v, "port5")
+
+		t, err := expandUserFssoPort5(d, v, "port5", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -619,7 +842,8 @@ func getObjectUserFsso(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("password5"); ok {
-		t, err := expandUserFssoPassword5(d, v, "password5")
+
+		t, err := expandUserFssoPassword5(d, v, "password5", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -628,7 +852,8 @@ func getObjectUserFsso(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("ldap_server"); ok {
-		t, err := expandUserFssoLdapServer(d, v, "ldap_server")
+
+		t, err := expandUserFssoLdapServer(d, v, "ldap_server", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -636,8 +861,79 @@ func getObjectUserFsso(d *schema.ResourceData) (*map[string]interface{}, error) 
 		}
 	}
 
+	if v, ok := d.GetOk("group_poll_interval"); ok {
+
+		t, err := expandUserFssoGroupPollInterval(d, v, "group_poll_interval", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["group-poll-interval"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ldap_poll"); ok {
+
+		t, err := expandUserFssoLdapPoll(d, v, "ldap_poll", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ldap-poll"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ldap_poll_interval"); ok {
+
+		t, err := expandUserFssoLdapPollInterval(d, v, "ldap_poll_interval", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ldap-poll-interval"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ldap_poll_filter"); ok {
+
+		t, err := expandUserFssoLdapPollFilter(d, v, "ldap_poll_filter", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ldap-poll-filter"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("user_info_server"); ok {
+
+		t, err := expandUserFssoUserInfoServer(d, v, "user_info_server", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["user-info-server"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ssl"); ok {
+
+		t, err := expandUserFssoSsl(d, v, "ssl", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ssl"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("ssl_trusted_cert"); ok {
+
+		t, err := expandUserFssoSslTrustedCert(d, v, "ssl_trusted_cert", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ssl-trusted-cert"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("source_ip"); ok {
-		t, err := expandUserFssoSourceIp(d, v, "source_ip")
+
+		t, err := expandUserFssoSourceIp(d, v, "source_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -646,11 +942,32 @@ func getObjectUserFsso(d *schema.ResourceData) (*map[string]interface{}, error) 
 	}
 
 	if v, ok := d.GetOk("source_ip6"); ok {
-		t, err := expandUserFssoSourceIp6(d, v, "source_ip6")
+
+		t, err := expandUserFssoSourceIp6(d, v, "source_ip6", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
 			obj["source-ip6"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("interface_select_method"); ok {
+
+		t, err := expandUserFssoInterfaceSelectMethod(d, v, "interface_select_method", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["interface-select-method"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("interface"); ok {
+
+		t, err := expandUserFssoInterface(d, v, "interface", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["interface"] = t
 		}
 	}
 
