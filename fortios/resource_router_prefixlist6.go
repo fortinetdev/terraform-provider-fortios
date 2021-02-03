@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -94,7 +95,7 @@ func resourceRouterPrefixList6Create(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectRouterPrefixList6(d)
+	obj, err := getObjectRouterPrefixList6(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating RouterPrefixList6 resource while getting object: %v", err)
 	}
@@ -119,7 +120,7 @@ func resourceRouterPrefixList6Update(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectRouterPrefixList6(d)
+	obj, err := getObjectRouterPrefixList6(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterPrefixList6 resource while getting object: %v", err)
 	}
@@ -172,22 +173,22 @@ func resourceRouterPrefixList6Read(d *schema.ResourceData, m interface{}) error 
 		return nil
 	}
 
-	err = refreshObjectRouterPrefixList6(d, o)
+	err = refreshObjectRouterPrefixList6(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading RouterPrefixList6 resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenRouterPrefixList6Name(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterPrefixList6Name(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterPrefixList6Comments(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterPrefixList6Comments(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterPrefixList6Rule(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenRouterPrefixList6Rule(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -208,32 +209,38 @@ func flattenRouterPrefixList6Rule(v interface{}, d *schema.ResourceData, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenRouterPrefixList6RuleId(i["id"], d, pre_append)
+
+			tmp["id"] = flattenRouterPrefixList6RuleId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenRouterPrefixList6RuleAction(i["action"], d, pre_append)
+
+			tmp["action"] = flattenRouterPrefixList6RuleAction(i["action"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix6"
 		if _, ok := i["prefix6"]; ok {
-			tmp["prefix6"] = flattenRouterPrefixList6RulePrefix6(i["prefix6"], d, pre_append)
+
+			tmp["prefix6"] = flattenRouterPrefixList6RulePrefix6(i["prefix6"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ge"
 		if _, ok := i["ge"]; ok {
-			tmp["ge"] = flattenRouterPrefixList6RuleGe(i["ge"], d, pre_append)
+
+			tmp["ge"] = flattenRouterPrefixList6RuleGe(i["ge"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "le"
 		if _, ok := i["le"]; ok {
-			tmp["le"] = flattenRouterPrefixList6RuleLe(i["le"], d, pre_append)
+
+			tmp["le"] = flattenRouterPrefixList6RuleLe(i["le"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "flags"
 		if _, ok := i["flags"]; ok {
-			tmp["flags"] = flattenRouterPrefixList6RuleFlags(i["flags"], d, pre_append)
+
+			tmp["flags"] = flattenRouterPrefixList6RuleFlags(i["flags"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -245,54 +252,54 @@ func flattenRouterPrefixList6Rule(v interface{}, d *schema.ResourceData, pre str
 	return result
 }
 
-func flattenRouterPrefixList6RuleId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterPrefixList6RuleId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterPrefixList6RuleAction(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterPrefixList6RuleAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterPrefixList6RulePrefix6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterPrefixList6RulePrefix6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterPrefixList6RuleGe(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterPrefixList6RuleGe(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterPrefixList6RuleLe(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterPrefixList6RuleLe(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterPrefixList6RuleFlags(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterPrefixList6RuleFlags(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectRouterPrefixList6(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectRouterPrefixList6(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenRouterPrefixList6Name(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenRouterPrefixList6Name(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("comments", flattenRouterPrefixList6Comments(o["comments"], d, "comments")); err != nil {
+	if err = d.Set("comments", flattenRouterPrefixList6Comments(o["comments"], d, "comments", sv)); err != nil {
 		if !fortiAPIPatch(o["comments"]) {
 			return fmt.Errorf("Error reading comments: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("rule", flattenRouterPrefixList6Rule(o["rule"], d, "rule")); err != nil {
+		if err = d.Set("rule", flattenRouterPrefixList6Rule(o["rule"], d, "rule", sv)); err != nil {
 			if !fortiAPIPatch(o["rule"]) {
 				return fmt.Errorf("Error reading rule: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("rule"); ok {
-			if err = d.Set("rule", flattenRouterPrefixList6Rule(o["rule"], d, "rule")); err != nil {
+			if err = d.Set("rule", flattenRouterPrefixList6Rule(o["rule"], d, "rule", sv)); err != nil {
 				if !fortiAPIPatch(o["rule"]) {
 					return fmt.Errorf("Error reading rule: %v", err)
 				}
@@ -306,18 +313,18 @@ func refreshObjectRouterPrefixList6(d *schema.ResourceData, o map[string]interfa
 func flattenRouterPrefixList6FortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandRouterPrefixList6Name(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterPrefixList6Name(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandRouterPrefixList6Comments(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterPrefixList6Comments(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandRouterPrefixList6Rule(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterPrefixList6Rule(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -333,32 +340,38 @@ func expandRouterPrefixList6Rule(d *schema.ResourceData, v interface{}, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandRouterPrefixList6RuleId(d, i["id"], pre_append)
+
+			tmp["id"], _ = expandRouterPrefixList6RuleId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["action"], _ = expandRouterPrefixList6RuleAction(d, i["action"], pre_append)
+
+			tmp["action"], _ = expandRouterPrefixList6RuleAction(d, i["action"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "prefix6"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["prefix6"], _ = expandRouterPrefixList6RulePrefix6(d, i["prefix6"], pre_append)
+
+			tmp["prefix6"], _ = expandRouterPrefixList6RulePrefix6(d, i["prefix6"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ge"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["ge"], _ = expandRouterPrefixList6RuleGe(d, i["ge"], pre_append)
+
+			tmp["ge"], _ = expandRouterPrefixList6RuleGe(d, i["ge"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "le"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["le"], _ = expandRouterPrefixList6RuleLe(d, i["le"], pre_append)
+
+			tmp["le"], _ = expandRouterPrefixList6RuleLe(d, i["le"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "flags"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["flags"], _ = expandRouterPrefixList6RuleFlags(d, i["flags"], pre_append)
+
+			tmp["flags"], _ = expandRouterPrefixList6RuleFlags(d, i["flags"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -369,35 +382,36 @@ func expandRouterPrefixList6Rule(d *schema.ResourceData, v interface{}, pre stri
 	return result, nil
 }
 
-func expandRouterPrefixList6RuleId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterPrefixList6RuleId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandRouterPrefixList6RuleAction(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterPrefixList6RuleAction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandRouterPrefixList6RulePrefix6(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterPrefixList6RulePrefix6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandRouterPrefixList6RuleGe(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterPrefixList6RuleGe(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandRouterPrefixList6RuleLe(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterPrefixList6RuleLe(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandRouterPrefixList6RuleFlags(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterPrefixList6RuleFlags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectRouterPrefixList6(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectRouterPrefixList6(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandRouterPrefixList6Name(d, v, "name")
+
+		t, err := expandRouterPrefixList6Name(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -406,7 +420,8 @@ func getObjectRouterPrefixList6(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-		t, err := expandRouterPrefixList6Comments(d, v, "comments")
+
+		t, err := expandRouterPrefixList6Comments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -415,7 +430,8 @@ func getObjectRouterPrefixList6(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("rule"); ok {
-		t, err := expandRouterPrefixList6Rule(d, v, "rule")
+
+		t, err := expandRouterPrefixList6Rule(d, v, "rule", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
