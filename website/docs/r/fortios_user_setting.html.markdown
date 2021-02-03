@@ -33,7 +33,6 @@ resource "fortios_user_setting" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `auth_type` - Supported firewall policy authentication protocols/methods.
@@ -52,7 +51,9 @@ The following arguments are supported:
 * `auth_invalid_max` - Maximum number of failed authentication attempts before the user is blocked.
 * `auth_lockout_threshold` - Maximum number of failed login attempts before login lockout is triggered.
 * `auth_lockout_duration` - Lockout period in seconds after too many login failures.
+* `per_policy_disclaimer` - Enable/disable per policy disclaimer.
 * `auth_ports` - Set up non-standard ports for authentication with HTTP, HTTPS, FTP, and TELNET. The structure of `auth_ports` block is documented below.
+* `auth_ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting).
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `auth_ports` block supports:
