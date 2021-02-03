@@ -20,7 +20,6 @@ resource "fortios_webfilter_ipsurlfiltercachesetting" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `dns_retry_interval` - Retry interval. Refresh DNS faster than TTL to capture multiple IPs for hosts. 0 means use DNS server's TTL only.
