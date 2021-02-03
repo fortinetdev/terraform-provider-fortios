@@ -30,7 +30,6 @@ resource "fortios_wanopt_contentdeliverynetworkrule" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Name of table.
