@@ -27,7 +27,6 @@ resource "fortios_firewallssh_setting" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `caname` - CA certificate used by SSH Inspection.
