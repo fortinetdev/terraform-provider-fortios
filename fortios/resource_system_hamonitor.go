@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -55,7 +56,7 @@ func resourceSystemHaMonitorUpdate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemHaMonitor(d)
+	obj, err := getObjectSystemHaMonitor(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemHaMonitor resource while getting object: %v", err)
 	}
@@ -108,41 +109,41 @@ func resourceSystemHaMonitorRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectSystemHaMonitor(d, o)
+	err = refreshObjectSystemHaMonitor(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemHaMonitor resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemHaMonitorMonitorVlan(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemHaMonitorMonitorVlan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemHaMonitorVlanHbInterval(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemHaMonitorVlanHbInterval(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemHaMonitorVlanHbLostThreshold(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemHaMonitorVlanHbLostThreshold(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemHaMonitor(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemHaMonitor(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("monitor_vlan", flattenSystemHaMonitorMonitorVlan(o["monitor-vlan"], d, "monitor_vlan")); err != nil {
+	if err = d.Set("monitor_vlan", flattenSystemHaMonitorMonitorVlan(o["monitor-vlan"], d, "monitor_vlan", sv)); err != nil {
 		if !fortiAPIPatch(o["monitor-vlan"]) {
 			return fmt.Errorf("Error reading monitor_vlan: %v", err)
 		}
 	}
 
-	if err = d.Set("vlan_hb_interval", flattenSystemHaMonitorVlanHbInterval(o["vlan-hb-interval"], d, "vlan_hb_interval")); err != nil {
+	if err = d.Set("vlan_hb_interval", flattenSystemHaMonitorVlanHbInterval(o["vlan-hb-interval"], d, "vlan_hb_interval", sv)); err != nil {
 		if !fortiAPIPatch(o["vlan-hb-interval"]) {
 			return fmt.Errorf("Error reading vlan_hb_interval: %v", err)
 		}
 	}
 
-	if err = d.Set("vlan_hb_lost_threshold", flattenSystemHaMonitorVlanHbLostThreshold(o["vlan-hb-lost-threshold"], d, "vlan_hb_lost_threshold")); err != nil {
+	if err = d.Set("vlan_hb_lost_threshold", flattenSystemHaMonitorVlanHbLostThreshold(o["vlan-hb-lost-threshold"], d, "vlan_hb_lost_threshold", sv)); err != nil {
 		if !fortiAPIPatch(o["vlan-hb-lost-threshold"]) {
 			return fmt.Errorf("Error reading vlan_hb_lost_threshold: %v", err)
 		}
@@ -154,26 +155,27 @@ func refreshObjectSystemHaMonitor(d *schema.ResourceData, o map[string]interface
 func flattenSystemHaMonitorFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemHaMonitorMonitorVlan(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemHaMonitorMonitorVlan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemHaMonitorVlanHbInterval(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemHaMonitorVlanHbInterval(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemHaMonitorVlanHbLostThreshold(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemHaMonitorVlanHbLostThreshold(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemHaMonitor(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemHaMonitor(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("monitor_vlan"); ok {
-		t, err := expandSystemHaMonitorMonitorVlan(d, v, "monitor_vlan")
+
+		t, err := expandSystemHaMonitorMonitorVlan(d, v, "monitor_vlan", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -182,7 +184,8 @@ func getObjectSystemHaMonitor(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("vlan_hb_interval"); ok {
-		t, err := expandSystemHaMonitorVlanHbInterval(d, v, "vlan_hb_interval")
+
+		t, err := expandSystemHaMonitorVlanHbInterval(d, v, "vlan_hb_interval", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -191,7 +194,8 @@ func getObjectSystemHaMonitor(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("vlan_hb_lost_threshold"); ok {
-		t, err := expandSystemHaMonitorVlanHbLostThreshold(d, v, "vlan_hb_lost_threshold")
+
+		t, err := expandSystemHaMonitorVlanHbLostThreshold(d, v, "vlan_hb_lost_threshold", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
