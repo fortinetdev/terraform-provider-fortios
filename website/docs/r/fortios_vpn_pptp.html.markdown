@@ -24,7 +24,6 @@ resource "fortios_vpn_pptp" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `status` - (Required) Enable/disable FortiGate as a PPTP gateway.
