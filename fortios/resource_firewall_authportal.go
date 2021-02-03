@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -75,7 +76,7 @@ func resourceFirewallAuthPortalUpdate(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectFirewallAuthPortal(d)
+	obj, err := getObjectFirewallAuthPortal(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallAuthPortal resource while getting object: %v", err)
 	}
@@ -128,14 +129,14 @@ func resourceFirewallAuthPortalRead(d *schema.ResourceData, m interface{}) error
 		return nil
 	}
 
-	err = refreshObjectFirewallAuthPortal(d, o)
+	err = refreshObjectFirewallAuthPortal(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallAuthPortal resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenFirewallAuthPortalGroups(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenFirewallAuthPortalGroups(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -156,7 +157,8 @@ func flattenFirewallAuthPortalGroups(v interface{}, d *schema.ResourceData, pre 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallAuthPortalGroupsName(i["name"], d, pre_append)
+
+			tmp["name"] = flattenFirewallAuthPortalGroupsName(i["name"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -168,34 +170,34 @@ func flattenFirewallAuthPortalGroups(v interface{}, d *schema.ResourceData, pre 
 	return result
 }
 
-func flattenFirewallAuthPortalGroupsName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallAuthPortalGroupsName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallAuthPortalPortalAddr(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallAuthPortalPortalAddr(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallAuthPortalPortalAddr6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallAuthPortalPortalAddr6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallAuthPortalIdentityBasedRoute(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallAuthPortalIdentityBasedRoute(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectFirewallAuthPortal(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectFirewallAuthPortal(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
 	if isImportTable() {
-		if err = d.Set("groups", flattenFirewallAuthPortalGroups(o["groups"], d, "groups")); err != nil {
+		if err = d.Set("groups", flattenFirewallAuthPortalGroups(o["groups"], d, "groups", sv)); err != nil {
 			if !fortiAPIPatch(o["groups"]) {
 				return fmt.Errorf("Error reading groups: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("groups"); ok {
-			if err = d.Set("groups", flattenFirewallAuthPortalGroups(o["groups"], d, "groups")); err != nil {
+			if err = d.Set("groups", flattenFirewallAuthPortalGroups(o["groups"], d, "groups", sv)); err != nil {
 				if !fortiAPIPatch(o["groups"]) {
 					return fmt.Errorf("Error reading groups: %v", err)
 				}
@@ -203,19 +205,19 @@ func refreshObjectFirewallAuthPortal(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
-	if err = d.Set("portal_addr", flattenFirewallAuthPortalPortalAddr(o["portal-addr"], d, "portal_addr")); err != nil {
+	if err = d.Set("portal_addr", flattenFirewallAuthPortalPortalAddr(o["portal-addr"], d, "portal_addr", sv)); err != nil {
 		if !fortiAPIPatch(o["portal-addr"]) {
 			return fmt.Errorf("Error reading portal_addr: %v", err)
 		}
 	}
 
-	if err = d.Set("portal_addr6", flattenFirewallAuthPortalPortalAddr6(o["portal-addr6"], d, "portal_addr6")); err != nil {
+	if err = d.Set("portal_addr6", flattenFirewallAuthPortalPortalAddr6(o["portal-addr6"], d, "portal_addr6", sv)); err != nil {
 		if !fortiAPIPatch(o["portal-addr6"]) {
 			return fmt.Errorf("Error reading portal_addr6: %v", err)
 		}
 	}
 
-	if err = d.Set("identity_based_route", flattenFirewallAuthPortalIdentityBasedRoute(o["identity-based-route"], d, "identity_based_route")); err != nil {
+	if err = d.Set("identity_based_route", flattenFirewallAuthPortalIdentityBasedRoute(o["identity-based-route"], d, "identity_based_route", sv)); err != nil {
 		if !fortiAPIPatch(o["identity-based-route"]) {
 			return fmt.Errorf("Error reading identity_based_route: %v", err)
 		}
@@ -227,10 +229,10 @@ func refreshObjectFirewallAuthPortal(d *schema.ResourceData, o map[string]interf
 func flattenFirewallAuthPortalFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandFirewallAuthPortalGroups(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallAuthPortalGroups(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -246,7 +248,8 @@ func expandFirewallAuthPortalGroups(d *schema.ResourceData, v interface{}, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallAuthPortalGroupsName(d, i["name"], pre_append)
+
+			tmp["name"], _ = expandFirewallAuthPortalGroupsName(d, i["name"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -257,27 +260,28 @@ func expandFirewallAuthPortalGroups(d *schema.ResourceData, v interface{}, pre s
 	return result, nil
 }
 
-func expandFirewallAuthPortalGroupsName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallAuthPortalGroupsName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallAuthPortalPortalAddr(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallAuthPortalPortalAddr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallAuthPortalPortalAddr6(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallAuthPortalPortalAddr6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallAuthPortalIdentityBasedRoute(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallAuthPortalIdentityBasedRoute(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectFirewallAuthPortal(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectFirewallAuthPortal(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("groups"); ok {
-		t, err := expandFirewallAuthPortalGroups(d, v, "groups")
+
+		t, err := expandFirewallAuthPortalGroups(d, v, "groups", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -286,7 +290,8 @@ func getObjectFirewallAuthPortal(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("portal_addr"); ok {
-		t, err := expandFirewallAuthPortalPortalAddr(d, v, "portal_addr")
+
+		t, err := expandFirewallAuthPortalPortalAddr(d, v, "portal_addr", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -295,7 +300,8 @@ func getObjectFirewallAuthPortal(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("portal_addr6"); ok {
-		t, err := expandFirewallAuthPortalPortalAddr6(d, v, "portal_addr6")
+
+		t, err := expandFirewallAuthPortalPortalAddr6(d, v, "portal_addr6", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -304,7 +310,8 @@ func getObjectFirewallAuthPortal(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("identity_based_route"); ok {
-		t, err := expandFirewallAuthPortalIdentityBasedRoute(d, v, "identity_based_route")
+
+		t, err := expandFirewallAuthPortalIdentityBasedRoute(d, v, "identity_based_route", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
