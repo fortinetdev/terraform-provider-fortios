@@ -45,8 +45,19 @@ The `area` block contains:
 * `nssa_default_information_originate_metric` - OSPFv3 default metric.
 * `nssa_default_information_originate_metric_type` - OSPFv3 metric type for default routes.
 * `nssa_redistribution` - Enable/disable redistribute into NSSA area.
+* `authentication` - Authentication mode.
+* `key_rollover_interval` - Key roll-over interval.
+* `ipsec_auth_alg` - Authentication algorithm.
+* `ipsec_enc_alg` - Encryption algorithm.
+* `ipsec_keys` - IPsec authentication and encryption keys. The structure of `ipsec_keys` block is documented below.
 * `range` - OSPF6 area range configuration. The structure of `range` block is documented below.
 * `virtual_link` - OSPF6 virtual link configuration. The structure of `virtual_link` block is documented below.
+
+The `ipsec_keys` block contains:
+
+* `spi` - Security Parameters Index.
+* `auth_key` - Authentication key.
+* `enc_key` - Encryption key.
 
 The `range` block contains:
 
@@ -62,6 +73,17 @@ The `virtual_link` block contains:
 * `retransmit_interval` - Retransmit interval.
 * `transmit_delay` - Transmit delay.
 * `peer` - A.B.C.D, peer router ID.
+* `authentication` - Authentication mode.
+* `key_rollover_interval` - Key roll-over interval.
+* `ipsec_auth_alg` - Authentication algorithm.
+* `ipsec_enc_alg` - Encryption algorithm.
+* `ipsec_keys` - IPsec authentication and encryption keys. The structure of `ipsec_keys` block is documented below.
+
+The `ipsec_keys` block contains:
+
+* `spi` - Security Parameters Index.
+* `auth_key` - Authentication key.
+* `enc_key` - Encryption key.
 
 The `ospf6_interface` block contains:
 
@@ -79,7 +101,18 @@ The `ospf6_interface` block contains:
 * `bfd` - Enable/disable Bidirectional Forwarding Detection (BFD).
 * `mtu` - MTU for OSPFv3 packets.
 * `mtu_ignore` - Enable/disable ignoring MTU field in DBD packets.
+* `authentication` - Authentication mode.
+* `key_rollover_interval` - Key roll-over interval.
+* `ipsec_auth_alg` - Authentication algorithm.
+* `ipsec_enc_alg` - Encryption algorithm.
+* `ipsec_keys` - IPsec authentication and encryption keys. The structure of `ipsec_keys` block is documented below.
 * `neighbor` - OSPFv3 neighbors are used when OSPFv3 runs on non-broadcast media The structure of `neighbor` block is documented below.
+
+The `ipsec_keys` block contains:
+
+* `spi` - Security Parameters Index.
+* `auth_key` - Authentication key.
+* `enc_key` - Encryption key.
 
 The `neighbor` block contains:
 
