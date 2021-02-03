@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -43,7 +44,7 @@ func resourceSwitchControllerSwitchInterfaceTagCreate(d *schema.ResourceData, m 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSwitchControllerSwitchInterfaceTag(d)
+	obj, err := getObjectSwitchControllerSwitchInterfaceTag(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerSwitchInterfaceTag resource while getting object: %v", err)
 	}
@@ -68,7 +69,7 @@ func resourceSwitchControllerSwitchInterfaceTagUpdate(d *schema.ResourceData, m 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSwitchControllerSwitchInterfaceTag(d)
+	obj, err := getObjectSwitchControllerSwitchInterfaceTag(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerSwitchInterfaceTag resource while getting object: %v", err)
 	}
@@ -121,21 +122,21 @@ func resourceSwitchControllerSwitchInterfaceTagRead(d *schema.ResourceData, m in
 		return nil
 	}
 
-	err = refreshObjectSwitchControllerSwitchInterfaceTag(d, o)
+	err = refreshObjectSwitchControllerSwitchInterfaceTag(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerSwitchInterfaceTag resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSwitchControllerSwitchInterfaceTagName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerSwitchInterfaceTagName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSwitchControllerSwitchInterfaceTag(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSwitchControllerSwitchInterfaceTag(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenSwitchControllerSwitchInterfaceTagName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenSwitchControllerSwitchInterfaceTagName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
@@ -147,18 +148,19 @@ func refreshObjectSwitchControllerSwitchInterfaceTag(d *schema.ResourceData, o m
 func flattenSwitchControllerSwitchInterfaceTagFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSwitchControllerSwitchInterfaceTagName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerSwitchInterfaceTagName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSwitchControllerSwitchInterfaceTag(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSwitchControllerSwitchInterfaceTag(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandSwitchControllerSwitchInterfaceTagName(d, v, "name")
+
+		t, err := expandSwitchControllerSwitchInterfaceTagName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
