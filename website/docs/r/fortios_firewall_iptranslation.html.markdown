@@ -23,7 +23,6 @@ resource "fortios_firewall_iptranslation" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `transid` - IP translation ID.
