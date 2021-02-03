@@ -24,7 +24,6 @@ resource "fortios_router_multicast6" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `multicast_routing` - Enable/disable IPv6 multicast routing.
