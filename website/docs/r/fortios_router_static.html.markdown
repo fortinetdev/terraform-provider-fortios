@@ -34,7 +34,6 @@ resource "fortios_router_static" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `seq_num` - Sequence number.
@@ -49,6 +48,7 @@ The following arguments are supported:
 * `comment` - Optional comments.
 * `blackhole` - Enable/disable black hole.
 * `dynamic_gateway` - Enable use of dynamic gateway retrieved from a DHCP or PPP server.
+* `sdwan` - Enable/disable egress through SD-WAN.
 * `virtual_wan_link` - Enable/disable egress through the virtual-wan-link.
 * `dstaddr` - Name of firewall address or address group.
 * `internet_service` - Application ID in the Internet service database.
