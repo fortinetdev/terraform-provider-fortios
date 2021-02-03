@@ -11,7 +11,6 @@ Configure SSL/SSH protocol options.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - (Required) Name.
@@ -23,7 +22,10 @@ The following arguments are supported:
 * `pop3s` - Configure POP3S options. The structure of `pop3s` block is documented below.
 * `smtps` - Configure SMTPS options. The structure of `smtps` block is documented below.
 * `ssh` - Configure SSH options. The structure of `ssh` block is documented below.
+* `allowlist` - Enable/disable exempting servers by FortiGuard allowlist.
+* `block_blocklisted_certificates` - Enable/disable blocking SSL-based botnet communication by FortiGuard certificate blocklist.
 * `whitelist` - Enable/disable exempting servers by FortiGuard whitelist.
+* `block_blacklisted_certificates` - Enable/disable blocking SSL-based botnet communication by FortiGuard certificate blacklist.
 * `ssl_exempt` - Servers to exempt from SSL inspection. The structure of `ssl_exempt` block is documented below.
 * `server_cert_mode` - Re-sign or replace the server's certificate.
 * `use_ssl_server` - Enable/disable the use of SSL server table for SSL offloading.
@@ -33,67 +35,115 @@ The following arguments are supported:
 * `ssl_server` - SSL servers. The structure of `ssl_server` block is documented below.
 * `ssl_anomalies_log` - Enable/disable logging SSL anomalies.
 * `ssl_exemptions_log` - Enable/disable logging SSL exemptions.
+* `ssl_negotiation_log` - Enable/disable logging SSL negotiation.
 * `rpc_over_https` - Enable/disable inspection of RPC over HTTPS.
 * `mapi_over_https` - Enable/disable inspection of MAPI over HTTPS.
+* `supported_alpn` - Configure ALPN option.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `ssl` block supports:
 
 * `inspect_all` - Level of SSL inspection.
+* `client_certificate` - Action based on received client certificate.
+* `unsupported_ssl_cipher` - Action based on the SSL cipher used being unsupported.
+* `unsupported_ssl_negotiation` - Action based on the SSL negotiation used being unsupported.
+* `expired_server_cert` - Action based on server certificate is expired.
+* `revoked_server_cert` - Action based on server certificate is revoked.
 * `client_cert_request` - Action based on client certificate request.
 * `unsupported_ssl` - Action based on the SSL encryption used being unsupported.
 * `invalid_server_cert` - Allow or block the invalid SSL session server certificate.
 * `untrusted_server_cert` - Allow, ignore, or block the untrusted SSL session server certificate.
+* `cert_validation_timeout` - Action based on certificate validation timeout.
+* `cert_validation_failure` - Action based on certificate validation failure.
 * `sni_server_cert_check` - Check the SNI in the client hello message with the CN or SAN fields in the returned server certificate.
 
 The `https` block supports:
 
 * `ports` - Ports to use for scanning (1 - 65535, default = 443).
 * `status` - Configure protocol inspection status.
+* `proxy_after_tcp_handshake` - Proxy traffic after the TCP 3-way handshake has been established (not before).
+* `client_certificate` - Action based on received client certificate.
+* `unsupported_ssl_cipher` - Action based on the SSL cipher used being unsupported.
+* `unsupported_ssl_negotiation` - Action based on the SSL negotiation used being unsupported.
+* `expired_server_cert` - Action based on server certificate is expired.
+* `revoked_server_cert` - Action based on server certificate is revoked.
 * `client_cert_request` - Action based on client certificate request.
 * `unsupported_ssl` - Action based on the SSL encryption used being unsupported.
 * `invalid_server_cert` - Allow or block the invalid SSL session server certificate.
 * `untrusted_server_cert` - Allow, ignore, or block the untrusted SSL session server certificate.
+* `cert_validation_timeout` - Action based on certificate validation timeout.
+* `cert_validation_failure` - Action based on certificate validation failure.
 * `sni_server_cert_check` - Check the SNI in the client hello message with the CN or SAN fields in the returned server certificate.
 
 The `ftps` block supports:
 
 * `ports` - Ports to use for scanning (1 - 65535, default = 443).
 * `status` - Configure protocol inspection status.
+* `client_certificate` - Action based on received client certificate.
+* `unsupported_ssl_cipher` - Action based on the SSL cipher used being unsupported.
+* `unsupported_ssl_negotiation` - Action based on the SSL negotiation used being unsupported.
+* `expired_server_cert` - Action based on server certificate is expired.
+* `revoked_server_cert` - Action based on server certificate is revoked.
 * `client_cert_request` - Action based on client certificate request.
 * `unsupported_ssl` - Action based on the SSL encryption used being unsupported.
 * `invalid_server_cert` - Allow or block the invalid SSL session server certificate.
 * `untrusted_server_cert` - Allow, ignore, or block the untrusted SSL session server certificate.
+* `cert_validation_timeout` - Action based on certificate validation timeout.
+* `cert_validation_failure` - Action based on certificate validation failure.
 * `sni_server_cert_check` - Check the SNI in the client hello message with the CN or SAN fields in the returned server certificate.
 
 The `imaps` block supports:
 
 * `ports` - Ports to use for scanning (1 - 65535, default = 443).
 * `status` - Configure protocol inspection status.
+* `proxy_after_tcp_handshake` - Proxy traffic after the TCP 3-way handshake has been established (not before).
+* `client_certificate` - Action based on received client certificate.
+* `unsupported_ssl_cipher` - Action based on the SSL cipher used being unsupported.
+* `unsupported_ssl_negotiation` - Action based on the SSL negotiation used being unsupported.
+* `expired_server_cert` - Action based on server certificate is expired.
+* `revoked_server_cert` - Action based on server certificate is revoked.
 * `client_cert_request` - Action based on client certificate request.
 * `unsupported_ssl` - Action based on the SSL encryption used being unsupported.
 * `invalid_server_cert` - Allow or block the invalid SSL session server certificate.
 * `untrusted_server_cert` - Allow, ignore, or block the untrusted SSL session server certificate.
+* `cert_validation_timeout` - Action based on certificate validation timeout.
+* `cert_validation_failure` - Action based on certificate validation failure.
 * `sni_server_cert_check` - Check the SNI in the client hello message with the CN or SAN fields in the returned server certificate.
 
 The `pop3s` block supports:
 
 * `ports` - Ports to use for scanning (1 - 65535, default = 443).
 * `status` - Configure protocol inspection status.
+* `proxy_after_tcp_handshake` - Proxy traffic after the TCP 3-way handshake has been established (not before).
+* `client_certificate` - Action based on received client certificate.
+* `unsupported_ssl_cipher` - Action based on the SSL cipher used being unsupported.
+* `unsupported_ssl_negotiation` - Action based on the SSL negotiation used being unsupported.
+* `expired_server_cert` - Action based on server certificate is expired.
+* `revoked_server_cert` - Action based on server certificate is revoked.
 * `client_cert_request` - Action based on client certificate request.
 * `unsupported_ssl` - Action based on the SSL encryption used being unsupported.
 * `invalid_server_cert` - Allow or block the invalid SSL session server certificate.
 * `untrusted_server_cert` - Allow, ignore, or block the untrusted SSL session server certificate.
+* `cert_validation_timeout` - Action based on certificate validation timeout.
+* `cert_validation_failure` - Action based on certificate validation failure.
 * `sni_server_cert_check` - Check the SNI in the client hello message with the CN or SAN fields in the returned server certificate.
 
 The `smtps` block supports:
 
 * `ports` - Ports to use for scanning (1 - 65535, default = 443).
 * `status` - Configure protocol inspection status.
+* `proxy_after_tcp_handshake` - Proxy traffic after the TCP 3-way handshake has been established (not before).
+* `client_certificate` - Action based on received client certificate.
+* `unsupported_ssl_cipher` - Action based on the SSL cipher used being unsupported.
+* `unsupported_ssl_negotiation` - Action based on the SSL negotiation used being unsupported.
+* `expired_server_cert` - Action based on server certificate is expired.
+* `revoked_server_cert` - Action based on server certificate is revoked.
 * `client_cert_request` - Action based on client certificate request.
 * `unsupported_ssl` - Action based on the SSL encryption used being unsupported.
 * `invalid_server_cert` - Allow or block the invalid SSL session server certificate.
 * `untrusted_server_cert` - Allow, ignore, or block the untrusted SSL session server certificate.
+* `cert_validation_timeout` - Action based on certificate validation timeout.
+* `cert_validation_failure` - Action based on certificate validation failure.
 * `sni_server_cert_check` - Check the SNI in the client hello message with the CN or SAN fields in the returned server certificate.
 
 The `ssh` block supports:
@@ -101,6 +151,7 @@ The `ssh` block supports:
 * `ports` - Ports to use for scanning (1 - 65535, default = 443).
 * `status` - Configure protocol inspection status.
 * `inspect_all` - Level of SSL inspection.
+* `proxy_after_tcp_handshake` - Proxy traffic after the TCP 3-way handshake has been established (not before).
 * `unsupported_version` - Action based on SSH version being unsupported.
 * `ssh_policy_check` - Enable/disable SSH policy check.
 * `ssh_tun_policy_check` - Enable/disable SSH tunnel policy check.
@@ -120,6 +171,12 @@ The `ssl_server` block supports:
 
 * `id` - SSL server ID.
 * `ip` - IPv4 address of the SSL server.
+* `https_client_certificate` - Action based on received client certificate during the HTTPS handshake.
+* `smtps_client_certificate` - Action based on received client certificate during the SMTPS handshake.
+* `pop3s_client_certificate` - Action based on received client certificate during the POP3S handshake.
+* `imaps_client_certificate` - Action based on received client certificate during the IMAPS handshake.
+* `ftps_client_certificate` - Action based on received client certificate during the FTPS handshake.
+* `ssl_other_client_certificate` - Action based on received client certificate during an SSL protocol handshake.
 * `https_client_cert_request` - Action based on client certificate request during the HTTPS handshake.
 * `smtps_client_cert_request` - Action based on client certificate request during the SMTPS handshake.
 * `pop3s_client_cert_request` - Action based on client certificate request during the POP3S handshake.
