@@ -109,6 +109,14 @@ func dataSourceRouterBgp() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"multipath_recursive_distance": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"recursive_next_hop": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"cluster_id": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -358,6 +366,14 @@ func dataSourceRouterBgp() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"next_hop_self_rr": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"next_hop_self_rr6": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"override_capability": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
@@ -538,7 +554,15 @@ func dataSourceRouterBgp() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"route_map_out_preferable": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"route_map_out6": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"route_map_out6_preferable": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -731,6 +755,14 @@ func dataSourceRouterBgp() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"next_hop_self_rr": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"next_hop_self_rr6": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"override_capability": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
@@ -911,7 +943,15 @@ func dataSourceRouterBgp() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"route_map_out_preferable": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"route_map_out6": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"route_map_out6_preferable": &schema.Schema{
 							Type:     schema.TypeString,
 							Computed: true,
 						},
@@ -1134,6 +1174,38 @@ func dataSourceRouterBgp() *schema.Resource {
 					},
 				},
 			},
+			"vrf_leak": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"vrf": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"target": &schema.Schema{
+							Type:     schema.TypeList,
+							Computed: true,
+							Elem: &schema.Resource{
+								Schema: map[string]*schema.Schema{
+									"vrf": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"route_map": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+									"interface": &schema.Schema{
+										Type:     schema.TypeString,
+										Computed: true,
+									},
+								},
+							},
+						},
+					},
+				},
+			},
 		},
 	}
 }
@@ -1249,6 +1321,14 @@ func dataSourceFlattenRouterBgpAdditionalPath(v interface{}, d *schema.ResourceD
 }
 
 func dataSourceFlattenRouterBgpAdditionalPath6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpMultipathRecursiveDistance(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpRecursiveNextHop(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1649,6 +1729,16 @@ func dataSourceFlattenRouterBgpNeighbor(v interface{}, d *schema.ResourceData, p
 			tmp["next_hop_self6"] = dataSourceFlattenRouterBgpNeighborNextHopSelf6(i["next-hop-self6"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "next_hop_self_rr"
+		if _, ok := i["next-hop-self-rr"]; ok {
+			tmp["next_hop_self_rr"] = dataSourceFlattenRouterBgpNeighborNextHopSelfRr(i["next-hop-self-rr"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "next_hop_self_rr6"
+		if _, ok := i["next-hop-self-rr6"]; ok {
+			tmp["next_hop_self_rr6"] = dataSourceFlattenRouterBgpNeighborNextHopSelfRr6(i["next-hop-self-rr6"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "override_capability"
 		if _, ok := i["override-capability"]; ok {
 			tmp["override_capability"] = dataSourceFlattenRouterBgpNeighborOverrideCapability(i["override-capability"], d, pre_append)
@@ -1874,9 +1964,19 @@ func dataSourceFlattenRouterBgpNeighbor(v interface{}, d *schema.ResourceData, p
 			tmp["route_map_out"] = dataSourceFlattenRouterBgpNeighborRouteMapOut(i["route-map-out"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out_preferable"
+		if _, ok := i["route-map-out-preferable"]; ok {
+			tmp["route_map_out_preferable"] = dataSourceFlattenRouterBgpNeighborRouteMapOutPreferable(i["route-map-out-preferable"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out6"
 		if _, ok := i["route-map-out6"]; ok {
 			tmp["route_map_out6"] = dataSourceFlattenRouterBgpNeighborRouteMapOut6(i["route-map-out6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out6_preferable"
+		if _, ok := i["route-map-out6-preferable"]; ok {
+			tmp["route_map_out6_preferable"] = dataSourceFlattenRouterBgpNeighborRouteMapOut6Preferable(i["route-map-out6-preferable"], d, pre_append)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "send_community"
@@ -2071,6 +2171,14 @@ func dataSourceFlattenRouterBgpNeighborNextHopSelf6(v interface{}, d *schema.Res
 	return v
 }
 
+func dataSourceFlattenRouterBgpNeighborNextHopSelfRr(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborNextHopSelfRr6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenRouterBgpNeighborOverrideCapability(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -2251,7 +2359,15 @@ func dataSourceFlattenRouterBgpNeighborRouteMapOut(v interface{}, d *schema.Reso
 	return v
 }
 
+func dataSourceFlattenRouterBgpNeighborRouteMapOutPreferable(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenRouterBgpNeighborRouteMapOut6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborRouteMapOut6Preferable(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -2513,6 +2629,16 @@ func dataSourceFlattenRouterBgpNeighborGroup(v interface{}, d *schema.ResourceDa
 			tmp["next_hop_self6"] = dataSourceFlattenRouterBgpNeighborGroupNextHopSelf6(i["next-hop-self6"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "next_hop_self_rr"
+		if _, ok := i["next-hop-self-rr"]; ok {
+			tmp["next_hop_self_rr"] = dataSourceFlattenRouterBgpNeighborGroupNextHopSelfRr(i["next-hop-self-rr"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "next_hop_self_rr6"
+		if _, ok := i["next-hop-self-rr6"]; ok {
+			tmp["next_hop_self_rr6"] = dataSourceFlattenRouterBgpNeighborGroupNextHopSelfRr6(i["next-hop-self-rr6"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "override_capability"
 		if _, ok := i["override-capability"]; ok {
 			tmp["override_capability"] = dataSourceFlattenRouterBgpNeighborGroupOverrideCapability(i["override-capability"], d, pre_append)
@@ -2738,9 +2864,19 @@ func dataSourceFlattenRouterBgpNeighborGroup(v interface{}, d *schema.ResourceDa
 			tmp["route_map_out"] = dataSourceFlattenRouterBgpNeighborGroupRouteMapOut(i["route-map-out"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out_preferable"
+		if _, ok := i["route-map-out-preferable"]; ok {
+			tmp["route_map_out_preferable"] = dataSourceFlattenRouterBgpNeighborGroupRouteMapOutPreferable(i["route-map-out-preferable"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out6"
 		if _, ok := i["route-map-out6"]; ok {
 			tmp["route_map_out6"] = dataSourceFlattenRouterBgpNeighborGroupRouteMapOut6(i["route-map-out6"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map_out6_preferable"
+		if _, ok := i["route-map-out6-preferable"]; ok {
+			tmp["route_map_out6_preferable"] = dataSourceFlattenRouterBgpNeighborGroupRouteMapOut6Preferable(i["route-map-out6-preferable"], d, pre_append)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "send_community"
@@ -2918,6 +3054,14 @@ func dataSourceFlattenRouterBgpNeighborGroupNextHopSelf(v interface{}, d *schema
 }
 
 func dataSourceFlattenRouterBgpNeighborGroupNextHopSelf6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupNextHopSelfRr(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupNextHopSelfRr6(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -3101,7 +3245,15 @@ func dataSourceFlattenRouterBgpNeighborGroupRouteMapOut(v interface{}, d *schema
 	return v
 }
 
+func dataSourceFlattenRouterBgpNeighborGroupRouteMapOutPreferable(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenRouterBgpNeighborGroupRouteMapOut6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpNeighborGroupRouteMapOut6Preferable(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -3605,6 +3757,101 @@ func dataSourceFlattenRouterBgpAdminDistanceDistance(v interface{}, d *schema.Re
 	return v
 }
 
+func dataSourceFlattenRouterBgpVrfLeak(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf"
+		if _, ok := i["vrf"]; ok {
+			tmp["vrf"] = dataSourceFlattenRouterBgpVrfLeakVrf(i["vrf"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "target"
+		if _, ok := i["target"]; ok {
+			tmp["target"] = dataSourceFlattenRouterBgpVrfLeakTarget(i["target"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenRouterBgpVrfLeakVrf(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpVrfLeakTarget(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "vrf"
+		if _, ok := i["vrf"]; ok {
+			tmp["vrf"] = dataSourceFlattenRouterBgpVrfLeakTargetVrf(i["vrf"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "route_map"
+		if _, ok := i["route-map"]; ok {
+			tmp["route_map"] = dataSourceFlattenRouterBgpVrfLeakTargetRouteMap(i["route-map"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
+		if _, ok := i["interface"]; ok {
+			tmp["interface"] = dataSourceFlattenRouterBgpVrfLeakTargetInterface(i["interface"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenRouterBgpVrfLeakTargetVrf(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpVrfLeakTargetRouteMap(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterBgpVrfLeakTargetInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectRouterBgp(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -3737,6 +3984,18 @@ func dataSourceRefreshObjectRouterBgp(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("additional_path6", dataSourceFlattenRouterBgpAdditionalPath6(o["additional-path6"], d, "additional_path6")); err != nil {
 		if !fortiAPIPatch(o["additional-path6"]) {
 			return fmt.Errorf("Error reading additional_path6: %v", err)
+		}
+	}
+
+	if err = d.Set("multipath_recursive_distance", dataSourceFlattenRouterBgpMultipathRecursiveDistance(o["multipath-recursive-distance"], d, "multipath_recursive_distance")); err != nil {
+		if !fortiAPIPatch(o["multipath-recursive-distance"]) {
+			return fmt.Errorf("Error reading multipath_recursive_distance: %v", err)
+		}
+	}
+
+	if err = d.Set("recursive_next_hop", dataSourceFlattenRouterBgpRecursiveNextHop(o["recursive-next-hop"], d, "recursive_next_hop")); err != nil {
+		if !fortiAPIPatch(o["recursive-next-hop"]) {
+			return fmt.Errorf("Error reading recursive_next_hop: %v", err)
 		}
 	}
 
@@ -3935,6 +4194,12 @@ func dataSourceRefreshObjectRouterBgp(d *schema.ResourceData, o map[string]inter
 	if err = d.Set("admin_distance", dataSourceFlattenRouterBgpAdminDistance(o["admin-distance"], d, "admin_distance")); err != nil {
 		if !fortiAPIPatch(o["admin-distance"]) {
 			return fmt.Errorf("Error reading admin_distance: %v", err)
+		}
+	}
+
+	if err = d.Set("vrf_leak", dataSourceFlattenRouterBgpVrfLeak(o["vrf-leak"], d, "vrf_leak")); err != nil {
+		if !fortiAPIPatch(o["vrf-leak"]) {
+			return fmt.Errorf("Error reading vrf_leak: %v", err)
 		}
 	}
 
