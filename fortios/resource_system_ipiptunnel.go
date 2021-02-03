@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -57,7 +58,7 @@ func resourceSystemIpipTunnelCreate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemIpipTunnel(d)
+	obj, err := getObjectSystemIpipTunnel(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemIpipTunnel resource while getting object: %v", err)
 	}
@@ -82,7 +83,7 @@ func resourceSystemIpipTunnelUpdate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemIpipTunnel(d)
+	obj, err := getObjectSystemIpipTunnel(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemIpipTunnel resource while getting object: %v", err)
 	}
@@ -135,51 +136,51 @@ func resourceSystemIpipTunnelRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectSystemIpipTunnel(d, o)
+	err = refreshObjectSystemIpipTunnel(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemIpipTunnel resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemIpipTunnelName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemIpipTunnelName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemIpipTunnelInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemIpipTunnelInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemIpipTunnelRemoteGw(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemIpipTunnelRemoteGw(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemIpipTunnelLocalGw(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemIpipTunnelLocalGw(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemIpipTunnel(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemIpipTunnel(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenSystemIpipTunnelName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenSystemIpipTunnelName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("interface", flattenSystemIpipTunnelInterface(o["interface"], d, "interface")); err != nil {
+	if err = d.Set("interface", flattenSystemIpipTunnelInterface(o["interface"], d, "interface", sv)); err != nil {
 		if !fortiAPIPatch(o["interface"]) {
 			return fmt.Errorf("Error reading interface: %v", err)
 		}
 	}
 
-	if err = d.Set("remote_gw", flattenSystemIpipTunnelRemoteGw(o["remote-gw"], d, "remote_gw")); err != nil {
+	if err = d.Set("remote_gw", flattenSystemIpipTunnelRemoteGw(o["remote-gw"], d, "remote_gw", sv)); err != nil {
 		if !fortiAPIPatch(o["remote-gw"]) {
 			return fmt.Errorf("Error reading remote_gw: %v", err)
 		}
 	}
 
-	if err = d.Set("local_gw", flattenSystemIpipTunnelLocalGw(o["local-gw"], d, "local_gw")); err != nil {
+	if err = d.Set("local_gw", flattenSystemIpipTunnelLocalGw(o["local-gw"], d, "local_gw", sv)); err != nil {
 		if !fortiAPIPatch(o["local-gw"]) {
 			return fmt.Errorf("Error reading local_gw: %v", err)
 		}
@@ -191,30 +192,31 @@ func refreshObjectSystemIpipTunnel(d *schema.ResourceData, o map[string]interfac
 func flattenSystemIpipTunnelFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemIpipTunnelName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemIpipTunnelName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemIpipTunnelInterface(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemIpipTunnelInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemIpipTunnelRemoteGw(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemIpipTunnelRemoteGw(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemIpipTunnelLocalGw(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemIpipTunnelLocalGw(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemIpipTunnel(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemIpipTunnel(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandSystemIpipTunnelName(d, v, "name")
+
+		t, err := expandSystemIpipTunnelName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -223,7 +225,8 @@ func getObjectSystemIpipTunnel(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
-		t, err := expandSystemIpipTunnelInterface(d, v, "interface")
+
+		t, err := expandSystemIpipTunnelInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -232,7 +235,8 @@ func getObjectSystemIpipTunnel(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("remote_gw"); ok {
-		t, err := expandSystemIpipTunnelRemoteGw(d, v, "remote_gw")
+
+		t, err := expandSystemIpipTunnelRemoteGw(d, v, "remote_gw", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -241,7 +245,8 @@ func getObjectSystemIpipTunnel(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("local_gw"); ok {
-		t, err := expandSystemIpipTunnelLocalGw(d, v, "local_gw")
+
+		t, err := expandSystemIpipTunnelLocalGw(d, v, "local_gw", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
