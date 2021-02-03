@@ -11,7 +11,6 @@ Configure WiFi quality of service (QoS) profiles.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - WiFi QoS profile name.
@@ -32,6 +31,11 @@ The following arguments are supported:
 * `dscp_wmm_vi` - DSCP mapping for video access (default = 32 40). The structure of `dscp_wmm_vi` block is documented below.
 * `dscp_wmm_be` - DSCP mapping for best effort access (default = 0 24). The structure of `dscp_wmm_be` block is documented below.
 * `dscp_wmm_bk` - DSCP mapping for background access (default = 8 16). The structure of `dscp_wmm_bk` block is documented below.
+* `wmm_dscp_marking` - Enable/disable WMM Differentiated Services Code Point (DSCP) marking.
+* `wmm_vo_dscp` - DSCP marking for voice access (default = 48).
+* `wmm_vi_dscp` - DSCP marking for video access (default = 32).
+* `wmm_be_dscp` - DSCP marking for best effort access (default = 0).
+* `wmm_bk_dscp` - DSCP marking for background access (default = 8).
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `dscp_wmm_vo` block supports:
