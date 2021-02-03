@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -99,7 +100,7 @@ func resourceSystemPasswordPolicyUpdate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemPasswordPolicy(d)
+	obj, err := getObjectSystemPasswordPolicy(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemPasswordPolicy resource while getting object: %v", err)
 	}
@@ -152,121 +153,121 @@ func resourceSystemPasswordPolicyRead(d *schema.ResourceData, m interface{}) err
 		return nil
 	}
 
-	err = refreshObjectSystemPasswordPolicy(d, o)
+	err = refreshObjectSystemPasswordPolicy(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemPasswordPolicy resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemPasswordPolicyStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemPasswordPolicyStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemPasswordPolicyApplyTo(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemPasswordPolicyApplyTo(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemPasswordPolicyMinimumLength(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemPasswordPolicyMinimumLength(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemPasswordPolicyMinLowerCaseLetter(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemPasswordPolicyMinLowerCaseLetter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemPasswordPolicyMinUpperCaseLetter(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemPasswordPolicyMinUpperCaseLetter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemPasswordPolicyMinNonAlphanumeric(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemPasswordPolicyMinNonAlphanumeric(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemPasswordPolicyMinNumber(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemPasswordPolicyMinNumber(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemPasswordPolicyChange4Characters(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemPasswordPolicyChange4Characters(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemPasswordPolicyExpireStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemPasswordPolicyExpireStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemPasswordPolicyExpireDay(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemPasswordPolicyExpireDay(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemPasswordPolicyReusePassword(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemPasswordPolicyReusePassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemPasswordPolicy(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemPasswordPolicy(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("status", flattenSystemPasswordPolicyStatus(o["status"], d, "status")); err != nil {
+	if err = d.Set("status", flattenSystemPasswordPolicyStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
 		}
 	}
 
-	if err = d.Set("apply_to", flattenSystemPasswordPolicyApplyTo(o["apply-to"], d, "apply_to")); err != nil {
+	if err = d.Set("apply_to", flattenSystemPasswordPolicyApplyTo(o["apply-to"], d, "apply_to", sv)); err != nil {
 		if !fortiAPIPatch(o["apply-to"]) {
 			return fmt.Errorf("Error reading apply_to: %v", err)
 		}
 	}
 
-	if err = d.Set("minimum_length", flattenSystemPasswordPolicyMinimumLength(o["minimum-length"], d, "minimum_length")); err != nil {
+	if err = d.Set("minimum_length", flattenSystemPasswordPolicyMinimumLength(o["minimum-length"], d, "minimum_length", sv)); err != nil {
 		if !fortiAPIPatch(o["minimum-length"]) {
 			return fmt.Errorf("Error reading minimum_length: %v", err)
 		}
 	}
 
-	if err = d.Set("min_lower_case_letter", flattenSystemPasswordPolicyMinLowerCaseLetter(o["min-lower-case-letter"], d, "min_lower_case_letter")); err != nil {
+	if err = d.Set("min_lower_case_letter", flattenSystemPasswordPolicyMinLowerCaseLetter(o["min-lower-case-letter"], d, "min_lower_case_letter", sv)); err != nil {
 		if !fortiAPIPatch(o["min-lower-case-letter"]) {
 			return fmt.Errorf("Error reading min_lower_case_letter: %v", err)
 		}
 	}
 
-	if err = d.Set("min_upper_case_letter", flattenSystemPasswordPolicyMinUpperCaseLetter(o["min-upper-case-letter"], d, "min_upper_case_letter")); err != nil {
+	if err = d.Set("min_upper_case_letter", flattenSystemPasswordPolicyMinUpperCaseLetter(o["min-upper-case-letter"], d, "min_upper_case_letter", sv)); err != nil {
 		if !fortiAPIPatch(o["min-upper-case-letter"]) {
 			return fmt.Errorf("Error reading min_upper_case_letter: %v", err)
 		}
 	}
 
-	if err = d.Set("min_non_alphanumeric", flattenSystemPasswordPolicyMinNonAlphanumeric(o["min-non-alphanumeric"], d, "min_non_alphanumeric")); err != nil {
+	if err = d.Set("min_non_alphanumeric", flattenSystemPasswordPolicyMinNonAlphanumeric(o["min-non-alphanumeric"], d, "min_non_alphanumeric", sv)); err != nil {
 		if !fortiAPIPatch(o["min-non-alphanumeric"]) {
 			return fmt.Errorf("Error reading min_non_alphanumeric: %v", err)
 		}
 	}
 
-	if err = d.Set("min_number", flattenSystemPasswordPolicyMinNumber(o["min-number"], d, "min_number")); err != nil {
+	if err = d.Set("min_number", flattenSystemPasswordPolicyMinNumber(o["min-number"], d, "min_number", sv)); err != nil {
 		if !fortiAPIPatch(o["min-number"]) {
 			return fmt.Errorf("Error reading min_number: %v", err)
 		}
 	}
 
-	if err = d.Set("change_4_characters", flattenSystemPasswordPolicyChange4Characters(o["change-4-characters"], d, "change_4_characters")); err != nil {
+	if err = d.Set("change_4_characters", flattenSystemPasswordPolicyChange4Characters(o["change-4-characters"], d, "change_4_characters", sv)); err != nil {
 		if !fortiAPIPatch(o["change-4-characters"]) {
 			return fmt.Errorf("Error reading change_4_characters: %v", err)
 		}
 	}
 
-	if err = d.Set("expire_status", flattenSystemPasswordPolicyExpireStatus(o["expire-status"], d, "expire_status")); err != nil {
+	if err = d.Set("expire_status", flattenSystemPasswordPolicyExpireStatus(o["expire-status"], d, "expire_status", sv)); err != nil {
 		if !fortiAPIPatch(o["expire-status"]) {
 			return fmt.Errorf("Error reading expire_status: %v", err)
 		}
 	}
 
-	if err = d.Set("expire_day", flattenSystemPasswordPolicyExpireDay(o["expire-day"], d, "expire_day")); err != nil {
+	if err = d.Set("expire_day", flattenSystemPasswordPolicyExpireDay(o["expire-day"], d, "expire_day", sv)); err != nil {
 		if !fortiAPIPatch(o["expire-day"]) {
 			return fmt.Errorf("Error reading expire_day: %v", err)
 		}
 	}
 
-	if err = d.Set("reuse_password", flattenSystemPasswordPolicyReusePassword(o["reuse-password"], d, "reuse_password")); err != nil {
+	if err = d.Set("reuse_password", flattenSystemPasswordPolicyReusePassword(o["reuse-password"], d, "reuse_password", sv)); err != nil {
 		if !fortiAPIPatch(o["reuse-password"]) {
 			return fmt.Errorf("Error reading reuse_password: %v", err)
 		}
@@ -278,58 +279,59 @@ func refreshObjectSystemPasswordPolicy(d *schema.ResourceData, o map[string]inte
 func flattenSystemPasswordPolicyFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemPasswordPolicyStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemPasswordPolicyStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemPasswordPolicyApplyTo(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemPasswordPolicyApplyTo(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemPasswordPolicyMinimumLength(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemPasswordPolicyMinimumLength(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemPasswordPolicyMinLowerCaseLetter(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemPasswordPolicyMinLowerCaseLetter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemPasswordPolicyMinUpperCaseLetter(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemPasswordPolicyMinUpperCaseLetter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemPasswordPolicyMinNonAlphanumeric(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemPasswordPolicyMinNonAlphanumeric(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemPasswordPolicyMinNumber(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemPasswordPolicyMinNumber(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemPasswordPolicyChange4Characters(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemPasswordPolicyChange4Characters(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemPasswordPolicyExpireStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemPasswordPolicyExpireStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemPasswordPolicyExpireDay(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemPasswordPolicyExpireDay(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemPasswordPolicyReusePassword(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemPasswordPolicyReusePassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemPasswordPolicy(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemPasswordPolicy(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
-		t, err := expandSystemPasswordPolicyStatus(d, v, "status")
+
+		t, err := expandSystemPasswordPolicyStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -338,7 +340,8 @@ func getObjectSystemPasswordPolicy(d *schema.ResourceData) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("apply_to"); ok {
-		t, err := expandSystemPasswordPolicyApplyTo(d, v, "apply_to")
+
+		t, err := expandSystemPasswordPolicyApplyTo(d, v, "apply_to", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -347,7 +350,8 @@ func getObjectSystemPasswordPolicy(d *schema.ResourceData) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("minimum_length"); ok {
-		t, err := expandSystemPasswordPolicyMinimumLength(d, v, "minimum_length")
+
+		t, err := expandSystemPasswordPolicyMinimumLength(d, v, "minimum_length", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -356,7 +360,8 @@ func getObjectSystemPasswordPolicy(d *schema.ResourceData) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOkExists("min_lower_case_letter"); ok {
-		t, err := expandSystemPasswordPolicyMinLowerCaseLetter(d, v, "min_lower_case_letter")
+
+		t, err := expandSystemPasswordPolicyMinLowerCaseLetter(d, v, "min_lower_case_letter", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -365,7 +370,8 @@ func getObjectSystemPasswordPolicy(d *schema.ResourceData) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOkExists("min_upper_case_letter"); ok {
-		t, err := expandSystemPasswordPolicyMinUpperCaseLetter(d, v, "min_upper_case_letter")
+
+		t, err := expandSystemPasswordPolicyMinUpperCaseLetter(d, v, "min_upper_case_letter", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -374,7 +380,8 @@ func getObjectSystemPasswordPolicy(d *schema.ResourceData) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOkExists("min_non_alphanumeric"); ok {
-		t, err := expandSystemPasswordPolicyMinNonAlphanumeric(d, v, "min_non_alphanumeric")
+
+		t, err := expandSystemPasswordPolicyMinNonAlphanumeric(d, v, "min_non_alphanumeric", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -383,7 +390,8 @@ func getObjectSystemPasswordPolicy(d *schema.ResourceData) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOkExists("min_number"); ok {
-		t, err := expandSystemPasswordPolicyMinNumber(d, v, "min_number")
+
+		t, err := expandSystemPasswordPolicyMinNumber(d, v, "min_number", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -392,7 +400,8 @@ func getObjectSystemPasswordPolicy(d *schema.ResourceData) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("change_4_characters"); ok {
-		t, err := expandSystemPasswordPolicyChange4Characters(d, v, "change_4_characters")
+
+		t, err := expandSystemPasswordPolicyChange4Characters(d, v, "change_4_characters", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -401,7 +410,8 @@ func getObjectSystemPasswordPolicy(d *schema.ResourceData) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("expire_status"); ok {
-		t, err := expandSystemPasswordPolicyExpireStatus(d, v, "expire_status")
+
+		t, err := expandSystemPasswordPolicyExpireStatus(d, v, "expire_status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -410,7 +420,8 @@ func getObjectSystemPasswordPolicy(d *schema.ResourceData) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("expire_day"); ok {
-		t, err := expandSystemPasswordPolicyExpireDay(d, v, "expire_day")
+
+		t, err := expandSystemPasswordPolicyExpireDay(d, v, "expire_day", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -419,7 +430,8 @@ func getObjectSystemPasswordPolicy(d *schema.ResourceData) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("reuse_password"); ok {
-		t, err := expandSystemPasswordPolicyReusePassword(d, v, "reuse_password")
+
+		t, err := expandSystemPasswordPolicyReusePassword(d, v, "reuse_password", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
