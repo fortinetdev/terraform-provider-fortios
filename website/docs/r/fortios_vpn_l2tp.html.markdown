@@ -11,7 +11,6 @@ Configure L2TP.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `eip` - End IP.
@@ -19,6 +18,9 @@ The following arguments are supported:
 * `status` - (Required) Enable/disable FortiGate as a L2TP gateway.
 * `usrgrp` - User group.
 * `enforce_ipsec` - Enable/disable IPsec enforcement.
+* `lcp_echo_interval` - Time in seconds between PPPoE Link Control Protocol (LCP) echo requests.
+* `lcp_max_echo_fails` - Maximum number of missed LCP echo messages before disconnect.
+* `compress` - Enable/disable data compression.
 
 
 ## Attribute Reference
