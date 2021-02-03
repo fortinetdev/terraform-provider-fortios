@@ -32,7 +32,6 @@ resource "fortios_systemsnmp_community" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `fosid` - (Required) Community ID.
