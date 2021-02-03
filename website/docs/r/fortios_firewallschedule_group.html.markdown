@@ -32,7 +32,6 @@ resource "fortios_firewallschedule_group" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - (Required) Schedule group name.
