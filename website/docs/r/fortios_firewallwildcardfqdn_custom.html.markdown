@@ -22,7 +22,6 @@ resource "fortios_firewallwildcardfqdn_custom" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Address name.
