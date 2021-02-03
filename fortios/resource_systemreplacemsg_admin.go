@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -58,7 +59,7 @@ func resourceSystemReplacemsgAdminCreate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemReplacemsgAdmin(d)
+	obj, err := getObjectSystemReplacemsgAdmin(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemReplacemsgAdmin resource while getting object: %v", err)
 	}
@@ -83,7 +84,7 @@ func resourceSystemReplacemsgAdminUpdate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemReplacemsgAdmin(d)
+	obj, err := getObjectSystemReplacemsgAdmin(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemReplacemsgAdmin resource while getting object: %v", err)
 	}
@@ -136,51 +137,51 @@ func resourceSystemReplacemsgAdminRead(d *schema.ResourceData, m interface{}) er
 		return nil
 	}
 
-	err = refreshObjectSystemReplacemsgAdmin(d, o)
+	err = refreshObjectSystemReplacemsgAdmin(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemReplacemsgAdmin resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemReplacemsgAdminMsgType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemReplacemsgAdminMsgType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemReplacemsgAdminBuffer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemReplacemsgAdminBuffer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemReplacemsgAdminHeader(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemReplacemsgAdminHeader(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemReplacemsgAdminFormat(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemReplacemsgAdminFormat(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemReplacemsgAdmin(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemReplacemsgAdmin(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("msg_type", flattenSystemReplacemsgAdminMsgType(o["msg-type"], d, "msg_type")); err != nil {
+	if err = d.Set("msg_type", flattenSystemReplacemsgAdminMsgType(o["msg-type"], d, "msg_type", sv)); err != nil {
 		if !fortiAPIPatch(o["msg-type"]) {
 			return fmt.Errorf("Error reading msg_type: %v", err)
 		}
 	}
 
-	if err = d.Set("buffer", flattenSystemReplacemsgAdminBuffer(o["buffer"], d, "buffer")); err != nil {
+	if err = d.Set("buffer", flattenSystemReplacemsgAdminBuffer(o["buffer"], d, "buffer", sv)); err != nil {
 		if !fortiAPIPatch(o["buffer"]) {
 			return fmt.Errorf("Error reading buffer: %v", err)
 		}
 	}
 
-	if err = d.Set("header", flattenSystemReplacemsgAdminHeader(o["header"], d, "header")); err != nil {
+	if err = d.Set("header", flattenSystemReplacemsgAdminHeader(o["header"], d, "header", sv)); err != nil {
 		if !fortiAPIPatch(o["header"]) {
 			return fmt.Errorf("Error reading header: %v", err)
 		}
 	}
 
-	if err = d.Set("format", flattenSystemReplacemsgAdminFormat(o["format"], d, "format")); err != nil {
+	if err = d.Set("format", flattenSystemReplacemsgAdminFormat(o["format"], d, "format", sv)); err != nil {
 		if !fortiAPIPatch(o["format"]) {
 			return fmt.Errorf("Error reading format: %v", err)
 		}
@@ -192,30 +193,31 @@ func refreshObjectSystemReplacemsgAdmin(d *schema.ResourceData, o map[string]int
 func flattenSystemReplacemsgAdminFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemReplacemsgAdminMsgType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemReplacemsgAdminMsgType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemReplacemsgAdminBuffer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemReplacemsgAdminBuffer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemReplacemsgAdminHeader(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemReplacemsgAdminHeader(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemReplacemsgAdminFormat(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemReplacemsgAdminFormat(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemReplacemsgAdmin(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemReplacemsgAdmin(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("msg_type"); ok {
-		t, err := expandSystemReplacemsgAdminMsgType(d, v, "msg_type")
+
+		t, err := expandSystemReplacemsgAdminMsgType(d, v, "msg_type", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -224,7 +226,8 @@ func getObjectSystemReplacemsgAdmin(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("buffer"); ok {
-		t, err := expandSystemReplacemsgAdminBuffer(d, v, "buffer")
+
+		t, err := expandSystemReplacemsgAdminBuffer(d, v, "buffer", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -233,7 +236,8 @@ func getObjectSystemReplacemsgAdmin(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("header"); ok {
-		t, err := expandSystemReplacemsgAdminHeader(d, v, "header")
+
+		t, err := expandSystemReplacemsgAdminHeader(d, v, "header", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -242,7 +246,8 @@ func getObjectSystemReplacemsgAdmin(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("format"); ok {
-		t, err := expandSystemReplacemsgAdminFormat(d, v, "format")
+
+		t, err := expandSystemReplacemsgAdminFormat(d, v, "format", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
