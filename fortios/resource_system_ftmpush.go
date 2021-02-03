@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -35,6 +36,12 @@ func resourceSystemFtmPush() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"server_cert": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
 			"server_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -54,7 +61,7 @@ func resourceSystemFtmPushUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemFtmPush(d)
+	obj, err := getObjectSystemFtmPush(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemFtmPush resource while getting object: %v", err)
 	}
@@ -107,41 +114,51 @@ func resourceSystemFtmPushRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectSystemFtmPush(d, o)
+	err = refreshObjectSystemFtmPush(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemFtmPush resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemFtmPushServerPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemFtmPushServerPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemFtmPushServerIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemFtmPushServerCert(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemFtmPushStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemFtmPushServerIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemFtmPush(d *schema.ResourceData, o map[string]interface{}) error {
+func flattenSystemFtmPushStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func refreshObjectSystemFtmPush(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("server_port", flattenSystemFtmPushServerPort(o["server-port"], d, "server_port")); err != nil {
+	if err = d.Set("server_port", flattenSystemFtmPushServerPort(o["server-port"], d, "server_port", sv)); err != nil {
 		if !fortiAPIPatch(o["server-port"]) {
 			return fmt.Errorf("Error reading server_port: %v", err)
 		}
 	}
 
-	if err = d.Set("server_ip", flattenSystemFtmPushServerIp(o["server-ip"], d, "server_ip")); err != nil {
+	if err = d.Set("server_cert", flattenSystemFtmPushServerCert(o["server-cert"], d, "server_cert", sv)); err != nil {
+		if !fortiAPIPatch(o["server-cert"]) {
+			return fmt.Errorf("Error reading server_cert: %v", err)
+		}
+	}
+
+	if err = d.Set("server_ip", flattenSystemFtmPushServerIp(o["server-ip"], d, "server_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["server-ip"]) {
 			return fmt.Errorf("Error reading server_ip: %v", err)
 		}
 	}
 
-	if err = d.Set("status", flattenSystemFtmPushStatus(o["status"], d, "status")); err != nil {
+	if err = d.Set("status", flattenSystemFtmPushStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
 		}
@@ -153,26 +170,31 @@ func refreshObjectSystemFtmPush(d *schema.ResourceData, o map[string]interface{}
 func flattenSystemFtmPushFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemFtmPushServerPort(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemFtmPushServerPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemFtmPushServerIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemFtmPushServerCert(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemFtmPushStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemFtmPushServerIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemFtmPush(d *schema.ResourceData) (*map[string]interface{}, error) {
+func expandSystemFtmPushStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func getObjectSystemFtmPush(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("server_port"); ok {
-		t, err := expandSystemFtmPushServerPort(d, v, "server_port")
+
+		t, err := expandSystemFtmPushServerPort(d, v, "server_port", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -180,8 +202,19 @@ func getObjectSystemFtmPush(d *schema.ResourceData) (*map[string]interface{}, er
 		}
 	}
 
+	if v, ok := d.GetOk("server_cert"); ok {
+
+		t, err := expandSystemFtmPushServerCert(d, v, "server_cert", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["server-cert"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("server_ip"); ok {
-		t, err := expandSystemFtmPushServerIp(d, v, "server_ip")
+
+		t, err := expandSystemFtmPushServerIp(d, v, "server_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -190,7 +223,8 @@ func getObjectSystemFtmPush(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-		t, err := expandSystemFtmPushStatus(d, v, "status")
+
+		t, err := expandSystemFtmPushStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
