@@ -25,7 +25,6 @@ resource "fortios_firewall_ldbmonitor" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Monitor name.
@@ -34,6 +33,7 @@ The following arguments are supported:
 * `timeout` - Time to wait to receive response to a health check from a server. Reaching the timeout means the health check failed (1 - 255 sec, default = 2).
 * `retry` - Number health check attempts before the server is considered down (1 - 255, default = 3).
 * `port` - Service port used to perform the health check. If 0, health check monitor inherits port configured for the server (0 - 65635, default = 0).
+* `src_ip` - Source IP for ldb-monitor.
 * `http_get` - URL used to send a GET request to check the health of an HTTP server.
 * `http_match` - String to match the value expected in response to an HTTP-GET request.
 * `http_max_redirects` - The maximum number of HTTP redirects to be allowed (0 - 5, default = 0).
