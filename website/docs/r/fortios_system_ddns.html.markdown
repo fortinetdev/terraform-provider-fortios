@@ -34,7 +34,6 @@ resource "fortios_system_ddns" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `ddnsid` - DDNS ID.
