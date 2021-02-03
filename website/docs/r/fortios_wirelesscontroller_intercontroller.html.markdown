@@ -23,7 +23,6 @@ resource "fortios_wirelesscontroller_intercontroller" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `inter_controller_mode` - Configure inter-controller mode (disable, l2-roaming, 1+1, default = disable).
