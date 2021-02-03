@@ -34,7 +34,6 @@ resource "fortios_vpnsslweb_usergroupbookmark" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Group name.
@@ -48,6 +47,7 @@ The `bookmarks` block supports:
 * `url` - URL parameter.
 * `host` - Host name/IP parameter.
 * `folder` - Network shared file folder parameter.
+* `domain` - Login domain.
 * `additional_params` - Additional parameters.
 * `listening_port` - Listening port (0 - 65535).
 * `remote_port` - Remote port (0 - 65535).
