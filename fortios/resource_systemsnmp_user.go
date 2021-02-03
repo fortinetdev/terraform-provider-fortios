@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -133,7 +134,7 @@ func resourceSystemSnmpUserCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemSnmpUser(d)
+	obj, err := getObjectSystemSnmpUser(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemSnmpUser resource while getting object: %v", err)
 	}
@@ -158,7 +159,7 @@ func resourceSystemSnmpUserUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemSnmpUser(d)
+	obj, err := getObjectSystemSnmpUser(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSnmpUser resource while getting object: %v", err)
 	}
@@ -211,179 +212,179 @@ func resourceSystemSnmpUserRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectSystemSnmpUser(d, o)
+	err = refreshObjectSystemSnmpUser(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemSnmpUser resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemSnmpUserName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSnmpUserName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSnmpUserStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSnmpUserStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSnmpUserTrapStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSnmpUserTrapStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSnmpUserTrapLport(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSnmpUserTrapLport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSnmpUserTrapRport(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSnmpUserTrapRport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSnmpUserQueries(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSnmpUserQueries(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSnmpUserQueryPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSnmpUserQueryPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSnmpUserNotifyHosts(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSnmpUserNotifyHosts(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSnmpUserNotifyHosts6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSnmpUserNotifyHosts6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSnmpUserSourceIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSnmpUserSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSnmpUserSourceIpv6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSnmpUserSourceIpv6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSnmpUserHaDirect(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSnmpUserHaDirect(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSnmpUserEvents(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSnmpUserEvents(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSnmpUserSecurityLevel(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSnmpUserSecurityLevel(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSnmpUserAuthProto(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSnmpUserAuthProto(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSnmpUserAuthPwd(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSnmpUserAuthPwd(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSnmpUserPrivProto(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSnmpUserPrivProto(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSnmpUserPrivPwd(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSnmpUserPrivPwd(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemSnmpUser(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemSnmpUser(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenSystemSnmpUserName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenSystemSnmpUserName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("status", flattenSystemSnmpUserStatus(o["status"], d, "status")); err != nil {
+	if err = d.Set("status", flattenSystemSnmpUserStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
 		}
 	}
 
-	if err = d.Set("trap_status", flattenSystemSnmpUserTrapStatus(o["trap-status"], d, "trap_status")); err != nil {
+	if err = d.Set("trap_status", flattenSystemSnmpUserTrapStatus(o["trap-status"], d, "trap_status", sv)); err != nil {
 		if !fortiAPIPatch(o["trap-status"]) {
 			return fmt.Errorf("Error reading trap_status: %v", err)
 		}
 	}
 
-	if err = d.Set("trap_lport", flattenSystemSnmpUserTrapLport(o["trap-lport"], d, "trap_lport")); err != nil {
+	if err = d.Set("trap_lport", flattenSystemSnmpUserTrapLport(o["trap-lport"], d, "trap_lport", sv)); err != nil {
 		if !fortiAPIPatch(o["trap-lport"]) {
 			return fmt.Errorf("Error reading trap_lport: %v", err)
 		}
 	}
 
-	if err = d.Set("trap_rport", flattenSystemSnmpUserTrapRport(o["trap-rport"], d, "trap_rport")); err != nil {
+	if err = d.Set("trap_rport", flattenSystemSnmpUserTrapRport(o["trap-rport"], d, "trap_rport", sv)); err != nil {
 		if !fortiAPIPatch(o["trap-rport"]) {
 			return fmt.Errorf("Error reading trap_rport: %v", err)
 		}
 	}
 
-	if err = d.Set("queries", flattenSystemSnmpUserQueries(o["queries"], d, "queries")); err != nil {
+	if err = d.Set("queries", flattenSystemSnmpUserQueries(o["queries"], d, "queries", sv)); err != nil {
 		if !fortiAPIPatch(o["queries"]) {
 			return fmt.Errorf("Error reading queries: %v", err)
 		}
 	}
 
-	if err = d.Set("query_port", flattenSystemSnmpUserQueryPort(o["query-port"], d, "query_port")); err != nil {
+	if err = d.Set("query_port", flattenSystemSnmpUserQueryPort(o["query-port"], d, "query_port", sv)); err != nil {
 		if !fortiAPIPatch(o["query-port"]) {
 			return fmt.Errorf("Error reading query_port: %v", err)
 		}
 	}
 
-	if err = d.Set("notify_hosts", flattenSystemSnmpUserNotifyHosts(o["notify-hosts"], d, "notify_hosts")); err != nil {
+	if err = d.Set("notify_hosts", flattenSystemSnmpUserNotifyHosts(o["notify-hosts"], d, "notify_hosts", sv)); err != nil {
 		if !fortiAPIPatch(o["notify-hosts"]) {
 			return fmt.Errorf("Error reading notify_hosts: %v", err)
 		}
 	}
 
-	if err = d.Set("notify_hosts6", flattenSystemSnmpUserNotifyHosts6(o["notify-hosts6"], d, "notify_hosts6")); err != nil {
+	if err = d.Set("notify_hosts6", flattenSystemSnmpUserNotifyHosts6(o["notify-hosts6"], d, "notify_hosts6", sv)); err != nil {
 		if !fortiAPIPatch(o["notify-hosts6"]) {
 			return fmt.Errorf("Error reading notify_hosts6: %v", err)
 		}
 	}
 
-	if err = d.Set("source_ip", flattenSystemSnmpUserSourceIp(o["source-ip"], d, "source_ip")); err != nil {
+	if err = d.Set("source_ip", flattenSystemSnmpUserSourceIp(o["source-ip"], d, "source_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["source-ip"]) {
 			return fmt.Errorf("Error reading source_ip: %v", err)
 		}
 	}
 
-	if err = d.Set("source_ipv6", flattenSystemSnmpUserSourceIpv6(o["source-ipv6"], d, "source_ipv6")); err != nil {
+	if err = d.Set("source_ipv6", flattenSystemSnmpUserSourceIpv6(o["source-ipv6"], d, "source_ipv6", sv)); err != nil {
 		if !fortiAPIPatch(o["source-ipv6"]) {
 			return fmt.Errorf("Error reading source_ipv6: %v", err)
 		}
 	}
 
-	if err = d.Set("ha_direct", flattenSystemSnmpUserHaDirect(o["ha-direct"], d, "ha_direct")); err != nil {
+	if err = d.Set("ha_direct", flattenSystemSnmpUserHaDirect(o["ha-direct"], d, "ha_direct", sv)); err != nil {
 		if !fortiAPIPatch(o["ha-direct"]) {
 			return fmt.Errorf("Error reading ha_direct: %v", err)
 		}
 	}
 
-	if err = d.Set("events", flattenSystemSnmpUserEvents(o["events"], d, "events")); err != nil {
+	if err = d.Set("events", flattenSystemSnmpUserEvents(o["events"], d, "events", sv)); err != nil {
 		if !fortiAPIPatch(o["events"]) {
 			return fmt.Errorf("Error reading events: %v", err)
 		}
 	}
 
-	if err = d.Set("security_level", flattenSystemSnmpUserSecurityLevel(o["security-level"], d, "security_level")); err != nil {
+	if err = d.Set("security_level", flattenSystemSnmpUserSecurityLevel(o["security-level"], d, "security_level", sv)); err != nil {
 		if !fortiAPIPatch(o["security-level"]) {
 			return fmt.Errorf("Error reading security_level: %v", err)
 		}
 	}
 
-	if err = d.Set("auth_proto", flattenSystemSnmpUserAuthProto(o["auth-proto"], d, "auth_proto")); err != nil {
+	if err = d.Set("auth_proto", flattenSystemSnmpUserAuthProto(o["auth-proto"], d, "auth_proto", sv)); err != nil {
 		if !fortiAPIPatch(o["auth-proto"]) {
 			return fmt.Errorf("Error reading auth_proto: %v", err)
 		}
 	}
 
-	if err = d.Set("priv_proto", flattenSystemSnmpUserPrivProto(o["priv-proto"], d, "priv_proto")); err != nil {
+	if err = d.Set("priv_proto", flattenSystemSnmpUserPrivProto(o["priv-proto"], d, "priv_proto", sv)); err != nil {
 		if !fortiAPIPatch(o["priv-proto"]) {
 			return fmt.Errorf("Error reading priv_proto: %v", err)
 		}
@@ -395,86 +396,87 @@ func refreshObjectSystemSnmpUser(d *schema.ResourceData, o map[string]interface{
 func flattenSystemSnmpUserFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemSnmpUserName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSnmpUserName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemSnmpUserStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSnmpUserStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemSnmpUserTrapStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSnmpUserTrapStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemSnmpUserTrapLport(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSnmpUserTrapLport(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemSnmpUserTrapRport(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSnmpUserTrapRport(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemSnmpUserQueries(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSnmpUserQueries(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemSnmpUserQueryPort(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSnmpUserQueryPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemSnmpUserNotifyHosts(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSnmpUserNotifyHosts(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemSnmpUserNotifyHosts6(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSnmpUserNotifyHosts6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemSnmpUserSourceIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSnmpUserSourceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemSnmpUserSourceIpv6(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSnmpUserSourceIpv6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemSnmpUserHaDirect(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSnmpUserHaDirect(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemSnmpUserEvents(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSnmpUserEvents(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemSnmpUserSecurityLevel(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSnmpUserSecurityLevel(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemSnmpUserAuthProto(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSnmpUserAuthProto(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemSnmpUserAuthPwd(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSnmpUserAuthPwd(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemSnmpUserPrivProto(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSnmpUserPrivProto(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemSnmpUserPrivPwd(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSnmpUserPrivPwd(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemSnmpUser(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemSnmpUser(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandSystemSnmpUserName(d, v, "name")
+
+		t, err := expandSystemSnmpUserName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -483,7 +485,8 @@ func getObjectSystemSnmpUser(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-		t, err := expandSystemSnmpUserStatus(d, v, "status")
+
+		t, err := expandSystemSnmpUserStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -492,7 +495,8 @@ func getObjectSystemSnmpUser(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("trap_status"); ok {
-		t, err := expandSystemSnmpUserTrapStatus(d, v, "trap_status")
+
+		t, err := expandSystemSnmpUserTrapStatus(d, v, "trap_status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -501,7 +505,8 @@ func getObjectSystemSnmpUser(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOkExists("trap_lport"); ok {
-		t, err := expandSystemSnmpUserTrapLport(d, v, "trap_lport")
+
+		t, err := expandSystemSnmpUserTrapLport(d, v, "trap_lport", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -510,7 +515,8 @@ func getObjectSystemSnmpUser(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOkExists("trap_rport"); ok {
-		t, err := expandSystemSnmpUserTrapRport(d, v, "trap_rport")
+
+		t, err := expandSystemSnmpUserTrapRport(d, v, "trap_rport", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -519,7 +525,8 @@ func getObjectSystemSnmpUser(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("queries"); ok {
-		t, err := expandSystemSnmpUserQueries(d, v, "queries")
+
+		t, err := expandSystemSnmpUserQueries(d, v, "queries", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -528,7 +535,8 @@ func getObjectSystemSnmpUser(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOkExists("query_port"); ok {
-		t, err := expandSystemSnmpUserQueryPort(d, v, "query_port")
+
+		t, err := expandSystemSnmpUserQueryPort(d, v, "query_port", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -537,7 +545,8 @@ func getObjectSystemSnmpUser(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("notify_hosts"); ok {
-		t, err := expandSystemSnmpUserNotifyHosts(d, v, "notify_hosts")
+
+		t, err := expandSystemSnmpUserNotifyHosts(d, v, "notify_hosts", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -546,7 +555,8 @@ func getObjectSystemSnmpUser(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("notify_hosts6"); ok {
-		t, err := expandSystemSnmpUserNotifyHosts6(d, v, "notify_hosts6")
+
+		t, err := expandSystemSnmpUserNotifyHosts6(d, v, "notify_hosts6", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -555,7 +565,8 @@ func getObjectSystemSnmpUser(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
-		t, err := expandSystemSnmpUserSourceIp(d, v, "source_ip")
+
+		t, err := expandSystemSnmpUserSourceIp(d, v, "source_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -564,7 +575,8 @@ func getObjectSystemSnmpUser(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("source_ipv6"); ok {
-		t, err := expandSystemSnmpUserSourceIpv6(d, v, "source_ipv6")
+
+		t, err := expandSystemSnmpUserSourceIpv6(d, v, "source_ipv6", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -573,7 +585,8 @@ func getObjectSystemSnmpUser(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("ha_direct"); ok {
-		t, err := expandSystemSnmpUserHaDirect(d, v, "ha_direct")
+
+		t, err := expandSystemSnmpUserHaDirect(d, v, "ha_direct", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -582,7 +595,8 @@ func getObjectSystemSnmpUser(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("events"); ok {
-		t, err := expandSystemSnmpUserEvents(d, v, "events")
+
+		t, err := expandSystemSnmpUserEvents(d, v, "events", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -591,7 +605,8 @@ func getObjectSystemSnmpUser(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("security_level"); ok {
-		t, err := expandSystemSnmpUserSecurityLevel(d, v, "security_level")
+
+		t, err := expandSystemSnmpUserSecurityLevel(d, v, "security_level", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -600,7 +615,8 @@ func getObjectSystemSnmpUser(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("auth_proto"); ok {
-		t, err := expandSystemSnmpUserAuthProto(d, v, "auth_proto")
+
+		t, err := expandSystemSnmpUserAuthProto(d, v, "auth_proto", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -609,7 +625,8 @@ func getObjectSystemSnmpUser(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("auth_pwd"); ok {
-		t, err := expandSystemSnmpUserAuthPwd(d, v, "auth_pwd")
+
+		t, err := expandSystemSnmpUserAuthPwd(d, v, "auth_pwd", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -618,7 +635,8 @@ func getObjectSystemSnmpUser(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("priv_proto"); ok {
-		t, err := expandSystemSnmpUserPrivProto(d, v, "priv_proto")
+
+		t, err := expandSystemSnmpUserPrivProto(d, v, "priv_proto", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -627,7 +645,8 @@ func getObjectSystemSnmpUser(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("priv_pwd"); ok {
-		t, err := expandSystemSnmpUserPrivPwd(d, v, "priv_pwd")
+
+		t, err := expandSystemSnmpUserPrivPwd(d, v, "priv_pwd", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
