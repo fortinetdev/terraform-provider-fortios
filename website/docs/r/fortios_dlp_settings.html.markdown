@@ -22,7 +22,6 @@ resource "fortios_dlp_settings" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `storage_device` - Storage device name.
