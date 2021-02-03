@@ -22,7 +22,6 @@ resource "fortios_webfilter_urlfilter" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `fosid` - (Required) ID.
@@ -39,6 +38,7 @@ The `entries` block supports:
 * `url` - URL to be filtered.
 * `type` - Filter type (simple, regex, or wildcard).
 * `action` - Action to take for URL filter matches.
+* `antiphish_action` - Action to take for AntiPhishing matches.
 * `status` - Enable/disable this URL filter.
 * `exempt` - If action is set to exempt, select the security profile operations that exempt URLs skip. Separate multiple options with a space.
 * `web_proxy_profile` - Web proxy profile.
