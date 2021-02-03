@@ -20,7 +20,6 @@ resource "fortios_wanopt_peer" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `peer_host_id` - Peer host ID.
