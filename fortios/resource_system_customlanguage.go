@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -53,7 +54,7 @@ func resourceSystemCustomLanguageCreate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemCustomLanguage(d)
+	obj, err := getObjectSystemCustomLanguage(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemCustomLanguage resource while getting object: %v", err)
 	}
@@ -78,7 +79,7 @@ func resourceSystemCustomLanguageUpdate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemCustomLanguage(d)
+	obj, err := getObjectSystemCustomLanguage(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemCustomLanguage resource while getting object: %v", err)
 	}
@@ -131,41 +132,41 @@ func resourceSystemCustomLanguageRead(d *schema.ResourceData, m interface{}) err
 		return nil
 	}
 
-	err = refreshObjectSystemCustomLanguage(d, o)
+	err = refreshObjectSystemCustomLanguage(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemCustomLanguage resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemCustomLanguageName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemCustomLanguageName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemCustomLanguageFilename(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemCustomLanguageFilename(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemCustomLanguageComments(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemCustomLanguageComments(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemCustomLanguage(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemCustomLanguage(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenSystemCustomLanguageName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenSystemCustomLanguageName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("filename", flattenSystemCustomLanguageFilename(o["filename"], d, "filename")); err != nil {
+	if err = d.Set("filename", flattenSystemCustomLanguageFilename(o["filename"], d, "filename", sv)); err != nil {
 		if !fortiAPIPatch(o["filename"]) {
 			return fmt.Errorf("Error reading filename: %v", err)
 		}
 	}
 
-	if err = d.Set("comments", flattenSystemCustomLanguageComments(o["comments"], d, "comments")); err != nil {
+	if err = d.Set("comments", flattenSystemCustomLanguageComments(o["comments"], d, "comments", sv)); err != nil {
 		if !fortiAPIPatch(o["comments"]) {
 			return fmt.Errorf("Error reading comments: %v", err)
 		}
@@ -177,26 +178,27 @@ func refreshObjectSystemCustomLanguage(d *schema.ResourceData, o map[string]inte
 func flattenSystemCustomLanguageFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemCustomLanguageName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemCustomLanguageName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemCustomLanguageFilename(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemCustomLanguageFilename(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemCustomLanguageComments(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemCustomLanguageComments(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemCustomLanguage(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemCustomLanguage(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandSystemCustomLanguageName(d, v, "name")
+
+		t, err := expandSystemCustomLanguageName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -205,7 +207,8 @@ func getObjectSystemCustomLanguage(d *schema.ResourceData) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("filename"); ok {
-		t, err := expandSystemCustomLanguageFilename(d, v, "filename")
+
+		t, err := expandSystemCustomLanguageFilename(d, v, "filename", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -214,7 +217,8 @@ func getObjectSystemCustomLanguage(d *schema.ResourceData) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-		t, err := expandSystemCustomLanguageComments(d, v, "comments")
+
+		t, err := expandSystemCustomLanguageComments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
