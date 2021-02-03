@@ -24,7 +24,6 @@ resource "fortios_switchcontroller_trafficpolicy" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - (Required) Traffic policy name.
@@ -34,6 +33,7 @@ The following arguments are supported:
 * `guaranteed_burst` - Guaranteed burst size in bytes (max value = 4294967295).
 * `maximum_burst` - Maximum burst size in bytes (max value = 4294967295).
 * `type` - Configure type of policy(ingress/egress).
+* `cos_queue` - COS queue(0 - 7), or unset to disable.
 * `cos` - COS queue(0 - 7), or unset to disable.
 * `fosid` - FSW Policer id
 
