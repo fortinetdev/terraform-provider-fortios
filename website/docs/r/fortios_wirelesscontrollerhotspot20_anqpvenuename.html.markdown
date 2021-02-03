@@ -24,7 +24,6 @@ resource "fortios_wirelesscontrollerhotspot20_anqpvenuename" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Name of venue name duple.
