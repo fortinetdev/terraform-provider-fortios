@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -45,6 +46,11 @@ func resourceCertificateCa() *schema.Resource {
 				Computed: true,
 			},
 			"source": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"ssl_inspection_trusted": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -88,7 +94,7 @@ func resourceCertificateCaCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectCertificateCa(d)
+	obj, err := getObjectCertificateCa(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating CertificateCa resource while getting object: %v", err)
 	}
@@ -113,7 +119,7 @@ func resourceCertificateCaUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectCertificateCa(d)
+	obj, err := getObjectCertificateCa(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating CertificateCa resource while getting object: %v", err)
 	}
@@ -166,111 +172,121 @@ func resourceCertificateCaRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectCertificateCa(d, o)
+	err = refreshObjectCertificateCa(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading CertificateCa resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenCertificateCaName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenCertificateCaName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenCertificateCaCa(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenCertificateCaCa(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenCertificateCaRange(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenCertificateCaRange(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenCertificateCaSource(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenCertificateCaSource(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenCertificateCaTrusted(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenCertificateCaSslInspectionTrusted(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenCertificateCaScepUrl(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenCertificateCaTrusted(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenCertificateCaAutoUpdateDays(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenCertificateCaScepUrl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenCertificateCaAutoUpdateDaysWarning(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenCertificateCaAutoUpdateDays(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenCertificateCaSourceIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenCertificateCaAutoUpdateDaysWarning(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenCertificateCaLastUpdated(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenCertificateCaSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectCertificateCa(d *schema.ResourceData, o map[string]interface{}) error {
+func flattenCertificateCaLastUpdated(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func refreshObjectCertificateCa(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenCertificateCaName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenCertificateCaName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("ca", flattenCertificateCaCa(o["ca"], d, "ca")); err != nil {
+	if err = d.Set("ca", flattenCertificateCaCa(o["ca"], d, "ca", sv)); err != nil {
 		if !fortiAPIPatch(o["ca"]) {
 			return fmt.Errorf("Error reading ca: %v", err)
 		}
 	}
 
-	if err = d.Set("range", flattenCertificateCaRange(o["range"], d, "range")); err != nil {
+	if err = d.Set("range", flattenCertificateCaRange(o["range"], d, "range", sv)); err != nil {
 		if !fortiAPIPatch(o["range"]) {
 			return fmt.Errorf("Error reading range: %v", err)
 		}
 	}
 
-	if err = d.Set("source", flattenCertificateCaSource(o["source"], d, "source")); err != nil {
+	if err = d.Set("source", flattenCertificateCaSource(o["source"], d, "source", sv)); err != nil {
 		if !fortiAPIPatch(o["source"]) {
 			return fmt.Errorf("Error reading source: %v", err)
 		}
 	}
 
-	if err = d.Set("trusted", flattenCertificateCaTrusted(o["trusted"], d, "trusted")); err != nil {
+	if err = d.Set("ssl_inspection_trusted", flattenCertificateCaSslInspectionTrusted(o["ssl-inspection-trusted"], d, "ssl_inspection_trusted", sv)); err != nil {
+		if !fortiAPIPatch(o["ssl-inspection-trusted"]) {
+			return fmt.Errorf("Error reading ssl_inspection_trusted: %v", err)
+		}
+	}
+
+	if err = d.Set("trusted", flattenCertificateCaTrusted(o["trusted"], d, "trusted", sv)); err != nil {
 		if !fortiAPIPatch(o["trusted"]) {
 			return fmt.Errorf("Error reading trusted: %v", err)
 		}
 	}
 
-	if err = d.Set("scep_url", flattenCertificateCaScepUrl(o["scep-url"], d, "scep_url")); err != nil {
+	if err = d.Set("scep_url", flattenCertificateCaScepUrl(o["scep-url"], d, "scep_url", sv)); err != nil {
 		if !fortiAPIPatch(o["scep-url"]) {
 			return fmt.Errorf("Error reading scep_url: %v", err)
 		}
 	}
 
-	if err = d.Set("auto_update_days", flattenCertificateCaAutoUpdateDays(o["auto-update-days"], d, "auto_update_days")); err != nil {
+	if err = d.Set("auto_update_days", flattenCertificateCaAutoUpdateDays(o["auto-update-days"], d, "auto_update_days", sv)); err != nil {
 		if !fortiAPIPatch(o["auto-update-days"]) {
 			return fmt.Errorf("Error reading auto_update_days: %v", err)
 		}
 	}
 
-	if err = d.Set("auto_update_days_warning", flattenCertificateCaAutoUpdateDaysWarning(o["auto-update-days-warning"], d, "auto_update_days_warning")); err != nil {
+	if err = d.Set("auto_update_days_warning", flattenCertificateCaAutoUpdateDaysWarning(o["auto-update-days-warning"], d, "auto_update_days_warning", sv)); err != nil {
 		if !fortiAPIPatch(o["auto-update-days-warning"]) {
 			return fmt.Errorf("Error reading auto_update_days_warning: %v", err)
 		}
 	}
 
-	if err = d.Set("source_ip", flattenCertificateCaSourceIp(o["source-ip"], d, "source_ip")); err != nil {
+	if err = d.Set("source_ip", flattenCertificateCaSourceIp(o["source-ip"], d, "source_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["source-ip"]) {
 			return fmt.Errorf("Error reading source_ip: %v", err)
 		}
 	}
 
-	if err = d.Set("last_updated", flattenCertificateCaLastUpdated(o["last-updated"], d, "last_updated")); err != nil {
+	if err = d.Set("last_updated", flattenCertificateCaLastUpdated(o["last-updated"], d, "last_updated", sv)); err != nil {
 		if !fortiAPIPatch(o["last-updated"]) {
 			return fmt.Errorf("Error reading last_updated: %v", err)
 		}
@@ -282,54 +298,59 @@ func refreshObjectCertificateCa(d *schema.ResourceData, o map[string]interface{}
 func flattenCertificateCaFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandCertificateCaName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandCertificateCaName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateCaCa(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandCertificateCaCa(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateCaRange(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandCertificateCaRange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateCaSource(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandCertificateCaSource(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateCaTrusted(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandCertificateCaSslInspectionTrusted(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateCaScepUrl(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandCertificateCaTrusted(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateCaAutoUpdateDays(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandCertificateCaScepUrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateCaAutoUpdateDaysWarning(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandCertificateCaAutoUpdateDays(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateCaSourceIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandCertificateCaAutoUpdateDaysWarning(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandCertificateCaLastUpdated(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandCertificateCaSourceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectCertificateCa(d *schema.ResourceData) (*map[string]interface{}, error) {
+func expandCertificateCaLastUpdated(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func getObjectCertificateCa(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandCertificateCaName(d, v, "name")
+
+		t, err := expandCertificateCaName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -338,7 +359,8 @@ func getObjectCertificateCa(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOk("ca"); ok {
-		t, err := expandCertificateCaCa(d, v, "ca")
+
+		t, err := expandCertificateCaCa(d, v, "ca", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -347,7 +369,8 @@ func getObjectCertificateCa(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOk("range"); ok {
-		t, err := expandCertificateCaRange(d, v, "range")
+
+		t, err := expandCertificateCaRange(d, v, "range", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -356,7 +379,8 @@ func getObjectCertificateCa(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOk("source"); ok {
-		t, err := expandCertificateCaSource(d, v, "source")
+
+		t, err := expandCertificateCaSource(d, v, "source", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -364,8 +388,19 @@ func getObjectCertificateCa(d *schema.ResourceData) (*map[string]interface{}, er
 		}
 	}
 
+	if v, ok := d.GetOk("ssl_inspection_trusted"); ok {
+
+		t, err := expandCertificateCaSslInspectionTrusted(d, v, "ssl_inspection_trusted", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ssl-inspection-trusted"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("trusted"); ok {
-		t, err := expandCertificateCaTrusted(d, v, "trusted")
+
+		t, err := expandCertificateCaTrusted(d, v, "trusted", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -374,7 +409,8 @@ func getObjectCertificateCa(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOk("scep_url"); ok {
-		t, err := expandCertificateCaScepUrl(d, v, "scep_url")
+
+		t, err := expandCertificateCaScepUrl(d, v, "scep_url", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -383,7 +419,8 @@ func getObjectCertificateCa(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOkExists("auto_update_days"); ok {
-		t, err := expandCertificateCaAutoUpdateDays(d, v, "auto_update_days")
+
+		t, err := expandCertificateCaAutoUpdateDays(d, v, "auto_update_days", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -392,7 +429,8 @@ func getObjectCertificateCa(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOkExists("auto_update_days_warning"); ok {
-		t, err := expandCertificateCaAutoUpdateDaysWarning(d, v, "auto_update_days_warning")
+
+		t, err := expandCertificateCaAutoUpdateDaysWarning(d, v, "auto_update_days_warning", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -401,7 +439,8 @@ func getObjectCertificateCa(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
-		t, err := expandCertificateCaSourceIp(d, v, "source_ip")
+
+		t, err := expandCertificateCaSourceIp(d, v, "source_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -410,7 +449,8 @@ func getObjectCertificateCa(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOkExists("last_updated"); ok {
-		t, err := expandCertificateCaLastUpdated(d, v, "last_updated")
+
+		t, err := expandCertificateCaLastUpdated(d, v, "last_updated", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
