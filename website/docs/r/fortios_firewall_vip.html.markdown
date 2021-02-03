@@ -75,7 +75,6 @@ resource "fortios_firewall_vip" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Virtual IP name.
@@ -94,6 +93,7 @@ The following arguments are supported:
 * `extintf` - Interface connected to the source network that receives the packets that will be forwarded to the destination network.
 * `arp_reply` - Enable to respond to ARP requests for this virtual IP address. Enabled by default.
 * `server_type` - Protocol to be load balanced by the virtual server (also called the server load balance virtual IP).
+* `http_redirect` - Enable/disable redirection of HTTP to HTTPS
 * `persistence` - Configure how to make sure that clients connect to the same server every time they make a request that is part of the same session.
 * `nat_source_vip` - Enable/disable forcing the source NAT mapped IP to the external IP for all traffic.
 * `portforward` - Enable/disable port forwarding.
@@ -135,6 +135,7 @@ The following arguments are supported:
 * `ssl_client_session_state_type` - How to expire SSL sessions for the segment of the SSL connection between the client and the FortiGate.
 * `ssl_client_session_state_timeout` - Number of minutes to keep client to FortiGate SSL session state.
 * `ssl_client_session_state_max` - Maximum number of client to FortiGate SSL session states to keep.
+* `ssl_client_rekey_count` - Maximum length of data in MB before triggering a client rekey (0 = disable).
 * `ssl_server_session_state_type` - How to expire SSL sessions for the segment of the SSL connection between the server and the FortiGate.
 * `ssl_server_session_state_timeout` - Number of minutes to keep FortiGate to Server SSL session state.
 * `ssl_server_session_state_max` - Maximum number of FortiGate to Server SSL session states to keep.
@@ -177,6 +178,8 @@ The `srcintf_filter` block supports:
 The `realservers` block supports:
 
 * `id` - Real server ID.
+* `type` - Type of address.
+* `address` - Dynamic address of the real server.
 * `ip` - IP address of the real server.
 * `port` - Port for communicating with the real server. Required if port forwarding is enabled.
 * `status` - Set the status of the real server to active so that it can accept traffic, or on standby or disabled so no traffic is sent.
