@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -48,7 +49,7 @@ func resourceSwitchControllerSflowUpdate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSwitchControllerSflow(d)
+	obj, err := getObjectSwitchControllerSflow(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerSflow resource while getting object: %v", err)
 	}
@@ -101,31 +102,31 @@ func resourceSwitchControllerSflowRead(d *schema.ResourceData, m interface{}) er
 		return nil
 	}
 
-	err = refreshObjectSwitchControllerSflow(d, o)
+	err = refreshObjectSwitchControllerSflow(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerSflow resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSwitchControllerSflowCollectorIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerSflowCollectorIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerSflowCollectorPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerSflowCollectorPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSwitchControllerSflow(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSwitchControllerSflow(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("collector_ip", flattenSwitchControllerSflowCollectorIp(o["collector-ip"], d, "collector_ip")); err != nil {
+	if err = d.Set("collector_ip", flattenSwitchControllerSflowCollectorIp(o["collector-ip"], d, "collector_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["collector-ip"]) {
 			return fmt.Errorf("Error reading collector_ip: %v", err)
 		}
 	}
 
-	if err = d.Set("collector_port", flattenSwitchControllerSflowCollectorPort(o["collector-port"], d, "collector_port")); err != nil {
+	if err = d.Set("collector_port", flattenSwitchControllerSflowCollectorPort(o["collector-port"], d, "collector_port", sv)); err != nil {
 		if !fortiAPIPatch(o["collector-port"]) {
 			return fmt.Errorf("Error reading collector_port: %v", err)
 		}
@@ -137,22 +138,23 @@ func refreshObjectSwitchControllerSflow(d *schema.ResourceData, o map[string]int
 func flattenSwitchControllerSflowFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSwitchControllerSflowCollectorIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerSflowCollectorIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerSflowCollectorPort(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerSflowCollectorPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSwitchControllerSflow(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSwitchControllerSflow(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("collector_ip"); ok {
-		t, err := expandSwitchControllerSflowCollectorIp(d, v, "collector_ip")
+
+		t, err := expandSwitchControllerSflowCollectorIp(d, v, "collector_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -161,7 +163,8 @@ func getObjectSwitchControllerSflow(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOkExists("collector_port"); ok {
-		t, err := expandSwitchControllerSflowCollectorPort(d, v, "collector_port")
+
+		t, err := expandSwitchControllerSflowCollectorPort(d, v, "collector_port", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
