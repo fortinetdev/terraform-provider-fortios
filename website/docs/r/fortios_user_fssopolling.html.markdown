@@ -11,7 +11,6 @@ Configure FSSO active directory servers for polling mode.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `fosid` - Active Directory server ID.
