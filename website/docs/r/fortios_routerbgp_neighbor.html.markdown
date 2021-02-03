@@ -14,7 +14,6 @@ BGP neighbor table.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `ip` - (Required) IP/IPv6 address of neighbor.
@@ -42,6 +41,8 @@ The following arguments are supported:
 * `stale_route` - Enable/disable stale route after neighbor down.
 * `next_hop_self` - Enable/disable IPv4 next-hop calculation for this neighbor.
 * `next_hop_self6` - Enable/disable IPv6 next-hop calculation for this neighbor.
+* `next_hop_self_rr` - Enable/disable setting nexthop's address to interface's IPv4 address for route-reflector routes.
+* `next_hop_self_rr6` - Enable/disable setting nexthop's address to interface's IPv6 address for route-reflector routes.
 * `override_capability` - Enable/disable override result of capability negotiation.
 * `passive` - Enable/disable sending of open messages to this neighbor.
 * `remove_private_as` - Enable/disable remove private AS number from IPv4 outbound updates.
@@ -87,7 +88,9 @@ The following arguments are supported:
 * `route_map_in` - IPv4 Inbound route map filter.
 * `route_map_in6` - IPv6 Inbound route map filter.
 * `route_map_out` - IPv4 Outbound route map filter.
+* `route_map_out_preferable` - IPv4 outbound route map filter if the peer is preferred.
 * `route_map_out6` - IPv6 Outbound route map filter.
+* `route_map_out6_preferable` - IPv6 outbound route map filter if the peer is preferred.
 * `send_community` - IPv4 Send community attribute to neighbor.
 * `send_community6` - IPv6 Send community attribute to neighbor.
 * `keep_alive_timer` - Keep alive timer interval (sec).
