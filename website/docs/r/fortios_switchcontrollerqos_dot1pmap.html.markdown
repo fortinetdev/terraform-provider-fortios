@@ -27,11 +27,11 @@ resource "fortios_switchcontrollerqos_dot1pmap" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - (Required) Dot1p map name.
 * `description` - Description of the 802.1p name.
+* `egress_pri_tagging` - Enable/disable egress priority-tag frame.
 * `priority_0` - COS queue mapped to dot1p priority number.
 * `priority_1` - COS queue mapped to dot1p priority number.
 * `priority_2` - COS queue mapped to dot1p priority number.
