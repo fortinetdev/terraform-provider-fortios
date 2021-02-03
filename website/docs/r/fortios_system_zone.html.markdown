@@ -20,11 +20,11 @@ resource "fortios_system_zone" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Zone name.
 * `tagging` - Config object tagging. The structure of `tagging` block is documented below.
+* `description` - Description.
 * `intrazone` - Allow or deny traffic routing between different interfaces in the same zone (default = deny).
 * `interface` - Add interfaces to this zone. Interfaces must not be assigned to another zone or have firewall policies defined. The structure of `interface` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
