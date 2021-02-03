@@ -131,7 +131,6 @@ resource "fortios_vpnipsec_phase2" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - IPsec tunnel name.
@@ -141,6 +140,7 @@ The following arguments are supported:
 * `selector_match` - Match type to use when comparing selectors.
 * `proposal` - (Required) Phase2 proposal.
 * `pfs` - Enable/disable PFS feature.
+* `ipv4_df` - Enable/disable setting and resetting of IPv4 'Don't Fragment' bit.
 * `dhgrp` - Phase2 DH group.
 * `replay` - Enable/disable replay detection.
 * `keepalive` - Enable/disable keep alive.
@@ -154,6 +154,9 @@ The following arguments are supported:
 * `encapsulation` - ESP encapsulation mode.
 * `l2tp` - Enable/disable L2TP over IPsec.
 * `comments` - Comment.
+* `initiator_ts_narrow` - Enable/disable traffic selector narrowing for IKEv2 initiator.
+* `diffserv` - Enable/disable applying DSCP value to the IPsec tunnel outer IP header.
+* `diffservcode` - DSCP value to be applied to the IPsec tunnel outer IP header.
 * `protocol` - Quick mode protocol selector (1 - 255 or 0 for all).
 * `src_name` - Local proxy ID name.
 * `src_name6` - Local proxy ID name.
