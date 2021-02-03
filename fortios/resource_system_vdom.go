@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -47,6 +48,11 @@ func resourceSystemVdom() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"flag": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
 			"temporary": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -60,7 +66,7 @@ func resourceSystemVdomCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemVdom(d)
+	obj, err := getObjectSystemVdom(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemVdom resource while getting object: %v", err)
 	}
@@ -85,7 +91,7 @@ func resourceSystemVdomUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemVdom(d)
+	obj, err := getObjectSystemVdom(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemVdom resource while getting object: %v", err)
 	}
@@ -138,51 +144,61 @@ func resourceSystemVdomRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectSystemVdom(d, o)
+	err = refreshObjectSystemVdom(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemVdom resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemVdomName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVdomShortName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomShortName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVdomVclusterId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomVclusterId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVdomTemporary(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomFlag(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemVdom(d *schema.ResourceData, o map[string]interface{}) error {
+func flattenSystemVdomTemporary(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func refreshObjectSystemVdom(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenSystemVdomName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenSystemVdomName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("short_name", flattenSystemVdomShortName(o["short-name"], d, "short_name")); err != nil {
+	if err = d.Set("short_name", flattenSystemVdomShortName(o["short-name"], d, "short_name", sv)); err != nil {
 		if !fortiAPIPatch(o["short-name"]) {
 			return fmt.Errorf("Error reading short_name: %v", err)
 		}
 	}
 
-	if err = d.Set("vcluster_id", flattenSystemVdomVclusterId(o["vcluster-id"], d, "vcluster_id")); err != nil {
+	if err = d.Set("vcluster_id", flattenSystemVdomVclusterId(o["vcluster-id"], d, "vcluster_id", sv)); err != nil {
 		if !fortiAPIPatch(o["vcluster-id"]) {
 			return fmt.Errorf("Error reading vcluster_id: %v", err)
 		}
 	}
 
-	if err = d.Set("temporary", flattenSystemVdomTemporary(o["temporary"], d, "temporary")); err != nil {
+	if err = d.Set("flag", flattenSystemVdomFlag(o["flag"], d, "flag", sv)); err != nil {
+		if !fortiAPIPatch(o["flag"]) {
+			return fmt.Errorf("Error reading flag: %v", err)
+		}
+	}
+
+	if err = d.Set("temporary", flattenSystemVdomTemporary(o["temporary"], d, "temporary", sv)); err != nil {
 		if !fortiAPIPatch(o["temporary"]) {
 			return fmt.Errorf("Error reading temporary: %v", err)
 		}
@@ -194,30 +210,35 @@ func refreshObjectSystemVdom(d *schema.ResourceData, o map[string]interface{}) e
 func flattenSystemVdomFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemVdomName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVdomShortName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomShortName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVdomVclusterId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomVclusterId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVdomTemporary(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomFlag(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemVdom(d *schema.ResourceData) (*map[string]interface{}, error) {
+func expandSystemVdomTemporary(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func getObjectSystemVdom(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandSystemVdomName(d, v, "name")
+
+		t, err := expandSystemVdomName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -226,7 +247,8 @@ func getObjectSystemVdom(d *schema.ResourceData) (*map[string]interface{}, error
 	}
 
 	if v, ok := d.GetOk("short_name"); ok {
-		t, err := expandSystemVdomShortName(d, v, "short_name")
+
+		t, err := expandSystemVdomShortName(d, v, "short_name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -235,7 +257,8 @@ func getObjectSystemVdom(d *schema.ResourceData) (*map[string]interface{}, error
 	}
 
 	if v, ok := d.GetOkExists("vcluster_id"); ok {
-		t, err := expandSystemVdomVclusterId(d, v, "vcluster_id")
+
+		t, err := expandSystemVdomVclusterId(d, v, "vcluster_id", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -243,8 +266,19 @@ func getObjectSystemVdom(d *schema.ResourceData) (*map[string]interface{}, error
 		}
 	}
 
+	if v, ok := d.GetOkExists("flag"); ok {
+
+		t, err := expandSystemVdomFlag(d, v, "flag", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["flag"] = t
+		}
+	}
+
 	if v, ok := d.GetOkExists("temporary"); ok {
-		t, err := expandSystemVdomTemporary(d, v, "temporary")
+
+		t, err := expandSystemVdomTemporary(d, v, "temporary", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
