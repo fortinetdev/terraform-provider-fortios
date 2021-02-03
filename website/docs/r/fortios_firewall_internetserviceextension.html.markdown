@@ -20,7 +20,6 @@ resource "fortios_firewall_internetserviceextension" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `fosid` - Internet Service ID in the Internet Service database.
@@ -50,8 +49,15 @@ The `disable_entry` block supports:
 
 * `id` - Disable entry ID.
 * `protocol` - Integer value for the protocol type as defined by IANA (0 - 255).
+* `port_range` - Port ranges in the disable entry. The structure of `port_range` block is documented below.
 * `port` - Integer value for the TCP/IP port (0 - 65535).
 * `ip_range` - IP ranges in the disable entry. The structure of `ip_range` block is documented below.
+
+The `port_range` block supports:
+
+* `id` - Custom entry port range ID.
+* `start_port` - Starting TCP/UDP/SCTP destination port (1 to 65535).
+* `end_port` - Ending TCP/UDP/SCTP destination port (1 to 65535).
 
 The `ip_range` block supports:
 
