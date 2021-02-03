@@ -11,7 +11,6 @@ Configure security exemption list.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Name of the exempt list.
