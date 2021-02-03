@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -45,6 +46,11 @@ func resourceVpnCertificateCa() *schema.Resource {
 				Computed: true,
 			},
 			"source": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"ssl_inspection_trusted": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -88,7 +94,7 @@ func resourceVpnCertificateCaCreate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectVpnCertificateCa(d)
+	obj, err := getObjectVpnCertificateCa(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating VpnCertificateCa resource while getting object: %v", err)
 	}
@@ -113,7 +119,7 @@ func resourceVpnCertificateCaUpdate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectVpnCertificateCa(d)
+	obj, err := getObjectVpnCertificateCa(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating VpnCertificateCa resource while getting object: %v", err)
 	}
@@ -166,111 +172,121 @@ func resourceVpnCertificateCaRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectVpnCertificateCa(d, o)
+	err = refreshObjectVpnCertificateCa(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading VpnCertificateCa resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenVpnCertificateCaName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnCertificateCaName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenVpnCertificateCaCa(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnCertificateCaCa(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenVpnCertificateCaRange(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnCertificateCaRange(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenVpnCertificateCaSource(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnCertificateCaSource(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenVpnCertificateCaTrusted(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnCertificateCaSslInspectionTrusted(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenVpnCertificateCaScepUrl(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnCertificateCaTrusted(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenVpnCertificateCaAutoUpdateDays(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnCertificateCaScepUrl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenVpnCertificateCaAutoUpdateDaysWarning(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnCertificateCaAutoUpdateDays(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenVpnCertificateCaSourceIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnCertificateCaAutoUpdateDaysWarning(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenVpnCertificateCaLastUpdated(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnCertificateCaSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectVpnCertificateCa(d *schema.ResourceData, o map[string]interface{}) error {
+func flattenVpnCertificateCaLastUpdated(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func refreshObjectVpnCertificateCa(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenVpnCertificateCaName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenVpnCertificateCaName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("ca", flattenVpnCertificateCaCa(o["ca"], d, "ca")); err != nil {
+	if err = d.Set("ca", flattenVpnCertificateCaCa(o["ca"], d, "ca", sv)); err != nil {
 		if !fortiAPIPatch(o["ca"]) {
 			return fmt.Errorf("Error reading ca: %v", err)
 		}
 	}
 
-	if err = d.Set("range", flattenVpnCertificateCaRange(o["range"], d, "range")); err != nil {
+	if err = d.Set("range", flattenVpnCertificateCaRange(o["range"], d, "range", sv)); err != nil {
 		if !fortiAPIPatch(o["range"]) {
 			return fmt.Errorf("Error reading range: %v", err)
 		}
 	}
 
-	if err = d.Set("source", flattenVpnCertificateCaSource(o["source"], d, "source")); err != nil {
+	if err = d.Set("source", flattenVpnCertificateCaSource(o["source"], d, "source", sv)); err != nil {
 		if !fortiAPIPatch(o["source"]) {
 			return fmt.Errorf("Error reading source: %v", err)
 		}
 	}
 
-	if err = d.Set("trusted", flattenVpnCertificateCaTrusted(o["trusted"], d, "trusted")); err != nil {
+	if err = d.Set("ssl_inspection_trusted", flattenVpnCertificateCaSslInspectionTrusted(o["ssl-inspection-trusted"], d, "ssl_inspection_trusted", sv)); err != nil {
+		if !fortiAPIPatch(o["ssl-inspection-trusted"]) {
+			return fmt.Errorf("Error reading ssl_inspection_trusted: %v", err)
+		}
+	}
+
+	if err = d.Set("trusted", flattenVpnCertificateCaTrusted(o["trusted"], d, "trusted", sv)); err != nil {
 		if !fortiAPIPatch(o["trusted"]) {
 			return fmt.Errorf("Error reading trusted: %v", err)
 		}
 	}
 
-	if err = d.Set("scep_url", flattenVpnCertificateCaScepUrl(o["scep-url"], d, "scep_url")); err != nil {
+	if err = d.Set("scep_url", flattenVpnCertificateCaScepUrl(o["scep-url"], d, "scep_url", sv)); err != nil {
 		if !fortiAPIPatch(o["scep-url"]) {
 			return fmt.Errorf("Error reading scep_url: %v", err)
 		}
 	}
 
-	if err = d.Set("auto_update_days", flattenVpnCertificateCaAutoUpdateDays(o["auto-update-days"], d, "auto_update_days")); err != nil {
+	if err = d.Set("auto_update_days", flattenVpnCertificateCaAutoUpdateDays(o["auto-update-days"], d, "auto_update_days", sv)); err != nil {
 		if !fortiAPIPatch(o["auto-update-days"]) {
 			return fmt.Errorf("Error reading auto_update_days: %v", err)
 		}
 	}
 
-	if err = d.Set("auto_update_days_warning", flattenVpnCertificateCaAutoUpdateDaysWarning(o["auto-update-days-warning"], d, "auto_update_days_warning")); err != nil {
+	if err = d.Set("auto_update_days_warning", flattenVpnCertificateCaAutoUpdateDaysWarning(o["auto-update-days-warning"], d, "auto_update_days_warning", sv)); err != nil {
 		if !fortiAPIPatch(o["auto-update-days-warning"]) {
 			return fmt.Errorf("Error reading auto_update_days_warning: %v", err)
 		}
 	}
 
-	if err = d.Set("source_ip", flattenVpnCertificateCaSourceIp(o["source-ip"], d, "source_ip")); err != nil {
+	if err = d.Set("source_ip", flattenVpnCertificateCaSourceIp(o["source-ip"], d, "source_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["source-ip"]) {
 			return fmt.Errorf("Error reading source_ip: %v", err)
 		}
 	}
 
-	if err = d.Set("last_updated", flattenVpnCertificateCaLastUpdated(o["last-updated"], d, "last_updated")); err != nil {
+	if err = d.Set("last_updated", flattenVpnCertificateCaLastUpdated(o["last-updated"], d, "last_updated", sv)); err != nil {
 		if !fortiAPIPatch(o["last-updated"]) {
 			return fmt.Errorf("Error reading last_updated: %v", err)
 		}
@@ -282,54 +298,59 @@ func refreshObjectVpnCertificateCa(d *schema.ResourceData, o map[string]interfac
 func flattenVpnCertificateCaFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandVpnCertificateCaName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnCertificateCaName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandVpnCertificateCaCa(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnCertificateCaCa(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandVpnCertificateCaRange(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnCertificateCaRange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandVpnCertificateCaSource(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnCertificateCaSource(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandVpnCertificateCaTrusted(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnCertificateCaSslInspectionTrusted(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandVpnCertificateCaScepUrl(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnCertificateCaTrusted(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandVpnCertificateCaAutoUpdateDays(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnCertificateCaScepUrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandVpnCertificateCaAutoUpdateDaysWarning(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnCertificateCaAutoUpdateDays(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandVpnCertificateCaSourceIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnCertificateCaAutoUpdateDaysWarning(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandVpnCertificateCaLastUpdated(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnCertificateCaSourceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectVpnCertificateCa(d *schema.ResourceData) (*map[string]interface{}, error) {
+func expandVpnCertificateCaLastUpdated(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func getObjectVpnCertificateCa(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandVpnCertificateCaName(d, v, "name")
+
+		t, err := expandVpnCertificateCaName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -338,7 +359,8 @@ func getObjectVpnCertificateCa(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("ca"); ok {
-		t, err := expandVpnCertificateCaCa(d, v, "ca")
+
+		t, err := expandVpnCertificateCaCa(d, v, "ca", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -347,7 +369,8 @@ func getObjectVpnCertificateCa(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("range"); ok {
-		t, err := expandVpnCertificateCaRange(d, v, "range")
+
+		t, err := expandVpnCertificateCaRange(d, v, "range", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -356,7 +379,8 @@ func getObjectVpnCertificateCa(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("source"); ok {
-		t, err := expandVpnCertificateCaSource(d, v, "source")
+
+		t, err := expandVpnCertificateCaSource(d, v, "source", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -364,8 +388,19 @@ func getObjectVpnCertificateCa(d *schema.ResourceData) (*map[string]interface{},
 		}
 	}
 
+	if v, ok := d.GetOk("ssl_inspection_trusted"); ok {
+
+		t, err := expandVpnCertificateCaSslInspectionTrusted(d, v, "ssl_inspection_trusted", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["ssl-inspection-trusted"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("trusted"); ok {
-		t, err := expandVpnCertificateCaTrusted(d, v, "trusted")
+
+		t, err := expandVpnCertificateCaTrusted(d, v, "trusted", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -374,7 +409,8 @@ func getObjectVpnCertificateCa(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("scep_url"); ok {
-		t, err := expandVpnCertificateCaScepUrl(d, v, "scep_url")
+
+		t, err := expandVpnCertificateCaScepUrl(d, v, "scep_url", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -383,7 +419,8 @@ func getObjectVpnCertificateCa(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOkExists("auto_update_days"); ok {
-		t, err := expandVpnCertificateCaAutoUpdateDays(d, v, "auto_update_days")
+
+		t, err := expandVpnCertificateCaAutoUpdateDays(d, v, "auto_update_days", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -392,7 +429,8 @@ func getObjectVpnCertificateCa(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOkExists("auto_update_days_warning"); ok {
-		t, err := expandVpnCertificateCaAutoUpdateDaysWarning(d, v, "auto_update_days_warning")
+
+		t, err := expandVpnCertificateCaAutoUpdateDaysWarning(d, v, "auto_update_days_warning", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -401,7 +439,8 @@ func getObjectVpnCertificateCa(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
-		t, err := expandVpnCertificateCaSourceIp(d, v, "source_ip")
+
+		t, err := expandVpnCertificateCaSourceIp(d, v, "source_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -410,7 +449,8 @@ func getObjectVpnCertificateCa(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOkExists("last_updated"); ok {
-		t, err := expandVpnCertificateCaLastUpdated(d, v, "last_updated")
+
+		t, err := expandVpnCertificateCaLastUpdated(d, v, "last_updated", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
