@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -59,7 +60,7 @@ func resourceSystemFipsCcUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemFipsCc(d)
+	obj, err := getObjectSystemFipsCc(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemFipsCc resource while getting object: %v", err)
 	}
@@ -112,51 +113,51 @@ func resourceSystemFipsCcRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectSystemFipsCc(d, o)
+	err = refreshObjectSystemFipsCc(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemFipsCc resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemFipsCcStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemFipsCcStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemFipsCcEntropyToken(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemFipsCcEntropyToken(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemFipsCcSelfTestPeriod(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemFipsCcSelfTestPeriod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemFipsCcKeyGenerationSelfTest(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemFipsCcKeyGenerationSelfTest(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemFipsCc(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemFipsCc(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("status", flattenSystemFipsCcStatus(o["status"], d, "status")); err != nil {
+	if err = d.Set("status", flattenSystemFipsCcStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
 		}
 	}
 
-	if err = d.Set("entropy_token", flattenSystemFipsCcEntropyToken(o["entropy-token"], d, "entropy_token")); err != nil {
+	if err = d.Set("entropy_token", flattenSystemFipsCcEntropyToken(o["entropy-token"], d, "entropy_token", sv)); err != nil {
 		if !fortiAPIPatch(o["entropy-token"]) {
 			return fmt.Errorf("Error reading entropy_token: %v", err)
 		}
 	}
 
-	if err = d.Set("self_test_period", flattenSystemFipsCcSelfTestPeriod(o["self-test-period"], d, "self_test_period")); err != nil {
+	if err = d.Set("self_test_period", flattenSystemFipsCcSelfTestPeriod(o["self-test-period"], d, "self_test_period", sv)); err != nil {
 		if !fortiAPIPatch(o["self-test-period"]) {
 			return fmt.Errorf("Error reading self_test_period: %v", err)
 		}
 	}
 
-	if err = d.Set("key_generation_self_test", flattenSystemFipsCcKeyGenerationSelfTest(o["key-generation-self-test"], d, "key_generation_self_test")); err != nil {
+	if err = d.Set("key_generation_self_test", flattenSystemFipsCcKeyGenerationSelfTest(o["key-generation-self-test"], d, "key_generation_self_test", sv)); err != nil {
 		if !fortiAPIPatch(o["key-generation-self-test"]) {
 			return fmt.Errorf("Error reading key_generation_self_test: %v", err)
 		}
@@ -168,30 +169,31 @@ func refreshObjectSystemFipsCc(d *schema.ResourceData, o map[string]interface{})
 func flattenSystemFipsCcFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemFipsCcStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemFipsCcStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemFipsCcEntropyToken(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemFipsCcEntropyToken(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemFipsCcSelfTestPeriod(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemFipsCcSelfTestPeriod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemFipsCcKeyGenerationSelfTest(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemFipsCcKeyGenerationSelfTest(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemFipsCc(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemFipsCc(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
-		t, err := expandSystemFipsCcStatus(d, v, "status")
+
+		t, err := expandSystemFipsCcStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -200,7 +202,8 @@ func getObjectSystemFipsCc(d *schema.ResourceData) (*map[string]interface{}, err
 	}
 
 	if v, ok := d.GetOk("entropy_token"); ok {
-		t, err := expandSystemFipsCcEntropyToken(d, v, "entropy_token")
+
+		t, err := expandSystemFipsCcEntropyToken(d, v, "entropy_token", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -209,7 +212,8 @@ func getObjectSystemFipsCc(d *schema.ResourceData) (*map[string]interface{}, err
 	}
 
 	if v, ok := d.GetOk("self_test_period"); ok {
-		t, err := expandSystemFipsCcSelfTestPeriod(d, v, "self_test_period")
+
+		t, err := expandSystemFipsCcSelfTestPeriod(d, v, "self_test_period", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -218,7 +222,8 @@ func getObjectSystemFipsCc(d *schema.ResourceData) (*map[string]interface{}, err
 	}
 
 	if v, ok := d.GetOk("key_generation_self_test"); ok {
-		t, err := expandSystemFipsCcKeyGenerationSelfTest(d, v, "key_generation_self_test")
+
+		t, err := expandSystemFipsCcKeyGenerationSelfTest(d, v, "key_generation_self_test", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
