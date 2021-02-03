@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -84,6 +85,35 @@ func resourceLogFortianalyzer3Filter() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"free_style": &schema.Schema{
+				Type:     schema.TypeList,
+				Optional: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"id": &schema.Schema{
+							Type:     schema.TypeInt,
+							Optional: true,
+							Computed: true,
+						},
+						"category": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+						"filter": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 1023),
+							Optional:     true,
+							Computed:     true,
+						},
+						"filter_type": &schema.Schema{
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
+						},
+					},
+				},
+			},
 			"dns": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -105,6 +135,11 @@ func resourceLogFortianalyzer3Filter() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"dynamic_sort_subtable": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Default:  "false",
+			},
 		},
 	}
 }
@@ -114,7 +149,7 @@ func resourceLogFortianalyzer3FilterUpdate(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectLogFortianalyzer3Filter(d)
+	obj, err := getObjectLogFortianalyzer3Filter(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogFortianalyzer3Filter resource while getting object: %v", err)
 	}
@@ -167,161 +202,245 @@ func resourceLogFortianalyzer3FilterRead(d *schema.ResourceData, m interface{}) 
 		return nil
 	}
 
-	err = refreshObjectLogFortianalyzer3Filter(d, o)
+	err = refreshObjectLogFortianalyzer3Filter(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading LogFortianalyzer3Filter resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenLogFortianalyzer3FilterSeverity(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogFortianalyzer3FilterSeverity(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogFortianalyzer3FilterForwardTraffic(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogFortianalyzer3FilterForwardTraffic(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogFortianalyzer3FilterLocalTraffic(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogFortianalyzer3FilterLocalTraffic(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogFortianalyzer3FilterMulticastTraffic(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogFortianalyzer3FilterMulticastTraffic(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogFortianalyzer3FilterSnifferTraffic(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogFortianalyzer3FilterSnifferTraffic(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogFortianalyzer3FilterAnomaly(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogFortianalyzer3FilterAnomaly(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogFortianalyzer3FilterNetscanDiscovery(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogFortianalyzer3FilterNetscanDiscovery(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogFortianalyzer3FilterNetscanVulnerability(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogFortianalyzer3FilterNetscanVulnerability(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogFortianalyzer3FilterVoip(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogFortianalyzer3FilterVoip(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogFortianalyzer3FilterDlpArchive(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogFortianalyzer3FilterDlpArchive(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogFortianalyzer3FilterGtp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogFortianalyzer3FilterGtp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogFortianalyzer3FilterDns(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogFortianalyzer3FilterFreeStyle(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := i["id"]; ok {
+
+			tmp["id"] = flattenLogFortianalyzer3FilterFreeStyleId(i["id"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
+		if _, ok := i["category"]; ok {
+
+			tmp["category"] = flattenLogFortianalyzer3FilterFreeStyleCategory(i["category"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter"
+		if _, ok := i["filter"]; ok {
+
+			tmp["filter"] = flattenLogFortianalyzer3FilterFreeStyleFilter(i["filter"], d, pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_type"
+		if _, ok := i["filter-type"]; ok {
+
+			tmp["filter_type"] = flattenLogFortianalyzer3FilterFreeStyleFilterType(i["filter-type"], d, pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	dynamic_sort_subtable(result, "id", d)
+	return result
+}
+
+func flattenLogFortianalyzer3FilterFreeStyleId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogFortianalyzer3FilterSsh(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogFortianalyzer3FilterFreeStyleCategory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogFortianalyzer3FilterFilter(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogFortianalyzer3FilterFreeStyleFilter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogFortianalyzer3FilterFilterType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogFortianalyzer3FilterFreeStyleFilterType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectLogFortianalyzer3Filter(d *schema.ResourceData, o map[string]interface{}) error {
+func flattenLogFortianalyzer3FilterDns(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenLogFortianalyzer3FilterSsh(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenLogFortianalyzer3FilterFilter(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenLogFortianalyzer3FilterFilterType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func refreshObjectLogFortianalyzer3Filter(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("severity", flattenLogFortianalyzer3FilterSeverity(o["severity"], d, "severity")); err != nil {
+	if err = d.Set("severity", flattenLogFortianalyzer3FilterSeverity(o["severity"], d, "severity", sv)); err != nil {
 		if !fortiAPIPatch(o["severity"]) {
 			return fmt.Errorf("Error reading severity: %v", err)
 		}
 	}
 
-	if err = d.Set("forward_traffic", flattenLogFortianalyzer3FilterForwardTraffic(o["forward-traffic"], d, "forward_traffic")); err != nil {
+	if err = d.Set("forward_traffic", flattenLogFortianalyzer3FilterForwardTraffic(o["forward-traffic"], d, "forward_traffic", sv)); err != nil {
 		if !fortiAPIPatch(o["forward-traffic"]) {
 			return fmt.Errorf("Error reading forward_traffic: %v", err)
 		}
 	}
 
-	if err = d.Set("local_traffic", flattenLogFortianalyzer3FilterLocalTraffic(o["local-traffic"], d, "local_traffic")); err != nil {
+	if err = d.Set("local_traffic", flattenLogFortianalyzer3FilterLocalTraffic(o["local-traffic"], d, "local_traffic", sv)); err != nil {
 		if !fortiAPIPatch(o["local-traffic"]) {
 			return fmt.Errorf("Error reading local_traffic: %v", err)
 		}
 	}
 
-	if err = d.Set("multicast_traffic", flattenLogFortianalyzer3FilterMulticastTraffic(o["multicast-traffic"], d, "multicast_traffic")); err != nil {
+	if err = d.Set("multicast_traffic", flattenLogFortianalyzer3FilterMulticastTraffic(o["multicast-traffic"], d, "multicast_traffic", sv)); err != nil {
 		if !fortiAPIPatch(o["multicast-traffic"]) {
 			return fmt.Errorf("Error reading multicast_traffic: %v", err)
 		}
 	}
 
-	if err = d.Set("sniffer_traffic", flattenLogFortianalyzer3FilterSnifferTraffic(o["sniffer-traffic"], d, "sniffer_traffic")); err != nil {
+	if err = d.Set("sniffer_traffic", flattenLogFortianalyzer3FilterSnifferTraffic(o["sniffer-traffic"], d, "sniffer_traffic", sv)); err != nil {
 		if !fortiAPIPatch(o["sniffer-traffic"]) {
 			return fmt.Errorf("Error reading sniffer_traffic: %v", err)
 		}
 	}
 
-	if err = d.Set("anomaly", flattenLogFortianalyzer3FilterAnomaly(o["anomaly"], d, "anomaly")); err != nil {
+	if err = d.Set("anomaly", flattenLogFortianalyzer3FilterAnomaly(o["anomaly"], d, "anomaly", sv)); err != nil {
 		if !fortiAPIPatch(o["anomaly"]) {
 			return fmt.Errorf("Error reading anomaly: %v", err)
 		}
 	}
 
-	if err = d.Set("netscan_discovery", flattenLogFortianalyzer3FilterNetscanDiscovery(o["netscan-discovery"], d, "netscan_discovery")); err != nil {
+	if err = d.Set("netscan_discovery", flattenLogFortianalyzer3FilterNetscanDiscovery(o["netscan-discovery"], d, "netscan_discovery", sv)); err != nil {
 		if !fortiAPIPatch(o["netscan-discovery"]) {
 			return fmt.Errorf("Error reading netscan_discovery: %v", err)
 		}
 	}
 
-	if err = d.Set("netscan_vulnerability", flattenLogFortianalyzer3FilterNetscanVulnerability(o["netscan-vulnerability"], d, "netscan_vulnerability")); err != nil {
+	if err = d.Set("netscan_vulnerability", flattenLogFortianalyzer3FilterNetscanVulnerability(o["netscan-vulnerability"], d, "netscan_vulnerability", sv)); err != nil {
 		if !fortiAPIPatch(o["netscan-vulnerability"]) {
 			return fmt.Errorf("Error reading netscan_vulnerability: %v", err)
 		}
 	}
 
-	if err = d.Set("voip", flattenLogFortianalyzer3FilterVoip(o["voip"], d, "voip")); err != nil {
+	if err = d.Set("voip", flattenLogFortianalyzer3FilterVoip(o["voip"], d, "voip", sv)); err != nil {
 		if !fortiAPIPatch(o["voip"]) {
 			return fmt.Errorf("Error reading voip: %v", err)
 		}
 	}
 
-	if err = d.Set("dlp_archive", flattenLogFortianalyzer3FilterDlpArchive(o["dlp-archive"], d, "dlp_archive")); err != nil {
+	if err = d.Set("dlp_archive", flattenLogFortianalyzer3FilterDlpArchive(o["dlp-archive"], d, "dlp_archive", sv)); err != nil {
 		if !fortiAPIPatch(o["dlp-archive"]) {
 			return fmt.Errorf("Error reading dlp_archive: %v", err)
 		}
 	}
 
-	if err = d.Set("gtp", flattenLogFortianalyzer3FilterGtp(o["gtp"], d, "gtp")); err != nil {
+	if err = d.Set("gtp", flattenLogFortianalyzer3FilterGtp(o["gtp"], d, "gtp", sv)); err != nil {
 		if !fortiAPIPatch(o["gtp"]) {
 			return fmt.Errorf("Error reading gtp: %v", err)
 		}
 	}
 
-	if err = d.Set("dns", flattenLogFortianalyzer3FilterDns(o["dns"], d, "dns")); err != nil {
+	if isImportTable() {
+		if err = d.Set("free_style", flattenLogFortianalyzer3FilterFreeStyle(o["free-style"], d, "free_style", sv)); err != nil {
+			if !fortiAPIPatch(o["free-style"]) {
+				return fmt.Errorf("Error reading free_style: %v", err)
+			}
+		}
+	} else {
+		if _, ok := d.GetOk("free_style"); ok {
+			if err = d.Set("free_style", flattenLogFortianalyzer3FilterFreeStyle(o["free-style"], d, "free_style", sv)); err != nil {
+				if !fortiAPIPatch(o["free-style"]) {
+					return fmt.Errorf("Error reading free_style: %v", err)
+				}
+			}
+		}
+	}
+
+	if err = d.Set("dns", flattenLogFortianalyzer3FilterDns(o["dns"], d, "dns", sv)); err != nil {
 		if !fortiAPIPatch(o["dns"]) {
 			return fmt.Errorf("Error reading dns: %v", err)
 		}
 	}
 
-	if err = d.Set("ssh", flattenLogFortianalyzer3FilterSsh(o["ssh"], d, "ssh")); err != nil {
+	if err = d.Set("ssh", flattenLogFortianalyzer3FilterSsh(o["ssh"], d, "ssh", sv)); err != nil {
 		if !fortiAPIPatch(o["ssh"]) {
 			return fmt.Errorf("Error reading ssh: %v", err)
 		}
 	}
 
-	if err = d.Set("filter", flattenLogFortianalyzer3FilterFilter(o["filter"], d, "filter")); err != nil {
+	if err = d.Set("filter", flattenLogFortianalyzer3FilterFilter(o["filter"], d, "filter", sv)); err != nil {
 		if !fortiAPIPatch(o["filter"]) {
 			return fmt.Errorf("Error reading filter: %v", err)
 		}
 	}
 
-	if err = d.Set("filter_type", flattenLogFortianalyzer3FilterFilterType(o["filter-type"], d, "filter_type")); err != nil {
+	if err = d.Set("filter_type", flattenLogFortianalyzer3FilterFilterType(o["filter-type"], d, "filter_type", sv)); err != nil {
 		if !fortiAPIPatch(o["filter-type"]) {
 			return fmt.Errorf("Error reading filter_type: %v", err)
 		}
@@ -333,74 +452,137 @@ func refreshObjectLogFortianalyzer3Filter(d *schema.ResourceData, o map[string]i
 func flattenLogFortianalyzer3FilterFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandLogFortianalyzer3FilterSeverity(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogFortianalyzer3FilterSeverity(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogFortianalyzer3FilterForwardTraffic(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogFortianalyzer3FilterForwardTraffic(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogFortianalyzer3FilterLocalTraffic(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogFortianalyzer3FilterLocalTraffic(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogFortianalyzer3FilterMulticastTraffic(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogFortianalyzer3FilterMulticastTraffic(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogFortianalyzer3FilterSnifferTraffic(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogFortianalyzer3FilterSnifferTraffic(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogFortianalyzer3FilterAnomaly(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogFortianalyzer3FilterAnomaly(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogFortianalyzer3FilterNetscanDiscovery(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogFortianalyzer3FilterNetscanDiscovery(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogFortianalyzer3FilterNetscanVulnerability(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogFortianalyzer3FilterNetscanVulnerability(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogFortianalyzer3FilterVoip(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogFortianalyzer3FilterVoip(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogFortianalyzer3FilterDlpArchive(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogFortianalyzer3FilterDlpArchive(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogFortianalyzer3FilterGtp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogFortianalyzer3FilterGtp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogFortianalyzer3FilterDns(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogFortianalyzer3FilterFreeStyle(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil, nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["id"], _ = expandLogFortianalyzer3FilterFreeStyleId(d, i["id"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "category"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["category"], _ = expandLogFortianalyzer3FilterFreeStyleCategory(d, i["category"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["filter"], _ = expandLogFortianalyzer3FilterFreeStyleFilter(d, i["filter"], pre_append, sv)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_type"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["filter-type"], _ = expandLogFortianalyzer3FilterFreeStyleFilterType(d, i["filter_type"], pre_append, sv)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result, nil
+}
+
+func expandLogFortianalyzer3FilterFreeStyleId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogFortianalyzer3FilterSsh(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogFortianalyzer3FilterFreeStyleCategory(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogFortianalyzer3FilterFilter(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogFortianalyzer3FilterFreeStyleFilter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogFortianalyzer3FilterFilterType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogFortianalyzer3FilterFreeStyleFilterType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectLogFortianalyzer3Filter(d *schema.ResourceData) (*map[string]interface{}, error) {
+func expandLogFortianalyzer3FilterDns(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogFortianalyzer3FilterSsh(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogFortianalyzer3FilterFilter(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogFortianalyzer3FilterFilterType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func getObjectLogFortianalyzer3Filter(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("severity"); ok {
-		t, err := expandLogFortianalyzer3FilterSeverity(d, v, "severity")
+
+		t, err := expandLogFortianalyzer3FilterSeverity(d, v, "severity", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -409,7 +591,8 @@ func getObjectLogFortianalyzer3Filter(d *schema.ResourceData) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("forward_traffic"); ok {
-		t, err := expandLogFortianalyzer3FilterForwardTraffic(d, v, "forward_traffic")
+
+		t, err := expandLogFortianalyzer3FilterForwardTraffic(d, v, "forward_traffic", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -418,7 +601,8 @@ func getObjectLogFortianalyzer3Filter(d *schema.ResourceData) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("local_traffic"); ok {
-		t, err := expandLogFortianalyzer3FilterLocalTraffic(d, v, "local_traffic")
+
+		t, err := expandLogFortianalyzer3FilterLocalTraffic(d, v, "local_traffic", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -427,7 +611,8 @@ func getObjectLogFortianalyzer3Filter(d *schema.ResourceData) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("multicast_traffic"); ok {
-		t, err := expandLogFortianalyzer3FilterMulticastTraffic(d, v, "multicast_traffic")
+
+		t, err := expandLogFortianalyzer3FilterMulticastTraffic(d, v, "multicast_traffic", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -436,7 +621,8 @@ func getObjectLogFortianalyzer3Filter(d *schema.ResourceData) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("sniffer_traffic"); ok {
-		t, err := expandLogFortianalyzer3FilterSnifferTraffic(d, v, "sniffer_traffic")
+
+		t, err := expandLogFortianalyzer3FilterSnifferTraffic(d, v, "sniffer_traffic", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -445,7 +631,8 @@ func getObjectLogFortianalyzer3Filter(d *schema.ResourceData) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("anomaly"); ok {
-		t, err := expandLogFortianalyzer3FilterAnomaly(d, v, "anomaly")
+
+		t, err := expandLogFortianalyzer3FilterAnomaly(d, v, "anomaly", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -454,7 +641,8 @@ func getObjectLogFortianalyzer3Filter(d *schema.ResourceData) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("netscan_discovery"); ok {
-		t, err := expandLogFortianalyzer3FilterNetscanDiscovery(d, v, "netscan_discovery")
+
+		t, err := expandLogFortianalyzer3FilterNetscanDiscovery(d, v, "netscan_discovery", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -463,7 +651,8 @@ func getObjectLogFortianalyzer3Filter(d *schema.ResourceData) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("netscan_vulnerability"); ok {
-		t, err := expandLogFortianalyzer3FilterNetscanVulnerability(d, v, "netscan_vulnerability")
+
+		t, err := expandLogFortianalyzer3FilterNetscanVulnerability(d, v, "netscan_vulnerability", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -472,7 +661,8 @@ func getObjectLogFortianalyzer3Filter(d *schema.ResourceData) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("voip"); ok {
-		t, err := expandLogFortianalyzer3FilterVoip(d, v, "voip")
+
+		t, err := expandLogFortianalyzer3FilterVoip(d, v, "voip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -481,7 +671,8 @@ func getObjectLogFortianalyzer3Filter(d *schema.ResourceData) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("dlp_archive"); ok {
-		t, err := expandLogFortianalyzer3FilterDlpArchive(d, v, "dlp_archive")
+
+		t, err := expandLogFortianalyzer3FilterDlpArchive(d, v, "dlp_archive", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -490,7 +681,8 @@ func getObjectLogFortianalyzer3Filter(d *schema.ResourceData) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("gtp"); ok {
-		t, err := expandLogFortianalyzer3FilterGtp(d, v, "gtp")
+
+		t, err := expandLogFortianalyzer3FilterGtp(d, v, "gtp", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -498,8 +690,19 @@ func getObjectLogFortianalyzer3Filter(d *schema.ResourceData) (*map[string]inter
 		}
 	}
 
+	if v, ok := d.GetOk("free_style"); ok {
+
+		t, err := expandLogFortianalyzer3FilterFreeStyle(d, v, "free_style", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["free-style"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("dns"); ok {
-		t, err := expandLogFortianalyzer3FilterDns(d, v, "dns")
+
+		t, err := expandLogFortianalyzer3FilterDns(d, v, "dns", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -508,7 +711,8 @@ func getObjectLogFortianalyzer3Filter(d *schema.ResourceData) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("ssh"); ok {
-		t, err := expandLogFortianalyzer3FilterSsh(d, v, "ssh")
+
+		t, err := expandLogFortianalyzer3FilterSsh(d, v, "ssh", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -517,7 +721,8 @@ func getObjectLogFortianalyzer3Filter(d *schema.ResourceData) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("filter"); ok {
-		t, err := expandLogFortianalyzer3FilterFilter(d, v, "filter")
+
+		t, err := expandLogFortianalyzer3FilterFilter(d, v, "filter", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -526,7 +731,8 @@ func getObjectLogFortianalyzer3Filter(d *schema.ResourceData) (*map[string]inter
 	}
 
 	if v, ok := d.GetOk("filter_type"); ok {
-		t, err := expandLogFortianalyzer3FilterFilterType(d, v, "filter_type")
+
+		t, err := expandLogFortianalyzer3FilterFilterType(d, v, "filter_type", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
