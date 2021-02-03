@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -42,11 +43,23 @@ func resourceSwitchControllerSwitchGroup() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"fortilink": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 15),
+				Optional:     true,
+				Computed:     true,
+			},
 			"members": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
+						"switch_id": &schema.Schema{
+							Type:         schema.TypeString,
+							ValidateFunc: validation.StringLenBetween(0, 79),
+							Optional:     true,
+							Computed:     true,
+						},
 						"name": &schema.Schema{
 							Type:         schema.TypeString,
 							ValidateFunc: validation.StringLenBetween(0, 64),
@@ -69,7 +82,7 @@ func resourceSwitchControllerSwitchGroupCreate(d *schema.ResourceData, m interfa
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSwitchControllerSwitchGroup(d)
+	obj, err := getObjectSwitchControllerSwitchGroup(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerSwitchGroup resource while getting object: %v", err)
 	}
@@ -94,7 +107,7 @@ func resourceSwitchControllerSwitchGroupUpdate(d *schema.ResourceData, m interfa
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSwitchControllerSwitchGroup(d)
+	obj, err := getObjectSwitchControllerSwitchGroup(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerSwitchGroup resource while getting object: %v", err)
 	}
@@ -147,22 +160,26 @@ func resourceSwitchControllerSwitchGroupRead(d *schema.ResourceData, m interface
 		return nil
 	}
 
-	err = refreshObjectSwitchControllerSwitchGroup(d, o)
+	err = refreshObjectSwitchControllerSwitchGroup(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerSwitchGroup resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSwitchControllerSwitchGroupName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerSwitchGroupName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerSwitchGroupDescription(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerSwitchGroupDescription(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerSwitchGroupMembers(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSwitchControllerSwitchGroupFortilink(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenSwitchControllerSwitchGroupMembers(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -181,9 +198,16 @@ func flattenSwitchControllerSwitchGroupMembers(v interface{}, d *schema.Resource
 
 		pre_append := "" // table
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "switch_id"
+		if _, ok := i["switch-id"]; ok {
+
+			tmp["switch_id"] = flattenSwitchControllerSwitchGroupMembersSwitchId(i["switch-id"], d, pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSwitchControllerSwitchGroupMembersName(i["name"], d, pre_append)
+
+			tmp["name"] = flattenSwitchControllerSwitchGroupMembersName(i["name"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -195,34 +219,44 @@ func flattenSwitchControllerSwitchGroupMembers(v interface{}, d *schema.Resource
 	return result
 }
 
-func flattenSwitchControllerSwitchGroupMembersName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerSwitchGroupMembersSwitchId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSwitchControllerSwitchGroup(d *schema.ResourceData, o map[string]interface{}) error {
+func flattenSwitchControllerSwitchGroupMembersName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func refreshObjectSwitchControllerSwitchGroup(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenSwitchControllerSwitchGroupName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenSwitchControllerSwitchGroupName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("description", flattenSwitchControllerSwitchGroupDescription(o["description"], d, "description")); err != nil {
+	if err = d.Set("description", flattenSwitchControllerSwitchGroupDescription(o["description"], d, "description", sv)); err != nil {
 		if !fortiAPIPatch(o["description"]) {
 			return fmt.Errorf("Error reading description: %v", err)
 		}
 	}
 
+	if err = d.Set("fortilink", flattenSwitchControllerSwitchGroupFortilink(o["fortilink"], d, "fortilink", sv)); err != nil {
+		if !fortiAPIPatch(o["fortilink"]) {
+			return fmt.Errorf("Error reading fortilink: %v", err)
+		}
+	}
+
 	if isImportTable() {
-		if err = d.Set("members", flattenSwitchControllerSwitchGroupMembers(o["members"], d, "members")); err != nil {
+		if err = d.Set("members", flattenSwitchControllerSwitchGroupMembers(o["members"], d, "members", sv)); err != nil {
 			if !fortiAPIPatch(o["members"]) {
 				return fmt.Errorf("Error reading members: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("members"); ok {
-			if err = d.Set("members", flattenSwitchControllerSwitchGroupMembers(o["members"], d, "members")); err != nil {
+			if err = d.Set("members", flattenSwitchControllerSwitchGroupMembers(o["members"], d, "members", sv)); err != nil {
 				if !fortiAPIPatch(o["members"]) {
 					return fmt.Errorf("Error reading members: %v", err)
 				}
@@ -236,18 +270,22 @@ func refreshObjectSwitchControllerSwitchGroup(d *schema.ResourceData, o map[stri
 func flattenSwitchControllerSwitchGroupFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSwitchControllerSwitchGroupName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerSwitchGroupName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerSwitchGroupDescription(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerSwitchGroupDescription(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerSwitchGroupMembers(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerSwitchGroupFortilink(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandSwitchControllerSwitchGroupMembers(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -261,9 +299,16 @@ func expandSwitchControllerSwitchGroupMembers(d *schema.ResourceData, v interfac
 		i := r.(map[string]interface{})
 		pre_append := "" // table
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "switch_id"
+		if _, ok := d.GetOk(pre_append); ok {
+
+			tmp["switch-id"], _ = expandSwitchControllerSwitchGroupMembersSwitchId(d, i["switch_id"], pre_append, sv)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSwitchControllerSwitchGroupMembersName(d, i["name"], pre_append)
+
+			tmp["name"], _ = expandSwitchControllerSwitchGroupMembersName(d, i["name"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -274,15 +319,20 @@ func expandSwitchControllerSwitchGroupMembers(d *schema.ResourceData, v interfac
 	return result, nil
 }
 
-func expandSwitchControllerSwitchGroupMembersName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerSwitchGroupMembersSwitchId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSwitchControllerSwitchGroup(d *schema.ResourceData) (*map[string]interface{}, error) {
+func expandSwitchControllerSwitchGroupMembersName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func getObjectSwitchControllerSwitchGroup(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandSwitchControllerSwitchGroupName(d, v, "name")
+
+		t, err := expandSwitchControllerSwitchGroupName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -291,7 +341,8 @@ func getObjectSwitchControllerSwitchGroup(d *schema.ResourceData) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("description"); ok {
-		t, err := expandSwitchControllerSwitchGroupDescription(d, v, "description")
+
+		t, err := expandSwitchControllerSwitchGroupDescription(d, v, "description", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -299,8 +350,19 @@ func getObjectSwitchControllerSwitchGroup(d *schema.ResourceData) (*map[string]i
 		}
 	}
 
+	if v, ok := d.GetOk("fortilink"); ok {
+
+		t, err := expandSwitchControllerSwitchGroupFortilink(d, v, "fortilink", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["fortilink"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("members"); ok {
-		t, err := expandSwitchControllerSwitchGroupMembers(d, v, "members")
+
+		t, err := expandSwitchControllerSwitchGroupMembers(d, v, "members", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
