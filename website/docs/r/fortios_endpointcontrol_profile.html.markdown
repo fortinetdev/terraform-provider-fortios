@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_endpointcontrol_profile
-Configure FortiClient endpoint control profiles.
+Configure FortiClient endpoint control profiles. Applies to FortiOS Version `<= 6.2.0`.
 
 ## Example Usage
 
@@ -72,7 +72,6 @@ resource "fortios_endpointcontrol_profile" "trname" {
 ```
 
 ## Argument Reference
-
 
 The following arguments are supported:
 
