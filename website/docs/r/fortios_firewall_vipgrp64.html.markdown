@@ -39,7 +39,6 @@ resource "fortios_firewall_vipgrp64" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - VIP64 group name.
