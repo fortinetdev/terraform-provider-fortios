@@ -19,7 +19,6 @@ resource "fortios_system_sessionttl" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `default` - Default timeout.
