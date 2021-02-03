@@ -40,10 +40,10 @@ resource "fortios_firewall_addrgrp" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - (Required) Address group name.
+* `type` - Address group type.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `member` - (Required) Address objects contained within the group. The structure of `member` block is documented below.
 * `comment` - Comment.
