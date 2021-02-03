@@ -25,6 +25,10 @@ func dataSourceFirewallPolicy64() *schema.Resource {
 				Type:     schema.TypeInt,
 				Required: true,
 			},
+			"name": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"uuid": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -86,6 +90,10 @@ func dataSourceFirewallPolicy64() *schema.Resource {
 				},
 			},
 			"logtraffic": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"logtraffic_start": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -177,6 +185,10 @@ func dataSourceFirewallPolicy64Read(d *schema.ResourceData, m interface{}) error
 }
 
 func dataSourceFlattenFirewallPolicy64Policyid(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallPolicy64Name(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -316,6 +328,10 @@ func dataSourceFlattenFirewallPolicy64Logtraffic(v interface{}, d *schema.Resour
 	return v
 }
 
+func dataSourceFlattenFirewallPolicy64LogtrafficStart(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallPolicy64PermitAnyHost(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -397,6 +413,12 @@ func dataSourceRefreshObjectFirewallPolicy64(d *schema.ResourceData, o map[strin
 		}
 	}
 
+	if err = d.Set("name", dataSourceFlattenFirewallPolicy64Name(o["name"], d, "name")); err != nil {
+		if !fortiAPIPatch(o["name"]) {
+			return fmt.Errorf("Error reading name: %v", err)
+		}
+	}
+
 	if err = d.Set("uuid", dataSourceFlattenFirewallPolicy64Uuid(o["uuid"], d, "uuid")); err != nil {
 		if !fortiAPIPatch(o["uuid"]) {
 			return fmt.Errorf("Error reading uuid: %v", err)
@@ -454,6 +476,12 @@ func dataSourceRefreshObjectFirewallPolicy64(d *schema.ResourceData, o map[strin
 	if err = d.Set("logtraffic", dataSourceFlattenFirewallPolicy64Logtraffic(o["logtraffic"], d, "logtraffic")); err != nil {
 		if !fortiAPIPatch(o["logtraffic"]) {
 			return fmt.Errorf("Error reading logtraffic: %v", err)
+		}
+	}
+
+	if err = d.Set("logtraffic_start", dataSourceFlattenFirewallPolicy64LogtrafficStart(o["logtraffic-start"], d, "logtraffic_start")); err != nil {
+		if !fortiAPIPatch(o["logtraffic-start"]) {
+			return fmt.Errorf("Error reading logtraffic_start: %v", err)
 		}
 	}
 
