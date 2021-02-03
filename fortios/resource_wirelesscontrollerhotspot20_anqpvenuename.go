@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -75,7 +76,7 @@ func resourceWirelessControllerHotspot20AnqpVenueNameCreate(d *schema.ResourceDa
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWirelessControllerHotspot20AnqpVenueName(d)
+	obj, err := getObjectWirelessControllerHotspot20AnqpVenueName(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WirelessControllerHotspot20AnqpVenueName resource while getting object: %v", err)
 	}
@@ -100,7 +101,7 @@ func resourceWirelessControllerHotspot20AnqpVenueNameUpdate(d *schema.ResourceDa
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWirelessControllerHotspot20AnqpVenueName(d)
+	obj, err := getObjectWirelessControllerHotspot20AnqpVenueName(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerHotspot20AnqpVenueName resource while getting object: %v", err)
 	}
@@ -153,18 +154,18 @@ func resourceWirelessControllerHotspot20AnqpVenueNameRead(d *schema.ResourceData
 		return nil
 	}
 
-	err = refreshObjectWirelessControllerHotspot20AnqpVenueName(d, o)
+	err = refreshObjectWirelessControllerHotspot20AnqpVenueName(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading WirelessControllerHotspot20AnqpVenueName resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenWirelessControllerHotspot20AnqpVenueNameName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerHotspot20AnqpVenueNameName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerHotspot20AnqpVenueNameValueList(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenWirelessControllerHotspot20AnqpVenueNameValueList(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -185,17 +186,20 @@ func flattenWirelessControllerHotspot20AnqpVenueNameValueList(v interface{}, d *
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
 		if _, ok := i["index"]; ok {
-			tmp["index"] = flattenWirelessControllerHotspot20AnqpVenueNameValueListIndex(i["index"], d, pre_append)
+
+			tmp["index"] = flattenWirelessControllerHotspot20AnqpVenueNameValueListIndex(i["index"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "lang"
 		if _, ok := i["lang"]; ok {
-			tmp["lang"] = flattenWirelessControllerHotspot20AnqpVenueNameValueListLang(i["lang"], d, pre_append)
+
+			tmp["lang"] = flattenWirelessControllerHotspot20AnqpVenueNameValueListLang(i["lang"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := i["value"]; ok {
-			tmp["value"] = flattenWirelessControllerHotspot20AnqpVenueNameValueListValue(i["value"], d, pre_append)
+
+			tmp["value"] = flattenWirelessControllerHotspot20AnqpVenueNameValueListValue(i["value"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -207,36 +211,36 @@ func flattenWirelessControllerHotspot20AnqpVenueNameValueList(v interface{}, d *
 	return result
 }
 
-func flattenWirelessControllerHotspot20AnqpVenueNameValueListIndex(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerHotspot20AnqpVenueNameValueListIndex(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerHotspot20AnqpVenueNameValueListLang(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerHotspot20AnqpVenueNameValueListLang(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerHotspot20AnqpVenueNameValueListValue(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerHotspot20AnqpVenueNameValueListValue(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectWirelessControllerHotspot20AnqpVenueName(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectWirelessControllerHotspot20AnqpVenueName(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenWirelessControllerHotspot20AnqpVenueNameName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenWirelessControllerHotspot20AnqpVenueNameName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("value_list", flattenWirelessControllerHotspot20AnqpVenueNameValueList(o["value-list"], d, "value_list")); err != nil {
+		if err = d.Set("value_list", flattenWirelessControllerHotspot20AnqpVenueNameValueList(o["value-list"], d, "value_list", sv)); err != nil {
 			if !fortiAPIPatch(o["value-list"]) {
 				return fmt.Errorf("Error reading value_list: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("value_list"); ok {
-			if err = d.Set("value_list", flattenWirelessControllerHotspot20AnqpVenueNameValueList(o["value-list"], d, "value_list")); err != nil {
+			if err = d.Set("value_list", flattenWirelessControllerHotspot20AnqpVenueNameValueList(o["value-list"], d, "value_list", sv)); err != nil {
 				if !fortiAPIPatch(o["value-list"]) {
 					return fmt.Errorf("Error reading value_list: %v", err)
 				}
@@ -250,14 +254,14 @@ func refreshObjectWirelessControllerHotspot20AnqpVenueName(d *schema.ResourceDat
 func flattenWirelessControllerHotspot20AnqpVenueNameFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandWirelessControllerHotspot20AnqpVenueNameName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerHotspot20AnqpVenueNameName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerHotspot20AnqpVenueNameValueList(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerHotspot20AnqpVenueNameValueList(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -273,17 +277,20 @@ func expandWirelessControllerHotspot20AnqpVenueNameValueList(d *schema.ResourceD
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "index"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["index"], _ = expandWirelessControllerHotspot20AnqpVenueNameValueListIndex(d, i["index"], pre_append)
+
+			tmp["index"], _ = expandWirelessControllerHotspot20AnqpVenueNameValueListIndex(d, i["index"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "lang"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["lang"], _ = expandWirelessControllerHotspot20AnqpVenueNameValueListLang(d, i["lang"], pre_append)
+
+			tmp["lang"], _ = expandWirelessControllerHotspot20AnqpVenueNameValueListLang(d, i["lang"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "value"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["value"], _ = expandWirelessControllerHotspot20AnqpVenueNameValueListValue(d, i["value"], pre_append)
+
+			tmp["value"], _ = expandWirelessControllerHotspot20AnqpVenueNameValueListValue(d, i["value"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -294,23 +301,24 @@ func expandWirelessControllerHotspot20AnqpVenueNameValueList(d *schema.ResourceD
 	return result, nil
 }
 
-func expandWirelessControllerHotspot20AnqpVenueNameValueListIndex(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerHotspot20AnqpVenueNameValueListIndex(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerHotspot20AnqpVenueNameValueListLang(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerHotspot20AnqpVenueNameValueListLang(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerHotspot20AnqpVenueNameValueListValue(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerHotspot20AnqpVenueNameValueListValue(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectWirelessControllerHotspot20AnqpVenueName(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectWirelessControllerHotspot20AnqpVenueName(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandWirelessControllerHotspot20AnqpVenueNameName(d, v, "name")
+
+		t, err := expandWirelessControllerHotspot20AnqpVenueNameName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -319,7 +327,8 @@ func getObjectWirelessControllerHotspot20AnqpVenueName(d *schema.ResourceData) (
 	}
 
 	if v, ok := d.GetOk("value_list"); ok {
-		t, err := expandWirelessControllerHotspot20AnqpVenueNameValueList(d, v, "value_list")
+
+		t, err := expandWirelessControllerHotspot20AnqpVenueNameValueList(d, v, "value_list", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
