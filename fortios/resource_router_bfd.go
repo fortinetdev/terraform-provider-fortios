@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -62,7 +63,7 @@ func resourceRouterBfdUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectRouterBfd(d, false)
+	obj, err := getObjectRouterBfd(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterBfd resource while getting object: %v", err)
 	}
@@ -87,7 +88,7 @@ func resourceRouterBfdDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectRouterBfd(d, true)
+	obj, err := getObjectRouterBfd(d, true, c.Fv)
 
 	if err != nil {
 		return fmt.Errorf("Error updating RouterBfd resource while getting object: %v", err)
@@ -120,14 +121,14 @@ func resourceRouterBfdRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectRouterBfd(d, o)
+	err = refreshObjectRouterBfd(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading RouterBfd resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenRouterBfdNeighbor(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenRouterBfdNeighbor(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -148,12 +149,14 @@ func flattenRouterBfdNeighbor(v interface{}, d *schema.ResourceData, pre string)
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := i["ip"]; ok {
-			tmp["ip"] = flattenRouterBfdNeighborIp(i["ip"], d, pre_append)
+
+			tmp["ip"] = flattenRouterBfdNeighborIp(i["ip"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := i["interface"]; ok {
-			tmp["interface"] = flattenRouterBfdNeighborInterface(i["interface"], d, pre_append)
+
+			tmp["interface"] = flattenRouterBfdNeighborInterface(i["interface"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -165,26 +168,26 @@ func flattenRouterBfdNeighbor(v interface{}, d *schema.ResourceData, pre string)
 	return result
 }
 
-func flattenRouterBfdNeighborIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterBfdNeighborIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterBfdNeighborInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterBfdNeighborInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectRouterBfd(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectRouterBfd(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
 	if isImportTable() {
-		if err = d.Set("neighbor", flattenRouterBfdNeighbor(o["neighbor"], d, "neighbor")); err != nil {
+		if err = d.Set("neighbor", flattenRouterBfdNeighbor(o["neighbor"], d, "neighbor", sv)); err != nil {
 			if !fortiAPIPatch(o["neighbor"]) {
 				return fmt.Errorf("Error reading neighbor: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("neighbor"); ok {
-			if err = d.Set("neighbor", flattenRouterBfdNeighbor(o["neighbor"], d, "neighbor")); err != nil {
+			if err = d.Set("neighbor", flattenRouterBfdNeighbor(o["neighbor"], d, "neighbor", sv)); err != nil {
 				if !fortiAPIPatch(o["neighbor"]) {
 					return fmt.Errorf("Error reading neighbor: %v", err)
 				}
@@ -198,10 +201,10 @@ func refreshObjectRouterBfd(d *schema.ResourceData, o map[string]interface{}) er
 func flattenRouterBfdFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandRouterBfdNeighbor(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterBfdNeighbor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -217,12 +220,14 @@ func expandRouterBfdNeighbor(d *schema.ResourceData, v interface{}, pre string) 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["ip"], _ = expandRouterBfdNeighborIp(d, i["ip"], pre_append)
+
+			tmp["ip"], _ = expandRouterBfdNeighborIp(d, i["ip"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "interface"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["interface"], _ = expandRouterBfdNeighborInterface(d, i["interface"], pre_append)
+
+			tmp["interface"], _ = expandRouterBfdNeighborInterface(d, i["interface"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -233,22 +238,23 @@ func expandRouterBfdNeighbor(d *schema.ResourceData, v interface{}, pre string) 
 	return result, nil
 }
 
-func expandRouterBfdNeighborIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterBfdNeighborIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandRouterBfdNeighborInterface(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterBfdNeighborInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectRouterBfd(d *schema.ResourceData, bemptysontable bool) (*map[string]interface{}, error) {
+func getObjectRouterBfd(d *schema.ResourceData, bemptysontable bool, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if bemptysontable {
 		obj["neighbor"] = make([]struct{}, 0)
 	} else {
 		if v, ok := d.GetOk("neighbor"); ok {
-			t, err := expandRouterBfdNeighbor(d, v, "neighbor")
+
+			t, err := expandRouterBfdNeighbor(d, v, "neighbor", sv)
 			if err != nil {
 				return &obj, err
 			} else if t != nil {
