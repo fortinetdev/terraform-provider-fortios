@@ -20,7 +20,6 @@ resource "fortios_switchcontroller_igmpsnooping" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `aging_time` - Maximum number of seconds to retain a multicast snooping entry for which no packets have been seen (15 - 3600 sec, default = 300).
