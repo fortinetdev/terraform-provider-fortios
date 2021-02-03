@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -85,7 +86,7 @@ func resourceSwitchControllerStpSettingsUpdate(d *schema.ResourceData, m interfa
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSwitchControllerStpSettings(d)
+	obj, err := getObjectSwitchControllerStpSettings(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerStpSettings resource while getting object: %v", err)
 	}
@@ -138,91 +139,91 @@ func resourceSwitchControllerStpSettingsRead(d *schema.ResourceData, m interface
 		return nil
 	}
 
-	err = refreshObjectSwitchControllerStpSettings(d, o)
+	err = refreshObjectSwitchControllerStpSettings(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerStpSettings resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSwitchControllerStpSettingsName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerStpSettingsName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerStpSettingsStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerStpSettingsStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerStpSettingsRevision(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerStpSettingsRevision(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerStpSettingsHelloTime(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerStpSettingsHelloTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerStpSettingsForwardTime(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerStpSettingsForwardTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerStpSettingsMaxAge(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerStpSettingsMaxAge(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerStpSettingsMaxHops(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerStpSettingsMaxHops(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerStpSettingsPendingTimer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerStpSettingsPendingTimer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSwitchControllerStpSettings(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSwitchControllerStpSettings(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenSwitchControllerStpSettingsName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenSwitchControllerStpSettingsName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("status", flattenSwitchControllerStpSettingsStatus(o["status"], d, "status")); err != nil {
+	if err = d.Set("status", flattenSwitchControllerStpSettingsStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
 		}
 	}
 
-	if err = d.Set("revision", flattenSwitchControllerStpSettingsRevision(o["revision"], d, "revision")); err != nil {
+	if err = d.Set("revision", flattenSwitchControllerStpSettingsRevision(o["revision"], d, "revision", sv)); err != nil {
 		if !fortiAPIPatch(o["revision"]) {
 			return fmt.Errorf("Error reading revision: %v", err)
 		}
 	}
 
-	if err = d.Set("hello_time", flattenSwitchControllerStpSettingsHelloTime(o["hello-time"], d, "hello_time")); err != nil {
+	if err = d.Set("hello_time", flattenSwitchControllerStpSettingsHelloTime(o["hello-time"], d, "hello_time", sv)); err != nil {
 		if !fortiAPIPatch(o["hello-time"]) {
 			return fmt.Errorf("Error reading hello_time: %v", err)
 		}
 	}
 
-	if err = d.Set("forward_time", flattenSwitchControllerStpSettingsForwardTime(o["forward-time"], d, "forward_time")); err != nil {
+	if err = d.Set("forward_time", flattenSwitchControllerStpSettingsForwardTime(o["forward-time"], d, "forward_time", sv)); err != nil {
 		if !fortiAPIPatch(o["forward-time"]) {
 			return fmt.Errorf("Error reading forward_time: %v", err)
 		}
 	}
 
-	if err = d.Set("max_age", flattenSwitchControllerStpSettingsMaxAge(o["max-age"], d, "max_age")); err != nil {
+	if err = d.Set("max_age", flattenSwitchControllerStpSettingsMaxAge(o["max-age"], d, "max_age", sv)); err != nil {
 		if !fortiAPIPatch(o["max-age"]) {
 			return fmt.Errorf("Error reading max_age: %v", err)
 		}
 	}
 
-	if err = d.Set("max_hops", flattenSwitchControllerStpSettingsMaxHops(o["max-hops"], d, "max_hops")); err != nil {
+	if err = d.Set("max_hops", flattenSwitchControllerStpSettingsMaxHops(o["max-hops"], d, "max_hops", sv)); err != nil {
 		if !fortiAPIPatch(o["max-hops"]) {
 			return fmt.Errorf("Error reading max_hops: %v", err)
 		}
 	}
 
-	if err = d.Set("pending_timer", flattenSwitchControllerStpSettingsPendingTimer(o["pending-timer"], d, "pending_timer")); err != nil {
+	if err = d.Set("pending_timer", flattenSwitchControllerStpSettingsPendingTimer(o["pending-timer"], d, "pending_timer", sv)); err != nil {
 		if !fortiAPIPatch(o["pending-timer"]) {
 			return fmt.Errorf("Error reading pending_timer: %v", err)
 		}
@@ -234,46 +235,47 @@ func refreshObjectSwitchControllerStpSettings(d *schema.ResourceData, o map[stri
 func flattenSwitchControllerStpSettingsFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSwitchControllerStpSettingsName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerStpSettingsName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerStpSettingsStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerStpSettingsStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerStpSettingsRevision(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerStpSettingsRevision(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerStpSettingsHelloTime(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerStpSettingsHelloTime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerStpSettingsForwardTime(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerStpSettingsForwardTime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerStpSettingsMaxAge(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerStpSettingsMaxAge(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerStpSettingsMaxHops(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerStpSettingsMaxHops(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerStpSettingsPendingTimer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerStpSettingsPendingTimer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSwitchControllerStpSettings(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSwitchControllerStpSettings(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandSwitchControllerStpSettingsName(d, v, "name")
+
+		t, err := expandSwitchControllerStpSettingsName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -282,7 +284,8 @@ func getObjectSwitchControllerStpSettings(d *schema.ResourceData) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-		t, err := expandSwitchControllerStpSettingsStatus(d, v, "status")
+
+		t, err := expandSwitchControllerStpSettingsStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -291,7 +294,8 @@ func getObjectSwitchControllerStpSettings(d *schema.ResourceData) (*map[string]i
 	}
 
 	if v, ok := d.GetOkExists("revision"); ok {
-		t, err := expandSwitchControllerStpSettingsRevision(d, v, "revision")
+
+		t, err := expandSwitchControllerStpSettingsRevision(d, v, "revision", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -300,7 +304,8 @@ func getObjectSwitchControllerStpSettings(d *schema.ResourceData) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("hello_time"); ok {
-		t, err := expandSwitchControllerStpSettingsHelloTime(d, v, "hello_time")
+
+		t, err := expandSwitchControllerStpSettingsHelloTime(d, v, "hello_time", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -309,7 +314,8 @@ func getObjectSwitchControllerStpSettings(d *schema.ResourceData) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("forward_time"); ok {
-		t, err := expandSwitchControllerStpSettingsForwardTime(d, v, "forward_time")
+
+		t, err := expandSwitchControllerStpSettingsForwardTime(d, v, "forward_time", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -318,7 +324,8 @@ func getObjectSwitchControllerStpSettings(d *schema.ResourceData) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("max_age"); ok {
-		t, err := expandSwitchControllerStpSettingsMaxAge(d, v, "max_age")
+
+		t, err := expandSwitchControllerStpSettingsMaxAge(d, v, "max_age", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -327,7 +334,8 @@ func getObjectSwitchControllerStpSettings(d *schema.ResourceData) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("max_hops"); ok {
-		t, err := expandSwitchControllerStpSettingsMaxHops(d, v, "max_hops")
+
+		t, err := expandSwitchControllerStpSettingsMaxHops(d, v, "max_hops", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -336,7 +344,8 @@ func getObjectSwitchControllerStpSettings(d *schema.ResourceData) (*map[string]i
 	}
 
 	if v, ok := d.GetOk("pending_timer"); ok {
-		t, err := expandSwitchControllerStpSettingsPendingTimer(d, v, "pending_timer")
+
+		t, err := expandSwitchControllerStpSettingsPendingTimer(d, v, "pending_timer", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
