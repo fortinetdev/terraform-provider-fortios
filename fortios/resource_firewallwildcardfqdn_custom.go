@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -70,7 +71,7 @@ func resourceFirewallWildcardFqdnCustomCreate(d *schema.ResourceData, m interfac
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectFirewallWildcardFqdnCustom(d)
+	obj, err := getObjectFirewallWildcardFqdnCustom(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallWildcardFqdnCustom resource while getting object: %v", err)
 	}
@@ -95,7 +96,7 @@ func resourceFirewallWildcardFqdnCustomUpdate(d *schema.ResourceData, m interfac
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectFirewallWildcardFqdnCustom(d)
+	obj, err := getObjectFirewallWildcardFqdnCustom(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallWildcardFqdnCustom resource while getting object: %v", err)
 	}
@@ -148,71 +149,71 @@ func resourceFirewallWildcardFqdnCustomRead(d *schema.ResourceData, m interface{
 		return nil
 	}
 
-	err = refreshObjectFirewallWildcardFqdnCustom(d, o)
+	err = refreshObjectFirewallWildcardFqdnCustom(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallWildcardFqdnCustom resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenFirewallWildcardFqdnCustomName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallWildcardFqdnCustomName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallWildcardFqdnCustomUuid(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallWildcardFqdnCustomUuid(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallWildcardFqdnCustomWildcardFqdn(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallWildcardFqdnCustomWildcardFqdn(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallWildcardFqdnCustomColor(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallWildcardFqdnCustomColor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallWildcardFqdnCustomComment(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallWildcardFqdnCustomComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallWildcardFqdnCustomVisibility(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallWildcardFqdnCustomVisibility(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectFirewallWildcardFqdnCustom(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectFirewallWildcardFqdnCustom(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenFirewallWildcardFqdnCustomName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenFirewallWildcardFqdnCustomName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("uuid", flattenFirewallWildcardFqdnCustomUuid(o["uuid"], d, "uuid")); err != nil {
+	if err = d.Set("uuid", flattenFirewallWildcardFqdnCustomUuid(o["uuid"], d, "uuid", sv)); err != nil {
 		if !fortiAPIPatch(o["uuid"]) {
 			return fmt.Errorf("Error reading uuid: %v", err)
 		}
 	}
 
-	if err = d.Set("wildcard_fqdn", flattenFirewallWildcardFqdnCustomWildcardFqdn(o["wildcard-fqdn"], d, "wildcard_fqdn")); err != nil {
+	if err = d.Set("wildcard_fqdn", flattenFirewallWildcardFqdnCustomWildcardFqdn(o["wildcard-fqdn"], d, "wildcard_fqdn", sv)); err != nil {
 		if !fortiAPIPatch(o["wildcard-fqdn"]) {
 			return fmt.Errorf("Error reading wildcard_fqdn: %v", err)
 		}
 	}
 
-	if err = d.Set("color", flattenFirewallWildcardFqdnCustomColor(o["color"], d, "color")); err != nil {
+	if err = d.Set("color", flattenFirewallWildcardFqdnCustomColor(o["color"], d, "color", sv)); err != nil {
 		if !fortiAPIPatch(o["color"]) {
 			return fmt.Errorf("Error reading color: %v", err)
 		}
 	}
 
-	if err = d.Set("comment", flattenFirewallWildcardFqdnCustomComment(o["comment"], d, "comment")); err != nil {
+	if err = d.Set("comment", flattenFirewallWildcardFqdnCustomComment(o["comment"], d, "comment", sv)); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
 		}
 	}
 
-	if err = d.Set("visibility", flattenFirewallWildcardFqdnCustomVisibility(o["visibility"], d, "visibility")); err != nil {
+	if err = d.Set("visibility", flattenFirewallWildcardFqdnCustomVisibility(o["visibility"], d, "visibility", sv)); err != nil {
 		if !fortiAPIPatch(o["visibility"]) {
 			return fmt.Errorf("Error reading visibility: %v", err)
 		}
@@ -224,38 +225,39 @@ func refreshObjectFirewallWildcardFqdnCustom(d *schema.ResourceData, o map[strin
 func flattenFirewallWildcardFqdnCustomFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandFirewallWildcardFqdnCustomName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallWildcardFqdnCustomName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallWildcardFqdnCustomUuid(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallWildcardFqdnCustomUuid(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallWildcardFqdnCustomWildcardFqdn(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallWildcardFqdnCustomWildcardFqdn(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallWildcardFqdnCustomColor(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallWildcardFqdnCustomColor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallWildcardFqdnCustomComment(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallWildcardFqdnCustomComment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallWildcardFqdnCustomVisibility(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallWildcardFqdnCustomVisibility(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectFirewallWildcardFqdnCustom(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectFirewallWildcardFqdnCustom(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandFirewallWildcardFqdnCustomName(d, v, "name")
+
+		t, err := expandFirewallWildcardFqdnCustomName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -264,7 +266,8 @@ func getObjectFirewallWildcardFqdnCustom(d *schema.ResourceData) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("uuid"); ok {
-		t, err := expandFirewallWildcardFqdnCustomUuid(d, v, "uuid")
+
+		t, err := expandFirewallWildcardFqdnCustomUuid(d, v, "uuid", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -273,7 +276,8 @@ func getObjectFirewallWildcardFqdnCustom(d *schema.ResourceData) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("wildcard_fqdn"); ok {
-		t, err := expandFirewallWildcardFqdnCustomWildcardFqdn(d, v, "wildcard_fqdn")
+
+		t, err := expandFirewallWildcardFqdnCustomWildcardFqdn(d, v, "wildcard_fqdn", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -282,7 +286,8 @@ func getObjectFirewallWildcardFqdnCustom(d *schema.ResourceData) (*map[string]in
 	}
 
 	if v, ok := d.GetOkExists("color"); ok {
-		t, err := expandFirewallWildcardFqdnCustomColor(d, v, "color")
+
+		t, err := expandFirewallWildcardFqdnCustomColor(d, v, "color", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -291,7 +296,8 @@ func getObjectFirewallWildcardFqdnCustom(d *schema.ResourceData) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-		t, err := expandFirewallWildcardFqdnCustomComment(d, v, "comment")
+
+		t, err := expandFirewallWildcardFqdnCustomComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -300,7 +306,8 @@ func getObjectFirewallWildcardFqdnCustom(d *schema.ResourceData) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("visibility"); ok {
-		t, err := expandFirewallWildcardFqdnCustomVisibility(d, v, "visibility")
+
+		t, err := expandFirewallWildcardFqdnCustomVisibility(d, v, "visibility", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
