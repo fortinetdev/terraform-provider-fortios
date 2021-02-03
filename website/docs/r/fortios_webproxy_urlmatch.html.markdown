@@ -33,7 +33,6 @@ resource "fortios_webproxy_urlmatch" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Configure a name for the URL to be exempted.
