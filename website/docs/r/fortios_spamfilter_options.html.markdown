@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_spamfilter_options
-Configure AntiSpam options.
+Configure AntiSpam options. Applies to FortiOS Version `<= 6.2.0`.
 
 ## Example Usage
 
@@ -18,7 +18,6 @@ resource "fortios_spamfilter_options" "trname" {
 ```
 
 ## Argument Reference
-
 
 The following arguments are supported:
 
