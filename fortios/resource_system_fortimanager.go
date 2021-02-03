@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -74,7 +75,7 @@ func resourceSystemFortimanagerUpdate(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemFortimanager(d)
+	obj, err := getObjectSystemFortimanager(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemFortimanager resource while getting object: %v", err)
 	}
@@ -127,81 +128,81 @@ func resourceSystemFortimanagerRead(d *schema.ResourceData, m interface{}) error
 		return nil
 	}
 
-	err = refreshObjectSystemFortimanager(d, o)
+	err = refreshObjectSystemFortimanager(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemFortimanager resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemFortimanagerIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemFortimanagerIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemFortimanagerVdom(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemFortimanagerVdom(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemFortimanagerIpsec(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemFortimanagerIpsec(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemFortimanagerCentralManagement(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemFortimanagerCentralManagement(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemFortimanagerCentralMgmtAutoBackup(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemFortimanagerCentralMgmtAutoBackup(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemFortimanagerCentralMgmtScheduleConfigRestore(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemFortimanagerCentralMgmtScheduleConfigRestore(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemFortimanagerCentralMgmtScheduleScriptRestore(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemFortimanagerCentralMgmtScheduleScriptRestore(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemFortimanager(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemFortimanager(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("ip", flattenSystemFortimanagerIp(o["ip"], d, "ip")); err != nil {
+	if err = d.Set("ip", flattenSystemFortimanagerIp(o["ip"], d, "ip", sv)); err != nil {
 		if !fortiAPIPatch(o["ip"]) {
 			return fmt.Errorf("Error reading ip: %v", err)
 		}
 	}
 
-	if err = d.Set("vdom", flattenSystemFortimanagerVdom(o["vdom"], d, "vdom")); err != nil {
+	if err = d.Set("vdom", flattenSystemFortimanagerVdom(o["vdom"], d, "vdom", sv)); err != nil {
 		if !fortiAPIPatch(o["vdom"]) {
 			return fmt.Errorf("Error reading vdom: %v", err)
 		}
 	}
 
-	if err = d.Set("ipsec", flattenSystemFortimanagerIpsec(o["ipsec"], d, "ipsec")); err != nil {
+	if err = d.Set("ipsec", flattenSystemFortimanagerIpsec(o["ipsec"], d, "ipsec", sv)); err != nil {
 		if !fortiAPIPatch(o["ipsec"]) {
 			return fmt.Errorf("Error reading ipsec: %v", err)
 		}
 	}
 
-	if err = d.Set("central_management", flattenSystemFortimanagerCentralManagement(o["central-management"], d, "central_management")); err != nil {
+	if err = d.Set("central_management", flattenSystemFortimanagerCentralManagement(o["central-management"], d, "central_management", sv)); err != nil {
 		if !fortiAPIPatch(o["central-management"]) {
 			return fmt.Errorf("Error reading central_management: %v", err)
 		}
 	}
 
-	if err = d.Set("central_mgmt_auto_backup", flattenSystemFortimanagerCentralMgmtAutoBackup(o["central-mgmt-auto-backup"], d, "central_mgmt_auto_backup")); err != nil {
+	if err = d.Set("central_mgmt_auto_backup", flattenSystemFortimanagerCentralMgmtAutoBackup(o["central-mgmt-auto-backup"], d, "central_mgmt_auto_backup", sv)); err != nil {
 		if !fortiAPIPatch(o["central-mgmt-auto-backup"]) {
 			return fmt.Errorf("Error reading central_mgmt_auto_backup: %v", err)
 		}
 	}
 
-	if err = d.Set("central_mgmt_schedule_config_restore", flattenSystemFortimanagerCentralMgmtScheduleConfigRestore(o["central-mgmt-schedule-config-restore"], d, "central_mgmt_schedule_config_restore")); err != nil {
+	if err = d.Set("central_mgmt_schedule_config_restore", flattenSystemFortimanagerCentralMgmtScheduleConfigRestore(o["central-mgmt-schedule-config-restore"], d, "central_mgmt_schedule_config_restore", sv)); err != nil {
 		if !fortiAPIPatch(o["central-mgmt-schedule-config-restore"]) {
 			return fmt.Errorf("Error reading central_mgmt_schedule_config_restore: %v", err)
 		}
 	}
 
-	if err = d.Set("central_mgmt_schedule_script_restore", flattenSystemFortimanagerCentralMgmtScheduleScriptRestore(o["central-mgmt-schedule-script-restore"], d, "central_mgmt_schedule_script_restore")); err != nil {
+	if err = d.Set("central_mgmt_schedule_script_restore", flattenSystemFortimanagerCentralMgmtScheduleScriptRestore(o["central-mgmt-schedule-script-restore"], d, "central_mgmt_schedule_script_restore", sv)); err != nil {
 		if !fortiAPIPatch(o["central-mgmt-schedule-script-restore"]) {
 			return fmt.Errorf("Error reading central_mgmt_schedule_script_restore: %v", err)
 		}
@@ -213,42 +214,43 @@ func refreshObjectSystemFortimanager(d *schema.ResourceData, o map[string]interf
 func flattenSystemFortimanagerFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemFortimanagerIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemFortimanagerIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemFortimanagerVdom(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemFortimanagerVdom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemFortimanagerIpsec(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemFortimanagerIpsec(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemFortimanagerCentralManagement(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemFortimanagerCentralManagement(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemFortimanagerCentralMgmtAutoBackup(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemFortimanagerCentralMgmtAutoBackup(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemFortimanagerCentralMgmtScheduleConfigRestore(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemFortimanagerCentralMgmtScheduleConfigRestore(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemFortimanagerCentralMgmtScheduleScriptRestore(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemFortimanagerCentralMgmtScheduleScriptRestore(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemFortimanager(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemFortimanager(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("ip"); ok {
-		t, err := expandSystemFortimanagerIp(d, v, "ip")
+
+		t, err := expandSystemFortimanagerIp(d, v, "ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -257,7 +259,8 @@ func getObjectSystemFortimanager(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("vdom"); ok {
-		t, err := expandSystemFortimanagerVdom(d, v, "vdom")
+
+		t, err := expandSystemFortimanagerVdom(d, v, "vdom", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -266,7 +269,8 @@ func getObjectSystemFortimanager(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("ipsec"); ok {
-		t, err := expandSystemFortimanagerIpsec(d, v, "ipsec")
+
+		t, err := expandSystemFortimanagerIpsec(d, v, "ipsec", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -275,7 +279,8 @@ func getObjectSystemFortimanager(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("central_management"); ok {
-		t, err := expandSystemFortimanagerCentralManagement(d, v, "central_management")
+
+		t, err := expandSystemFortimanagerCentralManagement(d, v, "central_management", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -284,7 +289,8 @@ func getObjectSystemFortimanager(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("central_mgmt_auto_backup"); ok {
-		t, err := expandSystemFortimanagerCentralMgmtAutoBackup(d, v, "central_mgmt_auto_backup")
+
+		t, err := expandSystemFortimanagerCentralMgmtAutoBackup(d, v, "central_mgmt_auto_backup", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -293,7 +299,8 @@ func getObjectSystemFortimanager(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("central_mgmt_schedule_config_restore"); ok {
-		t, err := expandSystemFortimanagerCentralMgmtScheduleConfigRestore(d, v, "central_mgmt_schedule_config_restore")
+
+		t, err := expandSystemFortimanagerCentralMgmtScheduleConfigRestore(d, v, "central_mgmt_schedule_config_restore", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -302,7 +309,8 @@ func getObjectSystemFortimanager(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("central_mgmt_schedule_script_restore"); ok {
-		t, err := expandSystemFortimanagerCentralMgmtScheduleScriptRestore(d, v, "central_mgmt_schedule_script_restore")
+
+		t, err := expandSystemFortimanagerCentralMgmtScheduleScriptRestore(d, v, "central_mgmt_schedule_script_restore", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
