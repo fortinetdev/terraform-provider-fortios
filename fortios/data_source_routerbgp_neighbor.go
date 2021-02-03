@@ -121,6 +121,14 @@ func dataSourceRouterbgpNeighbor() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"next_hop_self_rr": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"next_hop_self_rr6": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"override_capability": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -301,7 +309,15 @@ func dataSourceRouterbgpNeighbor() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"route_map_out_preferable": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"route_map_out6": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"route_map_out6_preferable": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -525,6 +541,14 @@ func dataSourceFlattenRouterbgpNeighborNextHopSelf6(v interface{}, d *schema.Res
 	return v
 }
 
+func dataSourceFlattenRouterbgpNeighborNextHopSelfRr(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterbgpNeighborNextHopSelfRr6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenRouterbgpNeighborOverrideCapability(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -705,7 +729,15 @@ func dataSourceFlattenRouterbgpNeighborRouteMapOut(v interface{}, d *schema.Reso
 	return v
 }
 
+func dataSourceFlattenRouterbgpNeighborRouteMapOutPreferable(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenRouterbgpNeighborRouteMapOut6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterbgpNeighborRouteMapOut6Preferable(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -973,6 +1005,18 @@ func dataSourceRefreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[stri
 	if err = d.Set("next_hop_self6", dataSourceFlattenRouterbgpNeighborNextHopSelf6(o["next-hop-self6"], d, "next_hop_self6")); err != nil {
 		if !fortiAPIPatch(o["next-hop-self6"]) {
 			return fmt.Errorf("Error reading next_hop_self6: %v", err)
+		}
+	}
+
+	if err = d.Set("next_hop_self_rr", dataSourceFlattenRouterbgpNeighborNextHopSelfRr(o["next-hop-self-rr"], d, "next_hop_self_rr")); err != nil {
+		if !fortiAPIPatch(o["next-hop-self-rr"]) {
+			return fmt.Errorf("Error reading next_hop_self_rr: %v", err)
+		}
+	}
+
+	if err = d.Set("next_hop_self_rr6", dataSourceFlattenRouterbgpNeighborNextHopSelfRr6(o["next-hop-self-rr6"], d, "next_hop_self_rr6")); err != nil {
+		if !fortiAPIPatch(o["next-hop-self-rr6"]) {
+			return fmt.Errorf("Error reading next_hop_self_rr6: %v", err)
 		}
 	}
 
@@ -1246,9 +1290,21 @@ func dataSourceRefreshObjectRouterbgpNeighbor(d *schema.ResourceData, o map[stri
 		}
 	}
 
+	if err = d.Set("route_map_out_preferable", dataSourceFlattenRouterbgpNeighborRouteMapOutPreferable(o["route-map-out-preferable"], d, "route_map_out_preferable")); err != nil {
+		if !fortiAPIPatch(o["route-map-out-preferable"]) {
+			return fmt.Errorf("Error reading route_map_out_preferable: %v", err)
+		}
+	}
+
 	if err = d.Set("route_map_out6", dataSourceFlattenRouterbgpNeighborRouteMapOut6(o["route-map-out6"], d, "route_map_out6")); err != nil {
 		if !fortiAPIPatch(o["route-map-out6"]) {
 			return fmt.Errorf("Error reading route_map_out6: %v", err)
+		}
+	}
+
+	if err = d.Set("route_map_out6_preferable", dataSourceFlattenRouterbgpNeighborRouteMapOut6Preferable(o["route-map-out6-preferable"], d, "route_map_out6_preferable")); err != nil {
+		if !fortiAPIPatch(o["route-map-out6-preferable"]) {
+			return fmt.Errorf("Error reading route_map_out6_preferable: %v", err)
 		}
 	}
 
