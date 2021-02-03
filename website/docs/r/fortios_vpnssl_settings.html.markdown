@@ -23,10 +23,10 @@ resource "fortios_vpnssl_settings" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `reqclientcert` - Enable to require client certificates for all SSL-VPN users.
+* `user_peer` - Name of user peer.
 * `ssl_max_proto_ver` - SSL maximum protocol version.
 * `ssl_min_proto_ver` - SSL minimum protocol version.
 * `tlsv1_0` - Enable/disable TLSv1.0.
@@ -77,12 +77,18 @@ The following arguments are supported:
 * `default_portal` - Default SSL VPN portal.
 * `authentication_rule` - Authentication rule for SSL VPN. The structure of `authentication_rule` block is documented below.
 * `dtls_tunnel` - Enable DTLS to prevent eavesdropping, tampering, or message forgery.
+* `dtls_max_proto_ver` - DTLS maximum protocol version.
+* `dtls_min_proto_ver` - DTLS minimum protocol version.
 * `check_referer` - Enable/disable verification of referer field in HTTP request header.
 * `http_request_header_timeout` - SSL-VPN session is disconnected if an HTTP request header is not received within this time (1 - 60 sec, default = 20).
 * `http_request_body_timeout` - SSL-VPN session is disconnected if an HTTP request body is not received within this time (1 - 60 sec, default = 20).
 * `auth_session_check_source_ip` - Enable/disable checking of source IP for authentication session.
 * `tunnel_connect_without_reauth` - Enable/disable tunnel connection without re-authorization if previous connection dropped.
 * `tunnel_user_session_timeout` - Time out value to clean up user session after tunnel connection is dropped (1 - 255 sec, default=30).
+* `hsts_include_subdomains` - Add HSTS includeSubDomains response header.
+* `transform_backward_slashes` - Transform backward slashes to forward slashes in URLs.
+* `encode_2f_sequence` - Encode \2F sequence to forward slash in URLs.
+* `encrypt_and_store_password` - Encrypt and store user passwords for SSL-VPN web sessions.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `tunnel_ip_pools` block supports:
@@ -118,6 +124,7 @@ The `authentication_rule` block supports:
 * `portal` - SSL VPN portal.
 * `realm` - SSL VPN realm.
 * `client_cert` - Enable/disable SSL VPN client certificate restrictive.
+* `user_peer` - Name of user peer.
 * `cipher` - SSL VPN cipher strength.
 * `auth` - SSL VPN authentication method restriction.
 
