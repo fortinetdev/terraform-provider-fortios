@@ -33,6 +33,14 @@ func dataSourceFirewallAddress6() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"start_mac": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"end_mac": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"sdn": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -50,6 +58,10 @@ func dataSourceFirewallAddress6() *schema.Resource {
 				Computed: true,
 			},
 			"fqdn": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"country": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -196,6 +208,14 @@ func dataSourceFlattenFirewallAddress6Type(v interface{}, d *schema.ResourceData
 	return v
 }
 
+func dataSourceFlattenFirewallAddress6StartMac(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddress6EndMac(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallAddress6Sdn(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -213,6 +233,10 @@ func dataSourceFlattenFirewallAddress6EndIp(v interface{}, d *schema.ResourceDat
 }
 
 func dataSourceFlattenFirewallAddress6Fqdn(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddress6Country(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -445,6 +469,18 @@ func dataSourceRefreshObjectFirewallAddress6(d *schema.ResourceData, o map[strin
 		}
 	}
 
+	if err = d.Set("start_mac", dataSourceFlattenFirewallAddress6StartMac(o["start-mac"], d, "start_mac")); err != nil {
+		if !fortiAPIPatch(o["start-mac"]) {
+			return fmt.Errorf("Error reading start_mac: %v", err)
+		}
+	}
+
+	if err = d.Set("end_mac", dataSourceFlattenFirewallAddress6EndMac(o["end-mac"], d, "end_mac")); err != nil {
+		if !fortiAPIPatch(o["end-mac"]) {
+			return fmt.Errorf("Error reading end_mac: %v", err)
+		}
+	}
+
 	if err = d.Set("sdn", dataSourceFlattenFirewallAddress6Sdn(o["sdn"], d, "sdn")); err != nil {
 		if !fortiAPIPatch(o["sdn"]) {
 			return fmt.Errorf("Error reading sdn: %v", err)
@@ -472,6 +508,12 @@ func dataSourceRefreshObjectFirewallAddress6(d *schema.ResourceData, o map[strin
 	if err = d.Set("fqdn", dataSourceFlattenFirewallAddress6Fqdn(o["fqdn"], d, "fqdn")); err != nil {
 		if !fortiAPIPatch(o["fqdn"]) {
 			return fmt.Errorf("Error reading fqdn: %v", err)
+		}
+	}
+
+	if err = d.Set("country", dataSourceFlattenFirewallAddress6Country(o["country"], d, "country")); err != nil {
+		if !fortiAPIPatch(o["country"]) {
+			return fmt.Errorf("Error reading country: %v", err)
 		}
 	}
 
