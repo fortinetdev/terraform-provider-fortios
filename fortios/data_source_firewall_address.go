@@ -37,6 +37,22 @@ func dataSourceFirewallAddress() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"sub_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"clearpass_spt": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"start_mac": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"end_mac": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"start_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -69,6 +85,22 @@ func dataSourceFirewallAddress() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"fsso_group": &schema.Schema{
+				Type:     schema.TypeList,
+				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"name": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
+			},
+			"interface": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"tenant": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -93,6 +125,14 @@ func dataSourceFirewallAddress() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"obj_tag": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"obj_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 			"comment": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -110,6 +150,14 @@ func dataSourceFirewallAddress() *schema.Resource {
 				Computed: true,
 			},
 			"filter": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"sdn_addr_type": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
+			"node_ip_only": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
 			},
@@ -223,6 +271,22 @@ func dataSourceFlattenFirewallAddressType(v interface{}, d *schema.ResourceData,
 	return v
 }
 
+func dataSourceFlattenFirewallAddressSubType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddressClearpassSpt(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddressStartMac(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddressEndMac(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallAddressStartIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -262,6 +326,46 @@ func dataSourceFlattenFirewallAddressSdn(v interface{}, d *schema.ResourceData, 
 	return v
 }
 
+func dataSourceFlattenFirewallAddressFssoGroup(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+	if v == nil {
+		return nil
+	}
+
+	l := v.([]interface{})
+	if len(l) == 0 || l[0] == nil {
+		return nil
+	}
+
+	result := make([]map[string]interface{}, 0, len(l))
+
+	con := 0
+	for _, r := range l {
+		tmp := make(map[string]interface{})
+		i := r.(map[string]interface{})
+
+		pre_append := "" // table
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
+		if _, ok := i["name"]; ok {
+			tmp["name"] = dataSourceFlattenFirewallAddressFssoGroupName(i["name"], d, pre_append)
+		}
+
+		result = append(result, tmp)
+
+		con += 1
+	}
+
+	return result
+}
+
+func dataSourceFlattenFirewallAddressFssoGroupName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddressInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallAddressTenant(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -286,6 +390,14 @@ func dataSourceFlattenFirewallAddressPolicyGroup(v interface{}, d *schema.Resour
 	return v
 }
 
+func dataSourceFlattenFirewallAddressObjTag(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddressObjType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceFlattenFirewallAddressComment(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
@@ -303,6 +415,14 @@ func dataSourceFlattenFirewallAddressColor(v interface{}, d *schema.ResourceData
 }
 
 func dataSourceFlattenFirewallAddressFilter(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddressSdnAddrType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenFirewallAddressNodeIpOnly(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -463,6 +583,30 @@ func dataSourceRefreshObjectFirewallAddress(d *schema.ResourceData, o map[string
 		}
 	}
 
+	if err = d.Set("sub_type", dataSourceFlattenFirewallAddressSubType(o["sub-type"], d, "sub_type")); err != nil {
+		if !fortiAPIPatch(o["sub-type"]) {
+			return fmt.Errorf("Error reading sub_type: %v", err)
+		}
+	}
+
+	if err = d.Set("clearpass_spt", dataSourceFlattenFirewallAddressClearpassSpt(o["clearpass-spt"], d, "clearpass_spt")); err != nil {
+		if !fortiAPIPatch(o["clearpass-spt"]) {
+			return fmt.Errorf("Error reading clearpass_spt: %v", err)
+		}
+	}
+
+	if err = d.Set("start_mac", dataSourceFlattenFirewallAddressStartMac(o["start-mac"], d, "start_mac")); err != nil {
+		if !fortiAPIPatch(o["start-mac"]) {
+			return fmt.Errorf("Error reading start_mac: %v", err)
+		}
+	}
+
+	if err = d.Set("end_mac", dataSourceFlattenFirewallAddressEndMac(o["end-mac"], d, "end_mac")); err != nil {
+		if !fortiAPIPatch(o["end-mac"]) {
+			return fmt.Errorf("Error reading end_mac: %v", err)
+		}
+	}
+
 	if err = d.Set("start_ip", dataSourceFlattenFirewallAddressStartIp(o["start-ip"], d, "start_ip")); err != nil {
 		if !fortiAPIPatch(o["start-ip"]) {
 			return fmt.Errorf("Error reading start_ip: %v", err)
@@ -511,6 +655,18 @@ func dataSourceRefreshObjectFirewallAddress(d *schema.ResourceData, o map[string
 		}
 	}
 
+	if err = d.Set("fsso_group", dataSourceFlattenFirewallAddressFssoGroup(o["fsso-group"], d, "fsso_group")); err != nil {
+		if !fortiAPIPatch(o["fsso-group"]) {
+			return fmt.Errorf("Error reading fsso_group: %v", err)
+		}
+	}
+
+	if err = d.Set("interface", dataSourceFlattenFirewallAddressInterface(o["interface"], d, "interface")); err != nil {
+		if !fortiAPIPatch(o["interface"]) {
+			return fmt.Errorf("Error reading interface: %v", err)
+		}
+	}
+
 	if err = d.Set("tenant", dataSourceFlattenFirewallAddressTenant(o["tenant"], d, "tenant")); err != nil {
 		if !fortiAPIPatch(o["tenant"]) {
 			return fmt.Errorf("Error reading tenant: %v", err)
@@ -547,6 +703,18 @@ func dataSourceRefreshObjectFirewallAddress(d *schema.ResourceData, o map[string
 		}
 	}
 
+	if err = d.Set("obj_tag", dataSourceFlattenFirewallAddressObjTag(o["obj-tag"], d, "obj_tag")); err != nil {
+		if !fortiAPIPatch(o["obj-tag"]) {
+			return fmt.Errorf("Error reading obj_tag: %v", err)
+		}
+	}
+
+	if err = d.Set("obj_type", dataSourceFlattenFirewallAddressObjType(o["obj-type"], d, "obj_type")); err != nil {
+		if !fortiAPIPatch(o["obj-type"]) {
+			return fmt.Errorf("Error reading obj_type: %v", err)
+		}
+	}
+
 	if err = d.Set("comment", dataSourceFlattenFirewallAddressComment(o["comment"], d, "comment")); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
@@ -574,6 +742,18 @@ func dataSourceRefreshObjectFirewallAddress(d *schema.ResourceData, o map[string
 	if err = d.Set("filter", dataSourceFlattenFirewallAddressFilter(o["filter"], d, "filter")); err != nil {
 		if !fortiAPIPatch(o["filter"]) {
 			return fmt.Errorf("Error reading filter: %v", err)
+		}
+	}
+
+	if err = d.Set("sdn_addr_type", dataSourceFlattenFirewallAddressSdnAddrType(o["sdn-addr-type"], d, "sdn_addr_type")); err != nil {
+		if !fortiAPIPatch(o["sdn-addr-type"]) {
+			return fmt.Errorf("Error reading sdn_addr_type: %v", err)
+		}
+	}
+
+	if err = d.Set("node_ip_only", dataSourceFlattenFirewallAddressNodeIpOnly(o["node-ip-only"], d, "node_ip_only")); err != nil {
+		if !fortiAPIPatch(o["node-ip-only"]) {
+			return fmt.Errorf("Error reading node_ip_only: %v", err)
 		}
 	}
 
