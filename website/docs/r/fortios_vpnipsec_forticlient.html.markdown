@@ -166,7 +166,6 @@ resource "fortios_vpnipsec_forticlient" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `realm` - FortiClient realm name.
