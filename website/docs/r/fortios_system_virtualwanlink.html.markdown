@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_system_virtualwanlink
-Configure redundant internet connections using SD-WAN (formerly virtual WAN link).
+Configure redundant internet connections using SD-WAN (formerly virtual WAN link). Applies to FortiOS Version `<= 6.4.0`.
 
 ## Example Usage
 
@@ -21,21 +21,29 @@ resource "fortios_system_virtualwanlink" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `status` - Enable/disable SD-WAN.
 * `load_balance_mode` - Algorithm or mode to use for load balancing Internet traffic to SD-WAN members.
+* `neighbor_hold_down` - Enable/disable hold switching from the secondary neighbor to the primary neighbor.
+* `neighbor_hold_down_time` - Waiting period in seconds when switching from the secondary neighbor to the primary neighbor when hold-down is disabled. (0 - 10000000, default = 0).
+* `neighbor_hold_boot_time` - Waiting period in seconds when switching from the primary neighbor to the secondary neighbor from the neighbor start. (0 - 10000000, default = 0).
 * `fail_detect` - Enable/disable SD-WAN Internet connection status checking (failure detection).
 * `fail_alert_interfaces` - Physical interfaces that will be alerted. The structure of `fail_alert_interfaces` block is documented below.
+* `zone` - Configure SD-WAN zones. The structure of `zone` block is documented below.
 * `members` - Physical FortiGate interfaces added to the virtual-wan-link. The structure of `members` block is documented below.
 * `health_check` - SD-WAN status checking or health checking. Identify a server on the Internet and determine how SD-WAN verifies that the FortiGate can communicate with it. The structure of `health_check` block is documented below.
+* `neighbor` - Create SD-WAN neighbor from BGP neighbor table to control route advertisements according to SLA status. The structure of `neighbor` block is documented below.
 * `service` - Create SD-WAN rules or priority rules (also called services) to control how sessions are distributed to physical interfaces in the SD-WAN. The structure of `service` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `fail_alert_interfaces` block supports:
 
 * `name` - Physical interface name.
+
+The `zone` block supports:
+
+* `name` - Zone name.
 
 The `members` block supports:
 
@@ -59,18 +67,24 @@ The `health_check` block supports:
 * `name` - Status check or health check name.
 * `probe_packets` - Enable/disable transmission of probe packets.
 * `addr_mode` - Address mode (IPv4 or IPv6).
+* `system_dns` - Enable/disable system DNS as the probe server.
 * `server` - IP address or FQDN name of the server.
 * `protocol` - Protocol used to determine if the FortiGate can communicate with the server.
 * `port` - Port number used to communicate with the server over the selected protocol.
 * `security_mode` - Twamp controller security mode.
 * `password` - Twamp controller password in authentication mode
 * `packet_size` - Packet size of a twamp test session,
+* `ha_priority` - HA election priority (1 - 50).
 * `http_get` - URL used to communicate with the server if the protocol if the protocol is HTTP.
 * `http_agent` - String in the http-agent field in the HTTP header.
 * `http_match` - Response string expected from the server if the protocol is HTTP.
+* `dns_request_domain` - Fully qualified domain name to resolve for the DNS probe.
 * `interval` - Status check interval, or the time between attempting to connect to the server (1 - 3600 sec, default = 5).
+* `probe_timeout` - Time to wait before a probe packet is considered lost (500 - 5000 msec, default = 500).
 * `failtime` - Number of failures before server is considered lost (1 - 3600, default = 5).
 * `recoverytime` - Number of successful responses received before server is considered recovered (1 - 3600, default = 5).
+* `probe_count` - Number of most recent probes that should be used to calculate latency and jitter (5 - 30, default = 30).
+* `diffservcode` - Differentiated services code point (DSCP) in the IP header of the probe packet.
 * `update_cascade_interface` - Enable/disable update cascade interface.
 * `update_static_route` - Enable/disable updating the static route.
 * `sla_fail_log_period` - Time interval in seconds that SLA fail log messages will be generated (0 - 3600, default = 0).
@@ -96,13 +110,24 @@ The `sla` block supports:
 * `jitter_threshold` - Jitter for SLA to make decision in milliseconds. (0 - 10000000, default = 5).
 * `packetloss_threshold` - Packet loss for SLA to make decision in percentage. (0 - 100, default = 0).
 
+The `neighbor` block supports:
+
+* `ip` - IP address of neighbor.
+* `member` - Member sequence number.
+* `role` - Role of neighbor.
+* `health_check` - SD-WAN health-check name.
+* `sla_id` - SLA ID.
+
 The `service` block supports:
 
 * `id` - Priority rule ID (1 - 4000).
 * `name` - Priority rule name.
 * `addr_mode` - Address mode (IPv4 or IPv6).
 * `input_device` - Source interface name. The structure of `input_device` block is documented below.
+* `input_device_negate` - Enable/disable negation of input device match.
 * `mode` - Control how the priority rule sets the priority of interfaces in the SD-WAN.
+* `role` - Service role to work with neighbor.
+* `standalone_action` - Enable/disable service when selected neighbor role is standalone while service role is not standalone.
 * `quality_link` - Quality grade.
 * `member` - Member sequence number.
 * `tos` - Type of service bit pattern.
@@ -122,8 +147,11 @@ The `service` block supports:
 * `internet_service` - Enable/disable use of Internet service for application-based load balancing.
 * `internet_service_custom` - Custom Internet service name list. The structure of `internet_service_custom` block is documented below.
 * `internet_service_custom_group` - Custom Internet Service group list. The structure of `internet_service_custom_group` block is documented below.
+* `internet_service_name` - Internet service name list. The structure of `internet_service_name` block is documented below.
 * `internet_service_id` - Internet service ID list. The structure of `internet_service_id` block is documented below.
 * `internet_service_group` - Internet Service group list. The structure of `internet_service_group` block is documented below.
+* `internet_service_app_ctrl` - Application control based Internet Service ID list. The structure of `internet_service_app_ctrl` block is documented below.
+* `internet_service_app_ctrl_group` - Application control based Internet Service group list. The structure of `internet_service_app_ctrl_group` block is documented below.
 * `internet_service_ctrl` - Control-based Internet Service ID list. The structure of `internet_service_ctrl` block is documented below.
 * `internet_service_ctrl_group` - Control-based Internet Service group list. The structure of `internet_service_ctrl_group` block is documented below.
 * `health_check` - Health check.
@@ -142,6 +170,8 @@ The `service` block supports:
 * `priority_members` - Member sequence number list. The structure of `priority_members` block is documented below.
 * `status` - Enable/disable SD-WAN service.
 * `gateway` - Enable/disable SD-WAN service gateway.
+* `default` - Enable/disable use of SD-WAN as default service.
+* `sla_compare_method` - Method to compare SLA value for sla and load balance mode. 
 
 The `input_device` block supports:
 
@@ -179,6 +209,10 @@ The `internet_service_custom_group` block supports:
 
 * `name` - Custom Internet Service group name.
 
+The `internet_service_name` block supports:
+
+* `name` - Internet service name.
+
 The `internet_service_id` block supports:
 
 * `id` - Internet service ID.
@@ -186,6 +220,14 @@ The `internet_service_id` block supports:
 The `internet_service_group` block supports:
 
 * `name` - Internet Service group name.
+
+The `internet_service_app_ctrl` block supports:
+
+* `id` - Application control based Internet Service ID.
+
+The `internet_service_app_ctrl_group` block supports:
+
+* `name` - Application control based Internet Service group name.
 
 The `internet_service_ctrl` block supports:
 
