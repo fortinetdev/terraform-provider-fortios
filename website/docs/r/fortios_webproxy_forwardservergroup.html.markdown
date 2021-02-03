@@ -37,7 +37,6 @@ resource "fortios_webproxy_forwardservergroup" "trname1" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Configure a forward server group consisting one or multiple forward servers. Supports failover and load balancing.
