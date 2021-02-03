@@ -11,13 +11,13 @@ CA certificate.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - (Required) Name.
 * `ca` - (Required) CA certificate as a PEM file.
 * `range` - Either global or VDOM IP address range for the CA certificate.
 * `source` - CA certificate source type.
+* `ssl_inspection_trusted` - Enable/disable this CA as a trusted CA for SSL inspection.
 * `trusted` - Enable/disable as a trusted CA.
 * `scep_url` - URL of the SCEP server.
 * `auto_update_days` - Number of days to wait before requesting an updated CA certificate (0 - 4294967295, 0 = disabled).
