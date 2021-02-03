@@ -20,7 +20,6 @@ resource "fortios_logmemory_setting" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `status` - Enable/disable logging to the FortiGate's memory.
