@@ -36,7 +36,6 @@ resource "fortios_authentication_scheme" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Authentication scheme name.
