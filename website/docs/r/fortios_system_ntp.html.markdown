@@ -24,7 +24,6 @@ resource "fortios_system_ntp" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `ntpsync` - Enable/disable setting the FortiGate system time by synchronizing with an NTP Server.
@@ -34,6 +33,10 @@ The following arguments are supported:
 * `source_ip` - Source IP address for communication to the NTP server.
 * `source_ip6` - Source IPv6 address for communication to the NTP server.
 * `server_mode` - Enable/disable FortiGate NTP Server Mode. Your FortiGate becomes an NTP server for other devices on your network. The FortiGate relays NTP requests to its configured NTP server.
+* `authentication` - Enable/disable authentication.
+* `key_type` - Key type for authentication (MD5, SHA1).
+* `key` - Key for authentication.
+* `key_id` - Key ID for authentication.
 * `interface` - FortiGate interface(s) with NTP server mode enabled. Devices on your network can contact these interfaces for NTP services. The structure of `interface` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
@@ -45,6 +48,8 @@ The `ntpserver` block supports:
 * `authentication` - Enable/disable MD5/SHA1 authentication.
 * `key` - Key for MD5/SHA1 authentication.
 * `key_id` - Key ID for authentication.
+* `interface_select_method` - Specify how to select outgoing interface to reach server.
+* `interface` - Specify outgoing interface to reach server.
 
 The `interface` block supports:
 
