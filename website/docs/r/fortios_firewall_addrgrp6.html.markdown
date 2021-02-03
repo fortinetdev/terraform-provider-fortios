@@ -38,7 +38,6 @@ resource "fortios_firewall_addrgrp6" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - IPv6 address group name.
