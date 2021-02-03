@@ -23,7 +23,6 @@ resource "fortios_logfortiguard_overridesetting" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `override` - Overriding FortiCloud settings for this VDOM or use global settings.
@@ -32,6 +31,8 @@ The following arguments are supported:
 * `upload_interval` - Frequency of uploading log files to FortiCloud.
 * `upload_day` - Day of week to roll logs.
 * `upload_time` - Time of day to roll logs (hh:mm).
+* `priority` - Set log transmission priority.
+* `max_log_rate` - FortiCloud maximum log rate in MBps (0 = unlimited).
 
 
 ## Attribute Reference
