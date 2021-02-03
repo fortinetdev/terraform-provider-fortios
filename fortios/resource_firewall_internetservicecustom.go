@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -117,7 +118,7 @@ func resourceFirewallInternetServiceCustomCreate(d *schema.ResourceData, m inter
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectFirewallInternetServiceCustom(d)
+	obj, err := getObjectFirewallInternetServiceCustom(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallInternetServiceCustom resource while getting object: %v", err)
 	}
@@ -142,7 +143,7 @@ func resourceFirewallInternetServiceCustomUpdate(d *schema.ResourceData, m inter
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectFirewallInternetServiceCustom(d)
+	obj, err := getObjectFirewallInternetServiceCustom(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallInternetServiceCustom resource while getting object: %v", err)
 	}
@@ -195,26 +196,26 @@ func resourceFirewallInternetServiceCustomRead(d *schema.ResourceData, m interfa
 		return nil
 	}
 
-	err = refreshObjectFirewallInternetServiceCustom(d, o)
+	err = refreshObjectFirewallInternetServiceCustom(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallInternetServiceCustom resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenFirewallInternetServiceCustomName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallInternetServiceCustomName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallInternetServiceCustomReputation(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallInternetServiceCustomReputation(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallInternetServiceCustomComment(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallInternetServiceCustomComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallInternetServiceCustomEntry(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenFirewallInternetServiceCustomEntry(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -235,22 +236,26 @@ func flattenFirewallInternetServiceCustomEntry(v interface{}, d *schema.Resource
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenFirewallInternetServiceCustomEntryId(i["id"], d, pre_append)
+
+			tmp["id"] = flattenFirewallInternetServiceCustomEntryId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := i["protocol"]; ok {
-			tmp["protocol"] = flattenFirewallInternetServiceCustomEntryProtocol(i["protocol"], d, pre_append)
+
+			tmp["protocol"] = flattenFirewallInternetServiceCustomEntryProtocol(i["protocol"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port_range"
 		if _, ok := i["port-range"]; ok {
-			tmp["port_range"] = flattenFirewallInternetServiceCustomEntryPortRange(i["port-range"], d, pre_append)
+
+			tmp["port_range"] = flattenFirewallInternetServiceCustomEntryPortRange(i["port-range"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
 		if _, ok := i["dst"]; ok {
-			tmp["dst"] = flattenFirewallInternetServiceCustomEntryDst(i["dst"], d, pre_append)
+
+			tmp["dst"] = flattenFirewallInternetServiceCustomEntryDst(i["dst"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -262,15 +267,15 @@ func flattenFirewallInternetServiceCustomEntry(v interface{}, d *schema.Resource
 	return result
 }
 
-func flattenFirewallInternetServiceCustomEntryId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallInternetServiceCustomEntryId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallInternetServiceCustomEntryProtocol(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallInternetServiceCustomEntryProtocol(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallInternetServiceCustomEntryPortRange(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenFirewallInternetServiceCustomEntryPortRange(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -291,17 +296,20 @@ func flattenFirewallInternetServiceCustomEntryPortRange(v interface{}, d *schema
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenFirewallInternetServiceCustomEntryPortRangeId(i["id"], d, pre_append)
+
+			tmp["id"] = flattenFirewallInternetServiceCustomEntryPortRangeId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_port"
 		if _, ok := i["start-port"]; ok {
-			tmp["start_port"] = flattenFirewallInternetServiceCustomEntryPortRangeStartPort(i["start-port"], d, pre_append)
+
+			tmp["start_port"] = flattenFirewallInternetServiceCustomEntryPortRangeStartPort(i["start-port"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_port"
 		if _, ok := i["end-port"]; ok {
-			tmp["end_port"] = flattenFirewallInternetServiceCustomEntryPortRangeEndPort(i["end-port"], d, pre_append)
+
+			tmp["end_port"] = flattenFirewallInternetServiceCustomEntryPortRangeEndPort(i["end-port"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -312,19 +320,19 @@ func flattenFirewallInternetServiceCustomEntryPortRange(v interface{}, d *schema
 	return result
 }
 
-func flattenFirewallInternetServiceCustomEntryPortRangeId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallInternetServiceCustomEntryPortRangeId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallInternetServiceCustomEntryPortRangeStartPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallInternetServiceCustomEntryPortRangeStartPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallInternetServiceCustomEntryPortRangeEndPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallInternetServiceCustomEntryPortRangeEndPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallInternetServiceCustomEntryDst(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenFirewallInternetServiceCustomEntryDst(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -345,7 +353,8 @@ func flattenFirewallInternetServiceCustomEntryDst(v interface{}, d *schema.Resou
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallInternetServiceCustomEntryDstName(i["name"], d, pre_append)
+
+			tmp["name"] = flattenFirewallInternetServiceCustomEntryDstName(i["name"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -356,40 +365,40 @@ func flattenFirewallInternetServiceCustomEntryDst(v interface{}, d *schema.Resou
 	return result
 }
 
-func flattenFirewallInternetServiceCustomEntryDstName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallInternetServiceCustomEntryDstName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectFirewallInternetServiceCustom(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectFirewallInternetServiceCustom(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenFirewallInternetServiceCustomName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenFirewallInternetServiceCustomName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("reputation", flattenFirewallInternetServiceCustomReputation(o["reputation"], d, "reputation")); err != nil {
+	if err = d.Set("reputation", flattenFirewallInternetServiceCustomReputation(o["reputation"], d, "reputation", sv)); err != nil {
 		if !fortiAPIPatch(o["reputation"]) {
 			return fmt.Errorf("Error reading reputation: %v", err)
 		}
 	}
 
-	if err = d.Set("comment", flattenFirewallInternetServiceCustomComment(o["comment"], d, "comment")); err != nil {
+	if err = d.Set("comment", flattenFirewallInternetServiceCustomComment(o["comment"], d, "comment", sv)); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("entry", flattenFirewallInternetServiceCustomEntry(o["entry"], d, "entry")); err != nil {
+		if err = d.Set("entry", flattenFirewallInternetServiceCustomEntry(o["entry"], d, "entry", sv)); err != nil {
 			if !fortiAPIPatch(o["entry"]) {
 				return fmt.Errorf("Error reading entry: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("entry"); ok {
-			if err = d.Set("entry", flattenFirewallInternetServiceCustomEntry(o["entry"], d, "entry")); err != nil {
+			if err = d.Set("entry", flattenFirewallInternetServiceCustomEntry(o["entry"], d, "entry", sv)); err != nil {
 				if !fortiAPIPatch(o["entry"]) {
 					return fmt.Errorf("Error reading entry: %v", err)
 				}
@@ -403,22 +412,22 @@ func refreshObjectFirewallInternetServiceCustom(d *schema.ResourceData, o map[st
 func flattenFirewallInternetServiceCustomFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandFirewallInternetServiceCustomName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallInternetServiceCustomName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallInternetServiceCustomReputation(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallInternetServiceCustomReputation(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallInternetServiceCustomComment(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallInternetServiceCustomComment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallInternetServiceCustomEntry(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallInternetServiceCustomEntry(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -434,24 +443,28 @@ func expandFirewallInternetServiceCustomEntry(d *schema.ResourceData, v interfac
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandFirewallInternetServiceCustomEntryId(d, i["id"], pre_append)
+
+			tmp["id"], _ = expandFirewallInternetServiceCustomEntryId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "protocol"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["protocol"], _ = expandFirewallInternetServiceCustomEntryProtocol(d, i["protocol"], pre_append)
+
+			tmp["protocol"], _ = expandFirewallInternetServiceCustomEntryProtocol(d, i["protocol"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "port_range"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["port-range"], _ = expandFirewallInternetServiceCustomEntryPortRange(d, i["port_range"], pre_append)
+
+			tmp["port-range"], _ = expandFirewallInternetServiceCustomEntryPortRange(d, i["port_range"], pre_append, sv)
 		} else {
 			tmp["port-range"] = make([]string, 0)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "dst"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["dst"], _ = expandFirewallInternetServiceCustomEntryDst(d, i["dst"], pre_append)
+
+			tmp["dst"], _ = expandFirewallInternetServiceCustomEntryDst(d, i["dst"], pre_append, sv)
 		} else {
 			tmp["dst"] = make([]string, 0)
 		}
@@ -464,15 +477,15 @@ func expandFirewallInternetServiceCustomEntry(d *schema.ResourceData, v interfac
 	return result, nil
 }
 
-func expandFirewallInternetServiceCustomEntryId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallInternetServiceCustomEntryId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallInternetServiceCustomEntryProtocol(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallInternetServiceCustomEntryProtocol(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallInternetServiceCustomEntryPortRange(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallInternetServiceCustomEntryPortRange(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -488,17 +501,20 @@ func expandFirewallInternetServiceCustomEntryPortRange(d *schema.ResourceData, v
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandFirewallInternetServiceCustomEntryPortRangeId(d, i["id"], pre_append)
+
+			tmp["id"], _ = expandFirewallInternetServiceCustomEntryPortRangeId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "start_port"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["start-port"], _ = expandFirewallInternetServiceCustomEntryPortRangeStartPort(d, i["start_port"], pre_append)
+
+			tmp["start-port"], _ = expandFirewallInternetServiceCustomEntryPortRangeStartPort(d, i["start_port"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "end_port"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["end-port"], _ = expandFirewallInternetServiceCustomEntryPortRangeEndPort(d, i["end_port"], pre_append)
+
+			tmp["end-port"], _ = expandFirewallInternetServiceCustomEntryPortRangeEndPort(d, i["end_port"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -509,19 +525,19 @@ func expandFirewallInternetServiceCustomEntryPortRange(d *schema.ResourceData, v
 	return result, nil
 }
 
-func expandFirewallInternetServiceCustomEntryPortRangeId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallInternetServiceCustomEntryPortRangeId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallInternetServiceCustomEntryPortRangeStartPort(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallInternetServiceCustomEntryPortRangeStartPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallInternetServiceCustomEntryPortRangeEndPort(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallInternetServiceCustomEntryPortRangeEndPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallInternetServiceCustomEntryDst(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallInternetServiceCustomEntryDst(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -537,7 +553,8 @@ func expandFirewallInternetServiceCustomEntryDst(d *schema.ResourceData, v inter
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallInternetServiceCustomEntryDstName(d, i["name"], pre_append)
+
+			tmp["name"], _ = expandFirewallInternetServiceCustomEntryDstName(d, i["name"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -548,15 +565,16 @@ func expandFirewallInternetServiceCustomEntryDst(d *schema.ResourceData, v inter
 	return result, nil
 }
 
-func expandFirewallInternetServiceCustomEntryDstName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallInternetServiceCustomEntryDstName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectFirewallInternetServiceCustom(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectFirewallInternetServiceCustom(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandFirewallInternetServiceCustomName(d, v, "name")
+
+		t, err := expandFirewallInternetServiceCustomName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -565,7 +583,8 @@ func getObjectFirewallInternetServiceCustom(d *schema.ResourceData) (*map[string
 	}
 
 	if v, ok := d.GetOkExists("reputation"); ok {
-		t, err := expandFirewallInternetServiceCustomReputation(d, v, "reputation")
+
+		t, err := expandFirewallInternetServiceCustomReputation(d, v, "reputation", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -574,7 +593,8 @@ func getObjectFirewallInternetServiceCustom(d *schema.ResourceData) (*map[string
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-		t, err := expandFirewallInternetServiceCustomComment(d, v, "comment")
+
+		t, err := expandFirewallInternetServiceCustomComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -583,7 +603,8 @@ func getObjectFirewallInternetServiceCustom(d *schema.ResourceData) (*map[string
 	}
 
 	if v, ok := d.GetOk("entry"); ok {
-		t, err := expandFirewallInternetServiceCustomEntry(d, v, "entry")
+
+		t, err := expandFirewallInternetServiceCustomEntry(d, v, "entry", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
