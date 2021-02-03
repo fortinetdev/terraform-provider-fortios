@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -77,7 +78,7 @@ func resourceWebfilterSearchEngineCreate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWebfilterSearchEngine(d)
+	obj, err := getObjectWebfilterSearchEngine(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WebfilterSearchEngine resource while getting object: %v", err)
 	}
@@ -102,7 +103,7 @@ func resourceWebfilterSearchEngineUpdate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWebfilterSearchEngine(d)
+	obj, err := getObjectWebfilterSearchEngine(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WebfilterSearchEngine resource while getting object: %v", err)
 	}
@@ -155,81 +156,81 @@ func resourceWebfilterSearchEngineRead(d *schema.ResourceData, m interface{}) er
 		return nil
 	}
 
-	err = refreshObjectWebfilterSearchEngine(d, o)
+	err = refreshObjectWebfilterSearchEngine(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading WebfilterSearchEngine resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenWebfilterSearchEngineName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebfilterSearchEngineName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebfilterSearchEngineHostname(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebfilterSearchEngineHostname(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebfilterSearchEngineUrl(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebfilterSearchEngineUrl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebfilterSearchEngineQuery(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebfilterSearchEngineQuery(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebfilterSearchEngineSafesearch(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebfilterSearchEngineSafesearch(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebfilterSearchEngineCharset(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebfilterSearchEngineCharset(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebfilterSearchEngineSafesearchStr(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebfilterSearchEngineSafesearchStr(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectWebfilterSearchEngine(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectWebfilterSearchEngine(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenWebfilterSearchEngineName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenWebfilterSearchEngineName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("hostname", flattenWebfilterSearchEngineHostname(o["hostname"], d, "hostname")); err != nil {
+	if err = d.Set("hostname", flattenWebfilterSearchEngineHostname(o["hostname"], d, "hostname", sv)); err != nil {
 		if !fortiAPIPatch(o["hostname"]) {
 			return fmt.Errorf("Error reading hostname: %v", err)
 		}
 	}
 
-	if err = d.Set("url", flattenWebfilterSearchEngineUrl(o["url"], d, "url")); err != nil {
+	if err = d.Set("url", flattenWebfilterSearchEngineUrl(o["url"], d, "url", sv)); err != nil {
 		if !fortiAPIPatch(o["url"]) {
 			return fmt.Errorf("Error reading url: %v", err)
 		}
 	}
 
-	if err = d.Set("query", flattenWebfilterSearchEngineQuery(o["query"], d, "query")); err != nil {
+	if err = d.Set("query", flattenWebfilterSearchEngineQuery(o["query"], d, "query", sv)); err != nil {
 		if !fortiAPIPatch(o["query"]) {
 			return fmt.Errorf("Error reading query: %v", err)
 		}
 	}
 
-	if err = d.Set("safesearch", flattenWebfilterSearchEngineSafesearch(o["safesearch"], d, "safesearch")); err != nil {
+	if err = d.Set("safesearch", flattenWebfilterSearchEngineSafesearch(o["safesearch"], d, "safesearch", sv)); err != nil {
 		if !fortiAPIPatch(o["safesearch"]) {
 			return fmt.Errorf("Error reading safesearch: %v", err)
 		}
 	}
 
-	if err = d.Set("charset", flattenWebfilterSearchEngineCharset(o["charset"], d, "charset")); err != nil {
+	if err = d.Set("charset", flattenWebfilterSearchEngineCharset(o["charset"], d, "charset", sv)); err != nil {
 		if !fortiAPIPatch(o["charset"]) {
 			return fmt.Errorf("Error reading charset: %v", err)
 		}
 	}
 
-	if err = d.Set("safesearch_str", flattenWebfilterSearchEngineSafesearchStr(o["safesearch-str"], d, "safesearch_str")); err != nil {
+	if err = d.Set("safesearch_str", flattenWebfilterSearchEngineSafesearchStr(o["safesearch-str"], d, "safesearch_str", sv)); err != nil {
 		if !fortiAPIPatch(o["safesearch-str"]) {
 			return fmt.Errorf("Error reading safesearch_str: %v", err)
 		}
@@ -241,42 +242,43 @@ func refreshObjectWebfilterSearchEngine(d *schema.ResourceData, o map[string]int
 func flattenWebfilterSearchEngineFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandWebfilterSearchEngineName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebfilterSearchEngineName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebfilterSearchEngineHostname(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebfilterSearchEngineHostname(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebfilterSearchEngineUrl(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebfilterSearchEngineUrl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebfilterSearchEngineQuery(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebfilterSearchEngineQuery(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebfilterSearchEngineSafesearch(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebfilterSearchEngineSafesearch(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebfilterSearchEngineCharset(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebfilterSearchEngineCharset(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebfilterSearchEngineSafesearchStr(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebfilterSearchEngineSafesearchStr(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectWebfilterSearchEngine(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectWebfilterSearchEngine(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandWebfilterSearchEngineName(d, v, "name")
+
+		t, err := expandWebfilterSearchEngineName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -285,7 +287,8 @@ func getObjectWebfilterSearchEngine(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("hostname"); ok {
-		t, err := expandWebfilterSearchEngineHostname(d, v, "hostname")
+
+		t, err := expandWebfilterSearchEngineHostname(d, v, "hostname", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -294,7 +297,8 @@ func getObjectWebfilterSearchEngine(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("url"); ok {
-		t, err := expandWebfilterSearchEngineUrl(d, v, "url")
+
+		t, err := expandWebfilterSearchEngineUrl(d, v, "url", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -303,7 +307,8 @@ func getObjectWebfilterSearchEngine(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("query"); ok {
-		t, err := expandWebfilterSearchEngineQuery(d, v, "query")
+
+		t, err := expandWebfilterSearchEngineQuery(d, v, "query", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -312,7 +317,8 @@ func getObjectWebfilterSearchEngine(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("safesearch"); ok {
-		t, err := expandWebfilterSearchEngineSafesearch(d, v, "safesearch")
+
+		t, err := expandWebfilterSearchEngineSafesearch(d, v, "safesearch", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -321,7 +327,8 @@ func getObjectWebfilterSearchEngine(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("charset"); ok {
-		t, err := expandWebfilterSearchEngineCharset(d, v, "charset")
+
+		t, err := expandWebfilterSearchEngineCharset(d, v, "charset", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -330,7 +337,8 @@ func getObjectWebfilterSearchEngine(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("safesearch_str"); ok {
-		t, err := expandWebfilterSearchEngineSafesearchStr(d, v, "safesearch_str")
+
+		t, err := expandWebfilterSearchEngineSafesearchStr(d, v, "safesearch_str", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
