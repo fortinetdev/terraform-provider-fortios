@@ -22,7 +22,6 @@ resource "fortios_system_ipv6neighborcache" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `fosid` - (Required) Unique integer ID of the entry.
