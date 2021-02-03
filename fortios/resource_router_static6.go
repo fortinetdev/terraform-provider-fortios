@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -80,7 +81,17 @@ func resourceRouterStatic6() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"sdwan": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
 			"virtual_wan_link": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"link_monitor_exempt": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
@@ -98,7 +109,7 @@ func resourceRouterStatic6Create(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectRouterStatic6(d)
+	obj, err := getObjectRouterStatic6(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating RouterStatic6 resource while getting object: %v", err)
 	}
@@ -123,7 +134,7 @@ func resourceRouterStatic6Update(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectRouterStatic6(d)
+	obj, err := getObjectRouterStatic6(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterStatic6 resource while getting object: %v", err)
 	}
@@ -176,131 +187,151 @@ func resourceRouterStatic6Read(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectRouterStatic6(d, o)
+	err = refreshObjectRouterStatic6(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading RouterStatic6 resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenRouterStatic6SeqNum(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterStatic6SeqNum(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterStatic6Status(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterStatic6Status(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterStatic6Dst(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterStatic6Dst(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterStatic6Gateway(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterStatic6Gateway(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterStatic6Device(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterStatic6Device(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterStatic6Devindex(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterStatic6Devindex(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterStatic6Distance(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterStatic6Distance(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterStatic6Priority(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterStatic6Priority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterStatic6Comment(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterStatic6Comment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterStatic6Blackhole(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterStatic6Blackhole(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterStatic6VirtualWanLink(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterStatic6Sdwan(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterStatic6Bfd(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterStatic6VirtualWanLink(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectRouterStatic6(d *schema.ResourceData, o map[string]interface{}) error {
+func flattenRouterStatic6LinkMonitorExempt(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenRouterStatic6Bfd(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func refreshObjectRouterStatic6(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("seq_num", flattenRouterStatic6SeqNum(o["seq-num"], d, "seq_num")); err != nil {
+	if err = d.Set("seq_num", flattenRouterStatic6SeqNum(o["seq-num"], d, "seq_num", sv)); err != nil {
 		if !fortiAPIPatch(o["seq-num"]) {
 			return fmt.Errorf("Error reading seq_num: %v", err)
 		}
 	}
 
-	if err = d.Set("status", flattenRouterStatic6Status(o["status"], d, "status")); err != nil {
+	if err = d.Set("status", flattenRouterStatic6Status(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
 		}
 	}
 
-	if err = d.Set("dst", flattenRouterStatic6Dst(o["dst"], d, "dst")); err != nil {
+	if err = d.Set("dst", flattenRouterStatic6Dst(o["dst"], d, "dst", sv)); err != nil {
 		if !fortiAPIPatch(o["dst"]) {
 			return fmt.Errorf("Error reading dst: %v", err)
 		}
 	}
 
-	if err = d.Set("gateway", flattenRouterStatic6Gateway(o["gateway"], d, "gateway")); err != nil {
+	if err = d.Set("gateway", flattenRouterStatic6Gateway(o["gateway"], d, "gateway", sv)); err != nil {
 		if !fortiAPIPatch(o["gateway"]) {
 			return fmt.Errorf("Error reading gateway: %v", err)
 		}
 	}
 
-	if err = d.Set("device", flattenRouterStatic6Device(o["device"], d, "device")); err != nil {
+	if err = d.Set("device", flattenRouterStatic6Device(o["device"], d, "device", sv)); err != nil {
 		if !fortiAPIPatch(o["device"]) {
 			return fmt.Errorf("Error reading device: %v", err)
 		}
 	}
 
-	if err = d.Set("devindex", flattenRouterStatic6Devindex(o["devindex"], d, "devindex")); err != nil {
+	if err = d.Set("devindex", flattenRouterStatic6Devindex(o["devindex"], d, "devindex", sv)); err != nil {
 		if !fortiAPIPatch(o["devindex"]) {
 			return fmt.Errorf("Error reading devindex: %v", err)
 		}
 	}
 
-	if err = d.Set("distance", flattenRouterStatic6Distance(o["distance"], d, "distance")); err != nil {
+	if err = d.Set("distance", flattenRouterStatic6Distance(o["distance"], d, "distance", sv)); err != nil {
 		if !fortiAPIPatch(o["distance"]) {
 			return fmt.Errorf("Error reading distance: %v", err)
 		}
 	}
 
-	if err = d.Set("priority", flattenRouterStatic6Priority(o["priority"], d, "priority")); err != nil {
+	if err = d.Set("priority", flattenRouterStatic6Priority(o["priority"], d, "priority", sv)); err != nil {
 		if !fortiAPIPatch(o["priority"]) {
 			return fmt.Errorf("Error reading priority: %v", err)
 		}
 	}
 
-	if err = d.Set("comment", flattenRouterStatic6Comment(o["comment"], d, "comment")); err != nil {
+	if err = d.Set("comment", flattenRouterStatic6Comment(o["comment"], d, "comment", sv)); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
 		}
 	}
 
-	if err = d.Set("blackhole", flattenRouterStatic6Blackhole(o["blackhole"], d, "blackhole")); err != nil {
+	if err = d.Set("blackhole", flattenRouterStatic6Blackhole(o["blackhole"], d, "blackhole", sv)); err != nil {
 		if !fortiAPIPatch(o["blackhole"]) {
 			return fmt.Errorf("Error reading blackhole: %v", err)
 		}
 	}
 
-	if err = d.Set("virtual_wan_link", flattenRouterStatic6VirtualWanLink(o["virtual-wan-link"], d, "virtual_wan_link")); err != nil {
+	if err = d.Set("sdwan", flattenRouterStatic6Sdwan(o["sdwan"], d, "sdwan", sv)); err != nil {
+		if !fortiAPIPatch(o["sdwan"]) {
+			return fmt.Errorf("Error reading sdwan: %v", err)
+		}
+	}
+
+	if err = d.Set("virtual_wan_link", flattenRouterStatic6VirtualWanLink(o["virtual-wan-link"], d, "virtual_wan_link", sv)); err != nil {
 		if !fortiAPIPatch(o["virtual-wan-link"]) {
 			return fmt.Errorf("Error reading virtual_wan_link: %v", err)
 		}
 	}
 
-	if err = d.Set("bfd", flattenRouterStatic6Bfd(o["bfd"], d, "bfd")); err != nil {
+	if err = d.Set("link_monitor_exempt", flattenRouterStatic6LinkMonitorExempt(o["link-monitor-exempt"], d, "link_monitor_exempt", sv)); err != nil {
+		if !fortiAPIPatch(o["link-monitor-exempt"]) {
+			return fmt.Errorf("Error reading link_monitor_exempt: %v", err)
+		}
+	}
+
+	if err = d.Set("bfd", flattenRouterStatic6Bfd(o["bfd"], d, "bfd", sv)); err != nil {
 		if !fortiAPIPatch(o["bfd"]) {
 			return fmt.Errorf("Error reading bfd: %v", err)
 		}
@@ -312,62 +343,71 @@ func refreshObjectRouterStatic6(d *schema.ResourceData, o map[string]interface{}
 func flattenRouterStatic6FortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandRouterStatic6SeqNum(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterStatic6SeqNum(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandRouterStatic6Status(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterStatic6Status(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandRouterStatic6Dst(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterStatic6Dst(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandRouterStatic6Gateway(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterStatic6Gateway(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandRouterStatic6Device(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterStatic6Device(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandRouterStatic6Devindex(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterStatic6Devindex(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandRouterStatic6Distance(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterStatic6Distance(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandRouterStatic6Priority(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterStatic6Priority(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandRouterStatic6Comment(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterStatic6Comment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandRouterStatic6Blackhole(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterStatic6Blackhole(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandRouterStatic6VirtualWanLink(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterStatic6Sdwan(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandRouterStatic6Bfd(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterStatic6VirtualWanLink(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectRouterStatic6(d *schema.ResourceData) (*map[string]interface{}, error) {
+func expandRouterStatic6LinkMonitorExempt(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandRouterStatic6Bfd(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func getObjectRouterStatic6(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("seq_num"); ok {
-		t, err := expandRouterStatic6SeqNum(d, v, "seq_num")
+
+		t, err := expandRouterStatic6SeqNum(d, v, "seq_num", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -376,7 +416,8 @@ func getObjectRouterStatic6(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-		t, err := expandRouterStatic6Status(d, v, "status")
+
+		t, err := expandRouterStatic6Status(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -385,7 +426,8 @@ func getObjectRouterStatic6(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOk("dst"); ok {
-		t, err := expandRouterStatic6Dst(d, v, "dst")
+
+		t, err := expandRouterStatic6Dst(d, v, "dst", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -394,7 +436,8 @@ func getObjectRouterStatic6(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOk("gateway"); ok {
-		t, err := expandRouterStatic6Gateway(d, v, "gateway")
+
+		t, err := expandRouterStatic6Gateway(d, v, "gateway", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -403,7 +446,8 @@ func getObjectRouterStatic6(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOk("device"); ok {
-		t, err := expandRouterStatic6Device(d, v, "device")
+
+		t, err := expandRouterStatic6Device(d, v, "device", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -412,7 +456,8 @@ func getObjectRouterStatic6(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOkExists("devindex"); ok {
-		t, err := expandRouterStatic6Devindex(d, v, "devindex")
+
+		t, err := expandRouterStatic6Devindex(d, v, "devindex", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -421,7 +466,8 @@ func getObjectRouterStatic6(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOk("distance"); ok {
-		t, err := expandRouterStatic6Distance(d, v, "distance")
+
+		t, err := expandRouterStatic6Distance(d, v, "distance", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -430,7 +476,8 @@ func getObjectRouterStatic6(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOkExists("priority"); ok {
-		t, err := expandRouterStatic6Priority(d, v, "priority")
+
+		t, err := expandRouterStatic6Priority(d, v, "priority", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -439,7 +486,8 @@ func getObjectRouterStatic6(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-		t, err := expandRouterStatic6Comment(d, v, "comment")
+
+		t, err := expandRouterStatic6Comment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -448,7 +496,8 @@ func getObjectRouterStatic6(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOk("blackhole"); ok {
-		t, err := expandRouterStatic6Blackhole(d, v, "blackhole")
+
+		t, err := expandRouterStatic6Blackhole(d, v, "blackhole", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -456,8 +505,19 @@ func getObjectRouterStatic6(d *schema.ResourceData) (*map[string]interface{}, er
 		}
 	}
 
+	if v, ok := d.GetOk("sdwan"); ok {
+
+		t, err := expandRouterStatic6Sdwan(d, v, "sdwan", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["sdwan"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("virtual_wan_link"); ok {
-		t, err := expandRouterStatic6VirtualWanLink(d, v, "virtual_wan_link")
+
+		t, err := expandRouterStatic6VirtualWanLink(d, v, "virtual_wan_link", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -465,8 +525,19 @@ func getObjectRouterStatic6(d *schema.ResourceData) (*map[string]interface{}, er
 		}
 	}
 
+	if v, ok := d.GetOk("link_monitor_exempt"); ok {
+
+		t, err := expandRouterStatic6LinkMonitorExempt(d, v, "link_monitor_exempt", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["link-monitor-exempt"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("bfd"); ok {
-		t, err := expandRouterStatic6Bfd(d, v, "bfd")
+
+		t, err := expandRouterStatic6Bfd(d, v, "bfd", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
