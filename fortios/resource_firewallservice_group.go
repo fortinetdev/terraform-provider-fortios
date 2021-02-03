@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -77,7 +78,7 @@ func resourceFirewallServiceGroupCreate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectFirewallServiceGroup(d)
+	obj, err := getObjectFirewallServiceGroup(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallServiceGroup resource while getting object: %v", err)
 	}
@@ -102,7 +103,7 @@ func resourceFirewallServiceGroupUpdate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectFirewallServiceGroup(d)
+	obj, err := getObjectFirewallServiceGroup(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallServiceGroup resource while getting object: %v", err)
 	}
@@ -155,18 +156,18 @@ func resourceFirewallServiceGroupRead(d *schema.ResourceData, m interface{}) err
 		return nil
 	}
 
-	err = refreshObjectFirewallServiceGroup(d, o)
+	err = refreshObjectFirewallServiceGroup(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallServiceGroup resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenFirewallServiceGroupName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallServiceGroupName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallServiceGroupMember(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenFirewallServiceGroupMember(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -187,7 +188,8 @@ func flattenFirewallServiceGroupMember(v interface{}, d *schema.ResourceData, pr
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenFirewallServiceGroupMemberName(i["name"], d, pre_append)
+
+			tmp["name"] = flattenFirewallServiceGroupMemberName(i["name"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -199,40 +201,40 @@ func flattenFirewallServiceGroupMember(v interface{}, d *schema.ResourceData, pr
 	return result
 }
 
-func flattenFirewallServiceGroupMemberName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallServiceGroupMemberName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallServiceGroupProxy(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallServiceGroupProxy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallServiceGroupComment(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallServiceGroupComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenFirewallServiceGroupColor(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenFirewallServiceGroupColor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectFirewallServiceGroup(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectFirewallServiceGroup(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenFirewallServiceGroupName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenFirewallServiceGroupName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("member", flattenFirewallServiceGroupMember(o["member"], d, "member")); err != nil {
+		if err = d.Set("member", flattenFirewallServiceGroupMember(o["member"], d, "member", sv)); err != nil {
 			if !fortiAPIPatch(o["member"]) {
 				return fmt.Errorf("Error reading member: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("member"); ok {
-			if err = d.Set("member", flattenFirewallServiceGroupMember(o["member"], d, "member")); err != nil {
+			if err = d.Set("member", flattenFirewallServiceGroupMember(o["member"], d, "member", sv)); err != nil {
 				if !fortiAPIPatch(o["member"]) {
 					return fmt.Errorf("Error reading member: %v", err)
 				}
@@ -240,19 +242,19 @@ func refreshObjectFirewallServiceGroup(d *schema.ResourceData, o map[string]inte
 		}
 	}
 
-	if err = d.Set("proxy", flattenFirewallServiceGroupProxy(o["proxy"], d, "proxy")); err != nil {
+	if err = d.Set("proxy", flattenFirewallServiceGroupProxy(o["proxy"], d, "proxy", sv)); err != nil {
 		if !fortiAPIPatch(o["proxy"]) {
 			return fmt.Errorf("Error reading proxy: %v", err)
 		}
 	}
 
-	if err = d.Set("comment", flattenFirewallServiceGroupComment(o["comment"], d, "comment")); err != nil {
+	if err = d.Set("comment", flattenFirewallServiceGroupComment(o["comment"], d, "comment", sv)); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
 		}
 	}
 
-	if err = d.Set("color", flattenFirewallServiceGroupColor(o["color"], d, "color")); err != nil {
+	if err = d.Set("color", flattenFirewallServiceGroupColor(o["color"], d, "color", sv)); err != nil {
 		if !fortiAPIPatch(o["color"]) {
 			return fmt.Errorf("Error reading color: %v", err)
 		}
@@ -264,14 +266,14 @@ func refreshObjectFirewallServiceGroup(d *schema.ResourceData, o map[string]inte
 func flattenFirewallServiceGroupFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandFirewallServiceGroupName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallServiceGroupName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallServiceGroupMember(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallServiceGroupMember(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -287,7 +289,8 @@ func expandFirewallServiceGroupMember(d *schema.ResourceData, v interface{}, pre
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandFirewallServiceGroupMemberName(d, i["name"], pre_append)
+
+			tmp["name"], _ = expandFirewallServiceGroupMemberName(d, i["name"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -298,27 +301,28 @@ func expandFirewallServiceGroupMember(d *schema.ResourceData, v interface{}, pre
 	return result, nil
 }
 
-func expandFirewallServiceGroupMemberName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallServiceGroupMemberName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallServiceGroupProxy(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallServiceGroupProxy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallServiceGroupComment(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallServiceGroupComment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandFirewallServiceGroupColor(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandFirewallServiceGroupColor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectFirewallServiceGroup(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectFirewallServiceGroup(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandFirewallServiceGroupName(d, v, "name")
+
+		t, err := expandFirewallServiceGroupName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -327,7 +331,8 @@ func getObjectFirewallServiceGroup(d *schema.ResourceData) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("member"); ok {
-		t, err := expandFirewallServiceGroupMember(d, v, "member")
+
+		t, err := expandFirewallServiceGroupMember(d, v, "member", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -336,7 +341,8 @@ func getObjectFirewallServiceGroup(d *schema.ResourceData) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("proxy"); ok {
-		t, err := expandFirewallServiceGroupProxy(d, v, "proxy")
+
+		t, err := expandFirewallServiceGroupProxy(d, v, "proxy", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -345,7 +351,8 @@ func getObjectFirewallServiceGroup(d *schema.ResourceData) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-		t, err := expandFirewallServiceGroupComment(d, v, "comment")
+
+		t, err := expandFirewallServiceGroupComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -354,7 +361,8 @@ func getObjectFirewallServiceGroup(d *schema.ResourceData) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOkExists("color"); ok {
-		t, err := expandFirewallServiceGroupColor(d, v, "color")
+
+		t, err := expandFirewallServiceGroupColor(d, v, "color", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
