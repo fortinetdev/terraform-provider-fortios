@@ -22,7 +22,6 @@ resource "fortios_system_ipiptunnel" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - IPIP Tunnel name.
