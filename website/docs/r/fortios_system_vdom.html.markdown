@@ -21,12 +21,12 @@ resource "fortios_system_vdom" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - VDOM name.
 * `short_name` - VDOM short name.
 * `vcluster_id` - Virtual cluster ID (0 - 4294967295).
+* `flag` - Flag.
 * `temporary` - Temporary.
 
 
