@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -55,7 +56,7 @@ func resourceWebfilterFtgdLocalCatCreate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWebfilterFtgdLocalCat(d)
+	obj, err := getObjectWebfilterFtgdLocalCat(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WebfilterFtgdLocalCat resource while getting object: %v", err)
 	}
@@ -80,7 +81,7 @@ func resourceWebfilterFtgdLocalCatUpdate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWebfilterFtgdLocalCat(d)
+	obj, err := getObjectWebfilterFtgdLocalCat(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WebfilterFtgdLocalCat resource while getting object: %v", err)
 	}
@@ -133,41 +134,41 @@ func resourceWebfilterFtgdLocalCatRead(d *schema.ResourceData, m interface{}) er
 		return nil
 	}
 
-	err = refreshObjectWebfilterFtgdLocalCat(d, o)
+	err = refreshObjectWebfilterFtgdLocalCat(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading WebfilterFtgdLocalCat resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenWebfilterFtgdLocalCatStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebfilterFtgdLocalCatStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebfilterFtgdLocalCatId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebfilterFtgdLocalCatId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebfilterFtgdLocalCatDesc(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebfilterFtgdLocalCatDesc(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectWebfilterFtgdLocalCat(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectWebfilterFtgdLocalCat(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("status", flattenWebfilterFtgdLocalCatStatus(o["status"], d, "status")); err != nil {
+	if err = d.Set("status", flattenWebfilterFtgdLocalCatStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
 		}
 	}
 
-	if err = d.Set("fosid", flattenWebfilterFtgdLocalCatId(o["id"], d, "fosid")); err != nil {
+	if err = d.Set("fosid", flattenWebfilterFtgdLocalCatId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
 			return fmt.Errorf("Error reading fosid: %v", err)
 		}
 	}
 
-	if err = d.Set("desc", flattenWebfilterFtgdLocalCatDesc(o["desc"], d, "desc")); err != nil {
+	if err = d.Set("desc", flattenWebfilterFtgdLocalCatDesc(o["desc"], d, "desc", sv)); err != nil {
 		if !fortiAPIPatch(o["desc"]) {
 			return fmt.Errorf("Error reading desc: %v", err)
 		}
@@ -179,26 +180,27 @@ func refreshObjectWebfilterFtgdLocalCat(d *schema.ResourceData, o map[string]int
 func flattenWebfilterFtgdLocalCatFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandWebfilterFtgdLocalCatStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebfilterFtgdLocalCatStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebfilterFtgdLocalCatId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebfilterFtgdLocalCatId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebfilterFtgdLocalCatDesc(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebfilterFtgdLocalCatDesc(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectWebfilterFtgdLocalCat(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectWebfilterFtgdLocalCat(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
-		t, err := expandWebfilterFtgdLocalCatStatus(d, v, "status")
+
+		t, err := expandWebfilterFtgdLocalCatStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -207,7 +209,8 @@ func getObjectWebfilterFtgdLocalCat(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("fosid"); ok {
-		t, err := expandWebfilterFtgdLocalCatId(d, v, "fosid")
+
+		t, err := expandWebfilterFtgdLocalCatId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -216,7 +219,8 @@ func getObjectWebfilterFtgdLocalCat(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("desc"); ok {
-		t, err := expandWebfilterFtgdLocalCatDesc(d, v, "desc")
+
+		t, err := expandWebfilterFtgdLocalCatDesc(d, v, "desc", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
