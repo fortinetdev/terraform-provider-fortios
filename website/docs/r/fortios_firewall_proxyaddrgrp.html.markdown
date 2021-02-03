@@ -11,7 +11,6 @@ Web proxy address group configuration.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Address group name.
