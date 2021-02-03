@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -89,7 +90,7 @@ func resourceSystemObjectTaggingCreate(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemObjectTagging(d)
+	obj, err := getObjectSystemObjectTagging(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemObjectTagging resource while getting object: %v", err)
 	}
@@ -114,7 +115,7 @@ func resourceSystemObjectTaggingUpdate(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemObjectTagging(d)
+	obj, err := getObjectSystemObjectTagging(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemObjectTagging resource while getting object: %v", err)
 	}
@@ -167,38 +168,38 @@ func resourceSystemObjectTaggingRead(d *schema.ResourceData, m interface{}) erro
 		return nil
 	}
 
-	err = refreshObjectSystemObjectTagging(d, o)
+	err = refreshObjectSystemObjectTagging(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemObjectTagging resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemObjectTaggingCategory(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemObjectTaggingCategory(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemObjectTaggingAddress(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemObjectTaggingAddress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemObjectTaggingDevice(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemObjectTaggingDevice(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemObjectTaggingInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemObjectTaggingInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemObjectTaggingMultiple(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemObjectTaggingMultiple(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemObjectTaggingColor(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemObjectTaggingColor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemObjectTaggingTags(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSystemObjectTaggingTags(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -219,7 +220,8 @@ func flattenSystemObjectTaggingTags(v interface{}, d *schema.ResourceData, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenSystemObjectTaggingTagsName(i["name"], d, pre_append)
+
+			tmp["name"] = flattenSystemObjectTaggingTagsName(i["name"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -231,58 +233,58 @@ func flattenSystemObjectTaggingTags(v interface{}, d *schema.ResourceData, pre s
 	return result
 }
 
-func flattenSystemObjectTaggingTagsName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemObjectTaggingTagsName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemObjectTagging(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemObjectTagging(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("category", flattenSystemObjectTaggingCategory(o["category"], d, "category")); err != nil {
+	if err = d.Set("category", flattenSystemObjectTaggingCategory(o["category"], d, "category", sv)); err != nil {
 		if !fortiAPIPatch(o["category"]) {
 			return fmt.Errorf("Error reading category: %v", err)
 		}
 	}
 
-	if err = d.Set("address", flattenSystemObjectTaggingAddress(o["address"], d, "address")); err != nil {
+	if err = d.Set("address", flattenSystemObjectTaggingAddress(o["address"], d, "address", sv)); err != nil {
 		if !fortiAPIPatch(o["address"]) {
 			return fmt.Errorf("Error reading address: %v", err)
 		}
 	}
 
-	if err = d.Set("device", flattenSystemObjectTaggingDevice(o["device"], d, "device")); err != nil {
+	if err = d.Set("device", flattenSystemObjectTaggingDevice(o["device"], d, "device", sv)); err != nil {
 		if !fortiAPIPatch(o["device"]) {
 			return fmt.Errorf("Error reading device: %v", err)
 		}
 	}
 
-	if err = d.Set("interface", flattenSystemObjectTaggingInterface(o["interface"], d, "interface")); err != nil {
+	if err = d.Set("interface", flattenSystemObjectTaggingInterface(o["interface"], d, "interface", sv)); err != nil {
 		if !fortiAPIPatch(o["interface"]) {
 			return fmt.Errorf("Error reading interface: %v", err)
 		}
 	}
 
-	if err = d.Set("multiple", flattenSystemObjectTaggingMultiple(o["multiple"], d, "multiple")); err != nil {
+	if err = d.Set("multiple", flattenSystemObjectTaggingMultiple(o["multiple"], d, "multiple", sv)); err != nil {
 		if !fortiAPIPatch(o["multiple"]) {
 			return fmt.Errorf("Error reading multiple: %v", err)
 		}
 	}
 
-	if err = d.Set("color", flattenSystemObjectTaggingColor(o["color"], d, "color")); err != nil {
+	if err = d.Set("color", flattenSystemObjectTaggingColor(o["color"], d, "color", sv)); err != nil {
 		if !fortiAPIPatch(o["color"]) {
 			return fmt.Errorf("Error reading color: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("tags", flattenSystemObjectTaggingTags(o["tags"], d, "tags")); err != nil {
+		if err = d.Set("tags", flattenSystemObjectTaggingTags(o["tags"], d, "tags", sv)); err != nil {
 			if !fortiAPIPatch(o["tags"]) {
 				return fmt.Errorf("Error reading tags: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("tags"); ok {
-			if err = d.Set("tags", flattenSystemObjectTaggingTags(o["tags"], d, "tags")); err != nil {
+			if err = d.Set("tags", flattenSystemObjectTaggingTags(o["tags"], d, "tags", sv)); err != nil {
 				if !fortiAPIPatch(o["tags"]) {
 					return fmt.Errorf("Error reading tags: %v", err)
 				}
@@ -296,34 +298,34 @@ func refreshObjectSystemObjectTagging(d *schema.ResourceData, o map[string]inter
 func flattenSystemObjectTaggingFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemObjectTaggingCategory(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemObjectTaggingCategory(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemObjectTaggingAddress(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemObjectTaggingAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemObjectTaggingDevice(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemObjectTaggingDevice(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemObjectTaggingInterface(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemObjectTaggingInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemObjectTaggingMultiple(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemObjectTaggingMultiple(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemObjectTaggingColor(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemObjectTaggingColor(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemObjectTaggingTags(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemObjectTaggingTags(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -339,7 +341,8 @@ func expandSystemObjectTaggingTags(d *schema.ResourceData, v interface{}, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandSystemObjectTaggingTagsName(d, i["name"], pre_append)
+
+			tmp["name"], _ = expandSystemObjectTaggingTagsName(d, i["name"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -350,15 +353,16 @@ func expandSystemObjectTaggingTags(d *schema.ResourceData, v interface{}, pre st
 	return result, nil
 }
 
-func expandSystemObjectTaggingTagsName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemObjectTaggingTagsName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemObjectTagging(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemObjectTagging(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("category"); ok {
-		t, err := expandSystemObjectTaggingCategory(d, v, "category")
+
+		t, err := expandSystemObjectTaggingCategory(d, v, "category", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -367,7 +371,8 @@ func getObjectSystemObjectTagging(d *schema.ResourceData) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("address"); ok {
-		t, err := expandSystemObjectTaggingAddress(d, v, "address")
+
+		t, err := expandSystemObjectTaggingAddress(d, v, "address", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -376,7 +381,8 @@ func getObjectSystemObjectTagging(d *schema.ResourceData) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("device"); ok {
-		t, err := expandSystemObjectTaggingDevice(d, v, "device")
+
+		t, err := expandSystemObjectTaggingDevice(d, v, "device", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -385,7 +391,8 @@ func getObjectSystemObjectTagging(d *schema.ResourceData) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
-		t, err := expandSystemObjectTaggingInterface(d, v, "interface")
+
+		t, err := expandSystemObjectTaggingInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -394,7 +401,8 @@ func getObjectSystemObjectTagging(d *schema.ResourceData) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("multiple"); ok {
-		t, err := expandSystemObjectTaggingMultiple(d, v, "multiple")
+
+		t, err := expandSystemObjectTaggingMultiple(d, v, "multiple", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -403,7 +411,8 @@ func getObjectSystemObjectTagging(d *schema.ResourceData) (*map[string]interface
 	}
 
 	if v, ok := d.GetOkExists("color"); ok {
-		t, err := expandSystemObjectTaggingColor(d, v, "color")
+
+		t, err := expandSystemObjectTaggingColor(d, v, "color", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -412,7 +421,8 @@ func getObjectSystemObjectTagging(d *schema.ResourceData) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("tags"); ok {
-		t, err := expandSystemObjectTaggingTags(d, v, "tags")
+
+		t, err := expandSystemObjectTaggingTags(d, v, "tags", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
