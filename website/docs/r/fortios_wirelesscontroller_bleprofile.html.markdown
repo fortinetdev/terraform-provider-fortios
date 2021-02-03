@@ -11,7 +11,6 @@ Configure Bluetooth Low Energy profile.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Bluetooth Low Energy profile name.
