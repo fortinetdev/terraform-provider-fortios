@@ -31,7 +31,6 @@ resource "fortios_webproxy_global" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `ssl_cert` - SSL certificate for SSL interception.
