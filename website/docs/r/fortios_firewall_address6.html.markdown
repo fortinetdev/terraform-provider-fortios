@@ -28,17 +28,19 @@ resource "fortios_firewall_address6" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Address name.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `type` - Type of IPv6 address object (default = ipprefix).
+* `start_mac` - First MAC address in the range.
+* `end_mac` - Last MAC address in the range.
 * `sdn` - SDN.
 * `ip6` - IPv6 address prefix (format: xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx/xxx).
 * `start_ip` - First IP address (inclusive) in the range for the address (format: xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx).
 * `end_ip` - Final IP address (inclusive) in the range for the address (format: xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx).
 * `fqdn` - Fully qualified domain name.
+* `country` - IPv6 addresses associated to a specific country.
 * `cache_ttl` - Minimal TTL of individual IPv6 addresses in FQDN cache.
 * `visibility` - Enable/disable the visibility of the object in the GUI.
 * `color` - Integer value to determine the color of the icon in the GUI (range 1 to 32, default = 0, which sets the value to 1).
