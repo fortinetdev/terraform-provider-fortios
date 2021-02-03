@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -49,7 +50,7 @@ func resourceSwitchControllerIgmpSnoopingUpdate(d *schema.ResourceData, m interf
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSwitchControllerIgmpSnooping(d)
+	obj, err := getObjectSwitchControllerIgmpSnooping(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerIgmpSnooping resource while getting object: %v", err)
 	}
@@ -102,31 +103,31 @@ func resourceSwitchControllerIgmpSnoopingRead(d *schema.ResourceData, m interfac
 		return nil
 	}
 
-	err = refreshObjectSwitchControllerIgmpSnooping(d, o)
+	err = refreshObjectSwitchControllerIgmpSnooping(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerIgmpSnooping resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSwitchControllerIgmpSnoopingAgingTime(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerIgmpSnoopingAgingTime(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerIgmpSnoopingFloodUnknownMulticast(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerIgmpSnoopingFloodUnknownMulticast(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSwitchControllerIgmpSnooping(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSwitchControllerIgmpSnooping(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("aging_time", flattenSwitchControllerIgmpSnoopingAgingTime(o["aging-time"], d, "aging_time")); err != nil {
+	if err = d.Set("aging_time", flattenSwitchControllerIgmpSnoopingAgingTime(o["aging-time"], d, "aging_time", sv)); err != nil {
 		if !fortiAPIPatch(o["aging-time"]) {
 			return fmt.Errorf("Error reading aging_time: %v", err)
 		}
 	}
 
-	if err = d.Set("flood_unknown_multicast", flattenSwitchControllerIgmpSnoopingFloodUnknownMulticast(o["flood-unknown-multicast"], d, "flood_unknown_multicast")); err != nil {
+	if err = d.Set("flood_unknown_multicast", flattenSwitchControllerIgmpSnoopingFloodUnknownMulticast(o["flood-unknown-multicast"], d, "flood_unknown_multicast", sv)); err != nil {
 		if !fortiAPIPatch(o["flood-unknown-multicast"]) {
 			return fmt.Errorf("Error reading flood_unknown_multicast: %v", err)
 		}
@@ -138,22 +139,23 @@ func refreshObjectSwitchControllerIgmpSnooping(d *schema.ResourceData, o map[str
 func flattenSwitchControllerIgmpSnoopingFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSwitchControllerIgmpSnoopingAgingTime(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerIgmpSnoopingAgingTime(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerIgmpSnoopingFloodUnknownMulticast(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerIgmpSnoopingFloodUnknownMulticast(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSwitchControllerIgmpSnooping(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSwitchControllerIgmpSnooping(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("aging_time"); ok {
-		t, err := expandSwitchControllerIgmpSnoopingAgingTime(d, v, "aging_time")
+
+		t, err := expandSwitchControllerIgmpSnoopingAgingTime(d, v, "aging_time", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -162,7 +164,8 @@ func getObjectSwitchControllerIgmpSnooping(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("flood_unknown_multicast"); ok {
-		t, err := expandSwitchControllerIgmpSnoopingFloodUnknownMulticast(d, v, "flood_unknown_multicast")
+
+		t, err := expandSwitchControllerIgmpSnoopingFloodUnknownMulticast(d, v, "flood_unknown_multicast", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
