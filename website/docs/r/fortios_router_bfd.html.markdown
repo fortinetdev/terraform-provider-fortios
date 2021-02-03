@@ -11,7 +11,6 @@ Configure BFD.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `neighbor` - neighbor The structure of `neighbor` block is documented below.
