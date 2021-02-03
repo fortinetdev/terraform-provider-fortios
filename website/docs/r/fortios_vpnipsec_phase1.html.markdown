@@ -90,7 +90,6 @@ resource "fortios_vpnipsec_phase1" "trnamex1" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - IPsec remote gateway name.
@@ -116,6 +115,8 @@ The following arguments are supported:
 * `ipv4_start_ip` - Start of IPv4 range.
 * `ipv4_end_ip` - End of IPv4 range.
 * `ipv4_netmask` - IPv4 Netmask.
+* `dhcp_ra_giaddr` - Relay agent gateway IP address to use in the giaddr field of DHCP requests.
+* `dhcp6_ra_linkaddr` - Relay agent IPv6 link address to use in DHCP6 requests.
 * `dns_mode` - DNS server mode.
 * `ipv4_dns_server1` - IPv4 DNS server 1.
 * `ipv4_dns_server2` - IPv4 DNS server 2.
@@ -168,6 +169,7 @@ The following arguments are supported:
 * `suite_b` - Use Suite-B.
 * `eap` - Enable/disable IKEv2 EAP authentication.
 * `eap_identity` - IKEv2 EAP peer identity type.
+* `eap_exclude_peergrp` - Peer group excluded from EAP authentication.
 * `acct_verify` - Enable/disable verification of RADIUS accounting record.
 * `ppk` - Enable/disable IKEv2 Postquantum Preshared Key (PPK).
 * `ppk_secret` - IKEv2 Postquantum Preshared Key (ASCII string or hexadecimal encoded with a leading 0x).
@@ -193,6 +195,15 @@ The following arguments are supported:
 * `rsa_signature_format` - Digital Signature Authentication RSA signature format.
 * `enforce_unique_id` - Enable/disable peer ID uniqueness check.
 * `cert_id_validation` - Enable/disable cross validation of peer ID and the identity in the peer's certificate as specified in RFC 4945.
+* `fec_egress` - Enable/disable Forward Error Correction for egress IPsec traffic.
+* `fec_send_timeout` - Timeout in milliseconds before sending Forward Error Correction packets (1 - 1000).
+* `fec_base` - Number of base Forward Error Correction packets (1 - 100).
+* `fec_codec` - ipsec fec encoding/decoding algorithm (0: reed-solomon, 1: xor).
+* `fec_redundant` - Number of redundant Forward Error Correction packets (1 - 100).
+* `fec_ingress` - Enable/disable Forward Error Correction for ingress IPsec traffic.
+* `fec_receive_timeout` - Timeout in milliseconds before dropping Forward Error Correction packets (1 - 10000).
+* `network_overlay` - Enable/disable network overlays.
+* `network_id` - VPN gateway network ID.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `certificate` block supports:
