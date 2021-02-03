@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -68,7 +69,7 @@ func resourceVpnPptpUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectVpnPptp(d)
+	obj, err := getObjectVpnPptp(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating VpnPptp resource while getting object: %v", err)
 	}
@@ -121,71 +122,71 @@ func resourceVpnPptpRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectVpnPptp(d, o)
+	err = refreshObjectVpnPptp(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading VpnPptp resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenVpnPptpStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnPptpStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenVpnPptpIpMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnPptpIpMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenVpnPptpEip(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnPptpEip(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenVpnPptpSip(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnPptpSip(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenVpnPptpLocalIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnPptpLocalIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenVpnPptpUsrgrp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnPptpUsrgrp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectVpnPptp(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectVpnPptp(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("status", flattenVpnPptpStatus(o["status"], d, "status")); err != nil {
+	if err = d.Set("status", flattenVpnPptpStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
 		}
 	}
 
-	if err = d.Set("ip_mode", flattenVpnPptpIpMode(o["ip-mode"], d, "ip_mode")); err != nil {
+	if err = d.Set("ip_mode", flattenVpnPptpIpMode(o["ip-mode"], d, "ip_mode", sv)); err != nil {
 		if !fortiAPIPatch(o["ip-mode"]) {
 			return fmt.Errorf("Error reading ip_mode: %v", err)
 		}
 	}
 
-	if err = d.Set("eip", flattenVpnPptpEip(o["eip"], d, "eip")); err != nil {
+	if err = d.Set("eip", flattenVpnPptpEip(o["eip"], d, "eip", sv)); err != nil {
 		if !fortiAPIPatch(o["eip"]) {
 			return fmt.Errorf("Error reading eip: %v", err)
 		}
 	}
 
-	if err = d.Set("sip", flattenVpnPptpSip(o["sip"], d, "sip")); err != nil {
+	if err = d.Set("sip", flattenVpnPptpSip(o["sip"], d, "sip", sv)); err != nil {
 		if !fortiAPIPatch(o["sip"]) {
 			return fmt.Errorf("Error reading sip: %v", err)
 		}
 	}
 
-	if err = d.Set("local_ip", flattenVpnPptpLocalIp(o["local-ip"], d, "local_ip")); err != nil {
+	if err = d.Set("local_ip", flattenVpnPptpLocalIp(o["local-ip"], d, "local_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["local-ip"]) {
 			return fmt.Errorf("Error reading local_ip: %v", err)
 		}
 	}
 
-	if err = d.Set("usrgrp", flattenVpnPptpUsrgrp(o["usrgrp"], d, "usrgrp")); err != nil {
+	if err = d.Set("usrgrp", flattenVpnPptpUsrgrp(o["usrgrp"], d, "usrgrp", sv)); err != nil {
 		if !fortiAPIPatch(o["usrgrp"]) {
 			return fmt.Errorf("Error reading usrgrp: %v", err)
 		}
@@ -197,38 +198,39 @@ func refreshObjectVpnPptp(d *schema.ResourceData, o map[string]interface{}) erro
 func flattenVpnPptpFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandVpnPptpStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnPptpStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandVpnPptpIpMode(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnPptpIpMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandVpnPptpEip(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnPptpEip(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandVpnPptpSip(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnPptpSip(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandVpnPptpLocalIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnPptpLocalIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandVpnPptpUsrgrp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnPptpUsrgrp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectVpnPptp(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectVpnPptp(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
-		t, err := expandVpnPptpStatus(d, v, "status")
+
+		t, err := expandVpnPptpStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -237,7 +239,8 @@ func getObjectVpnPptp(d *schema.ResourceData) (*map[string]interface{}, error) {
 	}
 
 	if v, ok := d.GetOk("ip_mode"); ok {
-		t, err := expandVpnPptpIpMode(d, v, "ip_mode")
+
+		t, err := expandVpnPptpIpMode(d, v, "ip_mode", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -246,7 +249,8 @@ func getObjectVpnPptp(d *schema.ResourceData) (*map[string]interface{}, error) {
 	}
 
 	if v, ok := d.GetOk("eip"); ok {
-		t, err := expandVpnPptpEip(d, v, "eip")
+
+		t, err := expandVpnPptpEip(d, v, "eip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -255,7 +259,8 @@ func getObjectVpnPptp(d *schema.ResourceData) (*map[string]interface{}, error) {
 	}
 
 	if v, ok := d.GetOk("sip"); ok {
-		t, err := expandVpnPptpSip(d, v, "sip")
+
+		t, err := expandVpnPptpSip(d, v, "sip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -264,7 +269,8 @@ func getObjectVpnPptp(d *schema.ResourceData) (*map[string]interface{}, error) {
 	}
 
 	if v, ok := d.GetOk("local_ip"); ok {
-		t, err := expandVpnPptpLocalIp(d, v, "local_ip")
+
+		t, err := expandVpnPptpLocalIp(d, v, "local_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -273,7 +279,8 @@ func getObjectVpnPptp(d *schema.ResourceData) (*map[string]interface{}, error) {
 	}
 
 	if v, ok := d.GetOk("usrgrp"); ok {
-		t, err := expandVpnPptpUsrgrp(d, v, "usrgrp")
+
+		t, err := expandVpnPptpUsrgrp(d, v, "usrgrp", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
