@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -48,7 +49,7 @@ func resourceEndpointControlForticlientRegistrationSyncCreate(d *schema.Resource
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectEndpointControlForticlientRegistrationSync(d)
+	obj, err := getObjectEndpointControlForticlientRegistrationSync(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating EndpointControlForticlientRegistrationSync resource while getting object: %v", err)
 	}
@@ -73,7 +74,7 @@ func resourceEndpointControlForticlientRegistrationSyncUpdate(d *schema.Resource
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectEndpointControlForticlientRegistrationSync(d)
+	obj, err := getObjectEndpointControlForticlientRegistrationSync(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating EndpointControlForticlientRegistrationSync resource while getting object: %v", err)
 	}
@@ -126,31 +127,31 @@ func resourceEndpointControlForticlientRegistrationSyncRead(d *schema.ResourceDa
 		return nil
 	}
 
-	err = refreshObjectEndpointControlForticlientRegistrationSync(d, o)
+	err = refreshObjectEndpointControlForticlientRegistrationSync(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading EndpointControlForticlientRegistrationSync resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenEndpointControlForticlientRegistrationSyncPeerName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenEndpointControlForticlientRegistrationSyncPeerName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenEndpointControlForticlientRegistrationSyncPeerIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenEndpointControlForticlientRegistrationSyncPeerIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectEndpointControlForticlientRegistrationSync(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectEndpointControlForticlientRegistrationSync(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("peer_name", flattenEndpointControlForticlientRegistrationSyncPeerName(o["peer-name"], d, "peer_name")); err != nil {
+	if err = d.Set("peer_name", flattenEndpointControlForticlientRegistrationSyncPeerName(o["peer-name"], d, "peer_name", sv)); err != nil {
 		if !fortiAPIPatch(o["peer-name"]) {
 			return fmt.Errorf("Error reading peer_name: %v", err)
 		}
 	}
 
-	if err = d.Set("peer_ip", flattenEndpointControlForticlientRegistrationSyncPeerIp(o["peer-ip"], d, "peer_ip")); err != nil {
+	if err = d.Set("peer_ip", flattenEndpointControlForticlientRegistrationSyncPeerIp(o["peer-ip"], d, "peer_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["peer-ip"]) {
 			return fmt.Errorf("Error reading peer_ip: %v", err)
 		}
@@ -162,22 +163,23 @@ func refreshObjectEndpointControlForticlientRegistrationSync(d *schema.ResourceD
 func flattenEndpointControlForticlientRegistrationSyncFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandEndpointControlForticlientRegistrationSyncPeerName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandEndpointControlForticlientRegistrationSyncPeerName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandEndpointControlForticlientRegistrationSyncPeerIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandEndpointControlForticlientRegistrationSyncPeerIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectEndpointControlForticlientRegistrationSync(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectEndpointControlForticlientRegistrationSync(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("peer_name"); ok {
-		t, err := expandEndpointControlForticlientRegistrationSyncPeerName(d, v, "peer_name")
+
+		t, err := expandEndpointControlForticlientRegistrationSyncPeerName(d, v, "peer_name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -186,7 +188,8 @@ func getObjectEndpointControlForticlientRegistrationSync(d *schema.ResourceData)
 	}
 
 	if v, ok := d.GetOk("peer_ip"); ok {
-		t, err := expandEndpointControlForticlientRegistrationSyncPeerIp(d, v, "peer_ip")
+
+		t, err := expandEndpointControlForticlientRegistrationSyncPeerIp(d, v, "peer_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
