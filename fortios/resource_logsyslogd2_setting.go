@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -67,6 +68,17 @@ func resourceLogSyslogd2Setting() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"priority": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"max_log_rate": &schema.Schema{
+				Type:         schema.TypeInt,
+				ValidateFunc: validation.IntBetween(0, 100000),
+				Optional:     true,
+				Computed:     true,
+			},
 			"enc_algorithm": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -109,6 +121,17 @@ func resourceLogSyslogd2Setting() *schema.Resource {
 					},
 				},
 			},
+			"interface_select_method": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+			},
+			"interface": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 15),
+				Optional:     true,
+				Computed:     true,
+			},
 			"syslog_type": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -128,7 +151,7 @@ func resourceLogSyslogd2SettingUpdate(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectLogSyslogd2Setting(d)
+	obj, err := getObjectLogSyslogd2Setting(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogSyslogd2Setting resource while getting object: %v", err)
 	}
@@ -181,54 +204,62 @@ func resourceLogSyslogd2SettingRead(d *schema.ResourceData, m interface{}) error
 		return nil
 	}
 
-	err = refreshObjectLogSyslogd2Setting(d, o)
+	err = refreshObjectLogSyslogd2Setting(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading LogSyslogd2Setting resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenLogSyslogd2SettingStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogSyslogd2SettingStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogSyslogd2SettingServer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogSyslogd2SettingServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogSyslogd2SettingMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogSyslogd2SettingMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogSyslogd2SettingPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogSyslogd2SettingPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogSyslogd2SettingFacility(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogSyslogd2SettingFacility(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogSyslogd2SettingSourceIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogSyslogd2SettingSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogSyslogd2SettingFormat(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogSyslogd2SettingFormat(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogSyslogd2SettingEncAlgorithm(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogSyslogd2SettingPriority(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogSyslogd2SettingSslMinProtoVersion(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogSyslogd2SettingMaxLogRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogSyslogd2SettingCertificate(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogSyslogd2SettingEncAlgorithm(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogSyslogd2SettingCustomFieldName(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenLogSyslogd2SettingSslMinProtoVersion(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenLogSyslogd2SettingCertificate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenLogSyslogd2SettingCustomFieldName(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -249,17 +280,20 @@ func flattenLogSyslogd2SettingCustomFieldName(v interface{}, d *schema.ResourceD
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenLogSyslogd2SettingCustomFieldNameId(i["id"], d, pre_append)
+
+			tmp["id"] = flattenLogSyslogd2SettingCustomFieldNameId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenLogSyslogd2SettingCustomFieldNameName(i["name"], d, pre_append)
+
+			tmp["name"] = flattenLogSyslogd2SettingCustomFieldNameName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "custom"
 		if _, ok := i["custom"]; ok {
-			tmp["custom"] = flattenLogSyslogd2SettingCustomFieldNameCustom(i["custom"], d, pre_append)
+
+			tmp["custom"] = flattenLogSyslogd2SettingCustomFieldNameCustom(i["custom"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -271,94 +305,114 @@ func flattenLogSyslogd2SettingCustomFieldName(v interface{}, d *schema.ResourceD
 	return result
 }
 
-func flattenLogSyslogd2SettingCustomFieldNameId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogSyslogd2SettingCustomFieldNameId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogSyslogd2SettingCustomFieldNameName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogSyslogd2SettingCustomFieldNameName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogSyslogd2SettingCustomFieldNameCustom(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogSyslogd2SettingCustomFieldNameCustom(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenLogSyslogd2SettingSyslogType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenLogSyslogd2SettingInterfaceSelectMethod(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectLogSyslogd2Setting(d *schema.ResourceData, o map[string]interface{}) error {
+func flattenLogSyslogd2SettingInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenLogSyslogd2SettingSyslogType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func refreshObjectLogSyslogd2Setting(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("status", flattenLogSyslogd2SettingStatus(o["status"], d, "status")); err != nil {
+	if err = d.Set("status", flattenLogSyslogd2SettingStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
 		}
 	}
 
-	if err = d.Set("server", flattenLogSyslogd2SettingServer(o["server"], d, "server")); err != nil {
+	if err = d.Set("server", flattenLogSyslogd2SettingServer(o["server"], d, "server", sv)); err != nil {
 		if !fortiAPIPatch(o["server"]) {
 			return fmt.Errorf("Error reading server: %v", err)
 		}
 	}
 
-	if err = d.Set("mode", flattenLogSyslogd2SettingMode(o["mode"], d, "mode")); err != nil {
+	if err = d.Set("mode", flattenLogSyslogd2SettingMode(o["mode"], d, "mode", sv)); err != nil {
 		if !fortiAPIPatch(o["mode"]) {
 			return fmt.Errorf("Error reading mode: %v", err)
 		}
 	}
 
-	if err = d.Set("port", flattenLogSyslogd2SettingPort(o["port"], d, "port")); err != nil {
+	if err = d.Set("port", flattenLogSyslogd2SettingPort(o["port"], d, "port", sv)); err != nil {
 		if !fortiAPIPatch(o["port"]) {
 			return fmt.Errorf("Error reading port: %v", err)
 		}
 	}
 
-	if err = d.Set("facility", flattenLogSyslogd2SettingFacility(o["facility"], d, "facility")); err != nil {
+	if err = d.Set("facility", flattenLogSyslogd2SettingFacility(o["facility"], d, "facility", sv)); err != nil {
 		if !fortiAPIPatch(o["facility"]) {
 			return fmt.Errorf("Error reading facility: %v", err)
 		}
 	}
 
-	if err = d.Set("source_ip", flattenLogSyslogd2SettingSourceIp(o["source-ip"], d, "source_ip")); err != nil {
+	if err = d.Set("source_ip", flattenLogSyslogd2SettingSourceIp(o["source-ip"], d, "source_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["source-ip"]) {
 			return fmt.Errorf("Error reading source_ip: %v", err)
 		}
 	}
 
-	if err = d.Set("format", flattenLogSyslogd2SettingFormat(o["format"], d, "format")); err != nil {
+	if err = d.Set("format", flattenLogSyslogd2SettingFormat(o["format"], d, "format", sv)); err != nil {
 		if !fortiAPIPatch(o["format"]) {
 			return fmt.Errorf("Error reading format: %v", err)
 		}
 	}
 
-	if err = d.Set("enc_algorithm", flattenLogSyslogd2SettingEncAlgorithm(o["enc-algorithm"], d, "enc_algorithm")); err != nil {
+	if err = d.Set("priority", flattenLogSyslogd2SettingPriority(o["priority"], d, "priority", sv)); err != nil {
+		if !fortiAPIPatch(o["priority"]) {
+			return fmt.Errorf("Error reading priority: %v", err)
+		}
+	}
+
+	if err = d.Set("max_log_rate", flattenLogSyslogd2SettingMaxLogRate(o["max-log-rate"], d, "max_log_rate", sv)); err != nil {
+		if !fortiAPIPatch(o["max-log-rate"]) {
+			return fmt.Errorf("Error reading max_log_rate: %v", err)
+		}
+	}
+
+	if err = d.Set("enc_algorithm", flattenLogSyslogd2SettingEncAlgorithm(o["enc-algorithm"], d, "enc_algorithm", sv)); err != nil {
 		if !fortiAPIPatch(o["enc-algorithm"]) {
 			return fmt.Errorf("Error reading enc_algorithm: %v", err)
 		}
 	}
 
-	if err = d.Set("ssl_min_proto_version", flattenLogSyslogd2SettingSslMinProtoVersion(o["ssl-min-proto-version"], d, "ssl_min_proto_version")); err != nil {
+	if err = d.Set("ssl_min_proto_version", flattenLogSyslogd2SettingSslMinProtoVersion(o["ssl-min-proto-version"], d, "ssl_min_proto_version", sv)); err != nil {
 		if !fortiAPIPatch(o["ssl-min-proto-version"]) {
 			return fmt.Errorf("Error reading ssl_min_proto_version: %v", err)
 		}
 	}
 
-	if err = d.Set("certificate", flattenLogSyslogd2SettingCertificate(o["certificate"], d, "certificate")); err != nil {
+	if err = d.Set("certificate", flattenLogSyslogd2SettingCertificate(o["certificate"], d, "certificate", sv)); err != nil {
 		if !fortiAPIPatch(o["certificate"]) {
 			return fmt.Errorf("Error reading certificate: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("custom_field_name", flattenLogSyslogd2SettingCustomFieldName(o["custom-field-name"], d, "custom_field_name")); err != nil {
+		if err = d.Set("custom_field_name", flattenLogSyslogd2SettingCustomFieldName(o["custom-field-name"], d, "custom_field_name", sv)); err != nil {
 			if !fortiAPIPatch(o["custom-field-name"]) {
 				return fmt.Errorf("Error reading custom_field_name: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("custom_field_name"); ok {
-			if err = d.Set("custom_field_name", flattenLogSyslogd2SettingCustomFieldName(o["custom-field-name"], d, "custom_field_name")); err != nil {
+			if err = d.Set("custom_field_name", flattenLogSyslogd2SettingCustomFieldName(o["custom-field-name"], d, "custom_field_name", sv)); err != nil {
 				if !fortiAPIPatch(o["custom-field-name"]) {
 					return fmt.Errorf("Error reading custom_field_name: %v", err)
 				}
@@ -366,7 +420,19 @@ func refreshObjectLogSyslogd2Setting(d *schema.ResourceData, o map[string]interf
 		}
 	}
 
-	if err = d.Set("syslog_type", flattenLogSyslogd2SettingSyslogType(o["syslog-type"], d, "syslog_type")); err != nil {
+	if err = d.Set("interface_select_method", flattenLogSyslogd2SettingInterfaceSelectMethod(o["interface-select-method"], d, "interface_select_method", sv)); err != nil {
+		if !fortiAPIPatch(o["interface-select-method"]) {
+			return fmt.Errorf("Error reading interface_select_method: %v", err)
+		}
+	}
+
+	if err = d.Set("interface", flattenLogSyslogd2SettingInterface(o["interface"], d, "interface", sv)); err != nil {
+		if !fortiAPIPatch(o["interface"]) {
+			return fmt.Errorf("Error reading interface: %v", err)
+		}
+	}
+
+	if err = d.Set("syslog_type", flattenLogSyslogd2SettingSyslogType(o["syslog-type"], d, "syslog_type", sv)); err != nil {
 		if !fortiAPIPatch(o["syslog-type"]) {
 			return fmt.Errorf("Error reading syslog_type: %v", err)
 		}
@@ -378,50 +444,58 @@ func refreshObjectLogSyslogd2Setting(d *schema.ResourceData, o map[string]interf
 func flattenLogSyslogd2SettingFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandLogSyslogd2SettingStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogSyslogd2SettingStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogSyslogd2SettingServer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogSyslogd2SettingServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogSyslogd2SettingMode(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogSyslogd2SettingMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogSyslogd2SettingPort(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogSyslogd2SettingPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogSyslogd2SettingFacility(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogSyslogd2SettingFacility(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogSyslogd2SettingSourceIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogSyslogd2SettingSourceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogSyslogd2SettingFormat(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogSyslogd2SettingFormat(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogSyslogd2SettingEncAlgorithm(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogSyslogd2SettingPriority(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogSyslogd2SettingSslMinProtoVersion(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogSyslogd2SettingMaxLogRate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogSyslogd2SettingCertificate(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogSyslogd2SettingEncAlgorithm(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogSyslogd2SettingCustomFieldName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogSyslogd2SettingSslMinProtoVersion(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogSyslogd2SettingCertificate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogSyslogd2SettingCustomFieldName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -437,17 +511,20 @@ func expandLogSyslogd2SettingCustomFieldName(d *schema.ResourceData, v interface
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandLogSyslogd2SettingCustomFieldNameId(d, i["id"], pre_append)
+
+			tmp["id"], _ = expandLogSyslogd2SettingCustomFieldNameId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandLogSyslogd2SettingCustomFieldNameName(d, i["name"], pre_append)
+
+			tmp["name"], _ = expandLogSyslogd2SettingCustomFieldNameName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "custom"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["custom"], _ = expandLogSyslogd2SettingCustomFieldNameCustom(d, i["custom"], pre_append)
+
+			tmp["custom"], _ = expandLogSyslogd2SettingCustomFieldNameCustom(d, i["custom"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -458,27 +535,36 @@ func expandLogSyslogd2SettingCustomFieldName(d *schema.ResourceData, v interface
 	return result, nil
 }
 
-func expandLogSyslogd2SettingCustomFieldNameId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogSyslogd2SettingCustomFieldNameId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogSyslogd2SettingCustomFieldNameName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogSyslogd2SettingCustomFieldNameName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogSyslogd2SettingCustomFieldNameCustom(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogSyslogd2SettingCustomFieldNameCustom(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandLogSyslogd2SettingSyslogType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandLogSyslogd2SettingInterfaceSelectMethod(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectLogSyslogd2Setting(d *schema.ResourceData) (*map[string]interface{}, error) {
+func expandLogSyslogd2SettingInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandLogSyslogd2SettingSyslogType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func getObjectLogSyslogd2Setting(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
-		t, err := expandLogSyslogd2SettingStatus(d, v, "status")
+
+		t, err := expandLogSyslogd2SettingStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -487,7 +573,8 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("server"); ok {
-		t, err := expandLogSyslogd2SettingServer(d, v, "server")
+
+		t, err := expandLogSyslogd2SettingServer(d, v, "server", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -496,7 +583,8 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("mode"); ok {
-		t, err := expandLogSyslogd2SettingMode(d, v, "mode")
+
+		t, err := expandLogSyslogd2SettingMode(d, v, "mode", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -505,7 +593,8 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOkExists("port"); ok {
-		t, err := expandLogSyslogd2SettingPort(d, v, "port")
+
+		t, err := expandLogSyslogd2SettingPort(d, v, "port", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -514,7 +603,8 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("facility"); ok {
-		t, err := expandLogSyslogd2SettingFacility(d, v, "facility")
+
+		t, err := expandLogSyslogd2SettingFacility(d, v, "facility", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -523,7 +613,8 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
-		t, err := expandLogSyslogd2SettingSourceIp(d, v, "source_ip")
+
+		t, err := expandLogSyslogd2SettingSourceIp(d, v, "source_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -532,7 +623,8 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("format"); ok {
-		t, err := expandLogSyslogd2SettingFormat(d, v, "format")
+
+		t, err := expandLogSyslogd2SettingFormat(d, v, "format", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -540,8 +632,29 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData) (*map[string]interface{
 		}
 	}
 
+	if v, ok := d.GetOk("priority"); ok {
+
+		t, err := expandLogSyslogd2SettingPriority(d, v, "priority", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["priority"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("max_log_rate"); ok {
+
+		t, err := expandLogSyslogd2SettingMaxLogRate(d, v, "max_log_rate", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["max-log-rate"] = t
+		}
+	}
+
 	if v, ok := d.GetOk("enc_algorithm"); ok {
-		t, err := expandLogSyslogd2SettingEncAlgorithm(d, v, "enc_algorithm")
+
+		t, err := expandLogSyslogd2SettingEncAlgorithm(d, v, "enc_algorithm", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -550,7 +663,8 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("ssl_min_proto_version"); ok {
-		t, err := expandLogSyslogd2SettingSslMinProtoVersion(d, v, "ssl_min_proto_version")
+
+		t, err := expandLogSyslogd2SettingSslMinProtoVersion(d, v, "ssl_min_proto_version", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -559,7 +673,8 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("certificate"); ok {
-		t, err := expandLogSyslogd2SettingCertificate(d, v, "certificate")
+
+		t, err := expandLogSyslogd2SettingCertificate(d, v, "certificate", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -568,7 +683,8 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData) (*map[string]interface{
 	}
 
 	if v, ok := d.GetOk("custom_field_name"); ok {
-		t, err := expandLogSyslogd2SettingCustomFieldName(d, v, "custom_field_name")
+
+		t, err := expandLogSyslogd2SettingCustomFieldName(d, v, "custom_field_name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -576,8 +692,29 @@ func getObjectLogSyslogd2Setting(d *schema.ResourceData) (*map[string]interface{
 		}
 	}
 
+	if v, ok := d.GetOk("interface_select_method"); ok {
+
+		t, err := expandLogSyslogd2SettingInterfaceSelectMethod(d, v, "interface_select_method", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["interface-select-method"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("interface"); ok {
+
+		t, err := expandLogSyslogd2SettingInterface(d, v, "interface", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["interface"] = t
+		}
+	}
+
 	if v, ok := d.GetOkExists("syslog_type"); ok {
-		t, err := expandLogSyslogd2SettingSyslogType(d, v, "syslog_type")
+
+		t, err := expandLogSyslogd2SettingSyslogType(d, v, "syslog_type", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
