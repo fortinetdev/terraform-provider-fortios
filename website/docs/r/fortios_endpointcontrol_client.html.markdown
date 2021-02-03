@@ -7,10 +7,9 @@ description: |-
 ---
 
 # fortios_endpointcontrol_client
-Configure endpoint control client lists.
+Configure endpoint control client lists. Applies to FortiOS Version `<= 6.2.0`.
 
 ## Argument Reference
-
 
 The following arguments are supported:
 
