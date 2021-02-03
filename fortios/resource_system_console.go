@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -58,7 +59,7 @@ func resourceSystemConsoleUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemConsole(d)
+	obj, err := getObjectSystemConsole(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemConsole resource while getting object: %v", err)
 	}
@@ -111,51 +112,51 @@ func resourceSystemConsoleRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectSystemConsole(d, o)
+	err = refreshObjectSystemConsole(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemConsole resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemConsoleMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemConsoleMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemConsoleBaudrate(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemConsoleBaudrate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemConsoleOutput(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemConsoleOutput(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemConsoleLogin(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemConsoleLogin(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemConsole(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemConsole(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("mode", flattenSystemConsoleMode(o["mode"], d, "mode")); err != nil {
+	if err = d.Set("mode", flattenSystemConsoleMode(o["mode"], d, "mode", sv)); err != nil {
 		if !fortiAPIPatch(o["mode"]) {
 			return fmt.Errorf("Error reading mode: %v", err)
 		}
 	}
 
-	if err = d.Set("baudrate", flattenSystemConsoleBaudrate(o["baudrate"], d, "baudrate")); err != nil {
+	if err = d.Set("baudrate", flattenSystemConsoleBaudrate(o["baudrate"], d, "baudrate", sv)); err != nil {
 		if !fortiAPIPatch(o["baudrate"]) {
 			return fmt.Errorf("Error reading baudrate: %v", err)
 		}
 	}
 
-	if err = d.Set("output", flattenSystemConsoleOutput(o["output"], d, "output")); err != nil {
+	if err = d.Set("output", flattenSystemConsoleOutput(o["output"], d, "output", sv)); err != nil {
 		if !fortiAPIPatch(o["output"]) {
 			return fmt.Errorf("Error reading output: %v", err)
 		}
 	}
 
-	if err = d.Set("login", flattenSystemConsoleLogin(o["login"], d, "login")); err != nil {
+	if err = d.Set("login", flattenSystemConsoleLogin(o["login"], d, "login", sv)); err != nil {
 		if !fortiAPIPatch(o["login"]) {
 			return fmt.Errorf("Error reading login: %v", err)
 		}
@@ -167,30 +168,31 @@ func refreshObjectSystemConsole(d *schema.ResourceData, o map[string]interface{}
 func flattenSystemConsoleFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemConsoleMode(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemConsoleMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemConsoleBaudrate(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemConsoleBaudrate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemConsoleOutput(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemConsoleOutput(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemConsoleLogin(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemConsoleLogin(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemConsole(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemConsole(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("mode"); ok {
-		t, err := expandSystemConsoleMode(d, v, "mode")
+
+		t, err := expandSystemConsoleMode(d, v, "mode", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -199,7 +201,8 @@ func getObjectSystemConsole(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOk("baudrate"); ok {
-		t, err := expandSystemConsoleBaudrate(d, v, "baudrate")
+
+		t, err := expandSystemConsoleBaudrate(d, v, "baudrate", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -208,7 +211,8 @@ func getObjectSystemConsole(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOk("output"); ok {
-		t, err := expandSystemConsoleOutput(d, v, "output")
+
+		t, err := expandSystemConsoleOutput(d, v, "output", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -217,7 +221,8 @@ func getObjectSystemConsole(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOk("login"); ok {
-		t, err := expandSystemConsoleLogin(d, v, "login")
+
+		t, err := expandSystemConsoleLogin(d, v, "login", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
