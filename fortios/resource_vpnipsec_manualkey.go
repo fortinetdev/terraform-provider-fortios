@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -88,7 +89,7 @@ func resourceVpnIpsecManualkeyCreate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectVpnIpsecManualkey(d)
+	obj, err := getObjectVpnIpsecManualkey(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating VpnIpsecManualkey resource while getting object: %v", err)
 	}
@@ -113,7 +114,7 @@ func resourceVpnIpsecManualkeyUpdate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectVpnIpsecManualkey(d)
+	obj, err := getObjectVpnIpsecManualkey(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating VpnIpsecManualkey resource while getting object: %v", err)
 	}
@@ -166,99 +167,99 @@ func resourceVpnIpsecManualkeyRead(d *schema.ResourceData, m interface{}) error 
 		return nil
 	}
 
-	err = refreshObjectVpnIpsecManualkey(d, o)
+	err = refreshObjectVpnIpsecManualkey(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading VpnIpsecManualkey resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenVpnIpsecManualkeyName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnIpsecManualkeyName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenVpnIpsecManualkeyInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnIpsecManualkeyInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenVpnIpsecManualkeyRemoteGw(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnIpsecManualkeyRemoteGw(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenVpnIpsecManualkeyLocalGw(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnIpsecManualkeyLocalGw(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenVpnIpsecManualkeyAuthentication(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnIpsecManualkeyAuthentication(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenVpnIpsecManualkeyEncryption(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnIpsecManualkeyEncryption(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenVpnIpsecManualkeyAuthkey(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnIpsecManualkeyAuthkey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenVpnIpsecManualkeyEnckey(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnIpsecManualkeyEnckey(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenVpnIpsecManualkeyLocalspi(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnIpsecManualkeyLocalspi(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenVpnIpsecManualkeyRemotespi(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnIpsecManualkeyRemotespi(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectVpnIpsecManualkey(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectVpnIpsecManualkey(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenVpnIpsecManualkeyName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenVpnIpsecManualkeyName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("interface", flattenVpnIpsecManualkeyInterface(o["interface"], d, "interface")); err != nil {
+	if err = d.Set("interface", flattenVpnIpsecManualkeyInterface(o["interface"], d, "interface", sv)); err != nil {
 		if !fortiAPIPatch(o["interface"]) {
 			return fmt.Errorf("Error reading interface: %v", err)
 		}
 	}
 
-	if err = d.Set("remote_gw", flattenVpnIpsecManualkeyRemoteGw(o["remote-gw"], d, "remote_gw")); err != nil {
+	if err = d.Set("remote_gw", flattenVpnIpsecManualkeyRemoteGw(o["remote-gw"], d, "remote_gw", sv)); err != nil {
 		if !fortiAPIPatch(o["remote-gw"]) {
 			return fmt.Errorf("Error reading remote_gw: %v", err)
 		}
 	}
 
-	if err = d.Set("local_gw", flattenVpnIpsecManualkeyLocalGw(o["local-gw"], d, "local_gw")); err != nil {
+	if err = d.Set("local_gw", flattenVpnIpsecManualkeyLocalGw(o["local-gw"], d, "local_gw", sv)); err != nil {
 		if !fortiAPIPatch(o["local-gw"]) {
 			return fmt.Errorf("Error reading local_gw: %v", err)
 		}
 	}
 
-	if err = d.Set("authentication", flattenVpnIpsecManualkeyAuthentication(o["authentication"], d, "authentication")); err != nil {
+	if err = d.Set("authentication", flattenVpnIpsecManualkeyAuthentication(o["authentication"], d, "authentication", sv)); err != nil {
 		if !fortiAPIPatch(o["authentication"]) {
 			return fmt.Errorf("Error reading authentication: %v", err)
 		}
 	}
 
-	if err = d.Set("encryption", flattenVpnIpsecManualkeyEncryption(o["encryption"], d, "encryption")); err != nil {
+	if err = d.Set("encryption", flattenVpnIpsecManualkeyEncryption(o["encryption"], d, "encryption", sv)); err != nil {
 		if !fortiAPIPatch(o["encryption"]) {
 			return fmt.Errorf("Error reading encryption: %v", err)
 		}
 	}
 
-	if err = d.Set("localspi", flattenVpnIpsecManualkeyLocalspi(o["localspi"], d, "localspi")); err != nil {
+	if err = d.Set("localspi", flattenVpnIpsecManualkeyLocalspi(o["localspi"], d, "localspi", sv)); err != nil {
 		if !fortiAPIPatch(o["localspi"]) {
 			return fmt.Errorf("Error reading localspi: %v", err)
 		}
 	}
 
-	if err = d.Set("remotespi", flattenVpnIpsecManualkeyRemotespi(o["remotespi"], d, "remotespi")); err != nil {
+	if err = d.Set("remotespi", flattenVpnIpsecManualkeyRemotespi(o["remotespi"], d, "remotespi", sv)); err != nil {
 		if !fortiAPIPatch(o["remotespi"]) {
 			return fmt.Errorf("Error reading remotespi: %v", err)
 		}
@@ -270,54 +271,55 @@ func refreshObjectVpnIpsecManualkey(d *schema.ResourceData, o map[string]interfa
 func flattenVpnIpsecManualkeyFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandVpnIpsecManualkeyName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnIpsecManualkeyName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandVpnIpsecManualkeyInterface(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnIpsecManualkeyInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandVpnIpsecManualkeyRemoteGw(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnIpsecManualkeyRemoteGw(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandVpnIpsecManualkeyLocalGw(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnIpsecManualkeyLocalGw(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandVpnIpsecManualkeyAuthentication(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnIpsecManualkeyAuthentication(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandVpnIpsecManualkeyEncryption(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnIpsecManualkeyEncryption(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandVpnIpsecManualkeyAuthkey(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnIpsecManualkeyAuthkey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandVpnIpsecManualkeyEnckey(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnIpsecManualkeyEnckey(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandVpnIpsecManualkeyLocalspi(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnIpsecManualkeyLocalspi(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandVpnIpsecManualkeyRemotespi(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnIpsecManualkeyRemotespi(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectVpnIpsecManualkey(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectVpnIpsecManualkey(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandVpnIpsecManualkeyName(d, v, "name")
+
+		t, err := expandVpnIpsecManualkeyName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -326,7 +328,8 @@ func getObjectVpnIpsecManualkey(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
-		t, err := expandVpnIpsecManualkeyInterface(d, v, "interface")
+
+		t, err := expandVpnIpsecManualkeyInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -335,7 +338,8 @@ func getObjectVpnIpsecManualkey(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("remote_gw"); ok {
-		t, err := expandVpnIpsecManualkeyRemoteGw(d, v, "remote_gw")
+
+		t, err := expandVpnIpsecManualkeyRemoteGw(d, v, "remote_gw", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -344,7 +348,8 @@ func getObjectVpnIpsecManualkey(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("local_gw"); ok {
-		t, err := expandVpnIpsecManualkeyLocalGw(d, v, "local_gw")
+
+		t, err := expandVpnIpsecManualkeyLocalGw(d, v, "local_gw", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -353,7 +358,8 @@ func getObjectVpnIpsecManualkey(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("authentication"); ok {
-		t, err := expandVpnIpsecManualkeyAuthentication(d, v, "authentication")
+
+		t, err := expandVpnIpsecManualkeyAuthentication(d, v, "authentication", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -362,7 +368,8 @@ func getObjectVpnIpsecManualkey(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("encryption"); ok {
-		t, err := expandVpnIpsecManualkeyEncryption(d, v, "encryption")
+
+		t, err := expandVpnIpsecManualkeyEncryption(d, v, "encryption", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -371,7 +378,8 @@ func getObjectVpnIpsecManualkey(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("authkey"); ok {
-		t, err := expandVpnIpsecManualkeyAuthkey(d, v, "authkey")
+
+		t, err := expandVpnIpsecManualkeyAuthkey(d, v, "authkey", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -380,7 +388,8 @@ func getObjectVpnIpsecManualkey(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("enckey"); ok {
-		t, err := expandVpnIpsecManualkeyEnckey(d, v, "enckey")
+
+		t, err := expandVpnIpsecManualkeyEnckey(d, v, "enckey", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -389,7 +398,8 @@ func getObjectVpnIpsecManualkey(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("localspi"); ok {
-		t, err := expandVpnIpsecManualkeyLocalspi(d, v, "localspi")
+
+		t, err := expandVpnIpsecManualkeyLocalspi(d, v, "localspi", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -398,7 +408,8 @@ func getObjectVpnIpsecManualkey(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("remotespi"); ok {
-		t, err := expandVpnIpsecManualkeyRemotespi(d, v, "remotespi")
+
+		t, err := expandVpnIpsecManualkeyRemotespi(d, v, "remotespi", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
