@@ -76,7 +76,6 @@ resource "fortios_wanopt_profile" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Profile name.
@@ -95,6 +94,7 @@ The `http` block supports:
 * `secure_tunnel` - Enable/disable securing the WAN Opt tunnel using SSL. Secure and non-secure tunnels use the same TCP port (7810).
 * `byte_caching` - Enable/disable byte-caching for HTTP. Byte caching reduces the amount of traffic by caching file data sent across the WAN and in future serving if from the cache.
 * `prefer_chunking` - Select dynamic or fixed-size data chunking for HTTP WAN Optimization.
+* `protocol_opt` - Select Protocol specific optimitation or generic TCP optimization.
 * `tunnel_sharing` - Tunnel sharing mode for aggressive/non-aggressive and/or interactive/non-interactive protocols.
 * `log_traffic` - Enable/disable logging.
 * `port` - Single port number or port number range for HTTP. Only packets with a destination port number that matches this port number or range are accepted by this profile.
@@ -109,6 +109,7 @@ The `cifs` block supports:
 * `secure_tunnel` - Enable/disable securing the WAN Opt tunnel using SSL. Secure and non-secure tunnels use the same TCP port (7810).
 * `byte_caching` - Enable/disable byte-caching for HTTP. Byte caching reduces the amount of traffic by caching file data sent across the WAN and in future serving if from the cache.
 * `prefer_chunking` - Select dynamic or fixed-size data chunking for HTTP WAN Optimization.
+* `protocol_opt` - Select Protocol specific optimitation or generic TCP optimization.
 * `tunnel_sharing` - Tunnel sharing mode for aggressive/non-aggressive and/or interactive/non-interactive protocols.
 * `log_traffic` - Enable/disable logging.
 * `port` - Single port number or port number range for CIFS. Only packets with a destination port number that matches this port number or range are accepted by this profile.
@@ -127,7 +128,9 @@ The `ftp` block supports:
 * `status` - Enable/disable HTTP WAN Optimization.
 * `secure_tunnel` - Enable/disable securing the WAN Opt tunnel using SSL. Secure and non-secure tunnels use the same TCP port (7810).
 * `byte_caching` - Enable/disable byte-caching for HTTP. Byte caching reduces the amount of traffic by caching file data sent across the WAN and in future serving if from the cache.
+* `ssl` - Enable/disable SSL/TLS offloading (hardware acceleration) for traffic in this tunnel.
 * `prefer_chunking` - Select dynamic or fixed-size data chunking for HTTP WAN Optimization.
+* `protocol_opt` - Select Protocol specific optimitation or generic TCP optimization.
 * `tunnel_sharing` - Tunnel sharing mode for aggressive/non-aggressive and/or interactive/non-interactive protocols.
 * `log_traffic` - Enable/disable logging.
 * `port` - Single port number or port number range for FTP. Only packets with a destination port number that matches this port number or range are accepted by this profile.
