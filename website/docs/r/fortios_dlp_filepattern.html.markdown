@@ -20,7 +20,6 @@ resource "fortios_dlp_filepattern" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `fosid` - (Required) ID.
