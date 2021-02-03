@@ -25,7 +25,6 @@ resource "fortios_logfortiguard_setting" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `status` - Enable/disable logging to FortiCloud.
@@ -33,9 +32,14 @@ The following arguments are supported:
 * `upload_interval` - Frequency of uploading log files to FortiCloud.
 * `upload_day` - Day of week to roll logs.
 * `upload_time` - Time of day to roll logs (hh:mm).
+* `priority` - Set log transmission priority.
+* `max_log_rate` - FortiCloud maximum log rate in MBps (0 = unlimited).
 * `enc_algorithm` - Enable and set the SSL security level for for sending encrypted logs to FortiCloud.
 * `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting).
+* `conn_timeout` - FortiGate Cloud connection timeout in seconds.
 * `source_ip` - Source IP address used to connect FortiCloud.
+* `interface_select_method` - Specify how to select outgoing interface to reach server.
+* `interface` - Specify outgoing interface to reach server.
 
 
 ## Attribute Reference
