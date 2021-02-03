@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_spamfilter_mheader
-Configure AntiSpam MIME header.
+Configure AntiSpam MIME header. Applies to FortiOS Version `<= 6.2.0`.
 
 ## Example Usage
 
@@ -29,7 +29,6 @@ resource "fortios_spamfilter_mheader" "trname" {
 ```
 
 ## Argument Reference
-
 
 The following arguments are supported:
 
