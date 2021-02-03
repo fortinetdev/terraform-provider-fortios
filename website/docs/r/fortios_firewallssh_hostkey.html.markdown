@@ -24,7 +24,6 @@ resource "fortios_firewallssh_hostkey" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - SSH public key name.
