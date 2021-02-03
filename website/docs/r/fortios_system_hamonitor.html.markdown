@@ -21,7 +21,6 @@ resource "fortios_system_hamonitor" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `monitor_vlan` - Enable/disable monitor VLAN interfaces.
