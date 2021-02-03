@@ -11,7 +11,6 @@ Configure WTP groups.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - WTP group name.
