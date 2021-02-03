@@ -43,7 +43,6 @@ resource "fortios_logdisk_setting" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `status` - (Required) Enable/disable local disk logging.
@@ -74,6 +73,8 @@ The following arguments are supported:
 * `full_first_warning_threshold` - Log full first warning threshold as a percent (1 - 98, default = 75).
 * `full_second_warning_threshold` - Log full second warning threshold as a percent (2 - 99, default = 90).
 * `full_final_warning_threshold` - Log full final warning threshold as a percent (3 - 100, default = 95).
+* `interface_select_method` - Specify how to select outgoing interface to reach server.
+* `interface` - Specify outgoing interface to reach server.
 
 
 ## Attribute Reference
