@@ -32,7 +32,6 @@ resource "fortios_user_peergrp" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Peer group name.
