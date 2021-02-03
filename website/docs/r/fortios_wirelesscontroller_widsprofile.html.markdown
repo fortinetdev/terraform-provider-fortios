@@ -11,7 +11,6 @@ Configure wireless intrusion detection system (WIDS) profiles.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - WIDS profile name.
@@ -23,11 +22,13 @@ The following arguments are supported:
 * `ap_bgscan_duration` - Listening time on a scanning channel (10 - 1000 msec, default = 20).
 * `ap_bgscan_idle` - Waiting time for channel inactivity before scanning this channel (0 - 1000 msec, default = 0).
 * `ap_bgscan_report_intv` - Period of time between background scan reports (15 - 600 sec, default = 30).
+* `ap_bgscan_disable_schedules` - Firewall schedules for turning off FortiAP radio background scan. Background scan will be disabled when at least one of the schedules is valid. Separate multiple schedule names with a space. The structure of `ap_bgscan_disable_schedules` block is documented below.
 * `ap_bgscan_disable_day` - Optionally turn off scanning for one or more days of the week. Separate the days with a space. By default, no days are set.
 * `ap_bgscan_disable_start` - Start time, using a 24-hour clock in the format of hh:mm, for disabling background scanning (default = 00:00).
 * `ap_bgscan_disable_end` - End time, using a 24-hour clock in the format of hh:mm, for disabling background scanning (default = 00:00).
 * `ap_fgscan_report_intv` - Period of time between foreground scan reports (15 - 600 sec, default = 15).
 * `ap_scan_passive` - Enable/disable passive scanning. Enable means do not send probe request on any channels (default = disable).
+* `ap_scan_threshold` - Minimum signal level/threshold in dBm required for the AP to report detected rogue AP (-95 to -20, default = -90).
 * `ap_auto_suppress` - Enable/disable on-wire rogue AP auto-suppression (default = disable).
 * `wireless_bridge` - Enable/disable wireless bridge detection (default = disable).
 * `deauth_broadcast` - Enable/disable broadcasting de-authentication detection (default = disable).
@@ -63,6 +64,11 @@ The following arguments are supported:
 * `eapol_pre_fail_thresh` - The threshold value for premature EAPOL-Failure flooding in specified interval.
 * `eapol_pre_fail_intv` - The detection interval for premature EAPOL-Failure flooding (1 - 3600 sec).
 * `deauth_unknown_src_thresh` - Threshold value per second to deauth unknown src for DoS attack (0: no limit).
+* `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
+The `ap_bgscan_disable_schedules` block supports:
+
+* `name` - Schedule name.
 
 
 ## Attribute Reference
