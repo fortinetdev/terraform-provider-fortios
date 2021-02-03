@@ -11,7 +11,6 @@ Hidden table for datasource.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `desc` - Signature description.
