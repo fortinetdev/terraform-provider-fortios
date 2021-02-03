@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -54,7 +55,7 @@ func resourceWirelessControllerHotspot20AnqpIpAddressTypeCreate(d *schema.Resour
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWirelessControllerHotspot20AnqpIpAddressType(d)
+	obj, err := getObjectWirelessControllerHotspot20AnqpIpAddressType(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WirelessControllerHotspot20AnqpIpAddressType resource while getting object: %v", err)
 	}
@@ -79,7 +80,7 @@ func resourceWirelessControllerHotspot20AnqpIpAddressTypeUpdate(d *schema.Resour
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWirelessControllerHotspot20AnqpIpAddressType(d)
+	obj, err := getObjectWirelessControllerHotspot20AnqpIpAddressType(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerHotspot20AnqpIpAddressType resource while getting object: %v", err)
 	}
@@ -132,41 +133,41 @@ func resourceWirelessControllerHotspot20AnqpIpAddressTypeRead(d *schema.Resource
 		return nil
 	}
 
-	err = refreshObjectWirelessControllerHotspot20AnqpIpAddressType(d, o)
+	err = refreshObjectWirelessControllerHotspot20AnqpIpAddressType(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading WirelessControllerHotspot20AnqpIpAddressType resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenWirelessControllerHotspot20AnqpIpAddressTypeName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerHotspot20AnqpIpAddressTypeName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerHotspot20AnqpIpAddressTypeIpv6AddressType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerHotspot20AnqpIpAddressTypeIpv6AddressType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWirelessControllerHotspot20AnqpIpAddressTypeIpv4AddressType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWirelessControllerHotspot20AnqpIpAddressTypeIpv4AddressType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectWirelessControllerHotspot20AnqpIpAddressType(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectWirelessControllerHotspot20AnqpIpAddressType(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenWirelessControllerHotspot20AnqpIpAddressTypeName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenWirelessControllerHotspot20AnqpIpAddressTypeName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("ipv6_address_type", flattenWirelessControllerHotspot20AnqpIpAddressTypeIpv6AddressType(o["ipv6-address-type"], d, "ipv6_address_type")); err != nil {
+	if err = d.Set("ipv6_address_type", flattenWirelessControllerHotspot20AnqpIpAddressTypeIpv6AddressType(o["ipv6-address-type"], d, "ipv6_address_type", sv)); err != nil {
 		if !fortiAPIPatch(o["ipv6-address-type"]) {
 			return fmt.Errorf("Error reading ipv6_address_type: %v", err)
 		}
 	}
 
-	if err = d.Set("ipv4_address_type", flattenWirelessControllerHotspot20AnqpIpAddressTypeIpv4AddressType(o["ipv4-address-type"], d, "ipv4_address_type")); err != nil {
+	if err = d.Set("ipv4_address_type", flattenWirelessControllerHotspot20AnqpIpAddressTypeIpv4AddressType(o["ipv4-address-type"], d, "ipv4_address_type", sv)); err != nil {
 		if !fortiAPIPatch(o["ipv4-address-type"]) {
 			return fmt.Errorf("Error reading ipv4_address_type: %v", err)
 		}
@@ -178,26 +179,27 @@ func refreshObjectWirelessControllerHotspot20AnqpIpAddressType(d *schema.Resourc
 func flattenWirelessControllerHotspot20AnqpIpAddressTypeFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandWirelessControllerHotspot20AnqpIpAddressTypeName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerHotspot20AnqpIpAddressTypeName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerHotspot20AnqpIpAddressTypeIpv6AddressType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerHotspot20AnqpIpAddressTypeIpv6AddressType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWirelessControllerHotspot20AnqpIpAddressTypeIpv4AddressType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWirelessControllerHotspot20AnqpIpAddressTypeIpv4AddressType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectWirelessControllerHotspot20AnqpIpAddressType(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectWirelessControllerHotspot20AnqpIpAddressType(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandWirelessControllerHotspot20AnqpIpAddressTypeName(d, v, "name")
+
+		t, err := expandWirelessControllerHotspot20AnqpIpAddressTypeName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -206,7 +208,8 @@ func getObjectWirelessControllerHotspot20AnqpIpAddressType(d *schema.ResourceDat
 	}
 
 	if v, ok := d.GetOk("ipv6_address_type"); ok {
-		t, err := expandWirelessControllerHotspot20AnqpIpAddressTypeIpv6AddressType(d, v, "ipv6_address_type")
+
+		t, err := expandWirelessControllerHotspot20AnqpIpAddressTypeIpv6AddressType(d, v, "ipv6_address_type", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -215,7 +218,8 @@ func getObjectWirelessControllerHotspot20AnqpIpAddressType(d *schema.ResourceDat
 	}
 
 	if v, ok := d.GetOk("ipv4_address_type"); ok {
-		t, err := expandWirelessControllerHotspot20AnqpIpAddressTypeIpv4AddressType(d, v, "ipv4_address_type")
+
+		t, err := expandWirelessControllerHotspot20AnqpIpAddressTypeIpv4AddressType(d, v, "ipv4_address_type", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
