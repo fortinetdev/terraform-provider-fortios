@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_dlp_fpsensitivity
-Create self-explanatory DLP sensitivity levels to be used when setting sensitivity under config fp-doc-source.
+Create self-explanatory DLP sensitivity levels to be used when setting sensitivity under config fp-doc-source. Applies to FortiOS Version `<= 6.2.0`.
 
 ## Example Usage
 
@@ -18,7 +18,6 @@ resource "fortios_dlp_fpsensitivity" "trname" {
 ```
 
 ## Argument Reference
-
 
 The following arguments are supported:
 
