@@ -21,12 +21,14 @@ resource "fortios_system_fortisandbox" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `status` - Enable/disable FortiSandbox.
+* `forticloud` - Enable/disable FortiSandbox Cloud.
 * `server` - IPv4 or IPv6 address of the remote FortiSandbox.
 * `source_ip` - Source IP address for communications to FortiSandbox.
+* `interface_select_method` - Specify how to select outgoing interface to reach server.
+* `interface` - Specify outgoing interface to reach server.
 * `enc_algorithm` - Configure the level of SSL protection for secure communication with FortiSandbox.
 * `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting).
 * `email` - Notifier email address.
