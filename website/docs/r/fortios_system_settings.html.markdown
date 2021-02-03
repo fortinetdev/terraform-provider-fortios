@@ -23,7 +23,6 @@ resource "fortios_system_settings" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `comments` - VDOM comments.
@@ -57,6 +56,8 @@ The following arguments are supported:
 * `prp_trailer_action` - Enable/disable action to take on PRP trailer.
 * `snat_hairpin_traffic` - Enable/disable source NAT (SNAT) for hairpin traffic.
 * `dhcp_proxy` - Enable/disable the DHCP Proxy.
+* `dhcp_proxy_interface_select_method` - Specify how to select outgoing interface to reach server.
+* `dhcp_proxy_interface` - Specify outgoing interface to reach server.
 * `dhcp_server_ip` - DHCP Server IPv4 address.
 * `dhcp6_server_ip` - DHCPv6 server IPv6 address.
 * `central_nat` - Enable/disable central NAT.
@@ -64,6 +65,7 @@ The following arguments are supported:
 * `lldp_reception` - Enable/disable Link Layer Discovery Protocol (LLDP) reception for this VDOM or apply global settings to this VDOM.
 * `lldp_transmission` - Enable/disable Link Layer Discovery Protocol (LLDP) transmission for this VDOM or apply global settings to this VDOM.
 * `link_down_access` - Enable/disable link down access traffic.
+* `auxiliary_session` - Enable/disable auxiliary session.
 * `asymroute` - Enable/disable IPv4 asymmetric routing.
 * `asymroute_icmp` - Enable/disable ICMP asymmetric routing.
 * `tcp_session_without_syn` - Enable/disable allowing TCP session without SYN flags.
@@ -72,6 +74,8 @@ The following arguments are supported:
 * `allow_linkdown_path` - Enable/disable link down path.
 * `asymroute6` - Enable/disable asymmetric IPv6 routing.
 * `asymroute6_icmp` - Enable/disable asymmetric ICMPv6 routing.
+* `sctp_session_without_init` - Enable/disable SCTP session creation without SCTP INIT.
+* `sip_expectation` - Enable/disable the SIP kernel session helper to create an expectation for port 5060.
 * `sip_helper` - Enable/disable the SIP session helper to process SIP sessions unless SIP sessions are accepted by the SIP application layer gateway (ALG).
 * `sip_nat_trace` - Enable/disable recording the original SIP source IP address when NAT is used.
 * `status` - Enable/disable this VDOM.
@@ -99,6 +103,7 @@ The following arguments are supported:
 * `gui_replacement_message_groups` - Enable/disable replacement message groups on the GUI.
 * `gui_voip_profile` - Enable/disable VoIP profiles on the GUI.
 * `gui_ap_profile` - Enable/disable FortiAP profiles on the GUI.
+* `gui_security_profile_group` - Enable/disable Security Profile Groups on the GUI.
 * `gui_dynamic_profile_display` - Enable/disable RADIUS Single Sign On (RSSO) on the GUI.
 * `gui_local_in_policy` - Enable/disable Local-In policies on the GUI.
 * `gui_local_reports` - Enable/disable local reports on the GUI.
@@ -112,6 +117,7 @@ The following arguments are supported:
 * `gui_threat_weight` - Enable/disable threat weight on the GUI.
 * `gui_multiple_utm_profiles` - Enable/disable multiple UTM profiles on the GUI.
 * `gui_spamfilter` - Enable/disable Antispam on the GUI.
+* `gui_file_filter` - Enable/disable File-filter on the GUI.
 * `gui_application_control` - Enable/disable application control on the GUI.
 * `gui_ips` - Enable/disable IPS on the GUI.
 * `gui_endpoint_control` - Enable/disable endpoint control on the GUI.
@@ -134,11 +140,15 @@ The following arguments are supported:
 * `gui_email_collection` - Enable/disable email collection on the GUI.
 * `gui_domain_ip_reputation` - Enable/disable Domain and IP Reputation on the GUI.
 * `gui_multiple_interface_policy` - Enable/disable adding multiple interfaces to a policy on the GUI.
+* `gui_policy_disclaimer` - Enable/disable policy disclaimer on the GUI.
+* `gui_per_policy_disclaimer` - Enable/disable policy disclaimer on the GUI.
 * `gui_policy_learning` - Enable/disable firewall policy learning mode on the GUI.
 * `compliance_check` - Enable/disable PCI DSS compliance checking.
 * `ike_session_resume` - Enable/disable IKEv2 session resumption (RFC 5723).
 * `ike_quick_crash_detect` - Enable/disable IKE quick crash detection (RFC 6290).
 * `ike_dn_format` - Configure IKE ASN.1 Distinguished Name format conventions.
+* `ike_port` - UDP port for IKE/IPsec traffic (default 500).
+* `ike_natt_port` - UDP port for IKE/IPsec traffic in NAT-T mode (default 4500).
 * `block_land_attack` - Enable/disable blocking of land attacks.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
