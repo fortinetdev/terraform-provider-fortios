@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -59,7 +60,7 @@ func resourceSwitchControllerStormControlUpdate(d *schema.ResourceData, m interf
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSwitchControllerStormControl(d)
+	obj, err := getObjectSwitchControllerStormControl(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerStormControl resource while getting object: %v", err)
 	}
@@ -112,51 +113,51 @@ func resourceSwitchControllerStormControlRead(d *schema.ResourceData, m interfac
 		return nil
 	}
 
-	err = refreshObjectSwitchControllerStormControl(d, o)
+	err = refreshObjectSwitchControllerStormControl(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerStormControl resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSwitchControllerStormControlRate(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerStormControlRate(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerStormControlUnknownUnicast(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerStormControlUnknownUnicast(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerStormControlUnknownMulticast(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerStormControlUnknownMulticast(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerStormControlBroadcast(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerStormControlBroadcast(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSwitchControllerStormControl(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSwitchControllerStormControl(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("rate", flattenSwitchControllerStormControlRate(o["rate"], d, "rate")); err != nil {
+	if err = d.Set("rate", flattenSwitchControllerStormControlRate(o["rate"], d, "rate", sv)); err != nil {
 		if !fortiAPIPatch(o["rate"]) {
 			return fmt.Errorf("Error reading rate: %v", err)
 		}
 	}
 
-	if err = d.Set("unknown_unicast", flattenSwitchControllerStormControlUnknownUnicast(o["unknown-unicast"], d, "unknown_unicast")); err != nil {
+	if err = d.Set("unknown_unicast", flattenSwitchControllerStormControlUnknownUnicast(o["unknown-unicast"], d, "unknown_unicast", sv)); err != nil {
 		if !fortiAPIPatch(o["unknown-unicast"]) {
 			return fmt.Errorf("Error reading unknown_unicast: %v", err)
 		}
 	}
 
-	if err = d.Set("unknown_multicast", flattenSwitchControllerStormControlUnknownMulticast(o["unknown-multicast"], d, "unknown_multicast")); err != nil {
+	if err = d.Set("unknown_multicast", flattenSwitchControllerStormControlUnknownMulticast(o["unknown-multicast"], d, "unknown_multicast", sv)); err != nil {
 		if !fortiAPIPatch(o["unknown-multicast"]) {
 			return fmt.Errorf("Error reading unknown_multicast: %v", err)
 		}
 	}
 
-	if err = d.Set("broadcast", flattenSwitchControllerStormControlBroadcast(o["broadcast"], d, "broadcast")); err != nil {
+	if err = d.Set("broadcast", flattenSwitchControllerStormControlBroadcast(o["broadcast"], d, "broadcast", sv)); err != nil {
 		if !fortiAPIPatch(o["broadcast"]) {
 			return fmt.Errorf("Error reading broadcast: %v", err)
 		}
@@ -168,30 +169,31 @@ func refreshObjectSwitchControllerStormControl(d *schema.ResourceData, o map[str
 func flattenSwitchControllerStormControlFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSwitchControllerStormControlRate(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerStormControlRate(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerStormControlUnknownUnicast(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerStormControlUnknownUnicast(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerStormControlUnknownMulticast(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerStormControlUnknownMulticast(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerStormControlBroadcast(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerStormControlBroadcast(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSwitchControllerStormControl(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSwitchControllerStormControl(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("rate"); ok {
-		t, err := expandSwitchControllerStormControlRate(d, v, "rate")
+
+		t, err := expandSwitchControllerStormControlRate(d, v, "rate", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -200,7 +202,8 @@ func getObjectSwitchControllerStormControl(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("unknown_unicast"); ok {
-		t, err := expandSwitchControllerStormControlUnknownUnicast(d, v, "unknown_unicast")
+
+		t, err := expandSwitchControllerStormControlUnknownUnicast(d, v, "unknown_unicast", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -209,7 +212,8 @@ func getObjectSwitchControllerStormControl(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("unknown_multicast"); ok {
-		t, err := expandSwitchControllerStormControlUnknownMulticast(d, v, "unknown_multicast")
+
+		t, err := expandSwitchControllerStormControlUnknownMulticast(d, v, "unknown_multicast", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -218,7 +222,8 @@ func getObjectSwitchControllerStormControl(d *schema.ResourceData) (*map[string]
 	}
 
 	if v, ok := d.GetOk("broadcast"); ok {
-		t, err := expandSwitchControllerStormControlBroadcast(d, v, "broadcast")
+
+		t, err := expandSwitchControllerStormControlBroadcast(d, v, "broadcast", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
