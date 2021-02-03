@@ -22,7 +22,6 @@ resource "fortios_system_vdomexception" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `fosid` - Index <1-4096>.
