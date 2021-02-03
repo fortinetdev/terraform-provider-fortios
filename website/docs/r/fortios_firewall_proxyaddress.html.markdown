@@ -24,7 +24,6 @@ resource "fortios_firewall_proxyaddress" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Address name.
