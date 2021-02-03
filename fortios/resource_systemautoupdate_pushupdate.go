@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -55,7 +56,7 @@ func resourceSystemAutoupdatePushUpdateUpdate(d *schema.ResourceData, m interfac
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemAutoupdatePushUpdate(d)
+	obj, err := getObjectSystemAutoupdatePushUpdate(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAutoupdatePushUpdate resource while getting object: %v", err)
 	}
@@ -108,51 +109,51 @@ func resourceSystemAutoupdatePushUpdateRead(d *schema.ResourceData, m interface{
 		return nil
 	}
 
-	err = refreshObjectSystemAutoupdatePushUpdate(d, o)
+	err = refreshObjectSystemAutoupdatePushUpdate(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemAutoupdatePushUpdate resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemAutoupdatePushUpdateStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAutoupdatePushUpdateStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAutoupdatePushUpdateOverride(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAutoupdatePushUpdateOverride(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAutoupdatePushUpdateAddress(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAutoupdatePushUpdateAddress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemAutoupdatePushUpdatePort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemAutoupdatePushUpdatePort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemAutoupdatePushUpdate(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemAutoupdatePushUpdate(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("status", flattenSystemAutoupdatePushUpdateStatus(o["status"], d, "status")); err != nil {
+	if err = d.Set("status", flattenSystemAutoupdatePushUpdateStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
 		}
 	}
 
-	if err = d.Set("override", flattenSystemAutoupdatePushUpdateOverride(o["override"], d, "override")); err != nil {
+	if err = d.Set("override", flattenSystemAutoupdatePushUpdateOverride(o["override"], d, "override", sv)); err != nil {
 		if !fortiAPIPatch(o["override"]) {
 			return fmt.Errorf("Error reading override: %v", err)
 		}
 	}
 
-	if err = d.Set("address", flattenSystemAutoupdatePushUpdateAddress(o["address"], d, "address")); err != nil {
+	if err = d.Set("address", flattenSystemAutoupdatePushUpdateAddress(o["address"], d, "address", sv)); err != nil {
 		if !fortiAPIPatch(o["address"]) {
 			return fmt.Errorf("Error reading address: %v", err)
 		}
 	}
 
-	if err = d.Set("port", flattenSystemAutoupdatePushUpdatePort(o["port"], d, "port")); err != nil {
+	if err = d.Set("port", flattenSystemAutoupdatePushUpdatePort(o["port"], d, "port", sv)); err != nil {
 		if !fortiAPIPatch(o["port"]) {
 			return fmt.Errorf("Error reading port: %v", err)
 		}
@@ -164,30 +165,31 @@ func refreshObjectSystemAutoupdatePushUpdate(d *schema.ResourceData, o map[strin
 func flattenSystemAutoupdatePushUpdateFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemAutoupdatePushUpdateStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAutoupdatePushUpdateStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAutoupdatePushUpdateOverride(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAutoupdatePushUpdateOverride(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAutoupdatePushUpdateAddress(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAutoupdatePushUpdateAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemAutoupdatePushUpdatePort(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemAutoupdatePushUpdatePort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemAutoupdatePushUpdate(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemAutoupdatePushUpdate(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("status"); ok {
-		t, err := expandSystemAutoupdatePushUpdateStatus(d, v, "status")
+
+		t, err := expandSystemAutoupdatePushUpdateStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -196,7 +198,8 @@ func getObjectSystemAutoupdatePushUpdate(d *schema.ResourceData) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("override"); ok {
-		t, err := expandSystemAutoupdatePushUpdateOverride(d, v, "override")
+
+		t, err := expandSystemAutoupdatePushUpdateOverride(d, v, "override", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -205,7 +208,8 @@ func getObjectSystemAutoupdatePushUpdate(d *schema.ResourceData) (*map[string]in
 	}
 
 	if v, ok := d.GetOk("address"); ok {
-		t, err := expandSystemAutoupdatePushUpdateAddress(d, v, "address")
+
+		t, err := expandSystemAutoupdatePushUpdateAddress(d, v, "address", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -214,7 +218,8 @@ func getObjectSystemAutoupdatePushUpdate(d *schema.ResourceData) (*map[string]in
 	}
 
 	if v, ok := d.GetOkExists("port"); ok {
-		t, err := expandSystemAutoupdatePushUpdatePort(d, v, "port")
+
+		t, err := expandSystemAutoupdatePushUpdatePort(d, v, "port", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
