@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -43,7 +44,7 @@ func resourceAntivirusHeuristicUpdate(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectAntivirusHeuristic(d)
+	obj, err := getObjectAntivirusHeuristic(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating AntivirusHeuristic resource while getting object: %v", err)
 	}
@@ -96,21 +97,21 @@ func resourceAntivirusHeuristicRead(d *schema.ResourceData, m interface{}) error
 		return nil
 	}
 
-	err = refreshObjectAntivirusHeuristic(d, o)
+	err = refreshObjectAntivirusHeuristic(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading AntivirusHeuristic resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenAntivirusHeuristicMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenAntivirusHeuristicMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectAntivirusHeuristic(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectAntivirusHeuristic(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("mode", flattenAntivirusHeuristicMode(o["mode"], d, "mode")); err != nil {
+	if err = d.Set("mode", flattenAntivirusHeuristicMode(o["mode"], d, "mode", sv)); err != nil {
 		if !fortiAPIPatch(o["mode"]) {
 			return fmt.Errorf("Error reading mode: %v", err)
 		}
@@ -122,18 +123,19 @@ func refreshObjectAntivirusHeuristic(d *schema.ResourceData, o map[string]interf
 func flattenAntivirusHeuristicFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandAntivirusHeuristicMode(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandAntivirusHeuristicMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectAntivirusHeuristic(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectAntivirusHeuristic(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("mode"); ok {
-		t, err := expandAntivirusHeuristicMode(d, v, "mode")
+
+		t, err := expandAntivirusHeuristicMode(d, v, "mode", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
