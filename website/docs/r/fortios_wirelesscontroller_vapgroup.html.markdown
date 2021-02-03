@@ -11,7 +11,6 @@ Configure virtual Access Point (VAP) groups.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - (Required) Group Name
