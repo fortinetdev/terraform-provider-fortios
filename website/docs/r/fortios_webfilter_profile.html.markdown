@@ -90,14 +90,15 @@ resource "fortios_webfilter_profile" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - (Required) Profile name.
 * `comment` - Optional comments.
+* `feature_set` - Flow/proxy feature set.
 * `replacemsg_group` - Replacement message group.
 * `inspection_mode` - Web filtering inspection mode.
 * `options` - Options.
+* `file_filter` - File filter. The structure of `file_filter` block is documented below.
 * `https_replacemsg` - Enable replacement messages for HTTPS.
 * `ovrd_perm` - Permitted override types.
 * `post_action` - Action taken for HTTP POST traffic.
@@ -106,6 +107,7 @@ The following arguments are supported:
 * `youtube_channel_status` - YouTube channel filter status.
 * `youtube_channel_filter` - YouTube channel filter. The structure of `youtube_channel_filter` block is documented below.
 * `ftgd_wf` - FortiGuard Web Filter settings. The structure of `ftgd_wf` block is documented below.
+* `antiphish` - AntiPhishing profile. The structure of `antiphish` block is documented below.
 * `wisp` - Enable/disable web proxy WISP.
 * `wisp_servers` - WISP servers. The structure of `wisp_servers` block is documented below.
 * `wisp_algorithm` - WISP server selection algorithm.
@@ -127,7 +129,29 @@ The following arguments are supported:
 * `web_ftgd_quota_usage` - Enable/disable logging daily quota usage.
 * `extended_log` - Enable/disable extended logging for web filtering.
 * `web_extended_all_action_log` - Enable/disable extended any filter action logging for web filtering.
+* `web_antiphishing_log` - Enable/disable logging of AntiPhishing checks.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+
+The `file_filter` block supports:
+
+* `status` - Enable/disable file filter.
+* `log` - Enable/disable file filter logging.
+* `scan_archive_contents` - Enable/disable file filter archive contents scan.
+* `entries` - File filter entries. The structure of `entries` block is documented below.
+
+The `entries` block supports:
+
+* `filter` - Add a file filter.
+* `comment` - Comment.
+* `protocol` - Protocols to apply with.
+* `action` - Action taken for matched file.
+* `direction` - Match files transmitted in the session's originating or reply direction.
+* `password_protected` - Match password-protected files.
+* `file_type` - Select file type. The structure of `file_type` block is documented below.
+
+The `file_type` block supports:
+
+* `name` - File type name.
 
 The `override` block supports:
 
@@ -154,6 +178,8 @@ The `web` block supports:
 * `bword_table` - Banned word table ID.
 * `urlfilter_table` - URL filter table ID.
 * `content_header_list` - Content header list.
+* `blocklist` - Enable/disable automatic addition of URLs detected by FortiSandbox to blocklist.
+* `allowlist` - FortiGuard allowlist settings.
 * `blacklist` - Enable/disable automatic addition of URLs detected by FortiSandbox to blacklist.
 * `whitelist` - FortiGuard whitelist settings.
 * `safe_search` - Safe search type.
@@ -209,6 +235,28 @@ The `quota` block supports:
 * `value` - Traffic quota value.
 * `duration` - Duration of quota.
 * `override_replacemsg` - Override replacement message.
+
+The `antiphish` block supports:
+
+* `status` - Toggle AntiPhishing functionality.
+* `domain_controller` - Domain for which to verify received credentials against.
+* `default_action` - Action to be taken when there is no matching rule.
+* `check_uri` - Enable/disable checking of GET URI parameters for known credentials.
+* `check_basic_auth` - Enable/disable checking of HTTP Basic Auth field for known credentials.
+* `max_body_len` - Maximum size of a POST body to check for credentials.
+* `inspection_entries` - AntiPhishing entries. The structure of `inspection_entries` block is documented below.
+* `custom_patterns` - Custom username and password regex patterns. The structure of `custom_patterns` block is documented below.
+
+The `inspection_entries` block supports:
+
+* `name` - Inspection target name.
+* `fortiguard_category` - FortiGuard category to match.
+* `action` - Action to be taken upon an AntiPhishing match.
+
+The `custom_patterns` block supports:
+
+* `pattern` - Target pattern.
+* `category` - Category that the pattern matches.
 
 The `wisp_servers` block supports:
 
