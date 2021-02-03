@@ -20,7 +20,6 @@ resource "fortios_systemlldp_networkpolicy" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - (Required) LLDP network policy name.
