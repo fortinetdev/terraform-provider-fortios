@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -59,7 +60,7 @@ func resourceVpnIpsecForticlientCreate(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectVpnIpsecForticlient(d)
+	obj, err := getObjectVpnIpsecForticlient(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating VpnIpsecForticlient resource while getting object: %v", err)
 	}
@@ -84,7 +85,7 @@ func resourceVpnIpsecForticlientUpdate(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectVpnIpsecForticlient(d)
+	obj, err := getObjectVpnIpsecForticlient(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating VpnIpsecForticlient resource while getting object: %v", err)
 	}
@@ -137,51 +138,51 @@ func resourceVpnIpsecForticlientRead(d *schema.ResourceData, m interface{}) erro
 		return nil
 	}
 
-	err = refreshObjectVpnIpsecForticlient(d, o)
+	err = refreshObjectVpnIpsecForticlient(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading VpnIpsecForticlient resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenVpnIpsecForticlientRealm(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnIpsecForticlientRealm(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenVpnIpsecForticlientUsergroupname(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnIpsecForticlientUsergroupname(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenVpnIpsecForticlientPhase2Name(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnIpsecForticlientPhase2Name(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenVpnIpsecForticlientStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenVpnIpsecForticlientStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectVpnIpsecForticlient(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectVpnIpsecForticlient(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("realm", flattenVpnIpsecForticlientRealm(o["realm"], d, "realm")); err != nil {
+	if err = d.Set("realm", flattenVpnIpsecForticlientRealm(o["realm"], d, "realm", sv)); err != nil {
 		if !fortiAPIPatch(o["realm"]) {
 			return fmt.Errorf("Error reading realm: %v", err)
 		}
 	}
 
-	if err = d.Set("usergroupname", flattenVpnIpsecForticlientUsergroupname(o["usergroupname"], d, "usergroupname")); err != nil {
+	if err = d.Set("usergroupname", flattenVpnIpsecForticlientUsergroupname(o["usergroupname"], d, "usergroupname", sv)); err != nil {
 		if !fortiAPIPatch(o["usergroupname"]) {
 			return fmt.Errorf("Error reading usergroupname: %v", err)
 		}
 	}
 
-	if err = d.Set("phase2name", flattenVpnIpsecForticlientPhase2Name(o["phase2name"], d, "phase2name")); err != nil {
+	if err = d.Set("phase2name", flattenVpnIpsecForticlientPhase2Name(o["phase2name"], d, "phase2name", sv)); err != nil {
 		if !fortiAPIPatch(o["phase2name"]) {
 			return fmt.Errorf("Error reading phase2name: %v", err)
 		}
 	}
 
-	if err = d.Set("status", flattenVpnIpsecForticlientStatus(o["status"], d, "status")); err != nil {
+	if err = d.Set("status", flattenVpnIpsecForticlientStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
 		}
@@ -193,30 +194,31 @@ func refreshObjectVpnIpsecForticlient(d *schema.ResourceData, o map[string]inter
 func flattenVpnIpsecForticlientFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandVpnIpsecForticlientRealm(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnIpsecForticlientRealm(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandVpnIpsecForticlientUsergroupname(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnIpsecForticlientUsergroupname(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandVpnIpsecForticlientPhase2Name(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnIpsecForticlientPhase2Name(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandVpnIpsecForticlientStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandVpnIpsecForticlientStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectVpnIpsecForticlient(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectVpnIpsecForticlient(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("realm"); ok {
-		t, err := expandVpnIpsecForticlientRealm(d, v, "realm")
+
+		t, err := expandVpnIpsecForticlientRealm(d, v, "realm", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -225,7 +227,8 @@ func getObjectVpnIpsecForticlient(d *schema.ResourceData) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("usergroupname"); ok {
-		t, err := expandVpnIpsecForticlientUsergroupname(d, v, "usergroupname")
+
+		t, err := expandVpnIpsecForticlientUsergroupname(d, v, "usergroupname", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -234,7 +237,8 @@ func getObjectVpnIpsecForticlient(d *schema.ResourceData) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("phase2name"); ok {
-		t, err := expandVpnIpsecForticlientPhase2Name(d, v, "phase2name")
+
+		t, err := expandVpnIpsecForticlientPhase2Name(d, v, "phase2name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -243,7 +247,8 @@ func getObjectVpnIpsecForticlient(d *schema.ResourceData) (*map[string]interface
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-		t, err := expandVpnIpsecForticlientStatus(d, v, "status")
+
+		t, err := expandVpnIpsecForticlientStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
