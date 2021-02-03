@@ -23,7 +23,6 @@ resource "fortios_switchcontroller_lldpsettings" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `status` - Enable/disable LLDP global settings.
@@ -31,6 +30,7 @@ The following arguments are supported:
 * `tx_interval` - Frequency of LLDP PDU transmission from FortiSwitch (5 - 4095 sec, default = 30). Packet TTL is tx-hold * tx-interval.
 * `fast_start_interval` - Frequency of LLDP PDU transmission from FortiSwitch for the first 4 packets when the link is up (2 - 5 sec, default = 2, 0 = disable fast start).
 * `management_interface` - Primary management interface to be advertised in LLDP and CDP PDUs.
+* `device_detection` - Enable/disable dynamic detection of LLDP neighbor devices for VLAN assignment.
 
 
 ## Attribute Reference
