@@ -24,7 +24,6 @@ resource "fortios_system_proberesponse" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `port` - Port number to response.
