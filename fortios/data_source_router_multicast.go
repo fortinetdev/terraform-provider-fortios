@@ -239,6 +239,14 @@ func dataSourceRouterMulticast() *schema.Resource {
 							Type:     schema.TypeString,
 							Computed: true,
 						},
+						"rpf_nbr_fail_back": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"rpf_nbr_fail_back_filter": &schema.Schema{
+							Type:     schema.TypeString,
+							Computed: true,
+						},
 						"join_group": &schema.Schema{
 							Type:     schema.TypeList,
 							Computed: true,
@@ -747,6 +755,16 @@ func dataSourceFlattenRouterMulticastInterface(v interface{}, d *schema.Resource
 			tmp["static_group"] = dataSourceFlattenRouterMulticastInterfaceStaticGroup(i["static-group"], d, pre_append)
 		}
 
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "rpf_nbr_fail_back"
+		if _, ok := i["rpf-nbr-fail-back"]; ok {
+			tmp["rpf_nbr_fail_back"] = dataSourceFlattenRouterMulticastInterfaceRpfNbrFailBack(i["rpf-nbr-fail-back"], d, pre_append)
+		}
+
+		pre_append = pre + "." + strconv.Itoa(con) + "." + "rpf_nbr_fail_back_filter"
+		if _, ok := i["rpf-nbr-fail-back-filter"]; ok {
+			tmp["rpf_nbr_fail_back_filter"] = dataSourceFlattenRouterMulticastInterfaceRpfNbrFailBackFilter(i["rpf-nbr-fail-back-filter"], d, pre_append)
+		}
+
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "join_group"
 		if _, ok := i["join-group"]; ok {
 			tmp["join_group"] = dataSourceFlattenRouterMulticastInterfaceJoinGroup(i["join-group"], d, pre_append)
@@ -834,6 +852,14 @@ func dataSourceFlattenRouterMulticastInterfaceMulticastFlow(v interface{}, d *sc
 }
 
 func dataSourceFlattenRouterMulticastInterfaceStaticGroup(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterMulticastInterfaceRpfNbrFailBack(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
+func dataSourceFlattenRouterMulticastInterfaceRpfNbrFailBackFilter(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
