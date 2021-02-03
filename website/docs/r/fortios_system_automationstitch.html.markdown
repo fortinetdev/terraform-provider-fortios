@@ -11,7 +11,6 @@ Automation stitches.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Name.
