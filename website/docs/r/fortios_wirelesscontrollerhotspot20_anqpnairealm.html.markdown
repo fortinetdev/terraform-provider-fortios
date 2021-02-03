@@ -11,7 +11,6 @@ Configure network access identifier (NAI) realm.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - NAI realm list name.
