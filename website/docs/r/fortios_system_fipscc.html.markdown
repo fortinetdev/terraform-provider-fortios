@@ -22,7 +22,6 @@ resource "fortios_system_fipscc" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `status` - Enable/disable FIPS-CC mode.
