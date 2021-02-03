@@ -96,7 +96,6 @@ resource "fortios_system_apiuser" "test2" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - User name.
