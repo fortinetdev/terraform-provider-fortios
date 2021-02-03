@@ -7,10 +7,9 @@ description: |-
 ---
 
 # fortios_switchcontroller_vlan
-Configure VLANs for switch controller.
+Configure VLANs for switch controller. Applies to FortiOS Version `<= 6.2.0`.
 
 ## Argument Reference
-
 
 The following arguments are supported:
 
