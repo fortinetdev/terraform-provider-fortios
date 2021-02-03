@@ -21,7 +21,6 @@ resource "fortios_log_customfield" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `fosid` - field ID <string>.
