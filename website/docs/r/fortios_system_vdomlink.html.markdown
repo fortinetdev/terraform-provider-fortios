@@ -11,7 +11,6 @@ Configure VDOM links.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - VDOM link name (maximum = 8 characters).
