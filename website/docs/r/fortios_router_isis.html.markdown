@@ -44,7 +44,6 @@ resource "fortios_router_isis" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `is_type` - IS type.
