@@ -48,7 +48,6 @@ resource "fortios_user_local" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - User name.
@@ -60,6 +59,8 @@ The following arguments are supported:
 * `radius_server` - Name of RADIUS server with which the user must authenticate.
 * `tacacs_server` - Name of TACACS+ server with which the user must authenticate.
 * `two_factor` - Enable/disable two-factor authentication.
+* `two_factor_authentication` - Authentication method by FortiToken Cloud.
+* `two_factor_notification` - Notification method for user activation by FortiToken Cloud.
 * `fortitoken` - Two-factor recipient's FortiToken serial number.
 * `email_to` - Two-factor recipient's email address.
 * `sms_server` - Send SMS through FortiGuard or other external server.
@@ -73,6 +74,8 @@ The following arguments are supported:
 * `auth_concurrent_value` - Maximum number of concurrent logins permitted from the same user.
 * `ppk_secret` - IKEv2 Postquantum Preshared Key (ASCII string or hexadecimal encoded with a leading 0x).
 * `ppk_identity` - IKEv2 Postquantum Preshared Key Identity.
+* `username_case_insensitivity` - Enable/disable case sensitivity when performing username matching (uppercase and lowercase letters are treated either as distinct or equivalent).
+* `username_case_sensitivity` - Enable/disable case sensitivity when performing username matching (uppercase and lowercase letters are treated either as distinct or equivalent).
 
 
 ## Attribute Reference
