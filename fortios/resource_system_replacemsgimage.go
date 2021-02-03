@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -54,7 +55,7 @@ func resourceSystemReplacemsgImageCreate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemReplacemsgImage(d)
+	obj, err := getObjectSystemReplacemsgImage(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemReplacemsgImage resource while getting object: %v", err)
 	}
@@ -79,7 +80,7 @@ func resourceSystemReplacemsgImageUpdate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemReplacemsgImage(d)
+	obj, err := getObjectSystemReplacemsgImage(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemReplacemsgImage resource while getting object: %v", err)
 	}
@@ -132,41 +133,41 @@ func resourceSystemReplacemsgImageRead(d *schema.ResourceData, m interface{}) er
 		return nil
 	}
 
-	err = refreshObjectSystemReplacemsgImage(d, o)
+	err = refreshObjectSystemReplacemsgImage(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemReplacemsgImage resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemReplacemsgImageName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemReplacemsgImageName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemReplacemsgImageImageType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemReplacemsgImageImageType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemReplacemsgImageImageBase64(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemReplacemsgImageImageBase64(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemReplacemsgImage(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemReplacemsgImage(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenSystemReplacemsgImageName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenSystemReplacemsgImageName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("image_type", flattenSystemReplacemsgImageImageType(o["image-type"], d, "image_type")); err != nil {
+	if err = d.Set("image_type", flattenSystemReplacemsgImageImageType(o["image-type"], d, "image_type", sv)); err != nil {
 		if !fortiAPIPatch(o["image-type"]) {
 			return fmt.Errorf("Error reading image_type: %v", err)
 		}
 	}
 
-	if err = d.Set("image_base64", flattenSystemReplacemsgImageImageBase64(o["image-base64"], d, "image_base64")); err != nil {
+	if err = d.Set("image_base64", flattenSystemReplacemsgImageImageBase64(o["image-base64"], d, "image_base64", sv)); err != nil {
 		if !fortiAPIPatch(o["image-base64"]) {
 			return fmt.Errorf("Error reading image_base64: %v", err)
 		}
@@ -178,26 +179,27 @@ func refreshObjectSystemReplacemsgImage(d *schema.ResourceData, o map[string]int
 func flattenSystemReplacemsgImageFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemReplacemsgImageName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemReplacemsgImageName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemReplacemsgImageImageType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemReplacemsgImageImageType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemReplacemsgImageImageBase64(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemReplacemsgImageImageBase64(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemReplacemsgImage(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemReplacemsgImage(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandSystemReplacemsgImageName(d, v, "name")
+
+		t, err := expandSystemReplacemsgImageName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -206,7 +208,8 @@ func getObjectSystemReplacemsgImage(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("image_type"); ok {
-		t, err := expandSystemReplacemsgImageImageType(d, v, "image_type")
+
+		t, err := expandSystemReplacemsgImageImageType(d, v, "image_type", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -215,7 +218,8 @@ func getObjectSystemReplacemsgImage(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("image_base64"); ok {
-		t, err := expandSystemReplacemsgImageImageBase64(d, v, "image_base64")
+
+		t, err := expandSystemReplacemsgImageImageBase64(d, v, "image_base64", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
