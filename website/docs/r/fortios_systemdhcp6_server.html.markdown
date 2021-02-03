@@ -24,7 +24,6 @@ resource "fortios_systemdhcp6_server" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `fosid` - (Required) ID.
@@ -36,6 +35,7 @@ The following arguments are supported:
 * `dns_server1` - DNS server 1.
 * `dns_server2` - DNS server 2.
 * `dns_server3` - DNS server 3.
+* `dns_server4` - DNS server 4.
 * `domain` - Domain name suffix for the IP addresses that the DHCP server assigns to clients.
 * `subnet` - (Required) Subnet or subnet-id if the IP mode is delegated.
 * `interface` - (Required) DHCP server can assign IP configurations to clients connected to this interface.
@@ -44,6 +44,7 @@ The following arguments are supported:
 * `option3` - Option 3.
 * `upstream_interface` - Interface name from where delegated information is provided.
 * `ip_mode` - Method used to assign client IP.
+* `prefix_mode` - Assigning a prefix from a DHCPv6 client or RA.
 * `prefix_range` - DHCP prefix configuration. The structure of `prefix_range` block is documented below.
 * `ip_range` - DHCP IP range configuration. The structure of `ip_range` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
