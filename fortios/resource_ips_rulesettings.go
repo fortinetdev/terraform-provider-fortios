@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -42,7 +43,7 @@ func resourceIpsRuleSettingsCreate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectIpsRuleSettings(d)
+	obj, err := getObjectIpsRuleSettings(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating IpsRuleSettings resource while getting object: %v", err)
 	}
@@ -67,7 +68,7 @@ func resourceIpsRuleSettingsUpdate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectIpsRuleSettings(d)
+	obj, err := getObjectIpsRuleSettings(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating IpsRuleSettings resource while getting object: %v", err)
 	}
@@ -120,21 +121,21 @@ func resourceIpsRuleSettingsRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectIpsRuleSettings(d, o)
+	err = refreshObjectIpsRuleSettings(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading IpsRuleSettings resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenIpsRuleSettingsId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenIpsRuleSettingsId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectIpsRuleSettings(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectIpsRuleSettings(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("fosid", flattenIpsRuleSettingsId(o["id"], d, "fosid")); err != nil {
+	if err = d.Set("fosid", flattenIpsRuleSettingsId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
 			return fmt.Errorf("Error reading fosid: %v", err)
 		}
@@ -146,18 +147,19 @@ func refreshObjectIpsRuleSettings(d *schema.ResourceData, o map[string]interface
 func flattenIpsRuleSettingsFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandIpsRuleSettingsId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandIpsRuleSettingsId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectIpsRuleSettings(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectIpsRuleSettings(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-		t, err := expandIpsRuleSettingsId(d, v, "fosid")
+
+		t, err := expandIpsRuleSettingsId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
