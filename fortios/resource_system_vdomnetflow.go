@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -59,7 +60,7 @@ func resourceSystemVdomNetflowUpdate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemVdomNetflow(d)
+	obj, err := getObjectSystemVdomNetflow(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemVdomNetflow resource while getting object: %v", err)
 	}
@@ -112,51 +113,51 @@ func resourceSystemVdomNetflowRead(d *schema.ResourceData, m interface{}) error 
 		return nil
 	}
 
-	err = refreshObjectSystemVdomNetflow(d, o)
+	err = refreshObjectSystemVdomNetflow(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemVdomNetflow resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemVdomNetflowVdomNetflow(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomNetflowVdomNetflow(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVdomNetflowCollectorIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomNetflowCollectorIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVdomNetflowCollectorPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomNetflowCollectorPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVdomNetflowSourceIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVdomNetflowSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemVdomNetflow(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemVdomNetflow(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("vdom_netflow", flattenSystemVdomNetflowVdomNetflow(o["vdom-netflow"], d, "vdom_netflow")); err != nil {
+	if err = d.Set("vdom_netflow", flattenSystemVdomNetflowVdomNetflow(o["vdom-netflow"], d, "vdom_netflow", sv)); err != nil {
 		if !fortiAPIPatch(o["vdom-netflow"]) {
 			return fmt.Errorf("Error reading vdom_netflow: %v", err)
 		}
 	}
 
-	if err = d.Set("collector_ip", flattenSystemVdomNetflowCollectorIp(o["collector-ip"], d, "collector_ip")); err != nil {
+	if err = d.Set("collector_ip", flattenSystemVdomNetflowCollectorIp(o["collector-ip"], d, "collector_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["collector-ip"]) {
 			return fmt.Errorf("Error reading collector_ip: %v", err)
 		}
 	}
 
-	if err = d.Set("collector_port", flattenSystemVdomNetflowCollectorPort(o["collector-port"], d, "collector_port")); err != nil {
+	if err = d.Set("collector_port", flattenSystemVdomNetflowCollectorPort(o["collector-port"], d, "collector_port", sv)); err != nil {
 		if !fortiAPIPatch(o["collector-port"]) {
 			return fmt.Errorf("Error reading collector_port: %v", err)
 		}
 	}
 
-	if err = d.Set("source_ip", flattenSystemVdomNetflowSourceIp(o["source-ip"], d, "source_ip")); err != nil {
+	if err = d.Set("source_ip", flattenSystemVdomNetflowSourceIp(o["source-ip"], d, "source_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["source-ip"]) {
 			return fmt.Errorf("Error reading source_ip: %v", err)
 		}
@@ -168,30 +169,31 @@ func refreshObjectSystemVdomNetflow(d *schema.ResourceData, o map[string]interfa
 func flattenSystemVdomNetflowFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemVdomNetflowVdomNetflow(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomNetflowVdomNetflow(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVdomNetflowCollectorIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomNetflowCollectorIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVdomNetflowCollectorPort(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomNetflowCollectorPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVdomNetflowSourceIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVdomNetflowSourceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemVdomNetflow(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemVdomNetflow(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("vdom_netflow"); ok {
-		t, err := expandSystemVdomNetflowVdomNetflow(d, v, "vdom_netflow")
+
+		t, err := expandSystemVdomNetflowVdomNetflow(d, v, "vdom_netflow", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -200,7 +202,8 @@ func getObjectSystemVdomNetflow(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("collector_ip"); ok {
-		t, err := expandSystemVdomNetflowCollectorIp(d, v, "collector_ip")
+
+		t, err := expandSystemVdomNetflowCollectorIp(d, v, "collector_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -209,7 +212,8 @@ func getObjectSystemVdomNetflow(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOkExists("collector_port"); ok {
-		t, err := expandSystemVdomNetflowCollectorPort(d, v, "collector_port")
+
+		t, err := expandSystemVdomNetflowCollectorPort(d, v, "collector_port", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -218,7 +222,8 @@ func getObjectSystemVdomNetflow(d *schema.ResourceData) (*map[string]interface{}
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
-		t, err := expandSystemVdomNetflowSourceIp(d, v, "source_ip")
+
+		t, err := expandSystemVdomNetflowSourceIp(d, v, "source_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
