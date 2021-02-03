@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -103,7 +104,7 @@ func resourceSystemVxlanCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemVxlan(d)
+	obj, err := getObjectSystemVxlan(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemVxlan resource while getting object: %v", err)
 	}
@@ -128,7 +129,7 @@ func resourceSystemVxlanUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemVxlan(d)
+	obj, err := getObjectSystemVxlan(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemVxlan resource while getting object: %v", err)
 	}
@@ -181,30 +182,30 @@ func resourceSystemVxlanRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectSystemVxlan(d, o)
+	err = refreshObjectSystemVxlan(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemVxlan resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemVxlanName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVxlanName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVxlanInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVxlanInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVxlanVni(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVxlanVni(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVxlanIpVersion(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVxlanIpVersion(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVxlanRemoteIp(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSystemVxlanRemoteIp(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -225,7 +226,8 @@ func flattenSystemVxlanRemoteIp(v interface{}, d *schema.ResourceData, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := i["ip"]; ok {
-			tmp["ip"] = flattenSystemVxlanRemoteIpIp(i["ip"], d, pre_append)
+
+			tmp["ip"] = flattenSystemVxlanRemoteIpIp(i["ip"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -237,11 +239,11 @@ func flattenSystemVxlanRemoteIp(v interface{}, d *schema.ResourceData, pre strin
 	return result
 }
 
-func flattenSystemVxlanRemoteIpIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVxlanRemoteIpIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVxlanRemoteIp6(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenSystemVxlanRemoteIp6(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -262,7 +264,8 @@ func flattenSystemVxlanRemoteIp6(v interface{}, d *schema.ResourceData, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip6"
 		if _, ok := i["ip6"]; ok {
-			tmp["ip6"] = flattenSystemVxlanRemoteIp6Ip6(i["ip6"], d, pre_append)
+
+			tmp["ip6"] = flattenSystemVxlanRemoteIp6Ip6(i["ip6"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -274,54 +277,54 @@ func flattenSystemVxlanRemoteIp6(v interface{}, d *schema.ResourceData, pre stri
 	return result
 }
 
-func flattenSystemVxlanRemoteIp6Ip6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVxlanRemoteIp6Ip6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVxlanDstport(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVxlanDstport(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemVxlanMulticastTtl(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemVxlanMulticastTtl(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemVxlan(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemVxlan(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenSystemVxlanName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenSystemVxlanName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("interface", flattenSystemVxlanInterface(o["interface"], d, "interface")); err != nil {
+	if err = d.Set("interface", flattenSystemVxlanInterface(o["interface"], d, "interface", sv)); err != nil {
 		if !fortiAPIPatch(o["interface"]) {
 			return fmt.Errorf("Error reading interface: %v", err)
 		}
 	}
 
-	if err = d.Set("vni", flattenSystemVxlanVni(o["vni"], d, "vni")); err != nil {
+	if err = d.Set("vni", flattenSystemVxlanVni(o["vni"], d, "vni", sv)); err != nil {
 		if !fortiAPIPatch(o["vni"]) {
 			return fmt.Errorf("Error reading vni: %v", err)
 		}
 	}
 
-	if err = d.Set("ip_version", flattenSystemVxlanIpVersion(o["ip-version"], d, "ip_version")); err != nil {
+	if err = d.Set("ip_version", flattenSystemVxlanIpVersion(o["ip-version"], d, "ip_version", sv)); err != nil {
 		if !fortiAPIPatch(o["ip-version"]) {
 			return fmt.Errorf("Error reading ip_version: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("remote_ip", flattenSystemVxlanRemoteIp(o["remote-ip"], d, "remote_ip")); err != nil {
+		if err = d.Set("remote_ip", flattenSystemVxlanRemoteIp(o["remote-ip"], d, "remote_ip", sv)); err != nil {
 			if !fortiAPIPatch(o["remote-ip"]) {
 				return fmt.Errorf("Error reading remote_ip: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("remote_ip"); ok {
-			if err = d.Set("remote_ip", flattenSystemVxlanRemoteIp(o["remote-ip"], d, "remote_ip")); err != nil {
+			if err = d.Set("remote_ip", flattenSystemVxlanRemoteIp(o["remote-ip"], d, "remote_ip", sv)); err != nil {
 				if !fortiAPIPatch(o["remote-ip"]) {
 					return fmt.Errorf("Error reading remote_ip: %v", err)
 				}
@@ -330,14 +333,14 @@ func refreshObjectSystemVxlan(d *schema.ResourceData, o map[string]interface{}) 
 	}
 
 	if isImportTable() {
-		if err = d.Set("remote_ip6", flattenSystemVxlanRemoteIp6(o["remote-ip6"], d, "remote_ip6")); err != nil {
+		if err = d.Set("remote_ip6", flattenSystemVxlanRemoteIp6(o["remote-ip6"], d, "remote_ip6", sv)); err != nil {
 			if !fortiAPIPatch(o["remote-ip6"]) {
 				return fmt.Errorf("Error reading remote_ip6: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("remote_ip6"); ok {
-			if err = d.Set("remote_ip6", flattenSystemVxlanRemoteIp6(o["remote-ip6"], d, "remote_ip6")); err != nil {
+			if err = d.Set("remote_ip6", flattenSystemVxlanRemoteIp6(o["remote-ip6"], d, "remote_ip6", sv)); err != nil {
 				if !fortiAPIPatch(o["remote-ip6"]) {
 					return fmt.Errorf("Error reading remote_ip6: %v", err)
 				}
@@ -345,13 +348,13 @@ func refreshObjectSystemVxlan(d *schema.ResourceData, o map[string]interface{}) 
 		}
 	}
 
-	if err = d.Set("dstport", flattenSystemVxlanDstport(o["dstport"], d, "dstport")); err != nil {
+	if err = d.Set("dstport", flattenSystemVxlanDstport(o["dstport"], d, "dstport", sv)); err != nil {
 		if !fortiAPIPatch(o["dstport"]) {
 			return fmt.Errorf("Error reading dstport: %v", err)
 		}
 	}
 
-	if err = d.Set("multicast_ttl", flattenSystemVxlanMulticastTtl(o["multicast-ttl"], d, "multicast_ttl")); err != nil {
+	if err = d.Set("multicast_ttl", flattenSystemVxlanMulticastTtl(o["multicast-ttl"], d, "multicast_ttl", sv)); err != nil {
 		if !fortiAPIPatch(o["multicast-ttl"]) {
 			return fmt.Errorf("Error reading multicast_ttl: %v", err)
 		}
@@ -363,26 +366,26 @@ func refreshObjectSystemVxlan(d *schema.ResourceData, o map[string]interface{}) 
 func flattenSystemVxlanFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemVxlanName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVxlanName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVxlanInterface(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVxlanInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVxlanVni(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVxlanVni(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVxlanIpVersion(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVxlanIpVersion(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVxlanRemoteIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVxlanRemoteIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -398,7 +401,8 @@ func expandSystemVxlanRemoteIp(d *schema.ResourceData, v interface{}, pre string
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["ip"], _ = expandSystemVxlanRemoteIpIp(d, i["ip"], pre_append)
+
+			tmp["ip"], _ = expandSystemVxlanRemoteIpIp(d, i["ip"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -409,11 +413,11 @@ func expandSystemVxlanRemoteIp(d *schema.ResourceData, v interface{}, pre string
 	return result, nil
 }
 
-func expandSystemVxlanRemoteIpIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVxlanRemoteIpIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVxlanRemoteIp6(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVxlanRemoteIp6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -429,7 +433,8 @@ func expandSystemVxlanRemoteIp6(d *schema.ResourceData, v interface{}, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "ip6"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["ip6"], _ = expandSystemVxlanRemoteIp6Ip6(d, i["ip6"], pre_append)
+
+			tmp["ip6"], _ = expandSystemVxlanRemoteIp6Ip6(d, i["ip6"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -440,23 +445,24 @@ func expandSystemVxlanRemoteIp6(d *schema.ResourceData, v interface{}, pre strin
 	return result, nil
 }
 
-func expandSystemVxlanRemoteIp6Ip6(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVxlanRemoteIp6Ip6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVxlanDstport(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVxlanDstport(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemVxlanMulticastTtl(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemVxlanMulticastTtl(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemVxlan(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemVxlan(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandSystemVxlanName(d, v, "name")
+
+		t, err := expandSystemVxlanName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -465,7 +471,8 @@ func getObjectSystemVxlan(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
-		t, err := expandSystemVxlanInterface(d, v, "interface")
+
+		t, err := expandSystemVxlanInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -474,7 +481,8 @@ func getObjectSystemVxlan(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("vni"); ok {
-		t, err := expandSystemVxlanVni(d, v, "vni")
+
+		t, err := expandSystemVxlanVni(d, v, "vni", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -483,7 +491,8 @@ func getObjectSystemVxlan(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("ip_version"); ok {
-		t, err := expandSystemVxlanIpVersion(d, v, "ip_version")
+
+		t, err := expandSystemVxlanIpVersion(d, v, "ip_version", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -492,7 +501,8 @@ func getObjectSystemVxlan(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("remote_ip"); ok {
-		t, err := expandSystemVxlanRemoteIp(d, v, "remote_ip")
+
+		t, err := expandSystemVxlanRemoteIp(d, v, "remote_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -501,7 +511,8 @@ func getObjectSystemVxlan(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("remote_ip6"); ok {
-		t, err := expandSystemVxlanRemoteIp6(d, v, "remote_ip6")
+
+		t, err := expandSystemVxlanRemoteIp6(d, v, "remote_ip6", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -510,7 +521,8 @@ func getObjectSystemVxlan(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("dstport"); ok {
-		t, err := expandSystemVxlanDstport(d, v, "dstport")
+
+		t, err := expandSystemVxlanDstport(d, v, "dstport", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -519,7 +531,8 @@ func getObjectSystemVxlan(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("multicast_ttl"); ok {
-		t, err := expandSystemVxlanMulticastTtl(d, v, "multicast_ttl")
+
+		t, err := expandSystemVxlanMulticastTtl(d, v, "multicast_ttl", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
