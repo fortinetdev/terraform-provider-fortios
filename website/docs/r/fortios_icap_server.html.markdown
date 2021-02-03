@@ -24,7 +24,6 @@ resource "fortios_icap_server" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Server name.
@@ -33,6 +32,8 @@ The following arguments are supported:
 * `ip6_address` - IPv6 address of the ICAP server.
 * `port` - ICAP server port.
 * `max_connections` - Maximum number of concurrent connections to ICAP server.
+* `secure` - Enable/disable secure connection to ICAP server.
+* `ssl_cert` - CA certificate name.
 
 
 ## Attribute Reference
