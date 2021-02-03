@@ -34,7 +34,6 @@ resource "fortios_firewallservice_custom" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Custom service name.
