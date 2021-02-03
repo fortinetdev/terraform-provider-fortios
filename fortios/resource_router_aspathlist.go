@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -72,7 +73,7 @@ func resourceRouterAspathListCreate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectRouterAspathList(d)
+	obj, err := getObjectRouterAspathList(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating RouterAspathList resource while getting object: %v", err)
 	}
@@ -97,7 +98,7 @@ func resourceRouterAspathListUpdate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectRouterAspathList(d)
+	obj, err := getObjectRouterAspathList(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterAspathList resource while getting object: %v", err)
 	}
@@ -150,18 +151,18 @@ func resourceRouterAspathListRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectRouterAspathList(d, o)
+	err = refreshObjectRouterAspathList(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading RouterAspathList resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenRouterAspathListName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterAspathListName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterAspathListRule(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenRouterAspathListRule(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -182,17 +183,20 @@ func flattenRouterAspathListRule(v interface{}, d *schema.ResourceData, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenRouterAspathListRuleId(i["id"], d, pre_append)
+
+			tmp["id"] = flattenRouterAspathListRuleId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenRouterAspathListRuleAction(i["action"], d, pre_append)
+
+			tmp["action"] = flattenRouterAspathListRuleAction(i["action"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "regexp"
 		if _, ok := i["regexp"]; ok {
-			tmp["regexp"] = flattenRouterAspathListRuleRegexp(i["regexp"], d, pre_append)
+
+			tmp["regexp"] = flattenRouterAspathListRuleRegexp(i["regexp"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -204,36 +208,36 @@ func flattenRouterAspathListRule(v interface{}, d *schema.ResourceData, pre stri
 	return result
 }
 
-func flattenRouterAspathListRuleId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterAspathListRuleId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterAspathListRuleAction(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterAspathListRuleAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenRouterAspathListRuleRegexp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenRouterAspathListRuleRegexp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectRouterAspathList(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectRouterAspathList(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenRouterAspathListName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenRouterAspathListName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("rule", flattenRouterAspathListRule(o["rule"], d, "rule")); err != nil {
+		if err = d.Set("rule", flattenRouterAspathListRule(o["rule"], d, "rule", sv)); err != nil {
 			if !fortiAPIPatch(o["rule"]) {
 				return fmt.Errorf("Error reading rule: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("rule"); ok {
-			if err = d.Set("rule", flattenRouterAspathListRule(o["rule"], d, "rule")); err != nil {
+			if err = d.Set("rule", flattenRouterAspathListRule(o["rule"], d, "rule", sv)); err != nil {
 				if !fortiAPIPatch(o["rule"]) {
 					return fmt.Errorf("Error reading rule: %v", err)
 				}
@@ -247,14 +251,14 @@ func refreshObjectRouterAspathList(d *schema.ResourceData, o map[string]interfac
 func flattenRouterAspathListFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandRouterAspathListName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterAspathListName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandRouterAspathListRule(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterAspathListRule(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -270,17 +274,20 @@ func expandRouterAspathListRule(d *schema.ResourceData, v interface{}, pre strin
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandRouterAspathListRuleId(d, i["id"], pre_append)
+
+			tmp["id"], _ = expandRouterAspathListRuleId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["action"], _ = expandRouterAspathListRuleAction(d, i["action"], pre_append)
+
+			tmp["action"], _ = expandRouterAspathListRuleAction(d, i["action"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "regexp"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["regexp"], _ = expandRouterAspathListRuleRegexp(d, i["regexp"], pre_append)
+
+			tmp["regexp"], _ = expandRouterAspathListRuleRegexp(d, i["regexp"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -291,23 +298,24 @@ func expandRouterAspathListRule(d *schema.ResourceData, v interface{}, pre strin
 	return result, nil
 }
 
-func expandRouterAspathListRuleId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterAspathListRuleId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandRouterAspathListRuleAction(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterAspathListRuleAction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandRouterAspathListRuleRegexp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandRouterAspathListRuleRegexp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectRouterAspathList(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectRouterAspathList(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandRouterAspathListName(d, v, "name")
+
+		t, err := expandRouterAspathListName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -316,7 +324,8 @@ func getObjectRouterAspathList(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("rule"); ok {
-		t, err := expandRouterAspathListRule(d, v, "rule")
+
+		t, err := expandRouterAspathListRule(d, v, "rule", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
