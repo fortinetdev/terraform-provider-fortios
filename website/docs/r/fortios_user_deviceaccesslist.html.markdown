@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_user_deviceaccesslist
-Configure device access control lists.
+Configure device access control lists. Applies to FortiOS Version `<= 6.2.0`.
 
 ## Example Usage
 
@@ -19,7 +19,6 @@ resource "fortios_user_deviceaccesslist" "trname" {
 ```
 
 ## Argument Reference
-
 
 The following arguments are supported:
 
