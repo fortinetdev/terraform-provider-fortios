@@ -43,7 +43,6 @@ resource "fortios_firewall_interfacepolicy" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `policyid` - Policy ID.
@@ -64,6 +63,8 @@ The following arguments are supported:
 * `av_profile` - Antivirus profile.
 * `webfilter_profile_status` - Enable/disable web filtering.
 * `webfilter_profile` - Web filter profile.
+* `emailfilter_profile_status` - Enable/disable email filter.
+* `emailfilter_profile` - Email filter profile.
 * `spamfilter_profile_status` - Enable/disable antispam.
 * `spamfilter_profile` - Antispam profile.
 * `dlp_sensor_status` - Enable/disable DLP.
