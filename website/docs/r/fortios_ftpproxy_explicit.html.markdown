@@ -21,7 +21,6 @@ resource "fortios_ftpproxy_explicit" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `status` - Enable/disable the explicit FTP proxy.
@@ -29,6 +28,10 @@ The following arguments are supported:
 * `incoming_ip` - Accept incoming FTP requests from this IP address. An interface must have this IP address.
 * `outgoing_ip` - Outgoing FTP requests will leave from this IP address. An interface must have this IP address.
 * `sec_default_action` - Accept or deny explicit FTP proxy sessions when no FTP proxy firewall policy exists.
+* `ssl` - Enable/disable the explicit FTPS proxy.
+* `ssl_cert` - Name of certificate for SSL connections to this server (default = "Fortinet_CA_SSL").
+* `ssl_dh_bits` - Bit-size of Diffie-Hellman (DH) prime used in DHE-RSA negotiation (default = 2048).
+* `ssl_algorithm` - Relative strength of encryption algorithms accepted in negotiation.
 
 
 ## Attribute Reference
