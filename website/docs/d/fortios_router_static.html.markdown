@@ -41,6 +41,7 @@ The following attributes are exported:
 * `comment` - Optional comments.
 * `blackhole` - Enable/disable black hole.
 * `dynamic_gateway` - Enable use of dynamic gateway retrieved from a DHCP or PPP server.
+* `sdwan` - Enable/disable egress through SD-WAN.
 * `virtual_wan_link` - Enable/disable egress through the virtual-wan-link.
 * `dstaddr` - Name of firewall address or address group.
 * `internet_service` - Application ID in the Internet service database.
