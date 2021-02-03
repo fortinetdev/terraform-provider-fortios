@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -81,7 +82,7 @@ func resourceDlpFilepatternCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectDlpFilepattern(d)
+	obj, err := getObjectDlpFilepattern(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating DlpFilepattern resource while getting object: %v", err)
 	}
@@ -106,7 +107,7 @@ func resourceDlpFilepatternUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectDlpFilepattern(d)
+	obj, err := getObjectDlpFilepattern(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating DlpFilepattern resource while getting object: %v", err)
 	}
@@ -159,26 +160,26 @@ func resourceDlpFilepatternRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectDlpFilepattern(d, o)
+	err = refreshObjectDlpFilepattern(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading DlpFilepattern resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenDlpFilepatternId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenDlpFilepatternId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenDlpFilepatternName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenDlpFilepatternName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenDlpFilepatternComment(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenDlpFilepatternComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenDlpFilepatternEntries(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenDlpFilepatternEntries(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -199,17 +200,20 @@ func flattenDlpFilepatternEntries(v interface{}, d *schema.ResourceData, pre str
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_type"
 		if _, ok := i["filter-type"]; ok {
-			tmp["filter_type"] = flattenDlpFilepatternEntriesFilterType(i["filter-type"], d, pre_append)
+
+			tmp["filter_type"] = flattenDlpFilepatternEntriesFilterType(i["filter-type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
 		if _, ok := i["pattern"]; ok {
-			tmp["pattern"] = flattenDlpFilepatternEntriesPattern(i["pattern"], d, pre_append)
+
+			tmp["pattern"] = flattenDlpFilepatternEntriesPattern(i["pattern"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_type"
 		if _, ok := i["file-type"]; ok {
-			tmp["file_type"] = flattenDlpFilepatternEntriesFileType(i["file-type"], d, pre_append)
+
+			tmp["file_type"] = flattenDlpFilepatternEntriesFileType(i["file-type"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -221,48 +225,48 @@ func flattenDlpFilepatternEntries(v interface{}, d *schema.ResourceData, pre str
 	return result
 }
 
-func flattenDlpFilepatternEntriesFilterType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenDlpFilepatternEntriesFilterType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenDlpFilepatternEntriesPattern(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenDlpFilepatternEntriesPattern(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenDlpFilepatternEntriesFileType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenDlpFilepatternEntriesFileType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectDlpFilepattern(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectDlpFilepattern(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("fosid", flattenDlpFilepatternId(o["id"], d, "fosid")); err != nil {
+	if err = d.Set("fosid", flattenDlpFilepatternId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
 			return fmt.Errorf("Error reading fosid: %v", err)
 		}
 	}
 
-	if err = d.Set("name", flattenDlpFilepatternName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenDlpFilepatternName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("comment", flattenDlpFilepatternComment(o["comment"], d, "comment")); err != nil {
+	if err = d.Set("comment", flattenDlpFilepatternComment(o["comment"], d, "comment", sv)); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("entries", flattenDlpFilepatternEntries(o["entries"], d, "entries")); err != nil {
+		if err = d.Set("entries", flattenDlpFilepatternEntries(o["entries"], d, "entries", sv)); err != nil {
 			if !fortiAPIPatch(o["entries"]) {
 				return fmt.Errorf("Error reading entries: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("entries"); ok {
-			if err = d.Set("entries", flattenDlpFilepatternEntries(o["entries"], d, "entries")); err != nil {
+			if err = d.Set("entries", flattenDlpFilepatternEntries(o["entries"], d, "entries", sv)); err != nil {
 				if !fortiAPIPatch(o["entries"]) {
 					return fmt.Errorf("Error reading entries: %v", err)
 				}
@@ -276,22 +280,22 @@ func refreshObjectDlpFilepattern(d *schema.ResourceData, o map[string]interface{
 func flattenDlpFilepatternFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandDlpFilepatternId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandDlpFilepatternId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandDlpFilepatternName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandDlpFilepatternName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandDlpFilepatternComment(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandDlpFilepatternComment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandDlpFilepatternEntries(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandDlpFilepatternEntries(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -307,17 +311,20 @@ func expandDlpFilepatternEntries(d *schema.ResourceData, v interface{}, pre stri
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "filter_type"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["filter-type"], _ = expandDlpFilepatternEntriesFilterType(d, i["filter_type"], pre_append)
+
+			tmp["filter-type"], _ = expandDlpFilepatternEntriesFilterType(d, i["filter_type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "pattern"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["pattern"], _ = expandDlpFilepatternEntriesPattern(d, i["pattern"], pre_append)
+
+			tmp["pattern"], _ = expandDlpFilepatternEntriesPattern(d, i["pattern"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "file_type"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["file-type"], _ = expandDlpFilepatternEntriesFileType(d, i["file_type"], pre_append)
+
+			tmp["file-type"], _ = expandDlpFilepatternEntriesFileType(d, i["file_type"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -328,23 +335,24 @@ func expandDlpFilepatternEntries(d *schema.ResourceData, v interface{}, pre stri
 	return result, nil
 }
 
-func expandDlpFilepatternEntriesFilterType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandDlpFilepatternEntriesFilterType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandDlpFilepatternEntriesPattern(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandDlpFilepatternEntriesPattern(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandDlpFilepatternEntriesFileType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandDlpFilepatternEntriesFileType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectDlpFilepattern(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectDlpFilepattern(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-		t, err := expandDlpFilepatternId(d, v, "fosid")
+
+		t, err := expandDlpFilepatternId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -353,7 +361,8 @@ func getObjectDlpFilepattern(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandDlpFilepatternName(d, v, "name")
+
+		t, err := expandDlpFilepatternName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -362,7 +371,8 @@ func getObjectDlpFilepattern(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-		t, err := expandDlpFilepatternComment(d, v, "comment")
+
+		t, err := expandDlpFilepatternComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -371,7 +381,8 @@ func getObjectDlpFilepattern(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("entries"); ok {
-		t, err := expandDlpFilepatternEntries(d, v, "entries")
+
+		t, err := expandDlpFilepatternEntries(d, v, "entries", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
