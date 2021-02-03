@@ -11,7 +11,6 @@ SSH proxy local keys.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - SSH proxy local key name.
