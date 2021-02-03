@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -70,7 +71,7 @@ func resourceWebProxyUrlMatchCreate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWebProxyUrlMatch(d)
+	obj, err := getObjectWebProxyUrlMatch(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WebProxyUrlMatch resource while getting object: %v", err)
 	}
@@ -95,7 +96,7 @@ func resourceWebProxyUrlMatchUpdate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectWebProxyUrlMatch(d)
+	obj, err := getObjectWebProxyUrlMatch(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WebProxyUrlMatch resource while getting object: %v", err)
 	}
@@ -148,71 +149,71 @@ func resourceWebProxyUrlMatchRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectWebProxyUrlMatch(d, o)
+	err = refreshObjectWebProxyUrlMatch(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading WebProxyUrlMatch resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenWebProxyUrlMatchName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyUrlMatchName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyUrlMatchStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyUrlMatchStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyUrlMatchUrlPattern(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyUrlMatchUrlPattern(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyUrlMatchForwardServer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyUrlMatchForwardServer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyUrlMatchCacheExemption(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyUrlMatchCacheExemption(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenWebProxyUrlMatchComment(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenWebProxyUrlMatchComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectWebProxyUrlMatch(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectWebProxyUrlMatch(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenWebProxyUrlMatchName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenWebProxyUrlMatchName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("status", flattenWebProxyUrlMatchStatus(o["status"], d, "status")); err != nil {
+	if err = d.Set("status", flattenWebProxyUrlMatchStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
 		}
 	}
 
-	if err = d.Set("url_pattern", flattenWebProxyUrlMatchUrlPattern(o["url-pattern"], d, "url_pattern")); err != nil {
+	if err = d.Set("url_pattern", flattenWebProxyUrlMatchUrlPattern(o["url-pattern"], d, "url_pattern", sv)); err != nil {
 		if !fortiAPIPatch(o["url-pattern"]) {
 			return fmt.Errorf("Error reading url_pattern: %v", err)
 		}
 	}
 
-	if err = d.Set("forward_server", flattenWebProxyUrlMatchForwardServer(o["forward-server"], d, "forward_server")); err != nil {
+	if err = d.Set("forward_server", flattenWebProxyUrlMatchForwardServer(o["forward-server"], d, "forward_server", sv)); err != nil {
 		if !fortiAPIPatch(o["forward-server"]) {
 			return fmt.Errorf("Error reading forward_server: %v", err)
 		}
 	}
 
-	if err = d.Set("cache_exemption", flattenWebProxyUrlMatchCacheExemption(o["cache-exemption"], d, "cache_exemption")); err != nil {
+	if err = d.Set("cache_exemption", flattenWebProxyUrlMatchCacheExemption(o["cache-exemption"], d, "cache_exemption", sv)); err != nil {
 		if !fortiAPIPatch(o["cache-exemption"]) {
 			return fmt.Errorf("Error reading cache_exemption: %v", err)
 		}
 	}
 
-	if err = d.Set("comment", flattenWebProxyUrlMatchComment(o["comment"], d, "comment")); err != nil {
+	if err = d.Set("comment", flattenWebProxyUrlMatchComment(o["comment"], d, "comment", sv)); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
 		}
@@ -224,38 +225,39 @@ func refreshObjectWebProxyUrlMatch(d *schema.ResourceData, o map[string]interfac
 func flattenWebProxyUrlMatchFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandWebProxyUrlMatchName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyUrlMatchName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyUrlMatchStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyUrlMatchStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyUrlMatchUrlPattern(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyUrlMatchUrlPattern(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyUrlMatchForwardServer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyUrlMatchForwardServer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyUrlMatchCacheExemption(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyUrlMatchCacheExemption(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandWebProxyUrlMatchComment(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandWebProxyUrlMatchComment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectWebProxyUrlMatch(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectWebProxyUrlMatch(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandWebProxyUrlMatchName(d, v, "name")
+
+		t, err := expandWebProxyUrlMatchName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -264,7 +266,8 @@ func getObjectWebProxyUrlMatch(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-		t, err := expandWebProxyUrlMatchStatus(d, v, "status")
+
+		t, err := expandWebProxyUrlMatchStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -273,7 +276,8 @@ func getObjectWebProxyUrlMatch(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("url_pattern"); ok {
-		t, err := expandWebProxyUrlMatchUrlPattern(d, v, "url_pattern")
+
+		t, err := expandWebProxyUrlMatchUrlPattern(d, v, "url_pattern", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -282,7 +286,8 @@ func getObjectWebProxyUrlMatch(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("forward_server"); ok {
-		t, err := expandWebProxyUrlMatchForwardServer(d, v, "forward_server")
+
+		t, err := expandWebProxyUrlMatchForwardServer(d, v, "forward_server", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -291,7 +296,8 @@ func getObjectWebProxyUrlMatch(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("cache_exemption"); ok {
-		t, err := expandWebProxyUrlMatchCacheExemption(d, v, "cache_exemption")
+
+		t, err := expandWebProxyUrlMatchCacheExemption(d, v, "cache_exemption", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -300,7 +306,8 @@ func getObjectWebProxyUrlMatch(d *schema.ResourceData) (*map[string]interface{},
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-		t, err := expandWebProxyUrlMatchComment(d, v, "comment")
+
+		t, err := expandWebProxyUrlMatchComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
