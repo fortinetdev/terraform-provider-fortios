@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -55,7 +56,7 @@ func resourceSwitchControllerSwitchProfileCreate(d *schema.ResourceData, m inter
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSwitchControllerSwitchProfile(d)
+	obj, err := getObjectSwitchControllerSwitchProfile(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerSwitchProfile resource while getting object: %v", err)
 	}
@@ -80,7 +81,7 @@ func resourceSwitchControllerSwitchProfileUpdate(d *schema.ResourceData, m inter
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSwitchControllerSwitchProfile(d)
+	obj, err := getObjectSwitchControllerSwitchProfile(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerSwitchProfile resource while getting object: %v", err)
 	}
@@ -133,35 +134,35 @@ func resourceSwitchControllerSwitchProfileRead(d *schema.ResourceData, m interfa
 		return nil
 	}
 
-	err = refreshObjectSwitchControllerSwitchProfile(d, o)
+	err = refreshObjectSwitchControllerSwitchProfile(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerSwitchProfile resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSwitchControllerSwitchProfileName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerSwitchProfileName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerSwitchProfileLoginPasswdOverride(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerSwitchProfileLoginPasswdOverride(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSwitchControllerSwitchProfileLoginPasswd(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSwitchControllerSwitchProfileLoginPasswd(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSwitchControllerSwitchProfile(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSwitchControllerSwitchProfile(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenSwitchControllerSwitchProfileName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenSwitchControllerSwitchProfileName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("login_passwd_override", flattenSwitchControllerSwitchProfileLoginPasswdOverride(o["login-passwd-override"], d, "login_passwd_override")); err != nil {
+	if err = d.Set("login_passwd_override", flattenSwitchControllerSwitchProfileLoginPasswdOverride(o["login-passwd-override"], d, "login_passwd_override", sv)); err != nil {
 		if !fortiAPIPatch(o["login-passwd-override"]) {
 			return fmt.Errorf("Error reading login_passwd_override: %v", err)
 		}
@@ -173,26 +174,27 @@ func refreshObjectSwitchControllerSwitchProfile(d *schema.ResourceData, o map[st
 func flattenSwitchControllerSwitchProfileFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSwitchControllerSwitchProfileName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerSwitchProfileName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerSwitchProfileLoginPasswdOverride(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerSwitchProfileLoginPasswdOverride(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSwitchControllerSwitchProfileLoginPasswd(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSwitchControllerSwitchProfileLoginPasswd(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSwitchControllerSwitchProfile(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSwitchControllerSwitchProfile(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandSwitchControllerSwitchProfileName(d, v, "name")
+
+		t, err := expandSwitchControllerSwitchProfileName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -201,7 +203,8 @@ func getObjectSwitchControllerSwitchProfile(d *schema.ResourceData) (*map[string
 	}
 
 	if v, ok := d.GetOk("login_passwd_override"); ok {
-		t, err := expandSwitchControllerSwitchProfileLoginPasswdOverride(d, v, "login_passwd_override")
+
+		t, err := expandSwitchControllerSwitchProfileLoginPasswdOverride(d, v, "login_passwd_override", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -210,7 +213,8 @@ func getObjectSwitchControllerSwitchProfile(d *schema.ResourceData) (*map[string
 	}
 
 	if v, ok := d.GetOk("login_passwd"); ok {
-		t, err := expandSwitchControllerSwitchProfileLoginPasswd(d, v, "login_passwd")
+
+		t, err := expandSwitchControllerSwitchProfileLoginPasswd(d, v, "login_passwd", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
