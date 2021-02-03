@@ -28,7 +28,6 @@ resource "fortios_application_list" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - (Required) List name.
@@ -39,12 +38,16 @@ The following arguments are supported:
 * `app_replacemsg` - Enable/disable replacement messages for blocked applications.
 * `other_application_log` - Enable/disable logging for other applications.
 * `enforce_default_app_port` - Enable/disable default application port enforcement for allowed applications.
+* `force_inclusion_ssl_di_sigs` - Enable/disable forced inclusion of SSL deep inspection signatures.
 * `unknown_application_action` - Pass or block traffic from unknown applications.
 * `unknown_application_log` - Enable/disable logging for unknown applications.
+* `p2p_block_list` - P2P applications to be blocklisted.
 * `p2p_black_list` - P2P applications to be black listed.
 * `deep_app_inspection` - Enable/disable deep application inspection.
 * `options` - Basic application protocol signatures allowed by default.
 * `entries` - Application list entries. The structure of `entries` block is documented below.
+* `control_default_network_services` - Enable/disable enforcement of protocols over selected ports.
+* `default_network_services` - Default network service entries. The structure of `default_network_services` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `entries` block supports:
@@ -59,6 +62,7 @@ The `entries` block supports:
 * `technology` - Application technology filter.
 * `behavior` - Application behavior filter.
 * `popularity` - Application popularity filter (1 - 5, from least to most popular).
+* `exclusion` - ID of excluded applications. The structure of `exclusion` block is documented below.
 * `parameters` - Application parameters. The structure of `parameters` block is documented below.
 * `action` - Pass or block traffic, or reset connection for traffic from this application.
 * `log` - Enable/disable logging for this application list.
@@ -91,10 +95,28 @@ The `application` block supports:
 
 * `id` - Application IDs.
 
+The `exclusion` block supports:
+
+* `id` - Excluded application IDs.
+
 The `parameters` block supports:
 
 * `id` - Parameter ID.
+* `members` - Parameter tuple members. The structure of `members` block is documented below.
 * `value` - Parameter value.
+
+The `members` block supports:
+
+* `id` - Parameter.
+* `name` - Parameter name.
+* `value` - Parameter value.
+
+The `default_network_services` block supports:
+
+* `id` - Entry ID.
+* `port` - Port number.
+* `services` - Network protocols.
+* `violation_action` - Action for protocols not white listed under selected port.
 
 
 ## Attribute Reference
