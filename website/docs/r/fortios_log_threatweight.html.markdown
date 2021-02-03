@@ -133,7 +133,6 @@ resource "fortios_log_threatweight" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `status` - Enable/disable the threat weight feature.
@@ -141,6 +140,7 @@ The following arguments are supported:
 * `blocked_connection` - Threat weight score for blocked connections.
 * `failed_connection` - Threat weight score for failed connections.
 * `url_block_detected` - Threat weight score for URL blocking.
+* `botnet_connection_detected` - Threat weight score for detected botnet connections.
 * `malware` - Anti-virus malware threat weight settings. The structure of `malware` block is documented below.
 * `ips` - IPS threat weight settings. The structure of `ips` block is documented below.
 * `web` - Web filtering threat weight settings. The structure of `web` block is documented below.
@@ -168,6 +168,10 @@ The `malware` block supports:
 * `virus_outbreak_prevention` - Threat weight score for virus (outbreak prevention) event.
 * `botnet_connection` - Threat weight score for detected botnet connections.
 * `content_disarm` - Threat weight score for virus (content disarm) detected.
+* `malware_list` - Threat weight score for virus (malware list) detected.
+* `fsa_malicious` - Threat weight score for FortiSandbox malicious malware detected.
+* `fsa_high_risk` - Threat weight score for FortiSandbox high risk malware detected.
+* `fsa_medium_risk` - Threat weight score for FortiSandbox medium risk malware detected.
 
 The `ips` block supports:
 
