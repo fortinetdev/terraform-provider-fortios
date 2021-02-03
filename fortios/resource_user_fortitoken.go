@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -89,7 +90,7 @@ func resourceUserFortitokenCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectUserFortitoken(d)
+	obj, err := getObjectUserFortitoken(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating UserFortitoken resource while getting object: %v", err)
 	}
@@ -114,7 +115,7 @@ func resourceUserFortitokenUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectUserFortitoken(d)
+	obj, err := getObjectUserFortitoken(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating UserFortitoken resource while getting object: %v", err)
 	}
@@ -167,101 +168,101 @@ func resourceUserFortitokenRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectUserFortitoken(d, o)
+	err = refreshObjectUserFortitoken(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading UserFortitoken resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenUserFortitokenSerialNumber(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserFortitokenSerialNumber(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserFortitokenStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserFortitokenStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserFortitokenSeed(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserFortitokenSeed(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserFortitokenComments(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserFortitokenComments(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserFortitokenLicense(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserFortitokenLicense(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserFortitokenActivationCode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserFortitokenActivationCode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserFortitokenActivationExpire(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserFortitokenActivationExpire(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserFortitokenRegId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserFortitokenRegId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserFortitokenOsVer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserFortitokenOsVer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectUserFortitoken(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectUserFortitoken(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("serial_number", flattenUserFortitokenSerialNumber(o["serial-number"], d, "serial_number")); err != nil {
+	if err = d.Set("serial_number", flattenUserFortitokenSerialNumber(o["serial-number"], d, "serial_number", sv)); err != nil {
 		if !fortiAPIPatch(o["serial-number"]) {
 			return fmt.Errorf("Error reading serial_number: %v", err)
 		}
 	}
 
-	if err = d.Set("status", flattenUserFortitokenStatus(o["status"], d, "status")); err != nil {
+	if err = d.Set("status", flattenUserFortitokenStatus(o["status"], d, "status", sv)); err != nil {
 		if !fortiAPIPatch(o["status"]) {
 			return fmt.Errorf("Error reading status: %v", err)
 		}
 	}
 
-	if err = d.Set("seed", flattenUserFortitokenSeed(o["seed"], d, "seed")); err != nil {
+	if err = d.Set("seed", flattenUserFortitokenSeed(o["seed"], d, "seed", sv)); err != nil {
 		if !fortiAPIPatch(o["seed"]) {
 			return fmt.Errorf("Error reading seed: %v", err)
 		}
 	}
 
-	if err = d.Set("comments", flattenUserFortitokenComments(o["comments"], d, "comments")); err != nil {
+	if err = d.Set("comments", flattenUserFortitokenComments(o["comments"], d, "comments", sv)); err != nil {
 		if !fortiAPIPatch(o["comments"]) {
 			return fmt.Errorf("Error reading comments: %v", err)
 		}
 	}
 
-	if err = d.Set("license", flattenUserFortitokenLicense(o["license"], d, "license")); err != nil {
+	if err = d.Set("license", flattenUserFortitokenLicense(o["license"], d, "license", sv)); err != nil {
 		if !fortiAPIPatch(o["license"]) {
 			return fmt.Errorf("Error reading license: %v", err)
 		}
 	}
 
-	if err = d.Set("activation_code", flattenUserFortitokenActivationCode(o["activation-code"], d, "activation_code")); err != nil {
+	if err = d.Set("activation_code", flattenUserFortitokenActivationCode(o["activation-code"], d, "activation_code", sv)); err != nil {
 		if !fortiAPIPatch(o["activation-code"]) {
 			return fmt.Errorf("Error reading activation_code: %v", err)
 		}
 	}
 
-	if err = d.Set("activation_expire", flattenUserFortitokenActivationExpire(o["activation-expire"], d, "activation_expire")); err != nil {
+	if err = d.Set("activation_expire", flattenUserFortitokenActivationExpire(o["activation-expire"], d, "activation_expire", sv)); err != nil {
 		if !fortiAPIPatch(o["activation-expire"]) {
 			return fmt.Errorf("Error reading activation_expire: %v", err)
 		}
 	}
 
-	if err = d.Set("reg_id", flattenUserFortitokenRegId(o["reg-id"], d, "reg_id")); err != nil {
+	if err = d.Set("reg_id", flattenUserFortitokenRegId(o["reg-id"], d, "reg_id", sv)); err != nil {
 		if !fortiAPIPatch(o["reg-id"]) {
 			return fmt.Errorf("Error reading reg_id: %v", err)
 		}
 	}
 
-	if err = d.Set("os_ver", flattenUserFortitokenOsVer(o["os-ver"], d, "os_ver")); err != nil {
+	if err = d.Set("os_ver", flattenUserFortitokenOsVer(o["os-ver"], d, "os_ver", sv)); err != nil {
 		if !fortiAPIPatch(o["os-ver"]) {
 			return fmt.Errorf("Error reading os_ver: %v", err)
 		}
@@ -273,50 +274,51 @@ func refreshObjectUserFortitoken(d *schema.ResourceData, o map[string]interface{
 func flattenUserFortitokenFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandUserFortitokenSerialNumber(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserFortitokenSerialNumber(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserFortitokenStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserFortitokenStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserFortitokenSeed(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserFortitokenSeed(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserFortitokenComments(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserFortitokenComments(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserFortitokenLicense(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserFortitokenLicense(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserFortitokenActivationCode(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserFortitokenActivationCode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserFortitokenActivationExpire(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserFortitokenActivationExpire(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserFortitokenRegId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserFortitokenRegId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserFortitokenOsVer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserFortitokenOsVer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectUserFortitoken(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectUserFortitoken(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("serial_number"); ok {
-		t, err := expandUserFortitokenSerialNumber(d, v, "serial_number")
+
+		t, err := expandUserFortitokenSerialNumber(d, v, "serial_number", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -325,7 +327,8 @@ func getObjectUserFortitoken(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("status"); ok {
-		t, err := expandUserFortitokenStatus(d, v, "status")
+
+		t, err := expandUserFortitokenStatus(d, v, "status", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -334,7 +337,8 @@ func getObjectUserFortitoken(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("seed"); ok {
-		t, err := expandUserFortitokenSeed(d, v, "seed")
+
+		t, err := expandUserFortitokenSeed(d, v, "seed", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -343,7 +347,8 @@ func getObjectUserFortitoken(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("comments"); ok {
-		t, err := expandUserFortitokenComments(d, v, "comments")
+
+		t, err := expandUserFortitokenComments(d, v, "comments", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -352,7 +357,8 @@ func getObjectUserFortitoken(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("license"); ok {
-		t, err := expandUserFortitokenLicense(d, v, "license")
+
+		t, err := expandUserFortitokenLicense(d, v, "license", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -361,7 +367,8 @@ func getObjectUserFortitoken(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("activation_code"); ok {
-		t, err := expandUserFortitokenActivationCode(d, v, "activation_code")
+
+		t, err := expandUserFortitokenActivationCode(d, v, "activation_code", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -370,7 +377,8 @@ func getObjectUserFortitoken(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOkExists("activation_expire"); ok {
-		t, err := expandUserFortitokenActivationExpire(d, v, "activation_expire")
+
+		t, err := expandUserFortitokenActivationExpire(d, v, "activation_expire", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -379,7 +387,8 @@ func getObjectUserFortitoken(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("reg_id"); ok {
-		t, err := expandUserFortitokenRegId(d, v, "reg_id")
+
+		t, err := expandUserFortitokenRegId(d, v, "reg_id", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -388,7 +397,8 @@ func getObjectUserFortitoken(d *schema.ResourceData) (*map[string]interface{}, e
 	}
 
 	if v, ok := d.GetOk("os_ver"); ok {
-		t, err := expandUserFortitokenOsVer(d, v, "os_ver")
+
+		t, err := expandUserFortitokenOsVer(d, v, "os_ver", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
