@@ -5,10 +5,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/url"
 	"strings"
+	"time"
 
 	"github.com/fortinetdev/forti-sdk-go/fortios/auth"
 	"github.com/fortinetdev/forti-sdk-go/fortios/config"
@@ -28,6 +28,7 @@ type MultValues []MultValue
 type FortiSDKClient struct {
 	Config  config.Config
 	Retries int
+	Fv      string
 }
 
 // ExtractString extracts strings from result and put them into a string array,
@@ -52,14 +53,23 @@ func escapeURLString(v string) string { // doesn't support "<>()"'#"
 
 // NewClient initializes a new global plugin client
 // It returns the created client object
-func NewClient(auth *auth.Auth, client *http.Client) *FortiSDKClient {
+func NewClient(auth *auth.Auth, client *http.Client) (*FortiSDKClient, error) {
 	c := &FortiSDKClient{}
 
 	c.Config.Auth = auth
 	c.Config.HTTPCon = client
 	c.Config.FwTarget = auth.Hostname
 
-	return c
+	vsave := client.Timeout
+	client.Timeout = time.Second * 30
+	v, err := c.GetDeviceVersion()
+	if err != nil {
+		return nil, fmt.Errorf("%s", err)
+	}
+	client.Timeout = vsave
+	c.Fv = v
+
+	return c, nil
 }
 
 // NewRequest creates the request to FortiOS for the client
@@ -75,41 +85,43 @@ func (c *FortiSDKClient) GetDeviceVersion() (version string, err error) {
 	path := "/api/v2/cmdb/system/global"
 
 	req := c.NewRequest(HTTPMethod, path, nil, nil)
-	err = req.Send()
-
-	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
-	req.HTTPResponse.Body.Close() //#
-
-	if err != nil || body == nil {
-		err = fmt.Errorf("cannot get response body %s", err)
+	err = req.Send2(2)
+	if err != nil || req.HTTPResponse == nil {
+		err = fmt.Errorf("cannot send request, %s", err)
 		return "", err
 	}
 
-	log.Printf("FOS-fortios reading response: %s", string(body))
+	body, err := ioutil.ReadAll(req.HTTPResponse.Body)
+	req.HTTPResponse.Body.Close() //#
+	if err != nil || body == nil {
+		err = fmt.Errorf("cannot get response body, %s", err)
+		return "", err
+	}
 
 	var result map[string]interface{}
 	json.Unmarshal([]byte(string(body)), &result)
 
-	if result != nil {
+	err = fortiAPIErrorFormat(result, string(body))
+
+	if err == nil {
 		if result["status"] == nil {
-			err = fmt.Errorf("cannot get the right response")
+			err = fmt.Errorf("no status in response")
 			return "", err
 		}
 
 		if result["status"] != "success" {
-			err = fmt.Errorf("cannot get the right response")
+			err = fmt.Errorf("wrong status - %v", result["status"])
 			return "", err
 		}
 
 		if result["version"] == nil {
-			err = fmt.Errorf("cannot get the right response")
+			err = fmt.Errorf("no version in response")
 			return "", err
 		}
 
 		return result["version"].(string), err
 	}
-
-	err = fmt.Errorf("cannot get the right response")
+	
 	return "", err
 }
 
