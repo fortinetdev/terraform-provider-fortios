@@ -52,6 +52,11 @@ func New(c config.Config, method string, path string, params interface{}, data *
 // Send request data to FortiOS.
 // If errors are encountered, it returns the error.
 func (r *Request) Send() error {
+	return r.Send2(15)
+}
+
+
+func (r *Request) Send2(retries int) error {
 	//Build FortiOS
 	//build Sign/Login INfo
 
@@ -78,7 +83,7 @@ func (r *Request) Send() error {
 				break
 			}
 
-			if retry > 15 {
+			if retry >  retries {
 				err = fmt.Errorf("lost connection to firewall with error: %v", errdo)
 				break
 			}
