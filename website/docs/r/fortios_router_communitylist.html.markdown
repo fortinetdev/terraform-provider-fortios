@@ -26,7 +26,6 @@ resource "fortios_router_communitylist" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - (Required) Community list name.
