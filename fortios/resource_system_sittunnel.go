@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -64,7 +65,7 @@ func resourceSystemSitTunnelCreate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemSitTunnel(d)
+	obj, err := getObjectSystemSitTunnel(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemSitTunnel resource while getting object: %v", err)
 	}
@@ -89,7 +90,7 @@ func resourceSystemSitTunnelUpdate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemSitTunnel(d)
+	obj, err := getObjectSystemSitTunnel(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSitTunnel resource while getting object: %v", err)
 	}
@@ -142,61 +143,61 @@ func resourceSystemSitTunnelRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectSystemSitTunnel(d, o)
+	err = refreshObjectSystemSitTunnel(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemSitTunnel resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemSitTunnelName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSitTunnelName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSitTunnelSource(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSitTunnelSource(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSitTunnelDestination(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSitTunnelDestination(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSitTunnelIp6(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSitTunnelIp6(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSitTunnelInterface(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSitTunnelInterface(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemSitTunnel(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemSitTunnel(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenSystemSitTunnelName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenSystemSitTunnelName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("source", flattenSystemSitTunnelSource(o["source"], d, "source")); err != nil {
+	if err = d.Set("source", flattenSystemSitTunnelSource(o["source"], d, "source", sv)); err != nil {
 		if !fortiAPIPatch(o["source"]) {
 			return fmt.Errorf("Error reading source: %v", err)
 		}
 	}
 
-	if err = d.Set("destination", flattenSystemSitTunnelDestination(o["destination"], d, "destination")); err != nil {
+	if err = d.Set("destination", flattenSystemSitTunnelDestination(o["destination"], d, "destination", sv)); err != nil {
 		if !fortiAPIPatch(o["destination"]) {
 			return fmt.Errorf("Error reading destination: %v", err)
 		}
 	}
 
-	if err = d.Set("ip6", flattenSystemSitTunnelIp6(o["ip6"], d, "ip6")); err != nil {
+	if err = d.Set("ip6", flattenSystemSitTunnelIp6(o["ip6"], d, "ip6", sv)); err != nil {
 		if !fortiAPIPatch(o["ip6"]) {
 			return fmt.Errorf("Error reading ip6: %v", err)
 		}
 	}
 
-	if err = d.Set("interface", flattenSystemSitTunnelInterface(o["interface"], d, "interface")); err != nil {
+	if err = d.Set("interface", flattenSystemSitTunnelInterface(o["interface"], d, "interface", sv)); err != nil {
 		if !fortiAPIPatch(o["interface"]) {
 			return fmt.Errorf("Error reading interface: %v", err)
 		}
@@ -208,34 +209,35 @@ func refreshObjectSystemSitTunnel(d *schema.ResourceData, o map[string]interface
 func flattenSystemSitTunnelFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemSitTunnelName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSitTunnelName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemSitTunnelSource(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSitTunnelSource(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemSitTunnelDestination(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSitTunnelDestination(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemSitTunnelIp6(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSitTunnelIp6(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemSitTunnelInterface(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSitTunnelInterface(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemSitTunnel(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemSitTunnel(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandSystemSitTunnelName(d, v, "name")
+
+		t, err := expandSystemSitTunnelName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -244,7 +246,8 @@ func getObjectSystemSitTunnel(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("source"); ok {
-		t, err := expandSystemSitTunnelSource(d, v, "source")
+
+		t, err := expandSystemSitTunnelSource(d, v, "source", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -253,7 +256,8 @@ func getObjectSystemSitTunnel(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("destination"); ok {
-		t, err := expandSystemSitTunnelDestination(d, v, "destination")
+
+		t, err := expandSystemSitTunnelDestination(d, v, "destination", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -262,7 +266,8 @@ func getObjectSystemSitTunnel(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("ip6"); ok {
-		t, err := expandSystemSitTunnelIp6(d, v, "ip6")
+
+		t, err := expandSystemSitTunnelIp6(d, v, "ip6", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -271,7 +276,8 @@ func getObjectSystemSitTunnel(d *schema.ResourceData) (*map[string]interface{}, 
 	}
 
 	if v, ok := d.GetOk("interface"); ok {
-		t, err := expandSystemSitTunnelInterface(d, v, "interface")
+
+		t, err := expandSystemSitTunnelInterface(d, v, "interface", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
