@@ -42,7 +42,6 @@ resource "fortios_firewall_internetservicegroup" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - Internet Service group name.
@@ -53,6 +52,7 @@ The following arguments are supported:
 
 The `member` block supports:
 
+* `name` - Internet Service name.
 * `id` - Internet Service ID.
 
 
