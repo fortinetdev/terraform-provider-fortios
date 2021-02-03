@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -91,7 +92,7 @@ func resourceDnsfilterDomainFilterCreate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectDnsfilterDomainFilter(d)
+	obj, err := getObjectDnsfilterDomainFilter(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating DnsfilterDomainFilter resource while getting object: %v", err)
 	}
@@ -116,7 +117,7 @@ func resourceDnsfilterDomainFilterUpdate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectDnsfilterDomainFilter(d)
+	obj, err := getObjectDnsfilterDomainFilter(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating DnsfilterDomainFilter resource while getting object: %v", err)
 	}
@@ -169,26 +170,26 @@ func resourceDnsfilterDomainFilterRead(d *schema.ResourceData, m interface{}) er
 		return nil
 	}
 
-	err = refreshObjectDnsfilterDomainFilter(d, o)
+	err = refreshObjectDnsfilterDomainFilter(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading DnsfilterDomainFilter resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenDnsfilterDomainFilterId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenDnsfilterDomainFilterId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenDnsfilterDomainFilterName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenDnsfilterDomainFilterName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenDnsfilterDomainFilterComment(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenDnsfilterDomainFilterComment(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenDnsfilterDomainFilterEntries(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenDnsfilterDomainFilterEntries(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -209,27 +210,32 @@ func flattenDnsfilterDomainFilterEntries(v interface{}, d *schema.ResourceData, 
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenDnsfilterDomainFilterEntriesId(i["id"], d, pre_append)
+
+			tmp["id"] = flattenDnsfilterDomainFilterEntriesId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain"
 		if _, ok := i["domain"]; ok {
-			tmp["domain"] = flattenDnsfilterDomainFilterEntriesDomain(i["domain"], d, pre_append)
+
+			tmp["domain"] = flattenDnsfilterDomainFilterEntriesDomain(i["domain"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenDnsfilterDomainFilterEntriesType(i["type"], d, pre_append)
+
+			tmp["type"] = flattenDnsfilterDomainFilterEntriesType(i["type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := i["action"]; ok {
-			tmp["action"] = flattenDnsfilterDomainFilterEntriesAction(i["action"], d, pre_append)
+
+			tmp["action"] = flattenDnsfilterDomainFilterEntriesAction(i["action"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := i["status"]; ok {
-			tmp["status"] = flattenDnsfilterDomainFilterEntriesStatus(i["status"], d, pre_append)
+
+			tmp["status"] = flattenDnsfilterDomainFilterEntriesStatus(i["status"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -241,56 +247,56 @@ func flattenDnsfilterDomainFilterEntries(v interface{}, d *schema.ResourceData, 
 	return result
 }
 
-func flattenDnsfilterDomainFilterEntriesId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenDnsfilterDomainFilterEntriesId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenDnsfilterDomainFilterEntriesDomain(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenDnsfilterDomainFilterEntriesDomain(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenDnsfilterDomainFilterEntriesType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenDnsfilterDomainFilterEntriesType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenDnsfilterDomainFilterEntriesAction(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenDnsfilterDomainFilterEntriesAction(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenDnsfilterDomainFilterEntriesStatus(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenDnsfilterDomainFilterEntriesStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectDnsfilterDomainFilter(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectDnsfilterDomainFilter(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("fosid", flattenDnsfilterDomainFilterId(o["id"], d, "fosid")); err != nil {
+	if err = d.Set("fosid", flattenDnsfilterDomainFilterId(o["id"], d, "fosid", sv)); err != nil {
 		if !fortiAPIPatch(o["id"]) {
 			return fmt.Errorf("Error reading fosid: %v", err)
 		}
 	}
 
-	if err = d.Set("name", flattenDnsfilterDomainFilterName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenDnsfilterDomainFilterName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("comment", flattenDnsfilterDomainFilterComment(o["comment"], d, "comment")); err != nil {
+	if err = d.Set("comment", flattenDnsfilterDomainFilterComment(o["comment"], d, "comment", sv)); err != nil {
 		if !fortiAPIPatch(o["comment"]) {
 			return fmt.Errorf("Error reading comment: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("entries", flattenDnsfilterDomainFilterEntries(o["entries"], d, "entries")); err != nil {
+		if err = d.Set("entries", flattenDnsfilterDomainFilterEntries(o["entries"], d, "entries", sv)); err != nil {
 			if !fortiAPIPatch(o["entries"]) {
 				return fmt.Errorf("Error reading entries: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("entries"); ok {
-			if err = d.Set("entries", flattenDnsfilterDomainFilterEntries(o["entries"], d, "entries")); err != nil {
+			if err = d.Set("entries", flattenDnsfilterDomainFilterEntries(o["entries"], d, "entries", sv)); err != nil {
 				if !fortiAPIPatch(o["entries"]) {
 					return fmt.Errorf("Error reading entries: %v", err)
 				}
@@ -304,22 +310,22 @@ func refreshObjectDnsfilterDomainFilter(d *schema.ResourceData, o map[string]int
 func flattenDnsfilterDomainFilterFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandDnsfilterDomainFilterId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandDnsfilterDomainFilterId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandDnsfilterDomainFilterName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandDnsfilterDomainFilterName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandDnsfilterDomainFilterComment(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandDnsfilterDomainFilterComment(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandDnsfilterDomainFilterEntries(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandDnsfilterDomainFilterEntries(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -335,27 +341,32 @@ func expandDnsfilterDomainFilterEntries(d *schema.ResourceData, v interface{}, p
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandDnsfilterDomainFilterEntriesId(d, i["id"], pre_append)
+
+			tmp["id"], _ = expandDnsfilterDomainFilterEntriesId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "domain"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["domain"], _ = expandDnsfilterDomainFilterEntriesDomain(d, i["domain"], pre_append)
+
+			tmp["domain"], _ = expandDnsfilterDomainFilterEntriesDomain(d, i["domain"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["type"], _ = expandDnsfilterDomainFilterEntriesType(d, i["type"], pre_append)
+
+			tmp["type"], _ = expandDnsfilterDomainFilterEntriesType(d, i["type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "action"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["action"], _ = expandDnsfilterDomainFilterEntriesAction(d, i["action"], pre_append)
+
+			tmp["action"], _ = expandDnsfilterDomainFilterEntriesAction(d, i["action"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "status"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["status"], _ = expandDnsfilterDomainFilterEntriesStatus(d, i["status"], pre_append)
+
+			tmp["status"], _ = expandDnsfilterDomainFilterEntriesStatus(d, i["status"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -366,31 +377,32 @@ func expandDnsfilterDomainFilterEntries(d *schema.ResourceData, v interface{}, p
 	return result, nil
 }
 
-func expandDnsfilterDomainFilterEntriesId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandDnsfilterDomainFilterEntriesId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandDnsfilterDomainFilterEntriesDomain(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandDnsfilterDomainFilterEntriesDomain(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandDnsfilterDomainFilterEntriesType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandDnsfilterDomainFilterEntriesType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandDnsfilterDomainFilterEntriesAction(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandDnsfilterDomainFilterEntriesAction(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandDnsfilterDomainFilterEntriesStatus(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandDnsfilterDomainFilterEntriesStatus(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectDnsfilterDomainFilter(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectDnsfilterDomainFilter(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOkExists("fosid"); ok {
-		t, err := expandDnsfilterDomainFilterId(d, v, "fosid")
+
+		t, err := expandDnsfilterDomainFilterId(d, v, "fosid", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -399,7 +411,8 @@ func getObjectDnsfilterDomainFilter(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandDnsfilterDomainFilterName(d, v, "name")
+
+		t, err := expandDnsfilterDomainFilterName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -408,7 +421,8 @@ func getObjectDnsfilterDomainFilter(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("comment"); ok {
-		t, err := expandDnsfilterDomainFilterComment(d, v, "comment")
+
+		t, err := expandDnsfilterDomainFilterComment(d, v, "comment", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -417,7 +431,8 @@ func getObjectDnsfilterDomainFilter(d *schema.ResourceData) (*map[string]interfa
 	}
 
 	if v, ok := d.GetOk("entries"); ok {
-		t, err := expandDnsfilterDomainFilterEntries(d, v, "entries")
+
+		t, err := expandDnsfilterDomainFilterEntries(d, v, "entries", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
