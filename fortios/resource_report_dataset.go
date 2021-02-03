@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -119,7 +120,7 @@ func resourceReportDatasetCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectReportDataset(d)
+	obj, err := getObjectReportDataset(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating ReportDataset resource while getting object: %v", err)
 	}
@@ -144,7 +145,7 @@ func resourceReportDatasetUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectReportDataset(d)
+	obj, err := getObjectReportDataset(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating ReportDataset resource while getting object: %v", err)
 	}
@@ -197,26 +198,26 @@ func resourceReportDatasetRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectReportDataset(d, o)
+	err = refreshObjectReportDataset(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading ReportDataset resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenReportDatasetName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenReportDatasetName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenReportDatasetPolicy(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenReportDatasetPolicy(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenReportDatasetQuery(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenReportDatasetQuery(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenReportDatasetField(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenReportDatasetField(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -237,22 +238,26 @@ func flattenReportDatasetField(v interface{}, d *schema.ResourceData, pre string
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenReportDatasetFieldId(i["id"], d, pre_append)
+
+			tmp["id"] = flattenReportDatasetFieldId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := i["type"]; ok {
-			tmp["type"] = flattenReportDatasetFieldType(i["type"], d, pre_append)
+
+			tmp["type"] = flattenReportDatasetFieldType(i["type"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := i["name"]; ok {
-			tmp["name"] = flattenReportDatasetFieldName(i["name"], d, pre_append)
+
+			tmp["name"] = flattenReportDatasetFieldName(i["name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "displayname"
 		if _, ok := i["displayname"]; ok {
-			tmp["displayname"] = flattenReportDatasetFieldDisplayname(i["displayname"], d, pre_append)
+
+			tmp["displayname"] = flattenReportDatasetFieldDisplayname(i["displayname"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -264,23 +269,23 @@ func flattenReportDatasetField(v interface{}, d *schema.ResourceData, pre string
 	return result
 }
 
-func flattenReportDatasetFieldId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenReportDatasetFieldId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenReportDatasetFieldType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenReportDatasetFieldType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenReportDatasetFieldName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenReportDatasetFieldName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenReportDatasetFieldDisplayname(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenReportDatasetFieldDisplayname(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenReportDatasetParameters(v interface{}, d *schema.ResourceData, pre string) []map[string]interface{} {
+func flattenReportDatasetParameters(v interface{}, d *schema.ResourceData, pre string, sv string) []map[string]interface{} {
 	if v == nil {
 		return nil
 	}
@@ -301,22 +306,26 @@ func flattenReportDatasetParameters(v interface{}, d *schema.ResourceData, pre s
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := i["id"]; ok {
-			tmp["id"] = flattenReportDatasetParametersId(i["id"], d, pre_append)
+
+			tmp["id"] = flattenReportDatasetParametersId(i["id"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "display_name"
 		if _, ok := i["display-name"]; ok {
-			tmp["display_name"] = flattenReportDatasetParametersDisplayName(i["display-name"], d, pre_append)
+
+			tmp["display_name"] = flattenReportDatasetParametersDisplayName(i["display-name"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "field"
 		if _, ok := i["field"]; ok {
-			tmp["field"] = flattenReportDatasetParametersField(i["field"], d, pre_append)
+
+			tmp["field"] = flattenReportDatasetParametersField(i["field"], d, pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "data_type"
 		if _, ok := i["data-type"]; ok {
-			tmp["data_type"] = flattenReportDatasetParametersDataType(i["data-type"], d, pre_append)
+
+			tmp["data_type"] = flattenReportDatasetParametersDataType(i["data-type"], d, pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -328,52 +337,52 @@ func flattenReportDatasetParameters(v interface{}, d *schema.ResourceData, pre s
 	return result
 }
 
-func flattenReportDatasetParametersId(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenReportDatasetParametersId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenReportDatasetParametersDisplayName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenReportDatasetParametersDisplayName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenReportDatasetParametersField(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenReportDatasetParametersField(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenReportDatasetParametersDataType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenReportDatasetParametersDataType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectReportDataset(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectReportDataset(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenReportDatasetName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenReportDatasetName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("policy", flattenReportDatasetPolicy(o["policy"], d, "policy")); err != nil {
+	if err = d.Set("policy", flattenReportDatasetPolicy(o["policy"], d, "policy", sv)); err != nil {
 		if !fortiAPIPatch(o["policy"]) {
 			return fmt.Errorf("Error reading policy: %v", err)
 		}
 	}
 
-	if err = d.Set("query", flattenReportDatasetQuery(o["query"], d, "query")); err != nil {
+	if err = d.Set("query", flattenReportDatasetQuery(o["query"], d, "query", sv)); err != nil {
 		if !fortiAPIPatch(o["query"]) {
 			return fmt.Errorf("Error reading query: %v", err)
 		}
 	}
 
 	if isImportTable() {
-		if err = d.Set("field", flattenReportDatasetField(o["field"], d, "field")); err != nil {
+		if err = d.Set("field", flattenReportDatasetField(o["field"], d, "field", sv)); err != nil {
 			if !fortiAPIPatch(o["field"]) {
 				return fmt.Errorf("Error reading field: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("field"); ok {
-			if err = d.Set("field", flattenReportDatasetField(o["field"], d, "field")); err != nil {
+			if err = d.Set("field", flattenReportDatasetField(o["field"], d, "field", sv)); err != nil {
 				if !fortiAPIPatch(o["field"]) {
 					return fmt.Errorf("Error reading field: %v", err)
 				}
@@ -382,14 +391,14 @@ func refreshObjectReportDataset(d *schema.ResourceData, o map[string]interface{}
 	}
 
 	if isImportTable() {
-		if err = d.Set("parameters", flattenReportDatasetParameters(o["parameters"], d, "parameters")); err != nil {
+		if err = d.Set("parameters", flattenReportDatasetParameters(o["parameters"], d, "parameters", sv)); err != nil {
 			if !fortiAPIPatch(o["parameters"]) {
 				return fmt.Errorf("Error reading parameters: %v", err)
 			}
 		}
 	} else {
 		if _, ok := d.GetOk("parameters"); ok {
-			if err = d.Set("parameters", flattenReportDatasetParameters(o["parameters"], d, "parameters")); err != nil {
+			if err = d.Set("parameters", flattenReportDatasetParameters(o["parameters"], d, "parameters", sv)); err != nil {
 				if !fortiAPIPatch(o["parameters"]) {
 					return fmt.Errorf("Error reading parameters: %v", err)
 				}
@@ -403,22 +412,22 @@ func refreshObjectReportDataset(d *schema.ResourceData, o map[string]interface{}
 func flattenReportDatasetFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandReportDatasetName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandReportDatasetName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandReportDatasetPolicy(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandReportDatasetPolicy(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandReportDatasetQuery(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandReportDatasetQuery(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandReportDatasetField(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandReportDatasetField(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -434,22 +443,26 @@ func expandReportDatasetField(d *schema.ResourceData, v interface{}, pre string)
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandReportDatasetFieldId(d, i["id"], pre_append)
+
+			tmp["id"], _ = expandReportDatasetFieldId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "type"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["type"], _ = expandReportDatasetFieldType(d, i["type"], pre_append)
+
+			tmp["type"], _ = expandReportDatasetFieldType(d, i["type"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["name"], _ = expandReportDatasetFieldName(d, i["name"], pre_append)
+
+			tmp["name"], _ = expandReportDatasetFieldName(d, i["name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "displayname"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["displayname"], _ = expandReportDatasetFieldDisplayname(d, i["displayname"], pre_append)
+
+			tmp["displayname"], _ = expandReportDatasetFieldDisplayname(d, i["displayname"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -460,23 +473,23 @@ func expandReportDatasetField(d *schema.ResourceData, v interface{}, pre string)
 	return result, nil
 }
 
-func expandReportDatasetFieldId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandReportDatasetFieldId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandReportDatasetFieldType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandReportDatasetFieldType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandReportDatasetFieldName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandReportDatasetFieldName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandReportDatasetFieldDisplayname(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandReportDatasetFieldDisplayname(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandReportDatasetParameters(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandReportDatasetParameters(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	l := v.([]interface{})
 	if len(l) == 0 || l[0] == nil {
 		return nil, nil
@@ -492,22 +505,26 @@ func expandReportDatasetParameters(d *schema.ResourceData, v interface{}, pre st
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "id"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["id"], _ = expandReportDatasetParametersId(d, i["id"], pre_append)
+
+			tmp["id"], _ = expandReportDatasetParametersId(d, i["id"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "display_name"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["display-name"], _ = expandReportDatasetParametersDisplayName(d, i["display_name"], pre_append)
+
+			tmp["display-name"], _ = expandReportDatasetParametersDisplayName(d, i["display_name"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "field"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["field"], _ = expandReportDatasetParametersField(d, i["field"], pre_append)
+
+			tmp["field"], _ = expandReportDatasetParametersField(d, i["field"], pre_append, sv)
 		}
 
 		pre_append = pre + "." + strconv.Itoa(con) + "." + "data_type"
 		if _, ok := d.GetOk(pre_append); ok {
-			tmp["data-type"], _ = expandReportDatasetParametersDataType(d, i["data_type"], pre_append)
+
+			tmp["data-type"], _ = expandReportDatasetParametersDataType(d, i["data_type"], pre_append, sv)
 		}
 
 		result = append(result, tmp)
@@ -518,27 +535,28 @@ func expandReportDatasetParameters(d *schema.ResourceData, v interface{}, pre st
 	return result, nil
 }
 
-func expandReportDatasetParametersId(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandReportDatasetParametersId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandReportDatasetParametersDisplayName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandReportDatasetParametersDisplayName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandReportDatasetParametersField(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandReportDatasetParametersField(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandReportDatasetParametersDataType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandReportDatasetParametersDataType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectReportDataset(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectReportDataset(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandReportDatasetName(d, v, "name")
+
+		t, err := expandReportDatasetName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -547,7 +565,8 @@ func getObjectReportDataset(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOkExists("policy"); ok {
-		t, err := expandReportDatasetPolicy(d, v, "policy")
+
+		t, err := expandReportDatasetPolicy(d, v, "policy", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -556,7 +575,8 @@ func getObjectReportDataset(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOk("query"); ok {
-		t, err := expandReportDatasetQuery(d, v, "query")
+
+		t, err := expandReportDatasetQuery(d, v, "query", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -565,7 +585,8 @@ func getObjectReportDataset(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOk("field"); ok {
-		t, err := expandReportDatasetField(d, v, "field")
+
+		t, err := expandReportDatasetField(d, v, "field", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -574,7 +595,8 @@ func getObjectReportDataset(d *schema.ResourceData) (*map[string]interface{}, er
 	}
 
 	if v, ok := d.GetOk("parameters"); ok {
-		t, err := expandReportDatasetParameters(d, v, "parameters")
+
+		t, err := expandReportDatasetParameters(d, v, "parameters", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
