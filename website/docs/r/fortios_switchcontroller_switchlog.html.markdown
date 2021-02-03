@@ -20,7 +20,6 @@ resource "fortios_switchcontroller_switchlog" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `status` - Enable/disable adding FortiSwitch logs to FortiGate event log.
