@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -41,6 +42,17 @@ func resourceUserAdgrp() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
+			"connector_source": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 35),
+				Optional:     true,
+				Computed:     true,
+			},
+			"fosid": &schema.Schema{
+				Type:     schema.TypeInt,
+				Optional: true,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -49,7 +61,7 @@ func resourceUserAdgrpCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectUserAdgrp(d)
+	obj, err := getObjectUserAdgrp(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating UserAdgrp resource while getting object: %v", err)
 	}
@@ -74,7 +86,7 @@ func resourceUserAdgrpUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectUserAdgrp(d)
+	obj, err := getObjectUserAdgrp(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating UserAdgrp resource while getting object: %v", err)
 	}
@@ -127,33 +139,53 @@ func resourceUserAdgrpRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectUserAdgrp(d, o)
+	err = refreshObjectUserAdgrp(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading UserAdgrp resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenUserAdgrpName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserAdgrpName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenUserAdgrpServerName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenUserAdgrpServerName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectUserAdgrp(d *schema.ResourceData, o map[string]interface{}) error {
+func flattenUserAdgrpConnectorSource(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func flattenUserAdgrpId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
+func refreshObjectUserAdgrp(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenUserAdgrpName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenUserAdgrpName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("server_name", flattenUserAdgrpServerName(o["server-name"], d, "server_name")); err != nil {
+	if err = d.Set("server_name", flattenUserAdgrpServerName(o["server-name"], d, "server_name", sv)); err != nil {
 		if !fortiAPIPatch(o["server-name"]) {
 			return fmt.Errorf("Error reading server_name: %v", err)
+		}
+	}
+
+	if err = d.Set("connector_source", flattenUserAdgrpConnectorSource(o["connector-source"], d, "connector_source", sv)); err != nil {
+		if !fortiAPIPatch(o["connector-source"]) {
+			return fmt.Errorf("Error reading connector_source: %v", err)
+		}
+	}
+
+	if err = d.Set("fosid", flattenUserAdgrpId(o["id"], d, "fosid", sv)); err != nil {
+		if !fortiAPIPatch(o["id"]) {
+			return fmt.Errorf("Error reading fosid: %v", err)
 		}
 	}
 
@@ -163,22 +195,31 @@ func refreshObjectUserAdgrp(d *schema.ResourceData, o map[string]interface{}) er
 func flattenUserAdgrpFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandUserAdgrpName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserAdgrpName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandUserAdgrpServerName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandUserAdgrpServerName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectUserAdgrp(d *schema.ResourceData) (*map[string]interface{}, error) {
+func expandUserAdgrpConnectorSource(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func expandUserAdgrpId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
+func getObjectUserAdgrp(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandUserAdgrpName(d, v, "name")
+
+		t, err := expandUserAdgrpName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -187,11 +228,32 @@ func getObjectUserAdgrp(d *schema.ResourceData) (*map[string]interface{}, error)
 	}
 
 	if v, ok := d.GetOk("server_name"); ok {
-		t, err := expandUserAdgrpServerName(d, v, "server_name")
+
+		t, err := expandUserAdgrpServerName(d, v, "server_name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
 			obj["server-name"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("connector_source"); ok {
+
+		t, err := expandUserAdgrpConnectorSource(d, v, "connector_source", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["connector-source"] = t
+		}
+	}
+
+	if v, ok := d.GetOkExists("fosid"); ok {
+
+		t, err := expandUserAdgrpId(d, v, "fosid", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["id"] = t
 		}
 	}
 
