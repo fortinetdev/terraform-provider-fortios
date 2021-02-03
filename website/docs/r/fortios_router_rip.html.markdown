@@ -52,7 +52,6 @@ resource "fortios_router_rip" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `default_information_originate` - Enable/disable generation of default route.
