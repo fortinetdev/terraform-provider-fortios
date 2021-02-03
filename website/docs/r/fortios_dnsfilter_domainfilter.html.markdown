@@ -28,7 +28,6 @@ resource "fortios_dnsfilter_domainfilter" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `fosid` - (Required) ID.
