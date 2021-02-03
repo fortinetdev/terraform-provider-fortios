@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -93,7 +94,7 @@ func resourceEndpointControlForticlientEmsCreate(d *schema.ResourceData, m inter
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectEndpointControlForticlientEms(d)
+	obj, err := getObjectEndpointControlForticlientEms(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating EndpointControlForticlientEms resource while getting object: %v", err)
 	}
@@ -118,7 +119,7 @@ func resourceEndpointControlForticlientEmsUpdate(d *schema.ResourceData, m inter
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectEndpointControlForticlientEms(d)
+	obj, err := getObjectEndpointControlForticlientEms(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating EndpointControlForticlientEms resource while getting object: %v", err)
 	}
@@ -171,105 +172,105 @@ func resourceEndpointControlForticlientEmsRead(d *schema.ResourceData, m interfa
 		return nil
 	}
 
-	err = refreshObjectEndpointControlForticlientEms(d, o)
+	err = refreshObjectEndpointControlForticlientEms(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading EndpointControlForticlientEms resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenEndpointControlForticlientEmsName(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenEndpointControlForticlientEmsName(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenEndpointControlForticlientEmsAddress(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenEndpointControlForticlientEmsAddress(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenEndpointControlForticlientEmsSerialNumber(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenEndpointControlForticlientEmsSerialNumber(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenEndpointControlForticlientEmsListenPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenEndpointControlForticlientEmsListenPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenEndpointControlForticlientEmsUploadPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenEndpointControlForticlientEmsUploadPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenEndpointControlForticlientEmsRestApiAuth(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenEndpointControlForticlientEmsRestApiAuth(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenEndpointControlForticlientEmsHttpsPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenEndpointControlForticlientEmsHttpsPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenEndpointControlForticlientEmsAdminUsername(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenEndpointControlForticlientEmsAdminUsername(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenEndpointControlForticlientEmsAdminPassword(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenEndpointControlForticlientEmsAdminPassword(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenEndpointControlForticlientEmsAdminType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenEndpointControlForticlientEmsAdminType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectEndpointControlForticlientEms(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectEndpointControlForticlientEms(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("name", flattenEndpointControlForticlientEmsName(o["name"], d, "name")); err != nil {
+	if err = d.Set("name", flattenEndpointControlForticlientEmsName(o["name"], d, "name", sv)); err != nil {
 		if !fortiAPIPatch(o["name"]) {
 			return fmt.Errorf("Error reading name: %v", err)
 		}
 	}
 
-	if err = d.Set("address", flattenEndpointControlForticlientEmsAddress(o["address"], d, "address")); err != nil {
+	if err = d.Set("address", flattenEndpointControlForticlientEmsAddress(o["address"], d, "address", sv)); err != nil {
 		if !fortiAPIPatch(o["address"]) {
 			return fmt.Errorf("Error reading address: %v", err)
 		}
 	}
 
-	if err = d.Set("serial_number", flattenEndpointControlForticlientEmsSerialNumber(o["serial-number"], d, "serial_number")); err != nil {
+	if err = d.Set("serial_number", flattenEndpointControlForticlientEmsSerialNumber(o["serial-number"], d, "serial_number", sv)); err != nil {
 		if !fortiAPIPatch(o["serial-number"]) {
 			return fmt.Errorf("Error reading serial_number: %v", err)
 		}
 	}
 
-	if err = d.Set("listen_port", flattenEndpointControlForticlientEmsListenPort(o["listen-port"], d, "listen_port")); err != nil {
+	if err = d.Set("listen_port", flattenEndpointControlForticlientEmsListenPort(o["listen-port"], d, "listen_port", sv)); err != nil {
 		if !fortiAPIPatch(o["listen-port"]) {
 			return fmt.Errorf("Error reading listen_port: %v", err)
 		}
 	}
 
-	if err = d.Set("upload_port", flattenEndpointControlForticlientEmsUploadPort(o["upload-port"], d, "upload_port")); err != nil {
+	if err = d.Set("upload_port", flattenEndpointControlForticlientEmsUploadPort(o["upload-port"], d, "upload_port", sv)); err != nil {
 		if !fortiAPIPatch(o["upload-port"]) {
 			return fmt.Errorf("Error reading upload_port: %v", err)
 		}
 	}
 
-	if err = d.Set("rest_api_auth", flattenEndpointControlForticlientEmsRestApiAuth(o["rest-api-auth"], d, "rest_api_auth")); err != nil {
+	if err = d.Set("rest_api_auth", flattenEndpointControlForticlientEmsRestApiAuth(o["rest-api-auth"], d, "rest_api_auth", sv)); err != nil {
 		if !fortiAPIPatch(o["rest-api-auth"]) {
 			return fmt.Errorf("Error reading rest_api_auth: %v", err)
 		}
 	}
 
-	if err = d.Set("https_port", flattenEndpointControlForticlientEmsHttpsPort(o["https-port"], d, "https_port")); err != nil {
+	if err = d.Set("https_port", flattenEndpointControlForticlientEmsHttpsPort(o["https-port"], d, "https_port", sv)); err != nil {
 		if !fortiAPIPatch(o["https-port"]) {
 			return fmt.Errorf("Error reading https_port: %v", err)
 		}
 	}
 
-	if err = d.Set("admin_username", flattenEndpointControlForticlientEmsAdminUsername(o["admin-username"], d, "admin_username")); err != nil {
+	if err = d.Set("admin_username", flattenEndpointControlForticlientEmsAdminUsername(o["admin-username"], d, "admin_username", sv)); err != nil {
 		if !fortiAPIPatch(o["admin-username"]) {
 			return fmt.Errorf("Error reading admin_username: %v", err)
 		}
 	}
 
-	if err = d.Set("admin_type", flattenEndpointControlForticlientEmsAdminType(o["admin-type"], d, "admin_type")); err != nil {
+	if err = d.Set("admin_type", flattenEndpointControlForticlientEmsAdminType(o["admin-type"], d, "admin_type", sv)); err != nil {
 		if !fortiAPIPatch(o["admin-type"]) {
 			return fmt.Errorf("Error reading admin_type: %v", err)
 		}
@@ -281,54 +282,55 @@ func refreshObjectEndpointControlForticlientEms(d *schema.ResourceData, o map[st
 func flattenEndpointControlForticlientEmsFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandEndpointControlForticlientEmsName(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandEndpointControlForticlientEmsName(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandEndpointControlForticlientEmsAddress(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandEndpointControlForticlientEmsAddress(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandEndpointControlForticlientEmsSerialNumber(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandEndpointControlForticlientEmsSerialNumber(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandEndpointControlForticlientEmsListenPort(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandEndpointControlForticlientEmsListenPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandEndpointControlForticlientEmsUploadPort(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandEndpointControlForticlientEmsUploadPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandEndpointControlForticlientEmsRestApiAuth(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandEndpointControlForticlientEmsRestApiAuth(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandEndpointControlForticlientEmsHttpsPort(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandEndpointControlForticlientEmsHttpsPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandEndpointControlForticlientEmsAdminUsername(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandEndpointControlForticlientEmsAdminUsername(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandEndpointControlForticlientEmsAdminPassword(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandEndpointControlForticlientEmsAdminPassword(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandEndpointControlForticlientEmsAdminType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandEndpointControlForticlientEmsAdminType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectEndpointControlForticlientEms(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectEndpointControlForticlientEms(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("name"); ok {
-		t, err := expandEndpointControlForticlientEmsName(d, v, "name")
+
+		t, err := expandEndpointControlForticlientEmsName(d, v, "name", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -337,7 +339,8 @@ func getObjectEndpointControlForticlientEms(d *schema.ResourceData) (*map[string
 	}
 
 	if v, ok := d.GetOk("address"); ok {
-		t, err := expandEndpointControlForticlientEmsAddress(d, v, "address")
+
+		t, err := expandEndpointControlForticlientEmsAddress(d, v, "address", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -346,7 +349,8 @@ func getObjectEndpointControlForticlientEms(d *schema.ResourceData) (*map[string
 	}
 
 	if v, ok := d.GetOk("serial_number"); ok {
-		t, err := expandEndpointControlForticlientEmsSerialNumber(d, v, "serial_number")
+
+		t, err := expandEndpointControlForticlientEmsSerialNumber(d, v, "serial_number", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -355,7 +359,8 @@ func getObjectEndpointControlForticlientEms(d *schema.ResourceData) (*map[string
 	}
 
 	if v, ok := d.GetOk("listen_port"); ok {
-		t, err := expandEndpointControlForticlientEmsListenPort(d, v, "listen_port")
+
+		t, err := expandEndpointControlForticlientEmsListenPort(d, v, "listen_port", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -364,7 +369,8 @@ func getObjectEndpointControlForticlientEms(d *schema.ResourceData) (*map[string
 	}
 
 	if v, ok := d.GetOk("upload_port"); ok {
-		t, err := expandEndpointControlForticlientEmsUploadPort(d, v, "upload_port")
+
+		t, err := expandEndpointControlForticlientEmsUploadPort(d, v, "upload_port", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -373,7 +379,8 @@ func getObjectEndpointControlForticlientEms(d *schema.ResourceData) (*map[string
 	}
 
 	if v, ok := d.GetOk("rest_api_auth"); ok {
-		t, err := expandEndpointControlForticlientEmsRestApiAuth(d, v, "rest_api_auth")
+
+		t, err := expandEndpointControlForticlientEmsRestApiAuth(d, v, "rest_api_auth", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -382,7 +389,8 @@ func getObjectEndpointControlForticlientEms(d *schema.ResourceData) (*map[string
 	}
 
 	if v, ok := d.GetOk("https_port"); ok {
-		t, err := expandEndpointControlForticlientEmsHttpsPort(d, v, "https_port")
+
+		t, err := expandEndpointControlForticlientEmsHttpsPort(d, v, "https_port", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -391,7 +399,8 @@ func getObjectEndpointControlForticlientEms(d *schema.ResourceData) (*map[string
 	}
 
 	if v, ok := d.GetOk("admin_username"); ok {
-		t, err := expandEndpointControlForticlientEmsAdminUsername(d, v, "admin_username")
+
+		t, err := expandEndpointControlForticlientEmsAdminUsername(d, v, "admin_username", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -400,7 +409,8 @@ func getObjectEndpointControlForticlientEms(d *schema.ResourceData) (*map[string
 	}
 
 	if v, ok := d.GetOk("admin_password"); ok {
-		t, err := expandEndpointControlForticlientEmsAdminPassword(d, v, "admin_password")
+
+		t, err := expandEndpointControlForticlientEmsAdminPassword(d, v, "admin_password", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -409,7 +419,8 @@ func getObjectEndpointControlForticlientEms(d *schema.ResourceData) (*map[string
 	}
 
 	if v, ok := d.GetOk("admin_type"); ok {
-		t, err := expandEndpointControlForticlientEmsAdminType(d, v, "admin_type")
+
+		t, err := expandEndpointControlForticlientEmsAdminType(d, v, "admin_type", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
