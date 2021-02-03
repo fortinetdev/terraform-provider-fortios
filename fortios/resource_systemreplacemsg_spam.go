@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -58,7 +59,7 @@ func resourceSystemReplacemsgSpamCreate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemReplacemsgSpam(d)
+	obj, err := getObjectSystemReplacemsgSpam(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemReplacemsgSpam resource while getting object: %v", err)
 	}
@@ -83,7 +84,7 @@ func resourceSystemReplacemsgSpamUpdate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemReplacemsgSpam(d)
+	obj, err := getObjectSystemReplacemsgSpam(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemReplacemsgSpam resource while getting object: %v", err)
 	}
@@ -136,51 +137,51 @@ func resourceSystemReplacemsgSpamRead(d *schema.ResourceData, m interface{}) err
 		return nil
 	}
 
-	err = refreshObjectSystemReplacemsgSpam(d, o)
+	err = refreshObjectSystemReplacemsgSpam(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemReplacemsgSpam resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemReplacemsgSpamMsgType(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemReplacemsgSpamMsgType(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemReplacemsgSpamBuffer(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemReplacemsgSpamBuffer(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemReplacemsgSpamHeader(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemReplacemsgSpamHeader(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemReplacemsgSpamFormat(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemReplacemsgSpamFormat(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemReplacemsgSpam(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemReplacemsgSpam(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("msg_type", flattenSystemReplacemsgSpamMsgType(o["msg-type"], d, "msg_type")); err != nil {
+	if err = d.Set("msg_type", flattenSystemReplacemsgSpamMsgType(o["msg-type"], d, "msg_type", sv)); err != nil {
 		if !fortiAPIPatch(o["msg-type"]) {
 			return fmt.Errorf("Error reading msg_type: %v", err)
 		}
 	}
 
-	if err = d.Set("buffer", flattenSystemReplacemsgSpamBuffer(o["buffer"], d, "buffer")); err != nil {
+	if err = d.Set("buffer", flattenSystemReplacemsgSpamBuffer(o["buffer"], d, "buffer", sv)); err != nil {
 		if !fortiAPIPatch(o["buffer"]) {
 			return fmt.Errorf("Error reading buffer: %v", err)
 		}
 	}
 
-	if err = d.Set("header", flattenSystemReplacemsgSpamHeader(o["header"], d, "header")); err != nil {
+	if err = d.Set("header", flattenSystemReplacemsgSpamHeader(o["header"], d, "header", sv)); err != nil {
 		if !fortiAPIPatch(o["header"]) {
 			return fmt.Errorf("Error reading header: %v", err)
 		}
 	}
 
-	if err = d.Set("format", flattenSystemReplacemsgSpamFormat(o["format"], d, "format")); err != nil {
+	if err = d.Set("format", flattenSystemReplacemsgSpamFormat(o["format"], d, "format", sv)); err != nil {
 		if !fortiAPIPatch(o["format"]) {
 			return fmt.Errorf("Error reading format: %v", err)
 		}
@@ -192,30 +193,31 @@ func refreshObjectSystemReplacemsgSpam(d *schema.ResourceData, o map[string]inte
 func flattenSystemReplacemsgSpamFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemReplacemsgSpamMsgType(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemReplacemsgSpamMsgType(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemReplacemsgSpamBuffer(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemReplacemsgSpamBuffer(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemReplacemsgSpamHeader(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemReplacemsgSpamHeader(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemReplacemsgSpamFormat(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemReplacemsgSpamFormat(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemReplacemsgSpam(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemReplacemsgSpam(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("msg_type"); ok {
-		t, err := expandSystemReplacemsgSpamMsgType(d, v, "msg_type")
+
+		t, err := expandSystemReplacemsgSpamMsgType(d, v, "msg_type", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -224,7 +226,8 @@ func getObjectSystemReplacemsgSpam(d *schema.ResourceData) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("buffer"); ok {
-		t, err := expandSystemReplacemsgSpamBuffer(d, v, "buffer")
+
+		t, err := expandSystemReplacemsgSpamBuffer(d, v, "buffer", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -233,7 +236,8 @@ func getObjectSystemReplacemsgSpam(d *schema.ResourceData) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("header"); ok {
-		t, err := expandSystemReplacemsgSpamHeader(d, v, "header")
+
+		t, err := expandSystemReplacemsgSpamHeader(d, v, "header", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -242,7 +246,8 @@ func getObjectSystemReplacemsgSpam(d *schema.ResourceData) (*map[string]interfac
 	}
 
 	if v, ok := d.GetOk("format"); ok {
-		t, err := expandSystemReplacemsgSpamFormat(d, v, "format")
+
+		t, err := expandSystemReplacemsgSpamFormat(d, v, "format", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
