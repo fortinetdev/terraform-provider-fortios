@@ -11,7 +11,6 @@ Configure IPv6 BFD.
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `neighbor` - Configure neighbor of IPv6 BFD. The structure of `neighbor` block is documented below.
