@@ -24,11 +24,11 @@ resource "fortios_dlp_sensor" "trname" {
 
 ## Argument Reference
 
-
 The following arguments are supported:
 
 * `name` - (Required) Name of the DLP sensor.
 * `comment` - Comment.
+* `feature_set` - Flow/proxy feature set.
 * `replacemsg_group` - Replacement message group used by this DLP sensor.
 * `filter` - Set up DLP filters for this sensor. The structure of `filter` block is documented below.
 * `dlp_log` - Enable/disable DLP logging.
@@ -50,6 +50,7 @@ The `filter` block supports:
 * `filter_by` - Select the type of content to match.
 * `file_size` - Match files this size or larger (0 - 4294967295 kbytes).
 * `company_identifier` - Enter a company identifier watermark to match. Only watermarks that your company has placed on the files are matched.
+* `sensitivity` - Select a DLP file pattern sensitivity to match. The structure of `sensitivity` block is documented below.
 * `fp_sensitivity` - Select a DLP file pattern sensitivity to match. The structure of `fp_sensitivity` block is documented below.
 * `match_percentage` - Percentage of fingerprints in the fingerprint databases designated with the selected fp-sensitivity to match.
 * `file_type` - Select the number of a DLP file pattern table to match.
@@ -57,6 +58,10 @@ The `filter` block supports:
 * `archive` - Enable/disable DLP archiving.
 * `action` - Action to take with content that this DLP sensor matches.
 * `expiry` - Quarantine duration in days, hours, minutes format (dddhhmm).
+
+The `sensitivity` block supports:
+
+* `name` - Select a DLP sensitivity.
 
 The `fp_sensitivity` block supports:
 
