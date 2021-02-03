@@ -12,6 +12,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"strings"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/validation"
@@ -53,7 +54,7 @@ func resourceSystemSflowUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	obj, err := getObjectSystemSflow(d)
+	obj, err := getObjectSystemSflow(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSflow resource while getting object: %v", err)
 	}
@@ -106,41 +107,41 @@ func resourceSystemSflowRead(d *schema.ResourceData, m interface{}) error {
 		return nil
 	}
 
-	err = refreshObjectSystemSflow(d, o)
+	err = refreshObjectSystemSflow(d, o, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemSflow resource from API: %v", err)
 	}
 	return nil
 }
 
-func flattenSystemSflowCollectorIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSflowCollectorIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSflowCollectorPort(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSflowCollectorPort(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func flattenSystemSflowSourceIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+func flattenSystemSflowSourceIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
-func refreshObjectSystemSflow(d *schema.ResourceData, o map[string]interface{}) error {
+func refreshObjectSystemSflow(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
-	if err = d.Set("collector_ip", flattenSystemSflowCollectorIp(o["collector-ip"], d, "collector_ip")); err != nil {
+	if err = d.Set("collector_ip", flattenSystemSflowCollectorIp(o["collector-ip"], d, "collector_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["collector-ip"]) {
 			return fmt.Errorf("Error reading collector_ip: %v", err)
 		}
 	}
 
-	if err = d.Set("collector_port", flattenSystemSflowCollectorPort(o["collector-port"], d, "collector_port")); err != nil {
+	if err = d.Set("collector_port", flattenSystemSflowCollectorPort(o["collector-port"], d, "collector_port", sv)); err != nil {
 		if !fortiAPIPatch(o["collector-port"]) {
 			return fmt.Errorf("Error reading collector_port: %v", err)
 		}
 	}
 
-	if err = d.Set("source_ip", flattenSystemSflowSourceIp(o["source-ip"], d, "source_ip")); err != nil {
+	if err = d.Set("source_ip", flattenSystemSflowSourceIp(o["source-ip"], d, "source_ip", sv)); err != nil {
 		if !fortiAPIPatch(o["source-ip"]) {
 			return fmt.Errorf("Error reading source_ip: %v", err)
 		}
@@ -152,26 +153,27 @@ func refreshObjectSystemSflow(d *schema.ResourceData, o map[string]interface{}) 
 func flattenSystemSflowFortiTestDebug(d *schema.ResourceData, fosdebugsn int, fosdebugbeg int, fosdebugend int) {
 	log.Printf(strconv.Itoa(fosdebugsn))
 	e := validation.IntBetween(fosdebugbeg, fosdebugend)
-	log.Printf("ER List: %v", e)
+	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
-func expandSystemSflowCollectorIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSflowCollectorIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemSflowCollectorPort(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSflowCollectorPort(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func expandSystemSflowSourceIp(d *schema.ResourceData, v interface{}, pre string) (interface{}, error) {
+func expandSystemSflowSourceIp(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
-func getObjectSystemSflow(d *schema.ResourceData) (*map[string]interface{}, error) {
+func getObjectSystemSflow(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
 	if v, ok := d.GetOk("collector_ip"); ok {
-		t, err := expandSystemSflowCollectorIp(d, v, "collector_ip")
+
+		t, err := expandSystemSflowCollectorIp(d, v, "collector_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -180,7 +182,8 @@ func getObjectSystemSflow(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOkExists("collector_port"); ok {
-		t, err := expandSystemSflowCollectorPort(d, v, "collector_port")
+
+		t, err := expandSystemSflowCollectorPort(d, v, "collector_port", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
@@ -189,7 +192,8 @@ func getObjectSystemSflow(d *schema.ResourceData) (*map[string]interface{}, erro
 	}
 
 	if v, ok := d.GetOk("source_ip"); ok {
-		t, err := expandSystemSflowSourceIp(d, v, "source_ip")
+
+		t, err := expandSystemSflowSourceIp(d, v, "source_ip", sv)
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
