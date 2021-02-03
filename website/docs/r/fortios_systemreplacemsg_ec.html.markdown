@@ -7,10 +7,9 @@ description: |-
 ---
 
 # fortios_systemreplacemsg_ec
-Replacement messages.
+Replacement messages. Applies to FortiOS Version `<= 6.2.0`.
 
 ## Argument Reference
-
 
 The following arguments are supported:
 
