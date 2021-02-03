@@ -18,6 +18,7 @@ Use this data source to get information on an fortios firewall addrgrp
 The following attributes are exported:
 
 * `name` - Address group name.
+* `type` - Address group type.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `member` - Address objects contained within the group. The structure of `member` block is documented below.
 * `comment` - Comment.
