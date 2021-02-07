@@ -251,6 +251,7 @@ func (c *FmgSDKClient) Do(method string, params map[string]interface{}) (output 
 		Session: c.SessionString,//session,
 	}
 
+	log.Printf("shengh: %v\n", params)
 	output, err = c.Execute(req)
 	return
 }

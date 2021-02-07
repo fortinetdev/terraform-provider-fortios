@@ -37,7 +37,7 @@ func resourceFortimanagerFirewallSecurityPolicyPackage() *schema.Resource {
 			"vdom": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "root",
+				// Default:  "root",
 			},
 			"inspection_mode": &schema.Schema{
 				Type:     schema.TypeString,
