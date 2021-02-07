@@ -25,7 +25,7 @@ The following arguments are supported:
 * `name` - (Required) Security policy package name.
 * `target` - The installation target.
 * `adom` - Source ADOM name. default is 'root'
-* `vdom` - Vdom of managed device. default is 'root'
+* `vdom` - Vdom of managed device.
 * `inspection_mode` - Inspection Mode. Enum:[flow, proxy]. default is 'flow'
 
 ## Attributes Reference
