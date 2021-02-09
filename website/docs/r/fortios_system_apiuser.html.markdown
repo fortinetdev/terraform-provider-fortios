@@ -135,3 +135,62 @@ $ export "FORTIOS_IMPORT_TABLE"="true"
 $ terraform import fortios_system_apiuser.labelname {{name}}
 $ unset "FORTIOS_IMPORT_TABLE"
 ```
+
+
+## FortiGate terraform access using PKI group
+
+This part provides a basic guideline to access FortiGate using terraform with a PKI group when peer_auth and peer_group are set for the currently used api user.
+
+~> Applies to FortiOS Version `6.2.6+`, `6.4.3+` and `6.6.0+` only.
+
+### Example
+
+```hcl
+provider "fortios" {
+  hostname   = "192.168.52.177"
+  insecure   = "true"
+  token      = "GNH7r40H65GNb46kd4rG8rtrmn0fr1"
+
+  peerauth   = "enable"
+  clientcert = "client-cert.pem"
+  clientkey  = "client-key.pem"
+}
+
+resource "fortios_firewall_address" "trname" {
+  allow_routing        = "disable"
+  associated_interface = "port2"
+  color                = 3
+  end_ip               = "255.255.255.0"
+  name                 = "testaddress"
+  start_ip             = "22.1.1.0"
+  subnet               = "22.1.1.0 255.255.255.0"
+  type                 = "ipmask"
+  visibility           = "enable"
+}
+```
+
+### Argument Description
+
+The following arguments are supported in the `provider` block:
+
+* `peerauth` - Enable/disable peer authentication, can be `enable` or `disable`.
+
+* `cacert` - CA certtificate file. You can specify a path to the file, or you can specify it by the `FORTIOS_CA_CACERT` environment variable. It's optional when peerauth is set to enable.
+
+* `clientcert` - User certificate file. You can specify a path to the file, or you can specify it by the `FORTIOS_CA_CLIENTCERT` environment variable. It's required when peerauth is set to enable.
+
+* `clientkey` - User private key file. You can specify a path to the file, or you can specify it by the `FORTIOS_CA_CLIENTKEY` environment variable. It's required when peerauth is set to enable.
+
+
+### Environment variables
+
+You can provide your credentials via the `FORTIOS_CA_PEERAUTH`, `FORTIOS_CA_CACERT`, `FORTIOS_CA_CLIENTCERT` and `FORTIOS_CA_CLIENTKEY` environment variables. Note that setting your FortiOS credentials using static credentials variables will override the environment variables.
+
+Usage:
+
+```shell
+$ export "FORTIOS_CA_PEERAUTH"="enable"
+$ export "FORTIOS_CA_CACERT"=""
+$ export "FORTIOS_CA_CLIENTCERT"="client-cert.pem"
+$ export "FORTIOS_CA_CLIENTKEY"="client-key.pem"
+```

@@ -27,6 +27,11 @@ type Config struct {
 	FMG_Passwd   string
 	FMG_Insecure *bool
 	FMG_CABundle string
+
+	PeerAuth   string
+	CaCert     string
+	ClientCert string
+	ClientKey  string
 }
 
 // FortiClient contains the basic FortiOS SDK connection information to FortiOS
@@ -94,7 +99,7 @@ func bFortiManagerHostnameExist(c *Config) bool {
 func createFortiOSClient(fClient *FortiClient, c *Config) error {
 	config := &tls.Config{}
 
-	auth := auth.NewAuth(c.Hostname, c.Token, c.CABundle, c.Vdom)
+	auth := auth.NewAuth(c.Hostname, c.Token, c.CABundle, c.PeerAuth, c.CaCert, c.ClientCert, c.ClientKey, c.Vdom)
 
 	if auth.Hostname == "" {
 		_, err := auth.GetEnvHostname()
@@ -114,6 +119,33 @@ func createFortiOSClient(fClient *FortiClient, c *Config) error {
 		auth.GetEnvCABundle()
 	}
 
+	if auth.PeerAuth == "" {
+		_, err := auth.GetEnvPeerAuth()
+		if err != nil {
+			return fmt.Errorf("Error reading PeerAuth")
+		}
+	}
+	if auth.CaCert == "" {
+		_, err := auth.GetEnvCaCert()
+		if err != nil {
+			return fmt.Errorf("Error reading CaCert")
+		}
+	}
+	if auth.ClientCert == "" {
+		_, err := auth.GetEnvClientCert()
+		if err != nil {
+			return fmt.Errorf("Error reading ClientCert")
+		}
+	}
+	if auth.ClientKey == "" {
+		_, err := auth.GetEnvClientKey()
+		if err != nil {
+			return fmt.Errorf("Error reading ClientKey")
+		}
+	}
+
+	pool := x509.NewCertPool()
+
 	if auth.CABundle != "" {
 		f, err := os.Open(auth.CABundle)
 		if err != nil {
@@ -126,11 +158,37 @@ func createFortiOSClient(fClient *FortiClient, c *Config) error {
 			return fmt.Errorf("Error reading CA Bundle: %v", err)
 		}
 
-		pool := x509.NewCertPool()
 		if !pool.AppendCertsFromPEM([]byte(caBundle)) {
 			return fmt.Errorf("Error reading CA Bundle")
 		}
 		config.RootCAs = pool
+	}
+
+	if auth.PeerAuth == "enable" {
+		if auth.CaCert != "" {
+			caCertFile := auth.CaCert
+			caCert, err := ioutil.ReadFile(caCertFile)
+			if err != nil {
+				return fmt.Errorf("client ioutil.ReadFile couldn't load cacert file: %v", err)
+			}
+
+			pool.AppendCertsFromPEM(caCert)
+		}
+
+		if auth.ClientCert == "" {
+			return fmt.Errorf("User Cert file doesn't exist!")
+		}
+
+		if auth.ClientKey == "" {
+			return fmt.Errorf("User Key file doesn't exist!")
+		}
+
+		clientCert, err := tls.LoadX509KeyPair(auth.ClientCert, auth.ClientKey)
+		if err != nil {
+			return fmt.Errorf("Client ioutil.ReadFile couldn't load clientCert/clientKey file: %v", err)
+		}
+
+		config.Certificates = []tls.Certificate{clientCert}
 	}
 
 	if c.Insecure == nil {

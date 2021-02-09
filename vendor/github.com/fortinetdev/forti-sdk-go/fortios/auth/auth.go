@@ -13,15 +13,25 @@ type Auth struct {
 	Vdom     string
 	Insecure *bool
 	Refresh  bool
+
+	PeerAuth string
+	CaCert string
+	ClientCert string
+	ClientKey string
 }
 
 // NewAuth inits Auth object with the given metadata
-func NewAuth(hostname string, token string, cabundle string, vdom string) *Auth {
+func NewAuth(hostname, token, cabundle, peerauth, cacert, clientcert, clientkey, vdom string) *Auth {
 	return &Auth{
 		Hostname: hostname,
 		Token:    token,
 		CABundle: cabundle,
 		Vdom:     vdom,
+
+		PeerAuth:   peerauth,
+		CaCert:     cacert,
+		ClientCert: clientcert,
+		ClientKey:  clientkey,
 	}
 }
 
@@ -77,4 +87,61 @@ func (m *Auth) GetEnvInsecure() (bool, error) {
 	}
 
 	return false, nil
+}
+
+//////////////////////////////////////////////////////////////////////
+// GetEnvPeerAuth gets PeerAuth from OS environment
+// It returns the PeerAuth value
+func (m *Auth) GetEnvPeerAuth() (string, error) {
+	c := os.Getenv("FORTIOS_CA_PEERAUTH")
+
+	if c == "" {
+		return c, nil
+	}
+
+	m.PeerAuth = c
+
+	return c, nil
+}
+
+// GetEnvCaCert gets Peer Auth Ca Cert file from OS environment
+// It returns the Ca Cert file file
+func (m *Auth) GetEnvCaCert() (string, error) {
+	c := os.Getenv("FORTIOS_CA_CACERT")
+
+	if c == "" {
+		return c, nil
+	}
+
+	m.CaCert = c
+
+	return c, nil
+}
+
+// GetEnvClientCert gets Peer Auth User Cert file from OS environment
+// It returns the User Cert file
+func (m *Auth) GetEnvClientCert() (string, error) {
+	c := os.Getenv("FORTIOS_CA_CLIENTCERT")
+
+	if c == "" {
+		return c, nil
+	}
+
+	m.ClientCert = c
+
+	return c, nil
+}
+
+// GetEnvClientKey gets Peer Auth User Key file from OS environment
+// It returns the User Key file
+func (m *Auth) GetEnvClientKey() (string, error) {
+	c := os.Getenv("FORTIOS_CA_CLIENTKEY")
+
+	if c == "" {
+		return c, nil
+	}
+
+	m.ClientKey = c
+
+	return c, nil
 }

@@ -44,6 +44,34 @@ func Provider() terraform.ResourceProvider {
 				Description: "CA Bundle file",
 			},
 
+			"peerauth": {
+				Type:        schema.TypeString,
+				Optional:    true,
+				Default:     "disable",
+				Description: "Enable/disable peer authentication, can be 'enable' or 'disable'",
+			},
+
+			"cacert": {
+				Type:        schema.TypeString,
+				Optional:    true,
+				Default:     "",
+				Description: "CA certtificate(Optional)",
+			},
+
+			"clientcert": {
+				Type:        schema.TypeString,
+				Optional:    true,
+				Default:     "",
+				Description: "User certificate",
+			},
+
+			"clientkey": {
+				Type:        schema.TypeString,
+				Optional:    true,
+				Default:     "",
+				Description: "User private key",
+			},
+
 			"vdom": &schema.Schema{
 				Type:        schema.TypeString,
 				Optional:    true,
@@ -922,6 +950,11 @@ func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 		FMG_CABundle: d.Get("fmg_cabundlefile").(string),
 		FMG_Username: d.Get("fmg_username").(string),
 		FMG_Passwd:   d.Get("fmg_passwd").(string),
+
+		PeerAuth:   d.Get("peerauth").(string),
+		CaCert:     d.Get("cacert").(string),
+		ClientCert: d.Get("clientcert").(string),
+		ClientKey:  d.Get("clientkey").(string),
 	}
 
 	v1, ok1 := d.GetOkExists("insecure")
