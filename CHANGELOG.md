@@ -1,4 +1,12 @@
-## 1.10.0 (Unreleased)
+## 1.11.0 (Unreleased)
+
+## 1.10.0 (Feb 10, 2021)
+
+FEATURES:
+
+* Support FortiGate terraform access using PKI group
+* Support fmg_firewall_security_policy for FMG 6.4
+* Support force_recreate for fortios_json_generic_api
 
 ## 1.9.0 (Feb 3, 2021)
 
