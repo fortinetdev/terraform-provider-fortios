@@ -28,6 +28,11 @@ func resourceJSONGenericAPI() *schema.Resource {
 				Type:     schema.TypeString,
 				Optional: true,
 			},
+			"force_recreate": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"json": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
