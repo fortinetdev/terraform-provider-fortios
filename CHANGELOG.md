@@ -1,5 +1,11 @@
 ## 1.11.0 (Unreleased)
 
+## 1.10.1 (Feb 10, 2021)
+
+BUG FIXES:
+
+* Resync
+
 ## 1.10.0 (Feb 10, 2021)
 
 FEATURES:
