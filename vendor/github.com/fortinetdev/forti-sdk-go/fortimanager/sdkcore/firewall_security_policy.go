@@ -18,14 +18,16 @@ type JSONFirewallSecurityPolicy struct {
 	DstIntf              []string `json:"dstintf"`
 	Service              []string `json:"service"`
 	Schedule             []string `json:"schedule"`
-	InternetService      string   `json:"internet-service"`
-	InternetServiceID    []string `json:"internet-service-id"`
-	InternetServiceSrc   string   `json:"internet-service-src"`
-	InternetServiceSrcID []string `json:"internet-service-src-id"`
+	InternetService      string   `json:"internet-service,omitempty"`
+	InternetServiceID    []string `json:"internet-service-id,omitempty"`
+	InternetServiceName    []string `json:"internet-service-name,omitempty"`
+	InternetServiceSrc   string   `json:"internet-service-src,omitempty"`
+	InternetServiceSrcID []string `json:"internet-service-src-id,omitempty"`
+	InternetServiceSrcName []string `json:"internet-service-src-name,omitempty"`
 	Users                []string `json:"users"`
 	Groups               []string `json:"groups"`
-	Fsso                 string   `json:"fsso"`
-	Rsso                 string   `json:"rsso"`
+	Fsso                 string   `json:"fsso,omitempty"`
+	Rsso                 string   `json:"rsso,omitempty"`
 	Logtraffic           string   `json:"logtraffic"`
 	LogtrafficStart      string   `json:"logtraffic-start"`
 	CapturePacket        string   `json:"capture-packet"`
@@ -180,6 +182,12 @@ func (c *FmgSDKClient) ReadFirewallSecurityPolicy(adom, id, pkg_name string) (ou
 			out.InternetServiceID = append(out.InternetServiceID, m[i])
 		}
 	}
+	if data["internet-service-name"] != nil {
+		m := util.InterfaceArray2StrArray(data["internet-service-name"].([]interface{}))
+		for i := 0; i < len(m); i++ {
+			out.InternetServiceName = append(out.InternetServiceName, m[i])
+		}
+	}
 	if data["internet-service-src"] != nil {
 		out.InternetServiceSrc = util.ControlSwitch2Str(int(data["internet-service-src"].(float64)))
 	}
@@ -187,6 +195,12 @@ func (c *FmgSDKClient) ReadFirewallSecurityPolicy(adom, id, pkg_name string) (ou
 		m := util.InterfaceArray2StrArray(data["internet-service-src-id"].([]interface{}))
 		for i := 0; i < len(m); i++ {
 			out.InternetServiceSrcID = append(out.InternetServiceSrcID, m[i])
+		}
+	}
+	if data["internet-service-src-name"] != nil {
+		m := util.InterfaceArray2StrArray(data["internet-service-src-name"].([]interface{}))
+		for i := 0; i < len(m); i++ {
+			out.InternetServiceSrcName = append(out.InternetServiceSrcName, m[i])
 		}
 	}
 	if data["users"] != nil {

@@ -84,12 +84,20 @@ func resourceFortimanagerFirewallSecurityPolicy() *schema.Resource {
 			"internet_service": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "disable",
-				ValidateFunc: validation.StringInSlice([]string{
-					"disable", "enable",
-				}, false),
+				Computed: true,
+				// Default:  "disable",
+				// ValidateFunc: validation.StringInSlice([]string{
+				// 	"disable", "enable",
+				// }, false),
 			},
 			"internet_service_id": &schema.Schema{
+				Type: schema.TypeList,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
+				Optional: true,
+			},
+			"internet_service_name": &schema.Schema{
 				Type: schema.TypeList,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
@@ -99,12 +107,20 @@ func resourceFortimanagerFirewallSecurityPolicy() *schema.Resource {
 			"internet_service_src": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "disable",
-				ValidateFunc: validation.StringInSlice([]string{
-					"disable", "enable",
-				}, false),
+				Computed: true,
+				// Default:  "disable",
+				// ValidateFunc: validation.StringInSlice([]string{
+				// 	"disable", "enable",
+				// }, false),
 			},
 			"internet_service_src_id": &schema.Schema{
+				Type: schema.TypeList,
+				Elem: &schema.Schema{
+					Type: schema.TypeString,
+				},
+				Optional: true,
+			},
+			"internet_service_src_name": &schema.Schema{
 				Type: schema.TypeList,
 				Elem: &schema.Schema{
 					Type: schema.TypeString,
@@ -128,18 +144,18 @@ func resourceFortimanagerFirewallSecurityPolicy() *schema.Resource {
 			"fsso": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "disable",
-				ValidateFunc: validation.StringInSlice([]string{
-					"disable", "enable",
-				}, false),
+				// Default:  "disable",
+				// ValidateFunc: validation.StringInSlice([]string{
+				// 	"disable", "enable",
+				// }, false),
 			},
 			"rsso": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
-				Default:  "disable",
-				ValidateFunc: validation.StringInSlice([]string{
-					"disable", "enable",
-				}, false),
+				// Default:  "disable",
+				// ValidateFunc: validation.StringInSlice([]string{
+				// 	"disable", "enable",
+				// }, false),
 			},
 			"logtraffic": &schema.Schema{
 				Type:     schema.TypeString,
@@ -333,8 +349,10 @@ func createFMGFirewallSecurityPolicy(d *schema.ResourceData, m interface{}) erro
 		Schedule:               util.InterfaceArray2StrArray(d.Get("schedule").([]interface{})),
 		InternetService:        d.Get("internet_service").(string),
 		InternetServiceID:      util.InterfaceArray2StrArray(d.Get("internet_service_id").([]interface{})),
+		InternetServiceName:    util.InterfaceArray2StrArray(d.Get("internet_service_name").([]interface{})),
 		InternetServiceSrc:     d.Get("internet_service_src").(string),
 		InternetServiceSrcID:   util.InterfaceArray2StrArray(d.Get("internet_service_src_id").([]interface{})),
+		InternetServiceSrcName: util.InterfaceArray2StrArray(d.Get("internet_service_src_name").([]interface{})),
 		Users:                  util.InterfaceArray2StrArray(d.Get("users").([]interface{})),
 		Groups:                 util.InterfaceArray2StrArray(d.Get("groups").([]interface{})),
 		Rsso:                   d.Get("rsso").(string),
@@ -493,8 +511,10 @@ func updateFMGFirewallSecurityPolicy(d *schema.ResourceData, m interface{}) erro
 		Schedule:               util.InterfaceArray2StrArray(d.Get("schedule").([]interface{})),
 		InternetService:        d.Get("internet_service").(string),
 		InternetServiceID:      util.InterfaceArray2StrArray(d.Get("internet_service_id").([]interface{})),
+		InternetServiceName:    util.InterfaceArray2StrArray(d.Get("internet_service_name").([]interface{})),
 		InternetServiceSrc:     d.Get("internet_service_src").(string),
 		InternetServiceSrcID:   util.InterfaceArray2StrArray(d.Get("internet_service_src_id").([]interface{})),
+		InternetServiceSrcName: util.InterfaceArray2StrArray(d.Get("internet_service_src_name").([]interface{})),
 		Users:                  util.InterfaceArray2StrArray(d.Get("users").([]interface{})),
 		Groups:                 util.InterfaceArray2StrArray(d.Get("groups").([]interface{})),
 		Rsso:                   d.Get("rsso").(string),

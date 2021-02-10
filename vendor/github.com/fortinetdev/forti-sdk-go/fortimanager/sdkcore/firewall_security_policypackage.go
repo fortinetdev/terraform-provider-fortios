@@ -24,16 +24,27 @@ type JSONFirewallSecurityPolicyPackage struct {
 func (c *FmgSDKClient) CreateUpdateFirewallSecurityPolicyPackage(params *JSONFirewallSecurityPolicyPackage, method, adom string) (err error) {
 	defer c.Trace("CreateUpdateFirewallSecurityPolicyPackage")()
 
+
 	d := map[string]interface{}{
 		"name": params.Name,
-		"scope member": map[string]string{
-			"name": params.Target,
-			"vdom": params.Vdom,
-		},
 		"package settings": map[string]string{
 			"inspection-mode": params.InspectionMode,
 		},
 		"type": "pkg",
+	}
+
+	v := make(map[string]string)
+
+	if params.Target != "" {
+		v["name"] = params.Target
+	}
+
+	if params.Vdom != "" {
+		v["vdom"] = params.Vdom
+	}
+
+	if params.Target != "" || params.Vdom != "" {
+		d["scope member"] = v
 	}
 
 	p := map[string]interface{}{
@@ -104,9 +115,11 @@ func (c *FmgSDKClient) ReadFirewallSecurityPolicyPackage(adom, name string) (out
 		out.Name = data["name"].(string)
 	}
 
-	sm := (data["scope member"].([]interface{}))[0].(map[string]interface{})
-	if sm["name"] != nil {
-		out.Target = sm["name"].(string)
+	if data["scope member"] != nil {
+		sm := (data["scope member"].([]interface{}))[0].(map[string]interface{})
+		if sm["name"] != nil {
+			out.Target = sm["name"].(string)
+		}
 	}
 
 	ps := data["package settings"].(map[string]interface{})

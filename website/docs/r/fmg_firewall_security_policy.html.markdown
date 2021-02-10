@@ -22,20 +22,14 @@ resource "fortios_fmg_firewall_security_policy" "test1" {
   service              = ["ALL"]
   action               = "accept"
   schedule             = ["always"]
-  internet_service     = "enable"
-  internet_service_id  = ["Alibaba.Web", "AOL.Web"]
-  internet_service_src = "disable"
   users                = ["guest"]
   groups               = ["Guest-group"]
-  rsso                 = "disable"
-  fsso                 = "enable"
   logtraffic           = "all"
   logtraffic_start     = "enable"
   capture_packet       = "enable"
   nat                  = "enable"
-  ippool               = "enable"
+  ippool               = "disable"
   fixedport            = "enable"
-  poolname             = ["test1"]
   utm_status           = "enable"
   profile_type         = "single"
   av_profile           = ["g-default"]
@@ -105,8 +99,10 @@ The following attributes are exported:
 * `schedule` - Schedule name.
 * `internet_service` - Enable/disable use of Destination Internet Services for this policy.
 * `internet_service_id` - Destination Internet Service ID.
+* `internet_service_name` - Destination Internet Service Name.
 * `internet_service_src` - Enable/disable use of Source Internet Services for this policy.
 * `internet_service_src_id` - Source Internet Service ID.
+* `internet_service_src_name` - Source Internet Service Name.
 * `users` - Names of individual users that can authenticate with this policy.
 * `groups` - Names of user groups that can authenticate with this policy.
 * `fsso` - Enable/disable Fortinet Single Sign-On.
