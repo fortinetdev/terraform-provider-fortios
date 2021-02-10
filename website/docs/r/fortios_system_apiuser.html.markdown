@@ -147,13 +147,14 @@ This part provides a basic guideline to access FortiGate using terraform with a 
 
 ```hcl
 provider "fortios" {
-  hostname   = "192.168.52.177"
-  insecure   = "true"
-  token      = "GNH7r40H65GNb46kd4rG8rtrmn0fr1"
+  hostname     = "myfirewall"
+  insecure     = "false"
+  cabundlefile = "server.crt"
+  token        = "GNH7r40H65GNb46kd4rG8rtrmn0fr1"
 
-  peerauth   = "enable"
-  clientcert = "client-cert.pem"
-  clientkey  = "client-key.pem"
+  peerauth     = "enable"
+  clientcert   = "client-cert.pem"
+  clientkey    = "client-key.pem"
 }
 
 resource "fortios_firewall_address" "trname" {

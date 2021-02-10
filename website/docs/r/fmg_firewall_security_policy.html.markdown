@@ -53,8 +53,10 @@ The following arguments are supported:
 * `schedule` - (Required) Schedule name.
 * `internet_service` - Enable/disable use of Destination Internet Services for this policy.
 * `internet_service_id` - Destination Internet Service ID.
+* `internet_service_name` - Destination Internet Service Name.
 * `internet_service_src` - Enable/disable use of Source Internet Services for this policy.
 * `internet_service_src_id` - Source Internet Service ID.
+* `internet_service_src_name` - Source Internet Service Name.
 * `users` - Names of individual users that can authenticate with this policy.
 * `groups` - Names of user groups that can authenticate with this policy.
 * `fsso` - Enable/disable Fortinet Single Sign-On.
