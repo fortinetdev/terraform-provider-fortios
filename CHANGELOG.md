@@ -1,5 +1,11 @@
 ## 1.11.0 (Unreleased)
 
+## 1.10.2 (Feb 11, 2021)
+
+IMPROVEMENTS:
+
+* Add buildURLWithoutVdom
+
 ## 1.10.1 (Feb 10, 2021)
 
 BUG FIXES:
