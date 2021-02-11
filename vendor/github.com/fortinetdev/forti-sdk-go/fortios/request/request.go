@@ -52,18 +52,23 @@ func New(c config.Config, method string, path string, params interface{}, data *
 // Send request data to FortiOS.
 // If errors are encountered, it returns the error.
 func (r *Request) Send() error {
-	return r.Send2(15)
+	return r.Send2(15, false)
 }
 
 
-func (r *Request) Send2(retries int) error {
+func (r *Request) Send2(retries int, ignvdom bool) error {
 	//Build FortiOS
 	//build Sign/Login INfo
 
 	//httpReq.URL, err = url.Parse(clientInfo.Endpoint + operation.HTTPPath)
 
 	r.HTTPRequest.Header.Set("Content-Type", "application/json")
-	u := buildURL(r)
+	u := ""
+	if ignvdom == true {
+		u = buildURLWithoutVdom(r)
+	} else {
+		u = buildURL(r)
+	}
 
 	var err error
 	r.HTTPRequest.URL, err = url.Parse(u)
@@ -98,6 +103,18 @@ func (r *Request) Send2(retries int) error {
 	}
 
 	return err
+}
+
+func buildURLWithoutVdom(r *Request) string {
+	u := "https://"
+	u += r.Config.FwTarget
+	u += r.Path
+	u += "?"
+
+	u += "access_token="
+	u += r.Config.Auth.Token
+
+	return u
 }
 
 func buildURL(r *Request) string {

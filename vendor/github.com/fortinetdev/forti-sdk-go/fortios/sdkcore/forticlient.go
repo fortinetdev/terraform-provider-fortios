@@ -85,7 +85,7 @@ func (c *FortiSDKClient) GetDeviceVersion() (version string, err error) {
 	path := "/api/v2/cmdb/system/global"
 
 	req := c.NewRequest(HTTPMethod, path, nil, nil)
-	err = req.Send2(2)
+	err = req.Send2(2, true)
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request, %s", err)
 		return "", err
@@ -121,7 +121,7 @@ func (c *FortiSDKClient) GetDeviceVersion() (version string, err error) {
 
 		return result["version"].(string), err
 	}
-	
+
 	return "", err
 }
 
