@@ -15,12 +15,12 @@ Filter results of the list type datasources.
 
 The following filter operators are supported:
 
-* `==` - Pattern must be identical to the value.
-* `=*` - Pattern must be identical to the value.
-* `!=` - Pattern does not match the value.
-* `!*` - Pattern does not match the value.
-* `=@` - Pattern found within value.
-* `!@` - Pattern not found within value.
+* `==` - Pattern must be identical to the value, case-sensitive.
+* `=*` - Pattern must be identical to the value, case-insensitive.
+* `!=` - Pattern does not match the value, case-sensitive.
+* `!*` - Pattern does not match the value, case-insensitive.
+* `=@` - Pattern found within value, case-insensitive.
+* `!@` - Pattern not found within value, case-insensitive.
 * `<=` - Value must be less than or equal to pattern.
 * `<` - Value must be less than pattern.
 * `>=` - Value must be greater than or equal to pattern.
