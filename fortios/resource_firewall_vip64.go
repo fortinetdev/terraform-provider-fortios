@@ -465,7 +465,7 @@ func flattenFirewallVip64Realservers(v interface{}, d *schema.ResourceData, pre 
 			v := flattenFirewallVip64RealserversMonitor(i["monitor"], d, pre_append, sv)
 			vx := ""
 			bstring := false
-			if i2ss2arrFortiAPIUpgrade(sv, "6.6.0") == true {
+			if i2ss2arrFortiAPIUpgrade(sv, "7.0.0") == true {
 				l := v.([]interface{})
 				if len(l) > 0 {
 					for k, r := range l {
@@ -892,7 +892,7 @@ func expandFirewallVip64Realservers(d *schema.ResourceData, v interface{}, pre s
 			bstring := false
 			t, _ := expandFirewallVip64RealserversMonitor(d, i["monitor"], pre_append, sv)
 			if t != nil {
-				if i2ss2arrFortiAPIUpgrade(sv, "6.6.0") == true {
+				if i2ss2arrFortiAPIUpgrade(sv, "7.0.0") == true {
 					bstring = true
 				}
 			}

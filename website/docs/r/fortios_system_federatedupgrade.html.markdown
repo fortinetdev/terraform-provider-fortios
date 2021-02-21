@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_system_federatedupgrade
-Coordinate federated upgrades within the Security Fabric. Applies to FortiOS Version `>= 6.6.0`.
+Coordinate federated upgrades within the Security Fabric. Applies to FortiOS Version `>= 7.0.0`.
 
 ## Argument Reference
 

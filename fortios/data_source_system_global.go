@@ -209,10 +209,6 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"vdom_mode": &schema.Schema{
-				Type:     schema.TypeString,
-				Computed: true,
-			},
 			"gui_allow_default_hostname": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -857,6 +853,10 @@ func dataSourceSystemGlobal() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
+			"vdom_mode": &schema.Schema{
+				Type:     schema.TypeString,
+				Computed: true,
+			},
 		},
 	}
 }
@@ -1072,10 +1072,6 @@ func dataSourceFlattenSystemGlobalManagementVdom(v interface{}, d *schema.Resour
 }
 
 func dataSourceFlattenSystemGlobalHostname(v interface{}, d *schema.ResourceData, pre string) interface{} {
-	return v
-}
-
-func dataSourceFlattenSystemGlobalVdomMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
 	return v
 }
 
@@ -1730,6 +1726,10 @@ func dataSourceFlattenSystemGlobalFortiipamIntegration(v interface{}, d *schema.
 	return v
 }
 
+func dataSourceFlattenSystemGlobalVdomMode(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	return v
+}
+
 func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{}) error {
 	var err error
 
@@ -2012,12 +2012,6 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("hostname", dataSourceFlattenSystemGlobalHostname(o["hostname"], d, "hostname")); err != nil {
 		if !fortiAPIPatch(o["hostname"]) {
 			return fmt.Errorf("Error reading hostname: %v", err)
-		}
-	}
-
-	if err = d.Set("vdom_mode", dataSourceFlattenSystemGlobalVdomMode(o["vdom-mode"], d, "vdom_mode")); err != nil {
-		if !fortiAPIPatch(o["vdom-mode"]) {
-			return fmt.Errorf("Error reading vdom_mode: %v", err)
 		}
 	}
 
@@ -2984,6 +2978,12 @@ func dataSourceRefreshObjectSystemGlobal(d *schema.ResourceData, o map[string]in
 	if err = d.Set("fortiipam_integration", dataSourceFlattenSystemGlobalFortiipamIntegration(o["fortiipam-integration"], d, "fortiipam_integration")); err != nil {
 		if !fortiAPIPatch(o["fortiipam-integration"]) {
 			return fmt.Errorf("Error reading fortiipam_integration: %v", err)
+		}
+	}
+
+	if err = d.Set("vdom_mode", dataSourceFlattenSystemGlobalVdomMode(o["vdom-mode"], d, "vdom_mode")); err != nil {
+		if !fortiAPIPatch(o["vdom-mode"]) {
+			return fmt.Errorf("Error reading vdom_mode: %v", err)
 		}
 	}
 

@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_emailfilter_blockallowlist
-Configure anti-spam block/allow list. Applies to FortiOS Version `>= 6.6.0`.
+Configure anti-spam block/allow list. Applies to FortiOS Version `>= 7.0.0`.
 
 ## Argument Reference
 

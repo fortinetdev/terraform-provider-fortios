@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_system_speedtestschedule
-Speed test schedule for each interface. Applies to FortiOS Version `>= 6.6.0`.
+Speed test schedule for each interface. Applies to FortiOS Version `>= 7.0.0`.
 
 ## Argument Reference
 

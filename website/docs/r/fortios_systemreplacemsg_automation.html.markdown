@@ -7,7 +7,7 @@ description: |-
 ---
 
 # fortios_systemreplacemsg_automation
-Replacement messages. Applies to FortiOS Version `>= 6.6.0`.
+Replacement messages. Applies to FortiOS Version `>= 7.0.0`.
 
 ## Argument Reference
 

@@ -141,7 +141,7 @@ $ unset "FORTIOS_IMPORT_TABLE"
 
 This part provides a basic guideline to access FortiGate using terraform with a PKI group when peer_auth and peer_group are set for the currently used api user.
 
-~> Applies to FortiOS Version `6.2.6+`, `6.4.3+` and `6.6.0+` only.
+~> Applies to FortiOS Version `6.2.6+`, `6.4.3+` and `7.0.0+` only.
 
 ### Example
 

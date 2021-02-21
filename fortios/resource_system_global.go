@@ -278,12 +278,6 @@ func resourceSystemGlobal() *schema.Resource {
 				Optional:     true,
 				Computed:     true,
 			},
-			"vdom_mode": &schema.Schema{
-				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 200),
-				Optional:     true,
-				Computed:     true,
-			},
 			"gui_allow_default_hostname": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -1152,6 +1146,12 @@ func resourceSystemGlobal() *schema.Resource {
 				Optional: true,
 				Computed: true,
 			},
+			"vdom_mode": &schema.Schema{
+				Type:         schema.TypeString,
+				ValidateFunc: validation.StringLenBetween(0, 200),
+				Optional:     true,
+				Computed:     true,
+			},
 		},
 	}
 }
@@ -1406,10 +1406,6 @@ func flattenSystemGlobalManagementVdom(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenSystemGlobalHostname(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return v
-}
-
-func flattenSystemGlobalVdomMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
@@ -2064,6 +2060,10 @@ func flattenSystemGlobalFortiipamIntegration(v interface{}, d *schema.ResourceDa
 	return v
 }
 
+func flattenSystemGlobalVdomMode(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
 
@@ -2346,12 +2346,6 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 	if err = d.Set("hostname", flattenSystemGlobalHostname(o["hostname"], d, "hostname", sv)); err != nil {
 		if !fortiAPIPatch(o["hostname"]) {
 			return fmt.Errorf("Error reading hostname: %v", err)
-		}
-	}
-
-	if err = d.Set("vdom_mode", flattenSystemGlobalVdomMode(o["vdom-mode"], d, "vdom_mode", sv)); err != nil {
-		if !fortiAPIPatch(o["vdom-mode"]) {
-			return fmt.Errorf("Error reading vdom_mode: %v", err)
 		}
 	}
 
@@ -3321,6 +3315,12 @@ func refreshObjectSystemGlobal(d *schema.ResourceData, o map[string]interface{},
 		}
 	}
 
+	if err = d.Set("vdom_mode", flattenSystemGlobalVdomMode(o["vdom-mode"], d, "vdom_mode", sv)); err != nil {
+		if !fortiAPIPatch(o["vdom-mode"]) {
+			return fmt.Errorf("Error reading vdom_mode: %v", err)
+		}
+	}
+
 	return nil
 }
 
@@ -3515,10 +3515,6 @@ func expandSystemGlobalManagementVdom(d *schema.ResourceData, v interface{}, pre
 }
 
 func expandSystemGlobalHostname(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
-	return v, nil
-}
-
-func expandSystemGlobalVdomMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
 
@@ -4166,6 +4162,10 @@ func expandSystemGlobalFortiipamIntegration(d *schema.ResourceData, v interface{
 	return v, nil
 }
 
+func expandSystemGlobalVdomMode(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func getObjectSystemGlobal(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
 
@@ -4636,16 +4636,6 @@ func getObjectSystemGlobal(d *schema.ResourceData, sv string) (*map[string]inter
 			return &obj, err
 		} else if t != nil {
 			obj["hostname"] = t
-		}
-	}
-
-	if v, ok := d.GetOk("vdom_mode"); ok {
-
-		t, err := expandSystemGlobalVdomMode(d, v, "vdom_mode", sv)
-		if err != nil {
-			return &obj, err
-		} else if t != nil {
-			obj["vdom-mode"] = t
 		}
 	}
 
@@ -6256,6 +6246,16 @@ func getObjectSystemGlobal(d *schema.ResourceData, sv string) (*map[string]inter
 			return &obj, err
 		} else if t != nil {
 			obj["fortiipam-integration"] = t
+		}
+	}
+
+	if v, ok := d.GetOk("vdom_mode"); ok {
+
+		t, err := expandSystemGlobalVdomMode(d, v, "vdom_mode", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["vdom-mode"] = t
 		}
 	}
 

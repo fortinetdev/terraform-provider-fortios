@@ -196,7 +196,7 @@ func refreshObjectUserKrbKeytab(d *schema.ResourceData, o map[string]interface{}
 		v := flattenUserKrbKeytabLdapServer(o["ldap-server"], d, "ldap_server", sv)
 		vx := ""
 		bstring := false
-		if i2ss2arrFortiAPIUpgrade(sv, "6.6.0") == true {
+		if i2ss2arrFortiAPIUpgrade(sv, "7.0.0") == true {
 			l := v.([]interface{})
 			if len(l) > 0 {
 				for k, r := range l {
@@ -296,7 +296,7 @@ func getObjectUserKrbKeytab(d *schema.ResourceData, sv string) (*map[string]inte
 		if err != nil {
 			return &obj, err
 		} else if t != nil {
-			if i2ss2arrFortiAPIUpgrade(sv, "6.6.0") == true {
+			if i2ss2arrFortiAPIUpgrade(sv, "7.0.0") == true {
 				vx := fmt.Sprintf("%v", t)
 				vx = strings.Replace(vx, "\"", "", -1)
 				vxx := strings.Split(vx, " ")

@@ -75,7 +75,6 @@ The following attributes are exported:
 * `revision_backup_on_logout` - Enable/disable back-up of the latest configuration revision when an administrator logs out of the CLI or GUI.
 * `management_vdom` - Management virtual domain name.
 * `hostname` - FortiGate unit's hostname. Most models will truncate names longer than 24 characters. Some models support hostnames up to 35 characters.
-* `vdom_mode` - Enable/disable support for split/multiple virtual domains (VDOMs). no-vdom:Disable split/multiple VDOMs mode. split-vdom:Enable split VDOMs mode. multi-vdom:Enable multiple VDOMs mode.
 * `gui_allow_default_hostname` - Enable/disable the GUI warning about using a default hostname
 * `gui_forticare_registration_setup_warning` - Enable/disable the FortiCare registration setup warning on the GUI.
 * `alias` - Alias for your FortiGate unit.
@@ -237,4 +236,5 @@ The following attributes are exported:
 * `faz_disk_buffer_size` - Maximum disk buffer size to temporarily store logs destined for FortiAnalyzer. To be used in the event that FortiAnalyzer is unavailalble.
 * `irq_time_accounting` - Configure CPU IRQ time accounting mode.
 * `fortiipam_integration` - Enable/disable integration with the FortiIPAM cloud service.
+* `vdom_mode` - Enable/disable support for split/multiple virtual domains (VDOMs). no-vdom:Disable split/multiple VDOMs mode. split-vdom:Enable split VDOMs mode. multi-vdom:Enable multiple VDOMs mode.
 
