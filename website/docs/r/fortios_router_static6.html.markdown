@@ -33,7 +33,7 @@ The following arguments are supported:
 
 * `seq_num` - Sequence number.
 * `status` - Enable/disable this static route.
-* `dst` - (Required) Destination IPv6 prefix.
+* `dst` - Destination IPv6 prefix.
 * `gateway` - IPv6 address of the gateway.
 * `device` - (Required) Gateway out interface or tunnel.
 * `devindex` - Device index (0 - 4294967295).

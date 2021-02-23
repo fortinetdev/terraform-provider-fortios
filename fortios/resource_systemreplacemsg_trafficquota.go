@@ -20,7 +20,7 @@ import (
 
 func resourceSystemReplacemsgTrafficQuota() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceSystemReplacemsgTrafficQuotaCreate,
+		Create: resourceSystemReplacemsgTrafficQuotaUpdate,
 		Read:   resourceSystemReplacemsgTrafficQuotaRead,
 		Update: resourceSystemReplacemsgTrafficQuotaUpdate,
 		Delete: resourceSystemReplacemsgTrafficQuotaDelete,
@@ -55,35 +55,12 @@ func resourceSystemReplacemsgTrafficQuota() *schema.Resource {
 	}
 }
 
-func resourceSystemReplacemsgTrafficQuotaCreate(d *schema.ResourceData, m interface{}) error {
-	c := m.(*FortiClient).Client
-	c.Retries = 1
-
-	obj, err := getObjectSystemReplacemsgTrafficQuota(d, c.Fv)
-	if err != nil {
-		return fmt.Errorf("Error creating SystemReplacemsgTrafficQuota resource while getting object: %v", err)
-	}
-
-	o, err := c.CreateSystemReplacemsgTrafficQuota(obj)
-
-	if err != nil {
-		return fmt.Errorf("Error creating SystemReplacemsgTrafficQuota resource: %v", err)
-	}
-
-	if o["mkey"] != nil && o["mkey"] != "" {
-		d.SetId(o["mkey"].(string))
-	} else {
-		d.SetId("SystemReplacemsgTrafficQuota")
-	}
-
-	return resourceSystemReplacemsgTrafficQuotaRead(d, m)
-}
-
 func resourceSystemReplacemsgTrafficQuotaUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	mkey = d.Get("msg_type").(string)
 	obj, err := getObjectSystemReplacemsgTrafficQuota(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemReplacemsgTrafficQuota resource while getting object: %v", err)

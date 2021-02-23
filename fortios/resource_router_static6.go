@@ -43,7 +43,8 @@ func resourceRouterStatic6() *schema.Resource {
 			},
 			"dst": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: true,
+				Optional: true,
+				Computed: true,
 			},
 			"gateway": &schema.Schema{
 				Type:     schema.TypeString,

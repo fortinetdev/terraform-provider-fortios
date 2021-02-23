@@ -20,7 +20,7 @@ import (
 
 func resourceSystemReplacemsgMail() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceSystemReplacemsgMailCreate,
+		Create: resourceSystemReplacemsgMailUpdate,
 		Read:   resourceSystemReplacemsgMailRead,
 		Update: resourceSystemReplacemsgMailUpdate,
 		Delete: resourceSystemReplacemsgMailDelete,
@@ -55,35 +55,12 @@ func resourceSystemReplacemsgMail() *schema.Resource {
 	}
 }
 
-func resourceSystemReplacemsgMailCreate(d *schema.ResourceData, m interface{}) error {
-	c := m.(*FortiClient).Client
-	c.Retries = 1
-
-	obj, err := getObjectSystemReplacemsgMail(d, c.Fv)
-	if err != nil {
-		return fmt.Errorf("Error creating SystemReplacemsgMail resource while getting object: %v", err)
-	}
-
-	o, err := c.CreateSystemReplacemsgMail(obj)
-
-	if err != nil {
-		return fmt.Errorf("Error creating SystemReplacemsgMail resource: %v", err)
-	}
-
-	if o["mkey"] != nil && o["mkey"] != "" {
-		d.SetId(o["mkey"].(string))
-	} else {
-		d.SetId("SystemReplacemsgMail")
-	}
-
-	return resourceSystemReplacemsgMailRead(d, m)
-}
-
 func resourceSystemReplacemsgMailUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	mkey = d.Get("msg_type").(string)
 	obj, err := getObjectSystemReplacemsgMail(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemReplacemsgMail resource while getting object: %v", err)

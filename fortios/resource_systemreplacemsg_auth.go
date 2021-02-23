@@ -20,7 +20,7 @@ import (
 
 func resourceSystemReplacemsgAuth() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceSystemReplacemsgAuthCreate,
+		Create: resourceSystemReplacemsgAuthUpdate,
 		Read:   resourceSystemReplacemsgAuthRead,
 		Update: resourceSystemReplacemsgAuthUpdate,
 		Delete: resourceSystemReplacemsgAuthDelete,
@@ -55,35 +55,12 @@ func resourceSystemReplacemsgAuth() *schema.Resource {
 	}
 }
 
-func resourceSystemReplacemsgAuthCreate(d *schema.ResourceData, m interface{}) error {
-	c := m.(*FortiClient).Client
-	c.Retries = 1
-
-	obj, err := getObjectSystemReplacemsgAuth(d, c.Fv)
-	if err != nil {
-		return fmt.Errorf("Error creating SystemReplacemsgAuth resource while getting object: %v", err)
-	}
-
-	o, err := c.CreateSystemReplacemsgAuth(obj)
-
-	if err != nil {
-		return fmt.Errorf("Error creating SystemReplacemsgAuth resource: %v", err)
-	}
-
-	if o["mkey"] != nil && o["mkey"] != "" {
-		d.SetId(o["mkey"].(string))
-	} else {
-		d.SetId("SystemReplacemsgAuth")
-	}
-
-	return resourceSystemReplacemsgAuthRead(d, m)
-}
-
 func resourceSystemReplacemsgAuthUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	mkey = d.Get("msg_type").(string)
 	obj, err := getObjectSystemReplacemsgAuth(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemReplacemsgAuth resource while getting object: %v", err)

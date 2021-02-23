@@ -38,7 +38,7 @@ The following arguments are supported:
 
 * `seq_num` - Sequence number.
 * `status` - Enable/disable this static route.
-* `dst` - (Required) Destination IP and mask for this route.
+* `dst` - Destination IP and mask for this route.
 * `src` - Source prefix for this route.
 * `gateway` - Gateway IP for this route.
 * `distance` - Administrative distance (1 - 255).

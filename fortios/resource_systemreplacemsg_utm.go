@@ -20,7 +20,7 @@ import (
 
 func resourceSystemReplacemsgUtm() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceSystemReplacemsgUtmCreate,
+		Create: resourceSystemReplacemsgUtmUpdate,
 		Read:   resourceSystemReplacemsgUtmRead,
 		Update: resourceSystemReplacemsgUtmUpdate,
 		Delete: resourceSystemReplacemsgUtmDelete,
@@ -55,35 +55,12 @@ func resourceSystemReplacemsgUtm() *schema.Resource {
 	}
 }
 
-func resourceSystemReplacemsgUtmCreate(d *schema.ResourceData, m interface{}) error {
-	c := m.(*FortiClient).Client
-	c.Retries = 1
-
-	obj, err := getObjectSystemReplacemsgUtm(d, c.Fv)
-	if err != nil {
-		return fmt.Errorf("Error creating SystemReplacemsgUtm resource while getting object: %v", err)
-	}
-
-	o, err := c.CreateSystemReplacemsgUtm(obj)
-
-	if err != nil {
-		return fmt.Errorf("Error creating SystemReplacemsgUtm resource: %v", err)
-	}
-
-	if o["mkey"] != nil && o["mkey"] != "" {
-		d.SetId(o["mkey"].(string))
-	} else {
-		d.SetId("SystemReplacemsgUtm")
-	}
-
-	return resourceSystemReplacemsgUtmRead(d, m)
-}
-
 func resourceSystemReplacemsgUtmUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	mkey = d.Get("msg_type").(string)
 	obj, err := getObjectSystemReplacemsgUtm(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemReplacemsgUtm resource while getting object: %v", err)

@@ -20,7 +20,7 @@ import (
 
 func resourceSystemReplacemsgNacQuar() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceSystemReplacemsgNacQuarCreate,
+		Create: resourceSystemReplacemsgNacQuarUpdate,
 		Read:   resourceSystemReplacemsgNacQuarRead,
 		Update: resourceSystemReplacemsgNacQuarUpdate,
 		Delete: resourceSystemReplacemsgNacQuarDelete,
@@ -55,35 +55,12 @@ func resourceSystemReplacemsgNacQuar() *schema.Resource {
 	}
 }
 
-func resourceSystemReplacemsgNacQuarCreate(d *schema.ResourceData, m interface{}) error {
-	c := m.(*FortiClient).Client
-	c.Retries = 1
-
-	obj, err := getObjectSystemReplacemsgNacQuar(d, c.Fv)
-	if err != nil {
-		return fmt.Errorf("Error creating SystemReplacemsgNacQuar resource while getting object: %v", err)
-	}
-
-	o, err := c.CreateSystemReplacemsgNacQuar(obj)
-
-	if err != nil {
-		return fmt.Errorf("Error creating SystemReplacemsgNacQuar resource: %v", err)
-	}
-
-	if o["mkey"] != nil && o["mkey"] != "" {
-		d.SetId(o["mkey"].(string))
-	} else {
-		d.SetId("SystemReplacemsgNacQuar")
-	}
-
-	return resourceSystemReplacemsgNacQuarRead(d, m)
-}
-
 func resourceSystemReplacemsgNacQuarUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	mkey = d.Get("msg_type").(string)
 	obj, err := getObjectSystemReplacemsgNacQuar(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemReplacemsgNacQuar resource while getting object: %v", err)

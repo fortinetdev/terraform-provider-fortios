@@ -20,7 +20,7 @@ import (
 
 func resourceSystemReplacemsgSslvpn() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceSystemReplacemsgSslvpnCreate,
+		Create: resourceSystemReplacemsgSslvpnUpdate,
 		Read:   resourceSystemReplacemsgSslvpnRead,
 		Update: resourceSystemReplacemsgSslvpnUpdate,
 		Delete: resourceSystemReplacemsgSslvpnDelete,
@@ -55,35 +55,12 @@ func resourceSystemReplacemsgSslvpn() *schema.Resource {
 	}
 }
 
-func resourceSystemReplacemsgSslvpnCreate(d *schema.ResourceData, m interface{}) error {
-	c := m.(*FortiClient).Client
-	c.Retries = 1
-
-	obj, err := getObjectSystemReplacemsgSslvpn(d, c.Fv)
-	if err != nil {
-		return fmt.Errorf("Error creating SystemReplacemsgSslvpn resource while getting object: %v", err)
-	}
-
-	o, err := c.CreateSystemReplacemsgSslvpn(obj)
-
-	if err != nil {
-		return fmt.Errorf("Error creating SystemReplacemsgSslvpn resource: %v", err)
-	}
-
-	if o["mkey"] != nil && o["mkey"] != "" {
-		d.SetId(o["mkey"].(string))
-	} else {
-		d.SetId("SystemReplacemsgSslvpn")
-	}
-
-	return resourceSystemReplacemsgSslvpnRead(d, m)
-}
-
 func resourceSystemReplacemsgSslvpnUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	mkey = d.Get("msg_type").(string)
 	obj, err := getObjectSystemReplacemsgSslvpn(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemReplacemsgSslvpn resource while getting object: %v", err)

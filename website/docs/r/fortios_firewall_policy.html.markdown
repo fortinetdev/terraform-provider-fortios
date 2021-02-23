@@ -121,7 +121,7 @@ The following arguments are supported:
 * `send_deny_packet` - Enable to send a reply when a session is denied or blocked by a firewall policy.
 * `firewall_session_dirty` - How to handle sessions if the configuration of this firewall policy changes.
 * `status` - Enable or disable this policy.
-* `schedule` - Schedule name.
+* `schedule` - Schedule name.(Default is `always`)
 * `schedule_timeout` - Enable to force current sessions to end when the schedule object times out. Disable allows them to end from inactivity.
 * `service` - Service and service group names. The structure of `service` block is documented below.
 * `tos` - ToS (Type of Service) value used for comparison.

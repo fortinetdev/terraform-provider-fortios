@@ -20,7 +20,7 @@ import (
 
 func resourceSystemReplacemsgIcap() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceSystemReplacemsgIcapCreate,
+		Create: resourceSystemReplacemsgIcapUpdate,
 		Read:   resourceSystemReplacemsgIcapRead,
 		Update: resourceSystemReplacemsgIcapUpdate,
 		Delete: resourceSystemReplacemsgIcapDelete,
@@ -55,35 +55,12 @@ func resourceSystemReplacemsgIcap() *schema.Resource {
 	}
 }
 
-func resourceSystemReplacemsgIcapCreate(d *schema.ResourceData, m interface{}) error {
-	c := m.(*FortiClient).Client
-	c.Retries = 1
-
-	obj, err := getObjectSystemReplacemsgIcap(d, c.Fv)
-	if err != nil {
-		return fmt.Errorf("Error creating SystemReplacemsgIcap resource while getting object: %v", err)
-	}
-
-	o, err := c.CreateSystemReplacemsgIcap(obj)
-
-	if err != nil {
-		return fmt.Errorf("Error creating SystemReplacemsgIcap resource: %v", err)
-	}
-
-	if o["mkey"] != nil && o["mkey"] != "" {
-		d.SetId(o["mkey"].(string))
-	} else {
-		d.SetId("SystemReplacemsgIcap")
-	}
-
-	return resourceSystemReplacemsgIcapRead(d, m)
-}
-
 func resourceSystemReplacemsgIcapUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	mkey = d.Get("msg_type").(string)
 	obj, err := getObjectSystemReplacemsgIcap(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemReplacemsgIcap resource while getting object: %v", err)

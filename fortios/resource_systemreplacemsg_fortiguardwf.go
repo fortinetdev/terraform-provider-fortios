@@ -20,7 +20,7 @@ import (
 
 func resourceSystemReplacemsgFortiguardWf() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceSystemReplacemsgFortiguardWfCreate,
+		Create: resourceSystemReplacemsgFortiguardWfUpdate,
 		Read:   resourceSystemReplacemsgFortiguardWfRead,
 		Update: resourceSystemReplacemsgFortiguardWfUpdate,
 		Delete: resourceSystemReplacemsgFortiguardWfDelete,
@@ -55,35 +55,12 @@ func resourceSystemReplacemsgFortiguardWf() *schema.Resource {
 	}
 }
 
-func resourceSystemReplacemsgFortiguardWfCreate(d *schema.ResourceData, m interface{}) error {
-	c := m.(*FortiClient).Client
-	c.Retries = 1
-
-	obj, err := getObjectSystemReplacemsgFortiguardWf(d, c.Fv)
-	if err != nil {
-		return fmt.Errorf("Error creating SystemReplacemsgFortiguardWf resource while getting object: %v", err)
-	}
-
-	o, err := c.CreateSystemReplacemsgFortiguardWf(obj)
-
-	if err != nil {
-		return fmt.Errorf("Error creating SystemReplacemsgFortiguardWf resource: %v", err)
-	}
-
-	if o["mkey"] != nil && o["mkey"] != "" {
-		d.SetId(o["mkey"].(string))
-	} else {
-		d.SetId("SystemReplacemsgFortiguardWf")
-	}
-
-	return resourceSystemReplacemsgFortiguardWfRead(d, m)
-}
-
 func resourceSystemReplacemsgFortiguardWfUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	mkey = d.Get("msg_type").(string)
 	obj, err := getObjectSystemReplacemsgFortiguardWf(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemReplacemsgFortiguardWf resource while getting object: %v", err)

@@ -20,7 +20,7 @@ import (
 
 func resourceSystemReplacemsgSpam() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceSystemReplacemsgSpamCreate,
+		Create: resourceSystemReplacemsgSpamUpdate,
 		Read:   resourceSystemReplacemsgSpamRead,
 		Update: resourceSystemReplacemsgSpamUpdate,
 		Delete: resourceSystemReplacemsgSpamDelete,
@@ -55,35 +55,12 @@ func resourceSystemReplacemsgSpam() *schema.Resource {
 	}
 }
 
-func resourceSystemReplacemsgSpamCreate(d *schema.ResourceData, m interface{}) error {
-	c := m.(*FortiClient).Client
-	c.Retries = 1
-
-	obj, err := getObjectSystemReplacemsgSpam(d, c.Fv)
-	if err != nil {
-		return fmt.Errorf("Error creating SystemReplacemsgSpam resource while getting object: %v", err)
-	}
-
-	o, err := c.CreateSystemReplacemsgSpam(obj)
-
-	if err != nil {
-		return fmt.Errorf("Error creating SystemReplacemsgSpam resource: %v", err)
-	}
-
-	if o["mkey"] != nil && o["mkey"] != "" {
-		d.SetId(o["mkey"].(string))
-	} else {
-		d.SetId("SystemReplacemsgSpam")
-	}
-
-	return resourceSystemReplacemsgSpamRead(d, m)
-}
-
 func resourceSystemReplacemsgSpamUpdate(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	mkey = d.Get("msg_type").(string)
 	obj, err := getObjectSystemReplacemsgSpam(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemReplacemsgSpam resource while getting object: %v", err)
