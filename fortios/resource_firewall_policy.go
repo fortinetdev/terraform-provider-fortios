@@ -351,7 +351,7 @@ func resourceFirewallPolicy() *schema.Resource {
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
 				Optional:     true,
-				Computed:     true,
+				Default:      "always",
 			},
 			"schedule_timeout": &schema.Schema{
 				Type:     schema.TypeString,
