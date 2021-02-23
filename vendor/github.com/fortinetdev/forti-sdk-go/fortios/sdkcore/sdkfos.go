@@ -18574,19 +18574,6 @@ func (c *FortiSDKClient) ReadSystemLldpNetworkPolicy(mkey string) (mapTmp map[st
 	return
 }
 
-// CreateSystemReplacemsgAdmin API operation for FortiOS creates a new Admin.
-// Returns the index value of the Admin and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the system.replacemsg - admin chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) CreateSystemReplacemsgAdmin(params *map[string]interface{}) (output map[string]interface{}, err error) {
-
-	HTTPMethod := "POST"
-	path := "/api/v2/cmdb/system.replacemsg/admin"
-	output = make(map[string]interface{})
-
-	err = createUpdate(c, HTTPMethod, path, params, output)
-	return
-}
 
 // UpdateSystemReplacemsgAdmin API operation for FortiOS updates the specified Admin.
 // Returns the index value of the Admin and execution result when the request executes successfully.
@@ -18606,11 +18593,8 @@ func (c *FortiSDKClient) UpdateSystemReplacemsgAdmin(params *map[string]interfac
 // Returns error for service API and SDK errors.
 // See the system.replacemsg - admin chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) DeleteSystemReplacemsgAdmin(mkey string) (err error) {
-	HTTPMethod := "DELETE"
-	path := "/api/v2/cmdb/system.replacemsg/admin"
-	path += "/" + escapeURLString(mkey)
 
-	err = delete(c, HTTPMethod, path)
+	//No unset API for system.replacemsg - admin
 	return
 }
 
@@ -18682,19 +18666,6 @@ func (c *FortiSDKClient) ReadSystemReplacemsgAutomation(mkey string) (mapTmp map
 	return
 }
 
-// CreateSystemReplacemsgAlertmail API operation for FortiOS creates a new Alertmail.
-// Returns the index value of the Alertmail and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the system.replacemsg - alertmail chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) CreateSystemReplacemsgAlertmail(params *map[string]interface{}) (output map[string]interface{}, err error) {
-
-	HTTPMethod := "POST"
-	path := "/api/v2/cmdb/system.replacemsg/alertmail"
-	output = make(map[string]interface{})
-
-	err = createUpdate(c, HTTPMethod, path, params, output)
-	return
-}
 
 // UpdateSystemReplacemsgAlertmail API operation for FortiOS updates the specified Alertmail.
 // Returns the index value of the Alertmail and execution result when the request executes successfully.
@@ -18714,11 +18685,8 @@ func (c *FortiSDKClient) UpdateSystemReplacemsgAlertmail(params *map[string]inte
 // Returns error for service API and SDK errors.
 // See the system.replacemsg - alertmail chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) DeleteSystemReplacemsgAlertmail(mkey string) (err error) {
-	HTTPMethod := "DELETE"
-	path := "/api/v2/cmdb/system.replacemsg/alertmail"
-	path += "/" + escapeURLString(mkey)
 
-	err = delete(c, HTTPMethod, path)
+	//No unset API for system.replacemsg - alertmail
 	return
 }
 
@@ -18736,19 +18704,6 @@ func (c *FortiSDKClient) ReadSystemReplacemsgAlertmail(mkey string) (mapTmp map[
 	return
 }
 
-// CreateSystemReplacemsgAuth API operation for FortiOS creates a new Auth.
-// Returns the index value of the Auth and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the system.replacemsg - auth chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) CreateSystemReplacemsgAuth(params *map[string]interface{}) (output map[string]interface{}, err error) {
-
-	HTTPMethod := "POST"
-	path := "/api/v2/cmdb/system.replacemsg/auth"
-	output = make(map[string]interface{})
-
-	err = createUpdate(c, HTTPMethod, path, params, output)
-	return
-}
 
 // UpdateSystemReplacemsgAuth API operation for FortiOS updates the specified Auth.
 // Returns the index value of the Auth and execution result when the request executes successfully.
@@ -18768,11 +18723,8 @@ func (c *FortiSDKClient) UpdateSystemReplacemsgAuth(params *map[string]interface
 // Returns error for service API and SDK errors.
 // See the system.replacemsg - auth chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) DeleteSystemReplacemsgAuth(mkey string) (err error) {
-	HTTPMethod := "DELETE"
-	path := "/api/v2/cmdb/system.replacemsg/auth"
-	path += "/" + escapeURLString(mkey)
 
-	err = delete(c, HTTPMethod, path)
+	//No unset API for system.replacemsg - auth
 	return
 }
 
@@ -18790,19 +18742,6 @@ func (c *FortiSDKClient) ReadSystemReplacemsgAuth(mkey string) (mapTmp map[strin
 	return
 }
 
-// CreateSystemReplacemsgDeviceDetectionPortal API operation for FortiOS creates a new Device Detection Portal.
-// Returns the index value of the Device Detection Portal and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the system.replacemsg - device-detection-portal chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) CreateSystemReplacemsgDeviceDetectionPortal(params *map[string]interface{}) (output map[string]interface{}, err error) {
-
-	HTTPMethod := "POST"
-	path := "/api/v2/cmdb/system.replacemsg/device-detection-portal"
-	output = make(map[string]interface{})
-
-	err = createUpdate(c, HTTPMethod, path, params, output)
-	return
-}
 
 // UpdateSystemReplacemsgDeviceDetectionPortal API operation for FortiOS updates the specified Device Detection Portal.
 // Returns the index value of the Device Detection Portal and execution result when the request executes successfully.
@@ -18822,11 +18761,8 @@ func (c *FortiSDKClient) UpdateSystemReplacemsgDeviceDetectionPortal(params *map
 // Returns error for service API and SDK errors.
 // See the system.replacemsg - device-detection-portal chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) DeleteSystemReplacemsgDeviceDetectionPortal(mkey string) (err error) {
-	HTTPMethod := "DELETE"
-	path := "/api/v2/cmdb/system.replacemsg/device-detection-portal"
-	path += "/" + escapeURLString(mkey)
 
-	err = delete(c, HTTPMethod, path)
+	//No unset API for system.replacemsg - device-detection-portal
 	return
 }
 
@@ -18844,19 +18780,6 @@ func (c *FortiSDKClient) ReadSystemReplacemsgDeviceDetectionPortal(mkey string) 
 	return
 }
 
-// CreateSystemReplacemsgEc API operation for FortiOS creates a new Ec.
-// Returns the index value of the Ec and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the system.replacemsg - ec chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) CreateSystemReplacemsgEc(params *map[string]interface{}) (output map[string]interface{}, err error) {
-
-	HTTPMethod := "POST"
-	path := "/api/v2/cmdb/system.replacemsg/ec"
-	output = make(map[string]interface{})
-
-	err = createUpdate(c, HTTPMethod, path, params, output)
-	return
-}
 
 // UpdateSystemReplacemsgEc API operation for FortiOS updates the specified Ec.
 // Returns the index value of the Ec and execution result when the request executes successfully.
@@ -18876,11 +18799,8 @@ func (c *FortiSDKClient) UpdateSystemReplacemsgEc(params *map[string]interface{}
 // Returns error for service API and SDK errors.
 // See the system.replacemsg - ec chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) DeleteSystemReplacemsgEc(mkey string) (err error) {
-	HTTPMethod := "DELETE"
-	path := "/api/v2/cmdb/system.replacemsg/ec"
-	path += "/" + escapeURLString(mkey)
 
-	err = delete(c, HTTPMethod, path)
+	//No unset API for system.replacemsg - ec
 	return
 }
 
@@ -18898,19 +18818,6 @@ func (c *FortiSDKClient) ReadSystemReplacemsgEc(mkey string) (mapTmp map[string]
 	return
 }
 
-// CreateSystemReplacemsgFortiguardWf API operation for FortiOS creates a new Fortiguard Wf.
-// Returns the index value of the Fortiguard Wf and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the system.replacemsg - fortiguard-wf chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) CreateSystemReplacemsgFortiguardWf(params *map[string]interface{}) (output map[string]interface{}, err error) {
-
-	HTTPMethod := "POST"
-	path := "/api/v2/cmdb/system.replacemsg/fortiguard-wf"
-	output = make(map[string]interface{})
-
-	err = createUpdate(c, HTTPMethod, path, params, output)
-	return
-}
 
 // UpdateSystemReplacemsgFortiguardWf API operation for FortiOS updates the specified Fortiguard Wf.
 // Returns the index value of the Fortiguard Wf and execution result when the request executes successfully.
@@ -18930,11 +18837,8 @@ func (c *FortiSDKClient) UpdateSystemReplacemsgFortiguardWf(params *map[string]i
 // Returns error for service API and SDK errors.
 // See the system.replacemsg - fortiguard-wf chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) DeleteSystemReplacemsgFortiguardWf(mkey string) (err error) {
-	HTTPMethod := "DELETE"
-	path := "/api/v2/cmdb/system.replacemsg/fortiguard-wf"
-	path += "/" + escapeURLString(mkey)
 
-	err = delete(c, HTTPMethod, path)
+	//No unset API for system.replacemsg - fortiguard-wf
 	return
 }
 
@@ -18952,19 +18856,6 @@ func (c *FortiSDKClient) ReadSystemReplacemsgFortiguardWf(mkey string) (mapTmp m
 	return
 }
 
-// CreateSystemReplacemsgFtp API operation for FortiOS creates a new Ftp.
-// Returns the index value of the Ftp and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the system.replacemsg - ftp chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) CreateSystemReplacemsgFtp(params *map[string]interface{}) (output map[string]interface{}, err error) {
-
-	HTTPMethod := "POST"
-	path := "/api/v2/cmdb/system.replacemsg/ftp"
-	output = make(map[string]interface{})
-
-	err = createUpdate(c, HTTPMethod, path, params, output)
-	return
-}
 
 // UpdateSystemReplacemsgFtp API operation for FortiOS updates the specified Ftp.
 // Returns the index value of the Ftp and execution result when the request executes successfully.
@@ -18984,11 +18875,8 @@ func (c *FortiSDKClient) UpdateSystemReplacemsgFtp(params *map[string]interface{
 // Returns error for service API and SDK errors.
 // See the system.replacemsg - ftp chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) DeleteSystemReplacemsgFtp(mkey string) (err error) {
-	HTTPMethod := "DELETE"
-	path := "/api/v2/cmdb/system.replacemsg/ftp"
-	path += "/" + escapeURLString(mkey)
 
-	err = delete(c, HTTPMethod, path)
+	//No unset API for system.replacemsg - ftp
 	return
 }
 
@@ -19006,19 +18894,6 @@ func (c *FortiSDKClient) ReadSystemReplacemsgFtp(mkey string) (mapTmp map[string
 	return
 }
 
-// CreateSystemReplacemsgHttp API operation for FortiOS creates a new Http.
-// Returns the index value of the Http and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the system.replacemsg - http chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) CreateSystemReplacemsgHttp(params *map[string]interface{}) (output map[string]interface{}, err error) {
-
-	HTTPMethod := "POST"
-	path := "/api/v2/cmdb/system.replacemsg/http"
-	output = make(map[string]interface{})
-
-	err = createUpdate(c, HTTPMethod, path, params, output)
-	return
-}
 
 // UpdateSystemReplacemsgHttp API operation for FortiOS updates the specified Http.
 // Returns the index value of the Http and execution result when the request executes successfully.
@@ -19038,11 +18913,8 @@ func (c *FortiSDKClient) UpdateSystemReplacemsgHttp(params *map[string]interface
 // Returns error for service API and SDK errors.
 // See the system.replacemsg - http chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) DeleteSystemReplacemsgHttp(mkey string) (err error) {
-	HTTPMethod := "DELETE"
-	path := "/api/v2/cmdb/system.replacemsg/http"
-	path += "/" + escapeURLString(mkey)
 
-	err = delete(c, HTTPMethod, path)
+	//No unset API for system.replacemsg - http
 	return
 }
 
@@ -19060,19 +18932,6 @@ func (c *FortiSDKClient) ReadSystemReplacemsgHttp(mkey string) (mapTmp map[strin
 	return
 }
 
-// CreateSystemReplacemsgIcap API operation for FortiOS creates a new Icap.
-// Returns the index value of the Icap and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the system.replacemsg - icap chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) CreateSystemReplacemsgIcap(params *map[string]interface{}) (output map[string]interface{}, err error) {
-
-	HTTPMethod := "POST"
-	path := "/api/v2/cmdb/system.replacemsg/icap"
-	output = make(map[string]interface{})
-
-	err = createUpdate(c, HTTPMethod, path, params, output)
-	return
-}
 
 // UpdateSystemReplacemsgIcap API operation for FortiOS updates the specified Icap.
 // Returns the index value of the Icap and execution result when the request executes successfully.
@@ -19092,11 +18951,8 @@ func (c *FortiSDKClient) UpdateSystemReplacemsgIcap(params *map[string]interface
 // Returns error for service API and SDK errors.
 // See the system.replacemsg - icap chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) DeleteSystemReplacemsgIcap(mkey string) (err error) {
-	HTTPMethod := "DELETE"
-	path := "/api/v2/cmdb/system.replacemsg/icap"
-	path += "/" + escapeURLString(mkey)
 
-	err = delete(c, HTTPMethod, path)
+	//No unset API for system.replacemsg - icap
 	return
 }
 
@@ -19114,19 +18970,6 @@ func (c *FortiSDKClient) ReadSystemReplacemsgIcap(mkey string) (mapTmp map[strin
 	return
 }
 
-// CreateSystemReplacemsgMail API operation for FortiOS creates a new Mail.
-// Returns the index value of the Mail and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the system.replacemsg - mail chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) CreateSystemReplacemsgMail(params *map[string]interface{}) (output map[string]interface{}, err error) {
-
-	HTTPMethod := "POST"
-	path := "/api/v2/cmdb/system.replacemsg/mail"
-	output = make(map[string]interface{})
-
-	err = createUpdate(c, HTTPMethod, path, params, output)
-	return
-}
 
 // UpdateSystemReplacemsgMail API operation for FortiOS updates the specified Mail.
 // Returns the index value of the Mail and execution result when the request executes successfully.
@@ -19146,11 +18989,8 @@ func (c *FortiSDKClient) UpdateSystemReplacemsgMail(params *map[string]interface
 // Returns error for service API and SDK errors.
 // See the system.replacemsg - mail chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) DeleteSystemReplacemsgMail(mkey string) (err error) {
-	HTTPMethod := "DELETE"
-	path := "/api/v2/cmdb/system.replacemsg/mail"
-	path += "/" + escapeURLString(mkey)
 
-	err = delete(c, HTTPMethod, path)
+	//No unset API for system.replacemsg - mail
 	return
 }
 
@@ -19168,19 +19008,6 @@ func (c *FortiSDKClient) ReadSystemReplacemsgMail(mkey string) (mapTmp map[strin
 	return
 }
 
-// CreateSystemReplacemsgNacQuar API operation for FortiOS creates a new Nac Quar.
-// Returns the index value of the Nac Quar and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the system.replacemsg - nac-quar chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) CreateSystemReplacemsgNacQuar(params *map[string]interface{}) (output map[string]interface{}, err error) {
-
-	HTTPMethod := "POST"
-	path := "/api/v2/cmdb/system.replacemsg/nac-quar"
-	output = make(map[string]interface{})
-
-	err = createUpdate(c, HTTPMethod, path, params, output)
-	return
-}
 
 // UpdateSystemReplacemsgNacQuar API operation for FortiOS updates the specified Nac Quar.
 // Returns the index value of the Nac Quar and execution result when the request executes successfully.
@@ -19200,11 +19027,8 @@ func (c *FortiSDKClient) UpdateSystemReplacemsgNacQuar(params *map[string]interf
 // Returns error for service API and SDK errors.
 // See the system.replacemsg - nac-quar chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) DeleteSystemReplacemsgNacQuar(mkey string) (err error) {
-	HTTPMethod := "DELETE"
-	path := "/api/v2/cmdb/system.replacemsg/nac-quar"
-	path += "/" + escapeURLString(mkey)
 
-	err = delete(c, HTTPMethod, path)
+	//No unset API for system.replacemsg - nac-quar
 	return
 }
 
@@ -19222,19 +19046,6 @@ func (c *FortiSDKClient) ReadSystemReplacemsgNacQuar(mkey string) (mapTmp map[st
 	return
 }
 
-// CreateSystemReplacemsgNntp API operation for FortiOS creates a new Nntp.
-// Returns the index value of the Nntp and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the system.replacemsg - nntp chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) CreateSystemReplacemsgNntp(params *map[string]interface{}) (output map[string]interface{}, err error) {
-
-	HTTPMethod := "POST"
-	path := "/api/v2/cmdb/system.replacemsg/nntp"
-	output = make(map[string]interface{})
-
-	err = createUpdate(c, HTTPMethod, path, params, output)
-	return
-}
 
 // UpdateSystemReplacemsgNntp API operation for FortiOS updates the specified Nntp.
 // Returns the index value of the Nntp and execution result when the request executes successfully.
@@ -19254,11 +19065,8 @@ func (c *FortiSDKClient) UpdateSystemReplacemsgNntp(params *map[string]interface
 // Returns error for service API and SDK errors.
 // See the system.replacemsg - nntp chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) DeleteSystemReplacemsgNntp(mkey string) (err error) {
-	HTTPMethod := "DELETE"
-	path := "/api/v2/cmdb/system.replacemsg/nntp"
-	path += "/" + escapeURLString(mkey)
 
-	err = delete(c, HTTPMethod, path)
+	//No unset API for system.replacemsg - nntp
 	return
 }
 
@@ -19276,19 +19084,6 @@ func (c *FortiSDKClient) ReadSystemReplacemsgNntp(mkey string) (mapTmp map[strin
 	return
 }
 
-// CreateSystemReplacemsgSpam API operation for FortiOS creates a new Spam.
-// Returns the index value of the Spam and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the system.replacemsg - spam chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) CreateSystemReplacemsgSpam(params *map[string]interface{}) (output map[string]interface{}, err error) {
-
-	HTTPMethod := "POST"
-	path := "/api/v2/cmdb/system.replacemsg/spam"
-	output = make(map[string]interface{})
-
-	err = createUpdate(c, HTTPMethod, path, params, output)
-	return
-}
 
 // UpdateSystemReplacemsgSpam API operation for FortiOS updates the specified Spam.
 // Returns the index value of the Spam and execution result when the request executes successfully.
@@ -19308,11 +19103,8 @@ func (c *FortiSDKClient) UpdateSystemReplacemsgSpam(params *map[string]interface
 // Returns error for service API and SDK errors.
 // See the system.replacemsg - spam chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) DeleteSystemReplacemsgSpam(mkey string) (err error) {
-	HTTPMethod := "DELETE"
-	path := "/api/v2/cmdb/system.replacemsg/spam"
-	path += "/" + escapeURLString(mkey)
 
-	err = delete(c, HTTPMethod, path)
+	//No unset API for system.replacemsg - spam
 	return
 }
 
@@ -19330,19 +19122,6 @@ func (c *FortiSDKClient) ReadSystemReplacemsgSpam(mkey string) (mapTmp map[strin
 	return
 }
 
-// CreateSystemReplacemsgSslvpn API operation for FortiOS creates a new Sslvpn.
-// Returns the index value of the Sslvpn and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the system.replacemsg - sslvpn chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) CreateSystemReplacemsgSslvpn(params *map[string]interface{}) (output map[string]interface{}, err error) {
-
-	HTTPMethod := "POST"
-	path := "/api/v2/cmdb/system.replacemsg/sslvpn"
-	output = make(map[string]interface{})
-
-	err = createUpdate(c, HTTPMethod, path, params, output)
-	return
-}
 
 // UpdateSystemReplacemsgSslvpn API operation for FortiOS updates the specified Sslvpn.
 // Returns the index value of the Sslvpn and execution result when the request executes successfully.
@@ -19362,11 +19141,8 @@ func (c *FortiSDKClient) UpdateSystemReplacemsgSslvpn(params *map[string]interfa
 // Returns error for service API and SDK errors.
 // See the system.replacemsg - sslvpn chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) DeleteSystemReplacemsgSslvpn(mkey string) (err error) {
-	HTTPMethod := "DELETE"
-	path := "/api/v2/cmdb/system.replacemsg/sslvpn"
-	path += "/" + escapeURLString(mkey)
 
-	err = delete(c, HTTPMethod, path)
+	//No unset API for system.replacemsg - sslvpn
 	return
 }
 
@@ -19384,19 +19160,6 @@ func (c *FortiSDKClient) ReadSystemReplacemsgSslvpn(mkey string) (mapTmp map[str
 	return
 }
 
-// CreateSystemReplacemsgTrafficQuota API operation for FortiOS creates a new Traffic Quota.
-// Returns the index value of the Traffic Quota and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the system.replacemsg - traffic-quota chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) CreateSystemReplacemsgTrafficQuota(params *map[string]interface{}) (output map[string]interface{}, err error) {
-
-	HTTPMethod := "POST"
-	path := "/api/v2/cmdb/system.replacemsg/traffic-quota"
-	output = make(map[string]interface{})
-
-	err = createUpdate(c, HTTPMethod, path, params, output)
-	return
-}
 
 // UpdateSystemReplacemsgTrafficQuota API operation for FortiOS updates the specified Traffic Quota.
 // Returns the index value of the Traffic Quota and execution result when the request executes successfully.
@@ -19416,11 +19179,8 @@ func (c *FortiSDKClient) UpdateSystemReplacemsgTrafficQuota(params *map[string]i
 // Returns error for service API and SDK errors.
 // See the system.replacemsg - traffic-quota chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) DeleteSystemReplacemsgTrafficQuota(mkey string) (err error) {
-	HTTPMethod := "DELETE"
-	path := "/api/v2/cmdb/system.replacemsg/traffic-quota"
-	path += "/" + escapeURLString(mkey)
 
-	err = delete(c, HTTPMethod, path)
+	//No unset API for system.replacemsg - traffic-quota
 	return
 }
 
@@ -19438,19 +19198,6 @@ func (c *FortiSDKClient) ReadSystemReplacemsgTrafficQuota(mkey string) (mapTmp m
 	return
 }
 
-// CreateSystemReplacemsgUtm API operation for FortiOS creates a new Utm.
-// Returns the index value of the Utm and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the system.replacemsg - utm chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) CreateSystemReplacemsgUtm(params *map[string]interface{}) (output map[string]interface{}, err error) {
-
-	HTTPMethod := "POST"
-	path := "/api/v2/cmdb/system.replacemsg/utm"
-	output = make(map[string]interface{})
-
-	err = createUpdate(c, HTTPMethod, path, params, output)
-	return
-}
 
 // UpdateSystemReplacemsgUtm API operation for FortiOS updates the specified Utm.
 // Returns the index value of the Utm and execution result when the request executes successfully.
@@ -19470,11 +19217,8 @@ func (c *FortiSDKClient) UpdateSystemReplacemsgUtm(params *map[string]interface{
 // Returns error for service API and SDK errors.
 // See the system.replacemsg - utm chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) DeleteSystemReplacemsgUtm(mkey string) (err error) {
-	HTTPMethod := "DELETE"
-	path := "/api/v2/cmdb/system.replacemsg/utm"
-	path += "/" + escapeURLString(mkey)
 
-	err = delete(c, HTTPMethod, path)
+	//No unset API for system.replacemsg - utm
 	return
 }
 
@@ -19492,19 +19236,6 @@ func (c *FortiSDKClient) ReadSystemReplacemsgUtm(mkey string) (mapTmp map[string
 	return
 }
 
-// CreateSystemReplacemsgWebproxy API operation for FortiOS creates a new Webproxy.
-// Returns the index value of the Webproxy and execution result when the request executes successfully.
-// Returns error for service API and SDK errors.
-// See the system.replacemsg - webproxy chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) CreateSystemReplacemsgWebproxy(params *map[string]interface{}) (output map[string]interface{}, err error) {
-
-	HTTPMethod := "POST"
-	path := "/api/v2/cmdb/system.replacemsg/webproxy"
-	output = make(map[string]interface{})
-
-	err = createUpdate(c, HTTPMethod, path, params, output)
-	return
-}
 
 // UpdateSystemReplacemsgWebproxy API operation for FortiOS updates the specified Webproxy.
 // Returns the index value of the Webproxy and execution result when the request executes successfully.
@@ -19524,11 +19255,8 @@ func (c *FortiSDKClient) UpdateSystemReplacemsgWebproxy(params *map[string]inter
 // Returns error for service API and SDK errors.
 // See the system.replacemsg - webproxy chapter in the FortiOS Handbook - CLI Reference.
 func (c *FortiSDKClient) DeleteSystemReplacemsgWebproxy(mkey string) (err error) {
-	HTTPMethod := "DELETE"
-	path := "/api/v2/cmdb/system.replacemsg/webproxy"
-	path += "/" + escapeURLString(mkey)
 
-	err = delete(c, HTTPMethod, path)
+	//No unset API for system.replacemsg - webproxy
 	return
 }
 
