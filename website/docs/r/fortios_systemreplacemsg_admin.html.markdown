@@ -9,6 +9,36 @@ description: |-
 # fortios_systemreplacemsg_admin
 Replacement messages.
 
+## Example Usage
+
+```hcl
+resource "fortios_systemreplacemsg_admin" "trname" {
+  buffer   = chomp(
+    <<-EOT
+    POST WARNING:
+    This is a private computer system. Unauthorized access or use
+    is prohibited and subject to prosecution and/or disciplinary
+    action. Any use of this system constitutes consent to
+    monitoring at all times and users are not entitled to any
+    expectation of privacy. If monitoring reveals possible evidence
+    of violation of criminal statutes, this evidence and any other
+    related information, including identification information about
+    the user, may be provided to law enforcement officials.
+    If monitoring reveals violations of security regulations or
+    unauthorized use, employees who violate security regulations or
+    make unauthorized use of this system are subject to appropriate
+    disciplinary action.
+
+    %%LAST_SUCCESSFUL_LOGIN%%
+    %%LAST_FAILED_LOGIN%%
+  EOT
+  )
+  format   = "text"
+  header   = "none"
+  msg_type = "post_admin-disclaimer-text"
+}
+```
+
 ## Argument Reference
 
 The following arguments are supported:
