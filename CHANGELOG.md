@@ -1,5 +1,19 @@
 ## 1.11.0 (Unreleased)
 
+## 1.10.3 (Feb 24, 2021)
+
+IMPROVEMENTS:
+
+* Improve fgt_filter documentation
+* Add Example for fortios_systemreplacemsg_admin
+
+BUG FIXES:
+
+* Add default for fortios_firewall_policy schedule #140
+* Make resource_router_static dst optional #141
+* Update release version info according to the changes in FOS version
+* Fix system replacemsg issues #139
+
 ## 1.10.2 (Feb 11, 2021)
 
 IMPROVEMENTS:
