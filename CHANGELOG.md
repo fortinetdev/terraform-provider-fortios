@@ -1,5 +1,12 @@
 ## 1.11.0 (Unreleased)
 
+## 1.10.4 (Feb 26, 2021)
+
+IMPROVEMENTS:
+
+* Improve request error message
+
+
 ## 1.10.3 (Feb 24, 2021)
 
 IMPROVEMENTS:
