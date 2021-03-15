@@ -13,16 +13,16 @@ Configure DNS servers for a non-management VDOM.
 
 The following arguments are supported:
 
-* `vdom_dns` - Enable/disable configuring DNS servers for the current VDOM.
+* `vdom_dns` - Enable/disable configuring DNS servers for the current VDOM. Valid values: `enable`, `disable`.
 * `primary` - Primary DNS server IP address for the VDOM.
 * `secondary` - Secondary DNS server IP address for the VDOM.
-* `dns_over_tls` - Enable/disable/enforce DNS over TLS.
+* `dns_over_tls` - Enable/disable/enforce DNS over TLS. Valid values: `disable`, `enable`, `enforce`.
 * `ssl_certificate` - Name of local certificate for SSL connections.
 * `server_hostname` - DNS server host name list. The structure of `server_hostname` block is documented below.
 * `ip6_primary` - Primary IPv6 DNS server IP address for the VDOM.
 * `ip6_secondary` - Secondary IPv6 DNS server IP address for the VDOM.
 * `source_ip` - Source IP for communications with the DNS server.
-* `interface_select_method` - Specify how to select outgoing interface to reach server.
+* `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.
 * `interface` - Specify outgoing interface to reach server.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
