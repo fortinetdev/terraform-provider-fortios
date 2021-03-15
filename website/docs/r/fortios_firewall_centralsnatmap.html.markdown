@@ -44,8 +44,8 @@ The following arguments are supported:
 
 * `policyid` - Policy ID.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
-* `status` - Enable/disable the active status of this policy.
-* `type` - IPv4/IPv6 source NAT.
+* `status` - Enable/disable the active status of this policy. Valid values: `enable`, `disable`.
+* `type` - IPv4/IPv6 source NAT. Valid values: `ipv4`, `ipv6`.
 * `orig_addr` - (Required) Original address. The structure of `orig_addr` block is documented below.
 * `orig_addr6` - IPv6 Original address. The structure of `orig_addr6` block is documented below.
 * `srcintf` - (Required) Source interface name from available interfaces. The structure of `srcintf` block is documented below.
@@ -57,7 +57,7 @@ The following arguments are supported:
 * `protocol` - (Required) Integer value for the protocol type (0 - 255).
 * `orig_port` - (Required) Original TCP port (0 to 65535).
 * `nat_port` - Translated port or port range (0 to 65535).
-* `nat` - (Required) Enable/disable source NAT.
+* `nat` - (Required) Enable/disable source NAT. Valid values: `disable`, `enable`.
 * `comments` - Comment.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
