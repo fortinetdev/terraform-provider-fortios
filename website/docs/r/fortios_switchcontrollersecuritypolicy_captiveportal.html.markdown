@@ -15,7 +15,7 @@ The following arguments are supported:
 
 * `name` - Policy name.
 * `vlan` - Names of VLANs that use captive portal authentication.
-* `policy_type` - Policy type.
+* `policy_type` - Policy type. Valid values: `captive-portal`.
 
 
 ## Attribute Reference
