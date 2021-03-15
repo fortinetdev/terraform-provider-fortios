@@ -46,7 +46,7 @@ The following arguments are supported:
 
 * `name` - Internet Service group name.
 * `comment` - Comment.
-* `direction` - How this service may be used (source, destination or both).
+* `direction` - How this service may be used (source, destination or both). Valid values: `source`, `destination`, `both`.
 * `member` - Internet Service group member. The structure of `member` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
