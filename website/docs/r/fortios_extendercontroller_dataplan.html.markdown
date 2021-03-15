@@ -14,24 +14,24 @@ FortiExtender dataplan configuration. Applies to FortiOS Version `>= 6.4.2`.
 The following arguments are supported:
 
 * `name` - FortiExtender dataplan name
-* `modem_id` - Dataplan's modem specifics, if any.
-* `type` - Type preferences configuration.
-* `slot` - SIM slot configuration.
+* `modem_id` - Dataplan's modem specifics, if any. Valid values: `modem1`, `modem2`, `all`.
+* `type` - Type preferences configuration. Valid values: `carrier`, `slot`, `iccid`, `generic`.
+* `slot` - SIM slot configuration. Valid values: `sim1`, `sim2`.
 * `iccid` - ICCID configuration.
 * `carrier` - Carrier configuration.
 * `APN` - APN configuration.
-* `auth_type` - Authentication type.
+* `auth_type` - Authentication type. Valid values: `none`, `pap`, `chap`.
 * `username` - Username.
 * `password` - Password.
-* `PDN` - PDN type.
+* `PDN` - PDN type. Valid values: `ipv4-only`, `ipv6-only`, `ipv4-ipv6`.
 * `signal_threshold` - Signal threshold. Specify the range between 50 - 100, where 50/100 means -50/-100 dBm.
 * `signal_period` - Signal period (600 to 18000 seconds).
 * `capacity` - Capacity in MB (0 - 102400000).
 * `monthly_fee` - Monthly fee of dataplan (0 - 100000, in local currency).
 * `billing_date` - Billing day of the month (1 - 31).
-* `overage` - Enable/disable dataplan overage detection.
+* `overage` - Enable/disable dataplan overage detection. Valid values: `disable`, `enable`.
 * `preferred_subnet` - Preferred subnet mask (8 - 32).
-* `private_network` - Enable/disable dataplan private network support.
+* `private_network` - Enable/disable dataplan private network support. Valid values: `disable`, `enable`.
 
 
 ## Attribute Reference
