@@ -135,12 +135,12 @@ resource "fortios_log_threatweight" "trname" {
 
 The following arguments are supported:
 
-* `status` - Enable/disable the threat weight feature.
+* `status` - Enable/disable the threat weight feature. Valid values: `enable`, `disable`.
 * `level` - Score mapping for threat weight levels. The structure of `level` block is documented below.
-* `blocked_connection` - Threat weight score for blocked connections.
-* `failed_connection` - Threat weight score for failed connections.
-* `url_block_detected` - Threat weight score for URL blocking.
-* `botnet_connection_detected` - Threat weight score for detected botnet connections.
+* `blocked_connection` - Threat weight score for blocked connections. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
+* `failed_connection` - Threat weight score for failed connections. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
+* `url_block_detected` - Threat weight score for URL blocking. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
+* `botnet_connection_detected` - Threat weight score for detected botnet connections. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
 * `malware` - Anti-virus malware threat weight settings. The structure of `malware` block is documented below.
 * `ips` - IPS threat weight settings. The structure of `ips` block is documented below.
 * `web` - Web filtering threat weight settings. The structure of `web` block is documented below.
@@ -157,47 +157,47 @@ The `level` block supports:
 
 The `malware` block supports:
 
-* `virus_infected` - Threat weight score for virus (infected) detected.
-* `file_blocked` - Threat weight score for blocked file detected.
-* `command_blocked` - Threat weight score for blocked command detected.
-* `oversized` - Threat weight score for oversized file detected.
-* `virus_scan_error` - Threat weight score for virus (scan error) detected.
-* `switch_proto` - Threat weight score for switch proto detected.
-* `mimefragmented` - Threat weight score for mimefragmented detected.
-* `virus_file_type_executable` - Threat weight score for virus (filetype executable) detected.
-* `virus_outbreak_prevention` - Threat weight score for virus (outbreak prevention) event.
-* `botnet_connection` - Threat weight score for detected botnet connections.
-* `content_disarm` - Threat weight score for virus (content disarm) detected.
-* `malware_list` - Threat weight score for virus (malware list) detected.
-* `fsa_malicious` - Threat weight score for FortiSandbox malicious malware detected.
-* `fsa_high_risk` - Threat weight score for FortiSandbox high risk malware detected.
-* `fsa_medium_risk` - Threat weight score for FortiSandbox medium risk malware detected.
+* `virus_infected` - Threat weight score for virus (infected) detected. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
+* `file_blocked` - Threat weight score for blocked file detected. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
+* `command_blocked` - Threat weight score for blocked command detected. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
+* `oversized` - Threat weight score for oversized file detected. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
+* `virus_scan_error` - Threat weight score for virus (scan error) detected. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
+* `switch_proto` - Threat weight score for switch proto detected. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
+* `mimefragmented` - Threat weight score for mimefragmented detected. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
+* `virus_file_type_executable` - Threat weight score for virus (filetype executable) detected. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
+* `virus_outbreak_prevention` - Threat weight score for virus (outbreak prevention) event. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
+* `botnet_connection` - Threat weight score for detected botnet connections. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
+* `content_disarm` - Threat weight score for virus (content disarm) detected. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
+* `malware_list` - Threat weight score for virus (malware list) detected. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
+* `fsa_malicious` - Threat weight score for FortiSandbox malicious malware detected. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
+* `fsa_high_risk` - Threat weight score for FortiSandbox high risk malware detected. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
+* `fsa_medium_risk` - Threat weight score for FortiSandbox medium risk malware detected. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
 
 The `ips` block supports:
 
-* `info_severity` - Threat weight score for IPS info severity events.
-* `low_severity` - Threat weight score for IPS low severity events.
-* `medium_severity` - Threat weight score for IPS medium severity events.
-* `high_severity` - Threat weight score for IPS high severity events.
-* `critical_severity` - Threat weight score for IPS critical severity events.
+* `info_severity` - Threat weight score for IPS info severity events. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
+* `low_severity` - Threat weight score for IPS low severity events. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
+* `medium_severity` - Threat weight score for IPS medium severity events. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
+* `high_severity` - Threat weight score for IPS high severity events. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
+* `critical_severity` - Threat weight score for IPS critical severity events. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
 
 The `web` block supports:
 
 * `id` - Entry ID.
 * `category` - Threat weight score for web category filtering matches.
-* `level` - Threat weight score for web category filtering matches.
+* `level` - Threat weight score for web category filtering matches. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
 
 The `geolocation` block supports:
 
 * `id` - Entry ID.
 * `country` - Country code.
-* `level` - Threat weight score for Geolocation-based events.
+* `level` - Threat weight score for Geolocation-based events. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
 
 The `application` block supports:
 
 * `id` - Entry ID.
 * `category` - Application category.
-* `level` - Threat weight score for Application events.
+* `level` - Threat weight score for Application events. Valid values: `disable`, `low`, `medium`, `high`, `critical`.
 
 
 ## Attribute Reference
