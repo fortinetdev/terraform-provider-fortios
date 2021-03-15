@@ -23,9 +23,9 @@ resource "fortios_log_guidisplay" "trname" {
 
 The following arguments are supported:
 
-* `resolve_hosts` - Enable/disable resolving IP addresses to hostname in log messages on the GUI using reverse DNS lookup
-* `resolve_apps` - Resolve unknown applications on the GUI using Fortinet's remote application database.
-* `fortiview_unscanned_apps` - Enable/disable showing unscanned traffic in FortiView application charts.
+* `resolve_hosts` - Enable/disable resolving IP addresses to hostname in log messages on the GUI using reverse DNS lookup Valid values: `enable`, `disable`.
+* `resolve_apps` - Resolve unknown applications on the GUI using Fortinet's remote application database. Valid values: `enable`, `disable`.
+* `fortiview_unscanned_apps` - Enable/disable showing unscanned traffic in FortiView application charts. Valid values: `enable`, `disable`.
 
 
 ## Attribute Reference
