@@ -51,22 +51,22 @@ The `bookmarks` block supports:
 * `additional_params` - Additional parameters.
 * `listening_port` - Listening port (0 - 65535).
 * `remote_port` - Remote port (0 - 65535).
-* `show_status_window` - Enable/disable showing of status window.
+* `show_status_window` - Enable/disable showing of status window. Valid values: `enable`, `disable`.
 * `description` - Description.
 * `server_layout` - Server side keyboard layout.
-* `security` - Security mode for RDP connection.
+* `security` - Security mode for RDP connection. Valid values: `rdp`, `nla`, `tls`, `any`.
 * `preconnection_id` - The numeric ID of the RDP source (0-2147483648).
 * `preconnection_blob` - An arbitrary string which identifies the RDP source.
 * `load_balancing_info` - The load balancing information or cookie which should be provided to the connection broker.
 * `port` - Remote port.
 * `logon_user` - Logon user.
 * `logon_password` - Logon password.
-* `sso` - Single Sign-On.
+* `sso` - Single Sign-On. Valid values: `disable`, `static`, `auto`.
 * `form_data` - Form data. The structure of `form_data` block is documented below.
-* `sso_credential` - Single sign-on credentials.
+* `sso_credential` - Single sign-on credentials. Valid values: `sslvpn-login`, `alternative`.
 * `sso_username` - SSO user name.
 * `sso_password` - SSO password.
-* `sso_credential_sent_once` - Single sign-on credentials are only sent once to remote server.
+* `sso_credential_sent_once` - Single sign-on credentials are only sent once to remote server. Valid values: `enable`, `disable`.
 
 The `form_data` block supports:
 
