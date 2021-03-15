@@ -23,7 +23,7 @@ resource "fortios_switchcontroller_switchprofile" "trname" {
 The following arguments are supported:
 
 * `name` - FortiSwitch Profile name.
-* `login_passwd_override` - Enable/disable overriding the admin administrator password for a managed FortiSwitch with the FortiGate admin administrator account password.
+* `login_passwd_override` - Enable/disable overriding the admin administrator password for a managed FortiSwitch with the FortiGate admin administrator account password. Valid values: `enable`, `disable`.
 * `login_passwd` - Login password of managed FortiSwitch.
 
 
