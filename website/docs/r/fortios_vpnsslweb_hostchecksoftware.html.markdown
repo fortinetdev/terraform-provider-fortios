@@ -24,8 +24,8 @@ resource "fortios_vpnsslweb_hostchecksoftware" "trname" {
 The following arguments are supported:
 
 * `name` - Name.
-* `os_type` - OS type.
-* `type` - Type.
+* `os_type` - OS type. Valid values: `windows`, `macos`.
+* `type` - Type. Valid values: `av`, `fw`.
 * `version` - Version.
 * `guid` - Globally unique ID.
 * `check_item_list` - Check item list. The structure of `check_item_list` block is documented below.
@@ -34,8 +34,8 @@ The following arguments are supported:
 The `check_item_list` block supports:
 
 * `id` - ID (0 - 4294967295).
-* `action` - Action.
-* `type` - Type.
+* `action` - Action. Valid values: `require`, `deny`.
+* `type` - Type. Valid values: `file`, `registry`, `process`.
 * `target` - Target.
 * `version` - Version.
 * `md5s` - MD5 checksum. The structure of `md5s` block is documented below.
