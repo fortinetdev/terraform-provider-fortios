@@ -13,7 +13,7 @@ Global PTP settings. Applies to FortiOS Version `>= 6.4.2`.
 
 The following arguments are supported:
 
-* `mode` - Enable/disable PTP mode.
+* `mode` - Enable/disable PTP mode. Valid values: `disable`, `transparent-e2e`, `transparent-p2p`.
 
 
 ## Attribute Reference
