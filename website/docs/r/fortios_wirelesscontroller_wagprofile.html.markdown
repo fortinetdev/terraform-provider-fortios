@@ -15,7 +15,7 @@ The following arguments are supported:
 
 * `name` - Tunnel profile name.
 * `comment` - Comment.
-* `tunnel_type` - Tunnel type.
+* `tunnel_type` - Tunnel type. Valid values: `l2tpv3`, `gre`.
 * `wag_ip` - IP Address of the wireless access gateway.
 * `wag_port` - UDP port of the wireless access gateway.
 * `ping_interval` - Interval between two tunnel monitoring echo packets (1 - 65535 sec, default = 1).
