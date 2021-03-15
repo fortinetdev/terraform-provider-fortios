@@ -36,27 +36,27 @@ The following arguments are supported:
 * `mailto1` - Email address to send alert email to (usually a system administrator) (max. 64 characters).
 * `mailto2` - Optional second email address to send alert email to (max. 64 characters).
 * `mailto3` - Optional third email address to send alert email to (max. 64 characters).
-* `filter_mode` - How to filter log messages that are sent to alert emails.
+* `filter_mode` - How to filter log messages that are sent to alert emails. Valid values: `category`, `threshold`.
 * `email_interval` - Interval between sending alert emails (1 - 99999 min, default = 5).
-* `IPS_logs` - Enable/disable IPS logs in alert email.
-* `firewall_authentication_failure_logs` - Enable/disable firewall authentication failure logs in alert email.
-* `HA_logs` - Enable/disable HA logs in alert email.
-* `IPsec_errors_logs` - Enable/disable IPsec error logs in alert email.
-* `FDS_update_logs` - Enable/disable FortiGuard update logs in alert email.
-* `PPP_errors_logs` - Enable/disable PPP error logs in alert email.
-* `sslvpn_authentication_errors_logs` - Enable/disable SSL-VPN authentication error logs in alert email.
-* `antivirus_logs` - Enable/disable antivirus logs in alert email.
-* `webfilter_logs` - Enable/disable web filter logs in alert email.
-* `configuration_changes_logs` - Enable/disable configuration change logs in alert email.
-* `violation_traffic_logs` - Enable/disable violation traffic logs in alert email.
-* `admin_login_logs` - Enable/disable administrator login/logout logs in alert email.
-* `FDS_license_expiring_warning` - Enable/disable FortiGuard license expiration warnings in alert email.
-* `log_disk_usage_warning` - Enable/disable disk usage warnings in alert email.
-* `fortiguard_log_quota_warning` - Enable/disable FortiCloud log quota warnings in alert email.
-* `amc_interface_bypass_mode` - Enable/disable Fortinet Advanced Mezzanine Card (AMC) interface bypass mode logs in alert email.
-* `FIPS_CC_errors` - Enable/disable FIPS and Common Criteria error logs in alert email.
-* `FSSO_disconnect_logs` - Enable/disable logging of FSSO collector agent disconnect.
-* `ssh_logs` - Enable/disable SSH logs in alert email.
+* `IPS_logs` - Enable/disable IPS logs in alert email. Valid values: `enable`, `disable`.
+* `firewall_authentication_failure_logs` - Enable/disable firewall authentication failure logs in alert email. Valid values: `enable`, `disable`.
+* `HA_logs` - Enable/disable HA logs in alert email. Valid values: `enable`, `disable`.
+* `IPsec_errors_logs` - Enable/disable IPsec error logs in alert email. Valid values: `enable`, `disable`.
+* `FDS_update_logs` - Enable/disable FortiGuard update logs in alert email. Valid values: `enable`, `disable`.
+* `PPP_errors_logs` - Enable/disable PPP error logs in alert email. Valid values: `enable`, `disable`.
+* `sslvpn_authentication_errors_logs` - Enable/disable SSL-VPN authentication error logs in alert email. Valid values: `enable`, `disable`.
+* `antivirus_logs` - Enable/disable antivirus logs in alert email. Valid values: `enable`, `disable`.
+* `webfilter_logs` - Enable/disable web filter logs in alert email. Valid values: `enable`, `disable`.
+* `configuration_changes_logs` - Enable/disable configuration change logs in alert email. Valid values: `enable`, `disable`.
+* `violation_traffic_logs` - Enable/disable violation traffic logs in alert email. Valid values: `enable`, `disable`.
+* `admin_login_logs` - Enable/disable administrator login/logout logs in alert email. Valid values: `enable`, `disable`.
+* `FDS_license_expiring_warning` - Enable/disable FortiGuard license expiration warnings in alert email. Valid values: `enable`, `disable`.
+* `log_disk_usage_warning` - Enable/disable disk usage warnings in alert email. Valid values: `enable`, `disable`.
+* `fortiguard_log_quota_warning` - Enable/disable FortiCloud log quota warnings in alert email. Valid values: `enable`, `disable`.
+* `amc_interface_bypass_mode` - Enable/disable Fortinet Advanced Mezzanine Card (AMC) interface bypass mode logs in alert email. Valid values: `enable`, `disable`.
+* `FIPS_CC_errors` - Enable/disable FIPS and Common Criteria error logs in alert email. Valid values: `enable`, `disable`.
+* `FSSO_disconnect_logs` - Enable/disable logging of FSSO collector agent disconnect. Valid values: `enable`, `disable`.
+* `ssh_logs` - Enable/disable SSH logs in alert email. Valid values: `enable`, `disable`.
 * `FDS_license_expiring_days` - Number of days to send alert email prior to FortiGuard license expiration (1 - 100 days, default = 100).
 * `local_disk_usage` - Disk usage percentage at which to send alert email (1 - 99 percent, default = 75).
 * `emergency_interval` - Emergency alert interval in minutes.
@@ -67,7 +67,7 @@ The following arguments are supported:
 * `notification_interval` - Notification alert interval in minutes.
 * `information_interval` - Information alert interval in minutes.
 * `debug_interval` - Debug alert interval in minutes.
-* `severity` - Lowest severity level to log.
+* `severity` - Lowest severity level to log. Valid values: `emergency`, `alert`, `critical`, `error`, `warning`, `notification`, `information`, `debug`.
 
 
 ## Attribute Reference
