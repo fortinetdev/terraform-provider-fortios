@@ -34,14 +34,14 @@ The following arguments are supported:
 
 * `name` - Name of table.
 * `comment` - Comment about this CDN-rule.
-* `status` - Enable/disable WAN optimization content delivery network rules.
+* `status` - Enable/disable WAN optimization content delivery network rules. Valid values: `enable`, `disable`.
 * `host_domain_name_suffix` - Suffix portion of the fully qualified domain name (eg. fortinet.com in "www.fortinet.com"). The structure of `host_domain_name_suffix` block is documented below.
-* `category` - Content delivery network rule category.
-* `request_cache_control` - Enable/disable HTTP request cache control.
-* `response_cache_control` - Enable/disable HTTP response cache control.
-* `response_expires` - Enable/disable HTTP response cache expires.
-* `text_response_vcache` - Enable/disable caching of text responses.
-* `updateserver` - Enable/disable update server.
+* `category` - Content delivery network rule category. Valid values: `vcache`, `youtube`.
+* `request_cache_control` - Enable/disable HTTP request cache control. Valid values: `enable`, `disable`.
+* `response_cache_control` - Enable/disable HTTP response cache control. Valid values: `enable`, `disable`.
+* `response_expires` - Enable/disable HTTP response cache expires. Valid values: `enable`, `disable`.
+* `text_response_vcache` - Enable/disable caching of text responses. Valid values: `enable`, `disable`.
+* `updateserver` - Enable/disable update server. Valid values: `enable`, `disable`.
 * `rules` - WAN optimization content delivery network rule entries. The structure of `rules` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
@@ -52,8 +52,8 @@ The `host_domain_name_suffix` block supports:
 The `rules` block supports:
 
 * `name` - WAN optimization content delivery network rule name.
-* `match_mode` - Match criteria for collecting content ID.
-* `skip_rule_mode` - Skip mode when evaluating skip-rules.
+* `match_mode` - Match criteria for collecting content ID. Valid values: `all`, `any`.
+* `skip_rule_mode` - Skip mode when evaluating skip-rules. Valid values: `all`, `any`.
 * `match_entries` - List of entries to match. The structure of `match_entries` block is documented below.
 * `skip_entries` - List of entries to skip. The structure of `skip_entries` block is documented below.
 * `content_id` - Content ID settings. The structure of `content_id` block is documented below.
@@ -61,7 +61,7 @@ The `rules` block supports:
 The `match_entries` block supports:
 
 * `id` - Rule ID.
-* `target` - Option in HTTP header or URL parameter to match.
+* `target` - Option in HTTP header or URL parameter to match. Valid values: `path`, `parameter`, `referrer`, `youtube-map`, `youtube-id`, `youku-id`.
 * `pattern` - Pattern string for matching target (Referrer or URL pattern, eg. "a", "a*c", "*a*", "a*c*e", and "*"). The structure of `pattern` block is documented below.
 
 The `pattern` block supports:
@@ -71,7 +71,7 @@ The `pattern` block supports:
 The `skip_entries` block supports:
 
 * `id` - Rule ID.
-* `target` - Option in HTTP header or URL parameter to match.
+* `target` - Option in HTTP header or URL parameter to match. Valid values: `path`, `parameter`, `referrer`, `youtube-map`, `youtube-id`, `youku-id`.
 * `pattern` - Pattern string for matching target (Referrer or URL pattern, eg. "a", "a*c", "*a*", "a*c*e", and "*"). The structure of `pattern` block is documented below.
 
 The `pattern` block supports:
@@ -80,13 +80,13 @@ The `pattern` block supports:
 
 The `content_id` block supports:
 
-* `target` - Option in HTTP header or URL parameter to match.
+* `target` - Option in HTTP header or URL parameter to match. Valid values: `path`, `parameter`, `referrer`, `youtube-map`, `youtube-id`, `youku-id`, `hls-manifest`, `dash-manifest`, `hls-fragment`, `dash-fragment`.
 * `start_str` - String from which to start search.
 * `start_skip` - Number of characters in URL to skip after start-str has been matched.
-* `start_direction` - Search direction from start-str match.
+* `start_direction` - Search direction from start-str match. Valid values: `forward`, `backward`.
 * `end_str` - String from which to end search.
 * `end_skip` - Number of characters in URL to skip after end-str has been matched.
-* `end_direction` - Search direction from end-str match.
+* `end_direction` - Search direction from end-str match. Valid values: `forward`, `backward`.
 * `range_str` - Name of content ID within the start string and end string.
 
 
