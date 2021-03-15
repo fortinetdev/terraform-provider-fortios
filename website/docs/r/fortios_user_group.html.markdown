@@ -35,27 +35,27 @@ The following arguments are supported:
 
 * `name` - Group name.
 * `fosid` - Group ID.
-* `group_type` - Set the group to be for firewall authentication, FSSO, RSSO, or guest users.
+* `group_type` - Set the group to be for firewall authentication, FSSO, RSSO, or guest users. Valid values: `firewall`, `fsso-service`, `rsso`, `guest`.
 * `authtimeout` - Authentication timeout in minutes for this user group. 0 to use the global user setting auth-timeout.
-* `auth_concurrent_override` - Enable/disable overriding the global number of concurrent authentication sessions for this user group.
+* `auth_concurrent_override` - Enable/disable overriding the global number of concurrent authentication sessions for this user group. Valid values: `enable`, `disable`.
 * `auth_concurrent_value` - Maximum number of concurrent authenticated connections per user (0 - 100).
 * `http_digest_realm` - Realm attribute for MD5-digest authentication.
 * `sso_attribute_value` - Name of the RADIUS user group that this local user group represents.
 * `member` - Names of users, peers, LDAP severs, or RADIUS servers to add to the user group. The structure of `member` block is documented below.
 * `match` - Group matches. The structure of `match` block is documented below.
-* `user_id` - Guest user ID type.
-* `password` - Guest user password type.
-* `user_name` - Enable/disable the guest user name entry.
-* `sponsor` - Set the action for the sponsor guest user field.
-* `company` - Set the action for the company guest user field.
-* `email` - Enable/disable the guest user email address field.
-* `mobile_phone` - Enable/disable the guest user mobile phone number field.
-* `sms_server` - Send SMS through FortiGuard or other external server.
+* `user_id` - Guest user ID type. Valid values: `email`, `auto-generate`, `specify`.
+* `password` - Guest user password type. Valid values: `auto-generate`, `specify`, `disable`.
+* `user_name` - Enable/disable the guest user name entry. Valid values: `disable`, `enable`.
+* `sponsor` - Set the action for the sponsor guest user field. Valid values: `optional`, `mandatory`, `disabled`.
+* `company` - Set the action for the company guest user field. Valid values: `optional`, `mandatory`, `disabled`.
+* `email` - Enable/disable the guest user email address field. Valid values: `disable`, `enable`.
+* `mobile_phone` - Enable/disable the guest user mobile phone number field. Valid values: `disable`, `enable`.
+* `sms_server` - Send SMS through FortiGuard or other external server. Valid values: `fortiguard`, `custom`.
 * `sms_custom_server` - SMS server.
-* `expire_type` - Determine when the expiration countdown begins.
+* `expire_type` - Determine when the expiration countdown begins. Valid values: `immediately`, `first-successful-login`.
 * `expire` - Time in seconds before guest user accounts expire. (1 - 31536000 sec)
 * `max_accounts` - Maximum number of guest accounts that can be created for this group (0 means unlimited).
-* `multiple_guest_add` - Enable/disable addition of multiple guests.
+* `multiple_guest_add` - Enable/disable addition of multiple guests. Valid values: `disable`, `enable`.
 * `guest` - Guest User. The structure of `guest` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
