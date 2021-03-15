@@ -13,7 +13,7 @@ Configure system-wide switch controller settings.
 
 The following arguments are supported:
 
-* `parallel_process_override` - Enable/disable parallel process override.
+* `parallel_process_override` - Enable/disable parallel process override. Valid values: `disable`, `enable`.
 * `parallel_process` - Maximum number of parallel processes (1 - 300, default = 1).
 * `data_sync_interval` - Time interval between collection of switch data (30 - 1800 sec, default = 60, 0 = disable).
 * `iot_weight_threshold` - MAC entry's confidence value. Value is re-queried when below this value (default = 1, 0 = disable).
