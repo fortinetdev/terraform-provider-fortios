@@ -83,26 +83,26 @@ The following arguments are supported:
 * `dstintf` - (Required) Outgoing (egress) interface. The structure of `dstintf` block is documented below.
 * `srcaddr` - (Required) Source address and address group names. The structure of `srcaddr` block is documented below.
 * `dstaddr` - (Required) Destination address and address group names. The structure of `dstaddr` block is documented below.
-* `action` - Policy action (allow/deny/ipsec).
-* `firewall_session_dirty` - How to handle sessions if the configuration of this firewall policy changes.
-* `status` - Enable or disable this policy.
+* `action` - Policy action (allow/deny/ipsec). Valid values: `accept`, `deny`, `ipsec`.
+* `firewall_session_dirty` - How to handle sessions if the configuration of this firewall policy changes. Valid values: `check-all`, `check-new`.
+* `status` - Enable or disable this policy. Valid values: `enable`, `disable`.
 * `vlan_cos_fwd` - VLAN forward direction user priority: 255 passthrough, 0 lowest, 7 highest
 * `vlan_cos_rev` - VLAN reverse direction user priority: 255 passthrough, 0 lowest, 7 highest
 * `schedule` - (Required) Schedule name.
 * `service` - Service and service group names. The structure of `service` block is documented below.
 * `tos` - ToS (Type of Service) value used for comparison.
 * `tos_mask` - Non-zero bit positions are used for comparison while zero bit positions are ignored.
-* `tos_negate` - Enable negated TOS match.
-* `tcp_session_without_syn` - Enable/disable creation of TCP session without SYN flag.
-* `anti_replay` - Enable/disable anti-replay check.
-* `utm_status` - Enable AV/web/ips protection profile.
-* `inspection_mode` - Policy inspection mode (Flow/proxy). Default is Flow mode.
-* `webcache` - Enable/disable web cache.
-* `webcache_https` - Enable/disable web cache for HTTPS.
-* `http_policy_redirect` - Redirect HTTP(S) traffic to matching transparent web proxy policy.
-* `ssh_policy_redirect` - Redirect SSH traffic to matching transparent proxy policy.
+* `tos_negate` - Enable negated TOS match. Valid values: `enable`, `disable`.
+* `tcp_session_without_syn` - Enable/disable creation of TCP session without SYN flag. Valid values: `all`, `data-only`, `disable`.
+* `anti_replay` - Enable/disable anti-replay check. Valid values: `enable`, `disable`.
+* `utm_status` - Enable AV/web/ips protection profile. Valid values: `enable`, `disable`.
+* `inspection_mode` - Policy inspection mode (Flow/proxy). Default is Flow mode. Valid values: `proxy`, `flow`.
+* `webcache` - Enable/disable web cache. Valid values: `enable`, `disable`.
+* `webcache_https` - Enable/disable web cache for HTTPS. Valid values: `disable`, `enable`.
+* `http_policy_redirect` - Redirect HTTP(S) traffic to matching transparent web proxy policy. Valid values: `enable`, `disable`.
+* `ssh_policy_redirect` - Redirect SSH traffic to matching transparent proxy policy. Valid values: `enable`, `disable`.
 * `webproxy_profile` - Webproxy profile name.
-* `profile_type` - Determine whether the firewall policy allows security profile groups or single profiles only.
+* `profile_type` - Determine whether the firewall policy allows security profile groups or single profiles only. Valid values: `single`, `group`.
 * `profile_group` - Name of profile group.
 * `av_profile` - Name of an existing Antivirus profile.
 * `webfilter_profile` - Name of an existing Web filter profile.
@@ -119,9 +119,9 @@ The following arguments are supported:
 * `ssh_filter_profile` - Name of an existing SSH filter profile.
 * `profile_protocol_options` - Name of an existing Protocol options profile.
 * `ssl_ssh_profile` - Name of an existing SSL SSH profile.
-* `logtraffic` - Enable or disable logging. Log all sessions or security profile sessions.
-* `logtraffic_start` - Record logs when a session starts.
-* `auto_asic_offload` - Enable/disable policy traffic ASIC offloading.
+* `logtraffic` - Enable or disable logging. Log all sessions or security profile sessions. Valid values: `all`, `utm`, `disable`.
+* `logtraffic_start` - Record logs when a session starts. Valid values: `enable`, `disable`.
+* `auto_asic_offload` - Enable/disable policy traffic ASIC offloading. Valid values: `enable`, `disable`.
 * `webproxy_forward_server` - Web proxy forward server name.
 * `traffic_shaper` - Reverse traffic shaper.
 * `traffic_shaper_reverse` - Reverse traffic shaper.
@@ -130,19 +130,19 @@ The following arguments are supported:
 * `app_category` - Application category ID list. The structure of `app_category` block is documented below.
 * `url_category` - URL category ID list. The structure of `url_category` block is documented below.
 * `app_group` - Application group names. The structure of `app_group` block is documented below.
-* `nat` - Enable/disable source NAT.
-* `fixedport` - Enable to prevent source NAT from changing a session's source port.
-* `ippool` - Enable to use IP Pools for source NAT.
+* `nat` - Enable/disable source NAT. Valid values: `enable`, `disable`.
+* `fixedport` - Enable to prevent source NAT from changing a session's source port. Valid values: `enable`, `disable`.
+* `ippool` - Enable to use IP Pools for source NAT. Valid values: `enable`, `disable`.
 * `poolname` - IP Pool names. The structure of `poolname` block is documented below.
 * `session_ttl` - Session TTL in seconds for sessions accepted by this policy. 0 means use the system default session TTL.
-* `inbound` - Policy-based IPsec VPN: only traffic from the remote network can initiate a VPN.
-* `outbound` - Policy-based IPsec VPN: only traffic from the internal network can initiate a VPN.
-* `natinbound` - Policy-based IPsec VPN: apply destination NAT to inbound traffic.
-* `natoutbound` - Policy-based IPsec VPN: apply source NAT to outbound traffic.
-* `send_deny_packet` - Enable/disable return of deny-packet.
+* `inbound` - Policy-based IPsec VPN: only traffic from the remote network can initiate a VPN. Valid values: `enable`, `disable`.
+* `outbound` - Policy-based IPsec VPN: only traffic from the internal network can initiate a VPN. Valid values: `enable`, `disable`.
+* `natinbound` - Policy-based IPsec VPN: apply destination NAT to inbound traffic. Valid values: `enable`, `disable`.
+* `natoutbound` - Policy-based IPsec VPN: apply source NAT to outbound traffic. Valid values: `enable`, `disable`.
+* `send_deny_packet` - Enable/disable return of deny-packet. Valid values: `enable`, `disable`.
 * `vpntunnel` - Policy-based IPsec VPN: name of the IPsec VPN Phase 1.
-* `diffserv_forward` - Enable to change packet's DiffServ values to the specified diffservcode-forward value.
-* `diffserv_reverse` - Enable to change packet's reverse (reply) DiffServ values to the specified diffservcode-rev value.
+* `diffserv_forward` - Enable to change packet's DiffServ values to the specified diffservcode-forward value. Valid values: `enable`, `disable`.
+* `diffserv_reverse` - Enable to change packet's reverse (reply) DiffServ values to the specified diffservcode-rev value. Valid values: `enable`, `disable`.
 * `diffservcode_forward` - Change packet's DiffServ to this value.
 * `diffservcode_rev` - Change packet's reverse (reply) DiffServ to this value.
 * `tcp_mss_sender` - Sender TCP maximum segment size (MSS).
@@ -150,20 +150,20 @@ The following arguments are supported:
 * `comments` - Comment.
 * `label` - Label for the policy that appears when the GUI is in Section View mode.
 * `global_label` - Label for the policy that appears when the GUI is in Global View mode.
-* `rsso` - Enable/disable RADIUS single sign-on (RSSO).
+* `rsso` - Enable/disable RADIUS single sign-on (RSSO). Valid values: `enable`, `disable`.
 * `custom_log_fields` - Log field index numbers to append custom log fields to log messages for this policy. The structure of `custom_log_fields` block is documented below.
 * `replacemsg_override_group` - Override the default replacement message group for this policy.
-* `srcaddr_negate` - When enabled srcaddr specifies what the source address must NOT be.
-* `dstaddr_negate` - When enabled dstaddr specifies what the destination address must NOT be.
-* `service_negate` - When enabled service specifies what the service must NOT be.
+* `srcaddr_negate` - When enabled srcaddr specifies what the source address must NOT be. Valid values: `enable`, `disable`.
+* `dstaddr_negate` - When enabled dstaddr specifies what the destination address must NOT be. Valid values: `enable`, `disable`.
+* `service_negate` - When enabled service specifies what the service must NOT be. Valid values: `enable`, `disable`.
 * `groups` - Names of user groups that can authenticate with this policy. The structure of `groups` block is documented below.
 * `users` - Names of individual users that can authenticate with this policy. The structure of `users` block is documented below.
 * `devices` - Names of devices or device groups that can be matched by the policy. The structure of `devices` block is documented below.
-* `timeout_send_rst` - Enable/disable sending RST packets when TCP sessions expire.
+* `timeout_send_rst` - Enable/disable sending RST packets when TCP sessions expire. Valid values: `enable`, `disable`.
 * `decrypted_traffic_mirror` - Decrypted traffic mirror.
-* `ssl_mirror` - Enable to copy decrypted SSL traffic to a FortiGate interface (called SSL mirroring).
+* `ssl_mirror` - Enable to copy decrypted SSL traffic to a FortiGate interface (called SSL mirroring). Valid values: `enable`, `disable`.
 * `ssl_mirror_intf` - SSL mirror interface name. The structure of `ssl_mirror_intf` block is documented below.
-* `dsri` - Enable DSRI to ignore HTTP server responses.
+* `dsri` - Enable DSRI to ignore HTTP server responses. Valid values: `enable`, `disable`.
 * `vlan_filter` - Set VLAN filters.
 * `fsso_groups` - Names of FSSO groups. The structure of `fsso_groups` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
