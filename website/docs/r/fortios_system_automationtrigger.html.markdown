@@ -29,14 +29,14 @@ resource "fortios_system_automationtrigger" "trname" {
 The following arguments are supported:
 
 * `name` - Name.
-* `trigger_type` - Trigger type.
+* `trigger_type` - Trigger type. Valid values: `event-based`, `scheduled`.
 * `event_type` - Event type.
 * `license_type` - License type.
-* `ioc_level` - IOC threat level.
-* `report_type` - Security Rating report.
+* `ioc_level` - IOC threat level. Valid values: `medium`, `high`.
+* `report_type` - Security Rating report. Valid values: `PostureReport`, `CoverageReport`, `OptimizationReport`.
 * `logid` - Log ID to trigger event.
-* `trigger_frequency` - Scheduled trigger frequency (default = daily).
-* `trigger_weekday` - Day of week for trigger.
+* `trigger_frequency` - Scheduled trigger frequency (default = daily). Valid values: `hourly`, `daily`, `weekly`, `monthly`.
+* `trigger_weekday` - Day of week for trigger. Valid values: `sunday`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`.
 * `trigger_day` - Day within a month to trigger.
 * `trigger_hour` - Hour of the day on which to trigger (0 - 23, default = 1).
 * `trigger_minute` - Minute of the hour on which to trigger (0 - 59, 60 to randomize).
