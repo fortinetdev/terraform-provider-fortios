@@ -37,24 +37,24 @@ resource "fortios_switchcontrollersecuritypolicy_8021X" "trname" {
 The following arguments are supported:
 
 * `name` - Policy name.
-* `security_mode` - Port or MAC based 802.1X security mode.
+* `security_mode` - Port or MAC based 802.1X security mode. Valid values: `802.1X`, `802.1X-mac-based`.
 * `user_group` - Name of user-group to assign to this MAC Authentication Bypass (MAB) policy. The structure of `user_group` block is documented below.
-* `mac_auth_bypass` - Enable/disable MAB for this policy.
-* `open_auth` - Enable/disable open authentication for this policy.
-* `eap_passthru` - Enable/disable EAP pass-through mode, allowing protocols (such as LLDP) to pass through ports for more flexible authentication.
-* `eap_auto_untagged_vlans` - Enable/disable automatic inclusion of untagged VLANs.
-* `guest_vlan` - Enable the guest VLAN feature to allow limited access to non-802.1X-compliant clients.
+* `mac_auth_bypass` - Enable/disable MAB for this policy. Valid values: `disable`, `enable`.
+* `open_auth` - Enable/disable open authentication for this policy. Valid values: `disable`, `enable`.
+* `eap_passthru` - Enable/disable EAP pass-through mode, allowing protocols (such as LLDP) to pass through ports for more flexible authentication. Valid values: `disable`, `enable`.
+* `eap_auto_untagged_vlans` - Enable/disable automatic inclusion of untagged VLANs. Valid values: `disable`, `enable`.
+* `guest_vlan` - Enable the guest VLAN feature to allow limited access to non-802.1X-compliant clients. Valid values: `disable`, `enable`.
 * `guest_vlanid` - Guest VLAN ID.
 * `guest_vlan_id` - Guest VLAN name.
 * `guest_auth_delay` - Guest authentication delay (1 - 900  sec, default = 30).
-* `auth_fail_vlan` - Enable to allow limited access to clients that cannot authenticate.
+* `auth_fail_vlan` - Enable to allow limited access to clients that cannot authenticate. Valid values: `disable`, `enable`.
 * `auth_fail_vlanid` - VLAN ID on which authentication failed.
 * `auth_fail_vlan_id` - VLAN ID on which authentication failed.
-* `framevid_apply` - Enable/disable the capability to apply the EAP/MAB frame VLAN to the port native VLAN.
-* `radius_timeout_overwrite` - Enable to override the global RADIUS session timeout.
-* `policy_type` - Policy type.
+* `framevid_apply` - Enable/disable the capability to apply the EAP/MAB frame VLAN to the port native VLAN. Valid values: `disable`, `enable`.
+* `radius_timeout_overwrite` - Enable to override the global RADIUS session timeout. Valid values: `disable`, `enable`.
+* `policy_type` - Policy type. Valid values: `802.1X`.
 * `authserver_timeout_period` - Authentication server timeout period (3 - 15 sec, default = 3).
-* `authserver_timeout_vlan` - Enable/disable the authentication server timeout VLAN to allow limited access when RADIUS is unavailable. 
+* `authserver_timeout_vlan` - Enable/disable the authentication server timeout VLAN to allow limited access when RADIUS is unavailable.  Valid values: `disable`, `enable`.
 * `authserver_timeout_vlanid` - Authentication server timeout VLAN name.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
