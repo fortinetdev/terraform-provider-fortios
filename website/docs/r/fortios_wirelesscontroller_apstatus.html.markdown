@@ -16,7 +16,7 @@ The following arguments are supported:
 * `fosid` - AP ID.
 * `bssid` - Access Point's (AP's) BSSID.
 * `ssid` - Access Point's (AP's) SSID.
-* `status` - Access Point's (AP's) status: rogue, accepted, or supressed.
+* `status` - Access Point's (AP's) status: rogue, accepted, or supressed. Valid values: `rogue`, `accepted`, `suppressed`.
 
 
 ## Attribute Reference
