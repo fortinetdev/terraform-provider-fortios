@@ -9,6 +9,48 @@ description: |-
 # fortios_firewall_sslsshprofile
 Configure SSL/SSH protocol options.
 
+## Example Usage
+
+```hcl
+resource "fortios_firewall_sslsshprofile" "t1" {
+  name = "test1"
+
+  ssl {
+    inspect_all = "disable"
+  }
+
+  https {
+    ports = "443 127 422 392"
+  }
+  ftps {
+    ports = 990
+  }
+  imaps {
+    ports = "993 1123"
+  }
+  pop3s {
+    ports = 995
+  }
+  smtps {
+    ports = 465
+  }
+}
+
+
+resource "fortios_firewall_sslsshprofile" "t2" {
+  name = "test2"
+
+  ssl {
+    inspect_all = "deep-inspection"
+  }
+
+  https {
+    ports = 443
+  }
+}
+
+```
+
 ## Argument Reference
 
 The following arguments are supported:
