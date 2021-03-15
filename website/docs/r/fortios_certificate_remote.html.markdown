@@ -15,8 +15,8 @@ The following arguments are supported:
 
 * `name` - Name.
 * `remote` - Remote certificate.
-* `range` - Either the global or VDOM IP address range for the remote certificate.
-* `source` - Remote certificate source type.
+* `range` - Either the global or VDOM IP address range for the remote certificate. Valid values: `global`, `vdom`.
+* `source` - Remote certificate source type. Valid values: `factory`, `user`, `bundle`.
 
 
 ## Attribute Reference
