@@ -15,11 +15,11 @@ The following arguments are supported:
 
 * `account_id` - FortiCloud customer account ID.
 * `country` - Country or region in which the FortiGate is located. The country determines the 802.11 bands and channels that are available.
-* `duplicate_ssid` - Enable/disable allowing Virtual Access Points (VAPs) to use the same SSID name in the same VDOM.
-* `fapc_compatibility` - Enable/disable FAP-C series compatibility.
-* `wfa_compatibility` - Enable/disable WFA compatibility.
-* `phishing_ssid_detect` - Enable/disable phishing SSID detection.
-* `fake_ssid_action` - Actions taken for detected fake SSID.
+* `duplicate_ssid` - Enable/disable allowing Virtual Access Points (VAPs) to use the same SSID name in the same VDOM. Valid values: `enable`, `disable`.
+* `fapc_compatibility` - Enable/disable FAP-C series compatibility. Valid values: `enable`, `disable`.
+* `wfa_compatibility` - Enable/disable WFA compatibility. Valid values: `enable`, `disable`.
+* `phishing_ssid_detect` - Enable/disable phishing SSID detection. Valid values: `enable`, `disable`.
+* `fake_ssid_action` - Actions taken for detected fake SSID. Valid values: `log`, `suppress`.
 * `offending_ssid` - Configure offending SSID. The structure of `offending_ssid` block is documented below.
 * `device_weight` - Upper limit of confidence of device for identification (0 - 255, default = 1, 0 = disable).
 * `device_holdoff` - Lower limit of creation time of device for identification in minutes (0 - 60, default = 5).
@@ -32,7 +32,7 @@ The `offending_ssid` block supports:
 
 * `id` - ID.
 * `ssid_pattern` - Define offending SSID pattern (case insensitive), eg: word, word*, *word, wo*rd.
-* `action` - Actions taken for detected offending SSID.
+* `action` - Actions taken for detected offending SSID. Valid values: `log`, `suppress`.
 
 The `darrp_optimize_schedules` block supports:
 
