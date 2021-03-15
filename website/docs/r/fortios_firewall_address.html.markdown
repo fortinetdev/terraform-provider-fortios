@@ -34,7 +34,7 @@ The following arguments are supported:
 * `subnet` - IP address and subnet mask of address.
 * `type` - Type of address.
 * `sub_type` - Sub-type of address.
-* `clearpass_spt` - SPT (System Posture Token) value.
+* `clearpass_spt` - SPT (System Posture Token) value. Valid values: `unknown`, `healthy`, `quarantine`, `checkup`, `transient`, `infected`.
 * `start_mac` - First MAC address in the range.
 * `end_mac` - Last MAC address in the range.
 * `start_ip` - First IP address (inclusive) in the range for the address.
@@ -54,18 +54,18 @@ The following arguments are supported:
 * `sdn_tag` - SDN Tag.
 * `policy_group` - Policy group name.
 * `obj_tag` - Tag of dynamic address object.
-* `obj_type` - Object type.
+* `obj_type` - Object type. Valid values: `ip`, `mac`.
 * `comment` - Comment.
-* `visibility` - Enable/disable address visibility in the GUI.
+* `visibility` - Enable/disable address visibility in the GUI. Valid values: `enable`, `disable`.
 * `associated_interface` - Network interface associated with address.
 * `color` - Color of icon on the GUI.
 * `filter` - Match criteria filter.
-* `sdn_addr_type` - Type of addresses to collect.
-* `node_ip_only` - Enable/disable collection of node addresses only in Kubernetes.
+* `sdn_addr_type` - Type of addresses to collect. Valid values: `private`, `public`, `all`.
+* `node_ip_only` - Enable/disable collection of node addresses only in Kubernetes. Valid values: `enable`, `disable`.
 * `obj_id` - Object ID for NSX.
 * `list` - IP address list. The structure of `list` block is documented below.
 * `tagging` - Config object tagging. The structure of `tagging` block is documented below.
-* `allow_routing` - Enable/disable use of this address in the static route configuration.
+* `allow_routing` - Enable/disable use of this address in the static route configuration. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `fsso_group` block supports:
