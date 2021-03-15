@@ -33,7 +33,7 @@ The following arguments are supported:
 The `field` block supports:
 
 * `id` - Field ID (1 to number of columns in SQL result).
-* `type` - Field type.
+* `type` - Field type. Valid values: `text`, `integer`, `double`.
 * `name` - Name.
 * `displayname` - Display name.
 
@@ -42,7 +42,7 @@ The `parameters` block supports:
 * `id` - Parameter ID (1 to number of columns in SQL result).
 * `display_name` - Display name.
 * `field` - SQL field name.
-* `data_type` - Data type.
+* `data_type` - Data type. Valid values: `text`, `integer`, `double`, `long-integer`, `date-time`.
 
 
 ## Attribute Reference
