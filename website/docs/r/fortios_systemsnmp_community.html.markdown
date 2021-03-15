@@ -36,17 +36,17 @@ The following arguments are supported:
 
 * `fosid` - (Required) Community ID.
 * `name` - (Required) Community name.
-* `status` - Enable/disable this SNMP community.
+* `status` - Enable/disable this SNMP community. Valid values: `enable`, `disable`.
 * `hosts` - Configure IPv4 SNMP managers (hosts). The structure of `hosts` block is documented below.
 * `hosts6` - Configure IPv6 SNMP managers. The structure of `hosts6` block is documented below.
-* `query_v1_status` - Enable/disable SNMP v1 queries.
+* `query_v1_status` - Enable/disable SNMP v1 queries. Valid values: `enable`, `disable`.
 * `query_v1_port` - SNMP v1 query port (default = 161).
-* `query_v2c_status` - Enable/disable SNMP v2c queries.
+* `query_v2c_status` - Enable/disable SNMP v2c queries. Valid values: `enable`, `disable`.
 * `query_v2c_port` - SNMP v2c query port (default = 161).
-* `trap_v1_status` - Enable/disable SNMP v1 traps.
+* `trap_v1_status` - Enable/disable SNMP v1 traps. Valid values: `enable`, `disable`.
 * `trap_v1_lport` - SNMP v1 trap local port (default = 162).
 * `trap_v1_rport` - SNMP v1 trap remote port (default = 162).
-* `trap_v2c_status` - Enable/disable SNMP v2c traps.
+* `trap_v2c_status` - Enable/disable SNMP v2c traps. Valid values: `enable`, `disable`.
 * `trap_v2c_lport` - SNMP v2c trap local port (default = 162).
 * `trap_v2c_rport` - SNMP v2c trap remote port (default = 162).
 * `events` - SNMP trap events.
@@ -57,16 +57,16 @@ The `hosts` block supports:
 * `id` - Host entry ID.
 * `source_ip` - Source IPv4 address for SNMP traps.
 * `ip` - IPv4 address of the SNMP manager (host).
-* `ha_direct` - Enable/disable direct management of HA cluster members.
-* `host_type` - Control whether the SNMP manager sends SNMP queries, receives SNMP traps, or both.
+* `ha_direct` - Enable/disable direct management of HA cluster members. Valid values: `enable`, `disable`.
+* `host_type` - Control whether the SNMP manager sends SNMP queries, receives SNMP traps, or both. Valid values: `any`, `query`, `trap`.
 
 The `hosts6` block supports:
 
 * `id` - Host6 entry ID.
 * `source_ipv6` - Source IPv6 address for SNMP traps.
 * `ipv6` - SNMP manager IPv6 address prefix.
-* `ha_direct` - Enable/disable direct management of HA cluster members.
-* `host_type` - Control whether the SNMP manager sends SNMP queries, receives SNMP traps, or both.
+* `ha_direct` - Enable/disable direct management of HA cluster members. Valid values: `enable`, `disable`.
+* `host_type` - Control whether the SNMP manager sends SNMP queries, receives SNMP traps, or both. Valid values: `any`, `query`, `trap`.
 
 
 ## Attribute Reference
