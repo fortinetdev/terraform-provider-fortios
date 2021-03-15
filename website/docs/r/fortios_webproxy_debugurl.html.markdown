@@ -26,8 +26,8 @@ The following arguments are supported:
 
 * `name` - Debug URL name.
 * `url_pattern` - (Required) URL exemption pattern.
-* `status` - Enable/disable this URL exemption.
-* `exact` - Enable/disable matching the exact path.
+* `status` - Enable/disable this URL exemption. Valid values: `enable`, `disable`.
+* `exact` - Enable/disable matching the exact path. Valid values: `enable`, `disable`.
 
 
 ## Attribute Reference
