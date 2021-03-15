@@ -61,17 +61,17 @@ resource "fortios_router_ospf6" "trname" {
 
 The following arguments are supported:
 
-* `abr_type` - Area border router type.
+* `abr_type` - Area border router type. Valid values: `cisco`, `ibm`, `standard`.
 * `auto_cost_ref_bandwidth` - Reference bandwidth in terms of megabits per second.
-* `default_information_originate` - Enable/disable generation of default route.
-* `log_neighbour_changes` - Enable logging of OSPFv3 neighbour's changes
+* `default_information_originate` - Enable/disable generation of default route. Valid values: `enable`, `always`, `disable`.
+* `log_neighbour_changes` - Enable logging of OSPFv3 neighbour's changes Valid values: `enable`, `disable`.
 * `default_information_metric` - Default information metric.
-* `default_information_metric_type` - Default information metric type.
+* `default_information_metric_type` - Default information metric type. Valid values: `1`, `2`.
 * `default_information_route_map` - Default information route map.
 * `default_metric` - Default metric of redistribute routes.
 * `router_id` - (Required) A.B.C.D, in IPv4 address format.
 * `spf_timers` - SPF calculation frequency.
-* `bfd` - Enable/disable Bidirectional Forwarding Detection (BFD).
+* `bfd` - Enable/disable Bidirectional Forwarding Detection (BFD). Valid values: `enable`, `disable`.
 * `area` - OSPF6 area configuration. The structure of `area` block is documented below.
 * `ospf6_interface` - OSPF6 interface configuration. The structure of `ospf6_interface` block is documented below.
 * `redistribute` - Redistribute configuration. The structure of `redistribute` block is documented below.
@@ -83,17 +83,17 @@ The `area` block supports:
 
 * `id` - Area entry IP address.
 * `default_cost` - Summary default cost of stub or NSSA area.
-* `nssa_translator_role` - NSSA translator role type.
-* `stub_type` - Stub summary setting.
-* `type` - Area type setting.
-* `nssa_default_information_originate` - Enable/disable originate type 7 default into NSSA area.
+* `nssa_translator_role` - NSSA translator role type. Valid values: `candidate`, `never`, `always`.
+* `stub_type` - Stub summary setting. Valid values: `no-summary`, `summary`.
+* `type` - Area type setting. Valid values: `regular`, `nssa`, `stub`.
+* `nssa_default_information_originate` - Enable/disable originate type 7 default into NSSA area. Valid values: `enable`, `disable`.
 * `nssa_default_information_originate_metric` - OSPFv3 default metric.
-* `nssa_default_information_originate_metric_type` - OSPFv3 metric type for default routes.
-* `nssa_redistribution` - Enable/disable redistribute into NSSA area.
-* `authentication` - Authentication mode.
+* `nssa_default_information_originate_metric_type` - OSPFv3 metric type for default routes. Valid values: `1`, `2`.
+* `nssa_redistribution` - Enable/disable redistribute into NSSA area. Valid values: `enable`, `disable`.
+* `authentication` - Authentication mode. Valid values: `none`, `ah`, `esp`.
 * `key_rollover_interval` - Key roll-over interval.
-* `ipsec_auth_alg` - Authentication algorithm.
-* `ipsec_enc_alg` - Encryption algorithm.
+* `ipsec_auth_alg` - Authentication algorithm. Valid values: `md5`, `sha1`, `sha256`, `sha384`, `sha512`.
+* `ipsec_enc_alg` - Encryption algorithm. Valid values: `null`, `des`, `3des`, `aes128`, `aes192`, `aes256`.
 * `ipsec_keys` - IPsec authentication and encryption keys. The structure of `ipsec_keys` block is documented below.
 * `range` - OSPF6 area range configuration. The structure of `range` block is documented below.
 * `virtual_link` - OSPF6 virtual link configuration. The structure of `virtual_link` block is documented below.
@@ -108,7 +108,7 @@ The `range` block supports:
 
 * `id` - Range entry ID.
 * `prefix6` - IPv6 prefix.
-* `advertise` - Enable/disable advertise status.
+* `advertise` - Enable/disable advertise status. Valid values: `disable`, `enable`.
 
 The `virtual_link` block supports:
 
@@ -118,10 +118,10 @@ The `virtual_link` block supports:
 * `retransmit_interval` - Retransmit interval.
 * `transmit_delay` - Transmit delay.
 * `peer` - A.B.C.D, peer router ID.
-* `authentication` - Authentication mode.
+* `authentication` - Authentication mode. Valid values: `none`, `ah`, `esp`, `area`.
 * `key_rollover_interval` - Key roll-over interval.
-* `ipsec_auth_alg` - Authentication algorithm.
-* `ipsec_enc_alg` - Encryption algorithm.
+* `ipsec_auth_alg` - Authentication algorithm. Valid values: `md5`, `sha1`, `sha256`, `sha384`, `sha512`.
+* `ipsec_enc_alg` - Encryption algorithm. Valid values: `null`, `des`, `3des`, `aes128`, `aes192`, `aes256`.
 * `ipsec_keys` - IPsec authentication and encryption keys. The structure of `ipsec_keys` block is documented below.
 
 The `ipsec_keys` block supports:
@@ -141,15 +141,15 @@ The `ospf6_interface` block supports:
 * `priority` - priority
 * `dead_interval` - Dead interval.
 * `hello_interval` - Hello interval.
-* `status` - Enable/disable OSPF6 routing on this interface.
-* `network_type` - Network type.
-* `bfd` - Enable/disable Bidirectional Forwarding Detection (BFD).
+* `status` - Enable/disable OSPF6 routing on this interface. Valid values: `disable`, `enable`.
+* `network_type` - Network type. Valid values: `broadcast`, `point-to-point`, `non-broadcast`, `point-to-multipoint`, `point-to-multipoint-non-broadcast`.
+* `bfd` - Enable/disable Bidirectional Forwarding Detection (BFD). Valid values: `global`, `enable`, `disable`.
 * `mtu` - MTU for OSPFv3 packets.
-* `mtu_ignore` - Enable/disable ignoring MTU field in DBD packets.
-* `authentication` - Authentication mode.
+* `mtu_ignore` - Enable/disable ignoring MTU field in DBD packets. Valid values: `enable`, `disable`.
+* `authentication` - Authentication mode. Valid values: `none`, `ah`, `esp`, `area`.
 * `key_rollover_interval` - Key roll-over interval.
-* `ipsec_auth_alg` - Authentication algorithm.
-* `ipsec_enc_alg` - Encryption algorithm.
+* `ipsec_auth_alg` - Authentication algorithm. Valid values: `md5`, `sha1`, `sha256`, `sha384`, `sha512`.
+* `ipsec_enc_alg` - Encryption algorithm. Valid values: `null`, `des`, `3des`, `aes128`, `aes192`, `aes256`.
 * `ipsec_keys` - IPsec authentication and encryption keys. The structure of `ipsec_keys` block is documented below.
 * `neighbor` - OSPFv3 neighbors are used when OSPFv3 runs on non-broadcast media The structure of `neighbor` block is documented below.
 
@@ -169,10 +169,10 @@ The `neighbor` block supports:
 The `redistribute` block supports:
 
 * `name` - Redistribute name.
-* `status` - status
+* `status` - status Valid values: `enable`, `disable`.
 * `metric` - Redistribute metric setting.
 * `routemap` - Route map name.
-* `metric_type` - Metric type.
+* `metric_type` - Metric type. Valid values: `1`, `2`.
 
 The `passive_interface` block supports:
 
@@ -182,7 +182,7 @@ The `summary_address` block supports:
 
 * `id` - Summary address entry ID.
 * `prefix6` - IPv6 prefix.
-* `advertise` - Enable/disable advertise status.
+* `advertise` - Enable/disable advertise status. Valid values: `disable`, `enable`.
 * `tag` - Tag value.
 
 
