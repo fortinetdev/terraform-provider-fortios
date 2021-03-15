@@ -31,8 +31,8 @@ The following arguments are supported:
 * `comment` - Comment.
 * `avatar` - Image file for avatar (maximum 4K base64 encoded).
 * `tagging` - Config object tagging. The structure of `tagging` block is documented below.
-* `type` - Device type.
-* `category` - Device category.
+* `type` - Device type. Valid values: `unknown`, `android-phone`, `android-tablet`, `blackberry-phone`, `blackberry-playbook`, `forticam`, `fortifone`, `fortinet-device`, `gaming-console`, `ip-phone`, `ipad`, `iphone`, `linux-pc`, `mac`, `media-streaming`, `printer`, `router-nat-device`, `windows-pc`, `windows-phone`, `windows-tablet`, `other-network-device`.
+* `category` - Device category. Valid values: `none`, `amazon-device`, `android-device`, `blackberry-device`, `fortinet-device`, `ios-device`, `windows-device`.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `tagging` block supports:
