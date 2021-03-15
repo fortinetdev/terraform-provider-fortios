@@ -28,20 +28,20 @@ resource "fortios_logsyslogd_setting" "trname" {
 
 The following arguments are supported:
 
-* `status` - Enable/disable remote syslog logging.
+* `status` - Enable/disable remote syslog logging. Valid values: `enable`, `disable`.
 * `server` - Address of remote syslog server.
-* `mode` - Remote syslog logging over UDP/Reliable TCP.
+* `mode` - Remote syslog logging over UDP/Reliable TCP. Valid values: `udp`, `legacy-reliable`, `reliable`.
 * `port` - Server listen port.
-* `facility` - Remote syslog facility.
+* `facility` - Remote syslog facility. Valid values: `kernel`, `user`, `mail`, `daemon`, `auth`, `syslog`, `lpr`, `news`, `uucp`, `cron`, `authpriv`, `ftp`, `ntp`, `audit`, `alert`, `clock`, `local0`, `local1`, `local2`, `local3`, `local4`, `local5`, `local6`, `local7`.
 * `source_ip` - Source IP address of syslog.
-* `format` - Log format.
-* `priority` - Set log transmission priority.
+* `format` - Log format. Valid values: `default`, `csv`, `cef`.
+* `priority` - Set log transmission priority. Valid values: `default`, `low`.
 * `max_log_rate` - Syslog maximum log rate in MBps (0 = unlimited).
-* `enc_algorithm` - Enable/disable reliable syslogging with TLS encryption.
-* `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting).
+* `enc_algorithm` - Enable/disable reliable syslogging with TLS encryption. Valid values: `high-medium`, `high`, `low`, `disable`.
+* `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting). Valid values: `default`, `SSLv3`, `TLSv1`, `TLSv1-1`, `TLSv1-2`.
 * `certificate` - Certificate used to communicate with Syslog server.
 * `custom_field_name` - Custom field name for CEF format logging. The structure of `custom_field_name` block is documented below.
-* `interface_select_method` - Specify how to select outgoing interface to reach server.
+* `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.
 * `interface` - Specify outgoing interface to reach server.
 * `syslog_type` - Hidden setting index of Syslog.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
