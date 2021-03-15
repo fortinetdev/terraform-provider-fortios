@@ -36,14 +36,14 @@ The following arguments are supported:
 
 * `name` - IPsec tunnel name.
 * `interface` - (Required) Name of the physical, aggregate, or VLAN interface.
-* `ip_version` - IP version to use for VPN interface.
-* `addr_type` - IP version to use for IP packets.
+* `ip_version` - IP version to use for VPN interface. Valid values: `4`, `6`.
+* `addr_type` - IP version to use for IP packets. Valid values: `4`, `6`.
 * `remote_gw` - (Required) IPv4 address of the remote gateway's external interface.
 * `remote_gw6` - (Required) Remote IPv6 address of VPN gateway.
 * `local_gw` - IPv4 address of the local gateway's external interface.
 * `local_gw6` - Local IPv6 address of VPN gateway.
-* `auth_alg` - (Required) Authentication algorithm. Must be the same for both ends of the tunnel.
-* `enc_alg` - (Required) Encryption algorithm. Must be the same for both ends of the tunnel.
+* `auth_alg` - (Required) Authentication algorithm. Must be the same for both ends of the tunnel. Valid values: `null`, `md5`, `sha1`, `sha256`, `sha384`, `sha512`.
+* `enc_alg` - (Required) Encryption algorithm. Must be the same for both ends of the tunnel. Valid values: `null`, `des`, `3des`, `aes128`, `aes192`, `aes256`, `aria128`, `aria192`, `aria256`, `seed`.
 * `auth_key` - Hexadecimal authentication key in 16-digit (8-byte) segments separated by hyphens.
 * `enc_key` - Hexadecimal encryption key in 16-digit (8-byte) segments separated by hyphens.
 * `local_spi` - Local SPI, a hexadecimal 8-digit (4-byte) tag. Discerns between two traffic streams with different encryption rules.
