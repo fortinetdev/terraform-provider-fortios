@@ -15,9 +15,9 @@ The following arguments are supported:
 
 * `standalone_group_id` - Cluster group ID (0 - 255). Must be the same for all members.
 * `group_member_id` - Cluster member ID (0 - 3).
-* `layer2_connection` - Indicate whether layer 2 connections are present among FGSP members.
+* `layer2_connection` - Indicate whether layer 2 connections are present among FGSP members. Valid values: `available`, `unavailable`.
 * `session_sync_dev` - Offload session-sync process to kernel and sync sessions using connected interface(s) directly.
-* `encryption` - Enable/disable encryption when synchronizing sessions.
+* `encryption` - Enable/disable encryption when synchronizing sessions. Valid values: `enable`, `disable`.
 * `psksecret` - Pre-shared secret for session synchronization (ASCII string or hexadecimal encoded with a leading 0x).
 
 
