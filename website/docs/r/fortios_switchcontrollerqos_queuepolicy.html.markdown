@@ -24,8 +24,8 @@ resource "fortios_switchcontrollerqos_queuepolicy" "trname" {
 The following arguments are supported:
 
 * `name` - (Required) QoS policy name
-* `schedule` - (Required) COS queue scheduling.
-* `rate_by` - (Required) COS queue rate by kbps or percent.
+* `schedule` - (Required) COS queue scheduling. Valid values: `strict`, `round-robin`, `weighted`.
+* `rate_by` - (Required) COS queue rate by kbps or percent. Valid values: `kbps`, `percent`.
 * `cos_queue` - COS queue configuration. The structure of `cos_queue` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
@@ -37,8 +37,8 @@ The `cos_queue` block supports:
 * `max_rate` - Maximum rate (0 - 4294967295 kbps, 0 to disable).
 * `min_rate_percent` - Minimum rate (% of link speed).
 * `max_rate_percent` - Maximum rate (% of link speed).
-* `drop_policy` - COS queue drop policy.
-* `ecn` - Enable/disable ECN packet marking to drop eligible packets.
+* `drop_policy` - COS queue drop policy. Valid values: `taildrop`, `weighted-random-early-detection`.
+* `ecn` - Enable/disable ECN packet marking to drop eligible packets. Valid values: `disable`, `enable`.
 * `weight` - Weight of weighted round robin scheduling.
 
 
