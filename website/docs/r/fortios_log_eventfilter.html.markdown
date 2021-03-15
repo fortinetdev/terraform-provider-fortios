@@ -31,22 +31,22 @@ resource "fortios_log_eventfilter" "trname" {
 
 The following arguments are supported:
 
-* `event` - Enable/disable event logging.
-* `system` - Enable/disable system event logging.
-* `vpn` - Enable/disable VPN event logging.
-* `user` - Enable/disable user authentication event logging.
-* `router` - Enable/disable router event logging.
-* `wireless_activity` - Enable/disable wireless event logging.
-* `wan_opt` - Enable/disable WAN optimization event logging.
-* `endpoint` - Enable/disable endpoint event logging.
-* `ha` - Enable/disable ha event logging.
-* `compliance_check` - Enable/disable PCI DSS compliance check logging.
-* `security_rating` - Enable/disable Security Rating result logging.
-* `fortiextender` - Enable/disable FortiExtender logging.
-* `connector` - Enable/disable SDN connector logging.
-* `sdwan` - Enable/disable SD-WAN logging.
-* `cifs` - Enable/disable CIFS logging.
-* `switch_controller` - Enable/disable Switch-Controller logging.
+* `event` - Enable/disable event logging. Valid values: `enable`, `disable`.
+* `system` - Enable/disable system event logging. Valid values: `enable`, `disable`.
+* `vpn` - Enable/disable VPN event logging. Valid values: `enable`, `disable`.
+* `user` - Enable/disable user authentication event logging. Valid values: `enable`, `disable`.
+* `router` - Enable/disable router event logging. Valid values: `enable`, `disable`.
+* `wireless_activity` - Enable/disable wireless event logging. Valid values: `enable`, `disable`.
+* `wan_opt` - Enable/disable WAN optimization event logging. Valid values: `enable`, `disable`.
+* `endpoint` - Enable/disable endpoint event logging. Valid values: `enable`, `disable`.
+* `ha` - Enable/disable ha event logging. Valid values: `enable`, `disable`.
+* `compliance_check` - Enable/disable PCI DSS compliance check logging. Valid values: `enable`, `disable`.
+* `security_rating` - Enable/disable Security Rating result logging. Valid values: `enable`, `disable`.
+* `fortiextender` - Enable/disable FortiExtender logging. Valid values: `enable`, `disable`.
+* `connector` - Enable/disable SDN connector logging. Valid values: `enable`, `disable`.
+* `sdwan` - Enable/disable SD-WAN logging. Valid values: `enable`, `disable`.
+* `cifs` - Enable/disable CIFS logging. Valid values: `enable`, `disable`.
+* `switch_controller` - Enable/disable Switch-Controller logging. Valid values: `enable`, `disable`.
 
 
 ## Attribute Reference
