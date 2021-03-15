@@ -24,10 +24,10 @@ resource "fortios_system_fipscc" "trname" {
 
 The following arguments are supported:
 
-* `status` - Enable/disable FIPS-CC mode.
-* `entropy_token` - Enable/disable/dynamic entropy token.
+* `status` - Enable/disable FIPS-CC mode. Valid values: `enable`, `disable`.
+* `entropy_token` - Enable/disable/dynamic entropy token. Valid values: `enable`, `disable`, `dynamic`.
 * `self_test_period` - Self test period.
-* `key_generation_self_test` - Enable/disable self tests after key generation.
+* `key_generation_self_test` - Enable/disable self tests after key generation. Valid values: `enable`, `disable`.
 
 
 ## Attribute Reference
