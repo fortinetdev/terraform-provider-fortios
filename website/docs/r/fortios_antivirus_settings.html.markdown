@@ -22,9 +22,9 @@ resource "fortios_antivirus_settings" "trname" {
 
 The following arguments are supported:
 
-* `use_extreme_db` - Enable/disable the use of Extreme AVDB.
-* `default_db` - Select the AV database to be used for AV scanning.
-* `grayware` - Enable/disable grayware detection when an AntiVirus profile is applied to traffic.
+* `use_extreme_db` - Enable/disable the use of Extreme AVDB. Valid values: `enable`, `disable`.
+* `default_db` - Select the AV database to be used for AV scanning. Valid values: `normal`, `extended`, `extreme`.
+* `grayware` - Enable/disable grayware detection when an AntiVirus profile is applied to traffic. Valid values: `enable`, `disable`.
 * `override_timeout` - Override the large file scan timeout value in seconds (30 - 3600). Zero is the default value and is used to disable this command. When disabled, the daemon adjusts the large file scan timeout based on the file size.
 
 
