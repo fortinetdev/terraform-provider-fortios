@@ -15,7 +15,7 @@ The following arguments are supported:
 
 * `name` - AP local configuration profile name.
 * `comment` - Comment.
-* `ac_type` - Validation controller type (default = default).
+* `ac_type` - Validation controller type (default = default). Valid values: `default`, `specify`, `apcfg`.
 * `ac_timer` - Maximum waiting time for the AP to join the validation controller after applying AP local configuration (3 - 30 min, default = 10).
 * `ac_ip` - IP address of the validation controller that AP must be able to join after applying AP local configuration.
 * `ac_port` - Port of the validation controller that AP must be able to join after applying AP local configuration (1024 - 49150, default = 5246).
@@ -25,7 +25,7 @@ The following arguments are supported:
 The `command_list` block supports:
 
 * `id` - Command ID.
-* `type` - The command type (default = non-password).
+* `type` - The command type (default = non-password). Valid values: `non-password`, `password`.
 * `name` - AP local configuration command name.
 * `value` - AP local configuration command value.
 * `passwd_value` - AP local configuration command password value.
