@@ -17,7 +17,7 @@ The following arguments are supported:
 * `password` - Password for SSH private key.
 * `private_key` - (Required) SSH proxy private key, encrypted with a password.
 * `public_key` - (Required) SSH proxy public key.
-* `source` - SSH proxy local CA source type.
+* `source` - SSH proxy local CA source type. Valid values: `built-in`, `user`.
 
 
 ## Attribute Reference
