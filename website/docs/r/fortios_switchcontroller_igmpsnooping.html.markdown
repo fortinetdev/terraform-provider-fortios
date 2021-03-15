@@ -23,7 +23,7 @@ resource "fortios_switchcontroller_igmpsnooping" "trname" {
 The following arguments are supported:
 
 * `aging_time` - Maximum number of seconds to retain a multicast snooping entry for which no packets have been seen (15 - 3600 sec, default = 300).
-* `flood_unknown_multicast` - Enable/disable unknown multicast flooding.
+* `flood_unknown_multicast` - Enable/disable unknown multicast flooding. Valid values: `enable`, `disable`.
 
 
 ## Attribute Reference
