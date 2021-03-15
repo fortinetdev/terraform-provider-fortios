@@ -24,8 +24,8 @@ resource "fortios_system_autoinstall" "trname" {
 
 The following arguments are supported:
 
-* `auto_install_config` - Enable/disable auto install the config in USB disk.
-* `auto_install_image` - Enable/disable auto install the image in USB disk.
+* `auto_install_config` - Enable/disable auto install the config in USB disk. Valid values: `enable`, `disable`.
+* `auto_install_image` - Enable/disable auto install the image in USB disk. Valid values: `enable`, `disable`.
 * `default_config_file` - Default config file name in USB disk.
 * `default_image_file` - Default image file name in USB disk.
 
