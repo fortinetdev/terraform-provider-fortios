@@ -43,17 +43,17 @@ The following arguments are supported:
 * `max_ttl` - Maximum time an object can stay in the web cache without checking to see if it has expired on the server (default = 7200 min (5 days); maximum = 5256000 min (10 years)).
 * `min_ttl` - Minimum time an object can stay in the web cache without checking to see if it has expired on the server (default = 5 min; maximum = 5256000 (10 years)).
 * `default_ttl` - Default object expiry time (default = 1440 min (1 day); maximum = 5256000 min (10 years)). This only applies to those objects that do not have an expiry time set by the web server.
-* `ignore_ims` - Enable/disable ignoring the if-modified-since (IMS) header.
-* `ignore_conditional` - Enable/disable controlling the behavior of cache-control HTTP 1.1 header values.
-* `ignore_pnc` - Enable/disable ignoring the pragma no-cache (PNC) header.
-* `ignore_ie_reload` - Enable/disable ignoring the PNC-interpretation of Internet Explorer's Accept: / header.
-* `cache_expired` - Enable/disable caching type-1 objects that are already expired on arrival.
-* `cache_cookie` - Enable/disable caching cookies. Since cookies contain information for or about individual users, they not usually cached.
-* `reval_pnc` - Enable/disable revalidation of pragma-no-cache (PNC) to address bandwidth concerns.
-* `always_revalidate` - Enable/disable revalidation of requested cached objects, which have content on the server, before serving it to the client.
-* `cache_by_default` - Enable/disable caching content that lacks explicit caching policies from the server.
-* `host_validate` - Enable/disable validating "Host:" with original server IP.
-* `external` - Enable/disable external Web caching.
+* `ignore_ims` - Enable/disable ignoring the if-modified-since (IMS) header. Valid values: `enable`, `disable`.
+* `ignore_conditional` - Enable/disable controlling the behavior of cache-control HTTP 1.1 header values. Valid values: `enable`, `disable`.
+* `ignore_pnc` - Enable/disable ignoring the pragma no-cache (PNC) header. Valid values: `enable`, `disable`.
+* `ignore_ie_reload` - Enable/disable ignoring the PNC-interpretation of Internet Explorer's Accept: / header. Valid values: `enable`, `disable`.
+* `cache_expired` - Enable/disable caching type-1 objects that are already expired on arrival. Valid values: `enable`, `disable`.
+* `cache_cookie` - Enable/disable caching cookies. Since cookies contain information for or about individual users, they not usually cached. Valid values: `enable`, `disable`.
+* `reval_pnc` - Enable/disable revalidation of pragma-no-cache (PNC) to address bandwidth concerns. Valid values: `enable`, `disable`.
+* `always_revalidate` - Enable/disable revalidation of requested cached objects, which have content on the server, before serving it to the client. Valid values: `enable`, `disable`.
+* `cache_by_default` - Enable/disable caching content that lacks explicit caching policies from the server. Valid values: `enable`, `disable`.
+* `host_validate` - Enable/disable validating "Host:" with original server IP. Valid values: `enable`, `disable`.
+* `external` - Enable/disable external Web caching. Valid values: `enable`, `disable`.
 
 
 ## Attribute Reference
