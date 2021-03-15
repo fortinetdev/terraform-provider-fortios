@@ -42,7 +42,7 @@ The following arguments are supported:
 * `fqdn` - Fully qualified domain name.
 * `country` - IPv6 addresses associated to a specific country.
 * `cache_ttl` - Minimal TTL of individual IPv6 addresses in FQDN cache.
-* `visibility` - Enable/disable the visibility of the object in the GUI.
+* `visibility` - Enable/disable the visibility of the object in the GUI. Valid values: `enable`, `disable`.
 * `color` - Integer value to determine the color of the icon in the GUI (range 1 to 32, default = 0, which sets the value to 1).
 * `obj_id` - Object ID for NSX.
 * `list` - IP address list. The structure of `list` block is documented below.
@@ -50,7 +50,7 @@ The following arguments are supported:
 * `comment` - Comment.
 * `template` - IPv6 address template.
 * `subnet_segment` - IPv6 subnet segments. The structure of `subnet_segment` block is documented below.
-* `host_type` - Host type.
+* `host_type` - Host type. Valid values: `any`, `specific`.
 * `host` - Host Address.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
@@ -71,7 +71,7 @@ The `tags` block supports:
 The `subnet_segment` block supports:
 
 * `name` - Name.
-* `type` - Subnet segment type.
+* `type` - Subnet segment type. Valid values: `any`, `specific`.
 * `value` - Subnet segment value.
 
 
