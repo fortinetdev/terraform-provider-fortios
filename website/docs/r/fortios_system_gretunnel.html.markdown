@@ -38,18 +38,18 @@ The following arguments are supported:
 
 * `name` - Tunnel name.
 * `interface` - Interface name.
-* `ip_version` - IP version to use for VPN interface.
+* `ip_version` - IP version to use for VPN interface. Valid values: `4`, `6`.
 * `remote_gw6` - IPv6 address of the remote gateway.
 * `local_gw6` - IPv6 address of the local gateway.
 * `remote_gw` - (Required) IP address of the remote gateway.
 * `local_gw` - (Required) IP address of the local gateway.
-* `sequence_number_transmission` - Enable/disable including of sequence numbers in transmitted GRE packets.
-* `sequence_number_reception` - Enable/disable validating sequence numbers in received GRE packets.
-* `checksum_transmission` - Enable/disable including checksums in transmitted GRE packets.
-* `checksum_reception` - Enable/disable validating checksums in received GRE packets.
+* `sequence_number_transmission` - Enable/disable including of sequence numbers in transmitted GRE packets. Valid values: `disable`, `enable`.
+* `sequence_number_reception` - Enable/disable validating sequence numbers in received GRE packets. Valid values: `disable`, `enable`.
+* `checksum_transmission` - Enable/disable including checksums in transmitted GRE packets. Valid values: `disable`, `enable`.
+* `checksum_reception` - Enable/disable validating checksums in received GRE packets. Valid values: `disable`, `enable`.
 * `key_outbound` - Include this key in transmitted GRE packets (0 - 4294967295).
 * `key_inbound` - Require received GRE packets contain this key (0 - 4294967295).
-* `dscp_copying` - Enable/disable DSCP copying.
+* `dscp_copying` - Enable/disable DSCP copying. Valid values: `disable`, `enable`.
 * `diffservcode` - DiffServ setting to be applied to GRE tunnel outer IP header.
 * `keepalive_interval` - Keepalive message interval (0 - 32767, 0 = disabled).
 * `keepalive_failtimes` - Number of consecutive unreturned keepalive messages before a GRE connection is considered down (1 - 255).
