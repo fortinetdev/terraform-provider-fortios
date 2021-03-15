@@ -37,14 +37,14 @@ The following arguments are supported:
 * `subtitle` - Report subtitle.
 * `description` - Description.
 * `style_theme` - (Required) Report style theme.
-* `options` - Report layout options.
-* `format` - Report format.
-* `schedule_type` - Report schedule type.
-* `day` - Schedule days of week to generate report.
+* `options` - Report layout options. Valid values: `include-table-of-content`, `auto-numbering-heading`, `view-chart-as-heading`, `show-html-navbar-before-heading`, `dummy-option`.
+* `format` - Report format. Valid values: `pdf`.
+* `schedule_type` - Report schedule type. Valid values: `demand`, `daily`, `weekly`.
+* `day` - Schedule days of week to generate report. Valid values: `sunday`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`.
 * `time` - Schedule time to generate report [hh:mm].
-* `cutoff_option` - Cutoff-option is either run-time or custom.
+* `cutoff_option` - Cutoff-option is either run-time or custom. Valid values: `run-time`, `custom`.
 * `cutoff_time` - Custom cutoff time to generate report [hh:mm].
-* `email_send` - Enable/disable sending emails after reports are generated.
+* `email_send` - Enable/disable sending emails after reports are generated. Valid values: `enable`, `disable`.
 * `email_recipients` - Email recipients for generated reports.
 * `max_pdf_report` - Maximum number of PDF reports to keep at one time (oldest report is overwritten).
 * `page` - Configure report page. The structure of `page` block is documented below.
@@ -53,10 +53,10 @@ The following arguments are supported:
 
 The `page` block supports:
 
-* `paper` - Report page paper.
-* `column_break_before` - Report page auto column break before heading.
-* `page_break_before` - Report page auto page break before heading.
-* `options` - Report page options.
+* `paper` - Report page paper. Valid values: `a4`, `letter`.
+* `column_break_before` - Report page auto column break before heading. Valid values: `heading1`, `heading2`, `heading3`.
+* `page_break_before` - Report page auto page break before heading. Valid values: `heading1`, `heading2`, `heading3`.
+* `options` - Report page options. Valid values: `header-on-first-page`, `footer-on-first-page`.
 * `header` - Configure report page header. The structure of `header` block is documented below.
 * `footer` - Configure report page footer. The structure of `footer` block is documented below.
 
@@ -69,7 +69,7 @@ The `header_item` block supports:
 
 * `id` - Report item ID.
 * `description` - Description.
-* `type` - Report item type.
+* `type` - Report item type. Valid values: `text`, `image`.
 * `style` - Report item style.
 * `content` - Report item text content.
 * `img_src` - Report item image file name.
@@ -83,7 +83,7 @@ The `footer_item` block supports:
 
 * `id` - Report item ID.
 * `description` - Description.
-* `type` - Report item type.
+* `type` - Report item type. Valid values: `text`, `image`.
 * `style` - Report item style.
 * `content` - Report item text content.
 * `img_src` - Report item image file name.
@@ -92,18 +92,18 @@ The `body_item` block supports:
 
 * `id` - Report item ID.
 * `description` - Description.
-* `type` - Report item type.
+* `type` - Report item type. Valid values: `text`, `image`, `chart`, `misc`.
 * `style` - Report item style.
 * `top_n` - Value of top.
-* `hide` - Enable/disable hide item in report.
+* `hide` - Enable/disable hide item in report. Valid values: `enable`, `disable`.
 * `parameters` - Parameters. The structure of `parameters` block is documented below.
-* `text_component` - Report item text component.
+* `text_component` - Report item text component. Valid values: `text`, `heading1`, `heading2`, `heading3`.
 * `content` - Report item text content.
 * `img_src` - Report item image file name.
-* `list_component` - Report item list component.
+* `list_component` - Report item list component. Valid values: `bullet`, `numbered`.
 * `list` - Configure report list item. The structure of `list` block is documented below.
 * `chart` - Report item chart name.
-* `chart_options` - Report chart options.
+* `chart_options` - Report chart options. Valid values: `include-no-data`, `hide-title`, `show-caption`.
 * `drill_down_items` - Control how drill down charts are shown.
 * `drill_down_types` - Control whether keys from the parent being combined or not.
 * `table_column_widths` - Report item table column widths.
@@ -111,7 +111,7 @@ The `body_item` block supports:
 * `table_head_style` - Table chart head style.
 * `table_odd_row_style` - Table chart odd row style.
 * `table_even_row_style` - Table chart even row style.
-* `misc_component` - Report item miscellaneous component.
+* `misc_component` - Report item miscellaneous component. Valid values: `hline`, `page-break`, `column-break`, `section-start`.
 * `column` - Report section column number.
 * `title` - Report section title.
 
