@@ -15,7 +15,7 @@ The following arguments are supported:
 
 * `name` - (Required) Name.
 * `crl` - Certificate Revocation List as a PEM file.
-* `range` - Either global or VDOM IP address range for the certificate.
+* `range` - Either global or VDOM IP address range for the certificate. Valid values: `global`, `vdom`.
 * `source` - Certificate source type.
 * `update_vdom` - VDOM for CRL update.
 * `ldap_server` - LDAP server name for CRL auto-update.
