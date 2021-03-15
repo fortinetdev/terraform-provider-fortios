@@ -23,7 +23,7 @@ resource "fortios_user_deviceaccesslist" "trname" {
 The following arguments are supported:
 
 * `name` - (Required) Device access list name.
-* `default_action` - Accept or deny unknown/unspecified devices.
+* `default_action` - Accept or deny unknown/unspecified devices. Valid values: `accept`, `deny`.
 * `device_list` - Device list. The structure of `device_list` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
@@ -31,7 +31,7 @@ The `device_list` block supports:
 
 * `id` - Entry ID.
 * `device` - Firewall device or device group.
-* `action` - Allow or block device.
+* `action` - Allow or block device. Valid values: `accept`, `deny`.
 
 
 ## Attribute Reference
