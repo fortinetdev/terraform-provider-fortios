@@ -28,9 +28,9 @@ The following arguments are supported:
 
 * `port` - Port number to response.
 * `http_probe_value` - Value to respond to the monitoring server.
-* `ttl_mode` - Mode for TWAMP packet TTL modification.
-* `mode` - SLA response mode.
-* `security_mode` - Twamp respondor security mode.
+* `ttl_mode` - Mode for TWAMP packet TTL modification. Valid values: `reinit`, `decrease`, `retain`.
+* `mode` - SLA response mode. Valid values: `none`, `http-probe`, `twamp`.
+* `security_mode` - Twamp respondor security mode. Valid values: `none`, `authentication`.
 * `password` - Twamp respondor password in authentication mode
 * `timeout` - An inactivity timer for a twamp test session.
 
