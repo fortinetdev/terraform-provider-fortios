@@ -29,7 +29,7 @@ The following arguments are supported:
 * `wildcard_fqdn` - Wildcard FQDN.
 * `color` - GUI icon color.
 * `comment` - Comment.
-* `visibility` - Enable/disable address visibility.
+* `visibility` - Enable/disable address visibility. Valid values: `enable`, `disable`.
 
 
 ## Attribute Reference
