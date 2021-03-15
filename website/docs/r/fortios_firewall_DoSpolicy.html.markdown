@@ -14,7 +14,7 @@ Configure IPv4 DoS policies.
 The following arguments are supported:
 
 * `policyid` - Policy ID.
-* `status` - Enable/disable this policy.
+* `status` - Enable/disable this policy. Valid values: `enable`, `disable`.
 * `name` - Policy name.
 * `comments` - Comment.
 * `interface` - (Required) Incoming interface name from available interfaces.
@@ -39,12 +39,12 @@ The `service` block supports:
 The `anomaly` block supports:
 
 * `name` - Anomaly name.
-* `status` - Enable/disable this anomaly.
-* `log` - Enable/disable anomaly logging.
-* `action` - Action taken when the threshold is reached.
-* `quarantine` - Quarantine method.
+* `status` - Enable/disable this anomaly. Valid values: `disable`, `enable`.
+* `log` - Enable/disable anomaly logging. Valid values: `enable`, `disable`.
+* `action` - Action taken when the threshold is reached. Valid values: `pass`, `block`.
+* `quarantine` - Quarantine method. Valid values: `none`, `attacker`.
 * `quarantine_expiry` - Duration of quarantine. (Format ###d##h##m, minimum 1m, maximum 364d23h59m, default = 5m). Requires quarantine set to attacker.
-* `quarantine_log` - Enable/disable quarantine logging.
+* `quarantine_log` - Enable/disable quarantine logging. Valid values: `disable`, `enable`.
 * `threshold` - Anomaly threshold. Number of detected instances per minute that triggers the anomaly action.
 * `thresholddefault` - Number of detected instances per minute which triggers action (1 - 2147483647, default = 1000). Note that each anomaly has a different threshold value assigned to it.
 
