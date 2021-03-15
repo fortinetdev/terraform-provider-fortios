@@ -64,42 +64,42 @@ The following arguments are supported:
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `policyid` - Policy ID.
 * `name` - Policy name.
-* `proxy` - (Required) Type of explicit proxy.
+* `proxy` - (Required) Type of explicit proxy. Valid values: `explicit-web`, `transparent-web`, `ftp`, `ssh`, `ssh-tunnel`, `wanopt`.
 * `srcintf` - Source interface names. The structure of `srcintf` block is documented below.
 * `dstintf` - (Required) Destination interface names. The structure of `dstintf` block is documented below.
 * `srcaddr` - Source address objects. The structure of `srcaddr` block is documented below.
 * `poolname` - Name of IP pool object. The structure of `poolname` block is documented below.
 * `dstaddr` - Destination address objects. The structure of `dstaddr` block is documented below.
-* `internet_service` - Enable/disable use of Internet Services for this policy. If enabled, destination address and service are not used.
-* `internet_service_negate` - When enabled, Internet Services match against any internet service EXCEPT the selected Internet Service.
+* `internet_service` - Enable/disable use of Internet Services for this policy. If enabled, destination address and service are not used. Valid values: `enable`, `disable`.
+* `internet_service_negate` - When enabled, Internet Services match against any internet service EXCEPT the selected Internet Service. Valid values: `enable`, `disable`.
 * `internet_service_name` - Internet Service name. The structure of `internet_service_name` block is documented below.
 * `internet_service_id` - Internet Service ID. The structure of `internet_service_id` block is documented below.
 * `internet_service_group` - Internet Service group name. The structure of `internet_service_group` block is documented below.
 * `internet_service_custom` - Custom Internet Service name. The structure of `internet_service_custom` block is documented below.
 * `internet_service_custom_group` - Custom Internet Service group name. The structure of `internet_service_custom_group` block is documented below.
 * `service` - Name of service objects. The structure of `service` block is documented below.
-* `srcaddr_negate` - When enabled, source addresses match against any address EXCEPT the specified source addresses.
-* `dstaddr_negate` - When enabled, destination addresses match against any address EXCEPT the specified destination addresses.
-* `service_negate` - When enabled, services match against any service EXCEPT the specified destination services.
-* `action` - Accept or deny traffic matching the policy parameters.
-* `status` - Enable/disable the active status of the policy.
+* `srcaddr_negate` - When enabled, source addresses match against any address EXCEPT the specified source addresses. Valid values: `enable`, `disable`.
+* `dstaddr_negate` - When enabled, destination addresses match against any address EXCEPT the specified destination addresses. Valid values: `enable`, `disable`.
+* `service_negate` - When enabled, services match against any service EXCEPT the specified destination services. Valid values: `enable`, `disable`.
+* `action` - Accept or deny traffic matching the policy parameters. Valid values: `accept`, `deny`, `redirect`.
+* `status` - Enable/disable the active status of the policy. Valid values: `enable`, `disable`.
 * `schedule` - (Required) Name of schedule object.
-* `logtraffic` - Enable/disable logging traffic through the policy.
+* `logtraffic` - Enable/disable logging traffic through the policy. Valid values: `all`, `utm`, `disable`.
 * `session_ttl` - TTL in seconds for sessions accepted by this policy (0 means use the system default session TTL).
 * `srcaddr6` - IPv6 source address objects. The structure of `srcaddr6` block is documented below.
 * `dstaddr6` - IPv6 destination address objects. The structure of `dstaddr6` block is documented below.
 * `groups` - Names of group objects. The structure of `groups` block is documented below.
 * `users` - Names of user objects. The structure of `users` block is documented below.
-* `http_tunnel_auth` - Enable/disable HTTP tunnel authentication.
-* `ssh_policy_redirect` - Redirect SSH traffic to matching transparent proxy policy.
+* `http_tunnel_auth` - Enable/disable HTTP tunnel authentication. Valid values: `enable`, `disable`.
+* `ssh_policy_redirect` - Redirect SSH traffic to matching transparent proxy policy. Valid values: `enable`, `disable`.
 * `webproxy_forward_server` - Web proxy forward server name.
 * `webproxy_profile` - Name of web proxy profile.
-* `transparent` - Enable to use the IP address of the client to connect to the server.
-* `webcache` - Enable/disable web caching.
-* `webcache_https` - Enable/disable web caching for HTTPS (Requires deep-inspection enabled in ssl-ssh-profile).
-* `disclaimer` - Web proxy disclaimer setting: by domain, policy, or user.
-* `utm_status` - Enable the use of UTM profiles/sensors/lists.
-* `profile_type` - Determine whether the firewall policy allows security profile groups or single profiles only.
+* `transparent` - Enable to use the IP address of the client to connect to the server. Valid values: `enable`, `disable`.
+* `webcache` - Enable/disable web caching. Valid values: `enable`, `disable`.
+* `webcache_https` - Enable/disable web caching for HTTPS (Requires deep-inspection enabled in ssl-ssh-profile). Valid values: `disable`, `enable`.
+* `disclaimer` - Web proxy disclaimer setting: by domain, policy, or user. Valid values: `disable`, `domain`, `policy`, `user`.
+* `utm_status` - Enable the use of UTM profiles/sensors/lists. Valid values: `enable`, `disable`.
+* `profile_type` - Determine whether the firewall policy allows security profile groups or single profiles only. Valid values: `single`, `group`.
 * `profile_group` - Name of profile group.
 * `av_profile` - Name of an existing Antivirus profile.
 * `webfilter_profile` - Name of an existing Web filter profile.
@@ -116,10 +116,10 @@ The following arguments are supported:
 * `profile_protocol_options` - Name of an existing Protocol options profile.
 * `ssl_ssh_profile` - Name of an existing SSL SSH profile.
 * `replacemsg_override_group` - Authentication replacement message override group.
-* `logtraffic_start` - Enable/disable policy log traffic start.
+* `logtraffic_start` - Enable/disable policy log traffic start. Valid values: `enable`, `disable`.
 * `label` - VDOM-specific GUI visible label.
 * `global_label` - Global web-based manager visible label.
-* `scan_botnet_connections` - Enable/disable scanning of connections to Botnet servers.
+* `scan_botnet_connections` - Enable/disable scanning of connections to Botnet servers. Valid values: `disable`, `block`, `monitor`.
 * `comments` - Optional comments.
 * `redirect_url` - Redirect URL for further explicit web proxy processing.
 * `decrypted_traffic_mirror` - Decrypted traffic mirror.
