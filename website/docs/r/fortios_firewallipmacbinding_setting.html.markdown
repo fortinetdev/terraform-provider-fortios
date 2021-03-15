@@ -23,9 +23,9 @@ resource "fortios_firewallipmacbinding_setting" "trname" {
 
 The following arguments are supported:
 
-* `bindthroughfw` - Enable/disable use of IP/MAC binding to filter packets that would normally go through the firewall.
-* `bindtofw` - Enable/disable use of IP/MAC binding to filter packets that would normally go to the firewall.
-* `undefinedhost` - Select action to take on packets with IP/MAC addresses not in the binding list (default = block).
+* `bindthroughfw` - Enable/disable use of IP/MAC binding to filter packets that would normally go through the firewall. Valid values: `enable`, `disable`.
+* `bindtofw` - Enable/disable use of IP/MAC binding to filter packets that would normally go to the firewall. Valid values: `enable`, `disable`.
+* `undefinedhost` - Select action to take on packets with IP/MAC addresses not in the binding list (default = block). Valid values: `allow`, `block`.
 
 
 ## Attribute Reference
