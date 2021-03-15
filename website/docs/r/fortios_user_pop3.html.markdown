@@ -28,8 +28,8 @@ The following arguments are supported:
 * `name` - POP3 server entry name.
 * `server` - (Required) {<name_str|ip_str>} server domain name or IP.
 * `port` - POP3 service port number.
-* `secure` - SSL connection.
-* `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting).
+* `secure` - SSL connection. Valid values: `none`, `starttls`, `pop3s`.
+* `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting). Valid values: `default`, `SSLv3`, `TLSv1`, `TLSv1-1`, `TLSv1-2`.
 
 
 ## Attribute Reference
