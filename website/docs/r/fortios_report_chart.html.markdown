@@ -36,16 +36,16 @@ The following arguments are supported:
 
 * `name` - (Required) Chart Widget Name
 * `policy` - Used by monitor policy.
-* `type` - Chart type.
-* `period` - Time period.
+* `type` - Chart type. Valid values: `graph`, `table`.
+* `period` - Time period. Valid values: `last24h`, `last7d`.
 * `drill_down_charts` - Drill down charts. The structure of `drill_down_charts` block is documented below.
 * `comments` - (Required) Comment.
 * `dataset` - (Required) Bind dataset to chart.
-* `category` - Category.
-* `favorite` - Favorite.
-* `graph_type` - Graph type.
-* `style` - Style.
-* `dimension` - Dimension.
+* `category` - Category. Valid values: `misc`, `traffic`, `event`, `virus`, `webfilter`, `attack`, `spam`, `dlp`, `app-ctrl`, `vulnerability`.
+* `favorite` - Favorite. Valid values: `no`, `yes`.
+* `graph_type` - Graph type. Valid values: `none`, `bar`, `pie`, `line`, `flow`.
+* `style` - Style. Valid values: `auto`, `manual`.
+* `dimension` - Dimension. Valid values: `2D`, `3D`.
 * `x_series` - X-series of chart. The structure of `x_series` block is documented below.
 * `y_series` - Y-series of chart. The structure of `y_series` block is documented below.
 * `category_series` - Category series of pie chart. The structure of `category_series` block is documented below.
@@ -54,7 +54,7 @@ The following arguments are supported:
 * `title_font_size` - Font size of chart title.
 * `background` - Chart background.
 * `color_palette` - Color palette (system will pick color automatically by default).
-* `legend` - Enable/Disable Legend area.
+* `legend` - Enable/Disable Legend area. Valid values: `enable`, `disable`.
 * `legend_font_size` - Font size of legend area.
 * `column` - Table column definition. The structure of `column` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
@@ -63,7 +63,7 @@ The `drill_down_charts` block supports:
 
 * `id` - Drill down chart ID.
 * `chart_name` - Drill down chart name.
-* `status` - Enable/disable this drill down chart.
+* `status` - Enable/disable this drill down chart. Valid values: `enable`, `disable`.
 
 The `x_series` block supports:
 
@@ -71,12 +71,12 @@ The `x_series` block supports:
 * `caption` - X-series caption.
 * `caption_font_size` - X-series caption font size.
 * `font_size` - X-series label font size.
-* `label_angle` - X-series label angle.
-* `is_category` - X-series represent category or not.
-* `scale_unit` - Scale unit.
+* `label_angle` - X-series label angle. Valid values: `45-degree`, `vertical`, `horizontal`.
+* `is_category` - X-series represent category or not. Valid values: `yes`, `no`.
+* `scale_unit` - Scale unit. Valid values: `minute`, `hour`, `day`, `month`, `year`.
 * `scale_step` - Scale step.
-* `scale_direction` - Scale increase or decrease.
-* `scale_format` - Date/time format.
+* `scale_direction` - Scale increase or decrease. Valid values: `decrease`, `increase`.
+* `scale_format` - Date/time format. Valid values: `YYYY-MM-DD-HH-MM`, `YYYY-MM-DD HH`, `YYYY-MM-DD`, `YYYY-MM`, `YYYY`, `HH-MM`, `MM-DD`.
 * `unit` - X-series unit.
 
 The `y_series` block supports:
@@ -85,10 +85,10 @@ The `y_series` block supports:
 * `caption` - Y-series caption.
 * `caption_font_size` - Y-series caption font size.
 * `font_size` - Y-series label font size.
-* `label_angle` - Y-series label angle.
+* `label_angle` - Y-series label angle. Valid values: `45-degree`, `vertical`, `horizontal`.
 * `group` - Y-series group option.
 * `unit` - Y-series unit.
-* `extra_y` - Allow another Y-series value
+* `extra_y` - Allow another Y-series value Valid values: `enable`, `disable`.
 * `extra_databind` - Extra Y-series value.
 * `y_legend` - First Y-series legend type/name.
 * `extra_y_legend` - Extra Y-series legend type/name.
@@ -115,8 +115,8 @@ The `column` block supports:
 The `mapping` block supports:
 
 * `id` - id
-* `op` - Comparision operater.
-* `value_type` - Value type.
+* `op` - Comparision operater. Valid values: `none`, `greater`, `greater-equal`, `less`, `less-equal`, `equal`, `between`.
+* `value_type` - Value type. Valid values: `integer`, `string`.
 * `value1` - Value 1.
 * `value2` - Value 2.
 * `displayname` - Display name.
