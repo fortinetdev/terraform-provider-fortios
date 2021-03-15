@@ -40,14 +40,14 @@ The following arguments are supported:
 
 * `policyid` - User defined local in policy ID.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
-* `ha_mgmt_intf_only` - Enable/disable dedicating the HA management interface only for local-in policy.
+* `ha_mgmt_intf_only` - Enable/disable dedicating the HA management interface only for local-in policy. Valid values: `enable`, `disable`.
 * `intf` - Incoming interface name from available options.
 * `srcaddr` - (Required) Source address object from available options. The structure of `srcaddr` block is documented below.
 * `dstaddr` - (Required) Destination address object from available options. The structure of `dstaddr` block is documented below.
-* `action` - Action performed on traffic matching the policy (default = deny).
+* `action` - Action performed on traffic matching the policy (default = deny). Valid values: `accept`, `deny`.
 * `service` - Service object from available options. The structure of `service` block is documented below.
 * `schedule` - (Required) Schedule object from available options.
-* `status` - Enable/disable this local-in policy.
+* `status` - Enable/disable this local-in policy. Valid values: `enable`, `disable`.
 * `comments` - Comment.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
