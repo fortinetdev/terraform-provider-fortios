@@ -52,7 +52,7 @@ resource "fortios_router_ripng" "trname" {
 
 The following arguments are supported:
 
-* `default_information_originate` - Enable/disable generation of default route.
+* `default_information_originate` - Enable/disable generation of default route. Valid values: `enable`, `disable`.
 * `default_metric` - Default metric.
 * `max_out_metric` - Maximum metric allowed to output(0 means 'not set').
 * `distance` - distance The structure of `distance` block is documented below.
@@ -79,8 +79,8 @@ The `distance` block supports:
 The `distribute_list` block supports:
 
 * `id` - Distribute list ID.
-* `status` - status
-* `direction` - Distribute list direction.
+* `status` - status Valid values: `enable`, `disable`.
+* `direction` - Distribute list direction. Valid values: `in`, `out`.
 * `listname` - Distribute access/prefix list name.
 * `interface` - Distribute list interface name.
 
@@ -103,8 +103,8 @@ The `aggregate_address` block supports:
 The `offset_list` block supports:
 
 * `id` - Offset-list ID.
-* `status` - status
-* `direction` - Offset list direction.
+* `status` - status Valid values: `enable`, `disable`.
+* `direction` - Offset list direction. Valid values: `in`, `out`.
 * `access_list6` - IPv6 access list name.
 * `offset` - offset
 * `interface` - Interface name.
@@ -116,15 +116,15 @@ The `passive_interface` block supports:
 The `redistribute` block supports:
 
 * `name` - Redistribute name.
-* `status` - status
+* `status` - status Valid values: `enable`, `disable`.
 * `metric` - Redistribute metric setting.
 * `routemap` - Route map name.
 
 The `interface` block supports:
 
 * `name` - Interface name.
-* `split_horizon_status` - Enable/disable split horizon.
-* `split_horizon` - Enable/disable split horizon.
+* `split_horizon_status` - Enable/disable split horizon. Valid values: `enable`, `disable`.
+* `split_horizon` - Enable/disable split horizon. Valid values: `poisoned`, `regular`.
 * `flags` - Flags.
 
 
