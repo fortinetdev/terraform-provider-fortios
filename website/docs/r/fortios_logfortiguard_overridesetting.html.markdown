@@ -25,13 +25,13 @@ resource "fortios_logfortiguard_overridesetting" "trname" {
 
 The following arguments are supported:
 
-* `override` - Overriding FortiCloud settings for this VDOM or use global settings.
-* `status` - Enable/disable logging to FortiCloud.
-* `upload_option` - Configure how log messages are sent to FortiCloud.
-* `upload_interval` - Frequency of uploading log files to FortiCloud.
+* `override` - Overriding FortiCloud settings for this VDOM or use global settings. Valid values: `enable`, `disable`.
+* `status` - Enable/disable logging to FortiCloud. Valid values: `enable`, `disable`.
+* `upload_option` - Configure how log messages are sent to FortiCloud. Valid values: `store-and-upload`, `realtime`, `1-minute`, `5-minute`.
+* `upload_interval` - Frequency of uploading log files to FortiCloud. Valid values: `daily`, `weekly`, `monthly`.
 * `upload_day` - Day of week to roll logs.
 * `upload_time` - Time of day to roll logs (hh:mm).
-* `priority` - Set log transmission priority.
+* `priority` - Set log transmission priority. Valid values: `default`, `low`.
 * `max_log_rate` - FortiCloud maximum log rate in MBps (0 = unlimited).
 
 
