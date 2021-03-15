@@ -13,7 +13,7 @@ Configure NSX-T setting. Applies to FortiOS Version `>= 7.0.0`.
 
 The following arguments are supported:
 
-* `liveness` - Enable/disable liveness detection packet forwarding.
+* `liveness` - Enable/disable liveness detection packet forwarding. Valid values: `enable`, `disable`.
 * `service` - Service name.
 
 
