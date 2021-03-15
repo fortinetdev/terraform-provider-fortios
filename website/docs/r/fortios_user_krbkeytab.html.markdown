@@ -45,7 +45,7 @@ resource "fortios_user_krbkeytab" "trname" {
 The following arguments are supported:
 
 * `name` - Kerberos keytab entry name.
-* `pac_data` - Enable/disable parsing PAC data in the ticket.
+* `pac_data` - Enable/disable parsing PAC data in the ticket. Valid values: `enable`, `disable`.
 * `principal` - (Required) Kerberos service principal, e.g. HTTP/fgt.example.com@EXAMPLE.COM.
 * `ldap_server` - (Required) LDAP server name.
 * `keytab` - (Required) base64 coded keytab file containing a pre-shared key.
