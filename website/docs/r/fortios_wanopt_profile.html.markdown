@@ -79,7 +79,7 @@ resource "fortios_wanopt_profile" "trname" {
 The following arguments are supported:
 
 * `name` - Profile name.
-* `transparent` - Enable/disable transparent mode.
+* `transparent` - Enable/disable transparent mode. Valid values: `enable`, `disable`.
 * `comments` - Comment.
 * `auth_group` - Optionally add an authentication group to restrict access to the WAN Optimization tunnel to peers in the authentication group.
 * `http` - Enable/disable HTTP WAN Optimization and configure HTTP WAN Optimization features. The structure of `http` block is documented below.
@@ -90,61 +90,61 @@ The following arguments are supported:
 
 The `http` block supports:
 
-* `status` - Enable/disable HTTP WAN Optimization.
-* `secure_tunnel` - Enable/disable securing the WAN Opt tunnel using SSL. Secure and non-secure tunnels use the same TCP port (7810).
-* `byte_caching` - Enable/disable byte-caching for HTTP. Byte caching reduces the amount of traffic by caching file data sent across the WAN and in future serving if from the cache.
-* `prefer_chunking` - Select dynamic or fixed-size data chunking for HTTP WAN Optimization.
-* `protocol_opt` - Select Protocol specific optimitation or generic TCP optimization.
-* `tunnel_sharing` - Tunnel sharing mode for aggressive/non-aggressive and/or interactive/non-interactive protocols.
-* `log_traffic` - Enable/disable logging.
+* `status` - Enable/disable HTTP WAN Optimization. Valid values: `enable`, `disable`.
+* `secure_tunnel` - Enable/disable securing the WAN Opt tunnel using SSL. Secure and non-secure tunnels use the same TCP port (7810). Valid values: `enable`, `disable`.
+* `byte_caching` - Enable/disable byte-caching for HTTP. Byte caching reduces the amount of traffic by caching file data sent across the WAN and in future serving if from the cache. Valid values: `enable`, `disable`.
+* `prefer_chunking` - Select dynamic or fixed-size data chunking for HTTP WAN Optimization. Valid values: `dynamic`, `fix`.
+* `protocol_opt` - Select Protocol specific optimitation or generic TCP optimization. Valid values: `protocol`, `tcp`.
+* `tunnel_sharing` - Tunnel sharing mode for aggressive/non-aggressive and/or interactive/non-interactive protocols. Valid values: `private`, `shared`, `express-shared`.
+* `log_traffic` - Enable/disable logging. Valid values: `enable`, `disable`.
 * `port` - Single port number or port number range for HTTP. Only packets with a destination port number that matches this port number or range are accepted by this profile.
-* `ssl` - Enable/disable SSL/TLS offloading (hardware acceleration) for HTTPS traffic in this tunnel.
+* `ssl` - Enable/disable SSL/TLS offloading (hardware acceleration) for HTTPS traffic in this tunnel. Valid values: `enable`, `disable`.
 * `ssl_port` - Port on which to expect HTTPS traffic for SSL/TLS offloading.
-* `unknown_http_version` - How to handle HTTP sessions that do not comply with HTTP 0.9, 1.0, or 1.1.
-* `tunnel_non_http` - Configure how to process non-HTTP traffic when a profile configured for HTTP traffic accepts a non-HTTP session. Can occur if an application sends non-HTTP traffic using an HTTP destination port.
+* `unknown_http_version` - How to handle HTTP sessions that do not comply with HTTP 0.9, 1.0, or 1.1. Valid values: `reject`, `tunnel`, `best-effort`.
+* `tunnel_non_http` - Configure how to process non-HTTP traffic when a profile configured for HTTP traffic accepts a non-HTTP session. Can occur if an application sends non-HTTP traffic using an HTTP destination port. Valid values: `enable`, `disable`.
 
 The `cifs` block supports:
 
-* `status` - Enable/disable HTTP WAN Optimization.
-* `secure_tunnel` - Enable/disable securing the WAN Opt tunnel using SSL. Secure and non-secure tunnels use the same TCP port (7810).
-* `byte_caching` - Enable/disable byte-caching for HTTP. Byte caching reduces the amount of traffic by caching file data sent across the WAN and in future serving if from the cache.
-* `prefer_chunking` - Select dynamic or fixed-size data chunking for HTTP WAN Optimization.
-* `protocol_opt` - Select Protocol specific optimitation or generic TCP optimization.
-* `tunnel_sharing` - Tunnel sharing mode for aggressive/non-aggressive and/or interactive/non-interactive protocols.
-* `log_traffic` - Enable/disable logging.
+* `status` - Enable/disable HTTP WAN Optimization. Valid values: `enable`, `disable`.
+* `secure_tunnel` - Enable/disable securing the WAN Opt tunnel using SSL. Secure and non-secure tunnels use the same TCP port (7810). Valid values: `enable`, `disable`.
+* `byte_caching` - Enable/disable byte-caching for HTTP. Byte caching reduces the amount of traffic by caching file data sent across the WAN and in future serving if from the cache. Valid values: `enable`, `disable`.
+* `prefer_chunking` - Select dynamic or fixed-size data chunking for HTTP WAN Optimization. Valid values: `dynamic`, `fix`.
+* `protocol_opt` - Select Protocol specific optimitation or generic TCP optimization. Valid values: `protocol`, `tcp`.
+* `tunnel_sharing` - Tunnel sharing mode for aggressive/non-aggressive and/or interactive/non-interactive protocols. Valid values: `private`, `shared`, `express-shared`.
+* `log_traffic` - Enable/disable logging. Valid values: `enable`, `disable`.
 * `port` - Single port number or port number range for CIFS. Only packets with a destination port number that matches this port number or range are accepted by this profile.
 
 The `mapi` block supports:
 
-* `status` - Enable/disable HTTP WAN Optimization.
-* `secure_tunnel` - Enable/disable securing the WAN Opt tunnel using SSL. Secure and non-secure tunnels use the same TCP port (7810).
-* `byte_caching` - Enable/disable byte-caching for HTTP. Byte caching reduces the amount of traffic by caching file data sent across the WAN and in future serving if from the cache.
-* `tunnel_sharing` - Tunnel sharing mode for aggressive/non-aggressive and/or interactive/non-interactive protocols.
-* `log_traffic` - Enable/disable logging.
+* `status` - Enable/disable HTTP WAN Optimization. Valid values: `enable`, `disable`.
+* `secure_tunnel` - Enable/disable securing the WAN Opt tunnel using SSL. Secure and non-secure tunnels use the same TCP port (7810). Valid values: `enable`, `disable`.
+* `byte_caching` - Enable/disable byte-caching for HTTP. Byte caching reduces the amount of traffic by caching file data sent across the WAN and in future serving if from the cache. Valid values: `enable`, `disable`.
+* `tunnel_sharing` - Tunnel sharing mode for aggressive/non-aggressive and/or interactive/non-interactive protocols. Valid values: `private`, `shared`, `express-shared`.
+* `log_traffic` - Enable/disable logging. Valid values: `enable`, `disable`.
 * `port` - Single port number or port number range for MAPI. Only packets with a destination port number that matches this port number or range are accepted by this profile.
 
 The `ftp` block supports:
 
-* `status` - Enable/disable HTTP WAN Optimization.
-* `secure_tunnel` - Enable/disable securing the WAN Opt tunnel using SSL. Secure and non-secure tunnels use the same TCP port (7810).
-* `byte_caching` - Enable/disable byte-caching for HTTP. Byte caching reduces the amount of traffic by caching file data sent across the WAN and in future serving if from the cache.
-* `ssl` - Enable/disable SSL/TLS offloading (hardware acceleration) for traffic in this tunnel.
-* `prefer_chunking` - Select dynamic or fixed-size data chunking for HTTP WAN Optimization.
-* `protocol_opt` - Select Protocol specific optimitation or generic TCP optimization.
-* `tunnel_sharing` - Tunnel sharing mode for aggressive/non-aggressive and/or interactive/non-interactive protocols.
-* `log_traffic` - Enable/disable logging.
+* `status` - Enable/disable HTTP WAN Optimization. Valid values: `enable`, `disable`.
+* `secure_tunnel` - Enable/disable securing the WAN Opt tunnel using SSL. Secure and non-secure tunnels use the same TCP port (7810). Valid values: `enable`, `disable`.
+* `byte_caching` - Enable/disable byte-caching for HTTP. Byte caching reduces the amount of traffic by caching file data sent across the WAN and in future serving if from the cache. Valid values: `enable`, `disable`.
+* `ssl` - Enable/disable SSL/TLS offloading (hardware acceleration) for traffic in this tunnel. Valid values: `enable`, `disable`.
+* `prefer_chunking` - Select dynamic or fixed-size data chunking for HTTP WAN Optimization. Valid values: `dynamic`, `fix`.
+* `protocol_opt` - Select Protocol specific optimitation or generic TCP optimization. Valid values: `protocol`, `tcp`.
+* `tunnel_sharing` - Tunnel sharing mode for aggressive/non-aggressive and/or interactive/non-interactive protocols. Valid values: `private`, `shared`, `express-shared`.
+* `log_traffic` - Enable/disable logging. Valid values: `enable`, `disable`.
 * `port` - Single port number or port number range for FTP. Only packets with a destination port number that matches this port number or range are accepted by this profile.
 
 The `tcp` block supports:
 
-* `status` - Enable/disable HTTP WAN Optimization.
-* `secure_tunnel` - Enable/disable securing the WAN Opt tunnel using SSL. Secure and non-secure tunnels use the same TCP port (7810).
-* `byte_caching` - Enable/disable byte-caching for HTTP. Byte caching reduces the amount of traffic by caching file data sent across the WAN and in future serving if from the cache.
-* `byte_caching_opt` - Select whether TCP byte-caching uses system memory only or both memory and disk space.
-* `tunnel_sharing` - Tunnel sharing mode for aggressive/non-aggressive and/or interactive/non-interactive protocols.
-* `log_traffic` - Enable/disable logging.
+* `status` - Enable/disable HTTP WAN Optimization. Valid values: `enable`, `disable`.
+* `secure_tunnel` - Enable/disable securing the WAN Opt tunnel using SSL. Secure and non-secure tunnels use the same TCP port (7810). Valid values: `enable`, `disable`.
+* `byte_caching` - Enable/disable byte-caching for HTTP. Byte caching reduces the amount of traffic by caching file data sent across the WAN and in future serving if from the cache. Valid values: `enable`, `disable`.
+* `byte_caching_opt` - Select whether TCP byte-caching uses system memory only or both memory and disk space. Valid values: `mem-only`, `mem-disk`.
+* `tunnel_sharing` - Tunnel sharing mode for aggressive/non-aggressive and/or interactive/non-interactive protocols. Valid values: `private`, `shared`, `express-shared`.
+* `log_traffic` - Enable/disable logging. Valid values: `enable`, `disable`.
 * `port` - Single port number or port number range for TCP. Only packets with a destination port number that matches this port number or range are accepted by this profile.
-* `ssl` - Enable/disable SSL/TLS offloading.
+* `ssl` - Enable/disable SSL/TLS offloading. Valid values: `enable`, `disable`.
 * `ssl_port` - Port on which to expect HTTPS traffic for SSL/TLS offloading.
 
 
