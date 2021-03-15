@@ -26,13 +26,13 @@ resource "fortios_system_fm" "trname" {
 
 The following arguments are supported:
 
-* `status` - Enable/disable FM.
+* `status` - Enable/disable FM. Valid values: `enable`, `disable`.
 * `fosid` - ID.
 * `ip` - IP address.
 * `vdom` - VDOM.
-* `auto_backup` - Enable/disable automatic backup.
-* `scheduled_config_restore` - Enable/disable scheduled configuration restore.
-* `ipsec` - Enable/disable IPsec.
+* `auto_backup` - Enable/disable automatic backup. Valid values: `enable`, `disable`.
+* `scheduled_config_restore` - Enable/disable scheduled configuration restore. Valid values: `enable`, `disable`.
+* `ipsec` - Enable/disable IPsec. Valid values: `enable`, `disable`.
 
 
 ## Attribute Reference
