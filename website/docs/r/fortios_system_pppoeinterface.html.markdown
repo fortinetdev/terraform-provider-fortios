@@ -33,14 +33,14 @@ resource "fortios_system_pppoeinterface" "trname" {
 The following arguments are supported:
 
 * `name` - Name of the PPPoE interface.
-* `dial_on_demand` - Enable/disable dial on demand to dial the PPPoE interface when packets are routed to the PPPoE interface.
-* `ipv6` - Enable/disable IPv6 Control Protocol (IPv6CP).
+* `dial_on_demand` - Enable/disable dial on demand to dial the PPPoE interface when packets are routed to the PPPoE interface. Valid values: `enable`, `disable`.
+* `ipv6` - Enable/disable IPv6 Control Protocol (IPv6CP). Valid values: `enable`, `disable`.
 * `device` - (Required) Name for the physical interface.
 * `username` - User name.
 * `password` - Enter the password.
-* `auth_type` - PPP authentication type to use.
+* `auth_type` - PPP authentication type to use. Valid values: `auto`, `pap`, `chap`, `mschapv1`, `mschapv2`.
 * `ipunnumbered` - PPPoE unnumbered IP.
-* `pppoe_unnumbered_negotiate` - Enable/disable PPPoE unnumbered negotiation.
+* `pppoe_unnumbered_negotiate` - Enable/disable PPPoE unnumbered negotiation. Valid values: `enable`, `disable`.
 * `idle_timeout` - PPPoE auto disconnect after idle timeout (0-4294967295 sec).
 * `disc_retry_timeout` - PPPoE discovery init timeout value in (0-4294967295 sec).
 * `padt_retry_timeout` - PPPoE terminate timeout value in (0-4294967295 sec).
