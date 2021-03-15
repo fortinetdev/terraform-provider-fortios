@@ -121,10 +121,9 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"ports": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(1, 65535),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -206,10 +205,9 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"ports": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(1, 65535),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -286,10 +284,9 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"ports": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(1, 65535),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -371,10 +368,9 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"ports": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(1, 65535),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -456,10 +452,9 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"ports": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(1, 65535),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -541,10 +536,9 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: map[string]*schema.Schema{
 						"ports": &schema.Schema{
-							Type:         schema.TypeInt,
-							ValidateFunc: validation.IntBetween(1, 65535),
-							Optional:     true,
-							Computed:     true,
+							Type:     schema.TypeString,
+							Optional: true,
+							Computed: true,
 						},
 						"status": &schema.Schema{
 							Type:     schema.TypeString,
@@ -1142,7 +1136,7 @@ func flattenFirewallSslSshProfileHttps(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenFirewallSslSshProfileHttpsPorts(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return convintflist2i(v)
+	return convintflist2str(v)
 }
 
 func flattenFirewallSslSshProfileHttpsStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1299,7 +1293,7 @@ func flattenFirewallSslSshProfileFtps(v interface{}, d *schema.ResourceData, pre
 }
 
 func flattenFirewallSslSshProfileFtpsPorts(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return convintflist2i(v)
+	return convintflist2str(v)
 }
 
 func flattenFirewallSslSshProfileFtpsStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1458,7 +1452,7 @@ func flattenFirewallSslSshProfileImaps(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenFirewallSslSshProfileImapsPorts(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return convintflist2i(v)
+	return convintflist2str(v)
 }
 
 func flattenFirewallSslSshProfileImapsStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1621,7 +1615,7 @@ func flattenFirewallSslSshProfilePop3S(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenFirewallSslSshProfilePop3SPorts(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return convintflist2i(v)
+	return convintflist2str(v)
 }
 
 func flattenFirewallSslSshProfilePop3SStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1784,7 +1778,7 @@ func flattenFirewallSslSshProfileSmtps(v interface{}, d *schema.ResourceData, pr
 }
 
 func flattenFirewallSslSshProfileSmtpsPorts(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return convintflist2i(v)
+	return convintflist2str(v)
 }
 
 func flattenFirewallSslSshProfileSmtpsStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
@@ -1905,7 +1899,7 @@ func flattenFirewallSslSshProfileSsh(v interface{}, d *schema.ResourceData, pre 
 }
 
 func flattenFirewallSslSshProfileSshPorts(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
-	return convintflist2i(v)
+	return convintflist2str(v)
 }
 
 func flattenFirewallSslSshProfileSshStatus(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {

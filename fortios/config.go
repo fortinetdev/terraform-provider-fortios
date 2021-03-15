@@ -96,6 +96,31 @@ func convintflist2i(v interface{}) interface{} {
 	return v
 }
 
+func convintflist2str(v interface{}) interface{} {
+	res := ""
+	if t, ok := v.([]interface{}); ok {
+		if len(t) == 0 {
+			return res
+		}
+
+		bFirst := true
+		for _, v1 := range t {
+			if t1, ok := v1.(float64); ok {
+				if bFirst == true {
+					res += strconv.Itoa(int(t1))
+					bFirst = false
+				} else {
+					res += " "
+					res += strconv.Itoa(int(t1))
+				}
+			}
+		}
+
+		return res
+	}
+	return res
+}
+
 func i2ss2arrFortiAPIUpgrade(v string, splitv string) bool {
 	splitv = strings.ReplaceAll(splitv, "v", "")
 
