@@ -22,8 +22,8 @@ resource "fortios_switchcontroller_switchlog" "trname" {
 
 The following arguments are supported:
 
-* `status` - Enable/disable adding FortiSwitch logs to FortiGate event log.
-* `severity` - Severity of FortiSwitch logs that are added to the FortiGate event log.
+* `status` - Enable/disable adding FortiSwitch logs to FortiGate event log. Valid values: `enable`, `disable`.
+* `severity` - Severity of FortiSwitch logs that are added to the FortiGate event log. Valid values: `emergency`, `alert`, `critical`, `error`, `warning`, `notification`, `information`, `debug`.
 
 
 ## Attribute Reference
