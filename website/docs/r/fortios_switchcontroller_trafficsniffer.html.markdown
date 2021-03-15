@@ -13,7 +13,7 @@ Configure FortiSwitch RSPAN/ERSPAN traffic sniffing parameters.
 
 The following arguments are supported:
 
-* `mode` - Configure traffic sniffer mode.
+* `mode` - Configure traffic sniffer mode. Valid values: `erspan-auto`, `rspan`, `none`.
 * `erspan_ip` - Configure ERSPAN collector IP address.
 * `target_mac` - Sniffer MACs to filter. The structure of `target_mac` block is documented below.
 * `target_ip` - Sniffer IPs to filter. The structure of `target_ip` block is documented below.
