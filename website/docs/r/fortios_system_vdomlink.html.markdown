@@ -14,8 +14,8 @@ Configure VDOM links.
 The following arguments are supported:
 
 * `name` - VDOM link name (maximum = 8 characters).
-* `vcluster` - Virtual cluster.
-* `type` - VDOM link type: PPP or Ethernet.
+* `vcluster` - Virtual cluster. Valid values: `vcluster1`, `vcluster2`.
+* `type` - VDOM link type: PPP or Ethernet. Valid values: `ppp`, `ethernet`.
 
 
 ## Attribute Reference
