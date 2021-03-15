@@ -14,26 +14,26 @@ Configure hotspot profile.
 The following arguments are supported:
 
 * `name` - Hotspot profile name.
-* `access_network_type` - Access network type.
-* `access_network_internet` - Enable/disable connectivity to the Internet.
-* `access_network_asra` - Enable/disable additional step required for access (ASRA).
-* `access_network_esr` - Enable/disable emergency services reachable (ESR).
-* `access_network_uesa` - Enable/disable unauthenticated emergency service accessible (UESA).
-* `venue_group` - Venue group.
-* `venue_type` - Venue type.
+* `access_network_type` - Access network type. Valid values: `private-network`, `private-network-with-guest-access`, `chargeable-public-network`, `free-public-network`, `personal-device-network`, `emergency-services-only-network`, `test-or-experimental`, `wildcard`.
+* `access_network_internet` - Enable/disable connectivity to the Internet. Valid values: `enable`, `disable`.
+* `access_network_asra` - Enable/disable additional step required for access (ASRA). Valid values: `enable`, `disable`.
+* `access_network_esr` - Enable/disable emergency services reachable (ESR). Valid values: `enable`, `disable`.
+* `access_network_uesa` - Enable/disable unauthenticated emergency service accessible (UESA). Valid values: `enable`, `disable`.
+* `venue_group` - Venue group. Valid values: `unspecified`, `assembly`, `business`, `educational`, `factory`, `institutional`, `mercantile`, `residential`, `storage`, `utility`, `vehicular`, `outdoor`.
+* `venue_type` - Venue type. Valid values: `unspecified`, `arena`, `stadium`, `passenger-terminal`, `amphitheater`, `amusement-park`, `place-of-worship`, `convention-center`, `library`, `museum`, `restaurant`, `theater`, `bar`, `coffee-shop`, `zoo-or-aquarium`, `emergency-center`, `doctor-office`, `bank`, `fire-station`, `police-station`, `post-office`, `professional-office`, `research-facility`, `attorney-office`, `primary-school`, `secondary-school`, `university-or-college`, `factory`, `hospital`, `long-term-care-facility`, `rehab-center`, `group-home`, `prison-or-jail`, `retail-store`, `grocery-market`, `auto-service-station`, `shopping-mall`, `gas-station`, `private`, `hotel-or-motel`, `dormitory`, `boarding-house`, `automobile`, `airplane`, `bus`, `ferry`, `ship-or-boat`, `train`, `motor-bike`, `muni-mesh-network`, `city-park`, `rest-area`, `traffic-control`, `bus-stop`, `kiosk`.
 * `hessid` - Homogeneous extended service set identifier (HESSID).
-* `proxy_arp` - Enable/disable Proxy ARP.
-* `l2tif` - Enable/disable Layer 2 traffic inspection and filtering.
-* `pame_bi` - Enable/disable Pre-Association Message Exchange BSSID Independent (PAME-BI).
+* `proxy_arp` - Enable/disable Proxy ARP. Valid values: `enable`, `disable`.
+* `l2tif` - Enable/disable Layer 2 traffic inspection and filtering. Valid values: `enable`, `disable`.
+* `pame_bi` - Enable/disable Pre-Association Message Exchange BSSID Independent (PAME-BI). Valid values: `disable`, `enable`.
 * `anqp_domain_id` - ANQP Domain ID (0-65535).
 * `domain_name` - Domain name.
 * `osu_ssid` - Online sign up (OSU) SSID.
 * `gas_comeback_delay` - GAS comeback delay (0 or 100 - 4000 milliseconds, default = 500).
 * `gas_fragmentation_limit` - GAS fragmentation limit (512 - 4096, default = 1024).
-* `dgaf` - Enable/disable downstream group-addressed forwarding (DGAF).
+* `dgaf` - Enable/disable downstream group-addressed forwarding (DGAF). Valid values: `enable`, `disable`.
 * `deauth_request_timeout` - Deauthentication request timeout (in seconds).
-* `wnm_sleep_mode` - Enable/disable wireless network management (WNM) sleep mode.
-* `bss_transition` - Enable/disable basic service set (BSS) transition Support.
+* `wnm_sleep_mode` - Enable/disable wireless network management (WNM) sleep mode. Valid values: `enable`, `disable`.
+* `bss_transition` - Enable/disable basic service set (BSS) transition Support. Valid values: `enable`, `disable`.
 * `venue_name` - Venue name.
 * `roaming_consortium` - Roaming consortium list name.
 * `nai_realm` - NAI realm list name.
