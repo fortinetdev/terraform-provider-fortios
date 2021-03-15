@@ -47,7 +47,7 @@ The `subnet_segment` block supports:
 * `id` - Subnet segment ID.
 * `name` - Subnet segment name.
 * `bits` - Number of bits.
-* `exclusive` - Enable/disable exclusive value.
+* `exclusive` - Enable/disable exclusive value. Valid values: `enable`, `disable`.
 * `values` - Subnet segment values. The structure of `values` block is documented below.
 
 The `values` block supports:
