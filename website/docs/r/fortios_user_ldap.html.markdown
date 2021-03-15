@@ -41,33 +41,33 @@ The following arguments are supported:
 * `server` - (Required) LDAP server CN domain name or IP.
 * `secondary_server` - Secondary LDAP server CN domain name or IP.
 * `tertiary_server` - Tertiary LDAP server CN domain name or IP.
-* `server_identity_check` - Enable/disable LDAP server identity check (verify server domain name/IP address against the server certificate).
+* `server_identity_check` - Enable/disable LDAP server identity check (verify server domain name/IP address against the server certificate). Valid values: `enable`, `disable`.
 * `source_ip` - Source IP for communications to LDAP server.
 * `cnid` - Common name identifier for the LDAP server. The common name identifier for most LDAP servers is "cn".
 * `dn` - (Required) Distinguished name used to look up entries on the LDAP server.
-* `type` - Authentication type for LDAP searches.
-* `two_factor` - Enable/disable two-factor authentication.
-* `two_factor_authentication` - Authentication method by FortiToken Cloud.
-* `two_factor_notification` - Notification method for user activation by FortiToken Cloud.
+* `type` - Authentication type for LDAP searches. Valid values: `simple`, `anonymous`, `regular`.
+* `two_factor` - Enable/disable two-factor authentication. Valid values: `disable`, `fortitoken-cloud`.
+* `two_factor_authentication` - Authentication method by FortiToken Cloud. Valid values: `fortitoken`, `email`, `sms`.
+* `two_factor_notification` - Notification method for user activation by FortiToken Cloud. Valid values: `email`, `sms`.
 * `username` - Username (full DN) for initial binding.
 * `password` - Password for initial binding.
-* `group_member_check` - Group member checking methods.
+* `group_member_check` - Group member checking methods. Valid values: `user-attr`, `group-object`, `posix-group-object`.
 * `group_search_base` - Search base used for group searching.
 * `group_object_filter` - Filter used for group searching.
 * `group_filter` - Filter used for group matching.
-* `secure` - Port to be used for authentication.
-* `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting).
+* `secure` - Port to be used for authentication. Valid values: `disable`, `starttls`, `ldaps`.
+* `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting). Valid values: `default`, `SSLv3`, `TLSv1`, `TLSv1-1`, `TLSv1-2`.
 * `ca_cert` - CA certificate name.
 * `port` - Port to be used for communication with the LDAP server (default = 389).
-* `password_expiry_warning` - Enable/disable password expiry warnings.
-* `password_renewal` - Enable/disable online password renewal.
+* `password_expiry_warning` - Enable/disable password expiry warnings. Valid values: `enable`, `disable`.
+* `password_renewal` - Enable/disable online password renewal. Valid values: `enable`, `disable`.
 * `member_attr` - Name of attribute from which to get group membership.
-* `account_key_processing` - Account key processing operation, either keep or strip domain string of UPN in the token.
+* `account_key_processing` - Account key processing operation, either keep or strip domain string of UPN in the token. Valid values: `same`, `strip`.
 * `account_key_filter` - Account key filter, using the UPN as the search filter.
-* `search_type` - Search type.
-* `obtain_user_info` - Enable/disable obtaining of user information.
+* `search_type` - Search type. Valid values: `recursive`.
+* `obtain_user_info` - Enable/disable obtaining of user information. Valid values: `enable`, `disable`.
 * `user_info_exchange_server` - MS Exchange server from which to fetch user information.
-* `interface_select_method` - Specify how to select outgoing interface to reach server.
+* `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.
 * `interface` - Specify outgoing interface to reach server.
 
 
