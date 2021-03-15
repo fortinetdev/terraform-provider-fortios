@@ -30,15 +30,15 @@ resource "fortios_report_style" "trname" {
 The following arguments are supported:
 
 * `name` - Report style name.
-* `options` - Report style options.
-* `font_family` - Font family.
-* `font_style` - Font style.
-* `font_weight` - Font weight.
+* `options` - Report style options. Valid values: `font`, `text`, `color`, `align`, `size`, `margin`, `border`, `padding`, `column`.
+* `font_family` - Font family. Valid values: `Verdana`, `Arial`, `Helvetica`, `Courier`, `Times`.
+* `font_style` - Font style. Valid values: `normal`, `italic`.
+* `font_weight` - Font weight. Valid values: `normal`, `bold`.
 * `font_size` - Font size.
 * `line_height` - Text line height.
 * `fg_color` - Foreground color.
 * `bg_color` - Background color.
-* `align` - Alignment.
+* `align` - Alignment. Valid values: `left`, `center`, `right`, `justify`.
 * `width` - Width.
 * `height` - Height.
 * `margin_top` - Margin top.
@@ -53,7 +53,7 @@ The following arguments are supported:
 * `padding_right` - Padding right.
 * `padding_bottom` - Padding bottom.
 * `padding_left` - Padding left.
-* `column_span` - Column span.
+* `column_span` - Column span. Valid values: `none`, `all`.
 * `column_gap` - Column gap.
 
 
