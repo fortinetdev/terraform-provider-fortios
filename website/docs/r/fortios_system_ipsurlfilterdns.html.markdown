@@ -14,8 +14,8 @@ Configure IPS URL filter DNS servers.
 The following arguments are supported:
 
 * `address` - DNS server IP address.
-* `status` - Enable/disable using this DNS server for IPS URL filter DNS queries.
-* `ipv6_capability` - Enable/disable this server for IPv6 queries.
+* `status` - Enable/disable using this DNS server for IPS URL filter DNS queries. Valid values: `enable`, `disable`.
+* `ipv6_capability` - Enable/disable this server for IPv6 queries. Valid values: `enable`, `disable`.
 
 
 ## Attribute Reference
