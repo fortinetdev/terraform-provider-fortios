@@ -15,12 +15,12 @@ The following arguments are supported:
 
 * `eip` - End IP.
 * `sip` - Start IP.
-* `status` - (Required) Enable/disable FortiGate as a L2TP gateway.
+* `status` - (Required) Enable/disable FortiGate as a L2TP gateway. Valid values: `enable`, `disable`.
 * `usrgrp` - User group.
-* `enforce_ipsec` - Enable/disable IPsec enforcement.
+* `enforce_ipsec` - Enable/disable IPsec enforcement. Valid values: `enable`, `disable`.
 * `lcp_echo_interval` - Time in seconds between PPPoE Link Control Protocol (LCP) echo requests.
 * `lcp_max_echo_fails` - Maximum number of missed LCP echo messages before disconnect.
-* `compress` - Enable/disable data compression.
+* `compress` - Enable/disable data compression. Valid values: `enable`, `disable`.
 
 
 ## Attribute Reference
