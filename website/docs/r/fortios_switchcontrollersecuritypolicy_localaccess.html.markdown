@@ -14,8 +14,8 @@ Configure allowaccess list for mgmt and internal interfaces on managed FortiSwit
 The following arguments are supported:
 
 * `name` - Policy name.
-* `mgmt_allowaccess` - Allowed access on the switch management interface.
-* `internal_allowaccess` - Allowed access on the switch internal interface.
+* `mgmt_allowaccess` - Allowed access on the switch management interface. Valid values: `https`, `ping`, `ssh`, `snmp`, `http`, `telnet`, `radius-acct`.
+* `internal_allowaccess` - Allowed access on the switch internal interface. Valid values: `https`, `ping`, `ssh`, `snmp`, `http`, `telnet`, `radius-acct`.
 
 
 ## Attribute Reference
