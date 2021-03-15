@@ -46,40 +46,40 @@ resource "fortios_router_isis" "trname" {
 
 The following arguments are supported:
 
-* `is_type` - IS type.
-* `adv_passive_only` - Enable/disable IS-IS advertisement of passive interfaces only.
-* `adv_passive_only6` - Enable/disable IPv6 IS-IS advertisement of passive interfaces only.
-* `auth_mode_l1` - Level 1 authentication mode.
-* `auth_mode_l2` - Level 2 authentication mode.
+* `is_type` - IS type. Valid values: `level-1-2`, `level-1`, `level-2-only`.
+* `adv_passive_only` - Enable/disable IS-IS advertisement of passive interfaces only. Valid values: `enable`, `disable`.
+* `adv_passive_only6` - Enable/disable IPv6 IS-IS advertisement of passive interfaces only. Valid values: `enable`, `disable`.
+* `auth_mode_l1` - Level 1 authentication mode. Valid values: `password`, `md5`.
+* `auth_mode_l2` - Level 2 authentication mode. Valid values: `password`, `md5`.
 * `auth_password_l1` - Authentication password for level 1 PDUs.
 * `auth_password_l2` - Authentication password for level 2 PDUs.
 * `auth_keychain_l1` - Authentication key-chain for level 1 PDUs.
 * `auth_keychain_l2` - Authentication key-chain for level 2 PDUs.
-* `auth_sendonly_l1` - Enable/disable level 1 authentication send-only.
-* `auth_sendonly_l2` - Enable/disable level 2 authentication send-only.
-* `ignore_lsp_errors` - Enable/disable ignoring of LSP errors with bad checksums.
+* `auth_sendonly_l1` - Enable/disable level 1 authentication send-only. Valid values: `enable`, `disable`.
+* `auth_sendonly_l2` - Enable/disable level 2 authentication send-only. Valid values: `enable`, `disable`.
+* `ignore_lsp_errors` - Enable/disable ignoring of LSP errors with bad checksums. Valid values: `enable`, `disable`.
 * `lsp_gen_interval_l1` - Minimum interval for level 1 LSP regenerating.
 * `lsp_gen_interval_l2` - Minimum interval for level 2 LSP regenerating.
 * `lsp_refresh_interval` - LSP refresh time in seconds.
 * `max_lsp_lifetime` - Maximum LSP lifetime in seconds.
 * `spf_interval_exp_l1` - Level 1 SPF calculation delay.
 * `spf_interval_exp_l2` - Level 2 SPF calculation delay.
-* `dynamic_hostname` - Enable/disable dynamic hostname.
-* `adjacency_check` - Enable/disable adjacency check.
-* `adjacency_check6` - Enable/disable IPv6 adjacency check.
-* `overload_bit` - Enable/disable signal other routers not to use us in SPF.
-* `overload_bit_suppress` - Suppress overload-bit for the specific prefixes.
+* `dynamic_hostname` - Enable/disable dynamic hostname. Valid values: `enable`, `disable`.
+* `adjacency_check` - Enable/disable adjacency check. Valid values: `enable`, `disable`.
+* `adjacency_check6` - Enable/disable IPv6 adjacency check. Valid values: `enable`, `disable`.
+* `overload_bit` - Enable/disable signal other routers not to use us in SPF. Valid values: `enable`, `disable`.
+* `overload_bit_suppress` - Suppress overload-bit for the specific prefixes. Valid values: `external`, `interlevel`.
 * `overload_bit_on_startup` - Overload-bit only temporarily after reboot.
-* `default_originate` - Enable/disable distribution of default route information.
-* `default_originate6` - Enable/disable distribution of default IPv6 route information.
-* `metric_style` - Use old-style (ISO 10589) or new-style packet formats
-* `redistribute_l1` - Enable/disable redistribution of level 1 routes into level 2.
+* `default_originate` - Enable/disable distribution of default route information. Valid values: `enable`, `disable`.
+* `default_originate6` - Enable/disable distribution of default IPv6 route information. Valid values: `enable`, `disable`.
+* `metric_style` - Use old-style (ISO 10589) or new-style packet formats Valid values: `narrow`, `wide`, `transition`, `narrow-transition`, `narrow-transition-l1`, `narrow-transition-l2`, `wide-l1`, `wide-l2`, `wide-transition`, `wide-transition-l1`, `wide-transition-l2`, `transition-l1`, `transition-l2`.
+* `redistribute_l1` - Enable/disable redistribution of level 1 routes into level 2. Valid values: `enable`, `disable`.
 * `redistribute_l1_list` - Access-list for route redistribution from l1 to l2.
-* `redistribute_l2` - Enable/disable redistribution of level 2 routes into level 1.
+* `redistribute_l2` - Enable/disable redistribution of level 2 routes into level 1. Valid values: `enable`, `disable`.
 * `redistribute_l2_list` - Access-list for route redistribution from l2 to l1.
-* `redistribute6_l1` - Enable/disable redistribution of level 1 IPv6 routes into level 2.
+* `redistribute6_l1` - Enable/disable redistribution of level 1 IPv6 routes into level 2. Valid values: `enable`, `disable`.
 * `redistribute6_l1_list` - Access-list for IPv6 route redistribution from l1 to l2.
-* `redistribute6_l2` - Enable/disable redistribution of level 2 IPv6 routes into level 1.
+* `redistribute6_l2` - Enable/disable redistribution of level 2 IPv6 routes into level 1. Valid values: `enable`, `disable`.
 * `redistribute6_l2_list` - Access-list for IPv6 route redistribution from l2 to l1.
 * `isis_net` - IS-IS net configuration. The structure of `isis_net` block is documented below.
 * `isis_interface` - IS-IS interface configuration. The structure of `isis_interface` block is documented below.
@@ -97,17 +97,17 @@ The `isis_net` block supports:
 The `isis_interface` block supports:
 
 * `name` - IS-IS interface name.
-* `status` - Enable/disable interface for IS-IS.
-* `status6` - Enable/disable IPv6 interface for IS-IS.
-* `network_type` - IS-IS interface's network type
-* `circuit_type` - IS-IS interface's circuit type
+* `status` - Enable/disable interface for IS-IS. Valid values: `enable`, `disable`.
+* `status6` - Enable/disable IPv6 interface for IS-IS. Valid values: `enable`, `disable`.
+* `network_type` - IS-IS interface's network type Valid values: `broadcast`, `point-to-point`, `loopback`.
+* `circuit_type` - IS-IS interface's circuit type Valid values: `level-1-2`, `level-1`, `level-2`.
 * `csnp_interval_l1` - Level 1 CSNP interval.
 * `csnp_interval_l2` - Level 2 CSNP interval.
 * `hello_interval_l1` - Level 1 hello interval.
 * `hello_interval_l2` - Level 2 hello interval.
 * `hello_multiplier_l1` - Level 1 multiplier for Hello holding time.
 * `hello_multiplier_l2` - Level 2 multiplier for Hello holding time.
-* `hello_padding` - Enable/disable padding to IS-IS hello packets.
+* `hello_padding` - Enable/disable padding to IS-IS hello packets. Valid values: `enable`, `disable`.
 * `lsp_interval` - LSP transmission interval (milliseconds).
 * `lsp_retransmit_interval` - LSP retransmission interval (sec).
 * `metric_l1` - Level 1 metric for interface.
@@ -118,43 +118,43 @@ The `isis_interface` block supports:
 * `auth_password_l2` - Authentication password for level 2 PDUs.
 * `auth_keychain_l1` - Authentication key-chain for level 1 PDUs.
 * `auth_keychain_l2` - Authentication key-chain for level 2 PDUs.
-* `auth_send_only_l1` - Enable/disable authentication send-only for level 1 PDUs.
-* `auth_send_only_l2` - Enable/disable authentication send-only for level 2 PDUs.
-* `auth_mode_l1` - Level 1 authentication mode.
-* `auth_mode_l2` - Level 2 authentication mode.
+* `auth_send_only_l1` - Enable/disable authentication send-only for level 1 PDUs. Valid values: `enable`, `disable`.
+* `auth_send_only_l2` - Enable/disable authentication send-only for level 2 PDUs. Valid values: `enable`, `disable`.
+* `auth_mode_l1` - Level 1 authentication mode. Valid values: `md5`, `password`.
+* `auth_mode_l2` - Level 2 authentication mode. Valid values: `md5`, `password`.
 * `priority_l1` - Level 1 priority.
 * `priority_l2` - Level 2 priority.
-* `mesh_group` - Enable/disable IS-IS mesh group.
+* `mesh_group` - Enable/disable IS-IS mesh group. Valid values: `enable`, `disable`.
 * `mesh_group_id` - Mesh group ID <0-4294967295>, 0: mesh-group blocked.
 
 The `summary_address` block supports:
 
 * `id` - Summary address entry ID.
 * `prefix` - Prefix.
-* `level` - Level.
+* `level` - Level. Valid values: `level-1-2`, `level-1`, `level-2`.
 
 The `summary_address6` block supports:
 
 * `id` - Prefix entry ID.
 * `prefix6` - IPv6 prefix.
-* `level` - Level.
+* `level` - Level. Valid values: `level-1-2`, `level-1`, `level-2`.
 
 The `redistribute` block supports:
 
 * `protocol` - Protocol name.
-* `status` - Status.
+* `status` - Status. Valid values: `enable`, `disable`.
 * `metric` - Metric.
-* `metric_type` - Metric type.
-* `level` - Level.
+* `metric_type` - Metric type. Valid values: `external`, `internal`.
+* `level` - Level. Valid values: `level-1-2`, `level-1`, `level-2`.
 * `routemap` - Route map name.
 
 The `redistribute6` block supports:
 
 * `protocol` - Protocol name.
-* `status` - Enable/disable redistribution.
+* `status` - Enable/disable redistribution. Valid values: `enable`, `disable`.
 * `metric` - Metric.
-* `metric_type` - Metric type.
-* `level` - Level.
+* `metric_type` - Metric type. Valid values: `external`, `internal`.
+* `level` - Level. Valid values: `level-1-2`, `level-1`, `level-2`.
 * `routemap` - Route map name.
 
 
