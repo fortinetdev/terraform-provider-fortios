@@ -19,19 +19,19 @@ The following arguments are supported:
 * `downlink` - Maximum downlink bandwidth for Virtual Access Points (VAPs) (0 - 2097152 Kbps, default = 0, 0 means no limit).
 * `uplink_sta` - Maximum uplink bandwidth for clients (0 - 2097152 Kbps, default = 0, 0 means no limit).
 * `downlink_sta` - Maximum downlink bandwidth for clients (0 - 2097152 Kbps, default = 0, 0 means no limit).
-* `burst` - Enable/disable client rate burst.
-* `wmm` - Enable/disable WiFi multi-media (WMM) control.
-* `wmm_uapsd` - Enable/disable WMM Unscheduled Automatic Power Save Delivery (U-APSD) power save mode.
-* `call_admission_control` - Enable/disable WMM call admission control.
+* `burst` - Enable/disable client rate burst. Valid values: `enable`, `disable`.
+* `wmm` - Enable/disable WiFi multi-media (WMM) control. Valid values: `enable`, `disable`.
+* `wmm_uapsd` - Enable/disable WMM Unscheduled Automatic Power Save Delivery (U-APSD) power save mode. Valid values: `enable`, `disable`.
+* `call_admission_control` - Enable/disable WMM call admission control. Valid values: `enable`, `disable`.
 * `call_capacity` - Maximum number of Voice over WLAN (VoWLAN) phones allowed (0 - 60, default = 10).
-* `bandwidth_admission_control` - Enable/disable WMM bandwidth admission control.
+* `bandwidth_admission_control` - Enable/disable WMM bandwidth admission control. Valid values: `enable`, `disable`.
 * `bandwidth_capacity` - Maximum bandwidth capacity allowed (1 - 600000 Kbps, default = 2000).
-* `dscp_wmm_mapping` - Enable/disable Differentiated Services Code Point (DSCP) mapping.
+* `dscp_wmm_mapping` - Enable/disable Differentiated Services Code Point (DSCP) mapping. Valid values: `enable`, `disable`.
 * `dscp_wmm_vo` - DSCP mapping for voice access (default = 48 56). The structure of `dscp_wmm_vo` block is documented below.
 * `dscp_wmm_vi` - DSCP mapping for video access (default = 32 40). The structure of `dscp_wmm_vi` block is documented below.
 * `dscp_wmm_be` - DSCP mapping for best effort access (default = 0 24). The structure of `dscp_wmm_be` block is documented below.
 * `dscp_wmm_bk` - DSCP mapping for background access (default = 8 16). The structure of `dscp_wmm_bk` block is documented below.
-* `wmm_dscp_marking` - Enable/disable WMM Differentiated Services Code Point (DSCP) marking.
+* `wmm_dscp_marking` - Enable/disable WMM Differentiated Services Code Point (DSCP) marking. Valid values: `enable`, `disable`.
 * `wmm_vo_dscp` - DSCP marking for voice access (default = 48).
 * `wmm_vi_dscp` - DSCP marking for video access (default = 32).
 * `wmm_be_dscp` - DSCP marking for best effort access (default = 0).
