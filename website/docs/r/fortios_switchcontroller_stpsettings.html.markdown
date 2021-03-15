@@ -28,7 +28,7 @@ resource "fortios_switchcontroller_stpsettings" "trname" {
 The following arguments are supported:
 
 * `name` - Name of global STP settings configuration.
-* `status` - Enable/disable STP.
+* `status` - Enable/disable STP. Valid values: `enable`, `disable`.
 * `revision` - STP revision number (0 - 65535).
 * `hello_time` - Period of time between successive STP frame Bridge Protocol Data Units (BPDUs) sent on a port (1 - 10 sec, default = 2).
 * `forward_time` - Period of time a port is in listening and learning state (4 - 30 sec, default = 15).
