@@ -27,10 +27,10 @@ resource "fortios_system_objecttagging" "trname" {
 The following arguments are supported:
 
 * `category` - Tag Category.
-* `address` - Address.
-* `device` - Device.
-* `interface` - Interface.
-* `multiple` - Allow multiple tag selection.
+* `address` - Address. Valid values: `disable`, `mandatory`, `optional`.
+* `device` - Device. Valid values: `disable`, `mandatory`, `optional`.
+* `interface` - Interface. Valid values: `disable`, `mandatory`, `optional`.
+* `multiple` - Allow multiple tag selection. Valid values: `enable`, `disable`.
 * `color` - Color of icon on the GUI.
 * `tags` - Tags. The structure of `tags` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
