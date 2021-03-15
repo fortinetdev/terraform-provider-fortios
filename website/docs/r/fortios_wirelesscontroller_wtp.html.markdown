@@ -16,7 +16,7 @@ The following arguments are supported:
 * `wtp_id` - WTP ID.
 * `index` - Index (0 - 4294967295).
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
-* `admin` - Configure how the FortiGate operating as a wireless controller discovers and manages this WTP, AP or FortiAP.
+* `admin` - Configure how the FortiGate operating as a wireless controller discovers and manages this WTP, AP or FortiAP. Valid values: `discovered`, `disable`, `enable`.
 * `name` - WTP, AP or FortiAP configuration name.
 * `location` - Field for describing the physical location of the WTP, AP or FortiAP.
 * `region` - Region name WTP is associated with.
@@ -24,34 +24,34 @@ The following arguments are supported:
 * `region_y` - Relative vertical region coordinate (between 0 and 1).
 * `firmware_provision` - Firmware version to provision to this FortiAP on bootup (major.minor.build, i.e. 6.2.1234).
 * `wtp_profile` - (Required) WTP profile name to apply to this WTP, AP or FortiAP.
-* `wtp_mode` - WTP, AP, or FortiAP operating mode; normal (by default) or remote. A tunnel mode SSID can be assigned to an AP in normal mode but not remote mode, while a local-bridge mode SSID can be assigned to an AP in either normal mode or remote mode.
+* `wtp_mode` - WTP, AP, or FortiAP operating mode; normal (by default) or remote. A tunnel mode SSID can be assigned to an AP in normal mode but not remote mode, while a local-bridge mode SSID can be assigned to an AP in either normal mode or remote mode. Valid values: `normal`, `remote`.
 * `apcfg_profile` - AP local configuration profile name.
 * `bonjour_profile` - Bonjour profile name.
-* `override_led_state` - Enable to override the profile LED state setting for this FortiAP. You must enable this option to use the led-state command to turn off the FortiAP's LEDs.
-* `led_state` - Enable to allow the FortiAPs LEDs to light. Disable to keep the LEDs off. You may want to keep the LEDs off so they are not distracting in low light areas etc.
-* `override_wan_port_mode` - Enable/disable overriding the wan-port-mode in the WTP profile.
-* `wan_port_mode` - Enable/disable using the FortiAP WAN port as a LAN port.
-* `override_ip_fragment` - Enable/disable overriding the WTP profile IP fragment prevention setting.
-* `ip_fragment_preventing` - Method by which IP fragmentation is prevented for CAPWAP tunneled control and data packets (default = tcp-mss-adjust).
+* `override_led_state` - Enable to override the profile LED state setting for this FortiAP. You must enable this option to use the led-state command to turn off the FortiAP's LEDs. Valid values: `enable`, `disable`.
+* `led_state` - Enable to allow the FortiAPs LEDs to light. Disable to keep the LEDs off. You may want to keep the LEDs off so they are not distracting in low light areas etc. Valid values: `enable`, `disable`.
+* `override_wan_port_mode` - Enable/disable overriding the wan-port-mode in the WTP profile. Valid values: `enable`, `disable`.
+* `wan_port_mode` - Enable/disable using the FortiAP WAN port as a LAN port. Valid values: `wan-lan`, `wan-only`.
+* `override_ip_fragment` - Enable/disable overriding the WTP profile IP fragment prevention setting. Valid values: `enable`, `disable`.
+* `ip_fragment_preventing` - Method by which IP fragmentation is prevented for CAPWAP tunneled control and data packets (default = tcp-mss-adjust). Valid values: `tcp-mss-adjust`, `icmp-unreachable`.
 * `tun_mtu_uplink` - Uplink tunnel maximum transmission unit (MTU) in octets (eight-bit bytes). Set the value to either 0 (by default), 576, or 1500.
 * `tun_mtu_downlink` - Downlink tunnel MTU in octets. Set the value to either 0 (by default), 576, or 1500.
-* `override_split_tunnel` - Enable/disable overriding the WTP profile split tunneling setting.
-* `split_tunneling_acl_path` - Split tunneling ACL path is local/tunnel.
-* `split_tunneling_acl_local_ap_subnet` - Enable/disable automatically adding local subnetwork of FortiAP to split-tunneling ACL (default = disable).
+* `override_split_tunnel` - Enable/disable overriding the WTP profile split tunneling setting. Valid values: `enable`, `disable`.
+* `split_tunneling_acl_path` - Split tunneling ACL path is local/tunnel. Valid values: `tunnel`, `local`.
+* `split_tunneling_acl_local_ap_subnet` - Enable/disable automatically adding local subnetwork of FortiAP to split-tunneling ACL (default = disable). Valid values: `enable`, `disable`.
 * `split_tunneling_acl` - Split tunneling ACL filter list. The structure of `split_tunneling_acl` block is documented below.
-* `override_lan` - Enable to override the WTP profile LAN port setting.
+* `override_lan` - Enable to override the WTP profile LAN port setting. Valid values: `enable`, `disable`.
 * `lan` - WTP LAN port mapping. The structure of `lan` block is documented below.
-* `override_allowaccess` - Enable to override the WTP profile management access configuration.
+* `override_allowaccess` - Enable to override the WTP profile management access configuration. Valid values: `enable`, `disable`.
 * `allowaccess` - Control management access to the managed WTP, FortiAP, or AP. Separate entries with a space.
-* `override_login_passwd_change` - Enable to override the WTP profile login-password (administrator password) setting.
-* `login_passwd_change` - Change or reset the administrator password of a managed WTP, FortiAP or AP (yes, default, or no, default = no).
+* `override_login_passwd_change` - Enable to override the WTP profile login-password (administrator password) setting. Valid values: `enable`, `disable`.
+* `login_passwd_change` - Change or reset the administrator password of a managed WTP, FortiAP or AP (yes, default, or no, default = no). Valid values: `yes`, `default`, `no`.
 * `login_passwd` - Set the managed WTP, FortiAP, or AP's administrator password.
 * `radio_1` - Configuration options for radio 1. The structure of `radio_1` block is documented below.
 * `radio_2` - Configuration options for radio 2. The structure of `radio_2` block is documented below.
 * `radio_3` - Configuration options for radio 3. The structure of `radio_3` block is documented below.
 * `radio_4` - Configuration options for radio 4. The structure of `radio_4` block is documented below.
-* `image_download` - Enable/disable WTP image download.
-* `mesh_bridge_enable` - Enable/disable mesh Ethernet bridge when WTP is configured as a mesh branch/leaf AP.
+* `image_download` - Enable/disable WTP image download. Valid values: `enable`, `disable`.
+* `mesh_bridge_enable` - Enable/disable mesh Ethernet bridge when WTP is configured as a mesh branch/leaf AP. Valid values: `default`, `enable`, `disable`.
 * `coordinate_latitude` - WTP latitude coordinate.
 * `coordinate_longitude` - WTP longitude coordinate.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
@@ -63,46 +63,46 @@ The `split_tunneling_acl` block supports:
 
 The `lan` block supports:
 
-* `port_mode` - LAN port mode.
+* `port_mode` - LAN port mode. Valid values: `offline`, `nat-to-wan`, `bridge-to-wan`, `bridge-to-ssid`.
 * `port_ssid` - Bridge LAN port to SSID.
-* `port1_mode` - LAN port 1 mode.
+* `port1_mode` - LAN port 1 mode. Valid values: `offline`, `nat-to-wan`, `bridge-to-wan`, `bridge-to-ssid`.
 * `port1_ssid` - Bridge LAN port 1 to SSID.
-* `port2_mode` - LAN port 2 mode.
+* `port2_mode` - LAN port 2 mode. Valid values: `offline`, `nat-to-wan`, `bridge-to-wan`, `bridge-to-ssid`.
 * `port2_ssid` - Bridge LAN port 2 to SSID.
-* `port3_mode` - LAN port 3 mode.
+* `port3_mode` - LAN port 3 mode. Valid values: `offline`, `nat-to-wan`, `bridge-to-wan`, `bridge-to-ssid`.
 * `port3_ssid` - Bridge LAN port 3 to SSID.
-* `port4_mode` - LAN port 4 mode.
+* `port4_mode` - LAN port 4 mode. Valid values: `offline`, `nat-to-wan`, `bridge-to-wan`, `bridge-to-ssid`.
 * `port4_ssid` - Bridge LAN port 4 to SSID.
-* `port5_mode` - LAN port 5 mode.
+* `port5_mode` - LAN port 5 mode. Valid values: `offline`, `nat-to-wan`, `bridge-to-wan`, `bridge-to-ssid`.
 * `port5_ssid` - Bridge LAN port 5 to SSID.
-* `port6_mode` - LAN port 6 mode.
+* `port6_mode` - LAN port 6 mode. Valid values: `offline`, `nat-to-wan`, `bridge-to-wan`, `bridge-to-ssid`.
 * `port6_ssid` - Bridge LAN port 6 to SSID.
-* `port7_mode` - LAN port 7 mode.
+* `port7_mode` - LAN port 7 mode. Valid values: `offline`, `nat-to-wan`, `bridge-to-wan`, `bridge-to-ssid`.
 * `port7_ssid` - Bridge LAN port 7 to SSID.
-* `port8_mode` - LAN port 8 mode.
+* `port8_mode` - LAN port 8 mode. Valid values: `offline`, `nat-to-wan`, `bridge-to-wan`, `bridge-to-ssid`.
 * `port8_ssid` - Bridge LAN port 8 to SSID.
-* `port_esl_mode` - ESL port mode.
+* `port_esl_mode` - ESL port mode. Valid values: `offline`, `nat-to-wan`, `bridge-to-wan`, `bridge-to-ssid`.
 * `port_esl_ssid` - Bridge ESL port to SSID.
 
 The `radio_1` block supports:
 
 * `radio_id` - radio-id
-* `override_band` - Enable to override the WTP profile band setting.
+* `override_band` - Enable to override the WTP profile band setting. Valid values: `enable`, `disable`.
 * `band` - WiFi band that Radio 1 operates on.
-* `override_analysis` - Enable to override the WTP profile spectrum analysis configuration.
+* `override_analysis` - Enable to override the WTP profile spectrum analysis configuration. Valid values: `enable`, `disable`.
 * `spectrum_analysis` - Enable/disable spectrum analysis to find interference that would negatively impact wireless performance.
-* `override_txpower` - Enable to override the WTP profile power level configuration.
-* `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference (default = enable).
+* `override_txpower` - Enable to override the WTP profile power level configuration. Valid values: `enable`, `disable`.
+* `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference (default = enable). Valid values: `enable`, `disable`.
 * `auto_power_high` - Automatic transmission power high limit in decibels (dB) of the measured power referenced to one milliwatt (mW), or dBm (10 - 17 dBm, default = 17).
 * `auto_power_low` - Automatic transmission power low limit in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_target` - The target of automatic transmit power adjustment in dBm. (-95 to -20, default = -70).
 * `power_level` - Radio power level as a percentage of the maximum transmit power (0 - 100, default = 100).
-* `override_vaps` - Enable to override WTP profile Virtual Access Point (VAP) settings.
+* `override_vaps` - Enable to override WTP profile Virtual Access Point (VAP) settings. Valid values: `enable`, `disable`.
 * `vap_all` - Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable).
 * `vaps` - Manually selected list of Virtual Access Points (VAPs). The structure of `vaps` block is documented below.
-* `override_channel` - Enable to override WTP profile channel settings.
+* `override_channel` - Enable to override WTP profile channel settings. Valid values: `enable`, `disable`.
 * `channel` - Selected list of wireless radio channels. The structure of `channel` block is documented below.
-* `drma_manual_mode` - Radio mode to be used for DRMA manual mode (default = ncf).
+* `drma_manual_mode` - Radio mode to be used for DRMA manual mode (default = ncf). Valid values: `ap`, `monitor`, `ncf`, `ncf-peek`.
 
 The `vaps` block supports:
 
@@ -115,22 +115,22 @@ The `channel` block supports:
 The `radio_2` block supports:
 
 * `radio_id` - radio-id
-* `override_band` - Enable to override the WTP profile band setting.
+* `override_band` - Enable to override the WTP profile band setting. Valid values: `enable`, `disable`.
 * `band` - WiFi band that Radio 1 operates on.
-* `override_analysis` - Enable to override the WTP profile spectrum analysis configuration.
+* `override_analysis` - Enable to override the WTP profile spectrum analysis configuration. Valid values: `enable`, `disable`.
 * `spectrum_analysis` - Enable/disable spectrum analysis to find interference that would negatively impact wireless performance.
-* `override_txpower` - Enable to override the WTP profile power level configuration.
-* `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference (default = enable).
+* `override_txpower` - Enable to override the WTP profile power level configuration. Valid values: `enable`, `disable`.
+* `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference (default = enable). Valid values: `enable`, `disable`.
 * `auto_power_high` - Automatic transmission power high limit in decibels (dB) of the measured power referenced to one milliwatt (mW), or dBm (10 - 17 dBm, default = 17).
 * `auto_power_low` - Automatic transmission power low limit in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_target` - The target of automatic transmit power adjustment in dBm. (-95 to -20, default = -70).
 * `power_level` - Radio power level as a percentage of the maximum transmit power (0 - 100, default = 100).
-* `override_vaps` - Enable to override WTP profile Virtual Access Point (VAP) settings.
+* `override_vaps` - Enable to override WTP profile Virtual Access Point (VAP) settings. Valid values: `enable`, `disable`.
 * `vap_all` - Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable).
 * `vaps` - Manually selected list of Virtual Access Points (VAPs). The structure of `vaps` block is documented below.
-* `override_channel` - Enable to override WTP profile channel settings.
+* `override_channel` - Enable to override WTP profile channel settings. Valid values: `enable`, `disable`.
 * `channel` - Selected list of wireless radio channels. The structure of `channel` block is documented below.
-* `drma_manual_mode` - Radio mode to be used for DRMA manual mode (default = ncf).
+* `drma_manual_mode` - Radio mode to be used for DRMA manual mode (default = ncf). Valid values: `ap`, `monitor`, `ncf`, `ncf-peek`.
 
 The `vaps` block supports:
 
@@ -142,22 +142,22 @@ The `channel` block supports:
 
 The `radio_3` block supports:
 
-* `override_band` - Enable to override the WTP profile band setting.
+* `override_band` - Enable to override the WTP profile band setting. Valid values: `enable`, `disable`.
 * `band` - WiFi band that Radio 3 operates on.
-* `override_analysis` - Enable to override the WTP profile spectrum analysis configuration.
+* `override_analysis` - Enable to override the WTP profile spectrum analysis configuration. Valid values: `enable`, `disable`.
 * `spectrum_analysis` - Enable/disable spectrum analysis to find interference that would negatively impact wireless performance.
-* `override_txpower` - Enable to override the WTP profile power level configuration.
-* `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference (default = enable).
+* `override_txpower` - Enable to override the WTP profile power level configuration. Valid values: `enable`, `disable`.
+* `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference (default = enable). Valid values: `enable`, `disable`.
 * `auto_power_high` - The upper bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_low` - The lower bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_target` - The target of automatic transmit power adjustment in dBm. (-95 to -20, default = -70).
 * `power_level` - Radio power level as a percentage of the maximum transmit power (0 - 100, default = 100).
-* `override_vaps` - Enable to override WTP profile Virtual Access Point (VAP) settings.
+* `override_vaps` - Enable to override WTP profile Virtual Access Point (VAP) settings. Valid values: `enable`, `disable`.
 * `vap_all` - Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable).
 * `vaps` - Manually selected list of Virtual Access Points (VAPs). The structure of `vaps` block is documented below.
-* `override_channel` - Enable to override WTP profile channel settings.
+* `override_channel` - Enable to override WTP profile channel settings. Valid values: `enable`, `disable`.
 * `channel` - Selected list of wireless radio channels. The structure of `channel` block is documented below.
-* `drma_manual_mode` - Radio mode to be used for DRMA manual mode (default = ncf).
+* `drma_manual_mode` - Radio mode to be used for DRMA manual mode (default = ncf). Valid values: `ap`, `monitor`, `ncf`, `ncf-peek`.
 
 The `vaps` block supports:
 
@@ -169,22 +169,22 @@ The `channel` block supports:
 
 The `radio_4` block supports:
 
-* `override_band` - Enable to override the WTP profile band setting.
+* `override_band` - Enable to override the WTP profile band setting. Valid values: `enable`, `disable`.
 * `band` - WiFi band that Radio 4 operates on.
-* `override_analysis` - Enable to override the WTP profile spectrum analysis configuration.
+* `override_analysis` - Enable to override the WTP profile spectrum analysis configuration. Valid values: `enable`, `disable`.
 * `spectrum_analysis` - Enable/disable spectrum analysis to find interference that would negatively impact wireless performance.
-* `override_txpower` - Enable to override the WTP profile power level configuration.
-* `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference (default = enable).
+* `override_txpower` - Enable to override the WTP profile power level configuration. Valid values: `enable`, `disable`.
+* `auto_power_level` - Enable/disable automatic power-level adjustment to prevent co-channel interference (default = enable). Valid values: `enable`, `disable`.
 * `auto_power_high` - The upper bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_low` - The lower bound of automatic transmit power adjustment in dBm (the actual range of transmit power depends on the AP platform type).
 * `auto_power_target` - The target of automatic transmit power adjustment in dBm. (-95 to -20, default = -70).
 * `power_level` - Radio power level as a percentage of the maximum transmit power (0 - 100, default = 100).
-* `override_vaps` - Enable to override WTP profile Virtual Access Point (VAP) settings.
+* `override_vaps` - Enable to override WTP profile Virtual Access Point (VAP) settings. Valid values: `enable`, `disable`.
 * `vap_all` - Enable/disable the automatic inheritance of all Virtual Access Points (VAPs) (default = enable).
 * `vaps` - Manually selected list of Virtual Access Points (VAPs). The structure of `vaps` block is documented below.
-* `override_channel` - Enable to override WTP profile channel settings.
+* `override_channel` - Enable to override WTP profile channel settings. Valid values: `enable`, `disable`.
 * `channel` - Selected list of wireless radio channels. The structure of `channel` block is documented below.
-* `drma_manual_mode` - Radio mode to be used for DRMA manual mode (default = ncf).
+* `drma_manual_mode` - Radio mode to be used for DRMA manual mode (default = ncf). Valid values: `ap`, `monitor`, `ncf`, `ncf-peek`.
 
 The `vaps` block supports:
 
