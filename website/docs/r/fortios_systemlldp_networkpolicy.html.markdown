@@ -35,64 +35,64 @@ The following arguments are supported:
 
 The `voice` block supports:
 
-* `status` - Enable/disable advertising this policy.
-* `tag` - Advertise tagged or untagged traffic.
+* `status` - Enable/disable advertising this policy. Valid values: `disable`, `enable`.
+* `tag` - Advertise tagged or untagged traffic. Valid values: `none`, `dot1q`, `dot1p`.
 * `vlan` - 802.1Q VLAN ID to advertise (1 - 4094).
 * `priority` - 802.1P CoS/PCP to advertise (0 - 7; from lowest to highest priority).
 * `dscp` - Differentiated Services Code Point (DSCP) value to advertise.
 
 The `voice_signaling` block supports:
 
-* `status` - Enable/disable advertising this policy.
-* `tag` - Advertise tagged or untagged traffic.
+* `status` - Enable/disable advertising this policy. Valid values: `disable`, `enable`.
+* `tag` - Advertise tagged or untagged traffic. Valid values: `none`, `dot1q`, `dot1p`.
 * `vlan` - 802.1Q VLAN ID to advertise (1 - 4094).
 * `priority` - 802.1P CoS/PCP to advertise (0 - 7; from lowest to highest priority).
 * `dscp` - Differentiated Services Code Point (DSCP) value to advertise.
 
 The `guest` block supports:
 
-* `status` - Enable/disable advertising this policy.
-* `tag` - Advertise tagged or untagged traffic.
+* `status` - Enable/disable advertising this policy. Valid values: `disable`, `enable`.
+* `tag` - Advertise tagged or untagged traffic. Valid values: `none`, `dot1q`, `dot1p`.
 * `vlan` - 802.1Q VLAN ID to advertise (1 - 4094).
 * `priority` - 802.1P CoS/PCP to advertise (0 - 7; from lowest to highest priority).
 * `dscp` - Differentiated Services Code Point (DSCP) value to advertise.
 
 The `guest_voice_signaling` block supports:
 
-* `status` - Enable/disable advertising this policy.
-* `tag` - Advertise tagged or untagged traffic.
+* `status` - Enable/disable advertising this policy. Valid values: `disable`, `enable`.
+* `tag` - Advertise tagged or untagged traffic. Valid values: `none`, `dot1q`, `dot1p`.
 * `vlan` - 802.1Q VLAN ID to advertise (1 - 4094).
 * `priority` - 802.1P CoS/PCP to advertise (0 - 7; from lowest to highest priority).
 * `dscp` - Differentiated Services Code Point (DSCP) value to advertise.
 
 The `softphone` block supports:
 
-* `status` - Enable/disable advertising this policy.
-* `tag` - Advertise tagged or untagged traffic.
+* `status` - Enable/disable advertising this policy. Valid values: `disable`, `enable`.
+* `tag` - Advertise tagged or untagged traffic. Valid values: `none`, `dot1q`, `dot1p`.
 * `vlan` - 802.1Q VLAN ID to advertise (1 - 4094).
 * `priority` - 802.1P CoS/PCP to advertise (0 - 7; from lowest to highest priority).
 * `dscp` - Differentiated Services Code Point (DSCP) value to advertise.
 
 The `video_conferencing` block supports:
 
-* `status` - Enable/disable advertising this policy.
-* `tag` - Advertise tagged or untagged traffic.
+* `status` - Enable/disable advertising this policy. Valid values: `disable`, `enable`.
+* `tag` - Advertise tagged or untagged traffic. Valid values: `none`, `dot1q`, `dot1p`.
 * `vlan` - 802.1Q VLAN ID to advertise (1 - 4094).
 * `priority` - 802.1P CoS/PCP to advertise (0 - 7; from lowest to highest priority).
 * `dscp` - Differentiated Services Code Point (DSCP) value to advertise.
 
 The `streaming_video` block supports:
 
-* `status` - Enable/disable advertising this policy.
-* `tag` - Advertise tagged or untagged traffic.
+* `status` - Enable/disable advertising this policy. Valid values: `disable`, `enable`.
+* `tag` - Advertise tagged or untagged traffic. Valid values: `none`, `dot1q`, `dot1p`.
 * `vlan` - 802.1Q VLAN ID to advertise (1 - 4094).
 * `priority` - 802.1P CoS/PCP to advertise (0 - 7; from lowest to highest priority).
 * `dscp` - Differentiated Services Code Point (DSCP) value to advertise.
 
 The `video_signaling` block supports:
 
-* `status` - Enable/disable advertising this policy.
-* `tag` - Advertise tagged or untagged traffic.
+* `status` - Enable/disable advertising this policy. Valid values: `disable`, `enable`.
+* `tag` - Advertise tagged or untagged traffic. Valid values: `none`, `dot1q`, `dot1p`.
 * `vlan` - 802.1Q VLAN ID to advertise (1 - 4094).
 * `priority` - 802.1P CoS/PCP to advertise (0 - 7; from lowest to highest priority).
 * `dscp` - Differentiated Services Code Point (DSCP) value to advertise.
