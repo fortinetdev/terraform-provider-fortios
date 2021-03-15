@@ -24,10 +24,10 @@ resource "fortios_systemautoupdate_schedule" "trname" {
 
 The following arguments are supported:
 
-* `status` - (Required) Enable/disable scheduled updates.
+* `status` - (Required) Enable/disable scheduled updates. Valid values: `enable`, `disable`.
 * `frequency` - (Required) Update frequency.
 * `time` - (Required) Update time.
-* `day` - Update day.
+* `day` - Update day. Valid values: `Sunday`, `Monday`, `Tuesday`, `Wednesday`, `Thursday`, `Friday`, `Saturday`.
 
 
 ## Attribute Reference
