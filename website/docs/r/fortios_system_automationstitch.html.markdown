@@ -14,7 +14,7 @@ Automation stitches.
 The following arguments are supported:
 
 * `name` - Name.
-* `status` - (Required) Enable/disable this stitch.
+* `status` - (Required) Enable/disable this stitch. Valid values: `enable`, `disable`.
 * `trigger` - (Required) Trigger name.
 * `action` - Action names. The structure of `action` block is documented below.
 * `destination` - Serial number/HA group-name of destination devices. The structure of `destination` block is documented below.
