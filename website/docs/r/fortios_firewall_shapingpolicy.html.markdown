@@ -53,19 +53,19 @@ The following arguments are supported:
 * `fosid` - Shaping policy ID.
 * `name` - Shaping policy name.
 * `comment` - Comments.
-* `status` - Enable/disable this traffic shaping policy.
-* `ip_version` - Apply this traffic shaping policy to IPv4 or IPv6 traffic.
+* `status` - Enable/disable this traffic shaping policy. Valid values: `enable`, `disable`.
+* `ip_version` - Apply this traffic shaping policy to IPv4 or IPv6 traffic. Valid values: `4`, `6`.
 * `srcaddr` - (Required) IPv4 source address and address group names. The structure of `srcaddr` block is documented below.
 * `dstaddr` - (Required) IPv4 destination address and address group names. The structure of `dstaddr` block is documented below.
 * `srcaddr6` - IPv6 source address and address group names. The structure of `srcaddr6` block is documented below.
 * `dstaddr6` - IPv6 destination address and address group names. The structure of `dstaddr6` block is documented below.
-* `internet_service` - Enable/disable use of Internet Services for this policy. If enabled, destination address and service are not used. 
+* `internet_service` - Enable/disable use of Internet Services for this policy. If enabled, destination address and service are not used.  Valid values: `enable`, `disable`.
 * `internet_service_name` - Internet Service ID. The structure of `internet_service_name` block is documented below.
 * `internet_service_id` - Internet Service ID. The structure of `internet_service_id` block is documented below.
 * `internet_service_group` - Internet Service group name. The structure of `internet_service_group` block is documented below.
 * `internet_service_custom` - Custom Internet Service name. The structure of `internet_service_custom` block is documented below.
 * `internet_service_custom_group` - Custom Internet Service group name. The structure of `internet_service_custom_group` block is documented below.
-* `internet_service_src` - Enable/disable use of Internet Services in source for this policy. If enabled, source address is not used. 
+* `internet_service_src` - Enable/disable use of Internet Services in source for this policy. If enabled, source address is not used.  Valid values: `enable`, `disable`.
 * `internet_service_src_name` - Internet Service source name. The structure of `internet_service_src_name` block is documented below.
 * `internet_service_src_id` - Internet Service source ID. The structure of `internet_service_src_id` block is documented below.
 * `internet_service_src_group` - Internet Service source group name. The structure of `internet_service_src_group` block is documented below.
@@ -83,13 +83,13 @@ The following arguments are supported:
 * `dstintf` - (Required) One or more outgoing (egress) interfaces. The structure of `dstintf` block is documented below.
 * `tos` - ToS (Type of Service) value used for comparison.
 * `tos_mask` - Non-zero bit positions are used for comparison while zero bit positions are ignored.
-* `tos_negate` - Enable negated TOS match.
+* `tos_negate` - Enable negated TOS match. Valid values: `enable`, `disable`.
 * `traffic_shaper` - Traffic shaper to apply to traffic forwarded by the firewall policy.
 * `traffic_shaper_reverse` - Traffic shaper to apply to response traffic received by the firewall policy.
 * `per_ip_shaper` - Per-IP traffic shaper to apply with this policy.
 * `class_id` - Traffic class ID.
-* `diffserv_forward` - Enable to change packet's DiffServ values to the specified diffservcode-forward value.
-* `diffserv_reverse` - Enable to change packet's reverse (reply) DiffServ values to the specified diffservcode-rev value.
+* `diffserv_forward` - Enable to change packet's DiffServ values to the specified diffservcode-forward value. Valid values: `enable`, `disable`.
+* `diffserv_reverse` - Enable to change packet's reverse (reply) DiffServ values to the specified diffservcode-rev value. Valid values: `enable`, `disable`.
 * `diffservcode_forward` - Change packet's DiffServ to this value.
 * `diffservcode_rev` - Change packet's reverse (reply) DiffServ to this value.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
