@@ -31,11 +31,11 @@ The following arguments are supported:
 The `entries` block supports:
 
 * `name` - Banned word.
-* `pattern_type` - Banned word pattern type: wildcard pattern or Perl regular expression.
-* `status` - Enable/disable banned word.
-* `lang` - Language of banned word.
+* `pattern_type` - Banned word pattern type: wildcard pattern or Perl regular expression. Valid values: `wildcard`, `regexp`.
+* `status` - Enable/disable banned word. Valid values: `enable`, `disable`.
+* `lang` - Language of banned word. Valid values: `western`, `simch`, `trach`, `japanese`, `korean`, `french`, `thai`, `spanish`, `cyrillic`.
 * `score` - Score, to be applied every time the word appears on a web page (0 - 4294967295, default = 10).
-* `action` - Block or exempt word when a match is found.
+* `action` - Block or exempt word when a match is found. Valid values: `block`, `exempt`.
 
 
 ## Attribute Reference
