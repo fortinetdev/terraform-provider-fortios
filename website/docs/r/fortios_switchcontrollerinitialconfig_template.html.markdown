@@ -16,9 +16,9 @@ The following arguments are supported:
 * `name` - Initial config template name
 * `vlanid` - Unique VLAN ID.
 * `ip` - Interface IPv4 address and subnet mask.
-* `allowaccess` - Permitted types of management access to this interface.
-* `auto_ip` - Automatically allocate interface address and subnet block.
-* `dhcp_server` - Enable/disable a DHCP server on this interface.
+* `allowaccess` - Permitted types of management access to this interface. Valid values: `ping`, `https`, `ssh`, `snmp`, `http`, `telnet`, `fgfm`, `radius-acct`, `probe-response`, `fabric`, `ftm`.
+* `auto_ip` - Automatically allocate interface address and subnet block. Valid values: `enable`, `disable`.
+* `dhcp_server` - Enable/disable a DHCP server on this interface. Valid values: `enable`, `disable`.
 
 
 ## Attribute Reference
