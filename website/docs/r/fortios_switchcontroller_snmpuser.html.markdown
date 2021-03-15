@@ -14,12 +14,12 @@ Configure FortiSwitch SNMP v3 users globally.
 The following arguments are supported:
 
 * `name` - SNMP user name.
-* `queries` - Enable/disable SNMP queries for this user.
+* `queries` - Enable/disable SNMP queries for this user. Valid values: `disable`, `enable`.
 * `query_port` - SNMPv3 query port (default = 161).
-* `security_level` - Security level for message authentication and encryption.
-* `auth_proto` - Authentication protocol.
+* `security_level` - Security level for message authentication and encryption. Valid values: `no-auth-no-priv`, `auth-no-priv`, `auth-priv`.
+* `auth_proto` - Authentication protocol. Valid values: `md5`, `sha`.
 * `auth_pwd` - Password for authentication protocol.
-* `priv_proto` - Privacy (encryption) protocol.
+* `priv_proto` - Privacy (encryption) protocol. Valid values: `aes`, `des`.
 * `priv_pwd` - Password for privacy (encryption) protocol.
 
 
