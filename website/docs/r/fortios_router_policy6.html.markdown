@@ -43,7 +43,7 @@ The following arguments are supported:
 * `output_device` - Outgoing interface name.
 * `tos` - Type of service bit pattern.
 * `tos_mask` - Type of service evaluated bits.
-* `status` - Enable/disable this policy route.
+* `status` - Enable/disable this policy route. Valid values: `enable`, `disable`.
 * `comments` - Optional comments.
 
 
