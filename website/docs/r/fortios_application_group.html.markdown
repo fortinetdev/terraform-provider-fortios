@@ -36,7 +36,7 @@ The following arguments are supported:
 * `vendor` - Application vendor filter.
 * `technology` - Application technology filter.
 * `behavior` - Application behavior filter.
-* `popularity` - Application popularity filter (1 - 5, from least to most popular).
+* `popularity` - Application popularity filter (1 - 5, from least to most popular). Valid values: `1`, `2`, `3`, `4`, `5`.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `application` block supports:
