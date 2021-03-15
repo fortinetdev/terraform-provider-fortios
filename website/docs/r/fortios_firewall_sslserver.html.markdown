@@ -37,17 +37,17 @@ The following arguments are supported:
 * `name` - Server name.
 * `ip` - (Required) IPv4 address of the SSL server.
 * `port` - (Required) Server service port (1 - 65535, default = 443).
-* `ssl_mode` - SSL/TLS mode for encryption and decryption of traffic.
-* `add_header_x_forwarded_proto` - Enable/disable adding an X-Forwarded-Proto header to forwarded requests.
+* `ssl_mode` - SSL/TLS mode for encryption and decryption of traffic. Valid values: `half`, `full`.
+* `add_header_x_forwarded_proto` - Enable/disable adding an X-Forwarded-Proto header to forwarded requests. Valid values: `enable`, `disable`.
 * `mapped_port` - Mapped server service port (1 - 65535, default = 80).
 * `ssl_cert` - (Required) Name of certificate for SSL connections to this server (default = "Fortinet_CA_SSL").
-* `ssl_dh_bits` - Bit-size of Diffie-Hellman (DH) prime used in DHE-RSA negotiation (default = 2048).
-* `ssl_algorithm` - Relative strength of encryption algorithms accepted in negotiation.
-* `ssl_client_renegotiation` - Allow or block client renegotiation by server.
-* `ssl_min_version` - Lowest SSL/TLS version to negotiate.
-* `ssl_max_version` - Highest SSL/TLS version to negotiate.
-* `ssl_send_empty_frags` - Enable/disable sending empty fragments to avoid attack on CBC IV.
-* `url_rewrite` - Enable/disable rewriting the URL.
+* `ssl_dh_bits` - Bit-size of Diffie-Hellman (DH) prime used in DHE-RSA negotiation (default = 2048). Valid values: `768`, `1024`, `1536`, `2048`.
+* `ssl_algorithm` - Relative strength of encryption algorithms accepted in negotiation. Valid values: `high`, `medium`, `low`.
+* `ssl_client_renegotiation` - Allow or block client renegotiation by server. Valid values: `allow`, `deny`, `secure`.
+* `ssl_min_version` - Lowest SSL/TLS version to negotiate. Valid values: `tls-1.0`, `tls-1.1`, `tls-1.2`.
+* `ssl_max_version` - Highest SSL/TLS version to negotiate. Valid values: `tls-1.0`, `tls-1.1`, `tls-1.2`.
+* `ssl_send_empty_frags` - Enable/disable sending empty fragments to avoid attack on CBC IV. Valid values: `enable`, `disable`.
+* `url_rewrite` - Enable/disable rewriting the URL. Valid values: `enable`, `disable`.
 
 
 ## Attribute Reference
