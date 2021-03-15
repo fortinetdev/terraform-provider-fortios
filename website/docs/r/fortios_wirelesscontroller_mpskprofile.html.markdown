@@ -21,7 +21,7 @@ The following arguments are supported:
 The `mpsk_group` block supports:
 
 * `name` - MPSK group name.
-* `vlan_type` - MPSK group VLAN options.
+* `vlan_type` - MPSK group VLAN options. Valid values: `no-vlan`, `fixed-vlan`.
 * `vlan_id` - Optional VLAN ID.
 * `mpsk_key` - List of multiple PSK entries. The structure of `mpsk_key` block is documented below.
 
@@ -30,7 +30,7 @@ The `mpsk_key` block supports:
 * `name` - Pre-shared key name.
 * `mac` - MAC address.
 * `passphrase` - WPA Pre-shared key.
-* `concurrent_client_limit_type` - MPSK client limit type options.
+* `concurrent_client_limit_type` - MPSK client limit type options. Valid values: `default`, `unlimited`, `specified`.
 * `concurrent_clients` - Number of clients that can connect using this pre-shared key (1 - 65535, default is 256).
 * `comment` - Comment.
 * `mpsk_schedules` - Firewall schedule for MPSK passphrase. The passphrase will be effective only when at least one schedule is valid. The structure of `mpsk_schedules` block is documented below.
