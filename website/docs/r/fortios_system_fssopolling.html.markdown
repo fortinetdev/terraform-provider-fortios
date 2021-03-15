@@ -23,9 +23,9 @@ resource "fortios_system_fssopolling" "trname" {
 
 The following arguments are supported:
 
-* `status` - Enable/disable FSSO Polling Mode.
+* `status` - Enable/disable FSSO Polling Mode. Valid values: `enable`, `disable`.
 * `listening_port` - Listening port to accept clients (1 - 65535).
-* `authentication` - Enable/disable FSSO Agent Authentication.
+* `authentication` - Enable/disable FSSO Agent Authentication. Valid values: `enable`, `disable`.
 * `auth_password` - Password to connect to FSSO Agent.
 
 
