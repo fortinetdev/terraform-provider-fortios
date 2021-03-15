@@ -93,31 +93,31 @@ resource "fortios_vpnipsec_phase1" "trnamex1" {
 The following arguments are supported:
 
 * `name` - IPsec remote gateway name.
-* `type` - Remote gateway type.
+* `type` - Remote gateway type. Valid values: `static`, `dynamic`, `ddns`.
 * `interface` - (Required) Local physical, aggregate, or VLAN outgoing interface.
-* `ike_version` - IKE protocol version.
+* `ike_version` - IKE protocol version. Valid values: `1`, `2`.
 * `remote_gw` - Remote VPN gateway.
 * `local_gw` - Local VPN gateway.
 * `remotegw_ddns` - Domain name of remote gateway (eg. name.DDNS.com).
 * `keylife` - Time to wait in seconds before phase 1 encryption key expires.
 * `certificate` - Names of up to 4 signed personal certificates. The structure of `certificate` block is documented below.
-* `authmethod` - Authentication method.
-* `authmethod_remote` - Authentication method (remote side).
-* `mode` - ID protection mode used to establish a secure channel.
-* `peertype` - Accept this peer type.
+* `authmethod` - Authentication method. Valid values: `psk`, `signature`.
+* `authmethod_remote` - Authentication method (remote side). Valid values: `psk`, `signature`.
+* `mode` - ID protection mode used to establish a secure channel. Valid values: `aggressive`, `main`.
+* `peertype` - Accept this peer type. Valid values: `any`, `one`, `dialup`, `peer`, `peergrp`.
 * `peerid` - Accept this peer identity.
 * `usrgrp` - User group name for dialup peers.
 * `peer` - Accept this peer certificate.
 * `peergrp` - Accept this peer certificate group.
-* `mode_cfg` - Enable/disable configuration method.
-* `assign_ip` - Enable/disable assignment of IP to IPsec interface via configuration method.
-* `assign_ip_from` - Method by which the IP address will be assigned.
+* `mode_cfg` - Enable/disable configuration method. Valid values: `disable`, `enable`.
+* `assign_ip` - Enable/disable assignment of IP to IPsec interface via configuration method. Valid values: `disable`, `enable`.
+* `assign_ip_from` - Method by which the IP address will be assigned. Valid values: `range`, `usrgrp`, `dhcp`, `name`.
 * `ipv4_start_ip` - Start of IPv4 range.
 * `ipv4_end_ip` - End of IPv4 range.
 * `ipv4_netmask` - IPv4 Netmask.
 * `dhcp_ra_giaddr` - Relay agent gateway IP address to use in the giaddr field of DHCP requests.
 * `dhcp6_ra_linkaddr` - Relay agent IPv6 link address to use in DHCP6 requests.
-* `dns_mode` - DNS server mode.
+* `dns_mode` - DNS server mode. Valid values: `manual`, `auto`.
 * `ipv4_dns_server1` - IPv4 DNS server 1.
 * `ipv4_dns_server2` - IPv4 DNS server 2.
 * `ipv4_dns_server3` - IPv4 DNS server 3.
@@ -136,73 +136,73 @@ The following arguments are supported:
 * `ipv6_exclude_range` - Configuration method IPv6 exclude ranges. The structure of `ipv6_exclude_range` block is documented below.
 * `ipv6_split_include` - IPv6 split-include subnets.
 * `ipv6_name` - IPv6 address name.
-* `unity_support` - Enable/disable support for Cisco UNITY Configuration Method extensions.
+* `unity_support` - Enable/disable support for Cisco UNITY Configuration Method extensions. Valid values: `disable`, `enable`.
 * `domain` - Instruct unity clients about the default DNS domain.
 * `banner` - Message that unity client should display after connecting.
-* `include_local_lan` - Enable/disable allow local LAN access on unity clients.
+* `include_local_lan` - Enable/disable allow local LAN access on unity clients. Valid values: `disable`, `enable`.
 * `ipv4_split_exclude` - IPv4 subnets that should not be sent over the IPsec tunnel.
 * `ipv6_split_exclude` - IPv6 subnets that should not be sent over the IPsec tunnel.
-* `save_password` - Enable/disable saving XAuth username and password on VPN clients.
-* `client_auto_negotiate` - Enable/disable allowing the VPN client to bring up the tunnel when there is no traffic.
-* `client_keep_alive` - Enable/disable allowing the VPN client to keep the tunnel up when there is no traffic.
+* `save_password` - Enable/disable saving XAuth username and password on VPN clients. Valid values: `disable`, `enable`.
+* `client_auto_negotiate` - Enable/disable allowing the VPN client to bring up the tunnel when there is no traffic. Valid values: `disable`, `enable`.
+* `client_keep_alive` - Enable/disable allowing the VPN client to keep the tunnel up when there is no traffic. Valid values: `disable`, `enable`.
 * `backup_gateway` - Instruct unity clients about the backup gateway address(es). The structure of `backup_gateway` block is documented below.
-* `proposal` - (Required) Phase1 proposal.
-* `add_route` - Enable/disable control addition of a route to peer destination selector.
-* `add_gw_route` - Enable/disable automatically add a route to the remote gateway.
+* `proposal` - (Required) Phase1 proposal. Valid values: `des-md5`, `des-sha1`, `des-sha256`, `des-sha384`, `des-sha512`, `3des-md5`, `3des-sha1`, `3des-sha256`, `3des-sha384`, `3des-sha512`, `aes128-md5`, `aes128-sha1`, `aes128-sha256`, `aes128-sha384`, `aes128-sha512`, `aes128gcm-prfsha1`, `aes128gcm-prfsha256`, `aes128gcm-prfsha384`, `aes128gcm-prfsha512`, `aes192-md5`, `aes192-sha1`, `aes192-sha256`, `aes192-sha384`, `aes192-sha512`, `aes256-md5`, `aes256-sha1`, `aes256-sha256`, `aes256-sha384`, `aes256-sha512`, `aes256gcm-prfsha1`, `aes256gcm-prfsha256`, `aes256gcm-prfsha384`, `aes256gcm-prfsha512`, `chacha20poly1305-prfsha1`, `chacha20poly1305-prfsha256`, `chacha20poly1305-prfsha384`, `chacha20poly1305-prfsha512`, `aria128-md5`, `aria128-sha1`, `aria128-sha256`, `aria128-sha384`, `aria128-sha512`, `aria192-md5`, `aria192-sha1`, `aria192-sha256`, `aria192-sha384`, `aria192-sha512`, `aria256-md5`, `aria256-sha1`, `aria256-sha256`, `aria256-sha384`, `aria256-sha512`, `seed-md5`, `seed-sha1`, `seed-sha256`, `seed-sha384`, `seed-sha512`.
+* `add_route` - Enable/disable control addition of a route to peer destination selector. Valid values: `disable`, `enable`.
+* `add_gw_route` - Enable/disable automatically add a route to the remote gateway. Valid values: `enable`, `disable`.
 * `psksecret` - (Required) Pre-shared secret for PSK authentication (ASCII string or hexadecimal encoded with a leading 0x).
 * `psksecret_remote` - Pre-shared secret for remote side PSK authentication (ASCII string or hexadecimal encoded with a leading 0x).
 * `keepalive` - NAT-T keep alive interval.
 * `distance` - Distance for routes added by IKE (1 - 255).
 * `priority` - Priority for routes added by IKE (0 - 4294967295).
 * `localid` - Local ID.
-* `localid_type` - Local ID type.
-* `auto_negotiate` - Enable/disable automatic initiation of IKE SA negotiation.
+* `localid_type` - Local ID type. Valid values: `auto`, `fqdn`, `user-fqdn`, `keyid`, `address`, `asn1dn`.
+* `auto_negotiate` - Enable/disable automatic initiation of IKE SA negotiation. Valid values: `enable`, `disable`.
 * `negotiate_timeout` - IKE SA negotiation timeout in seconds (1 - 300).
-* `fragmentation` - Enable/disable fragment IKE message on re-transmission.
-* `dpd` - Dead Peer Detection mode.
+* `fragmentation` - Enable/disable fragment IKE message on re-transmission. Valid values: `enable`, `disable`.
+* `dpd` - Dead Peer Detection mode. Valid values: `disable`, `on-idle`, `on-demand`.
 * `dpd_retrycount` - Number of DPD retry attempts.
 * `dpd_retryinterval` - DPD retry interval.
-* `forticlient_enforcement` - Enable/disable FortiClient enforcement.
+* `forticlient_enforcement` - Enable/disable FortiClient enforcement. Valid values: `enable`, `disable`.
 * `comments` - Comment.
-* `send_cert_chain` - Enable/disable sending certificate chain.
-* `dhgrp` - DH group.
-* `suite_b` - Use Suite-B.
-* `eap` - Enable/disable IKEv2 EAP authentication.
-* `eap_identity` - IKEv2 EAP peer identity type.
+* `send_cert_chain` - Enable/disable sending certificate chain. Valid values: `enable`, `disable`.
+* `dhgrp` - DH group. Valid values: `1`, `2`, `5`, `14`, `15`, `16`, `17`, `18`, `19`, `20`, `21`, `27`, `28`, `29`, `30`, `31`, `32`.
+* `suite_b` - Use Suite-B. Valid values: `disable`, `suite-b-gcm-128`, `suite-b-gcm-256`.
+* `eap` - Enable/disable IKEv2 EAP authentication. Valid values: `enable`, `disable`.
+* `eap_identity` - IKEv2 EAP peer identity type. Valid values: `use-id-payload`, `send-request`.
 * `eap_exclude_peergrp` - Peer group excluded from EAP authentication.
-* `acct_verify` - Enable/disable verification of RADIUS accounting record.
-* `ppk` - Enable/disable IKEv2 Postquantum Preshared Key (PPK).
+* `acct_verify` - Enable/disable verification of RADIUS accounting record. Valid values: `enable`, `disable`.
+* `ppk` - Enable/disable IKEv2 Postquantum Preshared Key (PPK). Valid values: `disable`, `allow`, `require`.
 * `ppk_secret` - IKEv2 Postquantum Preshared Key (ASCII string or hexadecimal encoded with a leading 0x).
 * `ppk_identity` - IKEv2 Postquantum Preshared Key Identity.
 * `wizard_type` - GUI VPN Wizard Type.
-* `xauthtype` - XAuth type.
-* `reauth` - Enable/disable re-authentication upon IKE SA lifetime expiration.
+* `xauthtype` - XAuth type. Valid values: `disable`, `client`, `pap`, `chap`, `auto`.
+* `reauth` - Enable/disable re-authentication upon IKE SA lifetime expiration. Valid values: `disable`, `enable`.
 * `authusr` - XAuth user name.
 * `authpasswd` - XAuth password (max 35 characters).
-* `group_authentication` - Enable/disable IKEv2 IDi group authentication.
+* `group_authentication` - Enable/disable IKEv2 IDi group authentication. Valid values: `enable`, `disable`.
 * `group_authentication_secret` - Password for IKEv2 IDi group authentication.  (ASCII string or hexadecimal indicated by a leading 0x.)
 * `authusrgrp` - Authentication user group.
-* `mesh_selector_type` - Add selectors containing subsets of the configuration depending on traffic.
-* `idle_timeout` - Enable/disable IPsec tunnel idle timeout.
+* `mesh_selector_type` - Add selectors containing subsets of the configuration depending on traffic. Valid values: `disable`, `subnet`, `host`.
+* `idle_timeout` - Enable/disable IPsec tunnel idle timeout. Valid values: `enable`, `disable`.
 * `idle_timeoutinterval` - IPsec tunnel idle timeout in minutes (5 - 43200).
-* `ha_sync_esp_seqno` - Enable/disable sequence number jump ahead for IPsec HA.
-* `nattraversal` - Enable/disable NAT traversal.
+* `ha_sync_esp_seqno` - Enable/disable sequence number jump ahead for IPsec HA. Valid values: `enable`, `disable`.
+* `nattraversal` - Enable/disable NAT traversal. Valid values: `enable`, `disable`, `forced`.
 * `fragmentation_mtu` - IKE fragmentation MTU (500 - 16000).
-* `childless_ike` - Enable/disable childless IKEv2 initiation (RFC 6023).
-* `rekey` - Enable/disable phase1 rekey.
-* `digital_signature_auth` - Enable/disable IKEv2 Digital Signature Authentication (RFC 7427).
-* `signature_hash_alg` - Digital Signature Authentication hash algorithms.
-* `rsa_signature_format` - Digital Signature Authentication RSA signature format.
-* `enforce_unique_id` - Enable/disable peer ID uniqueness check.
-* `cert_id_validation` - Enable/disable cross validation of peer ID and the identity in the peer's certificate as specified in RFC 4945.
-* `fec_egress` - Enable/disable Forward Error Correction for egress IPsec traffic.
+* `childless_ike` - Enable/disable childless IKEv2 initiation (RFC 6023). Valid values: `enable`, `disable`.
+* `rekey` - Enable/disable phase1 rekey. Valid values: `enable`, `disable`.
+* `digital_signature_auth` - Enable/disable IKEv2 Digital Signature Authentication (RFC 7427). Valid values: `enable`, `disable`.
+* `signature_hash_alg` - Digital Signature Authentication hash algorithms. Valid values: `sha1`, `sha2-256`, `sha2-384`, `sha2-512`.
+* `rsa_signature_format` - Digital Signature Authentication RSA signature format. Valid values: `pkcs1`, `pss`.
+* `enforce_unique_id` - Enable/disable peer ID uniqueness check. Valid values: `disable`, `keep-new`, `keep-old`.
+* `cert_id_validation` - Enable/disable cross validation of peer ID and the identity in the peer's certificate as specified in RFC 4945. Valid values: `enable`, `disable`.
+* `fec_egress` - Enable/disable Forward Error Correction for egress IPsec traffic. Valid values: `enable`, `disable`.
 * `fec_send_timeout` - Timeout in milliseconds before sending Forward Error Correction packets (1 - 1000).
 * `fec_base` - Number of base Forward Error Correction packets (1 - 100).
 * `fec_codec` - ipsec fec encoding/decoding algorithm (0: reed-solomon, 1: xor).
 * `fec_redundant` - Number of redundant Forward Error Correction packets (1 - 100).
-* `fec_ingress` - Enable/disable Forward Error Correction for ingress IPsec traffic.
+* `fec_ingress` - Enable/disable Forward Error Correction for ingress IPsec traffic. Valid values: `enable`, `disable`.
 * `fec_receive_timeout` - Timeout in milliseconds before dropping Forward Error Correction packets (1 - 10000).
-* `network_overlay` - Enable/disable network overlays.
+* `network_overlay` - Enable/disable network overlays. Valid values: `disable`, `enable`.
 * `network_id` - VPN gateway network ID.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
