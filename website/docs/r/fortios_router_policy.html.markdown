@@ -40,14 +40,14 @@ The following arguments are supported:
 
 * `seq_num` - Sequence number.
 * `input_device` - Incoming interface name. The structure of `input_device` block is documented below.
-* `input_device_negate` - Enable/disable negation of input device match.
+* `input_device_negate` - Enable/disable negation of input device match. Valid values: `enable`, `disable`.
 * `src` - Source IP and mask (x.x.x.x/x). The structure of `src` block is documented below.
 * `srcaddr` - Source address name. The structure of `srcaddr` block is documented below.
-* `src_negate` - Enable/disable negating source address match.
+* `src_negate` - Enable/disable negating source address match. Valid values: `enable`, `disable`.
 * `dst` - Destination IP and mask (x.x.x.x/x). The structure of `dst` block is documented below.
 * `dstaddr` - Destination address name. The structure of `dstaddr` block is documented below.
-* `dst_negate` - Enable/disable negating destination address match.
-* `action` - Action of the policy route.
+* `dst_negate` - Enable/disable negating destination address match. Valid values: `enable`, `disable`.
+* `action` - Action of the policy route. Valid values: `deny`, `permit`.
 * `protocol` - Protocol number (0 - 255).
 * `start_port` - Start destination port number (0 - 65535).
 * `end_port` - End destination port number (0 - 65535).
@@ -57,7 +57,7 @@ The following arguments are supported:
 * `output_device` - Outgoing interface name.
 * `tos` - Type of service bit pattern.
 * `tos_mask` - Type of service evaluated bits.
-* `status` - Enable/disable this policy route.
+* `status` - Enable/disable this policy route. Valid values: `enable`, `disable`.
 * `comments` - Optional comments.
 * `internet_service_id` - Destination Internet Service ID. The structure of `internet_service_id` block is documented below.
 * `internet_service_custom` - Custom Destination Internet Service name. The structure of `internet_service_custom` block is documented below.
