@@ -33,17 +33,17 @@ resource "fortios_wirelesscontrollerhotspot20_h2qpconncapability" "trname" {
 The following arguments are supported:
 
 * `name` - Connection capability name.
-* `icmp_port` - Set ICMP port service status.
-* `ftp_port` - Set FTP port service status.
-* `ssh_port` - Set SSH port service status.
-* `http_port` - Set HTTP port service status.
-* `tls_port` - Set TLS VPN (HTTPS) port service status.
-* `pptp_vpn_port` - Set Point to Point Tunneling Protocol (PPTP) VPN port service status.
-* `voip_tcp_port` - Set VoIP TCP port service status.
-* `voip_udp_port` - Set VoIP UDP port service status.
-* `ikev2_port` - Set IKEv2 port service for IPsec VPN status.
-* `ikev2_xx_port` - Set UDP port 4500 (which may be used by IKEv2 for IPsec VPN) service status.
-* `esp_port` - Set ESP port service (used by IPsec VPNs) status.
+* `icmp_port` - Set ICMP port service status. Valid values: `closed`, `open`, `unknown`.
+* `ftp_port` - Set FTP port service status. Valid values: `closed`, `open`, `unknown`.
+* `ssh_port` - Set SSH port service status. Valid values: `closed`, `open`, `unknown`.
+* `http_port` - Set HTTP port service status. Valid values: `closed`, `open`, `unknown`.
+* `tls_port` - Set TLS VPN (HTTPS) port service status. Valid values: `closed`, `open`, `unknown`.
+* `pptp_vpn_port` - Set Point to Point Tunneling Protocol (PPTP) VPN port service status. Valid values: `closed`, `open`, `unknown`.
+* `voip_tcp_port` - Set VoIP TCP port service status. Valid values: `closed`, `open`, `unknown`.
+* `voip_udp_port` - Set VoIP UDP port service status. Valid values: `closed`, `open`, `unknown`.
+* `ikev2_port` - Set IKEv2 port service for IPsec VPN status. Valid values: `closed`, `open`, `unknown`.
+* `ikev2_xx_port` - Set UDP port 4500 (which may be used by IKEv2 for IPsec VPN) service status. Valid values: `closed`, `open`, `unknown`.
+* `esp_port` - Set ESP port service (used by IPsec VPNs) status. Valid values: `closed`, `open`, `unknown`.
 
 
 ## Attribute Reference
