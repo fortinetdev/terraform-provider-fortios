@@ -26,8 +26,8 @@ resource "fortios_vpn_pptp" "trname" {
 
 The following arguments are supported:
 
-* `status` - (Required) Enable/disable FortiGate as a PPTP gateway.
-* `ip_mode` - IP assignment mode for PPTP client.
+* `status` - (Required) Enable/disable FortiGate as a PPTP gateway. Valid values: `enable`, `disable`.
+* `ip_mode` - IP assignment mode for PPTP client. Valid values: `range`, `usrgrp`.
 * `eip` - End IP.
 * `sip` - Start IP.
 * `local_ip` - Local IP to be used for peer's remote IP.
