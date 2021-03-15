@@ -27,18 +27,18 @@ resource "fortios_logfortiguard_setting" "trname" {
 
 The following arguments are supported:
 
-* `status` - Enable/disable logging to FortiCloud.
-* `upload_option` - Configure how log messages are sent to FortiCloud.
-* `upload_interval` - Frequency of uploading log files to FortiCloud.
+* `status` - Enable/disable logging to FortiCloud. Valid values: `enable`, `disable`.
+* `upload_option` - Configure how log messages are sent to FortiCloud. Valid values: `store-and-upload`, `realtime`, `1-minute`, `5-minute`.
+* `upload_interval` - Frequency of uploading log files to FortiCloud. Valid values: `daily`, `weekly`, `monthly`.
 * `upload_day` - Day of week to roll logs.
 * `upload_time` - Time of day to roll logs (hh:mm).
-* `priority` - Set log transmission priority.
+* `priority` - Set log transmission priority. Valid values: `default`, `low`.
 * `max_log_rate` - FortiCloud maximum log rate in MBps (0 = unlimited).
-* `enc_algorithm` - Enable and set the SSL security level for for sending encrypted logs to FortiCloud.
-* `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting).
+* `enc_algorithm` - Enable and set the SSL security level for for sending encrypted logs to FortiCloud. Valid values: `high-medium`, `high`, `low`.
+* `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting). Valid values: `default`, `SSLv3`, `TLSv1`, `TLSv1-1`, `TLSv1-2`.
 * `conn_timeout` - FortiGate Cloud connection timeout in seconds.
 * `source_ip` - Source IP address used to connect FortiCloud.
-* `interface_select_method` - Specify how to select outgoing interface to reach server.
+* `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.
 * `interface` - Specify outgoing interface to reach server.
 
 
