@@ -25,9 +25,9 @@ resource "fortios_report_setting" "trname" {
 
 The following arguments are supported:
 
-* `pdf_report` - Enable/disable PDF report.
-* `fortiview` - Enable/disable historical FortiView.
-* `report_source` - Report log source.
+* `pdf_report` - Enable/disable PDF report. Valid values: `enable`, `disable`.
+* `fortiview` - Enable/disable historical FortiView. Valid values: `enable`, `disable`.
+* `report_source` - Report log source. Valid values: `forward-traffic`, `sniffer-traffic`, `local-deny-traffic`.
 * `web_browsing_threshold` - Web browsing time calculation threshold (3 - 15 min).
 * `top_n` - Number of items to populate (100 - 4000).
 
