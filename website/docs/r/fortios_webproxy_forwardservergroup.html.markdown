@@ -40,9 +40,9 @@ resource "fortios_webproxy_forwardservergroup" "trname1" {
 The following arguments are supported:
 
 * `name` - Configure a forward server group consisting one or multiple forward servers. Supports failover and load balancing.
-* `affinity` - Enable/disable affinity, attaching a source-ip's traffic to the assigned forwarding server until the forward-server-affinity-timeout is reached (under web-proxy global).
+* `affinity` - Enable/disable affinity, attaching a source-ip's traffic to the assigned forwarding server until the forward-server-affinity-timeout is reached (under web-proxy global). Valid values: `enable`, `disable`.
 * `ldb_method` - Load balance method: weighted or least-session.
-* `group_down_option` - Action to take when all of the servers in the forward server group are down: block sessions until at least one server is back up or pass sessions to their destination.
+* `group_down_option` - Action to take when all of the servers in the forward server group are down: block sessions until at least one server is back up or pass sessions to their destination. Valid values: `block`, `pass`.
 * `server_list` - Add web forward servers to a list to form a server group. Optionally assign weights to each server. The structure of `server_list` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
