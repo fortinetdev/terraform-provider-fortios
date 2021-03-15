@@ -30,9 +30,9 @@ The following arguments are supported:
 The `rule` block supports:
 
 * `id` - Rule ID.
-* `action` - Permit or deny this IP address and netmask prefix.
+* `action` - Permit or deny this IP address and netmask prefix. Valid values: `permit`, `deny`.
 * `prefix6` - IPv6 prefix to define regular filter criteria, such as "any" or subnets.
-* `exact_match` - Enable/disable exact prefix match.
+* `exact_match` - Enable/disable exact prefix match. Valid values: `enable`, `disable`.
 * `flags` - Flags.
 
 
