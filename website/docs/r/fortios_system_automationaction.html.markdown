@@ -38,7 +38,7 @@ The following arguments are supported:
 * `email_body` - Email body.
 * `minimum_interval` - Limit execution to no more than once in this interval (in seconds).
 * `delay` - Delay before execution (in seconds).
-* `required` - Required in action chain.
+* `required` - Required in action chain. Valid values: `enable`, `disable`.
 * `aws_api_id` - AWS API Gateway ID.
 * `aws_region` - AWS region.
 * `aws_domain` - AWS domain.
@@ -48,7 +48,7 @@ The following arguments are supported:
 * `azure_app` - Azure function application name.
 * `azure_function` - Azure function name.
 * `azure_domain` - Azure function domain.
-* `azure_function_authorization` - Azure function authorization level.
+* `azure_function_authorization` - Azure function authorization level. Valid values: `anonymous`, `function`, `admin`.
 * `azure_api_key` - Azure function API key.
 * `gcp_function_region` - Google Cloud function region.
 * `gcp_project` - Google Cloud Platform project name.
@@ -60,13 +60,13 @@ The following arguments are supported:
 * `alicloud_version` - AliCloud version.
 * `alicloud_service` - AliCloud service name.
 * `alicloud_function` - AliCloud function name.
-* `alicloud_function_authorization` - AliCloud function authorization type.
+* `alicloud_function_authorization` - AliCloud function authorization type. Valid values: `anonymous`, `function`.
 * `alicloud_access_key_id` - AliCloud AccessKey ID.
 * `alicloud_access_key_secret` - AliCloud AccessKey secret.
 * `message` - Message content.
-* `replacement_message` - Enable/disable replacement message.
-* `protocol` - Request protocol.
-* `method` - Request method (POST, PUT, GET, PATCH or DELETE).
+* `replacement_message` - Enable/disable replacement message. Valid values: `enable`, `disable`.
+* `protocol` - Request protocol. Valid values: `http`, `https`.
+* `method` - Request method (POST, PUT, GET, PATCH or DELETE). Valid values: `post`, `put`, `get`, `patch`, `delete`.
 * `uri` - Request API URI.
 * `http_body` - Request body (if necessary). Should be serialized json string.
 * `port` - Protocol port.
