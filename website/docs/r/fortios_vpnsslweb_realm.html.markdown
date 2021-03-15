@@ -28,7 +28,7 @@ The following arguments are supported:
 * `max_concurrent_user` - Maximum concurrent users (0 - 65535, 0 means unlimited).
 * `login_page` - Replacement HTML for SSL-VPN login page.
 * `virtual_host` - Virtual host name for realm.
-* `virtual_host_only` - Enable/disable enforcement of virtual host method for SSL-VPN client access.
+* `virtual_host_only` - Enable/disable enforcement of virtual host method for SSL-VPN client access. Valid values: `enable`, `disable`.
 * `radius_server` - RADIUS server associated with realm.
 * `nas_ip` - IP address used as a NAS-IP to communicate with the RADIUS server.
 * `radius_port` - RADIUS service port number (0 - 65535, 0 means user.radius.radius-port).
