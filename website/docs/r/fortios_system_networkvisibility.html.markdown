@@ -26,12 +26,12 @@ resource "fortios_system_networkvisibility" "trname" {
 
 The following arguments are supported:
 
-* `destination_visibility` - Enable/disable logging of destination visibility.
-* `source_location` - Enable/disable logging of source geographical location visibility.
-* `destination_hostname_visibility` - Enable/disable logging of destination hostname visibility.
+* `destination_visibility` - Enable/disable logging of destination visibility. Valid values: `disable`, `enable`.
+* `source_location` - Enable/disable logging of source geographical location visibility. Valid values: `disable`, `enable`.
+* `destination_hostname_visibility` - Enable/disable logging of destination hostname visibility. Valid values: `disable`, `enable`.
 * `hostname_ttl` - TTL of hostname table entries (60 - 86400).
 * `hostname_limit` - Limit of the number of hostname table entries (0 - 50000).
-* `destination_location` - Enable/disable logging of destination geographical location visibility.
+* `destination_location` - Enable/disable logging of destination geographical location visibility. Valid values: `disable`, `enable`.
 
 
 ## Attribute Reference
