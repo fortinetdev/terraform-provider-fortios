@@ -25,7 +25,7 @@ The following arguments are supported:
 
 * `fosid` - Item ID.
 * `tos` - Value of the ToS byte in the IP datagram header (0-15, 8: minimize delay, 4: maximize throughput, 2: maximize reliability, 1: minimize monetary cost, and 0: default service).
-* `priority` - ToS based priority level to low, medium or high (these priorities match firewall traffic shaping priorities) (default = medium).
+* `priority` - ToS based priority level to low, medium or high (these priorities match firewall traffic shaping priorities) (default = medium). Valid values: `low`, `medium`, `high`.
 
 
 ## Attribute Reference
