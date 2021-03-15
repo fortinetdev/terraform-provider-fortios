@@ -36,18 +36,18 @@ The following arguments are supported:
 * `fosid` - Custom defined id.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `comment` - Comment.
-* `type` - VIP type: static NAT or server load balance.
+* `type` - VIP type: static NAT or server load balance. Valid values: `static-nat`, `server-load-balance`.
 * `src_filter` - Source IP6 filter (x:x:x:x:x:x:x:x/x). The structure of `src_filter` block is documented below.
 * `extip` - (Required) Start-external-IP [-end-external-IP].
 * `mappedip` - (Required) Start-mapped-IP [-end-mapped-IP].
-* `arp_reply` - Enable ARP reply.
-* `portforward` - Enable port forwarding.
-* `protocol` - Mapped port protocol.
+* `arp_reply` - Enable ARP reply. Valid values: `disable`, `enable`.
+* `portforward` - Enable port forwarding. Valid values: `disable`, `enable`.
+* `protocol` - Mapped port protocol. Valid values: `tcp`, `udp`.
 * `extport` - External service port.
 * `mappedport` - Mapped service port.
 * `color` - Color of icon on the GUI.
-* `ldb_method` - Load balance method.
-* `server_type` - Server type.
+* `ldb_method` - Load balance method. Valid values: `static`, `round-robin`, `weighted`, `least-session`, `least-rtt`, `first-alive`.
+* `server_type` - Server type. Valid values: `http`, `tcp`, `udp`, `ip`.
 * `realservers` - Real servers. The structure of `realservers` block is documented below.
 * `monitor` - Health monitors. The structure of `monitor` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
@@ -61,10 +61,10 @@ The `realservers` block supports:
 * `id` - Real server ID.
 * `ip` - Mapped server IP.
 * `port` - Mapped server port.
-* `status` - Server administrative status.
+* `status` - Server administrative status. Valid values: `active`, `standby`, `disable`.
 * `weight` - weight
 * `holddown_interval` - Hold down interval.
-* `healthcheck` - Per server health check.
+* `healthcheck` - Per server health check. Valid values: `disable`, `enable`, `vip`.
 * `max_connections` - Maximum number of connections allowed to server.
 * `monitor` - Health monitors.
 * `client_ip` - Restrict server to a client IP in this range.
