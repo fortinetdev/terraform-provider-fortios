@@ -14,7 +14,7 @@ Define internet service names. Applies to FortiOS Version `>= 6.4.0`.
 The following arguments are supported:
 
 * `name` - Internet Service name.
-* `type` - Internet Service name type.
+* `type` - Internet Service name type. Valid values: `default`, `location`.
 * `internet_service_id` - Internet Service ID.
 * `country_id` - Country or Area ID.
 * `region_id` - Region ID.
