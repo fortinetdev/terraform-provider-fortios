@@ -16,7 +16,7 @@ The following arguments are supported:
 * `name` - OSU provider ID.
 * `friendly_name` - OSU provider friendly name. The structure of `friendly_name` block is documented below.
 * `server_uri` - Server URI.
-* `osu_method` - OSU method list.
+* `osu_method` - OSU method list. Valid values: `oma-dm`, `soap-xml-spp`, `reserved`.
 * `osu_nai` - OSU NAI.
 * `service_description` - OSU service name. The structure of `service_description` block is documented below.
 * `icon` - OSU provider icon.
