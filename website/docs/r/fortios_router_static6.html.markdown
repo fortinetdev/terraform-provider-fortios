@@ -32,7 +32,7 @@ resource "fortios_router_static6" "trname" {
 The following arguments are supported:
 
 * `seq_num` - Sequence number.
-* `status` - Enable/disable this static route.
+* `status` - Enable/disable this static route. Valid values: `enable`, `disable`.
 * `dst` - Destination IPv6 prefix.
 * `gateway` - IPv6 address of the gateway.
 * `device` - (Required) Gateway out interface or tunnel.
@@ -40,11 +40,11 @@ The following arguments are supported:
 * `distance` - Administrative distance (1 - 255).
 * `priority` - Administrative priority (0 - 4294967295).
 * `comment` - Optional comments.
-* `blackhole` - Enable/disable black hole.
-* `sdwan` - Enable/disable egress through the SD-WAN.
-* `virtual_wan_link` - Enable/disable egress through the virtual-wan-link.
-* `link_monitor_exempt` - Enable/disable withdrawal of this static route when link monitor or health check is down.
-* `bfd` - Enable/disable Bidirectional Forwarding Detection (BFD).
+* `blackhole` - Enable/disable black hole. Valid values: `enable`, `disable`.
+* `sdwan` - Enable/disable egress through the SD-WAN. Valid values: `enable`, `disable`.
+* `virtual_wan_link` - Enable/disable egress through the virtual-wan-link. Valid values: `enable`, `disable`.
+* `link_monitor_exempt` - Enable/disable withdrawal of this static route when link monitor or health check is down. Valid values: `enable`, `disable`.
+* `bfd` - Enable/disable Bidirectional Forwarding Detection (BFD). Valid values: `enable`, `disable`.
 
 
 ## Attribute Reference
