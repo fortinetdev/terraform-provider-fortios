@@ -26,7 +26,7 @@ The following arguments are supported:
 * `name` - Password policy name.
 * `expire_days` - Time in days before the user's password expires.
 * `warn_days` - Time in days before a password expiration warning message is displayed to the user upon login.
-* `expired_password_renewal` - Enable/disable renewal of a password that already is expired.
+* `expired_password_renewal` - Enable/disable renewal of a password that already is expired. Valid values: `enable`, `disable`.
 
 
 ## Attribute Reference
