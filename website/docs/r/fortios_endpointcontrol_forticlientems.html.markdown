@@ -18,11 +18,11 @@ The following arguments are supported:
 * `serial_number` - (Required) FortiClient EMS Serial Number.
 * `listen_port` - FortiClient EMS telemetry listen port number. (1 - 65535, default: 8013).
 * `upload_port` - FortiClient EMS telemetry upload port number. (1 - 65535, default: 8014).
-* `rest_api_auth` - FortiClient EMS REST API authentication.
+* `rest_api_auth` - FortiClient EMS REST API authentication. Valid values: `disable`, `userpass`.
 * `https_port` - FortiClient EMS HTTPS access port number. (1 - 65535, default: 443).
 * `admin_username` - (Required) FortiClient EMS admin username.
 * `admin_password` - FortiClient EMS admin password.
-* `admin_type` - FortiClient EMS admin type.
+* `admin_type` - FortiClient EMS admin type. Valid values: `Windows`, `LDAP`.
 
 
 ## Attribute Reference
