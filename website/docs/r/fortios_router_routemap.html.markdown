@@ -61,28 +61,28 @@ The following arguments are supported:
 The `rule` block supports:
 
 * `id` - Rule ID.
-* `action` - Action.
+* `action` - Action. Valid values: `permit`, `deny`.
 * `match_as_path` - Match BGP AS path list.
 * `match_community` - Match BGP community list.
-* `match_community_exact` - Enable/disable exact matching of communities.
-* `match_origin` - Match BGP origin code.
+* `match_community_exact` - Enable/disable exact matching of communities. Valid values: `enable`, `disable`.
+* `match_origin` - Match BGP origin code. Valid values: `none`, `egp`, `igp`, `incomplete`.
 * `match_interface` - Match interface configuration.
 * `match_ip_address` - Match IP address permitted by access-list or prefix-list.
 * `match_ip6_address` - Match IPv6 address permitted by access-list6 or prefix-list6.
 * `match_ip_nexthop` - Match next hop IP address passed by access-list or prefix-list.
 * `match_ip6_nexthop` - Match next hop IPv6 address passed by access-list6 or prefix-list6.
 * `match_metric` - Match metric for redistribute routes.
-* `match_route_type` - Match route type.
+* `match_route_type` - Match route type. Valid values: `1`, `2`, `none`.
 * `match_tag` - Match tag.
 * `match_vrf` - Match VRF ID.
 * `set_aggregator_as` - BGP aggregator AS.
 * `set_aggregator_ip` - BGP aggregator IP.
-* `set_aspath_action` - Specify preferred action of set-aspath.
+* `set_aspath_action` - Specify preferred action of set-aspath. Valid values: `prepend`, `replace`.
 * `set_aspath` - Prepend BGP AS path attribute. The structure of `set_aspath` block is documented below.
-* `set_atomic_aggregate` - Enable/disable BGP atomic aggregate attribute.
+* `set_atomic_aggregate` - Enable/disable BGP atomic aggregate attribute. Valid values: `enable`, `disable`.
 * `set_community_delete` - Delete communities matching community list.
 * `set_community` - BGP community attribute. The structure of `set_community` block is documented below.
-* `set_community_additive` - Enable/disable adding set-community to existing community.
+* `set_community_additive` - Enable/disable adding set-community to existing community. Valid values: `enable`, `disable`.
 * `set_dampening_reachability_half_life` - Reachability half-life time for the penalty (1 - 45 min, 0 = unset).
 * `set_dampening_reuse` - Value to start reusing a route (1 - 20000, 0 = unset).
 * `set_dampening_suppress` - Value to start suppressing a route (1 - 20000, 0 = unset).
@@ -95,9 +95,9 @@ The `rule` block supports:
 * `set_ip6_nexthop_local` - IPv6 local address of next hop.
 * `set_local_preference` - BGP local preference path attribute.
 * `set_metric` - Metric value.
-* `set_metric_type` - Metric type.
+* `set_metric_type` - Metric type. Valid values: `1`, `2`, `none`.
 * `set_originator_id` - BGP originator ID attribute.
-* `set_origin` - BGP origin code.
+* `set_origin` - BGP origin code. Valid values: `none`, `egp`, `igp`, `incomplete`.
 * `set_tag` - Tag value.
 * `set_weight` - BGP weight for routing table.
 * `set_flags` - BGP flags value (0 - 65535)
