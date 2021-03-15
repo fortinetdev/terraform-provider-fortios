@@ -25,9 +25,9 @@ resource "fortios_system_ptp" "trname" {
 
 The following arguments are supported:
 
-* `status` - Enable/disable setting the FortiGate system time by synchronizing with an PTP Server.
-* `mode` - Multicast transmission or hybrid transmission.
-* `delay_mechanism` - End to end delay detection or peer to peer delay detection.
+* `status` - Enable/disable setting the FortiGate system time by synchronizing with an PTP Server. Valid values: `enable`, `disable`.
+* `mode` - Multicast transmission or hybrid transmission. Valid values: `multicast`, `hybrid`.
+* `delay_mechanism` - End to end delay detection or peer to peer delay detection. Valid values: `E2E`, `P2P`.
 * `request_interval` - The delay request value is the logarithmic mean interval in seconds between the delay request messages sent by the slave to the master.
 * `interface` - (Required) PTP slave will reply through this interface.
 
