@@ -39,25 +39,25 @@ resource "fortios_log_setting" "trname" {
 
 The following arguments are supported:
 
-* `resolve_ip` - Enable/disable adding resolved domain names to traffic logs if possible.
-* `resolve_port` - Enable/disable adding resolved service names to traffic logs.
-* `log_user_in_upper` - Enable/disable logs with user-in-upper.
-* `fwpolicy_implicit_log` - Enable/disable implicit firewall policy logging.
-* `fwpolicy6_implicit_log` - Enable/disable implicit firewall policy6 logging.
-* `log_invalid_packet` - Enable/disable invalid packet traffic logging.
-* `local_in_allow` - Enable/disable local-in-allow logging.
-* `local_in_deny_unicast` - Enable/disable local-in-deny-unicast logging.
-* `local_in_deny_broadcast` - Enable/disable local-in-deny-broadcast logging.
-* `local_out` - Enable/disable local-out logging.
-* `daemon_log` - Enable/disable daemon logging.
-* `neighbor_event` - Enable/disable neighbor event logging.
-* `brief_traffic_format` - Enable/disable brief format traffic logging.
-* `user_anonymize` - Enable/disable anonymizing user names in log messages.
-* `expolicy_implicit_log` - Enable/disable explicit proxy firewall implicit policy logging.
-* `log_policy_comment` - Enable/disable inserting policy comments into traffic logs.
-* `log_policy_name` - Enable/disable inserting policy name into traffic logs.
-* `faz_override` - Enable/disable override FortiAnalyzer settings.
-* `syslog_override` - Enable/disable override Syslog settings.
+* `resolve_ip` - Enable/disable adding resolved domain names to traffic logs if possible. Valid values: `enable`, `disable`.
+* `resolve_port` - Enable/disable adding resolved service names to traffic logs. Valid values: `enable`, `disable`.
+* `log_user_in_upper` - Enable/disable logs with user-in-upper. Valid values: `enable`, `disable`.
+* `fwpolicy_implicit_log` - Enable/disable implicit firewall policy logging. Valid values: `enable`, `disable`.
+* `fwpolicy6_implicit_log` - Enable/disable implicit firewall policy6 logging. Valid values: `enable`, `disable`.
+* `log_invalid_packet` - Enable/disable invalid packet traffic logging. Valid values: `enable`, `disable`.
+* `local_in_allow` - Enable/disable local-in-allow logging. Valid values: `enable`, `disable`.
+* `local_in_deny_unicast` - Enable/disable local-in-deny-unicast logging. Valid values: `enable`, `disable`.
+* `local_in_deny_broadcast` - Enable/disable local-in-deny-broadcast logging. Valid values: `enable`, `disable`.
+* `local_out` - Enable/disable local-out logging. Valid values: `enable`, `disable`.
+* `daemon_log` - Enable/disable daemon logging. Valid values: `enable`, `disable`.
+* `neighbor_event` - Enable/disable neighbor event logging. Valid values: `enable`, `disable`.
+* `brief_traffic_format` - Enable/disable brief format traffic logging. Valid values: `enable`, `disable`.
+* `user_anonymize` - Enable/disable anonymizing user names in log messages. Valid values: `enable`, `disable`.
+* `expolicy_implicit_log` - Enable/disable explicit proxy firewall implicit policy logging. Valid values: `enable`, `disable`.
+* `log_policy_comment` - Enable/disable inserting policy comments into traffic logs. Valid values: `enable`, `disable`.
+* `log_policy_name` - Enable/disable inserting policy name into traffic logs. Valid values: `enable`, `disable`.
+* `faz_override` - Enable/disable override FortiAnalyzer settings. Valid values: `enable`, `disable`.
+* `syslog_override` - Enable/disable override Syslog settings. Valid values: `enable`, `disable`.
 * `custom_log_fields` - Custom fields to append to all log messages. The structure of `custom_log_fields` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
