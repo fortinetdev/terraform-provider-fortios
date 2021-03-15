@@ -30,7 +30,7 @@ The `icon_list` block supports:
 * `name` - Icon name.
 * `lang` - Language code.
 * `file` - Icon file.
-* `type` - Icon type.
+* `type` - Icon type. Valid values: `bmp`, `gif`, `jpeg`, `png`, `tiff`.
 * `width` - Icon width.
 * `height` - Icon height.
 
