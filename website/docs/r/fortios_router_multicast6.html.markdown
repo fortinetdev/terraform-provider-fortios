@@ -26,8 +26,8 @@ resource "fortios_router_multicast6" "trname" {
 
 The following arguments are supported:
 
-* `multicast_routing` - Enable/disable IPv6 multicast routing.
-* `multicast_pmtu` - Enable/disable PMTU for IPv6 multicast.
+* `multicast_routing` - Enable/disable IPv6 multicast routing. Valid values: `enable`, `disable`.
+* `multicast_pmtu` - Enable/disable PMTU for IPv6 multicast. Valid values: `enable`, `disable`.
 * `interface` - Protocol Independent Multicast (PIM) interfaces. The structure of `interface` block is documented below.
 * `pim_sm_global` - PIM sparse-mode global settings. The structure of `pim_sm_global` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
