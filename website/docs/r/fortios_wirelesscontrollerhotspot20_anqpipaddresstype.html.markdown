@@ -24,8 +24,8 @@ resource "fortios_wirelesscontrollerhotspot20_anqpipaddresstype" "trname" {
 The following arguments are supported:
 
 * `name` - IP type name.
-* `ipv6_address_type` - IPv6 address type.
-* `ipv4_address_type` - IPv4 address type.
+* `ipv6_address_type` - IPv6 address type. Valid values: `not-available`, `available`, `not-known`.
+* `ipv4_address_type` - IPv4 address type. Valid values: `not-available`, `public`, `port-restricted`, `single-NATed-private`, `double-NATed-private`, `port-restricted-and-single-NATed`, `port-restricted-and-double-NATed`, `not-known`.
 
 
 ## Attribute Reference
