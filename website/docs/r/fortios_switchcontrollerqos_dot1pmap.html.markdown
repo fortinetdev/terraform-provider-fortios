@@ -31,15 +31,15 @@ The following arguments are supported:
 
 * `name` - (Required) Dot1p map name.
 * `description` - Description of the 802.1p name.
-* `egress_pri_tagging` - Enable/disable egress priority-tag frame.
-* `priority_0` - COS queue mapped to dot1p priority number.
-* `priority_1` - COS queue mapped to dot1p priority number.
-* `priority_2` - COS queue mapped to dot1p priority number.
-* `priority_3` - COS queue mapped to dot1p priority number.
-* `priority_4` - COS queue mapped to dot1p priority number.
-* `priority_5` - COS queue mapped to dot1p priority number.
-* `priority_6` - COS queue mapped to dot1p priority number.
-* `priority_7` - COS queue mapped to dot1p priority number.
+* `egress_pri_tagging` - Enable/disable egress priority-tag frame. Valid values: `disable`, `enable`.
+* `priority_0` - COS queue mapped to dot1p priority number. Valid values: `queue-0`, `queue-1`, `queue-2`, `queue-3`, `queue-4`, `queue-5`, `queue-6`, `queue-7`.
+* `priority_1` - COS queue mapped to dot1p priority number. Valid values: `queue-0`, `queue-1`, `queue-2`, `queue-3`, `queue-4`, `queue-5`, `queue-6`, `queue-7`.
+* `priority_2` - COS queue mapped to dot1p priority number. Valid values: `queue-0`, `queue-1`, `queue-2`, `queue-3`, `queue-4`, `queue-5`, `queue-6`, `queue-7`.
+* `priority_3` - COS queue mapped to dot1p priority number. Valid values: `queue-0`, `queue-1`, `queue-2`, `queue-3`, `queue-4`, `queue-5`, `queue-6`, `queue-7`.
+* `priority_4` - COS queue mapped to dot1p priority number. Valid values: `queue-0`, `queue-1`, `queue-2`, `queue-3`, `queue-4`, `queue-5`, `queue-6`, `queue-7`.
+* `priority_5` - COS queue mapped to dot1p priority number. Valid values: `queue-0`, `queue-1`, `queue-2`, `queue-3`, `queue-4`, `queue-5`, `queue-6`, `queue-7`.
+* `priority_6` - COS queue mapped to dot1p priority number. Valid values: `queue-0`, `queue-1`, `queue-2`, `queue-3`, `queue-4`, `queue-5`, `queue-6`, `queue-7`.
+* `priority_7` - COS queue mapped to dot1p priority number. Valid values: `queue-0`, `queue-1`, `queue-2`, `queue-3`, `queue-4`, `queue-5`, `queue-6`, `queue-7`.
 
 
 ## Attribute Reference
