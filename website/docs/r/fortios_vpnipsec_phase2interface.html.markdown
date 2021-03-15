@@ -150,32 +150,32 @@ The following arguments are supported:
 
 * `name` - IPsec tunnel name.
 * `phase1name` - (Required) Phase 1 determines the options required for phase 2.
-* `dhcp_ipsec` - Enable/disable DHCP-IPsec.
-* `proposal` - (Required) Phase2 proposal.
-* `pfs` - Enable/disable PFS feature.
-* `ipv4_df` - Enable/disable setting and resetting of IPv4 'Don't Fragment' bit.
-* `dhgrp` - Phase2 DH group.
-* `replay` - Enable/disable replay detection.
-* `keepalive` - Enable/disable keep alive.
-* `auto_negotiate` - Enable/disable IPsec SA auto-negotiation.
-* `add_route` - Enable/disable automatic route addition.
-* `auto_discovery_sender` - Enable/disable sending short-cut messages.
-* `auto_discovery_forwarder` - Enable/disable forwarding short-cut messages.
+* `dhcp_ipsec` - Enable/disable DHCP-IPsec. Valid values: `enable`, `disable`.
+* `proposal` - (Required) Phase2 proposal. Valid values: `null-md5`, `null-sha1`, `null-sha256`, `null-sha384`, `null-sha512`, `des-null`, `des-md5`, `des-sha1`, `des-sha256`, `des-sha384`, `des-sha512`, `3des-null`, `3des-md5`, `3des-sha1`, `3des-sha256`, `3des-sha384`, `3des-sha512`, `aes128-null`, `aes128-md5`, `aes128-sha1`, `aes128-sha256`, `aes128-sha384`, `aes128-sha512`, `aes128gcm`, `aes192-null`, `aes192-md5`, `aes192-sha1`, `aes192-sha256`, `aes192-sha384`, `aes192-sha512`, `aes256-null`, `aes256-md5`, `aes256-sha1`, `aes256-sha256`, `aes256-sha384`, `aes256-sha512`, `aes256gcm`, `chacha20poly1305`, `aria128-null`, `aria128-md5`, `aria128-sha1`, `aria128-sha256`, `aria128-sha384`, `aria128-sha512`, `aria192-null`, `aria192-md5`, `aria192-sha1`, `aria192-sha256`, `aria192-sha384`, `aria192-sha512`, `aria256-null`, `aria256-md5`, `aria256-sha1`, `aria256-sha256`, `aria256-sha384`, `aria256-sha512`, `seed-null`, `seed-md5`, `seed-sha1`, `seed-sha256`, `seed-sha384`, `seed-sha512`.
+* `pfs` - Enable/disable PFS feature. Valid values: `enable`, `disable`.
+* `ipv4_df` - Enable/disable setting and resetting of IPv4 'Don't Fragment' bit. Valid values: `enable`, `disable`.
+* `dhgrp` - Phase2 DH group. Valid values: `1`, `2`, `5`, `14`, `15`, `16`, `17`, `18`, `19`, `20`, `21`, `27`, `28`, `29`, `30`, `31`, `32`.
+* `replay` - Enable/disable replay detection. Valid values: `enable`, `disable`.
+* `keepalive` - Enable/disable keep alive. Valid values: `enable`, `disable`.
+* `auto_negotiate` - Enable/disable IPsec SA auto-negotiation. Valid values: `enable`, `disable`.
+* `add_route` - Enable/disable automatic route addition. Valid values: `phase1`, `enable`, `disable`.
+* `auto_discovery_sender` - Enable/disable sending short-cut messages. Valid values: `phase1`, `enable`, `disable`.
+* `auto_discovery_forwarder` - Enable/disable forwarding short-cut messages. Valid values: `phase1`, `enable`, `disable`.
 * `keylifeseconds` - Phase2 key life in time in seconds (120 - 172800).
 * `keylifekbs` - Phase2 key life in number of bytes of traffic (5120 - 4294967295).
-* `keylife_type` - Keylife type.
-* `single_source` - Enable/disable single source IP restriction.
-* `route_overlap` - Action for overlapping routes.
-* `encapsulation` - ESP encapsulation mode.
-* `l2tp` - Enable/disable L2TP over IPsec.
+* `keylife_type` - Keylife type. Valid values: `seconds`, `kbs`, `both`.
+* `single_source` - Enable/disable single source IP restriction. Valid values: `enable`, `disable`.
+* `route_overlap` - Action for overlapping routes. Valid values: `use-old`, `use-new`, `allow`.
+* `encapsulation` - ESP encapsulation mode. Valid values: `tunnel-mode`, `transport-mode`.
+* `l2tp` - Enable/disable L2TP over IPsec. Valid values: `enable`, `disable`.
 * `comments` - Comment.
-* `initiator_ts_narrow` - Enable/disable traffic selector narrowing for IKEv2 initiator.
-* `diffserv` - Enable/disable applying DSCP value to the IPsec tunnel outer IP header.
+* `initiator_ts_narrow` - Enable/disable traffic selector narrowing for IKEv2 initiator. Valid values: `enable`, `disable`.
+* `diffserv` - Enable/disable applying DSCP value to the IPsec tunnel outer IP header. Valid values: `enable`, `disable`.
 * `diffservcode` - DSCP value to be applied to the IPsec tunnel outer IP header.
 * `protocol` - Quick mode protocol selector (1 - 255 or 0 for all).
 * `src_name` - Local proxy ID name.
 * `src_name6` - Local proxy ID name.
-* `src_addr_type` - Local proxy ID type.
+* `src_addr_type` - Local proxy ID type. Valid values: `subnet`, `range`, `ip`, `name`, `subnet6`, `range6`, `ip6`, `name6`.
 * `src_start_ip` - Local proxy ID start.
 * `src_start_ip6` - Local proxy ID IPv6 start.
 * `src_end_ip` - Local proxy ID end.
@@ -185,7 +185,7 @@ The following arguments are supported:
 * `src_port` - Quick mode source port (1 - 65535 or 0 for all).
 * `dst_name` - Remote proxy ID name.
 * `dst_name6` - Remote proxy ID name.
-* `dst_addr_type` - Remote proxy ID type.
+* `dst_addr_type` - Remote proxy ID type. Valid values: `subnet`, `range`, `ip`, `name`, `subnet6`, `range6`, `ip6`, `name6`.
 * `dst_start_ip` - Remote proxy ID IPv4 start.
 * `dst_start_ip6` - Remote proxy ID IPv6 start.
 * `dst_end_ip` - Remote proxy ID IPv4 end.
