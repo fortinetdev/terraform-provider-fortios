@@ -19,12 +19,12 @@ The following arguments are supported:
 * `username` - User name used to sign in to the server. Must have proper permissions for service.
 * `password` - Password for the specified username.
 * `ip` - Server IPv4 address.
-* `connect_protocol` - Connection protocol used to connect to MS Exchange service.
-* `auth_type` - Authentication security type used for the RPC protocol layer.
-* `auth_level` - Authentication security level used for the RPC protocol layer.
-* `http_auth_type` - Authentication security type used for the HTTP transport.
-* `ssl_min_proto_version` - Minimum SSL/TLS protocol version for HTTPS transport (default is to follow system global setting).
-* `auto_discover_kdc` - Enable/disable automatic discovery of KDC IP addresses.
+* `connect_protocol` - Connection protocol used to connect to MS Exchange service. Valid values: `rpc-over-tcp`, `rpc-over-http`, `rpc-over-https`.
+* `auth_type` - Authentication security type used for the RPC protocol layer. Valid values: `spnego`, `ntlm`, `kerberos`.
+* `auth_level` - Authentication security level used for the RPC protocol layer. Valid values: `connect`, `call`, `packet`, `integrity`, `privacy`.
+* `http_auth_type` - Authentication security type used for the HTTP transport. Valid values: `basic`, `ntlm`.
+* `ssl_min_proto_version` - Minimum SSL/TLS protocol version for HTTPS transport (default is to follow system global setting). Valid values: `default`, `SSLv3`, `TLSv1`, `TLSv1-1`, `TLSv1-2`.
+* `auto_discover_kdc` - Enable/disable automatic discovery of KDC IP addresses. Valid values: `enable`, `disable`.
 * `kdc_ip` - KDC IPv4 addresses for Kerberos authentication. The structure of `kdc_ip` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
