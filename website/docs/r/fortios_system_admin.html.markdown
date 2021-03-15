@@ -38,11 +38,11 @@ resource "fortios_system_admin" "trname" {
 The following arguments are supported:
 
 * `name` - User name.
-* `wildcard` - Enable/disable wildcard RADIUS authentication.
-* `remote_auth` - Enable/disable authentication using a remote RADIUS, LDAP, or TACACS+ server.
+* `wildcard` - Enable/disable wildcard RADIUS authentication. Valid values: `enable`, `disable`.
+* `remote_auth` - Enable/disable authentication using a remote RADIUS, LDAP, or TACACS+ server. Valid values: `enable`, `disable`.
 * `remote_group` - User group name used for remote auth.
 * `password` - Admin user password.
-* `peer_auth` - Set to enable peer certificate authentication (for HTTPS admin access).
+* `peer_auth` - Set to enable peer certificate authentication (for HTTPS admin access). Valid values: `enable`, `disable`.
 * `peer_group` - Name of peer group defined under config user group which has PKI members. Used for peer certificate authentication (for HTTPS admin access).
 * `trusthost1` - Any IPv4 address or subnet address and netmask from which the administrator can connect to the FortiGate unit. Default allows access from any IPv4 address.
 * `trusthost2` - Any IPv4 address or subnet address and netmask from which the administrator can connect to the FortiGate unit. Default allows access from any IPv4 address.
@@ -65,7 +65,7 @@ The following arguments are supported:
 * `ip6_trusthost9` - Any IPv6 address from which the administrator can connect to the FortiGate unit. Default allows access from any IPv6 address.
 * `ip6_trusthost10` - Any IPv6 address from which the administrator can connect to the FortiGate unit. Default allows access from any IPv6 address.
 * `accprofile` - Access profile for this administrator. Access profiles control administrator access to FortiGate features.
-* `allow_remove_admin_session` - Enable/disable allow admin session to be removed by privileged admin users.
+* `allow_remove_admin_session` - Enable/disable allow admin session to be removed by privileged admin users. Valid values: `enable`, `disable`.
 * `comments` - Comment.
 * `hidden` - Admin user hidden attribute.
 * `vdom` - Virtual domain(s) that the administrator can access. The structure of `vdom` block is documented below.
@@ -74,20 +74,20 @@ The following arguments are supported:
 * `ssh_public_key3` - Public key of an SSH client. The client is authenticated without being asked for credentials. Create the public-private key pair in the SSH client application.
 * `ssh_certificate` - Select the certificate to be used by the FortiGate for authentication with an SSH client.
 * `schedule` - Firewall schedule used to restrict when the administrator can log in. No schedule means no restrictions.
-* `accprofile_override` - Enable to use the name of an access profile provided by the remote authentication server to control the FortiGate features that this administrator can access.
-* `radius_vdom_override` - Enable to use the names of VDOMs provided by the remote authentication server to control the VDOMs that this administrator can access.
+* `accprofile_override` - Enable to use the name of an access profile provided by the remote authentication server to control the FortiGate features that this administrator can access. Valid values: `enable`, `disable`.
+* `radius_vdom_override` - Enable to use the names of VDOMs provided by the remote authentication server to control the VDOMs that this administrator can access. Valid values: `enable`, `disable`.
 * `password_expire` - Password expire time.
-* `force_password_change` - Enable/disable force password change on next login.
+* `force_password_change` - Enable/disable force password change on next login. Valid values: `enable`, `disable`.
 * `gui_dashboard` - GUI dashboards. The structure of `gui_dashboard` block is documented below.
 * `two_factor` - Enable/disable two-factor authentication.
-* `two_factor_authentication` - Authentication method by FortiToken Cloud.
-* `two_factor_notification` - Notification method for user activation by FortiToken Cloud.
+* `two_factor_authentication` - Authentication method by FortiToken Cloud. Valid values: `fortitoken`, `email`, `sms`.
+* `two_factor_notification` - Notification method for user activation by FortiToken Cloud. Valid values: `email`, `sms`.
 * `fortitoken` - This administrator's FortiToken serial number.
 * `email_to` - This administrator's email address.
-* `sms_server` - Send SMS messages using the FortiGuard SMS server or a custom server.
+* `sms_server` - Send SMS messages using the FortiGuard SMS server or a custom server. Valid values: `fortiguard`, `custom`.
 * `sms_custom_server` - Custom SMS server to send SMS messages to.
 * `sms_phone` - Phone number on which the administrator receives SMS messages.
-* `guest_auth` - Enable/disable guest authentication.
+* `guest_auth` - Enable/disable guest authentication. Valid values: `disable`, `enable`.
 * `guest_usergroups` - Select guest user groups. The structure of `guest_usergroups` block is documented below.
 * `guest_lang` - Guest management portal language.
 * `history0` - history0
@@ -106,28 +106,28 @@ The `gui_dashboard` block supports:
 
 * `id` - Dashboard ID.
 * `name` - Dashboard name.
-* `scope` - Dashboard scope.
-* `layout_type` - Layout type.
+* `scope` - Dashboard scope. Valid values: `global`, `vdom`.
+* `layout_type` - Layout type. Valid values: `responsive`, `fixed`.
 * `columns` - Number of columns.
 * `widget` - Dashboard widgets. The structure of `widget` block is documented below.
 
 The `widget` block supports:
 
 * `id` - Widget ID.
-* `type` - Widget type.
+* `type` - Widget type. Valid values: `sysinfo`, `licinfo`, `vminfo`, `forticloud`, `cpu-usage`, `memory-usage`, `disk-usage`, `log-rate`, `sessions`, `session-rate`, `tr-history`, `analytics`, `usb-modem`, `admins`, `security-fabric`, `security-fabric-ranking`, `ha-status`, `vulnerability-summary`, `host-scan-summary`, `fortiview`, `botnet-activity`, `fortimail`.
 * `x_pos` - X position.
 * `y_pos` - Y position.
 * `width` - Width.
 * `height` - Height.
 * `interface` - Interface to monitor.
-* `region` - Security Audit Rating region.
-* `industry` - Security Audit Rating industry.
+* `region` - Security Audit Rating region. Valid values: `default`, `custom`.
+* `industry` - Security Audit Rating industry. Valid values: `default`, `custom`.
 * `fabric_device` - Fabric device to monitor.
 * `title` - Widget title.
-* `report_by` - Field to aggregate the data by.
-* `timeframe` - Timeframe period of reported data.
+* `report_by` - Field to aggregate the data by. Valid values: `source`, `destination`, `country`, `intfpair`, `srcintf`, `dstintf`, `policy`, `wificlient`, `shaper`, `endpoint-vulnerability`, `endpoint-device`, `application`, `cloud-app`, `cloud-user`, `web-domain`, `web-category`, `web-search-phrase`, `threat`, `system`, `unauth`, `admin`, `vpn`.
+* `timeframe` - Timeframe period of reported data. Valid values: `realtime`, `5min`, `hour`, `day`, `week`.
 * `sort_by` - Field to sort the data by.
-* `visualization` - Visualization to use.
+* `visualization` - Visualization to use. Valid values: `table`, `bubble`, `country`, `chord`.
 * `filters` - FortiView filters. The structure of `filters` block is documented below.
 
 The `filters` block supports:
