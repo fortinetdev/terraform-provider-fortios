@@ -16,7 +16,7 @@ The following arguments are supported:
 * `name` - NAC policy name.
 * `description` - Description for the NAC policy matching pattern.
 * `category` - Category of NAC policy.
-* `status` - Enable/disable NAC policy.
+* `status` - Enable/disable NAC policy. Valid values: `enable`, `disable`.
 * `mac` - NAC policy matching MAC address.
 * `hw_vendor` - NAC policy matching hardware vendor.
 * `type` - NAC policy matching type.
@@ -31,7 +31,7 @@ The following arguments are supported:
 * `ems_tag` - NAC policy matching EMS tag.
 * `switch_fortilink` - FortiLink interface for which this NAC policy belongs to.
 * `switch_scope` - List of managed FortiSwitches on which NAC policy can be applied. The structure of `switch_scope` block is documented below.
-* `switch_auto_auth` - NAC device auto authorization when discovered and nac-policy matched.
+* `switch_auto_auth` - NAC device auto authorization when discovered and nac-policy matched. Valid values: `global`, `disable`, `enable`.
 * `switch_port_policy` - switch-port-policy to be applied on the matched NAC policy.
 * `switch_mac_policy` - switch-mac-policy to be applied on the matched NAC policy.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
