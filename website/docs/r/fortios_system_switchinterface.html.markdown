@@ -18,11 +18,11 @@ The following arguments are supported:
 * `span_dest_port` - SPAN destination port name. All traffic on the SPAN source ports is echoed to the SPAN destination port.
 * `span_source_port` - Physical interface name. Port spanning echoes all traffic on the SPAN source ports to the SPAN destination port. The structure of `span_source_port` block is documented below.
 * `member` - Names of the interfaces that belong to the virtual switch. The structure of `member` block is documented below.
-* `type` - Type of switch based on functionality: switch for normal functionality, or hub to duplicate packets to all port members.
-* `intra_switch_policy` - Allow any traffic between switch interfaces or require firewall policies to allow traffic between switch interfaces.
+* `type` - Type of switch based on functionality: switch for normal functionality, or hub to duplicate packets to all port members. Valid values: `switch`, `hub`.
+* `intra_switch_policy` - Allow any traffic between switch interfaces or require firewall policies to allow traffic between switch interfaces. Valid values: `implicit`, `explicit`.
 * `mac_ttl` - Duration for which MAC addresses are held in the ARP table (300 - 8640000 sec, default = 300).
-* `span` - Enable/disable port spanning. Port spanning echoes traffic received by the software switch to the span destination port.
-* `span_direction` - The direction in which the SPAN port operates, either: rx, tx, or both.
+* `span` - Enable/disable port spanning. Port spanning echoes traffic received by the software switch to the span destination port. Valid values: `disable`, `enable`.
+* `span_direction` - The direction in which the SPAN port operates, either: rx, tx, or both. Valid values: `rx`, `tx`, `both`.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `span_source_port` block supports:
