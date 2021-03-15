@@ -33,7 +33,7 @@ The following arguments are supported:
 The `rule` block supports:
 
 * `id` - ID.
-* `action` - Permit or deny route-based operations, based on the route's AS_PATH attribute.
+* `action` - Permit or deny route-based operations, based on the route's AS_PATH attribute. Valid values: `deny`, `permit`.
 * `regexp` - Regular-expression to match the Border Gateway Protocol (BGP) AS paths.
 
 
