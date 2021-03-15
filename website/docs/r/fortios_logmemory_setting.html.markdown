@@ -22,8 +22,8 @@ resource "fortios_logmemory_setting" "trname" {
 
 The following arguments are supported:
 
-* `status` - Enable/disable logging to the FortiGate's memory.
-* `diskfull` - Action to take when memory is full.
+* `status` - Enable/disable logging to the FortiGate's memory. Valid values: `enable`, `disable`.
+* `diskfull` - Action to take when memory is full. Valid values: `overwrite`.
 
 
 ## Attribute Reference
