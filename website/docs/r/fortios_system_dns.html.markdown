@@ -32,7 +32,7 @@ The following arguments are supported:
 
 * `primary` - (Required) Primary DNS server IP address.
 * `secondary` - Secondary DNS server IP address.
-* `dns_over_tls` - Enable/disable/enforce DNS over TLS.
+* `dns_over_tls` - Enable/disable/enforce DNS over TLS. Valid values: `disable`, `enable`, `enforce`.
 * `ssl_certificate` - Name of local certificate for SSL connections.
 * `server_hostname` - DNS server host name list. The structure of `server_hostname` block is documented below.
 * `domain` - Search suffix list for hostname lookup. The structure of `domain` block is documented below.
@@ -42,9 +42,9 @@ The following arguments are supported:
 * `retry` - Number of times to retry (0 - 5).
 * `dns_cache_limit` - Maximum number of records in the DNS cache.
 * `dns_cache_ttl` - Duration in seconds that the DNS cache retains information.
-* `cache_notfound_responses` - Enable/disable response from the DNS server when a record is not in cache.
+* `cache_notfound_responses` - Enable/disable response from the DNS server when a record is not in cache. Valid values: `disable`, `enable`.
 * `source_ip` - IP address used by the DNS server as its source IP.
-* `interface_select_method` - Specify how to select outgoing interface to reach server.
+* `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.
 * `interface` - Specify outgoing interface to reach server.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
