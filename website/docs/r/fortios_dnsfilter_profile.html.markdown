@@ -64,15 +64,15 @@ The following arguments are supported:
 * `comment` - Comment.
 * `domain_filter` - Domain filter settings. The structure of `domain_filter` block is documented below.
 * `ftgd_dns` - FortiGuard DNS Filter settings. The structure of `ftgd_dns` block is documented below.
-* `log_all_domain` - Enable/disable logging of all domains visited (detailed DNS logging).
-* `sdns_ftgd_err_log` - Enable/disable FortiGuard SDNS rating error logging.
-* `sdns_domain_log` - Enable/disable domain filtering and botnet domain logging.
-* `block_action` - Action to take for blocked domains.
+* `log_all_domain` - Enable/disable logging of all domains visited (detailed DNS logging). Valid values: `enable`, `disable`.
+* `sdns_ftgd_err_log` - Enable/disable FortiGuard SDNS rating error logging. Valid values: `enable`, `disable`.
+* `sdns_domain_log` - Enable/disable domain filtering and botnet domain logging. Valid values: `enable`, `disable`.
+* `block_action` - Action to take for blocked domains. Valid values: `block`, `redirect`.
 * `redirect_portal` - IP address of the SDNS redirect portal.
 * `redirect_portal6` - IPv6 address of the SDNS redirect portal.
-* `block_botnet` - Enable/disable blocking botnet C&C DNS lookups.
-* `safe_search` - Enable/disable Google, Bing, and YouTube safe search.
-* `youtube_restrict` - Set safe search for YouTube restriction level.
+* `block_botnet` - Enable/disable blocking botnet C&C DNS lookups. Valid values: `disable`, `enable`.
+* `safe_search` - Enable/disable Google, Bing, and YouTube safe search. Valid values: `disable`, `enable`.
+* `youtube_restrict` - Set safe search for YouTube restriction level. Valid values: `strict`, `moderate`.
 * `external_ip_blocklist` - One or more external IP block lists. The structure of `external_ip_blocklist` block is documented below.
 * `dns_translation` - DNS translation settings. The structure of `dns_translation` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
@@ -83,15 +83,15 @@ The `domain_filter` block supports:
 
 The `ftgd_dns` block supports:
 
-* `options` - FortiGuard DNS filter options.
+* `options` - FortiGuard DNS filter options. Valid values: `error-allow`, `ftgd-disable`.
 * `filters` - FortiGuard DNS domain filters. The structure of `filters` block is documented below.
 
 The `filters` block supports:
 
 * `id` - ID number.
 * `category` - Category number.
-* `action` - Action to take for DNS requests matching the category.
-* `log` - Enable/disable DNS filter logging for this DNS profile.
+* `action` - Action to take for DNS requests matching the category. Valid values: `block`, `monitor`.
+* `log` - Enable/disable DNS filter logging for this DNS profile. Valid values: `enable`, `disable`.
 
 The `external_ip_blocklist` block supports:
 
@@ -100,11 +100,11 @@ The `external_ip_blocklist` block supports:
 The `dns_translation` block supports:
 
 * `id` - ID.
-* `addr_type` - DNS translation type (IPv4 or IPv6).
+* `addr_type` - DNS translation type (IPv4 or IPv6). Valid values: `ipv4`, `ipv6`.
 * `src` - IPv4 address or subnet on the internal network to compare with the resolved address in DNS query replies. If the resolved address matches, the resolved address is substituted with dst.
 * `dst` - IPv4 address or subnet on the external network to substitute for the resolved address in DNS query replies. Can be single IP address or subnet on the external network, but number of addresses must equal number of mapped IP addresses in src.
 * `netmask` - If src and dst are subnets rather than single IP addresses, enter the netmask for both src and dst.
-* `status` - Enable/disable this DNS translation entry.
+* `status` - Enable/disable this DNS translation entry. Valid values: `enable`, `disable`.
 * `src6` - IPv6 address or subnet on the internal network to compare with the resolved address in DNS query replies. If the resolved address matches, the resolved address is substituted with dst6.
 * `dst6` - IPv6 address or subnet on the external network to substitute for the resolved address in DNS query replies. Can be single IP address or subnet on the external network, but number of addresses must equal number of mapped IP addresses in src6.
 * `prefix` - If src6 and dst6 are subnets rather than single IP addresses, enter the prefix for both src6 and dst6 (1 - 128, default = 128).
