@@ -15,11 +15,11 @@ The following arguments are supported:
 
 * `name` - Storm control policy name.
 * `description` - Description of the storm control policy.
-* `storm_control_mode` - Set Storm control mode.
+* `storm_control_mode` - Set Storm control mode. Valid values: `global`, `override`, `disabled`.
 * `rate` - Threshold rate in packets per second at which storm traffic is controlled in override mode (default=500, 0 to drop all).
-* `unknown_unicast` - Enable/disable storm control to drop/allow unknown unicast traffic in override mode.
-* `unknown_multicast` - Enable/disable storm control to drop/allow unknown multicast traffic in override mode.
-* `broadcast` - Enable/disable storm control to drop/allow broadcast traffic in override mode.
+* `unknown_unicast` - Enable/disable storm control to drop/allow unknown unicast traffic in override mode. Valid values: `enable`, `disable`.
+* `unknown_multicast` - Enable/disable storm control to drop/allow unknown multicast traffic in override mode. Valid values: `enable`, `disable`.
+* `broadcast` - Enable/disable storm control to drop/allow broadcast traffic in override mode. Valid values: `enable`, `disable`.
 
 
 ## Attribute Reference
