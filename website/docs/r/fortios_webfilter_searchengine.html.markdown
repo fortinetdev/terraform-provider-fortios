@@ -30,8 +30,8 @@ The following arguments are supported:
 * `hostname` - Hostname (regular expression).
 * `url` - URL (regular expression).
 * `query` - Code used to prefix a query (must end with an equals character).
-* `safesearch` - Safe search method. You can disable safe search, add the safe search string to URLs, or insert a safe search header.
-* `charset` - Search engine charset.
+* `safesearch` - Safe search method. You can disable safe search, add the safe search string to URLs, or insert a safe search header. Valid values: `disable`, `url`, `header`.
+* `charset` - Search engine charset. Valid values: `utf-8`, `gb2312`.
 * `safesearch_str` - Safe search parameter used in the URL.
 
 
