@@ -31,7 +31,7 @@ The following arguments are supported:
 The `entries` block supports:
 
 * `pattern` - Content type (regular expression).
-* `action` - Action to take for this content type.
+* `action` - Action to take for this content type. Valid values: `block`, `allow`, `exempt`.
 * `category` - Categories that this content type applies to.
 
 
