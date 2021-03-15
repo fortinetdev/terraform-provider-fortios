@@ -15,7 +15,7 @@ The following arguments are supported:
 
 * `name` - Virtual-wire-pair name. Must be a unique interface name.
 * `member` - (Required) Interfaces belong to the virtual-wire-pair. The structure of `member` block is documented below.
-* `wildcard_vlan` - Enable/disable wildcard VLAN.
+* `wildcard_vlan` - Enable/disable wildcard VLAN. Valid values: `enable`, `disable`.
 * `vlan_filter` - Set VLAN filters.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
