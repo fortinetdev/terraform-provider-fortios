@@ -24,7 +24,7 @@ The `policy_list` block supports:
 * `description` - Description.
 * `from_vlan` - VLAN ID from which the Bonjour service is advertised (0 - 4094, default = 0).
 * `to_vlan` - VLAN ID to which the Bonjour service is made available (0 - 4094, default = all).
-* `services` - Bonjour services for the VLAN connecting to the Bonjour network.
+* `services` - Bonjour services for the VLAN connecting to the Bonjour network. Valid values: `all`, `airplay`, `afp`, `bit-torrent`, `ftp`, `ichat`, `itunes`, `printers`, `samba`, `scanners`, `ssh`, `chromecast`.
 
 
 ## Attribute Reference
