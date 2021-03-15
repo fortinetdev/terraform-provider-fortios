@@ -19,8 +19,8 @@ The following arguments are supported:
 * `vlan` - Native VLAN to be applied when using this VLAN policy.
 * `allowed_vlans` - Allowed VLANs to be applied when using this VLAN policy. The structure of `allowed_vlans` block is documented below.
 * `untagged_vlans` - Untagged VLANs to be applied when using this VLAN policy. The structure of `untagged_vlans` block is documented below.
-* `allowed_vlans_all` - Enable/disable all defined VLANs when using this VLAN policy.
-* `discard_mode` - Discard mode to be applied when using this VLAN policy.
+* `allowed_vlans_all` - Enable/disable all defined VLANs when using this VLAN policy. Valid values: `enable`, `disable`.
+* `discard_mode` - Discard mode to be applied when using this VLAN policy. Valid values: `none`, `all-untagged`, `all-tagged`.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `allowed_vlans` block supports:
