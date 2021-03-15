@@ -33,10 +33,10 @@ The following arguments are supported:
 * `key` - Key to access the primary server.
 * `secondary_key` - Key to access the secondary server.
 * `tertiary_key` - Key to access the tertiary server.
-* `authen_type` - Allowed authentication protocols/methods.
-* `authorization` - Enable/disable TACACS+ authorization.
+* `authen_type` - Allowed authentication protocols/methods. Valid values: `mschap`, `chap`, `pap`, `ascii`, `auto`.
+* `authorization` - Enable/disable TACACS+ authorization. Valid values: `enable`, `disable`.
 * `source_ip` - source IP for communications to TACACS+ server.
-* `interface_select_method` - Specify how to select outgoing interface to reach server.
+* `interface_select_method` - Specify how to select outgoing interface to reach server. Valid values: `auto`, `sdwan`, `specify`.
 * `interface` - Specify outgoing interface to reach server.
 
 
