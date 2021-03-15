@@ -35,7 +35,7 @@ resource "fortios_system_mobiletunnel" "trname" {
 The following arguments are supported:
 
 * `name` - Tunnel name.
-* `status` - Enable/disable this mobile tunnel.
+* `status` - Enable/disable this mobile tunnel. Valid values: `disable`, `enable`.
 * `roaming_interface` - (Required) Select the associated interface name from available options.
 * `home_agent` - (Required) IPv4 address of the NEMO HA (Format: xxx.xxx.xxx.xxx).
 * `home_address` - Home IP address (Format: xxx.xxx.xxx.xxx).
@@ -44,10 +44,10 @@ The following arguments are supported:
 * `reg_interval` - (Required) NMMO HA registration interval (5 - 300, default = 5).
 * `reg_retry` - (Required) Maximum number of NMMO HA registration retries (1 to 30, default = 3).
 * `n_mhae_spi` - (Required) NEMO authentication SPI (default: 256).
-* `n_mhae_key_type` - (Required) NEMO authentication key type (ascii or base64).
+* `n_mhae_key_type` - (Required) NEMO authentication key type (ascii or base64). Valid values: `ascii`, `base64`.
 * `n_mhae_key` - NEMO authentication key.
-* `hash_algorithm` - (Required) Hash Algorithm (Keyed MD5).
-* `tunnel_mode` - (Required) NEMO tunnnel mode (GRE tunnel).
+* `hash_algorithm` - (Required) Hash Algorithm (Keyed MD5). Valid values: `hmac-md5`.
+* `tunnel_mode` - (Required) NEMO tunnnel mode (GRE tunnel). Valid values: `gre`.
 * `network` - NEMO network configuration. The structure of `network` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
