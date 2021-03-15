@@ -48,7 +48,7 @@ The following arguments are supported:
 
 * `name` - (Required) Address group name.
 * `member` - Service objects contained within the group. The structure of `member` block is documented below.
-* `proxy` - Enable/disable web proxy service group.
+* `proxy` - Enable/disable web proxy service group. Valid values: `enable`, `disable`.
 * `comment` - Comment.
 * `color` - Color of icon on the GUI.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
