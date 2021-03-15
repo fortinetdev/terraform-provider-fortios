@@ -105,7 +105,7 @@ The following arguments are supported:
 * `vdom` - Virtual domains. The structure of `vdom` block is documented below.
 * `schedule` - Schedule name.
 * `cors_allow_origin` - Value for Access-Control-Allow-Origin on API responses. Avoid using '*' if possible.
-* `peer_auth` - Enable/disable peer authentication.
+* `peer_auth` - Enable/disable peer authentication. Valid values: `enable`, `disable`.
 * `peer_group` - Peer group name.
 * `trusthost` - Trusthost. The structure of `trusthost` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
@@ -117,7 +117,7 @@ The `vdom` block supports:
 The `trusthost` block supports:
 
 * `id` - Table ID.
-* `type` - Trusthost type.
+* `type` - Trusthost type. Valid values: `ipv4-trusthost`, `ipv6-trusthost`.
 * `ipv4_trusthost` - IPv4 trusted host address.
 * `ipv6_trusthost` - IPv6 trusted host address.
 
