@@ -28,12 +28,12 @@ resource "fortios_firewall_multicastaddress" "trname" {
 The following arguments are supported:
 
 * `name` - Multicast address name.
-* `type` - Type of address object: multicast IP address range or broadcast IP/mask to be treated as a multicast address.
+* `type` - Type of address object: multicast IP address range or broadcast IP/mask to be treated as a multicast address. Valid values: `multicastrange`, `broadcastmask`.
 * `subnet` - Broadcast address and subnet.
 * `start_ip` - (Required) First IPv4 address (inclusive) in the range for the address.
 * `end_ip` - (Required) Final IPv4 address (inclusive) in the range for the address.
 * `comment` - Comment.
-* `visibility` - Enable/disable visibility of the multicast address on the GUI.
+* `visibility` - Enable/disable visibility of the multicast address on the GUI. Valid values: `enable`, `disable`.
 * `associated_interface` - Interface associated with the address object. When setting up a policy, only addresses associated with this interface are available.
 * `color` - Integer value to determine the color of the icon in the GUI (1 - 32, default = 0, which sets value to 1).
 * `tagging` - Config object tagging. The structure of `tagging` block is documented below.
