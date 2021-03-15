@@ -24,10 +24,10 @@ resource "fortios_system_console" "trname" {
 
 The following arguments are supported:
 
-* `mode` - Console mode.
-* `baudrate` - Console baud rate.
-* `output` - Console output mode.
-* `login` - Enable/disable serial console and FortiExplorer.
+* `mode` - Console mode. Valid values: `batch`, `line`.
+* `baudrate` - Console baud rate. Valid values: `9600`, `19200`, `38400`, `57600`, `115200`.
+* `output` - Console output mode. Valid values: `standard`, `more`.
+* `login` - Enable/disable serial console and FortiExplorer. Valid values: `enable`, `disable`.
 
 
 ## Attribute Reference
