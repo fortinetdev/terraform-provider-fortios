@@ -13,10 +13,10 @@ Configure dedicated management.
 
 The following arguments are supported:
 
-* `status` - Enable/disable dedicated management.
+* `status` - Enable/disable dedicated management. Valid values: `enable`, `disable`.
 * `interface` - Dedicated management interface.
 * `default_gateway` - Default gateway for dedicated management interface.
-* `dhcp_server` - Enable/disable DHCP server on management interface.
+* `dhcp_server` - Enable/disable DHCP server on management interface. Valid values: `enable`, `disable`.
 * `dhcp_netmask` - DHCP netmask.
 * `dhcp_start_ip` - DHCP start IP for dedicated management.
 * `dhcp_end_ip` - DHCP end IP for dedicated management.
