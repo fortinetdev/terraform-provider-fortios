@@ -44,7 +44,7 @@ resource "fortios_system_linkmonitor" "trname" {
 The following arguments are supported:
 
 * `name` - Link monitor name.
-* `addr_mode` - Address mode (IPv4 or IPv6).
+* `addr_mode` - Address mode (IPv4 or IPv6). Valid values: `ipv4`, `ipv6`.
 * `srcintf` - Interface that receives the traffic to be monitored.
 * `server` - (Required) IP address of the server(s) to be monitored. The structure of `server` block is documented below.
 * `protocol` - Protocols used to monitor the server.
@@ -61,13 +61,13 @@ The following arguments are supported:
 * `failtime` - Number of retry attempts before the server is considered down (1 - 10, default = 5)
 * `recoverytime` - Number of successful responses received before server is considered recovered (1 - 10, default = 5).
 * `probe_count` - Number of most recent probes that should be used to calculate latency and jitter (5 - 30, default = 30).
-* `security_mode` - Twamp controller security mode.
+* `security_mode` - Twamp controller security mode. Valid values: `none`, `authentication`.
 * `password` - Twamp controller password in authentication mode
 * `packet_size` - Packet size of a twamp test session,
 * `ha_priority` - HA election priority (1 - 50).
-* `update_cascade_interface` - Enable/disable update cascade interface.
-* `update_static_route` - Enable/disable updating the static route.
-* `status` - Enable/disable this link monitor.
+* `update_cascade_interface` - Enable/disable update cascade interface. Valid values: `enable`, `disable`.
+* `update_static_route` - Enable/disable updating the static route. Valid values: `enable`, `disable`.
+* `status` - Enable/disable this link monitor. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `server` block supports:
