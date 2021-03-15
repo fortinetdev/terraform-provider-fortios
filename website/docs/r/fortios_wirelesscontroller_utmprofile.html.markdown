@@ -15,12 +15,12 @@ The following arguments are supported:
 
 * `name` - UTM profile name.
 * `comment` - Comment.
-* `utm_log` - Enable/disable UTM logging.
+* `utm_log` - Enable/disable UTM logging. Valid values: `enable`, `disable`.
 * `ips_sensor` - IPS sensor name.
 * `application_list` - Application control list name.
 * `antivirus_profile` - AntiVirus profile name.
 * `webfilter_profile` - WebFilter profile name.
-* `scan_botnet_connections` - Block or monitor connections to Botnet servers or disable Botnet scanning.
+* `scan_botnet_connections` - Block or monitor connections to Botnet servers or disable Botnet scanning. Valid values: `disable`, `block`, `monitor`.
 
 
 ## Attribute Reference
