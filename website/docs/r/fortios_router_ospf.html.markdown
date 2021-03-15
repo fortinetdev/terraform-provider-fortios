@@ -76,28 +76,28 @@ resource "fortios_router_ospf" "trname" {
 
 The following arguments are supported:
 
-* `abr_type` - Area border router type.
+* `abr_type` - Area border router type. Valid values: `cisco`, `ibm`, `shortcut`, `standard`.
 * `auto_cost_ref_bandwidth` - Reference bandwidth in terms of megabits per second.
 * `distance_external` - Administrative external distance.
 * `distance_inter_area` - Administrative inter-area distance.
 * `distance_intra_area` - Administrative intra-area distance.
-* `database_overflow` - Enable/disable database overflow.
+* `database_overflow` - Enable/disable database overflow. Valid values: `enable`, `disable`.
 * `database_overflow_max_lsas` - Database overflow maximum LSAs.
 * `database_overflow_time_to_recover` - Database overflow time to recover (sec).
-* `default_information_originate` - Enable/disable generation of default route.
+* `default_information_originate` - Enable/disable generation of default route. Valid values: `enable`, `always`, `disable`.
 * `default_information_metric` - Default information metric.
-* `default_information_metric_type` - Default information metric type.
+* `default_information_metric_type` - Default information metric type. Valid values: `1`, `2`.
 * `default_information_route_map` - Default information route map.
 * `default_metric` - Default metric of redistribute routes.
 * `distance` - Distance of the route.
-* `rfc1583_compatible` - Enable/disable RFC1583 compatibility.
+* `rfc1583_compatible` - Enable/disable RFC1583 compatibility. Valid values: `enable`, `disable`.
 * `router_id` - (Required) Router ID.
 * `spf_timers` - SPF calculation frequency.
-* `bfd` - Bidirectional Forwarding Detection (BFD).
-* `log_neighbour_changes` - Enable logging of OSPF neighbour's changes
+* `bfd` - Bidirectional Forwarding Detection (BFD). Valid values: `enable`, `disable`.
+* `log_neighbour_changes` - Enable logging of OSPF neighbour's changes Valid values: `enable`, `disable`.
 * `distribute_list_in` - Filter incoming routes.
 * `distribute_route_map_in` - Filter incoming external routes by route-map.
-* `restart_mode` - OSPF restart mode (graceful or LLS).
+* `restart_mode` - OSPF restart mode (graceful or LLS). Valid values: `none`, `lls`, `graceful-restart`.
 * `restart_period` - Graceful restart period.
 * `area` - OSPF area configuration. The structure of `area` block is documented below.
 * `ospf_interface` - OSPF interface configuration. The structure of `ospf_interface` block is documented below.
@@ -112,16 +112,16 @@ The following arguments are supported:
 The `area` block supports:
 
 * `id` - Area entry IP address.
-* `shortcut` - Enable/disable shortcut option.
-* `authentication` - Authentication type.
+* `shortcut` - Enable/disable shortcut option. Valid values: `disable`, `enable`, `default`.
+* `authentication` - Authentication type. Valid values: `none`, `text`, `md5`.
 * `default_cost` - Summary default cost of stub or NSSA area.
-* `nssa_translator_role` - NSSA translator role type.
-* `stub_type` - Stub summary setting.
-* `type` - Area type setting.
-* `nssa_default_information_originate` - Redistribute, advertise, or do not originate Type-7 default route into NSSA area.
+* `nssa_translator_role` - NSSA translator role type. Valid values: `candidate`, `never`, `always`.
+* `stub_type` - Stub summary setting. Valid values: `no-summary`, `summary`.
+* `type` - Area type setting. Valid values: `regular`, `nssa`, `stub`.
+* `nssa_default_information_originate` - Redistribute, advertise, or do not originate Type-7 default route into NSSA area. Valid values: `enable`, `always`, `disable`.
 * `nssa_default_information_originate_metric` - OSPF default metric.
-* `nssa_default_information_originate_metric_type` - OSPF metric type for default routes.
-* `nssa_redistribution` - Enable/disable redistribute into NSSA area.
+* `nssa_default_information_originate_metric_type` - OSPF metric type for default routes. Valid values: `1`, `2`.
+* `nssa_redistribution` - Enable/disable redistribute into NSSA area. Valid values: `enable`, `disable`.
 * `range` - OSPF area range configuration. The structure of `range` block is documented below.
 * `virtual_link` - OSPF virtual link configuration. The structure of `virtual_link` block is documented below.
 * `filter_list` - OSPF area filter-list configuration. The structure of `filter_list` block is documented below.
@@ -130,14 +130,14 @@ The `range` block supports:
 
 * `id` - Range entry ID.
 * `prefix` - Prefix.
-* `advertise` - Enable/disable advertise status.
+* `advertise` - Enable/disable advertise status. Valid values: `disable`, `enable`.
 * `substitute` - Substitute prefix.
-* `substitute_status` - Enable/disable substitute status.
+* `substitute_status` - Enable/disable substitute status. Valid values: `enable`, `disable`.
 
 The `virtual_link` block supports:
 
 * `name` - Virtual link entry name.
-* `authentication` - Authentication type.
+* `authentication` - Authentication type. Valid values: `none`, `text`, `md5`.
 * `authentication_key` - Authentication key.
 * `md5_key` - MD5 key.
 * `md5_keychain` - Authentication MD5 key-chain name.
@@ -157,14 +157,14 @@ The `filter_list` block supports:
 
 * `id` - Filter list entry ID.
 * `list` - Access-list or prefix-list name.
-* `direction` - Direction.
+* `direction` - Direction. Valid values: `in`, `out`.
 
 The `ospf_interface` block supports:
 
 * `name` - Interface entry name.
 * `interface` - Configuration interface name.
 * `ip` - IP address.
-* `authentication` - Authentication type.
+* `authentication` - Authentication type. Valid values: `none`, `text`, `md5`.
 * `authentication_key` - Authentication key.
 * `md5_key` - MD5 key.
 * `md5_keychain` - Authentication MD5 key-chain name.
@@ -176,12 +176,12 @@ The `ospf_interface` block supports:
 * `dead_interval` - Dead interval.
 * `hello_interval` - Hello interval.
 * `hello_multiplier` - Number of hello packets within dead interval.
-* `database_filter_out` - Enable/disable control of flooding out LSAs.
+* `database_filter_out` - Enable/disable control of flooding out LSAs. Valid values: `enable`, `disable`.
 * `mtu` - MTU for database description packets.
-* `mtu_ignore` - Enable/disable ignore MTU.
-* `network_type` - Network type.
-* `bfd` - Bidirectional Forwarding Detection (BFD).
-* `status` - Enable/disable status.
+* `mtu_ignore` - Enable/disable ignore MTU. Valid values: `enable`, `disable`.
+* `network_type` - Network type. Valid values: `broadcast`, `non-broadcast`, `point-to-point`, `point-to-multipoint`, `point-to-multipoint-non-broadcast`.
+* `bfd` - Bidirectional Forwarding Detection (BFD). Valid values: `global`, `enable`, `disable`.
+* `status` - Enable/disable status. Valid values: `disable`, `enable`.
 * `resync_timeout` - Graceful restart neighbor resynchronization timeout.
 * `md5_keys` - MD5 key. The structure of `md5_keys` block is documented below.
 
@@ -213,21 +213,21 @@ The `summary_address` block supports:
 * `id` - Summary address entry ID.
 * `prefix` - Prefix.
 * `tag` - Tag value.
-* `advertise` - Enable/disable advertise status.
+* `advertise` - Enable/disable advertise status. Valid values: `disable`, `enable`.
 
 The `distribute_list` block supports:
 
 * `id` - Distribute list entry ID.
 * `access_list` - Access list name.
-* `protocol` - Protocol type.
+* `protocol` - Protocol type. Valid values: `connected`, `static`, `rip`.
 
 The `redistribute` block supports:
 
 * `name` - Redistribute name.
-* `status` - status
+* `status` - status Valid values: `enable`, `disable`.
 * `metric` - Redistribute metric setting.
 * `routemap` - Route map name.
-* `metric_type` - Metric type.
+* `metric_type` - Metric type. Valid values: `1`, `2`.
 * `tag` - Tag value.
 
 
