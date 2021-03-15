@@ -13,8 +13,8 @@ Configure alarm.
 
 The following arguments are supported:
 
-* `status` - Enable/disable alarm.
-* `audible` - Enable/disable audible alarm.
+* `status` - Enable/disable alarm. Valid values: `enable`, `disable`.
+* `audible` - Enable/disable audible alarm. Valid values: `enable`, `disable`.
 * `groups` - Alarm groups. The structure of `groups` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
