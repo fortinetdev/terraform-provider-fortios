@@ -25,9 +25,9 @@ resource "fortios_wirelesscontroller_intercontroller" "trname" {
 
 The following arguments are supported:
 
-* `inter_controller_mode` - Configure inter-controller mode (disable, l2-roaming, 1+1, default = disable).
+* `inter_controller_mode` - Configure inter-controller mode (disable, l2-roaming, 1+1, default = disable). Valid values: `disable`, `l2-roaming`, `1+1`.
 * `inter_controller_key` - Secret key for inter-controller communications.
-* `inter_controller_pri` - Configure inter-controller's priority (primary or secondary, default = primary).
+* `inter_controller_pri` - Configure inter-controller's priority (primary or secondary, default = primary). Valid values: `primary`, `secondary`.
 * `fast_failover_max` - Maximum number of retransmissions for fast failover HA messages between peer wireless controllers (3 - 64, default = 10).
 * `fast_failover_wait` - Minimum wait time before an AP transitions from secondary controller to primary controller (10 - 86400 sec, default = 10).
 * `inter_controller_peer` - Fast failover peer wireless controller list. The structure of `inter_controller_peer` block is documented below.
@@ -38,7 +38,7 @@ The `inter_controller_peer` block supports:
 * `id` - ID.
 * `peer_ip` - Peer wireless controller's IP address.
 * `peer_port` - Port used by the wireless controller's for inter-controller communications (1024 - 49150, default = 5246).
-* `peer_priority` - Peer wireless controller's priority (primary or secondary, default = primary).
+* `peer_priority` - Peer wireless controller's priority (primary or secondary, default = primary). Valid values: `primary`, `secondary`.
 
 
 ## Attribute Reference
