@@ -25,7 +25,7 @@ The following arguments are supported:
 
 * `fosid` - Item ID.
 * `ds` - DSCP(DiffServ) DS value (0 - 63).
-* `priority` - DSCP based priority level.
+* `priority` - DSCP based priority level. Valid values: `low`, `medium`, `high`.
 
 
 ## Attribute Reference
