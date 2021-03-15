@@ -43,13 +43,13 @@ resource "fortios_extendercontroller_extender" "trname" {
 The following arguments are supported:
 
 * `fosid` - (Required) FortiExtender serial number.
-* `admin` - (Required) FortiExtender Administration (enable or disable).
+* `admin` - (Required) FortiExtender Administration (enable or disable). Valid values: `disable`, `discovered`, `enable`.
 * `ifname` - FortiExtender interface name.
 * `vdom` - VDOM
-* `role` - (Required) FortiExtender work role(Primary, Secondary, None).
-* `mode` - FortiExtender mode.
-* `dial_mode` - Dial mode (dial-on-demand or always-connect).
-* `redial` - Number of redials allowed based on failed attempts.
+* `role` - (Required) FortiExtender work role(Primary, Secondary, None). Valid values: `none`, `primary`, `secondary`.
+* `mode` - FortiExtender mode. Valid values: `standalone`, `redundant`.
+* `dial_mode` - Dial mode (dial-on-demand or always-connect). Valid values: `dial-on-demand`, `always-connect`.
+* `redial` - Number of redials allowed based on failed attempts. Valid values: `none`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`.
 * `redundant_intf` - Redundant interface.
 * `dial_status` - Dial status.
 * `conn_status` - Connection status.
@@ -59,19 +59,19 @@ The following arguments are supported:
 * `billing_start_day` - Billing start day.
 * `at_dial_script` - Initialization AT commands specific to the MODEM.
 * `modem_passwd` - MODEM password.
-* `initiated_update` - Allow/disallow network initiated updates to the MODEM.
-* `modem_type` - MODEM type (CDMA, GSM/LTE or WIMAX).
+* `initiated_update` - Allow/disallow network initiated updates to the MODEM. Valid values: `enable`, `disable`.
+* `modem_type` - MODEM type (CDMA, GSM/LTE or WIMAX). Valid values: `cdma`, `gsm/lte`, `wimax`.
 * `ppp_username` - PPP username.
 * `ppp_password` - PPP password.
-* `ppp_auth_protocol` - PPP authentication protocol (PAP,CHAP or auto).
-* `ppp_echo_request` - Enable/disable PPP echo request.
+* `ppp_auth_protocol` - PPP authentication protocol (PAP,CHAP or auto). Valid values: `auto`, `pap`, `chap`.
+* `ppp_echo_request` - Enable/disable PPP echo request. Valid values: `enable`, `disable`.
 * `wimax_carrier` - WiMax carrier.
 * `wimax_realm` - WiMax realm.
-* `wimax_auth_protocol` - WiMax authentication protocol(TLS or TTLS).
+* `wimax_auth_protocol` - WiMax authentication protocol(TLS or TTLS). Valid values: `tls`, `ttls`.
 * `sim_pin` - SIM PIN.
 * `access_point_name` - Access point name(APN).
-* `multi_mode` - MODEM mode of operation(3G,LTE,etc).
-* `roaming` - Enable/disable MODEM roaming.
+* `multi_mode` - MODEM mode of operation(3G,LTE,etc). Valid values: `auto`, `auto-3g`, `force-lte`, `force-3g`, `force-2g`.
+* `roaming` - Enable/disable MODEM roaming. Valid values: `enable`, `disable`.
 * `cdma_nai` - NAI for CDMA MODEMS.
 * `aaa_shared_secret` - AAA shared secret.
 * `ha_shared_secret` - HA shared secret.
