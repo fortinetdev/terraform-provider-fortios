@@ -27,7 +27,7 @@ The following arguments are supported:
 * `fosid` - Index <1-4096>.
 * `object` - (Required) Name of the configuration object that can be configured independently for all VDOMs.
 * `oid` - Object ID.
-* `scope` - Determine whether the configuration object can be configured separately for all VDOMs or if some VDOMs share the same configuration.
+* `scope` - Determine whether the configuration object can be configured separately for all VDOMs or if some VDOMs share the same configuration. Valid values: `all`, `inclusive`, `exclusive`.
 * `vdom` - Names of the VDOMs. The structure of `vdom` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
