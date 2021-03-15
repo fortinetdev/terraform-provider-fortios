@@ -76,70 +76,70 @@ resource "fortios_system_accprofile" "test12" {
 The following arguments are supported:
 
 * `name` - (Required) Profile name.
-* `scope` - Scope of admin access: global or specific VDOM(s).
+* `scope` - Scope of admin access: global or specific VDOM(s). Valid values: `vdom`, `global`.
 * `comments` - Comment.
-* `secfabgrp` - Security Fabric.
-* `ftviewgrp` - FortiView.
-* `authgrp` - Administrator access to Users and Devices.
-* `sysgrp` - System Configuration.
-* `netgrp` - Network Configuration.
-* `loggrp` - Administrator access to Logging and Reporting including viewing log messages.
-* `fwgrp` - Administrator access to the Firewall configuration.
-* `vpngrp` - Administrator access to IPsec, SSL, PPTP, and L2TP VPN.
-* `utmgrp` - Administrator access to Security Profiles.
-* `wanoptgrp` - Administrator access to WAN Opt & Cache.
-* `wifi` - Administrator access to the WiFi controller and Switch controller.
+* `secfabgrp` - Security Fabric. Valid values: `none`, `read`, `read-write`.
+* `ftviewgrp` - FortiView. Valid values: `none`, `read`, `read-write`.
+* `authgrp` - Administrator access to Users and Devices. Valid values: `none`, `read`, `read-write`.
+* `sysgrp` - System Configuration. Valid values: `none`, `read`, `read-write`, `custom`.
+* `netgrp` - Network Configuration. Valid values: `none`, `read`, `read-write`, `custom`.
+* `loggrp` - Administrator access to Logging and Reporting including viewing log messages. Valid values: `none`, `read`, `read-write`, `custom`.
+* `fwgrp` - Administrator access to the Firewall configuration. Valid values: `none`, `read`, `read-write`, `custom`.
+* `vpngrp` - Administrator access to IPsec, SSL, PPTP, and L2TP VPN. Valid values: `none`, `read`, `read-write`.
+* `utmgrp` - Administrator access to Security Profiles. Valid values: `none`, `read`, `read-write`, `custom`.
+* `wanoptgrp` - Administrator access to WAN Opt & Cache. Valid values: `none`, `read`, `read-write`.
+* `wifi` - Administrator access to the WiFi controller and Switch controller. Valid values: `none`, `read`, `read-write`.
 * `netgrp_permission` - Custom network permission. The structure of `netgrp_permission` block is documented below.
 * `sysgrp_permission` - Custom system permission. The structure of `sysgrp_permission` block is documented below.
 * `fwgrp_permission` - Custom firewall permission. The structure of `fwgrp_permission` block is documented below.
 * `loggrp_permission` - Custom Log & Report permission. The structure of `loggrp_permission` block is documented below.
 * `utmgrp_permission` - Custom Security Profile permissions. The structure of `utmgrp_permission` block is documented below.
-* `admintimeout_override` - Enable/disable overriding the global administrator idle timeout.
+* `admintimeout_override` - Enable/disable overriding the global administrator idle timeout. Valid values: `enable`, `disable`.
 * `admintimeout` - Administrator timeout for this access profile (0 - 480 min, default = 10, 0 means never timeout).
-* `system_diagnostics` - Enable/disable permission to run system diagnostic commands.
+* `system_diagnostics` - Enable/disable permission to run system diagnostic commands. Valid values: `enable`, `disable`.
 
 The `netgrp_permission` block supports:
 
-* `cfg` - Network Configuration.
-* `packet_capture` - Packet Capture Configuration.
-* `route_cfg` - Router Configuration.
+* `cfg` - Network Configuration. Valid values: `none`, `read`, `read-write`.
+* `packet_capture` - Packet Capture Configuration. Valid values: `none`, `read`, `read-write`.
+* `route_cfg` - Router Configuration. Valid values: `none`, `read`, `read-write`.
 
 The `sysgrp_permission` block supports:
 
-* `admin` - Administrator Users.
-* `upd` - FortiGuard Updates.
-* `cfg` - System Configuration.
-* `mnt` - Maintenance.
+* `admin` - Administrator Users. Valid values: `none`, `read`, `read-write`.
+* `upd` - FortiGuard Updates. Valid values: `none`, `read`, `read-write`.
+* `cfg` - System Configuration. Valid values: `none`, `read`, `read-write`.
+* `mnt` - Maintenance. Valid values: `none`, `read`, `read-write`.
 
 The `fwgrp_permission` block supports:
 
-* `policy` - Policy Configuration.
-* `address` - Address Configuration.
-* `service` - Service Configuration.
-* `schedule` - Schedule Configuration.
+* `policy` - Policy Configuration. Valid values: `none`, `read`, `read-write`.
+* `address` - Address Configuration. Valid values: `none`, `read`, `read-write`.
+* `service` - Service Configuration. Valid values: `none`, `read`, `read-write`.
+* `schedule` - Schedule Configuration. Valid values: `none`, `read`, `read-write`.
 
 The `loggrp_permission` block supports:
 
-* `config` - Log & Report configuration.
-* `data_access` - Log & Report Data Access.
-* `report_access` - Log & Report Report Access.
-* `threat_weight` - Log & Report Threat Weight.
+* `config` - Log & Report configuration. Valid values: `none`, `read`, `read-write`.
+* `data_access` - Log & Report Data Access. Valid values: `none`, `read`, `read-write`.
+* `report_access` - Log & Report Report Access. Valid values: `none`, `read`, `read-write`.
+* `threat_weight` - Log & Report Threat Weight. Valid values: `none`, `read`, `read-write`.
 
 The `utmgrp_permission` block supports:
 
-* `antivirus` - Antivirus profiles and settings.
-* `ips` - IPS profiles and settings.
-* `webfilter` - Web Filter profiles and settings.
-* `emailfilter` - AntiSpam filter and settings.
-* `spamfilter` - AntiSpam filter and settings.
-* `data_loss_prevention` - DLP profiles and settings.
-* `file_filter` - File-filter profiles and settings.
-* `application_control` - Application Control profiles and settings.
-* `icap` - ICAP profiles and settings.
-* `voip` - VoIP profiles and settings.
-* `waf` - Web Application Firewall profiles and settings.
-* `dnsfilter` - DNS Filter profiles and settings.
-* `endpoint_control` - FortiClient Profiles.
+* `antivirus` - Antivirus profiles and settings. Valid values: `none`, `read`, `read-write`.
+* `ips` - IPS profiles and settings. Valid values: `none`, `read`, `read-write`.
+* `webfilter` - Web Filter profiles and settings. Valid values: `none`, `read`, `read-write`.
+* `emailfilter` - AntiSpam filter and settings. Valid values: `none`, `read`, `read-write`.
+* `spamfilter` - AntiSpam filter and settings. Valid values: `none`, `read`, `read-write`.
+* `data_loss_prevention` - DLP profiles and settings. Valid values: `none`, `read`, `read-write`.
+* `file_filter` - File-filter profiles and settings. Valid values: `none`, `read`, `read-write`.
+* `application_control` - Application Control profiles and settings. Valid values: `none`, `read`, `read-write`.
+* `icap` - ICAP profiles and settings. Valid values: `none`, `read`, `read-write`.
+* `voip` - VoIP profiles and settings. Valid values: `none`, `read`, `read-write`.
+* `waf` - Web Application Firewall profiles and settings. Valid values: `none`, `read`, `read-write`.
+* `dnsfilter` - DNS Filter profiles and settings. Valid values: `none`, `read`, `read-write`.
+* `endpoint_control` - FortiClient Profiles. Valid values: `none`, `read`, `read-write`.
 
 
 ## Attribute Reference
