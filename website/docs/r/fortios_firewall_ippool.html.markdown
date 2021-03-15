@@ -32,7 +32,7 @@ resource "fortios_firewall_ippool" "trname" {
 The following arguments are supported:
 
 * `name` - IP pool name.
-* `type` - IP pool type (overload, one-to-one, fixed port range, or port block allocation).
+* `type` - IP pool type (overload, one-to-one, fixed port range, or port block allocation). Valid values: `overload`, `one-to-one`, `fixed-port-range`, `port-block-allocation`.
 * `startip` - (Required) First IPv4 address (inclusive) in the range for the address pool (format xxx.xxx.xxx.xxx, Default: 0.0.0.0).
 * `endip` - (Required) Final IPv4 address (inclusive) in the range for the address pool (format xxx.xxx.xxx.xxx, Default: 0.0.0.0).
 * `startport` - First port number (inclusive) in the range for the address pool (Default: 5117).
@@ -43,8 +43,8 @@ The following arguments are supported:
 * `port_per_user` -  Number of port for each user (32 to 60416, default = 0, auto).
 * `num_blocks_per_user` - Number of addresses blocks that can be used by a user (1 to 128, default = 8).
 * `pba_timeout` - Port block allocation timeout (seconds).
-* `permit_any_host` - Enable/disable full cone NAT.
-* `arp_reply` - Enable/disable replying to ARP requests when an IP Pool is added to a policy (default = enable).
+* `permit_any_host` - Enable/disable full cone NAT. Valid values: `disable`, `enable`.
+* `arp_reply` - Enable/disable replying to ARP requests when an IP Pool is added to a policy (default = enable). Valid values: `disable`, `enable`.
 * `arp_intf` - Select an interface from available options that will reply to ARP requests. (If blank, any is selected).
 * `associated_interface` - Associated interface name.
 * `comments` - Comment.
