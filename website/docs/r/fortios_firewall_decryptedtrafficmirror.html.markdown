@@ -15,8 +15,8 @@ The following arguments are supported:
 
 * `name` - Name.
 * `dstmac` - Set destination MAC address for mirrored traffic.
-* `traffic_type` - Types of decrypted traffic to be mirrored.
-* `traffic_source` - Source of decrypted traffic to be mirrored.
+* `traffic_type` - Types of decrypted traffic to be mirrored. Valid values: `ssl`, `ssh`.
+* `traffic_source` - Source of decrypted traffic to be mirrored. Valid values: `client`, `server`, `both`.
 * `interface` - Decrypted traffic mirror interface The structure of `interface` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
