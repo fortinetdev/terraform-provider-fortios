@@ -15,7 +15,7 @@ The following arguments are supported:
 
 * `name` - Bluetooth Low Energy profile name.
 * `comment` - Comment.
-* `advertising` - Advertising type.
+* `advertising` - Advertising type. Valid values: `ibeacon`, `eddystone-uid`, `eddystone-url`.
 * `ibeacon_uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `major_id` - Major ID.
 * `minor_id` - Minor ID.
@@ -23,9 +23,9 @@ The following arguments are supported:
 * `eddystone_instance` - Eddystone instance ID.
 * `eddystone_url` - Eddystone URL.
 * `eddystone_url_encode_hex` - Eddystone encoded URL hexadecimal string
-* `txpower` - Transmit power level (default = 0).
+* `txpower` - Transmit power level (default = 0). Valid values: `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`, `11`, `12`.
 * `beacon_interval` - Beacon interval (default = 100 msec).
-* `ble_scanning` - Enable/disable Bluetooth Low Energy (BLE) scanning.
+* `ble_scanning` - Enable/disable Bluetooth Low Energy (BLE) scanning. Valid values: `enable`, `disable`.
 
 
 ## Attribute Reference
