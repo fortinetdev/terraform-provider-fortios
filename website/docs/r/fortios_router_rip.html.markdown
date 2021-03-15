@@ -54,7 +54,7 @@ resource "fortios_router_rip" "trname" {
 
 The following arguments are supported:
 
-* `default_information_originate` - Enable/disable generation of default route.
+* `default_information_originate` - Enable/disable generation of default route. Valid values: `enable`, `disable`.
 * `default_metric` - Default metric.
 * `max_out_metric` - Maximum metric allowed to output(0 means 'not set').
 * `recv_buffer_size` - Receiving buffer size.
@@ -68,7 +68,7 @@ The following arguments are supported:
 * `update_timer` - Update timer in seconds.
 * `timeout_timer` - Timeout timer in seconds.
 * `garbage_timer` - Garbage timer in seconds.
-* `version` - RIP version.
+* `version` - RIP version. Valid values: `1`, `2`.
 * `interface` - RIP interface configuration. The structure of `interface` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
@@ -82,8 +82,8 @@ The `distance` block supports:
 The `distribute_list` block supports:
 
 * `id` - Distribute list ID.
-* `status` - status
-* `direction` - Distribute list direction.
+* `status` - status Valid values: `enable`, `disable`.
+* `direction` - Distribute list direction. Valid values: `in`, `out`.
 * `listname` - Distribute access/prefix list name.
 * `interface` - Distribute list interface name.
 
@@ -100,8 +100,8 @@ The `network` block supports:
 The `offset_list` block supports:
 
 * `id` - Offset-list ID.
-* `status` - status
-* `direction` - Offset list direction.
+* `status` - status Valid values: `enable`, `disable`.
+* `direction` - Offset list direction. Valid values: `in`, `out`.
 * `access_list` - Access list name.
 * `offset` - offset
 * `interface` - Interface name.
@@ -113,7 +113,7 @@ The `passive_interface` block supports:
 The `redistribute` block supports:
 
 * `name` - Redistribute name.
-* `status` - status
+* `status` - status Valid values: `enable`, `disable`.
 * `metric` - Redistribute metric setting.
 * `routemap` - Route map name.
 
@@ -121,13 +121,13 @@ The `interface` block supports:
 
 * `name` - Interface name.
 * `auth_keychain` - Authentication key-chain name.
-* `auth_mode` - Authentication mode.
+* `auth_mode` - Authentication mode. Valid values: `none`, `text`, `md5`.
 * `auth_string` - Authentication string/password.
-* `receive_version` - Receive version.
-* `send_version` - Send version.
-* `send_version2_broadcast` - Enable/disable broadcast version 1 compatible packets.
-* `split_horizon_status` - Enable/disable split horizon.
-* `split_horizon` - Enable/disable split horizon.
+* `receive_version` - Receive version. Valid values: `1`, `2`.
+* `send_version` - Send version. Valid values: `1`, `2`.
+* `send_version2_broadcast` - Enable/disable broadcast version 1 compatible packets. Valid values: `disable`, `enable`.
+* `split_horizon_status` - Enable/disable split horizon. Valid values: `enable`, `disable`.
+* `split_horizon` - Enable/disable split horizon. Valid values: `poisoned`, `regular`.
 * `flags` - flags
 
 
