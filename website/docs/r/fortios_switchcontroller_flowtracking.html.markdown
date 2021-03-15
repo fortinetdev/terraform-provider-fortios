@@ -13,13 +13,13 @@ Configure FortiSwitch flow tracking and export via ipfix/netflow.
 
 The following arguments are supported:
 
-* `sample_mode` - Configure sample mode for the flow tracking.
+* `sample_mode` - Configure sample mode for the flow tracking. Valid values: `local`, `perimeter`, `device-ingress`.
 * `sample_rate` - Configure sample rate for the perimeter and device-ingress sampling(0 - 99999).
-* `format` - Configure flow tracking protocol.
+* `format` - Configure flow tracking protocol. Valid values: `netflow1`, `netflow5`, `netflow9`, `ipfix`.
 * `collector_ip` - Configure collector ip address.
 * `collector_port` - Configure collector port number(0-65535, default=0).
-* `transport` - Configure L4 transport protocol for exporting packets.
-* `level` - Configure flow tracking level.
+* `transport` - Configure L4 transport protocol for exporting packets. Valid values: `udp`, `tcp`, `sctp`.
+* `level` - Configure flow tracking level. Valid values: `vlan`, `ip`, `port`, `proto`, `mac`.
 * `max_export_pkt_size` - Configure flow max export packet size (512-9216, default=512 bytes).
 * `timeout_general` - Configure flow session general timeout (60-604800, default=3600 seconds).
 * `timeout_icmp` - Configure flow session ICMP timeout (60-604800, default=300 seconds).
