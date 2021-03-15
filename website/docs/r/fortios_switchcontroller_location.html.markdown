@@ -58,8 +58,8 @@ The `address_civic` block supports:
 The `coordinates` block supports:
 
 * `altitude` - +/- Floating point no. eg. 117.47.
-* `altitude_unit` - m ( meters), f ( floors).
-* `datum` - WGS84, NAD83, NAD83/MLLW.
+* `altitude_unit` - m ( meters), f ( floors). Valid values: `m`, `f`.
+* `datum` - WGS84, NAD83, NAD83/MLLW. Valid values: `WGS84`, `NAD83`, `NAD83/MLLW`.
 * `latitude` - Floating point start with ( +/- )  or end with ( N or S ) eg. +/-16.67 or 16.67N.
 * `longitude` - Floating point start with ( +/- )  or end with ( E or W ) eg. +/-26.789 or 26.789E.
 * `parent_key` - Parent key name.
