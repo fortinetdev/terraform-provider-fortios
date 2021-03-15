@@ -14,12 +14,12 @@ Speed test schedule for each interface. Applies to FortiOS Version `>= 7.0.0`.
 The following arguments are supported:
 
 * `interface` - Interface name.
-* `status` - Enable/disable scheduled speed test.
+* `status` - Enable/disable scheduled speed test. Valid values: `disable`, `enable`.
 * `diffserv` - DSCP used for speed test.
 * `server_name` - Speed test server name.
 * `schedules` - Schedules for the interface. The structure of `schedules` block is documented below.
-* `update_inbandwidth` - Enable/disable bypassing interface's inbound bandwidth setting.
-* `update_outbandwidth` - Enable/disable bypassing interface's outbound bandwidth setting.
+* `update_inbandwidth` - Enable/disable bypassing interface's inbound bandwidth setting. Valid values: `disable`, `enable`.
+* `update_outbandwidth` - Enable/disable bypassing interface's outbound bandwidth setting. Valid values: `disable`, `enable`.
 * `update_inbandwidth_maximum` - Maximum downloading bandwidth (kbps) to be used in a speed test.
 * `update_inbandwidth_minimum` - Minimum downloading bandwidth (kbps) to be considered effective.
 * `update_outbandwidth_maximum` - Maximum uploading bandwidth (kbps) to be used in a speed test.
