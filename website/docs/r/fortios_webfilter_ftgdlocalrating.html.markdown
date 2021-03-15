@@ -24,7 +24,7 @@ resource "fortios_webfilter_ftgdlocalrating" "trname" {
 The following arguments are supported:
 
 * `url` - URL to rate locally.
-* `status` - Enable/disable local rating.
+* `status` - Enable/disable local rating. Valid values: `enable`, `disable`.
 * `comment` - Comment.
 * `rating` - (Required) Local rating.
 
