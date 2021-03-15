@@ -37,7 +37,7 @@ The following arguments are supported:
 * `hostkey_ecdsa384` - ECDSA nid384 certificate used by SSH proxy.
 * `hostkey_ecdsa521` - ECDSA nid384 certificate used by SSH proxy.
 * `hostkey_ed25519` - ED25519 hostkey used by SSH proxy.
-* `host_trusted_checking` - Enable/disable host trusted checking.
+* `host_trusted_checking` - Enable/disable host trusted checking. Valid values: `enable`, `disable`.
 
 
 ## Attribute Reference
