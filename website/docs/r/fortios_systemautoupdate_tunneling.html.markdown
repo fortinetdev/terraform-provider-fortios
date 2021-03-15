@@ -22,7 +22,7 @@ resource "fortios_systemautoupdate_tunneling" "trname" {
 
 The following arguments are supported:
 
-* `status` - Enable/disable web proxy tunnelling.
+* `status` - Enable/disable web proxy tunnelling. Valid values: `enable`, `disable`.
 * `address` - Web proxy IP address or FQDN.
 * `port` - Web proxy port.
 * `username` - Web proxy username.
