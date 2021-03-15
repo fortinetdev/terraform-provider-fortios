@@ -37,9 +37,9 @@ resource "fortios_firewallservice_custom" "trname" {
 The following arguments are supported:
 
 * `name` - Custom service name.
-* `proxy` - Enable/disable web proxy service.
+* `proxy` - Enable/disable web proxy service. Valid values: `enable`, `disable`.
 * `category` - Service category.
-* `protocol` - Protocol type based on IANA numbers.
+* `protocol` - Protocol type based on IANA numbers. Valid values: `TCP/UDP/SCTP`, `ICMP`, `ICMP6`, `IP`, `HTTP`, `FTP`, `CONNECT`, `SOCKS-TCP`, `SOCKS-UDP`, `ALL`.
 * `helper` - Helper name.
 * `iprange` - Start and end of the IP range associated with service.
 * `fqdn` - Fully qualified domain name.
@@ -54,11 +54,11 @@ The following arguments are supported:
 * `tcp_timewait_timer` - Set the length of the TCP TIME-WAIT state in seconds (1 - 300 sec, 0 = default).
 * `udp_idle_timer` - UDP half close timeout (0 - 86400 sec, 0 = default).
 * `session_ttl` - Session TTL (300 - 604800, 0 = default).
-* `check_reset_range` - Configure the type of ICMP error message verification.
+* `check_reset_range` - Configure the type of ICMP error message verification. Valid values: `disable`, `strict`, `default`.
 * `comment` - Comment.
 * `color` - Color of icon on the GUI.
-* `visibility` - Enable/disable the visibility of the service on the GUI.
-* `app_service_type` - Application service type.
+* `visibility` - Enable/disable the visibility of the service on the GUI. Valid values: `enable`, `disable`.
+* `app_service_type` - Application service type. Valid values: `disable`, `app-id`, `app-category`.
 * `app_category` - Application category ID. The structure of `app_category` block is documented below.
 * `application` - Application ID. The structure of `application` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
