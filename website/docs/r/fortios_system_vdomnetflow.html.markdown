@@ -24,7 +24,7 @@ resource "fortios_system_vdomnetflow" "trname" {
 
 The following arguments are supported:
 
-* `vdom_netflow` - Enable/disable NetFlow per VDOM.
+* `vdom_netflow` - Enable/disable NetFlow per VDOM. Valid values: `enable`, `disable`.
 * `collector_ip` - NetFlow collector IP address.
 * `collector_port` - NetFlow collector port number.
 * `source_ip` - Source IP address for communication with the NetFlow agent.
