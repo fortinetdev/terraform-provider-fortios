@@ -27,7 +27,7 @@ The following arguments are supported:
 * `name` - IPv6 multicast address name.
 * `ip6` - (Required) IPv6 address prefix (format: xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx/xxx).
 * `comment` - Comment.
-* `visibility` - Enable/disable visibility of the IPv6 multicast address on the GUI.
+* `visibility` - Enable/disable visibility of the IPv6 multicast address on the GUI. Valid values: `enable`, `disable`.
 * `color` - Color of icon on the GUI.
 * `tagging` - Config object tagging. The structure of `tagging` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
