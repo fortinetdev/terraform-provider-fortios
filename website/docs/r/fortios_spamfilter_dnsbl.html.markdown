@@ -37,10 +37,10 @@ The following arguments are supported:
 
 The `entries` block supports:
 
-* `status` - Enable/disable status.
+* `status` - Enable/disable status. Valid values: `enable`, `disable`.
 * `id` - DNSBL/ORBL entry ID.
 * `server` - DNSBL or ORBL server name.
-* `action` - Reject connection or mark as spam email.
+* `action` - Reject connection or mark as spam email. Valid values: `reject`, `spam`.
 
 
 ## Attribute Reference
