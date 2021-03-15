@@ -24,7 +24,7 @@ resource "fortios_system_vdomsflow" "trname" {
 
 The following arguments are supported:
 
-* `vdom_sflow` - Enable/disable the sFlow configuration for the current VDOM.
+* `vdom_sflow` - Enable/disable the sFlow configuration for the current VDOM. Valid values: `enable`, `disable`.
 * `collector_ip` - IP address of the sFlow collector that sFlow agents added to interfaces in this VDOM send sFlow datagrams to (default = 0.0.0.0).
 * `collector_port` - UDP port number used for sending sFlow datagrams (configure only if required by your sFlow collector or your network configuration) (0 - 65535, default = 6343).
 * `source_ip` - Source IP address for sFlow agent.
