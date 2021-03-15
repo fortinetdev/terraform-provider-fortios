@@ -14,7 +14,7 @@ Configure FortiToken.
 The following arguments are supported:
 
 * `serial_number` - Serial number.
-* `status` - Status
+* `status` - Status Valid values: `active`, `lock`.
 * `seed` - Token seed.
 * `comments` - Comment.
 * `license` - Mobile token license.
