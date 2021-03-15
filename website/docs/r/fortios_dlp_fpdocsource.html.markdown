@@ -37,14 +37,14 @@ resource "fortios_dlp_fpdocsource" "trname" {
 The following arguments are supported:
 
 * `name` - Name of the DLP fingerprint database.
-* `server_type` - (Required) Protocol used to communicate with the file server. Currently only Samba (SMB) servers are supported.
+* `server_type` - (Required) Protocol used to communicate with the file server. Currently only Samba (SMB) servers are supported. Valid values: `samba`.
 * `server` - (Required) IPv4 or IPv6 address of the server.
-* `period` - Frequency for which the FortiGate checks the server for new or changed files.
-* `vdom` - Select the VDOM that can communicate with the file server.
-* `scan_subdirectories` - Enable/disable scanning subdirectories to find files to create fingerprints from.
-* `scan_on_creation` - Enable to keep the fingerprint database up to date when a file is added or changed on the server.
-* `remove_deleted` - Enable to keep the fingerprint database up to date when a file is deleted from the server.
-* `keep_modified` - Enable so that when a file is changed on the server the FortiGate keeps the old fingerprint and adds a new fingerprint to the database.
+* `period` - Frequency for which the FortiGate checks the server for new or changed files. Valid values: `none`, `daily`, `weekly`, `monthly`.
+* `vdom` - Select the VDOM that can communicate with the file server. Valid values: `mgmt`, `current`.
+* `scan_subdirectories` - Enable/disable scanning subdirectories to find files to create fingerprints from. Valid values: `enable`, `disable`.
+* `scan_on_creation` - Enable to keep the fingerprint database up to date when a file is added or changed on the server. Valid values: `enable`, `disable`.
+* `remove_deleted` - Enable to keep the fingerprint database up to date when a file is deleted from the server. Valid values: `enable`, `disable`.
+* `keep_modified` - Enable so that when a file is changed on the server the FortiGate keeps the old fingerprint and adds a new fingerprint to the database. Valid values: `enable`, `disable`.
 * `username` - (Required) User name required to log into the file server.
 * `password` - Password required to log into the file server.
 * `file_path` - Path on the server to the fingerprint files (max 119 characters).
@@ -52,7 +52,7 @@ The following arguments are supported:
 * `sensitivity` - Select a sensitivity or threat level for matches with this fingerprint database. Add sensitivities using fp-sensitivity.
 * `tod_hour` - Hour of the day on which to scan the server (0 - 23, default = 1).
 * `tod_min` - Minute of the hour on which to scan the server (0 - 59).
-* `weekday` - Day of the week on which to scan the server.
+* `weekday` - Day of the week on which to scan the server. Valid values: `sunday`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`.
 * `date` - Day of the month on which to scan the server (1 - 31).
 
 
