@@ -14,7 +14,7 @@ Configure the MAC address group.
 The following arguments are supported:
 
 * `fosid` - ID.
-* `default_policy` - Allow or block the clients with MAC addresses that are not in the group.
+* `default_policy` - Allow or block the clients with MAC addresses that are not in the group. Valid values: `allow`, `deny`.
 * `addresses` - Manually selected group of addresses. The structure of `addresses` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
