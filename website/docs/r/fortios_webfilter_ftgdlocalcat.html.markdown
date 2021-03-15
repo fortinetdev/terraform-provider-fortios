@@ -23,7 +23,7 @@ resource "fortios_webfilter_ftgdlocalcat" "trname" {
 
 The following arguments are supported:
 
-* `status` - Enable/disable the local category.
+* `status` - Enable/disable the local category. Valid values: `enable`, `disable`.
 * `fosid` - Local category ID.
 * `desc` - Local category description.
 
