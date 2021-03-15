@@ -28,13 +28,13 @@ The following arguments are supported:
 
 * `active_auth_scheme` - Active authentication method (scheme name).
 * `sso_auth_scheme` - Single-Sign-On authentication method (scheme name).
-* `captive_portal_type` - Captive portal type.
+* `captive_portal_type` - Captive portal type. Valid values: `fqdn`, `ip`.
 * `captive_portal_ip` - Captive portal IP address.
 * `captive_portal_ip6` - Captive portal IPv6 address.
 * `captive_portal` - Captive portal host name.
 * `captive_portal6` - IPv6 captive portal host name.
 * `captive_portal_port` - Captive portal port number (1 - 65535, default = 7830).
-* `auth_https` - Enable/disable redirecting HTTP user authentication to HTTPS.
+* `auth_https` - Enable/disable redirecting HTTP user authentication to HTTPS. Valid values: `enable`, `disable`.
 * `captive_portal_ssl_port` - Captive portal SSL port number (1 - 65535, default = 7831).
 
 
