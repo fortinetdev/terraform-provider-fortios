@@ -37,8 +37,8 @@ The following arguments are supported:
 * `store_blocked` - Quarantine blocked files found in sessions using the selected protocols.
 * `drop_heuristic` - Do not quarantine files detected by heuristics found in sessions using the selected protocols. Dropped files are deleted instead of being quarantined.
 * `store_heuristic` - Quarantine files detected by heuristics found in sessions using the selected protocols.
-* `lowspace` - Select the method for handling additional files when running low on disk space.
-* `destination` - Choose whether to quarantine files to the FortiGate disk or to FortiAnalyzer or to delete them instead of quarantining them.
+* `lowspace` - Select the method for handling additional files when running low on disk space. Valid values: `drop-new`, `ovrw-old`.
+* `destination` - Choose whether to quarantine files to the FortiGate disk or to FortiAnalyzer or to delete them instead of quarantining them. Valid values: `NULL`, `disk`, `FortiAnalyzer`.
 
 
 ## Attribute Reference
