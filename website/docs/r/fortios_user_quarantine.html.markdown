@@ -21,7 +21,7 @@ resource "fortios_user_quarantine" "trname" {
 
 The following arguments are supported:
 
-* `quarantine` - Enable/disable quarantine.
+* `quarantine` - Enable/disable quarantine. Valid values: `enable`, `disable`.
 * `traffic_policy` - Traffic policy for quarantined MACs.
 * `firewall_groups` - Firewall address group which includes all quarantine MAC address.
 * `targets` - Quarantine entry to hold multiple MACs. The structure of `targets` block is documented below.
@@ -38,7 +38,7 @@ The `macs` block supports:
 * `mac` - Quarantine MAC.
 * `entry_id` - FSW entry id for the quarantine MAC.
 * `description` - Description for the quarantine MAC.
-* `drop` - Enable/Disable dropping of quarantined device traffic
+* `drop` - Enable/Disable dropping of quarantined device traffic Valid values: `disable`, `enable`.
 * `parent` - Parent entry name.
 
 
