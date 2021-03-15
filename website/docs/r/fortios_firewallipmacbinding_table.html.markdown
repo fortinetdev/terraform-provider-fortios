@@ -29,7 +29,7 @@ The following arguments are supported:
 * `ip` - (Required) IPv4 address portion of the pair (format: xxx.xxx.xxx.xxx).
 * `mac` - MAC address portion of the pair (format: xx:xx:xx:xx:xx:xx in hexidecimal).
 * `name` - Name of the pair (optional, default = no name).
-* `status` - Enable/disable this IP-mac binding pair.
+* `status` - Enable/disable this IP-mac binding pair. Valid values: `enable`, `disable`.
 
 
 ## Attribute Reference
