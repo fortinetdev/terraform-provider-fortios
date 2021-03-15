@@ -13,14 +13,14 @@ Configure virtual network enabler tunnel. Applies to FortiOS Version `>= 6.4.2`.
 
 The following arguments are supported:
 
-* `status` - Enable/disable VNE tunnel.
+* `status` - Enable/disable VNE tunnel. Valid values: `enable`, `disable`.
 * `interface` - Interface name.
 * `ssl_certificate` - Name of local certificate for SSL connections.
 * `bmr_hostname` - BMR hostname.
 * `ipv4_address` - Tunnel IPv4 address and netmask.
 * `br` - Border relay IPv6 address.
 * `update_url` - URL of provisioning server.
-* `mode` - VNE tunnel mode.
+* `mode` - VNE tunnel mode. Valid values: `map-e`, `fixed-ip`.
 
 
 ## Attribute Reference
