@@ -30,7 +30,7 @@ The following arguments are supported:
 
 The `entries` block supports:
 
-* `filter_type` - Filter by file name pattern or by file type.
+* `filter_type` - Filter by file name pattern or by file type. Valid values: `pattern`, `type`.
 * `pattern` - Add a file name pattern.
 * `file_type` - Select a file type.
 
