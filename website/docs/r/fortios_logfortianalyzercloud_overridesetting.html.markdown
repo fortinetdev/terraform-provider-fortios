@@ -13,7 +13,7 @@ Override FortiAnalyzer Cloud settings.
 
 The following arguments are supported:
 
-* `status` - Enable/disable logging to FortiAnalyzer.
+* `status` - Enable/disable logging to FortiAnalyzer. Valid values: `enable`, `disable`.
 
 
 ## Attribute Reference
