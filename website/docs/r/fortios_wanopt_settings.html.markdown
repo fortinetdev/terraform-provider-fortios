@@ -24,8 +24,8 @@ resource "fortios_wanopt_settings" "trname" {
 The following arguments are supported:
 
 * `host_id` - (Required) Local host ID (must also be entered in the remote FortiGate's peer list).
-* `tunnel_ssl_algorithm` - Relative strength of encryption algorithms accepted during tunnel negotiation.
-* `auto_detect_algorithm` - Auto detection algorithms used in tunnel negotiations.
+* `tunnel_ssl_algorithm` - Relative strength of encryption algorithms accepted during tunnel negotiation. Valid values: `high`, `medium`, `low`.
+* `auto_detect_algorithm` - Auto detection algorithms used in tunnel negotiations. Valid values: `simple`, `diff-req-resp`.
 
 
 ## Attribute Reference
