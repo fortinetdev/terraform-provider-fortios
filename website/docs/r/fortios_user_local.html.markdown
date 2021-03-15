@@ -52,30 +52,30 @@ The following arguments are supported:
 
 * `name` - User name.
 * `fosid` - User ID.
-* `status` - (Required) Enable/disable allowing the local user to authenticate with the FortiGate unit.
-* `type` - (Required) Authentication method.
+* `status` - (Required) Enable/disable allowing the local user to authenticate with the FortiGate unit. Valid values: `enable`, `disable`.
+* `type` - (Required) Authentication method. Valid values: `password`, `radius`, `tacacs+`, `ldap`.
 * `passwd` - User's password.
 * `ldap_server` - Name of LDAP server with which the user must authenticate.
 * `radius_server` - Name of RADIUS server with which the user must authenticate.
 * `tacacs_server` - Name of TACACS+ server with which the user must authenticate.
 * `two_factor` - Enable/disable two-factor authentication.
-* `two_factor_authentication` - Authentication method by FortiToken Cloud.
-* `two_factor_notification` - Notification method for user activation by FortiToken Cloud.
+* `two_factor_authentication` - Authentication method by FortiToken Cloud. Valid values: `fortitoken`, `email`, `sms`.
+* `two_factor_notification` - Notification method for user activation by FortiToken Cloud. Valid values: `email`, `sms`.
 * `fortitoken` - Two-factor recipient's FortiToken serial number.
 * `email_to` - Two-factor recipient's email address.
-* `sms_server` - Send SMS through FortiGuard or other external server.
+* `sms_server` - Send SMS through FortiGuard or other external server. Valid values: `fortiguard`, `custom`.
 * `sms_custom_server` - Two-factor recipient's SMS server.
 * `sms_phone` - Two-factor recipient's mobile phone number.
 * `passwd_policy` - Password policy to apply to this user, as defined in config user password-policy.
 * `passwd_time` - Time of the last password update.
 * `authtimeout` - Time in minutes before the authentication timeout for a user is reached.
 * `workstation` - Name of the remote user workstation, if you want to limit the user to authenticate only from a particular workstation.
-* `auth_concurrent_override` - Enable/disable overriding the policy-auth-concurrent under config system global.
+* `auth_concurrent_override` - Enable/disable overriding the policy-auth-concurrent under config system global. Valid values: `enable`, `disable`.
 * `auth_concurrent_value` - Maximum number of concurrent logins permitted from the same user.
 * `ppk_secret` - IKEv2 Postquantum Preshared Key (ASCII string or hexadecimal encoded with a leading 0x).
 * `ppk_identity` - IKEv2 Postquantum Preshared Key Identity.
-* `username_case_insensitivity` - Enable/disable case sensitivity when performing username matching (uppercase and lowercase letters are treated either as distinct or equivalent).
-* `username_case_sensitivity` - Enable/disable case sensitivity when performing username matching (uppercase and lowercase letters are treated either as distinct or equivalent).
+* `username_case_insensitivity` - Enable/disable case sensitivity when performing username matching (uppercase and lowercase letters are treated either as distinct or equivalent). Valid values: `enable`, `disable`.
+* `username_case_sensitivity` - Enable/disable case sensitivity when performing username matching (uppercase and lowercase letters are treated either as distinct or equivalent). Valid values: `disable`, `enable`.
 
 
 ## Attribute Reference
