@@ -26,7 +26,7 @@ The following arguments are supported:
 
 * `storage_device` - Storage device name.
 * `size` - Maximum total size of files within the storage (MB).
-* `db_mode` - Behaviour when the maximum size is reached.
+* `db_mode` - Behaviour when the maximum size is reached. Valid values: `stop-adding`, `remove-modified-then-oldest`, `remove-oldest`.
 * `cache_mem_percent` - Maximum percentage of available memory allocated to caching (1 - 15%).
 * `chunk_size` - Maximum fingerprint chunk size.  **Changing will flush the entire database**.
 
