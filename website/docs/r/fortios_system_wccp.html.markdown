@@ -45,21 +45,21 @@ The following arguments are supported:
 * `group_address` - IP multicast address used by the cache routers. For the FortiGate to ignore multicast WCCP traffic, use the default 0.0.0.0.
 * `server_list` - IP addresses and netmasks for up to four cache servers.
 * `router_list` - IP addresses of one or more WCCP routers.
-* `ports_defined` - Match method.
-* `server_type` - Cache server type.
+* `ports_defined` - Match method. Valid values: `source`, `destination`.
+* `server_type` - Cache server type. Valid values: `forward`, `proxy`.
 * `ports` - Service ports.
-* `authentication` - Enable/disable MD5 authentication.
+* `authentication` - Enable/disable MD5 authentication. Valid values: `enable`, `disable`.
 * `password` - Password for MD5 authentication.
-* `forward_method` - Method used to forward traffic to the cache servers.
-* `cache_engine_method` - Method used to forward traffic to the routers or to return to the cache engine.
-* `service_type` - WCCP service type used by the cache server for logical interception and redirection of traffic.
-* `primary_hash` - Hash method.
+* `forward_method` - Method used to forward traffic to the cache servers. Valid values: `GRE`, `L2`, `any`.
+* `cache_engine_method` - Method used to forward traffic to the routers or to return to the cache engine. Valid values: `GRE`, `L2`.
+* `service_type` - WCCP service type used by the cache server for logical interception and redirection of traffic. Valid values: `auto`, `standard`, `dynamic`.
+* `primary_hash` - Hash method. Valid values: `src-ip`, `dst-ip`, `src-port`, `dst-port`.
 * `priority` - Service priority.
 * `protocol` - Service protocol.
 * `assignment_weight` - Assignment of hash weight/ratio for the WCCP cache engine.
-* `assignment_bucket_format` - Assignment bucket format for the WCCP cache engine.
-* `return_method` -  Method used to decline a redirected packet and return it to the FortiGate.
-* `assignment_method` - Hash key assignment preference.
+* `assignment_bucket_format` - Assignment bucket format for the WCCP cache engine. Valid values: `wccp-v2`, `cisco-implementation`.
+* `return_method` -  Method used to decline a redirected packet and return it to the FortiGate. Valid values: `GRE`, `L2`, `any`.
+* `assignment_method` - Hash key assignment preference. Valid values: `HASH`, `MASK`, `any`.
 * `assignment_srcaddr_mask` - Assignment source address mask.
 * `assignment_dstaddr_mask` - Assignment destination address mask.
 
