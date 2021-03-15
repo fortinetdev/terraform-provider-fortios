@@ -37,8 +37,8 @@ The `map` block supports:
 
 * `name` - Dscp mapping entry name.
 * `cos_queue` - COS queue number.
-* `diffserv` - Differentiated service.
-* `ip_precedence` - IP Precedence.
+* `diffserv` - Differentiated service. Valid values: `CS0`, `CS1`, `AF11`, `AF12`, `AF13`, `CS2`, `AF21`, `AF22`, `AF23`, `CS3`, `AF31`, `AF32`, `AF33`, `CS4`, `AF41`, `AF42`, `AF43`, `CS5`, `EF`, `CS6`, `CS7`.
+* `ip_precedence` - IP Precedence. Valid values: `network-control`, `internetwork-control`, `critic-ecp`, `flashoverride`, `flash`, `immediate`, `priority`, `routine`.
 * `value` - Raw values of DSCP (0 - 63).
 
 
