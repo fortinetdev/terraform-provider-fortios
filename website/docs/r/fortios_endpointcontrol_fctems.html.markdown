@@ -16,16 +16,16 @@ The following arguments are supported:
 * `name` - FortiClient Enterprise Management Server (EMS) name.
 * `server` - FortiClient EMS FQDN or IPv4 address.
 * `serial_number` - FortiClient EMS Serial Number.
-* `fortinetone_cloud_authentication` - Enable/disable authentication of FortiClient EMS Cloud through FortiCloud account.
+* `fortinetone_cloud_authentication` - Enable/disable authentication of FortiClient EMS Cloud through FortiCloud account. Valid values: `enable`, `disable`.
 * `https_port` - FortiClient EMS HTTPS access port number. (1 - 65535, default: 443).
 * `admin_username` - FortiClient EMS admin username.
 * `admin_password` - FortiClient EMS admin password.
 * `source_ip` - REST API call source IP.
-* `pull_sysinfo` - Enable/disable pulling SysInfo from EMS.
-* `pull_vulnerabilities` - Enable/disable pulling vulnerabilities from EMS.
-* `pull_avatars` - Enable/disable pulling avatars from EMS.
-* `pull_tags` - Enable/disable pulling FortiClient user tags from EMS.
-* `cloud_server_type` - Cloud server type.
+* `pull_sysinfo` - Enable/disable pulling SysInfo from EMS. Valid values: `enable`, `disable`.
+* `pull_vulnerabilities` - Enable/disable pulling vulnerabilities from EMS. Valid values: `enable`, `disable`.
+* `pull_avatars` - Enable/disable pulling avatars from EMS. Valid values: `enable`, `disable`.
+* `pull_tags` - Enable/disable pulling FortiClient user tags from EMS. Valid values: `enable`, `disable`.
+* `cloud_server_type` - Cloud server type. Valid values: `production`, `alpha`, `beta`.
 * `call_timeout` - FortiClient EMS call timeout in milliseconds (500 - 30000 milliseconds, default = 5000).
 * `certificate` - FortiClient EMS certificate.
 
