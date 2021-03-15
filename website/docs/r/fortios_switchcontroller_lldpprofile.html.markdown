@@ -28,13 +28,13 @@ The following arguments are supported:
 
 * `name` - Profile name.
 * `med_tlvs` - Transmitted LLDP-MED TLVs (type-length-value descriptions): inventory management TLV and/or network policy TLV.
-* `n8021_tlvs` - Transmitted IEEE 802.1 TLVs.
+* `n8021_tlvs` - Transmitted IEEE 802.1 TLVs. Valid values: `port-vlan-id`.
 * `n8023_tlvs` - Transmitted IEEE 802.3 TLVs.
-* `auto_isl` - Enable/disable auto inter-switch LAG.
+* `auto_isl` - Enable/disable auto inter-switch LAG. Valid values: `disable`, `enable`.
 * `auto_isl_hello_timer` - Auto inter-switch LAG hello timer duration (1 - 30 sec, default = 3).
 * `auto_isl_receive_timeout` - Auto inter-switch LAG timeout if no response is received (3 - 90 sec, default = 9).
 * `auto_isl_port_group` - Auto inter-switch LAG port group ID (0 - 9).
-* `auto_mclag_icl` - Enable/disable MCLAG inter chassis link.
+* `auto_mclag_icl` - Enable/disable MCLAG inter chassis link. Valid values: `disable`, `enable`.
 * `med_network_policy` - Configuration method to edit Media Endpoint Discovery (MED) network policy type-length-value (TLV) categories. The structure of `med_network_policy` block is documented below.
 * `med_location_service` - Configuration method to edit Media Endpoint Discovery (MED) location service type-length-value (TLV) categories. The structure of `med_location_service` block is documented below.
 * `custom_tlvs` - Configuration method to edit custom TLV entries. The structure of `custom_tlvs` block is documented below.
@@ -43,9 +43,9 @@ The following arguments are supported:
 The `med_network_policy` block supports:
 
 * `name` - Policy type name.
-* `status` - Enable or disable this TLV.
+* `status` - Enable or disable this TLV. Valid values: `disable`, `enable`.
 * `vlan_intf` - VLAN interface to advertise; if configured on port.
-* `assign_vlan` - Enable/disable VLAN assignment when this profile is applied on managed FortiSwitch port.
+* `assign_vlan` - Enable/disable VLAN assignment when this profile is applied on managed FortiSwitch port. Valid values: `disable`, `enable`.
 * `vlan` - ID of VLAN to advertise, if configured on port (0 - 4094, 0 = priority tag).
 * `priority` - Advertised Layer 2 priority (0 - 7; from lowest to highest priority).
 * `dscp` - Advertised Differentiated Services Code Point (DSCP) value, a packet header value indicating the level of service requested for traffic, such as high priority or best effort delivery.
@@ -53,7 +53,7 @@ The `med_network_policy` block supports:
 The `med_location_service` block supports:
 
 * `name` - Location service type name.
-* `status` - Enable or disable this TLV.
+* `status` - Enable or disable this TLV. Valid values: `disable`, `enable`.
 * `sys_location_id` - Location service ID.
 
 The `custom_tlvs` block supports:
