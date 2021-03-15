@@ -36,7 +36,7 @@ The following arguments are supported:
 * `name` - Auto script name.
 * `interval` - Repeat interval in seconds.
 * `repeat` - Number of times to repeat this script (0 = infinite).
-* `start` - Script starting mode.
+* `start` - Script starting mode. Valid values: `manual`, `auto`.
 * `script` - List of FortiOS CLI commands to repeat.
 * `output_size` - Number of megabytes to limit script output to (10 - 1024, default = 10).
 * `timeout` - Maximum running time for this script in seconds (0 = no timeout).
