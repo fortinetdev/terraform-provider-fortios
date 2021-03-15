@@ -21,7 +21,7 @@ resource "fortios_lognulldevice_setting" "trname" {
 
 The following arguments are supported:
 
-* `status` - (Required) Enable/disable statistics collection for when no external logging destination, such as FortiAnalyzer, is present (data is not saved).
+* `status` - (Required) Enable/disable statistics collection for when no external logging destination, such as FortiAnalyzer, is present (data is not saved). Valid values: `enable`, `disable`.
 
 
 ## Attribute Reference
