@@ -51,18 +51,18 @@ The following arguments are supported:
 * `dstintf` - (Required) Destination interface name.
 * `srcaddr` - (Required) Source address name. The structure of `srcaddr` block is documented below.
 * `dstaddr` - (Required) Destination address name. The structure of `dstaddr` block is documented below.
-* `action` - Policy action.
-* `status` - Enable/disable policy status.
+* `action` - Policy action. Valid values: `accept`, `deny`.
+* `status` - Enable/disable policy status. Valid values: `enable`, `disable`.
 * `schedule` - (Required) Schedule name.
 * `service` - Service name. The structure of `service` block is documented below.
-* `logtraffic` - Enable/disable policy log traffic.
-* `logtraffic_start` - Record logs when a session starts and ends.
-* `permit_any_host` - Enable/disable permit any host in.
+* `logtraffic` - Enable/disable policy log traffic. Valid values: `enable`, `disable`.
+* `logtraffic_start` - Record logs when a session starts and ends. Valid values: `enable`, `disable`.
+* `permit_any_host` - Enable/disable permit any host in. Valid values: `enable`, `disable`.
 * `traffic_shaper` - Traffic shaper.
 * `traffic_shaper_reverse` - Reverse traffic shaper.
 * `per_ip_shaper` - Per-IP traffic shaper.
-* `fixedport` - Enable/disable policy fixed port.
-* `ippool` - Enable/disable policy64 IP pool.
+* `fixedport` - Enable/disable policy fixed port. Valid values: `enable`, `disable`.
+* `ippool` - Enable/disable policy64 IP pool. Valid values: `enable`, `disable`.
 * `poolname` - Policy IP pool names. The structure of `poolname` block is documented below.
 * `tcp_mss_sender` - TCP MSS value of sender.
 * `tcp_mss_receiver` - TCP MSS value of receiver.
