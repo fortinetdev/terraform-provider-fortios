@@ -27,12 +27,12 @@ resource "fortios_icap_server" "trname" {
 The following arguments are supported:
 
 * `name` - Server name.
-* `ip_version` - IP version.
+* `ip_version` - IP version. Valid values: `4`, `6`.
 * `ip_address` - IPv4 address of the ICAP server.
 * `ip6_address` - IPv6 address of the ICAP server.
 * `port` - ICAP server port.
 * `max_connections` - Maximum number of concurrent connections to ICAP server.
-* `secure` - Enable/disable secure connection to ICAP server.
+* `secure` - Enable/disable secure connection to ICAP server. Valid values: `enable`, `disable`.
 * `ssl_cert` - CA certificate name.
 
 
