@@ -16,9 +16,9 @@ The following arguments are supported:
 * `name` - (Required) Sensor name.
 * `comment` - Comment.
 * `replacemsg_group` - Replacement message group.
-* `block_malicious_url` - Enable/disable malicious URL blocking.
-* `scan_botnet_connections` - Block or monitor connections to Botnet servers, or disable Botnet scanning.
-* `extended_log` - Enable/disable extended logging.
+* `block_malicious_url` - Enable/disable malicious URL blocking. Valid values: `disable`, `enable`.
+* `scan_botnet_connections` - Block or monitor connections to Botnet servers, or disable Botnet scanning. Valid values: `disable`, `block`, `monitor`.
+* `extended_log` - Enable/disable extended logging. Valid values: `enable`, `disable`.
 * `entries` - IPS sensor filter. The structure of `entries` block is documented below.
 * `filter` - IPS sensor filter. The structure of `filter` block is documented below.
 * `override` - IPS override rule. The structure of `override` block is documented below.
@@ -34,19 +34,19 @@ The `entries` block supports:
 * `os` - Operating systems to be protected.  all includes all operating systems. other includes all unlisted operating systems.
 * `application` - Applications to be protected. set application ? lists available applications. all includes all applications. other includes all unlisted applications.
 * `cve` - List of CVE IDs of the signatures to add to the sensor The structure of `cve` block is documented below.
-* `status` - Status of the signatures included in filter. default enables the filter and only use filters with default status of enable. Filters with default status of disable will not be used.
-* `log` - Enable/disable logging of signatures included in filter.
-* `log_packet` - Enable/disable packet logging. Enable to save the packet that triggers the filter. You can download the packets in pcap format for diagnostic use.
-* `log_attack_context` - Enable/disable logging of attack context: URL buffer, header buffer, body buffer, packet buffer.
-* `action` - Action taken with traffic in which signatures are detected.
+* `status` - Status of the signatures included in filter. default enables the filter and only use filters with default status of enable. Filters with default status of disable will not be used. Valid values: `disable`, `enable`, `default`.
+* `log` - Enable/disable logging of signatures included in filter. Valid values: `disable`, `enable`.
+* `log_packet` - Enable/disable packet logging. Enable to save the packet that triggers the filter. You can download the packets in pcap format for diagnostic use. Valid values: `disable`, `enable`.
+* `log_attack_context` - Enable/disable logging of attack context: URL buffer, header buffer, body buffer, packet buffer. Valid values: `disable`, `enable`.
+* `action` - Action taken with traffic in which signatures are detected. Valid values: `pass`, `block`, `reset`, `default`.
 * `rate_count` - Count of the rate.
 * `rate_duration` - Duration (sec) of the rate.
-* `rate_mode` - Rate limit mode.
-* `rate_track` - Track the packet protocol field.
+* `rate_mode` - Rate limit mode. Valid values: `periodical`, `continuous`.
+* `rate_track` - Track the packet protocol field. Valid values: `none`, `src-ip`, `dest-ip`, `dhcp-client-mac`, `dns-domain`.
 * `exempt_ip` - Traffic from selected source or destination IP addresses is exempt from this signature. The structure of `exempt_ip` block is documented below.
-* `quarantine` - Quarantine method.
+* `quarantine` - Quarantine method. Valid values: `none`, `attacker`.
 * `quarantine_expiry` - Duration of quarantine. (Format ###d##h##m, minimum 1m, maximum 364d23h59m, default = 5m). Requires quarantine set to attacker.
-* `quarantine_log` - Enable/disable quarantine logging.
+* `quarantine_log` - Enable/disable quarantine logging. Valid values: `disable`, `enable`.
 
 The `rule` block supports:
 
@@ -70,24 +70,24 @@ The `filter` block supports:
 * `protocol` - Vulnerable protocol filter.
 * `os` - Vulnerable OS filter.
 * `application` - Vulnerable application filter.
-* `status` - Selected rules status.
-* `log` - Enable/disable logging of selected rules.
-* `log_packet` - Enable/disable packet logging of selected rules.
-* `action` - Action of selected rules.
-* `quarantine` - Quarantine IP or interface.
+* `status` - Selected rules status. Valid values: `disable`, `enable`, `default`.
+* `log` - Enable/disable logging of selected rules. Valid values: `disable`, `enable`.
+* `log_packet` - Enable/disable packet logging of selected rules. Valid values: `disable`, `enable`.
+* `action` - Action of selected rules. Valid values: `pass`, `block`, `reset`, `default`.
+* `quarantine` - Quarantine IP or interface. Valid values: `none`, `attacker`.
 * `quarantine_expiry` - Duration of quarantine in minute.
-* `quarantine_log` - Enable/disable logging of selected quarantine.
+* `quarantine_log` - Enable/disable logging of selected quarantine. Valid values: `disable`, `enable`.
 
 The `override` block supports:
 
 * `rule_id` - Override rule ID.
-* `status` - Enable/disable status of override rule.
-* `log` - Enable/disable logging.
-* `log_packet` - Enable/disable packet logging.
-* `action` - Action of override rule.
-* `quarantine` - Quarantine IP or interface.
+* `status` - Enable/disable status of override rule. Valid values: `disable`, `enable`.
+* `log` - Enable/disable logging. Valid values: `disable`, `enable`.
+* `log_packet` - Enable/disable packet logging. Valid values: `disable`, `enable`.
+* `action` - Action of override rule. Valid values: `pass`, `block`, `reset`.
+* `quarantine` - Quarantine IP or interface. Valid values: `none`, `attacker`.
 * `quarantine_expiry` - Duration of quarantine in minute.
-* `quarantine_log` - Enable/disable logging of selected quarantine.
+* `quarantine_log` - Enable/disable logging of selected quarantine. Valid values: `disable`, `enable`.
 * `exempt_ip` - Exempted IP. The structure of `exempt_ip` block is documented below.
 
 The `exempt_ip` block supports:
