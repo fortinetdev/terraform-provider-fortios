@@ -22,10 +22,10 @@ The following arguments are supported:
 * `os` - Operating system(s) that the signature protects. Blank for all operating systems.
 * `application` - Applications to be protected. Blank for all applications.
 * `protocol` - Protocol(s) that the signature scans. Blank for all protocols.
-* `status` - Enable/disable this signature.
-* `log` - Enable/disable logging.
-* `log_packet` - Enable/disable packet logging.
-* `action` - Default action (pass or block) for this signature.
+* `status` - Enable/disable this signature. Valid values: `disable`, `enable`.
+* `log` - Enable/disable logging. Valid values: `disable`, `enable`.
+* `log_packet` - Enable/disable packet logging. Valid values: `disable`, `enable`.
+* `action` - Default action (pass or block) for this signature. Valid values: `pass`, `block`.
 * `comment` - Comment.
 
 
