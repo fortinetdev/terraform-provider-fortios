@@ -28,23 +28,23 @@ The following arguments are supported:
 
 * `name` - Address name.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
-* `type` - Proxy address type.
+* `type` - Proxy address type. Valid values: `host-regex`, `url`, `category`, `method`, `ua`, `header`, `src-advanced`, `dst-advanced`.
 * `host` - Address object for the host.
 * `host_regex` - Host name as a regular expression.
 * `path` - URL path as a regular expression.
 * `query` - Match the query part of the URL as a regular expression.
-* `referrer` - Enable/disable use of referrer field in the HTTP header to match the address.
+* `referrer` - Enable/disable use of referrer field in the HTTP header to match the address. Valid values: `enable`, `disable`.
 * `category` - FortiGuard category ID. The structure of `category` block is documented below.
-* `method` - HTTP request methods to be used.
-* `ua` - Names of browsers to be used as user agent.
+* `method` - HTTP request methods to be used. Valid values: `get`, `post`, `put`, `head`, `connect`, `trace`, `options`, `delete`.
+* `ua` - Names of browsers to be used as user agent. Valid values: `chrome`, `ms`, `firefox`, `safari`, `other`.
 * `header_name` - Name of HTTP header.
 * `header` - HTTP header name as a regular expression.
-* `case_sensitivity` - Enable to make the pattern case sensitive.
+* `case_sensitivity` - Enable to make the pattern case sensitive. Valid values: `disable`, `enable`.
 * `header_group` - HTTP header group. The structure of `header_group` block is documented below.
 * `color` - Integer value to determine the color of the icon in the GUI (1 - 32, default = 0, which sets value to 1).
 * `tagging` - Config object tagging. The structure of `tagging` block is documented below.
 * `comment` - Optional comments.
-* `visibility` - Enable/disable visibility of the object in the GUI.
+* `visibility` - Enable/disable visibility of the object in the GUI. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `category` block supports:
@@ -56,7 +56,7 @@ The `header_group` block supports:
 * `id` - ID.
 * `header_name` - HTTP header.
 * `header` - HTTP header regular expression.
-* `case_sensitivity` - Case sensitivity in pattern.
+* `case_sensitivity` - Case sensitivity in pattern. Valid values: `disable`, `enable`.
 
 The `tagging` block supports:
 
