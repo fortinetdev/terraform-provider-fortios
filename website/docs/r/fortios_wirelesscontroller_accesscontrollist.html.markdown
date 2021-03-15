@@ -28,7 +28,7 @@ The `layer3_ipv4_rules` block supports:
 * `dstaddr` - Destination IP address (any | local-LAN | IPv4 address[/<network mask | mask length>], default = any).
 * `dstport` - Destination port (0 - 65535, default = 0, meaning any).
 * `protocol` - Protocol type as defined by IANA (0 - 255, default = 255, meaning any).
-* `action` - Policy action (allow | deny).
+* `action` - Policy action (allow | deny). Valid values: `allow`, `deny`.
 
 The `layer3_ipv6_rules` block supports:
 
@@ -39,7 +39,7 @@ The `layer3_ipv6_rules` block supports:
 * `dstaddr` - Destination IPv6 address (any | local-LAN | IPv6 address[/prefix length]), default = any.
 * `dstport` - Destination port (0 - 65535, default = 0, meaning any).
 * `protocol` - Protocol type as defined by IANA (0 - 255, default = 255, meaning any).
-* `action` - Policy action (allow | deny).
+* `action` - Policy action (allow | deny). Valid values: `allow`, `deny`.
 
 
 ## Attribute Reference
