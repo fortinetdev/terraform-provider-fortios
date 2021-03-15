@@ -32,9 +32,9 @@ resource "fortios_system_sdnconnector" "trname" {
 The following arguments are supported:
 
 * `name` - SDN connector name.
-* `status` - (Required) Enable/disable connection to the remote SDN connector.
+* `status` - (Required) Enable/disable connection to the remote SDN connector. Valid values: `disable`, `enable`.
 * `type` - (Required) Type of SDN connector.
-* `ha_status` - Enable/disable use for FortiGate HA service.
+* `ha_status` - Enable/disable use for FortiGate HA service. Valid values: `disable`, `enable`.
 * `server` - Server address of the remote SDN connector.
 * `server_port` - Port number of the remote SDN connector.
 * `username` - Username of the remote SDN connector as login credentials.
@@ -53,18 +53,18 @@ The following arguments are supported:
 * `client_id` - Azure client ID (application ID).
 * `client_secret` - Azure client secret (application key).
 * `resource_group` - Azure resource group.
-* `azure_region` - Azure server region.
+* `azure_region` - Azure server region. Valid values: `global`, `china`, `germany`, `usgov`, `local`.
 * `nic` - Configure Azure network interface. The structure of `nic` block is documented below.
 * `route_table` - Configure Azure route table. The structure of `route_table` block is documented below.
 * `user_id` - User ID.
 * `compartment_id` - Compartment ID.
 * `oci_region` - OCI server region.
-* `oci_region_type` - OCI region type.
+* `oci_region_type` - OCI region type. Valid values: `commercial`, `government`.
 * `oci_cert` - OCI certificate.
 * `oci_fingerprint` - OCI pubkey fingerprint.
 * `external_ip` - Configure GCP external IP. The structure of `external_ip` block is documented below.
 * `route` - Configure GCP route. The structure of `route` block is documented below.
-* `use_metadata_iam` - Enable/disable using IAM role from metadata to call API.
+* `use_metadata_iam` - Enable/disable using IAM role from metadata to call API. Valid values: `disable`, `enable`.
 * `gcp_project` - GCP project name.
 * `service_account` - GCP service account email.
 * `key_passwd` - Private key password.
@@ -74,7 +74,7 @@ The following arguments are supported:
 * `group_name` - Group name of computers.
 * `api_key` - IBM cloud API key or service ID API key.
 * `compute_generation` - Compute generation for IBM cloud infrastructure.
-* `ibm_region` - IBM cloud region name.
+* `ibm_region` - IBM cloud region name. Valid values: `us-south`, `us-east`, `germany`, `great-britain`, `japan`, `australia`.
 * `update_interval` - Dynamic object update interval (0 - 3600 sec, 0 means disabled, default = 60).
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
