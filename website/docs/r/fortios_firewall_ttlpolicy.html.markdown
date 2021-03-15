@@ -35,8 +35,8 @@ resource "fortios_firewall_ttlpolicy" "trname" {
 The following arguments are supported:
 
 * `fosid` - (Required) ID.
-* `status` - Enable/disable this TTL policy.
-* `action` - Action to be performed on traffic matching this policy (default = deny).
+* `status` - Enable/disable this TTL policy. Valid values: `enable`, `disable`.
+* `action` - Action to be performed on traffic matching this policy (default = deny). Valid values: `accept`, `deny`.
 * `srcintf` - (Required) Source interface name from available interfaces.
 * `srcaddr` - (Required) Source address object(s) from available options. Separate multiple names with a space. The structure of `srcaddr` block is documented below.
 * `service` - (Required) Service object(s) from available options. Separate multiple names with a space. The structure of `service` block is documented below.
