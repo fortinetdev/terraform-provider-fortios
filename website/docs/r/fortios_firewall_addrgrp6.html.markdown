@@ -42,7 +42,7 @@ The following arguments are supported:
 
 * `name` - IPv6 address group name.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
-* `visibility` - Enable/disable address group6 visibility in the GUI.
+* `visibility` - Enable/disable address group6 visibility in the GUI. Valid values: `enable`, `disable`.
 * `color` - Integer value to determine the color of the icon in the GUI (1 - 32, default = 0, which sets the value to 1).
 * `comment` - Comment.
 * `member` - (Required) Address objects contained within the group. The structure of `member` block is documented below.
