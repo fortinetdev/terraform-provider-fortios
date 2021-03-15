@@ -29,7 +29,7 @@ The following arguments are supported:
 The `rule` block supports:
 
 * `id` - Rule ID.
-* `action` - Permit or deny this IP address and netmask prefix.
+* `action` - Permit or deny this IP address and netmask prefix. Valid values: `permit`, `deny`.
 * `prefix` - IPv4 prefix to define regular filter criteria, such as "any" or subnets.
 * `ge` - Minimum prefix length to be matched (0 - 32).
 * `le` - Maximum prefix length to be matched (0 - 32).
