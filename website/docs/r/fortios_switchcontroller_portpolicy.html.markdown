@@ -20,7 +20,7 @@ The following arguments are supported:
 * `qos_policy` - QoS policy to be applied when using this port-policy.
 * `n802_1x` - 802.1x security policy to be applied when using this port-policy.
 * `vlan_policy` - VLAN policy to be applied when using this port-policy.
-* `bounce_port_link` - Enable/disable bouncing (administratively bring the link down, up) of a switch port where this port policy is applied. Helps to clear and reassign VLAN from lldp-profile.
+* `bounce_port_link` - Enable/disable bouncing (administratively bring the link down, up) of a switch port where this port policy is applied. Helps to clear and reassign VLAN from lldp-profile. Valid values: `disable`, `enable`.
 
 
 ## Attribute Reference
