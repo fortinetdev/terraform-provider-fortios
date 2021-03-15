@@ -59,7 +59,7 @@ resource "fortios_firewall_policy46" "trname" {
 
 The following arguments are supported:
 
-* `permit_any_host` - Enable/disable allowing any host.
+* `permit_any_host` - Enable/disable allowing any host. Valid values: `enable`, `disable`.
 * `policyid` - Policy ID.
 * `name` - Policy name.
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
@@ -67,20 +67,20 @@ The following arguments are supported:
 * `dstintf` - (Required) Destination interface name.
 * `srcaddr` - (Required) Source address objects. The structure of `srcaddr` block is documented below.
 * `dstaddr` - (Required) Destination address objects. The structure of `dstaddr` block is documented below.
-* `action` - Accept or deny traffic matching the policy.
-* `status` - Enable/disable this policy.
+* `action` - Accept or deny traffic matching the policy. Valid values: `accept`, `deny`.
+* `status` - Enable/disable this policy. Valid values: `enable`, `disable`.
 * `schedule` - (Required) Schedule name.
 * `service` - Service name. The structure of `service` block is documented below.
-* `logtraffic` - Enable/disable traffic logging for this policy.
-* `logtraffic_start` - Record logs when a session starts and ends.
+* `logtraffic` - Enable/disable traffic logging for this policy. Valid values: `enable`, `disable`.
+* `logtraffic_start` - Record logs when a session starts and ends. Valid values: `enable`, `disable`.
 * `traffic_shaper` - Traffic shaper.
 * `traffic_shaper_reverse` - Reverse traffic shaper.
 * `per_ip_shaper` - Per IP traffic shaper.
-* `fixedport` - Enable/disable fixed port for this policy.
+* `fixedport` - Enable/disable fixed port for this policy. Valid values: `enable`, `disable`.
 * `tcp_mss_sender` - TCP Maximum Segment Size value of sender (0 - 65535, default = 0).
 * `tcp_mss_receiver` - TCP Maximum Segment Size value of receiver (0 - 65535, default = 0)
 * `comments` - Comment.
-* `ippool` - Enable/disable use of IP Pools for source NAT.
+* `ippool` - Enable/disable use of IP Pools for source NAT. Valid values: `enable`, `disable`.
 * `poolname` - IP Pool names. The structure of `poolname` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
