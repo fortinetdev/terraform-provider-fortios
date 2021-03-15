@@ -44,20 +44,20 @@ The following arguments are supported:
 * `uuid` - Universally Unique Identifier (UUID; automatically assigned but can be manually reset).
 * `name` - Policy name.
 * `comments` - Comment.
-* `status` - Enable/disable this policy.
-* `logtraffic` - Enable/disable logging traffic accepted by this policy.
+* `status` - Enable/disable this policy. Valid values: `enable`, `disable`.
+* `logtraffic` - Enable/disable logging traffic accepted by this policy. Valid values: `enable`, `disable`.
 * `srcintf` - (Required) Source interface name.
 * `dstintf` - (Required) Destination interface name.
 * `srcaddr` - (Required) Source address objects. The structure of `srcaddr` block is documented below.
 * `dstaddr` - (Required) Destination address objects. The structure of `dstaddr` block is documented below.
-* `snat` - Enable/disable substitution of the outgoing interface IP address for the original source IP address (called source NAT or SNAT).
+* `snat` - Enable/disable substitution of the outgoing interface IP address for the original source IP address (called source NAT or SNAT). Valid values: `enable`, `disable`.
 * `snat_ip` - IPv4 address to be used as the source address for NATed traffic.
 * `dnat` - IPv4 DNAT address used for multicast destination addresses.
-* `action` - Accept or deny traffic matching the policy.
+* `action` - Accept or deny traffic matching the policy. Valid values: `accept`, `deny`.
 * `protocol` - Integer value for the protocol type as defined by IANA (0 - 255, default = 0).
 * `start_port` - Integer value for starting TCP/UDP/SCTP destination port in range (1 - 65535, default = 1).
 * `end_port` -  Integer value for ending TCP/UDP/SCTP destination port in range (1 - 65535, default = 1).
-* `auto_asic_offload` - Enable/disable offloading policy traffic for hardware acceleration.
+* `auto_asic_offload` - Enable/disable offloading policy traffic for hardware acceleration. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `srcaddr` block supports:
