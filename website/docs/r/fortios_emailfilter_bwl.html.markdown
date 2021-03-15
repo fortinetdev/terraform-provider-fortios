@@ -21,14 +21,14 @@ The following arguments are supported:
 
 The `entries` block supports:
 
-* `status` - Enable/disable status.
+* `status` - Enable/disable status. Valid values: `enable`, `disable`.
 * `id` - Entry ID.
-* `type` - Entry type.
-* `action` - Reject, mark as spam or good email.
-* `addr_type` - IP address type.
+* `type` - Entry type. Valid values: `ip`, `email`.
+* `action` - Reject, mark as spam or good email. Valid values: `reject`, `spam`, `clear`.
+* `addr_type` - IP address type. Valid values: `ipv4`, `ipv6`.
 * `ip4_subnet` - IPv4 network address/subnet mask bits.
 * `ip6_subnet` - IPv6 network address/subnet mask bits.
-* `pattern_type` - Wildcard pattern or regular expression.
+* `pattern_type` - Wildcard pattern or regular expression. Valid values: `wildcard`, `regexp`.
 * `email_pattern` - Email address pattern.
 
 
