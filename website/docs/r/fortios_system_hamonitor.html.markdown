@@ -23,7 +23,7 @@ resource "fortios_system_hamonitor" "trname" {
 
 The following arguments are supported:
 
-* `monitor_vlan` - Enable/disable monitor VLAN interfaces.
+* `monitor_vlan` - Enable/disable monitor VLAN interfaces. Valid values: `enable`, `disable`.
 * `vlan_hb_interval` - Configure heartbeat interval (seconds).
 * `vlan_hb_lost_threshold` - VLAN lost heartbeat threshold (1 - 60).
 
