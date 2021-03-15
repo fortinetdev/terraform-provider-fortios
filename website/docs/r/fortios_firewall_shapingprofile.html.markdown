@@ -32,7 +32,7 @@ The following arguments are supported:
 
 * `profile_name` - (Required) Shaping profile name.
 * `comment` - Comment.
-* `type` - Select shaping profile type: policing / queuing.
+* `type` - Select shaping profile type: policing / queuing. Valid values: `policing`, `queuing`.
 * `default_class_id` - (Required) Default class ID to handle unclassified packets (including all local traffic).
 * `shaping_entries` - Define shaping entries of this shaping profile. The structure of `shaping_entries` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
