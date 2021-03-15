@@ -15,7 +15,7 @@ The following arguments are supported:
 
 * `fosid` - ID.
 * `mac` - MAC address.
-* `policy` - Allow or block the client with this MAC address.
+* `policy` - Allow or block the client with this MAC address. Valid values: `allow`, `deny`.
 
 
 ## Attribute Reference
