@@ -21,12 +21,12 @@ The following arguments are supported:
 
 The `entries` block supports:
 
-* `status` - Enable/disable status.
+* `status` - Enable/disable status. Valid values: `enable`, `disable`.
 * `id` - Mime header entry ID.
 * `fieldname` - Pattern for header field name.
 * `fieldbody` - Pattern for the header field body.
-* `pattern_type` - Wildcard pattern or regular expression.
-* `action` - Mark spam or good.
+* `pattern_type` - Wildcard pattern or regular expression. Valid values: `wildcard`, `regexp`.
+* `action` - Mark spam or good. Valid values: `spam`, `clear`.
 
 
 ## Attribute Reference
