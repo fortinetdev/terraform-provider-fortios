@@ -30,7 +30,7 @@ The following arguments are supported:
 * `cert` - OCSP server certificate.
 * `secondary_url` - Secondary OCSP server URL.
 * `secondary_cert` - Secondary OCSP server certificate.
-* `unavail_action` - Action when server is unavailable (revoke the certificate or ignore the result of the check).
+* `unavail_action` - Action when server is unavailable (revoke the certificate or ignore the result of the check). Valid values: `revoke`, `ignore`.
 * `source_ip` - Source IP address for communications to the OCSP server.
 
 
