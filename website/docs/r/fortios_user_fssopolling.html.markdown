@@ -14,7 +14,7 @@ Configure FSSO active directory servers for polling mode.
 The following arguments are supported:
 
 * `fosid` - Active Directory server ID.
-* `status` - Enable/disable polling for the status of this Active Directory server.
+* `status` - Enable/disable polling for the status of this Active Directory server. Valid values: `enable`, `disable`.
 * `server` - (Required) Host name or IP address of the Active Directory server.
 * `default_domain` - Default domain managed by this Active Directory server.
 * `port` - Port to communicate with this Active Directory server.
@@ -24,8 +24,8 @@ The following arguments are supported:
 * `logon_history` - Number of hours of logon history to keep, 0 means keep all history.
 * `polling_frequency` - Polling frequency (every 1 to 30 seconds).
 * `adgrp` - LDAP Group Info. The structure of `adgrp` block is documented below.
-* `smbv1` - Enable/disable support of SMBv1 for Samba.
-* `smb_ntlmv1_auth` - Enable/disable support of NTLMv1 for Samba authentication.
+* `smbv1` - Enable/disable support of SMBv1 for Samba. Valid values: `enable`, `disable`.
+* `smb_ntlmv1_auth` - Enable/disable support of NTLMv1 for Samba authentication. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `adgrp` block supports:
