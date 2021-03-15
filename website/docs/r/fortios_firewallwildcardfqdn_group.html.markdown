@@ -39,7 +39,7 @@ The following arguments are supported:
 * `member` - (Required) Address group members. The structure of `member` block is documented below.
 * `color` - GUI icon color.
 * `comment` - Comment.
-* `visibility` - Enable/disable address visibility.
+* `visibility` - Enable/disable address visibility. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `member` block supports:
