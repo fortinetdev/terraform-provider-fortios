@@ -26,7 +26,7 @@ resource "fortios_firewall_iptranslation" "trname" {
 The following arguments are supported:
 
 * `transid` - IP translation ID.
-* `type` - IP translation type (option: SCTP).
+* `type` - IP translation type (option: SCTP). Valid values: `SCTP`.
 * `startip` - (Required) First IPv4 address (inclusive) in the range of the addresses to be translated (format xxx.xxx.xxx.xxx, default: 0.0.0.0).
 * `endip` - (Required) Final IPv4 address (inclusive) in the range of the addresses to be translated (format xxx.xxx.xxx.xxx, default: 0.0.0.0).
 * `map_startip` - (Required) Address to be used as the starting point for translation in the range (format xxx.xxx.xxx.xxx, default: 0.0.0.0).
