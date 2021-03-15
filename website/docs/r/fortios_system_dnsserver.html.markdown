@@ -24,7 +24,7 @@ resource "fortios_system_dnsserver" "trname" {
 The following arguments are supported:
 
 * `name` - DNS server name.
-* `mode` - DNS server mode.
+* `mode` - DNS server mode. Valid values: `recursive`, `non-recursive`, `forward-only`.
 * `dnsfilter_profile` - DNS filter profile.
 
 
