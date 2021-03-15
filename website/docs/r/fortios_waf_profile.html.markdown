@@ -24,8 +24,8 @@ resource "fortios_waf_profile" "trname" {
 The following arguments are supported:
 
 * `name` - WAF Profile name.
-* `external` - Disable/Enable external HTTP Inspection.
-* `extended_log` - Enable/disable extended logging.
+* `external` - Disable/Enable external HTTP Inspection. Valid values: `disable`, `enable`.
+* `extended_log` - Enable/disable extended logging. Valid values: `enable`, `disable`.
 * `signature` - WAF signatures. The structure of `signature` block is documented below.
 * `constraint` - WAF HTTP protocol restrictions. The structure of `constraint` block is documented below.
 * `method` - Method restriction. The structure of `method` block is documented below.
@@ -45,10 +45,10 @@ The `signature` block supports:
 The `main_class` block supports:
 
 * `id` - Main signature class ID.
-* `status` - Status.
-* `action` - Action.
-* `log` - Enable/disable logging.
-* `severity` - Severity.
+* `status` - Status. Valid values: `enable`, `disable`.
+* `action` - Action. Valid values: `allow`, `block`, `erase`.
+* `log` - Enable/disable logging. Valid values: `enable`, `disable`.
+* `severity` - Severity. Valid values: `high`, `medium`, `low`.
 
 The `disabled_sub_class` block supports:
 
@@ -61,14 +61,14 @@ The `disabled_signature` block supports:
 The `custom_signature` block supports:
 
 * `name` - Signature name.
-* `status` - Status.
-* `action` - Action.
-* `log` - Enable/disable logging.
-* `severity` - Severity.
-* `direction` - Traffic direction.
-* `case_sensitivity` - Case sensitivity in pattern.
+* `status` - Status. Valid values: `enable`, `disable`.
+* `action` - Action. Valid values: `allow`, `block`, `erase`.
+* `log` - Enable/disable logging. Valid values: `enable`, `disable`.
+* `severity` - Severity. Valid values: `high`, `medium`, `low`.
+* `direction` - Traffic direction. Valid values: `request`, `response`.
+* `case_sensitivity` - Case sensitivity in pattern. Valid values: `disable`, `enable`.
 * `pattern` - Match pattern.
-* `target` - Match HTTP target.
+* `target` - Match HTTP target. Valid values: `arg`, `arg-name`, `req-body`, `req-cookie`, `req-cookie-name`, `req-filename`, `req-header`, `req-header-name`, `req-raw-uri`, `req-uri`, `resp-body`, `resp-hdr`, `resp-status`.
 
 The `constraint` block supports:
 
@@ -89,145 +89,145 @@ The `constraint` block supports:
 
 The `header_length` block supports:
 
-* `status` - Enable/disable the constraint.
+* `status` - Enable/disable the constraint. Valid values: `enable`, `disable`.
 * `length` - Length of HTTP header in bytes (0 to 2147483647).
-* `action` - Action.
-* `log` - Enable/disable logging.
-* `severity` - Severity.
+* `action` - Action. Valid values: `allow`, `block`.
+* `log` - Enable/disable logging. Valid values: `enable`, `disable`.
+* `severity` - Severity. Valid values: `high`, `medium`, `low`.
 
 The `content_length` block supports:
 
-* `status` - Enable/disable the constraint.
+* `status` - Enable/disable the constraint. Valid values: `enable`, `disable`.
 * `length` - Length of HTTP content in bytes (0 to 2147483647).
-* `action` - Action.
-* `log` - Enable/disable logging.
-* `severity` - Severity.
+* `action` - Action. Valid values: `allow`, `block`.
+* `log` - Enable/disable logging. Valid values: `enable`, `disable`.
+* `severity` - Severity. Valid values: `high`, `medium`, `low`.
 
 The `param_length` block supports:
 
-* `status` - Enable/disable the constraint.
+* `status` - Enable/disable the constraint. Valid values: `enable`, `disable`.
 * `length` - Maximum length of parameter in URL, HTTP POST request or HTTP body in bytes (0 to 2147483647).
-* `action` - Action.
-* `log` - Enable/disable logging.
-* `severity` - Severity.
+* `action` - Action. Valid values: `allow`, `block`.
+* `log` - Enable/disable logging. Valid values: `enable`, `disable`.
+* `severity` - Severity. Valid values: `high`, `medium`, `low`.
 
 The `line_length` block supports:
 
-* `status` - Enable/disable the constraint.
+* `status` - Enable/disable the constraint. Valid values: `enable`, `disable`.
 * `length` - Length of HTTP line in bytes (0 to 2147483647).
-* `action` - Action.
-* `log` - Enable/disable logging.
-* `severity` - Severity.
+* `action` - Action. Valid values: `allow`, `block`.
+* `log` - Enable/disable logging. Valid values: `enable`, `disable`.
+* `severity` - Severity. Valid values: `high`, `medium`, `low`.
 
 The `url_param_length` block supports:
 
-* `status` - Enable/disable the constraint.
+* `status` - Enable/disable the constraint. Valid values: `enable`, `disable`.
 * `length` - Maximum length of URL parameter in bytes (0 to 2147483647).
-* `action` - Action.
-* `log` - Enable/disable logging.
-* `severity` - Severity.
+* `action` - Action. Valid values: `allow`, `block`.
+* `log` - Enable/disable logging. Valid values: `enable`, `disable`.
+* `severity` - Severity. Valid values: `high`, `medium`, `low`.
 
 The `version` block supports:
 
-* `status` - Enable/disable the constraint.
-* `action` - Action.
-* `log` - Enable/disable logging.
-* `severity` - Severity.
+* `status` - Enable/disable the constraint. Valid values: `enable`, `disable`.
+* `action` - Action. Valid values: `allow`, `block`.
+* `log` - Enable/disable logging. Valid values: `enable`, `disable`.
+* `severity` - Severity. Valid values: `high`, `medium`, `low`.
 
 The `method` block supports:
 
-* `status` - Enable/disable the constraint.
-* `action` - Action.
-* `log` - Enable/disable logging.
-* `severity` - Severity.
+* `status` - Enable/disable the constraint. Valid values: `enable`, `disable`.
+* `action` - Action. Valid values: `allow`, `block`.
+* `log` - Enable/disable logging. Valid values: `enable`, `disable`.
+* `severity` - Severity. Valid values: `high`, `medium`, `low`.
 
 The `hostname` block supports:
 
-* `status` - Enable/disable the constraint.
-* `action` - Action.
-* `log` - Enable/disable logging.
-* `severity` - Severity.
+* `status` - Enable/disable the constraint. Valid values: `enable`, `disable`.
+* `action` - Action. Valid values: `allow`, `block`.
+* `log` - Enable/disable logging. Valid values: `enable`, `disable`.
+* `severity` - Severity. Valid values: `high`, `medium`, `low`.
 
 The `malformed` block supports:
 
-* `status` - Enable/disable the constraint.
-* `action` - Action.
-* `log` - Enable/disable logging.
-* `severity` - Severity.
+* `status` - Enable/disable the constraint. Valid values: `enable`, `disable`.
+* `action` - Action. Valid values: `allow`, `block`.
+* `log` - Enable/disable logging. Valid values: `enable`, `disable`.
+* `severity` - Severity. Valid values: `high`, `medium`, `low`.
 
 The `max_cookie` block supports:
 
-* `status` - Enable/disable the constraint.
+* `status` - Enable/disable the constraint. Valid values: `enable`, `disable`.
 * `max_cookie` - Maximum number of cookies in HTTP request (0 to 2147483647).
-* `action` - Action.
-* `log` - Enable/disable logging.
-* `severity` - Severity.
+* `action` - Action. Valid values: `allow`, `block`.
+* `log` - Enable/disable logging. Valid values: `enable`, `disable`.
+* `severity` - Severity. Valid values: `high`, `medium`, `low`.
 
 The `max_header_line` block supports:
 
-* `status` - Enable/disable the constraint.
+* `status` - Enable/disable the constraint. Valid values: `enable`, `disable`.
 * `max_header_line` - Maximum number HTTP header lines (0 to 2147483647).
-* `action` - Action.
-* `log` - Enable/disable logging.
-* `severity` - Severity.
+* `action` - Action. Valid values: `allow`, `block`.
+* `log` - Enable/disable logging. Valid values: `enable`, `disable`.
+* `severity` - Severity. Valid values: `high`, `medium`, `low`.
 
 The `max_url_param` block supports:
 
-* `status` - Enable/disable the constraint.
+* `status` - Enable/disable the constraint. Valid values: `enable`, `disable`.
 * `max_url_param` - Maximum number of parameters in URL (0 to 2147483647).
-* `action` - Action.
-* `log` - Enable/disable logging.
-* `severity` - Severity.
+* `action` - Action. Valid values: `allow`, `block`.
+* `log` - Enable/disable logging. Valid values: `enable`, `disable`.
+* `severity` - Severity. Valid values: `high`, `medium`, `low`.
 
 The `max_range_segment` block supports:
 
-* `status` - Enable/disable the constraint.
+* `status` - Enable/disable the constraint. Valid values: `enable`, `disable`.
 * `max_range_segment` - Maximum number of range segments in HTTP range line (0 to 2147483647).
-* `action` - Action.
-* `log` - Enable/disable logging.
-* `severity` - Severity.
+* `action` - Action. Valid values: `allow`, `block`.
+* `log` - Enable/disable logging. Valid values: `enable`, `disable`.
+* `severity` - Severity. Valid values: `high`, `medium`, `low`.
 
 The `exception` block supports:
 
 * `id` - Exception ID.
 * `pattern` - URL pattern.
-* `regex` - Enable/disable regular expression based pattern match.
+* `regex` - Enable/disable regular expression based pattern match. Valid values: `enable`, `disable`.
 * `address` - Host address.
-* `header_length` - HTTP header length in request.
-* `content_length` - HTTP content length in request.
-* `param_length` - Maximum length of parameter in URL, HTTP POST request or HTTP body.
-* `line_length` - HTTP line length in request.
-* `url_param_length` - Maximum length of parameter in URL.
-* `version` - Enable/disable HTTP version check.
-* `method` - Enable/disable HTTP method check.
-* `hostname` - Enable/disable hostname check.
-* `malformed` - Enable/disable malformed HTTP request check.
-* `max_cookie` - Maximum number of cookies in HTTP request.
-* `max_header_line` - Maximum number of HTTP header line.
-* `max_url_param` - Maximum number of parameters in URL.
-* `max_range_segment` - Maximum number of range segments in HTTP range line.
+* `header_length` - HTTP header length in request. Valid values: `enable`, `disable`.
+* `content_length` - HTTP content length in request. Valid values: `enable`, `disable`.
+* `param_length` - Maximum length of parameter in URL, HTTP POST request or HTTP body. Valid values: `enable`, `disable`.
+* `line_length` - HTTP line length in request. Valid values: `enable`, `disable`.
+* `url_param_length` - Maximum length of parameter in URL. Valid values: `enable`, `disable`.
+* `version` - Enable/disable HTTP version check. Valid values: `enable`, `disable`.
+* `method` - Enable/disable HTTP method check. Valid values: `enable`, `disable`.
+* `hostname` - Enable/disable hostname check. Valid values: `enable`, `disable`.
+* `malformed` - Enable/disable malformed HTTP request check. Valid values: `enable`, `disable`.
+* `max_cookie` - Maximum number of cookies in HTTP request. Valid values: `enable`, `disable`.
+* `max_header_line` - Maximum number of HTTP header line. Valid values: `enable`, `disable`.
+* `max_url_param` - Maximum number of parameters in URL. Valid values: `enable`, `disable`.
+* `max_range_segment` - Maximum number of range segments in HTTP range line. Valid values: `enable`, `disable`.
 
 The `method` block supports:
 
-* `status` - Status.
-* `log` - Enable/disable logging.
-* `severity` - Severity.
-* `default_allowed_methods` - Methods.
+* `status` - Status. Valid values: `enable`, `disable`.
+* `log` - Enable/disable logging. Valid values: `enable`, `disable`.
+* `severity` - Severity. Valid values: `high`, `medium`, `low`.
+* `default_allowed_methods` - Methods. Valid values: `get`, `post`, `put`, `head`, `connect`, `trace`, `options`, `delete`, `others`.
 * `method_policy` - HTTP method policy. The structure of `method_policy` block is documented below.
 
 The `method_policy` block supports:
 
 * `id` - HTTP method policy ID.
 * `pattern` - URL pattern.
-* `regex` - Enable/disable regular expression based pattern match.
+* `regex` - Enable/disable regular expression based pattern match. Valid values: `enable`, `disable`.
 * `address` - Host address.
-* `allowed_methods` - Allowed Methods.
+* `allowed_methods` - Allowed Methods. Valid values: `get`, `post`, `put`, `head`, `connect`, `trace`, `options`, `delete`, `others`.
 
 The `address_list` block supports:
 
-* `status` - Status.
-* `blocked_log` - Enable/disable logging on blocked addresses.
-* `severity` - Severity.
+* `status` - Status. Valid values: `enable`, `disable`.
+* `blocked_log` - Enable/disable logging on blocked addresses. Valid values: `enable`, `disable`.
+* `severity` - Severity. Valid values: `high`, `medium`, `low`.
 * `trusted_address` - Trusted address. The structure of `trusted_address` block is documented below.
 * `blocked_address` - Blocked address. The structure of `blocked_address` block is documented below.
 
@@ -243,9 +243,9 @@ The `url_access` block supports:
 
 * `id` - URL access ID.
 * `address` - Host address.
-* `action` - Action.
-* `log` - Enable/disable logging.
-* `severity` - Severity.
+* `action` - Action. Valid values: `bypass`, `permit`, `block`.
+* `log` - Enable/disable logging. Valid values: `enable`, `disable`.
+* `severity` - Severity. Valid values: `high`, `medium`, `low`.
 * `access_pattern` - URL access pattern. The structure of `access_pattern` block is documented below.
 
 The `access_pattern` block supports:
@@ -253,8 +253,8 @@ The `access_pattern` block supports:
 * `id` - URL access pattern ID.
 * `srcaddr` - Source address.
 * `pattern` - URL pattern.
-* `regex` - Enable/disable regular expression based pattern match.
-* `negate` - Enable/disable match negation.
+* `regex` - Enable/disable regular expression based pattern match. Valid values: `enable`, `disable`.
+* `negate` - Enable/disable match negation. Valid values: `enable`, `disable`.
 
 
 ## Attribute Reference
