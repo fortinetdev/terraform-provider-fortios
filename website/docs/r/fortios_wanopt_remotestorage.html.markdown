@@ -22,7 +22,7 @@ resource "fortios_wanopt_remotestorage" "trname" {
 
 The following arguments are supported:
 
-* `status` - Enable/disable using remote device as Web cache storage.
+* `status` - Enable/disable using remote device as Web cache storage. Valid values: `disable`, `enable`.
 * `local_cache_id` - ID that this device uses to connect to the remote device.
 * `remote_cache_id` - ID of the remote device to which the device connects.
 * `remote_cache_ip` - IP address of the remote device to which the device connects.
