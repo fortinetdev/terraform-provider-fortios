@@ -14,7 +14,7 @@ Configure CIFS profile. Applies to FortiOS Version `<= 6.4.0`.
 The following arguments are supported:
 
 * `name` - Profile name.
-* `server_credential_type` - CIFS server credential type.
+* `server_credential_type` - CIFS server credential type. Valid values: `none`, `credential-replication`, `credential-keytab`.
 * `file_filter` - File filter. The structure of `file_filter` block is documented below.
 * `domain_controller` - Domain for which to decrypt CIFS traffic.
 * `server_keytab` - Server keytab. The structure of `server_keytab` block is documented below.
@@ -22,16 +22,16 @@ The following arguments are supported:
 
 The `file_filter` block supports:
 
-* `status` - Enable/disable file filter.
-* `log` - Enable/disable file filter logging.
+* `status` - Enable/disable file filter. Valid values: `enable`, `disable`.
+* `log` - Enable/disable file filter logging. Valid values: `enable`, `disable`.
 * `entries` - File filter entries. The structure of `entries` block is documented below.
 
 The `entries` block supports:
 
 * `filter` - Add a file filter.
 * `comment` - Comment.
-* `action` - Action taken for matched file.
-* `direction` - Match files transmitted in the session's originating or reply direction.
+* `action` - Action taken for matched file. Valid values: `log`, `block`.
+* `direction` - Match files transmitted in the session's originating or reply direction. Valid values: `incoming`, `outgoing`, `any`.
 * `file_type` - Select file type. The structure of `file_type` block is documented below.
 
 The `file_type` block supports:
