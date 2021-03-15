@@ -28,11 +28,11 @@ The following arguments are supported:
 
 * `name` - (Required) Traffic policy name.
 * `description` - Description of the traffic policy.
-* `policer_status` - Enable/disable policer config on the traffic policy.
+* `policer_status` - Enable/disable policer config on the traffic policy. Valid values: `enable`, `disable`.
 * `guaranteed_bandwidth` - Guaranteed bandwidth in kbps (max value = 524287000).
 * `guaranteed_burst` - Guaranteed burst size in bytes (max value = 4294967295).
 * `maximum_burst` - Maximum burst size in bytes (max value = 4294967295).
-* `type` - Configure type of policy(ingress/egress).
+* `type` - Configure type of policy(ingress/egress). Valid values: `ingress`, `egress`.
 * `cos_queue` - COS queue(0 - 7), or unset to disable.
 * `cos` - COS queue(0 - 7), or unset to disable.
 * `fosid` - FSW Policer id
