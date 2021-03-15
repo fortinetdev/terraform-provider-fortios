@@ -24,8 +24,8 @@ resource "fortios_systemautoupdate_pushupdate" "trname" {
 
 The following arguments are supported:
 
-* `status` - (Required) Enable/disable push updates.
-* `override` - (Required) Enable/disable push update override server.
+* `status` - (Required) Enable/disable push updates. Valid values: `enable`, `disable`.
+* `override` - (Required) Enable/disable push update override server. Valid values: `enable`, `disable`.
 * `address` - (Required) Push update override server.
 * `port` - (Required) Push update override port. (Do not overlap with other service ports)
 
