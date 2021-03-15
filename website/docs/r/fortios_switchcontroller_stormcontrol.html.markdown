@@ -14,9 +14,9 @@ Configure FortiSwitch storm control.
 The following arguments are supported:
 
 * `rate` - Rate in packets per second at which storm traffic is controlled (1 - 10000000, default = 500). Storm control drops excess traffic data rates beyond this threshold.
-* `unknown_unicast` - Enable/disable storm control to drop unknown unicast traffic.
-* `unknown_multicast` - Enable/disable storm control to drop unknown multicast traffic.
-* `broadcast` - Enable/disable storm control to drop broadcast traffic.
+* `unknown_unicast` - Enable/disable storm control to drop unknown unicast traffic. Valid values: `enable`, `disable`.
+* `unknown_multicast` - Enable/disable storm control to drop unknown multicast traffic. Valid values: `enable`, `disable`.
+* `broadcast` - Enable/disable storm control to drop broadcast traffic. Valid values: `enable`, `disable`.
 
 
 ## Attribute Reference
