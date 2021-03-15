@@ -38,18 +38,18 @@ resource "fortios_firewall_multicastpolicy6" "trname" {
 The following arguments are supported:
 
 * `fosid` - Policy ID.
-* `status` - Enable/disable this policy.
+* `status` - Enable/disable this policy. Valid values: `enable`, `disable`.
 * `name` - Policy name.
-* `logtraffic` - Enable/disable logging traffic accepted by this policy.
+* `logtraffic` - Enable/disable logging traffic accepted by this policy. Valid values: `enable`, `disable`.
 * `srcintf` - (Required) IPv6 source interface name.
 * `dstintf` - (Required) IPv6 destination interface name.
 * `srcaddr` - (Required) IPv6 source address name. The structure of `srcaddr` block is documented below.
 * `dstaddr` - (Required) IPv6 destination address name. The structure of `dstaddr` block is documented below.
-* `action` - Accept or deny traffic matching the policy.
+* `action` - Accept or deny traffic matching the policy. Valid values: `accept`, `deny`.
 * `protocol` - Integer value for the protocol type as defined by IANA (0 - 255, default = 0).
 * `start_port` - Integer value for starting TCP/UDP/SCTP destination port in range (1 - 65535, default = 1).
 * `end_port` - Integer value for ending TCP/UDP/SCTP destination port in range (1 - 65535, default = 65535).
-* `auto_asic_offload` - Enable/disable offloading policy traffic for hardware acceleration.
+* `auto_asic_offload` - Enable/disable offloading policy traffic for hardware acceleration. Valid values: `enable`, `disable`.
 * `comments` - Comment.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
