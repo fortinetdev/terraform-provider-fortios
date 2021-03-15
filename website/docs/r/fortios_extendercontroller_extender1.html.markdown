@@ -77,7 +77,7 @@ The following arguments are supported:
 
 * `name` - (Required) FortiExtender entry name.
 * `fosid` - FortiExtender serial number.
-* `authorized` - (Required) FortiExtender Administration (enable or disable).
+* `authorized` - (Required) FortiExtender Administration (enable or disable). Valid values: `disable`, `enable`.
 * `ext_name` - FortiExtender name.
 * `description` - Description.
 * `vdom` - VDOM
@@ -88,20 +88,20 @@ The following arguments are supported:
 
 The `controller_report` block supports:
 
-* `status` - FortiExtender controller report status.
+* `status` - FortiExtender controller report status. Valid values: `disable`, `enable`.
 * `interval` - Controller report interval.
 * `signal_threshold` - Controller report signal threshold.
 
 The `modem1` block supports:
 
 * `ifname` - FortiExtender interface name.
-* `redundant_mode` - FortiExtender mode.
+* `redundant_mode` - FortiExtender mode. Valid values: `disable`, `enable`.
 * `redundant_intf` - Redundant interface.
 * `conn_status` - Connection status.
-* `default_sim` - Default SIM selection.
-* `gps` - FortiExtender GPS enable/disable.
-* `sim1_pin` - SIM #1 PIN status.
-* `sim2_pin` - SIM #2 PIN status.
+* `default_sim` - Default SIM selection. Valid values: `sim1`, `sim2`, `carrier`, `cost`.
+* `gps` - FortiExtender GPS enable/disable. Valid values: `disable`, `enable`.
+* `sim1_pin` - SIM #1 PIN status. Valid values: `disable`, `enable`.
+* `sim2_pin` - SIM #2 PIN status. Valid values: `disable`, `enable`.
 * `sim1_pin_code` - SIM #1 PIN password.
 * `sim2_pin_code` - SIM #2 PIN password.
 * `preferred_carrier` - Preferred carrier.
@@ -109,25 +109,25 @@ The `modem1` block supports:
 
 The `auto_switch` block supports:
 
-* `disconnect` - Auto switch by disconnect.
+* `disconnect` - Auto switch by disconnect. Valid values: `disable`, `enable`.
 * `disconnect_threshold` - Automatically switch based on disconnect threshold.
 * `disconnect_period` - Automatically switch based on disconnect period.
-* `signal` - Automatically switch based on signal strength.
-* `dataplan` - Automatically switch based on data usage.
-* `switch_back` - Auto switch with switch back multi-options.
+* `signal` - Automatically switch based on signal strength. Valid values: `disable`, `enable`.
+* `dataplan` - Automatically switch based on data usage. Valid values: `disable`, `enable`.
+* `switch_back` - Auto switch with switch back multi-options. Valid values: `time`, `timer`.
 * `switch_back_time` - Automatically switch over to preferred SIM/carrier at a specified time in UTC (HH:MM).
 * `switch_back_timer` - Automatically switch over to preferred SIM/carrier after the given time (3600 - 2147483647 sec).
 
 The `modem2` block supports:
 
 * `ifname` - FortiExtender interface name.
-* `redundant_mode` - FortiExtender mode.
+* `redundant_mode` - FortiExtender mode. Valid values: `disable`, `enable`.
 * `redundant_intf` - Redundant interface.
 * `conn_status` - Connection status.
-* `default_sim` - Default SIM selection.
-* `gps` - FortiExtender GPS enable/disable.
-* `sim1_pin` - SIM #1 PIN status.
-* `sim2_pin` - SIM #2 PIN status.
+* `default_sim` - Default SIM selection. Valid values: `sim1`, `sim2`, `carrier`, `cost`.
+* `gps` - FortiExtender GPS enable/disable. Valid values: `disable`, `enable`.
+* `sim1_pin` - SIM #1 PIN status. Valid values: `disable`, `enable`.
+* `sim2_pin` - SIM #2 PIN status. Valid values: `disable`, `enable`.
 * `sim1_pin_code` - SIM #1 PIN password.
 * `sim2_pin_code` - SIM #2 PIN password.
 * `preferred_carrier` - Preferred carrier.
@@ -135,12 +135,12 @@ The `modem2` block supports:
 
 The `auto_switch` block supports:
 
-* `disconnect` - Auto switch by disconnect.
+* `disconnect` - Auto switch by disconnect. Valid values: `disable`, `enable`.
 * `disconnect_threshold` - Automatically switch based on disconnect threshold.
 * `disconnect_period` - Automatically switch based on disconnect period.
-* `signal` - Automatically switch based on signal strength.
-* `dataplan` - Automatically switch based on data usage.
-* `switch_back` - Auto switch with switch back multi-options.
+* `signal` - Automatically switch based on signal strength. Valid values: `disable`, `enable`.
+* `dataplan` - Automatically switch based on data usage. Valid values: `disable`, `enable`.
+* `switch_back` - Auto switch with switch back multi-options. Valid values: `time`, `timer`.
 * `switch_back_time` - Automatically switch over to preferred SIM/carrier at a specified time in UTC (HH:MM).
 * `switch_back_timer` - Automatically switch over to preferred SIM/carrier after the given time (3600 - 2147483647 sec).
 
