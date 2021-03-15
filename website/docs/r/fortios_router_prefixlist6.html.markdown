@@ -29,7 +29,7 @@ The following arguments are supported:
 The `rule` block supports:
 
 * `id` - Rule ID.
-* `action` - Permit or deny packets that match this rule.
+* `action` - Permit or deny packets that match this rule. Valid values: `permit`, `deny`.
 * `prefix6` - IPv6 prefix to define regular filter criteria, such as "any" or subnets.
 * `ge` - Minimum prefix length to be matched (0 - 128).
 * `le` - Maximum prefix length to be matched (0 - 128).
