@@ -23,7 +23,7 @@ resource "fortios_switchcontroller_8021Xsettings" "trname" {
 
 The following arguments are supported:
 
-* `link_down_auth` - Interface-reauthentication state to set if a link is down.
+* `link_down_auth` - Interface-reauthentication state to set if a link is down. Valid values: `set-unauth`, `no-action`.
 * `reauth_period` - Period of time to allow for reauthentication (1 - 1440 sec, default = 60, 0 = disable reauthentication).
 * `max_reauth_attempt` - Maximum number of authentication attempts (0 - 15, default = 3).
 * `tx_period` - 802.1X Tx period (seconds, default=30).
