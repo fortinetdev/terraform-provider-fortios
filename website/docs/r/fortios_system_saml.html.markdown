@@ -26,9 +26,9 @@ resource "fortios_system_saml" "trname" {
 
 The following arguments are supported:
 
-* `status` - Enable/disable SAML authentication (default = disable).
-* `role` - SAML role.
-* `default_login_page` - Choose default login page.
+* `status` - Enable/disable SAML authentication (default = disable). Valid values: `enable`, `disable`.
+* `role` - SAML role. Valid values: `identity-provider`, `service-provider`.
+* `default_login_page` - Choose default login page. Valid values: `normal`, `sso`.
 * `default_profile` - Default profile for new SSO admin.
 * `cert` - Certificate to sign SAML messages.
 * `portal_url` - SP portal URL.
