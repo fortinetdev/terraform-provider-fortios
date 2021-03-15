@@ -39,13 +39,13 @@ resource "fortios_authentication_scheme" "trname" {
 The following arguments are supported:
 
 * `name` - Authentication scheme name.
-* `method` - (Required) Authentication methods (default = basic).
-* `negotiate_ntlm` - Enable/disable negotiate authentication for NTLM (default = disable).
+* `method` - (Required) Authentication methods (default = basic). Valid values: `ntlm`, `basic`, `digest`, `form`, `negotiate`, `fsso`, `rsso`, `ssh-publickey`.
+* `negotiate_ntlm` - Enable/disable negotiate authentication for NTLM (default = disable). Valid values: `enable`, `disable`.
 * `kerberos_keytab` - Kerberos keytab setting.
 * `domain_controller` - Domain controller setting.
 * `fsso_agent_for_ntlm` - FSSO agent to use for NTLM authentication.
-* `require_tfa` - Enable/disable two-factor authentication (default = disable).
-* `fsso_guest` - Enable/disable user fsso-guest authentication (default = disable).
+* `require_tfa` - Enable/disable two-factor authentication (default = disable). Valid values: `enable`, `disable`.
+* `fsso_guest` - Enable/disable user fsso-guest authentication (default = disable). Valid values: `enable`, `disable`.
 * `user_database` - Authentication server to contain user information; "local" (default) or "123" (for LDAP). The structure of `user_database` block is documented below.
 * `ssh_ca` - SSH CA name.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
