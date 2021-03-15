@@ -14,14 +14,14 @@ Configure logical storage.
 The following arguments are supported:
 
 * `name` - Storage name.
-* `status` - Enable/disable storage.
-* `media_status` - The physical status of current media.
+* `status` - Enable/disable storage. Valid values: `enable`, `disable`.
+* `media_status` - The physical status of current media. Valid values: `enable`, `disable`, `fail`.
 * `order` - Set storage order.
 * `partition` - Label of underlying partition.
 * `device` - Partition device.
 * `size` - Partition size.
-* `usage` - Use hard disk for logging or WAN Optimization (default = log).
-* `wanopt_mode` - WAN Optimization mode (default = mix).
+* `usage` - Use hard disk for logging or WAN Optimization (default = log). Valid values: `log`, `wanopt`.
+* `wanopt_mode` - WAN Optimization mode (default = mix). Valid values: `mix`, `wanopt`, `webcache`.
 
 
 ## Attribute Reference
