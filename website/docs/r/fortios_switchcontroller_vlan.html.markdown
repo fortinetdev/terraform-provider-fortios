@@ -18,8 +18,8 @@ The following arguments are supported:
 * `vlanid` - VLAN ID.
 * `comments` - Comment.
 * `color` - Color of icon on the GUI.
-* `security` - Security.
-* `auth` - Authentication.
+* `security` - Security. Valid values: `open`, `captive-portal`, `8021x`.
+* `auth` - Authentication. Valid values: `radius`, `usergroup`.
 * `radius_server` - Authentication radius server.
 * `usergroup` - Authentication usergroup.
 * `portal_message_override_group` - Specify captive portal replacement message override group.
