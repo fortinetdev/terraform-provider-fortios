@@ -42,10 +42,10 @@ The following arguments are supported:
 * `intf` - (Required) Incoming interface name from available options.
 * `srcaddr` - (Required) Source address object from available options. The structure of `srcaddr` block is documented below.
 * `dstaddr` - (Required) Destination address object from available options. The structure of `dstaddr` block is documented below.
-* `action` - Action performed on traffic matching the policy (default = deny).
+* `action` - Action performed on traffic matching the policy (default = deny). Valid values: `accept`, `deny`.
 * `service` - (Required) Service object from available options. Separate names with a space. The structure of `service` block is documented below.
 * `schedule` - (Required) Schedule object from available options.
-* `status` - Enable/disable this local-in policy.
+* `status` - Enable/disable this local-in policy. Valid values: `enable`, `disable`.
 * `comments` - Comment.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
