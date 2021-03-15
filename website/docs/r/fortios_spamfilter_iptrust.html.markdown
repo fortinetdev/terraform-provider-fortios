@@ -21,9 +21,9 @@ The following arguments are supported:
 
 The `entries` block supports:
 
-* `status` - Enable/disable status.
+* `status` - Enable/disable status. Valid values: `enable`, `disable`.
 * `id` - Trusted IP entry ID.
-* `addr_type` - Type of address.
+* `addr_type` - Type of address. Valid values: `ipv4`, `ipv6`.
 * `ip4_subnet` - IPv4 network address or network address/subnet mask bits.
 * `ip6_subnet` - IPv6 network address/subnet mask bits.
 
