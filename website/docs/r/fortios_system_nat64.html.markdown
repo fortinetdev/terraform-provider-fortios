@@ -26,13 +26,13 @@ resource "fortios_system_nat64" "trname" {
 
 The following arguments are supported:
 
-* `status` - Enable/disable NAT64 (default = disable).
+* `status` - Enable/disable NAT64 (default = disable). Valid values: `enable`, `disable`.
 * `nat64_prefix` - (Required) NAT64 prefix must be ::/96 (default = 64:ff9b::/96).
-* `secondary_prefix_status` - Enable/disable secondary NAT64 prefix.
+* `secondary_prefix_status` - Enable/disable secondary NAT64 prefix. Valid values: `enable`, `disable`.
 * `secondary_prefix` - Secondary NAT64 prefix. The structure of `secondary_prefix` block is documented below.
-* `always_synthesize_aaaa_record` - Enable/disable AAAA record synthesis (default = enable).
-* `generate_ipv6_fragment_header` - Enable/disable IPv6 fragment header generation.
-* `nat46_force_ipv4_packet_forwarding` - Enable/disable mandatory IPv4 packet forwarding in nat46.
+* `always_synthesize_aaaa_record` - Enable/disable AAAA record synthesis (default = enable). Valid values: `enable`, `disable`.
+* `generate_ipv6_fragment_header` - Enable/disable IPv6 fragment header generation. Valid values: `enable`, `disable`.
+* `nat46_force_ipv4_packet_forwarding` - Enable/disable mandatory IPv4 packet forwarding in nat46. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
 The `secondary_prefix` block supports:
