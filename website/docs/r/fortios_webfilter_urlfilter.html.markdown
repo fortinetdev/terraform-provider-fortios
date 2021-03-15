@@ -27,8 +27,8 @@ The following arguments are supported:
 * `fosid` - (Required) ID.
 * `name` - (Required) Name of URL filter list.
 * `comment` - Optional comments.
-* `one_arm_ips_urlfilter` - Enable/disable DNS resolver for one-arm IPS URL filter operation.
-* `ip_addr_block` - Enable/disable blocking URLs when the hostname appears as an IP address.
+* `one_arm_ips_urlfilter` - Enable/disable DNS resolver for one-arm IPS URL filter operation. Valid values: `enable`, `disable`.
+* `ip_addr_block` - Enable/disable blocking URLs when the hostname appears as an IP address. Valid values: `enable`, `disable`.
 * `entries` - URL filter entries. The structure of `entries` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
@@ -36,14 +36,14 @@ The `entries` block supports:
 
 * `id` - Id.
 * `url` - URL to be filtered.
-* `type` - Filter type (simple, regex, or wildcard).
-* `action` - Action to take for URL filter matches.
-* `antiphish_action` - Action to take for AntiPhishing matches.
-* `status` - Enable/disable this URL filter.
+* `type` - Filter type (simple, regex, or wildcard). Valid values: `simple`, `regex`, `wildcard`.
+* `action` - Action to take for URL filter matches. Valid values: `exempt`, `block`, `allow`, `monitor`.
+* `antiphish_action` - Action to take for AntiPhishing matches. Valid values: `block`, `log`.
+* `status` - Enable/disable this URL filter. Valid values: `enable`, `disable`.
 * `exempt` - If action is set to exempt, select the security profile operations that exempt URLs skip. Separate multiple options with a space.
 * `web_proxy_profile` - Web proxy profile.
 * `referrer_host` - Referrer host name.
-* `dns_address_family` - Resolve IPv4 address, IPv6 address, or both from DNS server.
+* `dns_address_family` - Resolve IPv4 address, IPv6 address, or both from DNS server. Valid values: `ipv4`, `ipv6`, `both`.
 
 
 ## Attribute Reference
