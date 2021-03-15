@@ -15,13 +15,13 @@ The following arguments are supported:
 
 * `name` - Profile name.
 * `comment` - Comment.
-* `feature_set` - Flow/proxy feature set.
+* `feature_set` - Flow/proxy feature set. Valid values: `flow`, `proxy`.
 * `replacemsg_group` - Replacement message group.
-* `spam_log` - Enable/disable spam logging for email filtering.
-* `spam_log_fortiguard_response` - Enable/disable logging FortiGuard spam response.
+* `spam_log` - Enable/disable spam logging for email filtering. Valid values: `disable`, `enable`.
+* `spam_log_fortiguard_response` - Enable/disable logging FortiGuard spam response. Valid values: `disable`, `enable`.
 * `file_filter` - File filter. The structure of `file_filter` block is documented below.
-* `spam_filtering` - Enable/disable spam filtering.
-* `external` - Enable/disable external Email inspection.
+* `spam_filtering` - Enable/disable spam filtering. Valid values: `enable`, `disable`.
+* `external` - Enable/disable external Email inspection. Valid values: `enable`, `disable`.
 * `options` - Options.
 * `imap` - IMAP. The structure of `imap` block is documented below.
 * `pop3` - POP3. The structure of `pop3` block is documented below.
@@ -41,18 +41,18 @@ The following arguments are supported:
 
 The `file_filter` block supports:
 
-* `status` - Enable/disable file filter.
-* `log` - Enable/disable file filter logging.
-* `scan_archive_contents` - Enable/disable file filter archive contents scan.
+* `status` - Enable/disable file filter. Valid values: `enable`, `disable`.
+* `log` - Enable/disable file filter logging. Valid values: `enable`, `disable`.
+* `scan_archive_contents` - Enable/disable file filter archive contents scan. Valid values: `enable`, `disable`.
 * `entries` - File filter entries. The structure of `entries` block is documented below.
 
 The `entries` block supports:
 
 * `filter` - Add a file filter.
 * `comment` - Comment.
-* `protocol` - Protocols to apply with.
-* `action` - Action taken for matched file.
-* `password_protected` - Match password-protected files.
+* `protocol` - Protocols to apply with. Valid values: `smtp`, `imap`, `pop3`.
+* `action` - Action taken for matched file. Valid values: `log`, `block`.
+* `password_protected` - Match password-protected files. Valid values: `yes`, `any`.
 * `file_type` - Select file type. The structure of `file_type` block is documented below.
 
 The `file_type` block supports:
@@ -61,54 +61,54 @@ The `file_type` block supports:
 
 The `imap` block supports:
 
-* `log_all` - Enable/disable logging of all email traffic.
-* `log` - Enable/disable logging.
-* `action` - Action for spam email.
-* `tag_type` - Tag subject or header for spam email.
+* `log_all` - Enable/disable logging of all email traffic. Valid values: `disable`, `enable`.
+* `log` - Enable/disable logging. Valid values: `enable`, `disable`.
+* `action` - Action for spam email. Valid values: `pass`, `tag`.
+* `tag_type` - Tag subject or header for spam email. Valid values: `subject`, `header`, `spaminfo`.
 * `tag_msg` - Subject text or header added to spam email.
 
 The `pop3` block supports:
 
-* `log_all` - Enable/disable logging of all email traffic.
-* `log` - Enable/disable logging.
-* `action` - Action for spam email.
-* `tag_type` - Tag subject or header for spam email.
+* `log_all` - Enable/disable logging of all email traffic. Valid values: `disable`, `enable`.
+* `log` - Enable/disable logging. Valid values: `enable`, `disable`.
+* `action` - Action for spam email. Valid values: `pass`, `tag`.
+* `tag_type` - Tag subject or header for spam email. Valid values: `subject`, `header`, `spaminfo`.
 * `tag_msg` - Subject text or header added to spam email.
 
 The `smtp` block supports:
 
-* `log_all` - Enable/disable logging of all email traffic.
-* `log` - Enable/disable logging.
-* `action` - Action for spam email.
-* `tag_type` - Tag subject or header for spam email.
+* `log_all` - Enable/disable logging of all email traffic. Valid values: `disable`, `enable`.
+* `log` - Enable/disable logging. Valid values: `enable`, `disable`.
+* `action` - Action for spam email. Valid values: `pass`, `tag`, `discard`.
+* `tag_type` - Tag subject or header for spam email. Valid values: `subject`, `header`, `spaminfo`.
 * `tag_msg` - Subject text or header added to spam email.
-* `hdrip` - Enable/disable SMTP email header IP checks for spamfsip, spamrbl and spambwl filters.
-* `local_override` - Enable/disable local filter to override SMTP remote check result.
+* `hdrip` - Enable/disable SMTP email header IP checks for spamfsip, spamrbl and spambwl filters. Valid values: `disable`, `enable`.
+* `local_override` - Enable/disable local filter to override SMTP remote check result. Valid values: `disable`, `enable`.
 
 The `mapi` block supports:
 
-* `log_all` - Enable/disable logging of all email traffic.
-* `log` - Enable/disable logging.
-* `action` - Action for spam email.
+* `log_all` - Enable/disable logging of all email traffic. Valid values: `disable`, `enable`.
+* `log` - Enable/disable logging. Valid values: `enable`, `disable`.
+* `action` - Action for spam email. Valid values: `pass`, `discard`.
 
 The `msn_hotmail` block supports:
 
-* `log_all` - Enable/disable logging of all email traffic.
-* `log` - Enable/disable logging.
+* `log_all` - Enable/disable logging of all email traffic. Valid values: `disable`, `enable`.
+* `log` - Enable/disable logging. Valid values: `enable`, `disable`.
 
 The `yahoo_mail` block supports:
 
-* `log_all` - Enable/disable logging of all email traffic.
-* `log` - Enable/disable logging.
+* `log_all` - Enable/disable logging of all email traffic. Valid values: `disable`, `enable`.
+* `log` - Enable/disable logging. Valid values: `enable`, `disable`.
 
 The `gmail` block supports:
 
-* `log_all` - Enable/disable logging of all email traffic.
-* `log` - Enable/disable logging.
+* `log_all` - Enable/disable logging of all email traffic. Valid values: `disable`, `enable`.
+* `log` - Enable/disable logging. Valid values: `enable`, `disable`.
 
 The `other_webmails` block supports:
 
-* `log_all` - Enable/disable logging of all email traffic.
+* `log_all` - Enable/disable logging of all email traffic. Valid values: `disable`, `enable`.
 
 
 ## Attribute Reference
