@@ -14,7 +14,7 @@ PTP policy configuration. Applies to FortiOS Version `>= 6.4.2`.
 The following arguments are supported:
 
 * `name` - Policy name.
-* `status` - Enable/disable PTP policy.
+* `status` - Enable/disable PTP policy. Valid values: `disable`, `enable`.
 
 
 ## Attribute Reference
