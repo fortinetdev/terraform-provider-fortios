@@ -24,10 +24,10 @@ resource "fortios_wanopt_cacheservice" "trname" {
 
 The following arguments are supported:
 
-* `prefer_scenario` - Set the preferred cache behavior towards the balance between latency and hit-ratio.
-* `collaboration` - Enable/disable cache-collaboration between cache-service clusters.
+* `prefer_scenario` - Set the preferred cache behavior towards the balance between latency and hit-ratio. Valid values: `balance`, `prefer-speed`, `prefer-cache`.
+* `collaboration` - Enable/disable cache-collaboration between cache-service clusters. Valid values: `enable`, `disable`.
 * `device_id` - Set identifier for this cache device.
-* `acceptable_connections` - Set strategy when accepting cache collaboration connection.
+* `acceptable_connections` - Set strategy when accepting cache collaboration connection. Valid values: `any`, `peers`.
 * `dst_peer` - Modify cache-service destination peer list. The structure of `dst_peer` block is documented below.
 * `src_peer` - Modify cache-service source peer list. The structure of `src_peer` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
