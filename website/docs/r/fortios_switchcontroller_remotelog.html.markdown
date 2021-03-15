@@ -14,12 +14,12 @@ Configure logging by FortiSwitch device to a remote syslog server.
 The following arguments are supported:
 
 * `name` - Remote log name.
-* `status` - Enable/disable logging by FortiSwitch device to a remote syslog server.
+* `status` - Enable/disable logging by FortiSwitch device to a remote syslog server. Valid values: `enable`, `disable`.
 * `server` - IPv4 address of the remote syslog server.
 * `port` - Remote syslog server listening port.
-* `severity` - Severity of logs to be transferred to remote log server.
-* `csv` - Enable/disable comma-separated value (CSV) strings.
-* `facility` - Facility to log to remote syslog server.
+* `severity` - Severity of logs to be transferred to remote log server. Valid values: `emergency`, `alert`, `critical`, `error`, `warning`, `notification`, `information`, `debug`.
+* `csv` - Enable/disable comma-separated value (CSV) strings. Valid values: `enable`, `disable`.
+* `facility` - Facility to log to remote syslog server. Valid values: `kernel`, `user`, `mail`, `daemon`, `auth`, `syslog`, `lpr`, `news`, `uucp`, `cron`, `authpriv`, `ftp`, `ntp`, `audit`, `alert`, `clock`, `local0`, `local1`, `local2`, `local3`, `local4`, `local5`, `local6`, `local7`.
 
 
 ## Attribute Reference
