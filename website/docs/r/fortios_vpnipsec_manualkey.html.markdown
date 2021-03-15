@@ -34,8 +34,8 @@ The following arguments are supported:
 * `interface` - (Required) Name of the physical, aggregate, or VLAN interface.
 * `remote_gw` - (Required) Peer gateway.
 * `local_gw` - Local gateway.
-* `authentication` - (Required) Authentication algorithm. Must be the same for both ends of the tunnel.
-* `encryption` - (Required) Encryption algorithm. Must be the same for both ends of the tunnel.
+* `authentication` - (Required) Authentication algorithm. Must be the same for both ends of the tunnel. Valid values: `null`, `md5`, `sha1`, `sha256`, `sha384`, `sha512`.
+* `encryption` - (Required) Encryption algorithm. Must be the same for both ends of the tunnel. Valid values: `null`, `des`, `3des`, `aes128`, `aes192`, `aes256`, `aria128`, `aria192`, `aria256`, `seed`.
 * `authkey` - Hexadecimal authentication key in 16-digit (8-byte) segments separated by hyphens.
 * `enckey` - Hexadecimal encryption key in 16-digit (8-byte) segments separated by hyphens.
 * `localspi` - Local SPI, a hexadecimal 8-digit (4-byte) tag. Discerns between two traffic streams with different encryption rules.
