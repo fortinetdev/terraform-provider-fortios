@@ -75,13 +75,13 @@ The following arguments are supported:
 
 * `name` - (Required) Profile name.
 * `comment` - Comment.
-* `flow_based` - Enable/disable flow-based spam filtering.
+* `flow_based` - Enable/disable flow-based spam filtering. Valid values: `enable`, `disable`.
 * `replacemsg_group` - Replacement message group.
-* `spam_log` - Enable/disable spam logging for email filtering.
-* `spam_log_fortiguard_response` - Enable/disable logging FortiGuard spam response.
-* `spam_filtering` - Enable/disable spam filtering.
-* `external` - Enable/disable external Email inspection.
-* `options` - Options.
+* `spam_log` - Enable/disable spam logging for email filtering. Valid values: `disable`, `enable`.
+* `spam_log_fortiguard_response` - Enable/disable logging FortiGuard spam response. Valid values: `disable`, `enable`.
+* `spam_filtering` - Enable/disable spam filtering. Valid values: `enable`, `disable`.
+* `external` - Enable/disable external Email inspection. Valid values: `enable`, `disable`.
+* `options` - Options. Valid values: `bannedword`, `spambwl`, `spamfsip`, `spamfssubmit`, `spamfschksum`, `spamfsurl`, `spamhelodns`, `spamraddrdns`, `spamrbl`, `spamhdrcheck`, `spamfsphish`.
 * `imap` - IMAP. The structure of `imap` block is documented below.
 * `pop3` - POP3. The structure of `pop3` block is documented below.
 * `smtp` - SMTP. The structure of `smtp` block is documented below.
@@ -98,43 +98,43 @@ The following arguments are supported:
 
 The `imap` block supports:
 
-* `log` - Enable/disable logging.
-* `action` - Action for spam email.
-* `tag_type` - Tag subject or header for spam email.
+* `log` - Enable/disable logging. Valid values: `enable`, `disable`.
+* `action` - Action for spam email. Valid values: `pass`, `tag`.
+* `tag_type` - Tag subject or header for spam email. Valid values: `subject`, `header`, `spaminfo`.
 * `tag_msg` - Subject text or header added to spam email.
 
 The `pop3` block supports:
 
-* `log` - Enable/disable logging.
-* `action` - Action for spam email.
-* `tag_type` - Tag subject or header for spam email.
+* `log` - Enable/disable logging. Valid values: `enable`, `disable`.
+* `action` - Action for spam email. Valid values: `pass`, `tag`.
+* `tag_type` - Tag subject or header for spam email. Valid values: `subject`, `header`, `spaminfo`.
 * `tag_msg` - Subject text or header added to spam email.
 
 The `smtp` block supports:
 
-* `log` - Enable/disable logging.
-* `action` - Action for spam email.
-* `tag_type` - Tag subject or header for spam email.
+* `log` - Enable/disable logging. Valid values: `enable`, `disable`.
+* `action` - Action for spam email. Valid values: `pass`, `tag`, `discard`.
+* `tag_type` - Tag subject or header for spam email. Valid values: `subject`, `header`, `spaminfo`.
 * `tag_msg` - Subject text or header added to spam email.
-* `hdrip` - Enable/disable SMTP email header IP checks for spamfsip, spamrbl and spambwl filters.
-* `local_override` - Enable/disable local filter to override SMTP remote check result.
+* `hdrip` - Enable/disable SMTP email header IP checks for spamfsip, spamrbl and spambwl filters. Valid values: `disable`, `enable`.
+* `local_override` - Enable/disable local filter to override SMTP remote check result. Valid values: `disable`, `enable`.
 
 The `mapi` block supports:
 
-* `log` - Enable/disable logging.
-* `action` - Action for spam email.
+* `log` - Enable/disable logging. Valid values: `enable`, `disable`.
+* `action` - Action for spam email. Valid values: `pass`, `discard`.
 
 The `msn_hotmail` block supports:
 
-* `log` - Enable/disable logging.
+* `log` - Enable/disable logging. Valid values: `enable`, `disable`.
 
 The `yahoo_mail` block supports:
 
-* `log` - Enable/disable logging.
+* `log` - Enable/disable logging. Valid values: `enable`, `disable`.
 
 The `gmail` block supports:
 
-* `log` - Enable/disable logging.
+* `log` - Enable/disable logging. Valid values: `enable`, `disable`.
 
 
 ## Attribute Reference
