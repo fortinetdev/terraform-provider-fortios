@@ -15,11 +15,11 @@ The following arguments are supported:
 
 * `name` - Profile name.
 * `comment` - Comment.
-* `feature_set` - Flow/proxy feature set.
+* `feature_set` - Flow/proxy feature set. Valid values: `flow`, `proxy`.
 * `replacemsg_group` - Replacement message group
-* `log` - Enable/disable file-filter logging.
-* `extended_log` - Enable/disable file-filter extended logging.
-* `scan_archive_contents` - Enable/disable archive contents scan. (Not for CIFS)
+* `log` - Enable/disable file-filter logging. Valid values: `disable`, `enable`.
+* `extended_log` - Enable/disable file-filter extended logging. Valid values: `disable`, `enable`.
+* `scan_archive_contents` - Enable/disable archive contents scan. (Not for CIFS) Valid values: `disable`, `enable`.
 * `rules` - File filter rules. The structure of `rules` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
 
@@ -27,10 +27,10 @@ The `rules` block supports:
 
 * `name` - File-filter rule name.
 * `comment` - Comment.
-* `protocol` - Protocols to apply rule to.
-* `action` - Action taken for matched file.
-* `direction` - Traffic direction. (HTTP, FTP, SSH, CIFS only)
-* `password_protected` - Match password-protected files.
+* `protocol` - Protocols to apply rule to. Valid values: `http`, `ftp`, `smtp`, `imap`, `pop3`, `mapi`, `cifs`, `ssh`.
+* `action` - Action taken for matched file. Valid values: `log-only`, `block`.
+* `direction` - Traffic direction. (HTTP, FTP, SSH, CIFS only) Valid values: `incoming`, `outgoing`, `any`.
+* `password_protected` - Match password-protected files. Valid values: `yes`, `any`.
 * `file_type` - Select file type. The structure of `file_type` block is documented below.
 
 The `file_type` block supports:
