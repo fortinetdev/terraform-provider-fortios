@@ -27,17 +27,17 @@ resource "fortios_user_peer" "trname1" {
 The following arguments are supported:
 
 * `name` - Peer name.
-* `mandatory_ca_verify` - Determine what happens to the peer if the CA certificate is not installed. Disable to automatically consider the peer certificate as valid.
+* `mandatory_ca_verify` - Determine what happens to the peer if the CA certificate is not installed. Disable to automatically consider the peer certificate as valid. Valid values: `enable`, `disable`.
 * `ca` - Name of the CA certificate as returned by the execute vpn certificate ca list command.
 * `subject` - Peer certificate name constraints.
 * `cn` - Peer certificate common name.
-* `cn_type` - Peer certificate common name type.
+* `cn_type` - Peer certificate common name type. Valid values: `string`, `email`, `FQDN`, `ipv4`, `ipv6`.
 * `ldap_server` - Name of an LDAP server defined under the user ldap command. Performs client access rights check.
 * `ldap_username` - Username for LDAP server bind.
 * `ldap_password` - Password for LDAP server bind.
-* `ldap_mode` - Mode for LDAP peer authentication.
+* `ldap_mode` - Mode for LDAP peer authentication. Valid values: `password`, `principal-name`.
 * `ocsp_override_server` - Online Certificate Status Protocol (OCSP) server for certificate retrieval.
-* `two_factor` - Enable/disable two-factor authentication, applying certificate and password-based authentication.
+* `two_factor` - Enable/disable two-factor authentication, applying certificate and password-based authentication. Valid values: `enable`, `disable`.
 * `passwd` - Peer's password used for two-factor authentication.
 
 
