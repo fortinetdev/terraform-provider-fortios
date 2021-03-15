@@ -25,11 +25,11 @@ The `community` block supports:
 
 * `id` - Community ID.
 * `name` - Community name.
-* `status` - Enable/disable this SNMP community.
-* `query_v1_status` - Enable/disable SNMP v1 queries.
-* `query_v2c_status` - Enable/disable SNMP v2c queries.
-* `trap_v1_status` - Enable/disable SNMP v1 traps.
-* `trap_v2c_status` - Enable/disable SNMP v2c traps.
+* `status` - Enable/disable this SNMP community. Valid values: `enable`, `disable`.
+* `query_v1_status` - Enable/disable SNMP v1 queries. Valid values: `enable`, `disable`.
+* `query_v2c_status` - Enable/disable SNMP v2c queries. Valid values: `enable`, `disable`.
+* `trap_v1_status` - Enable/disable SNMP v1 traps. Valid values: `enable`, `disable`.
+* `trap_v2c_status` - Enable/disable SNMP v2c traps. Valid values: `enable`, `disable`.
 * `hosts` - Configure IPv4 SNMP managers (hosts). The structure of `hosts` block is documented below.
 
 The `hosts` block supports:
@@ -40,13 +40,13 @@ The `hosts` block supports:
 The `user` block supports:
 
 * `name` - SNMP User Name
-* `status` - SNMP User Enable
-* `queries` - Enable/disable SNMP queries for this user.
-* `trap_status` - Enable/disable traps for this SNMP user.
-* `security_level` - Security level for message authentication and encryption.
-* `auth_proto` - Authentication protocol.
+* `status` - SNMP User Enable Valid values: `enable`, `disable`.
+* `queries` - Enable/disable SNMP queries for this user. Valid values: `enable`, `disable`.
+* `trap_status` - Enable/disable traps for this SNMP user. Valid values: `enable`, `disable`.
+* `security_level` - Security level for message authentication and encryption. Valid values: `no-auth-no-priv`, `auth-no-priv`, `auth-priv`.
+* `auth_proto` - Authentication protocol. Valid values: `md5`, `sha`.
 * `auth_pwd` - Password for authentication protocol.
-* `priv_proto` - Privacy (encryption) protocol.
+* `priv_proto` - Privacy (encryption) protocol. Valid values: `aes`, `des`, `aes256`, `aes256cisco`.
 * `priv_pwd` - Password for privacy (encryption) protocol.
 * `notify_hosts` - Configure SNMP User Notify Hosts.
 
