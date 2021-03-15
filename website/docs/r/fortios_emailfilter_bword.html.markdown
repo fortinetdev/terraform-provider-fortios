@@ -21,13 +21,13 @@ The following arguments are supported:
 
 The `entries` block supports:
 
-* `status` - Enable/disable status.
+* `status` - Enable/disable status. Valid values: `enable`, `disable`.
 * `id` - Banned word entry ID.
 * `pattern` - Pattern for the banned word.
-* `pattern_type` - Wildcard pattern or regular expression.
-* `action` - Mark spam or good.
-* `where` - Component of the email to be scanned.
-* `language` - Language for the banned word.
+* `pattern_type` - Wildcard pattern or regular expression. Valid values: `wildcard`, `regexp`.
+* `action` - Mark spam or good. Valid values: `spam`, `clear`.
+* `where` - Component of the email to be scanned. Valid values: `subject`, `body`, `all`.
+* `language` - Language for the banned word. Valid values: `western`, `simch`, `trach`, `japanese`, `korean`, `french`, `thai`, `spanish`.
 * `score` - Score value.
 
 
