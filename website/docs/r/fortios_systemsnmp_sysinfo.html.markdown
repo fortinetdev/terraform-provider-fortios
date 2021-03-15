@@ -24,7 +24,7 @@ resource "fortios_systemsnmp_sysinfo" "trname" {
 
 The following arguments are supported:
 
-* `status` - Enable/disable SNMP.
+* `status` - Enable/disable SNMP. Valid values: `enable`, `disable`.
 * `engine_id` - Local SNMP engineID string (maximum 24 characters).
 * `description` - System description.
 * `contact_info` - Contact information.
