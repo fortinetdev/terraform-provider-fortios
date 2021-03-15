@@ -37,7 +37,7 @@ resource "fortios_router_static" "trname" {
 The following arguments are supported:
 
 * `seq_num` - Sequence number.
-* `status` - Enable/disable this static route.
+* `status` - Enable/disable this static route. Valid values: `enable`, `disable`.
 * `dst` - Destination IP and mask for this route.
 * `src` - Source prefix for this route.
 * `gateway` - Gateway IP for this route.
@@ -46,16 +46,16 @@ The following arguments are supported:
 * `priority` - Administrative priority (0 - 4294967295).
 * `device` - Gateway out interface or tunnel.
 * `comment` - Optional comments.
-* `blackhole` - Enable/disable black hole.
-* `dynamic_gateway` - Enable use of dynamic gateway retrieved from a DHCP or PPP server.
-* `sdwan` - Enable/disable egress through SD-WAN.
-* `virtual_wan_link` - Enable/disable egress through the virtual-wan-link.
+* `blackhole` - Enable/disable black hole. Valid values: `enable`, `disable`.
+* `dynamic_gateway` - Enable use of dynamic gateway retrieved from a DHCP or PPP server. Valid values: `enable`, `disable`.
+* `sdwan` - Enable/disable egress through SD-WAN. Valid values: `enable`, `disable`.
+* `virtual_wan_link` - Enable/disable egress through the virtual-wan-link. Valid values: `enable`, `disable`.
 * `dstaddr` - Name of firewall address or address group.
 * `internet_service` - Application ID in the Internet service database.
 * `internet_service_custom` - Application name in the Internet service custom database.
-* `link_monitor_exempt` - Enable/disable withdrawing this route when link monitor or health check is down.
+* `link_monitor_exempt` - Enable/disable withdrawing this route when link monitor or health check is down. Valid values: `enable`, `disable`.
 * `vrf` - Virtual Routing Forwarding ID.
-* `bfd` - Enable/disable Bidirectional Forwarding Detection (BFD).
+* `bfd` - Enable/disable Bidirectional Forwarding Detection (BFD). Valid values: `enable`, `disable`.
 
 
 ## Attribute Reference
