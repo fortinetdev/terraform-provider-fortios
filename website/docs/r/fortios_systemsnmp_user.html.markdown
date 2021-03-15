@@ -35,22 +35,22 @@ resource "fortios_systemsnmp_user" "trname" {
 The following arguments are supported:
 
 * `name` - (Required) SNMP user name.
-* `status` - Enable/disable this SNMP user.
-* `trap_status` - Enable/disable traps for this SNMP user.
+* `status` - Enable/disable this SNMP user. Valid values: `enable`, `disable`.
+* `trap_status` - Enable/disable traps for this SNMP user. Valid values: `enable`, `disable`.
 * `trap_lport` - SNMPv3 local trap port (default = 162).
 * `trap_rport` - SNMPv3 trap remote port (default = 162).
-* `queries` - Enable/disable SNMP queries for this user.
+* `queries` - Enable/disable SNMP queries for this user. Valid values: `enable`, `disable`.
 * `query_port` - SNMPv3 query port (default = 161).
 * `notify_hosts` - SNMP managers to send notifications (traps) to.
 * `notify_hosts6` - IPv6 SNMP managers to send notifications (traps) to.
 * `source_ip` - Source IP for SNMP trap.
 * `source_ipv6` - Source IPv6 for SNMP trap.
-* `ha_direct` - Enable/disable direct management of HA cluster members.
+* `ha_direct` - Enable/disable direct management of HA cluster members. Valid values: `enable`, `disable`.
 * `events` - SNMP notifications (traps) to send.
-* `security_level` - Security level for message authentication and encryption.
+* `security_level` - Security level for message authentication and encryption. Valid values: `no-auth-no-priv`, `auth-no-priv`, `auth-priv`.
 * `auth_proto` - Authentication protocol.
 * `auth_pwd` - Password for authentication protocol.
-* `priv_proto` - Privacy (encryption) protocol.
+* `priv_proto` - Privacy (encryption) protocol. Valid values: `aes`, `des`, `aes256`, `aes256cisco`.
 * `priv_pwd` - Password for privacy (encryption) protocol.
 
 
