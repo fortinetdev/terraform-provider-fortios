@@ -15,8 +15,8 @@ The following arguments are supported:
 
 * `msg_type` - Message type.
 * `buffer` - Message string.
-* `header` - Header flag.
-* `format` - Format flag.
+* `header` - Header flag. Valid values: `none`, `http`, `8bit`.
+* `format` - Format flag. Valid values: `none`, `text`, `html`.
 
 
 ## Attribute Reference
