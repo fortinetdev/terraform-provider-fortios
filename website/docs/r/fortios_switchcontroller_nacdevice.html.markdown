@@ -15,7 +15,7 @@ The following arguments are supported:
 
 * `fosid` - Device ID.
 * `description` - Description for the learned NAC device.
-* `status` - Status of the learned NAC device. Set enable to authorize the NAC device.
+* `status` - Status of the learned NAC device. Set enable to authorize the NAC device. Valid values: `enable`, `disable`.
 * `mac` - MAC address of the learned NAC device.
 * `last_known_switch` - Managed FortiSwitch where NAC device is last learned.
 * `last_known_port` - Managed FortiSwitch port where NAC device is last learned.
