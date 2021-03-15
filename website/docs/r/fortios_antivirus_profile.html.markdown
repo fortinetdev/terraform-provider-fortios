@@ -35,16 +35,16 @@ The following arguments are supported:
 * `name` - (Required) Profile name.
 * `comment` - Comment.
 * `replacemsg_group` - Replacement message group customized for this profile.
-* `feature_set` - Flow/proxy feature set.
-* `inspection_mode` - Inspection mode.
-* `ftgd_analytics` - Settings to control which files are uploaded to FortiSandbox.
+* `feature_set` - Flow/proxy feature set. Valid values: `flow`, `proxy`.
+* `inspection_mode` - Inspection mode. Valid values: `proxy`, `flow-based`.
+* `ftgd_analytics` - Settings to control which files are uploaded to FortiSandbox. Valid values: `disable`, `suspicious`, `everything`.
 * `analytics_max_upload` - Maximum size of files that can be uploaded to FortiSandbox (1 - 395 MBytes, default = 10).
 * `analytics_ignore_filetype` - Do not submit files matching this DLP file-pattern to FortiSandbox.
 * `analytics_accept_filetype` - Only submit files matching this DLP file-pattern to FortiSandbox.
 * `analytics_wl_filetype` - Do not submit files matching this DLP file-pattern to FortiSandbox.
 * `analytics_bl_filetype` - Only submit files matching this DLP file-pattern to FortiSandbox.
-* `analytics_db` - Enable/disable using the FortiSandbox signature database to supplement the AV signature databases.
-* `mobile_malware_db` - Enable/disable using the mobile malware signature database.
+* `analytics_db` - Enable/disable using the FortiSandbox signature database to supplement the AV signature databases. Valid values: `disable`, `enable`.
+* `mobile_malware_db` - Enable/disable using the mobile malware signature database. Valid values: `disable`, `enable`.
 * `http` - Configure HTTP AntiVirus options. The structure of `http` block is documented below.
 * `ftp` - Configure FTP AntiVirus options. The structure of `ftp` block is documented below.
 * `imap` - Configure IMAP AntiVirus options. The structure of `imap` block is documented below.
@@ -58,131 +58,131 @@ The following arguments are supported:
 * `nac_quar` - Configure AntiVirus quarantine settings. The structure of `nac_quar` block is documented below.
 * `outbreak_prevention` - Configure Virus Outbreak Prevention settings. The structure of `outbreak_prevention` block is documented below.
 * `content_disarm` - AV Content Disarm and Reconstruction settings. The structure of `content_disarm` block is documented below.
-* `av_virus_log` - Enable/disable AntiVirus logging.
-* `av_block_log` - Enable/disable logging for AntiVirus file blocking.
-* `extended_log` - Enable/disable extended logging for antivirus.
+* `av_virus_log` - Enable/disable AntiVirus logging. Valid values: `enable`, `disable`.
+* `av_block_log` - Enable/disable logging for AntiVirus file blocking. Valid values: `enable`, `disable`.
+* `extended_log` - Enable/disable extended logging for antivirus. Valid values: `enable`, `disable`.
 * `scan_mode` - Choose between full scan mode and quick scan mode.
 
 The `http` block supports:
 
-* `options` - Enable/disable HTTP AntiVirus scanning, monitoring, and quarantine.
-* `archive_block` - Select the archive types to block.
-* `archive_log` - Select the archive types to log.
-* `emulator` - Enable/disable the virus emulator.
-* `outbreak_prevention` - Enable Virus Outbreak Prevention service.
-* `content_disarm` - Enable Content Disarm and Reconstruction for this protocol.
+* `options` - Enable/disable HTTP AntiVirus scanning, monitoring, and quarantine. Valid values: `scan`, `avmonitor`, `quarantine`.
+* `archive_block` - Select the archive types to block. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
+* `archive_log` - Select the archive types to log. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
+* `emulator` - Enable/disable the virus emulator. Valid values: `enable`, `disable`.
+* `outbreak_prevention` - Enable Virus Outbreak Prevention service. Valid values: `disabled`, `files`, `full-archive`.
+* `content_disarm` - Enable Content Disarm and Reconstruction for this protocol. Valid values: `disable`, `enable`.
 
 The `ftp` block supports:
 
-* `options` - Enable/disable FTP AntiVirus scanning, monitoring, and quarantine.
-* `archive_block` - Select the archive types to block.
-* `archive_log` - Select the archive types to log.
-* `emulator` - Enable/disable the virus emulator.
-* `outbreak_prevention` - Enable Virus Outbreak Prevention service.
+* `options` - Enable/disable FTP AntiVirus scanning, monitoring, and quarantine. Valid values: `scan`, `avmonitor`, `quarantine`.
+* `archive_block` - Select the archive types to block. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
+* `archive_log` - Select the archive types to log. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
+* `emulator` - Enable/disable the virus emulator. Valid values: `enable`, `disable`.
+* `outbreak_prevention` - Enable Virus Outbreak Prevention service. Valid values: `disabled`, `files`, `full-archive`.
 
 The `imap` block supports:
 
-* `options` - Enable/disable IMAP AntiVirus scanning, monitoring, and quarantine.
-* `archive_block` - Select the archive types to block.
-* `archive_log` - Select the archive types to log.
-* `emulator` - Enable/disable the virus emulator.
-* `executables` - Treat Windows executable files as viruses for the purpose of blocking or monitoring.
-* `outbreak_prevention` - Enable Virus Outbreak Prevention service.
-* `content_disarm` - Enable Content Disarm and Reconstruction for this protocol.
+* `options` - Enable/disable IMAP AntiVirus scanning, monitoring, and quarantine. Valid values: `scan`, `avmonitor`, `quarantine`.
+* `archive_block` - Select the archive types to block. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
+* `archive_log` - Select the archive types to log. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
+* `emulator` - Enable/disable the virus emulator. Valid values: `enable`, `disable`.
+* `executables` - Treat Windows executable files as viruses for the purpose of blocking or monitoring. Valid values: `default`, `virus`.
+* `outbreak_prevention` - Enable Virus Outbreak Prevention service. Valid values: `disabled`, `files`, `full-archive`.
+* `content_disarm` - Enable Content Disarm and Reconstruction for this protocol. Valid values: `disable`, `enable`.
 
 The `pop3` block supports:
 
-* `options` - Enable/disable POP3 AntiVirus scanning, monitoring, and quarantine.
-* `archive_block` - Select the archive types to block.
-* `archive_log` - Select the archive types to log.
-* `emulator` - Enable/disable the virus emulator.
-* `executables` - Treat Windows executable files as viruses for the purpose of blocking or monitoring.
-* `outbreak_prevention` - Enable Virus Outbreak Prevention service.
-* `content_disarm` - Enable Content Disarm and Reconstruction for this protocol.
+* `options` - Enable/disable POP3 AntiVirus scanning, monitoring, and quarantine. Valid values: `scan`, `avmonitor`, `quarantine`.
+* `archive_block` - Select the archive types to block. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
+* `archive_log` - Select the archive types to log. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
+* `emulator` - Enable/disable the virus emulator. Valid values: `enable`, `disable`.
+* `executables` - Treat Windows executable files as viruses for the purpose of blocking or monitoring. Valid values: `default`, `virus`.
+* `outbreak_prevention` - Enable Virus Outbreak Prevention service. Valid values: `disabled`, `files`, `full-archive`.
+* `content_disarm` - Enable Content Disarm and Reconstruction for this protocol. Valid values: `disable`, `enable`.
 
 The `smtp` block supports:
 
-* `options` - Enable/disable SMTP AntiVirus scanning, monitoring, and quarantine.
-* `archive_block` - Select the archive types to block.
-* `archive_log` - Select the archive types to log.
-* `emulator` - Enable/disable the virus emulator.
-* `executables` - Treat Windows executable files as viruses for the purpose of blocking or monitoring.
-* `outbreak_prevention` - Enable Virus Outbreak Prevention service.
-* `content_disarm` - Enable Content Disarm and Reconstruction for this protocol.
+* `options` - Enable/disable SMTP AntiVirus scanning, monitoring, and quarantine. Valid values: `scan`, `avmonitor`, `quarantine`.
+* `archive_block` - Select the archive types to block. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
+* `archive_log` - Select the archive types to log. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
+* `emulator` - Enable/disable the virus emulator. Valid values: `enable`, `disable`.
+* `executables` - Treat Windows executable files as viruses for the purpose of blocking or monitoring. Valid values: `default`, `virus`.
+* `outbreak_prevention` - Enable Virus Outbreak Prevention service. Valid values: `disabled`, `files`, `full-archive`.
+* `content_disarm` - Enable Content Disarm and Reconstruction for this protocol. Valid values: `disable`, `enable`.
 
 The `mapi` block supports:
 
-* `options` - Enable/disable MAPI AntiVirus scanning, monitoring, and quarantine.
-* `archive_block` - Select the archive types to block.
-* `archive_log` - Select the archive types to log.
-* `emulator` - Enable/disable the virus emulator.
-* `executables` - Treat Windows executable files as viruses for the purpose of blocking or monitoring.
-* `outbreak_prevention` - Enable Virus Outbreak Prevention service.
+* `options` - Enable/disable MAPI AntiVirus scanning, monitoring, and quarantine. Valid values: `scan`, `avmonitor`, `quarantine`.
+* `archive_block` - Select the archive types to block. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
+* `archive_log` - Select the archive types to log. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
+* `emulator` - Enable/disable the virus emulator. Valid values: `enable`, `disable`.
+* `executables` - Treat Windows executable files as viruses for the purpose of blocking or monitoring. Valid values: `default`, `virus`.
+* `outbreak_prevention` - Enable Virus Outbreak Prevention service. Valid values: `disabled`, `files`, `full-archive`.
 
 The `nntp` block supports:
 
-* `options` - Enable/disable NNTP AntiVirus scanning, monitoring, and quarantine.
-* `archive_block` - Select the archive types to block.
-* `archive_log` - Select the archive types to log.
-* `emulator` - Enable/disable the virus emulator.
-* `outbreak_prevention` - Enable Virus Outbreak Prevention service.
+* `options` - Enable/disable NNTP AntiVirus scanning, monitoring, and quarantine. Valid values: `scan`, `avmonitor`, `quarantine`.
+* `archive_block` - Select the archive types to block. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
+* `archive_log` - Select the archive types to log. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
+* `emulator` - Enable/disable the virus emulator. Valid values: `enable`, `disable`.
+* `outbreak_prevention` - Enable Virus Outbreak Prevention service. Valid values: `disabled`, `files`, `full-archive`.
 
 The `cifs` block supports:
 
-* `options` - Enable/disable CIFS AntiVirus scanning, monitoring, and quarantine.
-* `archive_block` - Select the archive types to block.
-* `archive_log` - Select the archive types to log.
-* `emulator` - Enable/disable the virus emulator.
-* `outbreak_prevention` - Enable Virus Outbreak Prevention service.
+* `options` - Enable/disable CIFS AntiVirus scanning, monitoring, and quarantine. Valid values: `scan`, `avmonitor`, `quarantine`.
+* `archive_block` - Select the archive types to block. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
+* `archive_log` - Select the archive types to log. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
+* `emulator` - Enable/disable the virus emulator. Valid values: `enable`, `disable`.
+* `outbreak_prevention` - Enable Virus Outbreak Prevention service. Valid values: `disabled`, `files`, `full-archive`.
 
 The `ssh` block supports:
 
-* `options` - Enable/disable SFTP and SCP AntiVirus scanning, monitoring, and quarantine.
-* `archive_block` - Select the archive types to block.
-* `archive_log` - Select the archive types to log.
-* `emulator` - Enable/disable the virus emulator.
-* `outbreak_prevention` - Enable Virus Outbreak Prevention service.
+* `options` - Enable/disable SFTP and SCP AntiVirus scanning, monitoring, and quarantine. Valid values: `scan`, `avmonitor`, `quarantine`.
+* `archive_block` - Select the archive types to block. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
+* `archive_log` - Select the archive types to log. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
+* `emulator` - Enable/disable the virus emulator. Valid values: `enable`, `disable`.
+* `outbreak_prevention` - Enable Virus Outbreak Prevention service. Valid values: `disabled`, `files`, `full-archive`.
 
 The `smb` block supports:
 
-* `options` - Enable/disable SMB AntiVirus scanning, monitoring, and quarantine.
-* `archive_block` - Select the archive types to block.
-* `archive_log` - Select the archive types to log.
-* `emulator` - Enable/disable the virus emulator.
-* `outbreak_prevention` - Enable Virus Outbreak Prevention service.
+* `options` - Enable/disable SMB AntiVirus scanning, monitoring, and quarantine. Valid values: `scan`, `avmonitor`, `quarantine`.
+* `archive_block` - Select the archive types to block. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
+* `archive_log` - Select the archive types to log. Valid values: `encrypted`, `corrupted`, `partiallycorrupted`, `multipart`, `nested`, `mailbomb`, `fileslimit`, `timeout`, `unhandled`.
+* `emulator` - Enable/disable the virus emulator. Valid values: `enable`, `disable`.
+* `outbreak_prevention` - Enable Virus Outbreak Prevention service. Valid values: `disabled`, `files`, `full-archive`.
 
 The `nac_quar` block supports:
 
-* `infected` - Enable/Disable quarantining infected hosts to the banned user list.
+* `infected` - Enable/Disable quarantining infected hosts to the banned user list. Valid values: `none`, `quar-src-ip`.
 * `expiry` - Duration of quarantine.
-* `log` - Enable/disable AntiVirus quarantine logging.
+* `log` - Enable/disable AntiVirus quarantine logging. Valid values: `enable`, `disable`.
 
 The `outbreak_prevention` block supports:
 
-* `ftgd_service` - Enable/disable FortiGuard Virus outbreak prevention service.
-* `external_blocklist` - Enable/disable external malware blocklist.
+* `ftgd_service` - Enable/disable FortiGuard Virus outbreak prevention service. Valid values: `disable`, `enable`.
+* `external_blocklist` - Enable/disable external malware blocklist. Valid values: `disable`, `enable`.
 
 The `content_disarm` block supports:
 
-* `original_file_destination` - Destination to send original file if active content is removed.
-* `error_action` - Action to be taken if CDR engine encounters an unrecoverable error.
-* `office_macro` - Enable/disable stripping of macros in Microsoft Office documents.
-* `office_hylink` - Enable/disable stripping of hyperlinks in Microsoft Office documents.
-* `office_linked` - Enable/disable stripping of linked objects in Microsoft Office documents.
-* `office_embed` - Enable/disable stripping of embedded objects in Microsoft Office documents.
-* `office_dde` - Enable/disable stripping of Dynamic Data Exchange events in Microsoft Office documents.
-* `office_action` - Enable/disable stripping of PowerPoint action events in Microsoft Office documents.
-* `pdf_javacode` - Enable/disable stripping of JavaScript code in PDF documents.
-* `pdf_embedfile` - Enable/disable stripping of embedded files in PDF documents.
-* `pdf_hyperlink` - Enable/disable stripping of hyperlinks from PDF documents.
-* `pdf_act_gotor` - Enable/disable stripping of links to other PDFs in PDF documents.
-* `pdf_act_launch` - Enable/disable stripping of links to external applications in PDF documents.
-* `pdf_act_sound` - Enable/disable stripping of embedded sound files in PDF documents.
-* `pdf_act_movie` - Enable/disable stripping of embedded movies in PDF documents.
-* `pdf_act_java` - Enable/disable stripping of actions that execute JavaScript code in PDF documents.
-* `pdf_act_form` - Enable/disable stripping of actions that submit data to other targets in PDF documents.
-* `cover_page` - Enable/disable inserting a cover page into the disarmed document.
-* `detect_only` - Enable/disable only detect disarmable files, do not alter content.
+* `original_file_destination` - Destination to send original file if active content is removed. Valid values: `fortisandbox`, `quarantine`, `discard`.
+* `error_action` - Action to be taken if CDR engine encounters an unrecoverable error. Valid values: `block`, `log-only`, `ignore`.
+* `office_macro` - Enable/disable stripping of macros in Microsoft Office documents. Valid values: `disable`, `enable`.
+* `office_hylink` - Enable/disable stripping of hyperlinks in Microsoft Office documents. Valid values: `disable`, `enable`.
+* `office_linked` - Enable/disable stripping of linked objects in Microsoft Office documents. Valid values: `disable`, `enable`.
+* `office_embed` - Enable/disable stripping of embedded objects in Microsoft Office documents. Valid values: `disable`, `enable`.
+* `office_dde` - Enable/disable stripping of Dynamic Data Exchange events in Microsoft Office documents. Valid values: `disable`, `enable`.
+* `office_action` - Enable/disable stripping of PowerPoint action events in Microsoft Office documents. Valid values: `disable`, `enable`.
+* `pdf_javacode` - Enable/disable stripping of JavaScript code in PDF documents. Valid values: `disable`, `enable`.
+* `pdf_embedfile` - Enable/disable stripping of embedded files in PDF documents. Valid values: `disable`, `enable`.
+* `pdf_hyperlink` - Enable/disable stripping of hyperlinks from PDF documents. Valid values: `disable`, `enable`.
+* `pdf_act_gotor` - Enable/disable stripping of links to other PDFs in PDF documents. Valid values: `disable`, `enable`.
+* `pdf_act_launch` - Enable/disable stripping of links to external applications in PDF documents. Valid values: `disable`, `enable`.
+* `pdf_act_sound` - Enable/disable stripping of embedded sound files in PDF documents. Valid values: `disable`, `enable`.
+* `pdf_act_movie` - Enable/disable stripping of embedded movies in PDF documents. Valid values: `disable`, `enable`.
+* `pdf_act_java` - Enable/disable stripping of actions that execute JavaScript code in PDF documents. Valid values: `disable`, `enable`.
+* `pdf_act_form` - Enable/disable stripping of actions that submit data to other targets in PDF documents. Valid values: `disable`, `enable`.
+* `cover_page` - Enable/disable inserting a cover page into the disarmed document. Valid values: `disable`, `enable`.
+* `detect_only` - Enable/disable only detect disarmable files, do not alter content. Valid values: `disable`, `enable`.
 
 
 ## Attribute Reference
