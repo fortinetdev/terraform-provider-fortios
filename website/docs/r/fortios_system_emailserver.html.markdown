@@ -29,18 +29,18 @@ resource "fortios_system_emailserver" "trname" {
 
 The following arguments are supported:
 
-* `type` - Use FortiGuard Message service or custom email server.
+* `type` - Use FortiGuard Message service or custom email server. Valid values: `custom`.
 * `reply_to` - Reply-To email address.
 * `server` - SMTP server IP address or hostname.
 * `port` - SMTP server port.
 * `source_ip` - SMTP server IPv4 source IP.
 * `source_ip6` - SMTP server IPv6 source IP.
-* `authenticate` - Enable/disable authentication.
-* `validate_server` - Enable/disable validation of server certificate.
+* `authenticate` - Enable/disable authentication. Valid values: `enable`, `disable`.
+* `validate_server` - Enable/disable validation of server certificate. Valid values: `enable`, `disable`.
 * `username` - SMTP server user name for authentication.
 * `password` - SMTP server user password for authentication.
-* `security` - Connection security used by the email server.
-* `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting).
+* `security` - Connection security used by the email server. Valid values: `none`, `starttls`, `smtps`.
+* `ssl_min_proto_version` - Minimum supported protocol version for SSL/TLS connections (default is to follow system global setting). Valid values: `default`, `SSLv3`, `TLSv1`, `TLSv1-1`, `TLSv1-2`.
 
 
 ## Attribute Reference
