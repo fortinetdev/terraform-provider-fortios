@@ -13,7 +13,7 @@ Configure FortiSwitch SNMP system information globally.
 
 The following arguments are supported:
 
-* `status` - Enable/disable SNMP.
+* `status` - Enable/disable SNMP. Valid values: `disable`, `enable`.
 * `engine_id` - Local SNMP engine ID string (max 24 char).
 * `description` - System description.
 * `contact_info` - Contact information.
