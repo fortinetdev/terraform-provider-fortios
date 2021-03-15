@@ -51,134 +51,134 @@ The `mail` block supports:
 
 * `msg_type` - Message type.
 * `buffer` - Message string.
-* `header` - Header flag.
+* `header` - Header flag. Valid values: `none`, `http`, `8bit`.
 * `format` - Format flag.
 
 The `http` block supports:
 
 * `msg_type` - Message type.
 * `buffer` - Message string.
-* `header` - Header flag.
+* `header` - Header flag. Valid values: `none`, `http`, `8bit`.
 * `format` - Format flag.
 
 The `webproxy` block supports:
 
 * `msg_type` - Message type.
 * `buffer` - Message string.
-* `header` - Header flag.
+* `header` - Header flag. Valid values: `none`, `http`, `8bit`.
 * `format` - Format flag.
 
 The `ftp` block supports:
 
 * `msg_type` - Message type.
 * `buffer` - Message string.
-* `header` - Header flag.
+* `header` - Header flag. Valid values: `none`, `http`, `8bit`.
 * `format` - Format flag.
 
 The `nntp` block supports:
 
 * `msg_type` - Message type.
 * `buffer` - Message string.
-* `header` - Header flag.
+* `header` - Header flag. Valid values: `none`, `http`, `8bit`.
 * `format` - Format flag.
 
 The `fortiguard_wf` block supports:
 
 * `msg_type` - Message type.
 * `buffer` - Message string.
-* `header` - Header flag.
+* `header` - Header flag. Valid values: `none`, `http`, `8bit`.
 * `format` - Format flag.
 
 The `spam` block supports:
 
 * `msg_type` - Message type.
 * `buffer` - Message string.
-* `header` - Header flag.
+* `header` - Header flag. Valid values: `none`, `http`, `8bit`.
 * `format` - Format flag.
 
 The `alertmail` block supports:
 
 * `msg_type` - Message type.
 * `buffer` - Message string.
-* `header` - Header flag.
+* `header` - Header flag. Valid values: `none`, `http`, `8bit`.
 * `format` - Format flag.
 
 The `admin` block supports:
 
 * `msg_type` - Message type.
 * `buffer` - Message string.
-* `header` - Header flag.
+* `header` - Header flag. Valid values: `none`, `http`, `8bit`.
 * `format` - Format flag.
 
 The `auth` block supports:
 
 * `msg_type` - Message type.
 * `buffer` - Message string.
-* `header` - Header flag.
+* `header` - Header flag. Valid values: `none`, `http`, `8bit`.
 * `format` - Format flag.
 
 The `sslvpn` block supports:
 
 * `msg_type` - Message type.
 * `buffer` - Message string.
-* `header` - Header flag.
+* `header` - Header flag. Valid values: `none`, `http`, `8bit`.
 * `format` - Format flag.
 
 The `ec` block supports:
 
 * `msg_type` - Message type.
 * `buffer` - Message string.
-* `header` - Header flag.
-* `format` - Format flag.
+* `header` - Header flag. Valid values: `none`, `http`, `8bit`.
+* `format` - Format flag. Valid values: `none`, `text`, `html`, `wml`.
 
 The `device_detection_portal` block supports:
 
 * `msg_type` - Message type.
 * `buffer` - Message string.
-* `header` - Header flag.
+* `header` - Header flag. Valid values: `none`, `http`, `8bit`.
 * `format` - Format flag.
 
 The `nac_quar` block supports:
 
 * `msg_type` - Message type.
 * `buffer` - Message string.
-* `header` - Header flag.
+* `header` - Header flag. Valid values: `none`, `http`, `8bit`.
 * `format` - Format flag.
 
 The `traffic_quota` block supports:
 
 * `msg_type` - Message type.
 * `buffer` - Message string.
-* `header` - Header flag.
+* `header` - Header flag. Valid values: `none`, `http`, `8bit`.
 * `format` - Format flag.
 
 The `utm` block supports:
 
 * `msg_type` - Message type.
 * `buffer` - Message string.
-* `header` - Header flag.
+* `header` - Header flag. Valid values: `none`, `http`, `8bit`.
 * `format` - Format flag.
 
 The `custom_message` block supports:
 
 * `msg_type` - Message type.
 * `buffer` - Message string.
-* `header` - Header flag.
+* `header` - Header flag. Valid values: `none`, `http`, `8bit`.
 * `format` - Format flag.
 
 The `icap` block supports:
 
 * `msg_type` - Message type.
 * `buffer` - Message string.
-* `header` - Header flag.
+* `header` - Header flag. Valid values: `none`, `http`, `8bit`.
 * `format` - Format flag.
 
 The `automation` block supports:
 
 * `msg_type` - Message type.
 * `buffer` - Message string.
-* `header` - Header flag.
-* `format` - Format flag.
+* `header` - Header flag. Valid values: `none`, `http`, `8bit`.
+* `format` - Format flag. Valid values: `none`, `text`, `html`.
 
 
 ## Attribute Reference
