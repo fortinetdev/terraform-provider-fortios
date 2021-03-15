@@ -24,7 +24,7 @@ resource "fortios_system_automationdestination" "trname" {
 The following arguments are supported:
 
 * `name` - Name.
-* `type` - Destination type.
+* `type` - Destination type. Valid values: `fortigate`, `ha-cluster`.
 * `destination` - Destinations. The structure of `destination` block is documented below.
 * `ha_group_id` - Cluster group ID set for this destination (default = 0).
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
