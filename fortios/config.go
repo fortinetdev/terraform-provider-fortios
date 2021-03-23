@@ -115,8 +115,6 @@ func convintflist2str(v interface{}) interface{} {
 				}
 			}
 		}
-
-		return res
 	}
 	return res
 }
