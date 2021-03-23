@@ -328,7 +328,7 @@ output "m3output" {
 }
 
 ```
-Note the `depend_on` in the resource configuration.
+Note the `depends_on` in the resource configuration.
 
 ```
 
@@ -358,6 +358,6 @@ module "m3" {
 }
 
 ```
-Note the `depend_on` in the module configuration.
+Note the `depends_on` in the module configuration.
 
 We will find that these policies have been submitted to the device in the order of 1, 2, 3, 4, 5, 6, 7, 8, 9 after executing terraform apply.
