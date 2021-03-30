@@ -238,4 +238,4 @@ The following attributes are exported:
   ```
 
 ## Others
-~> **Warning:** Since changes outside of Terraform may cause changes to policies that are beyond the control of the resource, terraform destroy for the resource will not restore the original sequence state of the policy. Please re-use the resource or resource_json_generic_api to adjust sequence as needed.
+~> **Warning:** Since the policy changes caused by modifications outside the terraform may be beyond the control of the resource, terraform destroy for the resource will not restore the original sequence state of security policies. Please re-use the resource or resource_json_generic_api to adjust sequence as needed.

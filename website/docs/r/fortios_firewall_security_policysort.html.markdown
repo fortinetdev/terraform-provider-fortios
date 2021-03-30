@@ -91,6 +91,6 @@ The following attributes are exported:
 * `comment` - Comment.
 
 
-~> **Note** Since changes outside of Terraform may cause changes to policies that are beyond the control of the resource, terraform destroy for the resource will not restore the original sequence state of security policies.
+~> **Note** Since the policy changes caused by modifications outside the terraform may be beyond the control of the resource, terraform destroy for the resource will not restore the original sequence state of security policies.
 
 !> **Warning** This resource involves the priority shift of many policies, when using terraform apply to apply this resource, please try to ensure that the FGT is offline to avoid business interruption or unnecessary security risks.
