@@ -932,6 +932,7 @@ func Provider() terraform.ResourceProvider {
 			"fortios_wirelesscontrollerhotspot20_icon":                  resourceWirelessControllerHotspot20Icon(),
 			"fortios_wirelesscontrollerhotspot20_qosmap":                resourceWirelessControllerHotspot20QosMap(),
 			"fortios_routerbgp_neighbor":                                resourceRouterbgpNeighbor(),
+			"fortios_routerbgp_network":                                 resourceRouterbgpNetwork(),
 		},
 
 		ConfigureFunc: providerConfigure,
