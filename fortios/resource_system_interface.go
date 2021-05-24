@@ -672,6 +672,7 @@ func resourceSystemInterface() *schema.Resource {
 				ValidateFunc: validation.IntBetween(1, 4094),
 				Optional:     true,
 				Computed:     true,
+				ForceNew:     true,
 			},
 			"forward_domain": &schema.Schema{
 				Type:     schema.TypeInt,
