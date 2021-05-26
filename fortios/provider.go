@@ -341,6 +341,7 @@ func Provider() terraform.ResourceProvider {
 			"fortios_systemsnmp_userlist":                     dataSourceSystemSnmpUserList(),
 			"fortios_user_samllist":                           dataSourceUserSamlList(),
 			"fortios_routerbgp_neighborlist":                  dataSourceRouterbgpNeighborList(),
+			"fortios_system_certificate_download":             dataSourceSystemCertificateDownload(),
 		},
 
 		ResourcesMap: map[string]*schema.Resource{
