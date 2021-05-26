@@ -1,7 +1,7 @@
 // Copyright 2020 Fortinet, Inc. All rights reserved.
-// Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
+// Author: Justin Roberts (@poroping), Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
 // Documentation:
-// Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu),
+// Justin Roberts (@poroping), Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu),
 // Xing Li (@lix-fortinet), Yue Wang (@yuew-ftnt), Yuffie Zhu (@yuffiezhu)
 
 // Description: BGP network table.
