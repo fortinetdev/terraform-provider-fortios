@@ -95,8 +95,8 @@ func resourceRouterbgpNetworkUpdate(d *schema.ResourceData, m interface{}) error
 	}
 
 	log.Printf(strconv.Itoa(c.Retries))
-	if o["child_mkey"] != nil && o["child_mkey"] != "" {
-		d.SetId(strconv.Itoa(int(o["child_mkey"].(float64))))
+	if o["mkey"] != nil && o["mkey"] != "" {
+		d.SetId(strconv.Itoa(int(o["mkey"].(float64))))
 	}
 
 	return resourceRouterbgpNetworkRead(d, m)
