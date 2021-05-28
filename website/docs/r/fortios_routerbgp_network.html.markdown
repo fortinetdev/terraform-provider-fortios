@@ -16,6 +16,7 @@ BGP network table.
 
 The following arguments are supported:
 
+* `fosid` - ID.
 * `prefix` - (Required) Prefix of network.
 * `backdoor` - Enable/disable route as backdoor.
 * `route_map` - Route map to modify generated route.
@@ -23,13 +24,13 @@ The following arguments are supported:
 ## Attribute Reference
 
 In addition to all the above arguments, the following attributes are exported:
-* `id` - an identifier for the resource with format {{networkid}}.
+* `id` - an identifier for the resource with format {{fosid}}.
 
 ## Import
 
 Routerbgp Network can be imported using any of these accepted formats:
 ```
 $ export "FORTIOS_IMPORT_TABLE"="true"
-$ terraform import fortios_routerbgp_network.labelname {{networkid}}
+$ terraform import fortios_routerbgp_network.labelname {{fosid}}
 $ unset "FORTIOS_IMPORT_TABLE"
 ```
