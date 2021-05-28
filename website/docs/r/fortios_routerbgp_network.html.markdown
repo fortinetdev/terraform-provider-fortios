@@ -18,7 +18,7 @@ The following arguments are supported:
 
 * `prefix` - (Required) Prefix of network.
 * `backdoor` - Enable/disable route as backdoor.
-* `route_map_in` - Route map to modify generated route.
+* `route_map` - Route map to modify generated route.
 
 ## Attribute Reference
 
