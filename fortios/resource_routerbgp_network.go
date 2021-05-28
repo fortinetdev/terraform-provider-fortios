@@ -30,6 +30,12 @@ func resourceRouterbgpNetwork() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"fosid": &schema.Schema{
+				Type:     schema.TypeInt,
+				ForceNew: true,
+				Optional: true,
+				Computed: true,
+			},
 			"prefix": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -147,6 +153,10 @@ func flattenRouterbgpNetworkPrefix(v interface{}, d *schema.ResourceData, pre st
 	return v
 }
 
+func flattenRouterbgpNetworkId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenRouterbgpNetworkBackdoor(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
@@ -157,6 +167,12 @@ func flattenRouterbgpNetworkRouteMap(v interface{}, d *schema.ResourceData, pre 
 
 func refreshObjectRouterbgpNetwork(d *schema.ResourceData, o map[string]interface{}, sv string) error {
 	var err error
+
+	if err = d.Set("fosid", flattenRouterbgpNetworkId(o["id"], d, "fosid", sv)); err != nil {
+		if !fortiAPIPatch(o["id"]) {
+			return fmt.Errorf("Error reading fosid: %v", err)
+		}
+	}
 
 	if err = d.Set("prefix", flattenRouterbgpNetworkPrefix(o["prefix"], d, "prefix", sv)); err != nil {
 		if !fortiAPIPatch(o["prefix"]) {
@@ -185,6 +201,10 @@ func flattenRouterbgpNetworkFortiTestDebug(d *schema.ResourceData, fosdebugsn in
 	log.Printf("ER List: %v, %v", strings.Split("FortiOS Ver", " "), e)
 }
 
+func expandRouterbgpNetworkId(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
+	return v, nil
+}
+
 func expandRouterbgpNetworkPrefix(d *schema.ResourceData, v interface{}, pre string, sv string) (interface{}, error) {
 	return v, nil
 }
@@ -199,6 +219,16 @@ func expandRouterbgpNetworkRouteMap(d *schema.ResourceData, v interface{}, pre s
 
 func getObjectRouterbgpNetwork(d *schema.ResourceData, sv string) (*map[string]interface{}, error) {
 	obj := make(map[string]interface{})
+
+	if v, ok := d.GetOkExists("fosid"); ok {
+
+		t, err := expandRouterbgpNetworkId(d, v, "fosid", sv)
+		if err != nil {
+			return &obj, err
+		} else if t != nil {
+			obj["id"] = t
+		}
+	}
 
 	if v, ok := d.GetOk("prefix"); ok {
 
