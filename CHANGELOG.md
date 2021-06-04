@@ -1,4 +1,25 @@
-## 1.11.1 (Unreleased)
+## 1.12.1 (Unreleased)
+
+
+## 1.12.0 (Jun 3, 2021)
+
+IMPROVEMENTS:
+
+* Adjust instructions website/docs/r/fortios_system_ha.html.markdown
+* Adjust instructions website/docs/r/fortios_system_fortimanager.html.markdown
+* Adjust instructions website/docs/r/fortios_router_accesslist.html.markdown
+* Adjust instructions website/docs/r/fortios_certificate_local.html.markdown
+* Adjust function structure for vendor/github.com/fortinetdev/forti-sdk-go/fortios/sdkcore/sdkfos.go
+* Adjust function structure for fortios/resource_routerbgp_network.go
+* Update READM.md
+* Update policy seq/sort docs
+* Remove redundant statement #148
+* Fix wrong spelling in fgt_policysort.html.md
+
+FEATURES:
+
+* **New Resource:** `fortios_routerbgp_network`
+
 
 ## 1.11.0 (Mar 15, 2021)
 
