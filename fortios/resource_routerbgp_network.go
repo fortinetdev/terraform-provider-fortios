@@ -97,6 +97,8 @@ func resourceRouterbgpNetworkUpdate(d *schema.ResourceData, m interface{}) error
 	log.Printf(strconv.Itoa(c.Retries))
 	if o["mkey"] != nil && o["mkey"] != "" {
 		d.SetId(strconv.Itoa(int(o["mkey"].(float64))))
+	} else {
+		d.SetId("RouterbgpNetwork")
 	}
 
 	return resourceRouterbgpNetworkRead(d, m)
@@ -142,6 +144,10 @@ func resourceRouterbgpNetworkRead(d *schema.ResourceData, m interface{}) error {
 	return nil
 }
 
+func flattenRouterbgpNetworkId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	return v
+}
+
 func flattenRouterbgpNetworkPrefix(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	if v1, ok := d.GetOkExists(pre); ok && v != nil {
 		if s, ok := v1.(string); ok {
@@ -150,10 +156,6 @@ func flattenRouterbgpNetworkPrefix(v interface{}, d *schema.ResourceData, pre st
 		}
 	}
 
-	return v
-}
-
-func flattenRouterbgpNetworkId(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
 	return v
 }
 
