@@ -1,5 +1,11 @@
-## 1.12.1 (Unreleased)
+## 1.12.2 (Unreleased)
 
+
+## 1.12.1 (Jun 5, 2021)
+
+BUG FIXES:
+
+* Fix fortios_certificate_local documentation error
 
 ## 1.12.0 (Jun 3, 2021)
 
@@ -19,7 +25,6 @@ IMPROVEMENTS:
 FEATURES:
 
 * **New Resource:** `fortios_routerbgp_network`
-
 
 ## 1.11.0 (Mar 15, 2021)
 
