@@ -77,6 +77,7 @@ pBmnz+IlqzrwBZBxmB+1xFrYATm/hZ3HMFrLKQVoTJgTP74/PIpCaO/mjis4
 
 **Step2: Prepare TF file with fortios_json_generic_api resource**
 
+```
 #cat main.tf
 provider "fortios" {
   hostname = "192.168.52.177"
