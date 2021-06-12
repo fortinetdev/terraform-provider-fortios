@@ -1,4 +1,17 @@
-## 1.12.2 (Unreleased)
+## 1.14.0 (Unreleased)
+
+
+## 1.13.0 (Jun 12, 2021)
+
+FEATURES:
+
+* **New Resource:** `fortios_firewall_securitypolicy`
+* **New Resource:** `fortios_system_virtualswitch`
+* **New Resource:** `fortios_routerbgp_network6`
+* **New Resource:** `fortios_routerospf_ospfinterface`
+* **New Resource:** `fortios_routerospf_network`
+* **New Resource:** `fortios_routerospf_neighbor`
+* **New Resource:** `fortios_routerospf6_ospf6interface`
 
 
 ## 1.12.1 (Jun 5, 2021)
