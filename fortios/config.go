@@ -80,7 +80,7 @@ func dynamic_sort_subtable(result []map[string]interface{}, fieldname string, d 
 				v1 := fmt.Sprintf("%v", result[i][fieldname])
 				v2 := fmt.Sprintf("%v", result[j][fieldname])
 
-				return sortStringwithNumber(v1) < sortsortStringwithNumberame(v2)
+				return sortStringwithNumber(v1) < sortStringwithNumber(v2)
 			})
 		}
 	}
