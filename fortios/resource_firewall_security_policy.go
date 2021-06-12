@@ -9,12 +9,12 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
 
-func resourceFirewallSecurityPolicy() *schema.Resource {
+func resourceFirewallSecurityPolicy1() *schema.Resource {
 	return &schema.Resource{
-		Create: resourceFirewallSecurityPolicyCreate,
-		Read:   resourceFirewallSecurityPolicyRead,
-		Update: resourceFirewallSecurityPolicyUpdate,
-		Delete: resourceFirewallSecurityPolicyDelete,
+		Create: resourceFirewallSecurityPolicyCreate1,
+		Read:   resourceFirewallSecurityPolicyRead1,
+		Update: resourceFirewallSecurityPolicyUpdate1,
+		Delete: resourceFirewallSecurityPolicyDelete1,
 
 		Importer: &schema.ResourceImporter{
 			State: schema.ImportStatePassthrough,
@@ -199,7 +199,7 @@ func resourceFirewallSecurityPolicy() *schema.Resource {
 	}
 }
 
-func resourceFirewallSecurityPolicyCreate(d *schema.ResourceData, m interface{}) error {
+func resourceFirewallSecurityPolicyCreate1(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 
 	if c == nil {
@@ -409,7 +409,7 @@ func resourceFirewallSecurityPolicyCreate(d *schema.ResourceData, m interface{})
 	}
 
 	//Call process by sdk
-	o, err := c.CreateFirewallSecurityPolicy(i)
+	o, err := c.CreateFirewallSecurityPolicy1(i)
 	if err != nil {
 		return fmt.Errorf("Error creating Firewall Security Policy: %s", err)
 	}
@@ -417,10 +417,10 @@ func resourceFirewallSecurityPolicyCreate(d *schema.ResourceData, m interface{})
 	//Set index for d
 	d.SetId(strconv.Itoa(int(o.Mkey)))
 
-	return resourceFirewallSecurityPolicyRead(d, m)
+	return resourceFirewallSecurityPolicyRead1(d, m)
 }
 
-func resourceFirewallSecurityPolicyUpdate(d *schema.ResourceData, m interface{}) error {
+func resourceFirewallSecurityPolicyUpdate1(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
@@ -631,15 +631,15 @@ func resourceFirewallSecurityPolicyUpdate(d *schema.ResourceData, m interface{})
 	}
 
 	//Call process by sdk
-	_, err := c.UpdateFirewallSecurityPolicy(i, mkey)
+	_, err := c.UpdateFirewallSecurityPolicy1(i, mkey)
 	if err != nil {
 		return fmt.Errorf("Error updating Firewall Security Policy: %s", err)
 	}
 
-	return resourceFirewallSecurityPolicyRead(d, m)
+	return resourceFirewallSecurityPolicyRead1(d, m)
 }
 
-func resourceFirewallSecurityPolicyDelete(d *schema.ResourceData, m interface{}) error {
+func resourceFirewallSecurityPolicyDelete1(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
@@ -651,7 +651,7 @@ func resourceFirewallSecurityPolicyDelete(d *schema.ResourceData, m interface{})
 	c.Retries = 1
 
 	//Call process by sdk
-	err := c.DeleteFirewallSecurityPolicy(mkey)
+	err := c.DeleteFirewallSecurityPolicy1(mkey)
 	if err != nil {
 		return fmt.Errorf("Error deleting Firewall Security Policy: %s", err)
 	}
@@ -662,7 +662,7 @@ func resourceFirewallSecurityPolicyDelete(d *schema.ResourceData, m interface{})
 	return nil
 }
 
-func resourceFirewallSecurityPolicyRead(d *schema.ResourceData, m interface{}) error {
+func resourceFirewallSecurityPolicyRead1(d *schema.ResourceData, m interface{}) error {
 	mkey := d.Id()
 
 	c := m.(*FortiClient).Client
@@ -674,7 +674,7 @@ func resourceFirewallSecurityPolicyRead(d *schema.ResourceData, m interface{}) e
 	c.Retries = 1
 
 	//Call process by sdk
-	o, err := c.ReadFirewallSecurityPolicy(mkey)
+	o, err := c.ReadFirewallSecurityPolicy1(mkey)
 	if err != nil {
 		return fmt.Errorf("Error reading Firewall Security Policy: %s", err)
 	}

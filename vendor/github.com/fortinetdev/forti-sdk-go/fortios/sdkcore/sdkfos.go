@@ -5272,6 +5272,60 @@ func (c *FortiSDKClient) ReadFirewallRegion(mkey string) (mapTmp map[string]inte
 	return
 }
 
+// CreateFirewallSecurityPolicy API operation for FortiOS creates a new Security Policy.
+// Returns the index value of the Security Policy and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the firewall - security-policy chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateFirewallSecurityPolicy(params *map[string]interface{}) (output map[string]interface{}, err error) {
+
+	HTTPMethod := "POST"
+	path := "/api/v2/cmdb/firewall/security-policy"
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// UpdateFirewallSecurityPolicy API operation for FortiOS updates the specified Security Policy.
+// Returns the index value of the Security Policy and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the firewall - security-policy chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateFirewallSecurityPolicy(params *map[string]interface{}, mkey string) (output map[string]interface{}, err error) {
+	HTTPMethod := "PUT"
+	path := "/api/v2/cmdb/firewall/security-policy"
+	path += "/" + escapeURLString(mkey)
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// DeleteFirewallSecurityPolicy API operation for FortiOS deletes the specified Security Policy.
+// Returns error for service API and SDK errors.
+// See the firewall - security-policy chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteFirewallSecurityPolicy(mkey string) (err error) {
+	HTTPMethod := "DELETE"
+	path := "/api/v2/cmdb/firewall/security-policy"
+	path += "/" + escapeURLString(mkey)
+
+	err = delete(c, HTTPMethod, path)
+	return
+}
+
+// ReadFirewallSecurityPolicy API operation for FortiOS gets the Security Policy
+// with the specified index value.
+// Returns the requested Security Policy value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the firewall - security-policy chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadFirewallSecurityPolicy(mkey string) (mapTmp map[string]interface{}, err error) {
+	HTTPMethod := "GET"
+	path := "/api/v2/cmdb/firewall/security-policy"
+	path += "/" + escapeURLString(mkey)
+
+	mapTmp, err = read(c, HTTPMethod, path, false)
+	return
+}
+
 // CreateFirewallShapingPolicy API operation for FortiOS creates a new Shaping Policy.
 // Returns the index value of the Shaping Policy and execution result when the request executes successfully.
 // Returns error for service API and SDK errors.
@@ -25430,6 +25484,60 @@ func (c *FortiSDKClient) ReadWirelessControllerHotspot20QosMap(mkey string) (map
 	return
 }
 
+// CreateSystemVirtualSwitch API operation for FortiOS creates a new Virtual Switch.
+// Returns the index value of the Virtual Switch and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - virtual-switch chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateSystemVirtualSwitch(params *map[string]interface{}) (output map[string]interface{}, err error) {
+
+	HTTPMethod := "POST"
+	path := "/api/v2/cmdb/system/virtual-switch"
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// UpdateSystemVirtualSwitch API operation for FortiOS updates the specified Virtual Switch.
+// Returns the index value of the Virtual Switch and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - virtual-switch chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateSystemVirtualSwitch(params *map[string]interface{}, mkey string) (output map[string]interface{}, err error) {
+	HTTPMethod := "PUT"
+	path := "/api/v2/cmdb/system/virtual-switch"
+	path += "/" + escapeURLString(mkey)
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// DeleteSystemVirtualSwitch API operation for FortiOS deletes the specified Virtual Switch.
+// Returns error for service API and SDK errors.
+// See the system - virtual-switch chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteSystemVirtualSwitch(mkey string) (err error) {
+	HTTPMethod := "DELETE"
+	path := "/api/v2/cmdb/system/virtual-switch"
+	path += "/" + escapeURLString(mkey)
+
+	err = delete(c, HTTPMethod, path)
+	return
+}
+
+// ReadSystemVirtualSwitch API operation for FortiOS gets the Virtual Switch
+// with the specified index value.
+// Returns the requested Virtual Switch value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the system - virtual-switch chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadSystemVirtualSwitch(mkey string) (mapTmp map[string]interface{}, err error) {
+	HTTPMethod := "GET"
+	path := "/api/v2/cmdb/system/virtual-switch"
+	path += "/" + escapeURLString(mkey)
+
+	mapTmp, err = read(c, HTTPMethod, path, false)
+	return
+}
+
 // CreateRouterbgpNeighbor API operation for FortiOS creates a new Neighbor.
 // Returns the index value of the Neighbor and execution result when the request executes successfully.
 // Returns error for service API and SDK errors.
@@ -25532,6 +25640,276 @@ func (c *FortiSDKClient) DeleteRouterbgpNetwork(mkey string) (err error) {
 func (c *FortiSDKClient) ReadRouterbgpNetwork(mkey string) (mapTmp map[string]interface{}, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/router/bgp/network"
+	path += "/" + escapeURLString(mkey)
+
+	mapTmp, err = read(c, HTTPMethod, path, false)
+	return
+}
+
+// CreateRouterbgpNetwork6 API operation for FortiOS creates a new Network6.
+// Returns the index value of the Network6 and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router/bgp - network6 chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateRouterbgpNetwork6(params *map[string]interface{}) (output map[string]interface{}, err error) {
+
+	HTTPMethod := "POST"
+	path := "/api/v2/cmdb/router/bgp/network6"
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// UpdateRouterbgpNetwork6 API operation for FortiOS updates the specified Network6.
+// Returns the index value of the Network6 and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router/bgp - network6 chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateRouterbgpNetwork6(params *map[string]interface{}, mkey string) (output map[string]interface{}, err error) {
+	HTTPMethod := "PUT"
+	path := "/api/v2/cmdb/router/bgp/network6"
+	path += "/" + escapeURLString(mkey)
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// DeleteRouterbgpNetwork6 API operation for FortiOS deletes the specified Network6.
+// Returns error for service API and SDK errors.
+// See the router/bgp - network6 chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteRouterbgpNetwork6(mkey string) (err error) {
+	HTTPMethod := "DELETE"
+	path := "/api/v2/cmdb/router/bgp/network6"
+	path += "/" + escapeURLString(mkey)
+
+	err = delete(c, HTTPMethod, path)
+	return
+}
+
+// ReadRouterbgpNetwork6 API operation for FortiOS gets the Network6
+// with the specified index value.
+// Returns the requested Network6 value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router/bgp - network6 chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadRouterbgpNetwork6(mkey string) (mapTmp map[string]interface{}, err error) {
+	HTTPMethod := "GET"
+	path := "/api/v2/cmdb/router/bgp/network6"
+	path += "/" + escapeURLString(mkey)
+
+	mapTmp, err = read(c, HTTPMethod, path, false)
+	return
+}
+
+// CreateRouterospfOspfInterface API operation for FortiOS creates a new Ospf Interface.
+// Returns the index value of the Ospf Interface and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router/ospf - ospf-interface chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateRouterospfOspfInterface(params *map[string]interface{}) (output map[string]interface{}, err error) {
+
+	HTTPMethod := "POST"
+	path := "/api/v2/cmdb/router/ospf/ospf-interface"
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// UpdateRouterospfOspfInterface API operation for FortiOS updates the specified Ospf Interface.
+// Returns the index value of the Ospf Interface and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router/ospf - ospf-interface chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateRouterospfOspfInterface(params *map[string]interface{}, mkey string) (output map[string]interface{}, err error) {
+	HTTPMethod := "PUT"
+	path := "/api/v2/cmdb/router/ospf/ospf-interface"
+	path += "/" + escapeURLString(mkey)
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// DeleteRouterospfOspfInterface API operation for FortiOS deletes the specified Ospf Interface.
+// Returns error for service API and SDK errors.
+// See the router/ospf - ospf-interface chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteRouterospfOspfInterface(mkey string) (err error) {
+	HTTPMethod := "DELETE"
+	path := "/api/v2/cmdb/router/ospf/ospf-interface"
+	path += "/" + escapeURLString(mkey)
+
+	err = delete(c, HTTPMethod, path)
+	return
+}
+
+// ReadRouterospfOspfInterface API operation for FortiOS gets the Ospf Interface
+// with the specified index value.
+// Returns the requested Ospf Interface value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router/ospf - ospf-interface chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadRouterospfOspfInterface(mkey string) (mapTmp map[string]interface{}, err error) {
+	HTTPMethod := "GET"
+	path := "/api/v2/cmdb/router/ospf/ospf-interface"
+	path += "/" + escapeURLString(mkey)
+
+	mapTmp, err = read(c, HTTPMethod, path, false)
+	return
+}
+
+// CreateRouterospfNetwork API operation for FortiOS creates a new Network.
+// Returns the index value of the Network and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router/ospf - network chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateRouterospfNetwork(params *map[string]interface{}) (output map[string]interface{}, err error) {
+
+	HTTPMethod := "POST"
+	path := "/api/v2/cmdb/router/ospf/network"
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// UpdateRouterospfNetwork API operation for FortiOS updates the specified Network.
+// Returns the index value of the Network and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router/ospf - network chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateRouterospfNetwork(params *map[string]interface{}, mkey string) (output map[string]interface{}, err error) {
+	HTTPMethod := "PUT"
+	path := "/api/v2/cmdb/router/ospf/network"
+	path += "/" + escapeURLString(mkey)
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// DeleteRouterospfNetwork API operation for FortiOS deletes the specified Network.
+// Returns error for service API and SDK errors.
+// See the router/ospf - network chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteRouterospfNetwork(mkey string) (err error) {
+	HTTPMethod := "DELETE"
+	path := "/api/v2/cmdb/router/ospf/network"
+	path += "/" + escapeURLString(mkey)
+
+	err = delete(c, HTTPMethod, path)
+	return
+}
+
+// ReadRouterospfNetwork API operation for FortiOS gets the Network
+// with the specified index value.
+// Returns the requested Network value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router/ospf - network chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadRouterospfNetwork(mkey string) (mapTmp map[string]interface{}, err error) {
+	HTTPMethod := "GET"
+	path := "/api/v2/cmdb/router/ospf/network"
+	path += "/" + escapeURLString(mkey)
+
+	mapTmp, err = read(c, HTTPMethod, path, false)
+	return
+}
+
+// CreateRouterospfNeighbor API operation for FortiOS creates a new Neighbor.
+// Returns the index value of the Neighbor and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router/ospf - neighbor chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateRouterospfNeighbor(params *map[string]interface{}) (output map[string]interface{}, err error) {
+
+	HTTPMethod := "POST"
+	path := "/api/v2/cmdb/router/ospf/neighbor"
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// UpdateRouterospfNeighbor API operation for FortiOS updates the specified Neighbor.
+// Returns the index value of the Neighbor and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router/ospf - neighbor chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateRouterospfNeighbor(params *map[string]interface{}, mkey string) (output map[string]interface{}, err error) {
+	HTTPMethod := "PUT"
+	path := "/api/v2/cmdb/router/ospf/neighbor"
+	path += "/" + escapeURLString(mkey)
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// DeleteRouterospfNeighbor API operation for FortiOS deletes the specified Neighbor.
+// Returns error for service API and SDK errors.
+// See the router/ospf - neighbor chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteRouterospfNeighbor(mkey string) (err error) {
+	HTTPMethod := "DELETE"
+	path := "/api/v2/cmdb/router/ospf/neighbor"
+	path += "/" + escapeURLString(mkey)
+
+	err = delete(c, HTTPMethod, path)
+	return
+}
+
+// ReadRouterospfNeighbor API operation for FortiOS gets the Neighbor
+// with the specified index value.
+// Returns the requested Neighbor value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router/ospf - neighbor chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadRouterospfNeighbor(mkey string) (mapTmp map[string]interface{}, err error) {
+	HTTPMethod := "GET"
+	path := "/api/v2/cmdb/router/ospf/neighbor"
+	path += "/" + escapeURLString(mkey)
+
+	mapTmp, err = read(c, HTTPMethod, path, false)
+	return
+}
+
+// CreateRouterospf6Ospf6Interface API operation for FortiOS creates a new Ospf6 Interface.
+// Returns the index value of the Ospf6 Interface and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router/ospf6 - ospf6-interface chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) CreateRouterospf6Ospf6Interface(params *map[string]interface{}) (output map[string]interface{}, err error) {
+
+	HTTPMethod := "POST"
+	path := "/api/v2/cmdb/router/ospf6/ospf6-interface"
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// UpdateRouterospf6Ospf6Interface API operation for FortiOS updates the specified Ospf6 Interface.
+// Returns the index value of the Ospf6 Interface and execution result when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router/ospf6 - ospf6-interface chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) UpdateRouterospf6Ospf6Interface(params *map[string]interface{}, mkey string) (output map[string]interface{}, err error) {
+	HTTPMethod := "PUT"
+	path := "/api/v2/cmdb/router/ospf6/ospf6-interface"
+	path += "/" + escapeURLString(mkey)
+	output = make(map[string]interface{})
+
+	err = createUpdate(c, HTTPMethod, path, params, output)
+	return
+}
+
+// DeleteRouterospf6Ospf6Interface API operation for FortiOS deletes the specified Ospf6 Interface.
+// Returns error for service API and SDK errors.
+// See the router/ospf6 - ospf6-interface chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) DeleteRouterospf6Ospf6Interface(mkey string) (err error) {
+	HTTPMethod := "DELETE"
+	path := "/api/v2/cmdb/router/ospf6/ospf6-interface"
+	path += "/" + escapeURLString(mkey)
+
+	err = delete(c, HTTPMethod, path)
+	return
+}
+
+// ReadRouterospf6Ospf6Interface API operation for FortiOS gets the Ospf6 Interface
+// with the specified index value.
+// Returns the requested Ospf6 Interface value when the request executes successfully.
+// Returns error for service API and SDK errors.
+// See the router/ospf6 - ospf6-interface chapter in the FortiOS Handbook - CLI Reference.
+func (c *FortiSDKClient) ReadRouterospf6Ospf6Interface(mkey string) (mapTmp map[string]interface{}, err error) {
+	HTTPMethod := "GET"
+	path := "/api/v2/cmdb/router/ospf6/ospf6-interface"
 	path += "/" + escapeURLString(mkey)
 
 	mapTmp, err = read(c, HTTPMethod, path, false)

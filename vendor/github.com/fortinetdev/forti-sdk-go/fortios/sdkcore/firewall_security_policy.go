@@ -83,7 +83,7 @@ func ExpandPolicyInternetIDList(members []PolicyInternetIDMultValue) []float64 {
 // Returns the index value of the firewall policy and execution result when the request executes successfully.
 // Returns error for service API and SDK errors.
 // See the firewall - policy chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) CreateFirewallSecurityPolicy(params *JSONFirewallSecurityPolicy) (output *JSONCreateFirewallSecurityPolicyOutput, err error) {
+func (c *FortiSDKClient) CreateFirewallSecurityPolicy1(params *JSONFirewallSecurityPolicy) (output *JSONCreateFirewallSecurityPolicyOutput, err error) {
 	HTTPMethod := "POST"
 	path := "/api/v2/cmdb/firewall/policy"
 	output = &JSONCreateFirewallSecurityPolicyOutput{}
@@ -130,7 +130,7 @@ func (c *FortiSDKClient) CreateFirewallSecurityPolicy(params *JSONFirewallSecuri
 // Returns the index value of the firewall policy and execution result when the request executes successfully.
 // Returns error for service API and SDK errors.
 // See the firewall - policy chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) UpdateFirewallSecurityPolicy(params *JSONFirewallSecurityPolicy, mkey string) (output *JSONUpdateFirewallSecurityPolicyOutput, err error) {
+func (c *FortiSDKClient) UpdateFirewallSecurityPolicy1(params *JSONFirewallSecurityPolicy, mkey string) (output *JSONUpdateFirewallSecurityPolicyOutput, err error) {
 	HTTPMethod := "PUT"
 	path := "/api/v2/cmdb/firewall/policy"
 	path += "/" + mkey
@@ -179,7 +179,7 @@ func (c *FortiSDKClient) UpdateFirewallSecurityPolicy(params *JSONFirewallSecuri
 // DeleteFirewallSecurityPolicy API operation for FortiOS deletes the specified firewall policy.
 // Returns error for service API and SDK errors.
 // See the firewall - policy chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) DeleteFirewallSecurityPolicy(mkey string) (err error) {
+func (c *FortiSDKClient) DeleteFirewallSecurityPolicy1(mkey string) (err error) {
 	HTTPMethod := "DELETE"
 	path := "/api/v2/cmdb/firewall/policy"
 	path += "/" + mkey
@@ -213,7 +213,7 @@ func (c *FortiSDKClient) DeleteFirewallSecurityPolicy(mkey string) (err error) {
 // Returns the requested firewall policy value when the request executes successfully.
 // Returns error for service API and SDK errors.
 // See the firewall - policy chapter in the FortiOS Handbook - CLI Reference.
-func (c *FortiSDKClient) ReadFirewallSecurityPolicy(mkey string) (output *JSONFirewallSecurityPolicy, err error) {
+func (c *FortiSDKClient) ReadFirewallSecurityPolicy1(mkey string) (output *JSONFirewallSecurityPolicy, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/firewall/policy"
 	path += "/" + mkey

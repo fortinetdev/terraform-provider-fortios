@@ -9,6 +9,10 @@ description: |-
 # fortios_router_ospf6
 Configure IPv6 OSPF.
 
+~> The provider supports the definition of Ospf6-Interface in Router Ospf6 `fortios_router_ospf6`, and also allows the definition of separate Ospf6-Interface resources `fortios_routerospf6_ospf6interface`, but do not use a `fortios_router_ospf6` with in-line Ospf6-Interface in conjunction with any `fortios_routerospf6_ospf6interface` resources, otherwise conflicts and overwrite will occur.
+
+
+
 ## Example Usage
 
 ```hcl
