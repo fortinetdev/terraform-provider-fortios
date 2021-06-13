@@ -1464,6 +1464,13 @@ func dataSourceFlattenSystemInterfaceManagementIp(v interface{}, d *schema.Resou
 }
 
 func dataSourceFlattenSystemInterfaceIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	if v1, ok := d.GetOkExists(pre); ok && v != nil {
+		if s, ok := v1.(string); ok {
+			v = validateConvIPMask2CIDR(s, v.(string))
+			return v
+		}
+	}
+
 	return v
 }
 
