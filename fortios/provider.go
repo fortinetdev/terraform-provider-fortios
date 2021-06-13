@@ -115,6 +115,7 @@ func Provider() terraform.ResourceProvider {
 		},
 
 		DataSourcesMap: map[string]*schema.Resource{
+			"fortios_ipmask_cidr":                             dataSourceIPMaskCIDR(),
 			"fortios_json_generic_api":                        dataSourceJSONGenericAPI(),
 			"fortios_firewall_DoSpolicy":                      dataSourceFirewallDosPolicy(),
 			"fortios_firewall_DoSpolicy6":                     dataSourceFirewallDosPolicy6(),
