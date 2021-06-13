@@ -3,6 +3,10 @@
 
 ## 1.13.0 (Jun 12, 2021)
 
+IMPROVEMENTS:
+
+* Support ipmask/cidr for system/interface/ip
+
 FEATURES:
 
 * **New Resource:** `fortios_firewall_securitypolicy`
@@ -12,7 +16,7 @@ FEATURES:
 * **New Resource:** `fortios_routerospf_network`
 * **New Resource:** `fortios_routerospf_neighbor`
 * **New Resource:** `fortios_routerospf6_ospf6interface`
-
+* **New Data Source:** `fortios_ipmask_cidr`
 
 ## 1.12.1 (Jun 5, 2021)
 
