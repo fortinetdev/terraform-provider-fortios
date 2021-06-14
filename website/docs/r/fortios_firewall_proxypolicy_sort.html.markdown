@@ -1,14 +1,14 @@
 
 ---
 layout: "fortios"
-page_title: "FortiOS: fortios_firewall_proxypolicy_move"
-sidebar_current: "docs-fortios_firewall_proxypolicy_move"
+page_title: "FortiOS: fortios_firewall_proxypolicy_sort"
+sidebar_current: "docs-fortios_firewall_proxypolicy_sort"
 subcategory: "FortiGate Firewall"
 description: |-
   Provides a resource to sort firewall proxypolicy policy
 ---
 
-# fortios_firewall_proxypolicy_move
+# fortios_firewall_proxypolicy_sort
 Provides a resource to sort firewall proxypolicy policy
 
 ```hcl

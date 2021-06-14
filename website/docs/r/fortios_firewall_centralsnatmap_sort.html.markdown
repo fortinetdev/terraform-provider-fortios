@@ -1,14 +1,14 @@
 
 ---
 layout: "fortios"
-page_title: "FortiOS: fortios_firewall_centralsnatmap_move"
-sidebar_current: "docs-fortios_firewall_centralsnatmap_move"
+page_title: "FortiOS: fortios_firewall_centralsnatmap_sort"
+sidebar_current: "docs-fortios_firewall_centralsnatmap_sort"
 subcategory: "FortiGate Firewall"
 description: |-
   Provides a resource to sort firewall centralsnatmap policy
 ---
 
-# fortios_firewall_centralsnatmap_move
+# fortios_firewall_centralsnatmap_sort
 Provides a resource to sort firewall centralsnatmap policy
 
 ```hcl
