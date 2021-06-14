@@ -44,6 +44,7 @@ The following arguments are supported:
 * `ikev2_port` - Set IKEv2 port service for IPsec VPN status. Valid values: `closed`, `open`, `unknown`.
 * `ikev2_xx_port` - Set UDP port 4500 (which may be used by IKEv2 for IPsec VPN) service status. Valid values: `closed`, `open`, `unknown`.
 * `esp_port` - Set ESP port service (used by IPsec VPNs) status. Valid values: `closed`, `open`, `unknown`.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

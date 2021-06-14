@@ -30,6 +30,11 @@ func resourceFirewallSniffer() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fosid": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 9999),
@@ -269,12 +274,20 @@ func resourceFirewallSnifferCreate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallSniffer(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallSniffer resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateFirewallSniffer(obj)
+	o, err := c.CreateFirewallSniffer(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallSniffer resource: %v", err)
@@ -294,12 +307,20 @@ func resourceFirewallSnifferUpdate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallSniffer(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallSniffer resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateFirewallSniffer(obj, mkey)
+	o, err := c.UpdateFirewallSniffer(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallSniffer resource: %v", err)
 	}
@@ -320,7 +341,15 @@ func resourceFirewallSnifferDelete(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteFirewallSniffer(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteFirewallSniffer(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting FirewallSniffer resource: %v", err)
 	}
@@ -336,7 +365,15 @@ func resourceFirewallSnifferRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadFirewallSniffer(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadFirewallSniffer(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallSniffer resource: %v", err)
 	}

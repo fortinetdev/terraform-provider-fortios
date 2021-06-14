@@ -41,6 +41,7 @@ The following arguments are supported:
 * `resync_timeout` - Graceful restart neighbor resynchronization timeout.
 * `md5_keys` - MD5 key. The structure of `md5_keys` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `md5_keys` block supports:
 

@@ -30,6 +30,11 @@ func resourceFirewallSshHostKey() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -81,12 +86,20 @@ func resourceFirewallSshHostKeyCreate(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallSshHostKey(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallSshHostKey resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateFirewallSshHostKey(obj)
+	o, err := c.CreateFirewallSshHostKey(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallSshHostKey resource: %v", err)
@@ -106,12 +119,20 @@ func resourceFirewallSshHostKeyUpdate(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallSshHostKey(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallSshHostKey resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateFirewallSshHostKey(obj, mkey)
+	o, err := c.UpdateFirewallSshHostKey(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallSshHostKey resource: %v", err)
 	}
@@ -132,7 +153,15 @@ func resourceFirewallSshHostKeyDelete(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteFirewallSshHostKey(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteFirewallSshHostKey(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting FirewallSshHostKey resource: %v", err)
 	}
@@ -148,7 +177,15 @@ func resourceFirewallSshHostKeyRead(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadFirewallSshHostKey(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadFirewallSshHostKey(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallSshHostKey resource: %v", err)
 	}

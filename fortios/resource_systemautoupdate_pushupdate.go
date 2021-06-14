@@ -30,6 +30,11 @@ func resourceSystemAutoupdatePushUpdate() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -56,12 +61,20 @@ func resourceSystemAutoupdatePushUpdateUpdate(d *schema.ResourceData, m interfac
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemAutoupdatePushUpdate(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAutoupdatePushUpdate resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemAutoupdatePushUpdate(obj, mkey)
+	o, err := c.UpdateSystemAutoupdatePushUpdate(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAutoupdatePushUpdate resource: %v", err)
 	}
@@ -82,7 +95,15 @@ func resourceSystemAutoupdatePushUpdateDelete(d *schema.ResourceData, m interfac
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemAutoupdatePushUpdate(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemAutoupdatePushUpdate(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemAutoupdatePushUpdate resource: %v", err)
 	}
@@ -98,7 +119,15 @@ func resourceSystemAutoupdatePushUpdateRead(d *schema.ResourceData, m interface{
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemAutoupdatePushUpdate(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemAutoupdatePushUpdate(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemAutoupdatePushUpdate resource: %v", err)
 	}

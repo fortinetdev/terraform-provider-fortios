@@ -30,6 +30,11 @@ func resourceLogNullDeviceSetting() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -43,12 +48,20 @@ func resourceLogNullDeviceSettingUpdate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectLogNullDeviceSetting(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogNullDeviceSetting resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateLogNullDeviceSetting(obj, mkey)
+	o, err := c.UpdateLogNullDeviceSetting(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating LogNullDeviceSetting resource: %v", err)
 	}
@@ -69,7 +82,15 @@ func resourceLogNullDeviceSettingDelete(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteLogNullDeviceSetting(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteLogNullDeviceSetting(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting LogNullDeviceSetting resource: %v", err)
 	}
@@ -85,7 +106,15 @@ func resourceLogNullDeviceSettingRead(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadLogNullDeviceSetting(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadLogNullDeviceSetting(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading LogNullDeviceSetting resource: %v", err)
 	}

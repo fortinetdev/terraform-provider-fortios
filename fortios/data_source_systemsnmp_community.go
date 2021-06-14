@@ -21,6 +21,12 @@ func dataSourceSystemSnmpCommunity() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemSnmpCommunityRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				Required: true,
@@ -141,6 +147,14 @@ func dataSourceSystemSnmpCommunityRead(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := ""
 
 	t := d.Get("fosid")
@@ -152,7 +166,7 @@ func dataSourceSystemSnmpCommunityRead(d *schema.ResourceData, m interface{}) er
 		return fmt.Errorf("Error describing SystemSnmpCommunity: type error")
 	}
 
-	o, err := c.ReadSystemSnmpCommunity(mkey)
+	o, err := c.ReadSystemSnmpCommunity(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemSnmpCommunity: %v", err)
 	}

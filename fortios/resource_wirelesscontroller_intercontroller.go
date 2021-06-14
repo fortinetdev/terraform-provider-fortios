@@ -30,6 +30,11 @@ func resourceWirelessControllerInterController() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"inter_controller_mode": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -101,12 +106,20 @@ func resourceWirelessControllerInterControllerUpdate(d *schema.ResourceData, m i
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWirelessControllerInterController(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerInterController resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateWirelessControllerInterController(obj, mkey)
+	o, err := c.UpdateWirelessControllerInterController(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerInterController resource: %v", err)
 	}
@@ -127,7 +140,15 @@ func resourceWirelessControllerInterControllerDelete(d *schema.ResourceData, m i
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteWirelessControllerInterController(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteWirelessControllerInterController(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting WirelessControllerInterController resource: %v", err)
 	}
@@ -143,7 +164,15 @@ func resourceWirelessControllerInterControllerRead(d *schema.ResourceData, m int
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadWirelessControllerInterController(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadWirelessControllerInterController(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading WirelessControllerInterController resource: %v", err)
 	}

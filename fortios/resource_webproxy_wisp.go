@@ -30,6 +30,11 @@ func resourceWebProxyWisp() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -75,12 +80,20 @@ func resourceWebProxyWispCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWebProxyWisp(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WebProxyWisp resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateWebProxyWisp(obj)
+	o, err := c.CreateWebProxyWisp(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating WebProxyWisp resource: %v", err)
@@ -100,12 +113,20 @@ func resourceWebProxyWispUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWebProxyWisp(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WebProxyWisp resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateWebProxyWisp(obj, mkey)
+	o, err := c.UpdateWebProxyWisp(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating WebProxyWisp resource: %v", err)
 	}
@@ -126,7 +147,15 @@ func resourceWebProxyWispDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteWebProxyWisp(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteWebProxyWisp(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting WebProxyWisp resource: %v", err)
 	}
@@ -142,7 +171,15 @@ func resourceWebProxyWispRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadWebProxyWisp(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadWebProxyWisp(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading WebProxyWisp resource: %v", err)
 	}

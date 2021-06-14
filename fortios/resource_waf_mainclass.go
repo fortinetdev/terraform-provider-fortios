@@ -30,6 +30,11 @@ func resourceWafMainClass() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
@@ -50,12 +55,20 @@ func resourceWafMainClassCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWafMainClass(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WafMainClass resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateWafMainClass(obj)
+	o, err := c.CreateWafMainClass(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating WafMainClass resource: %v", err)
@@ -75,12 +88,20 @@ func resourceWafMainClassUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWafMainClass(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WafMainClass resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateWafMainClass(obj, mkey)
+	o, err := c.UpdateWafMainClass(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating WafMainClass resource: %v", err)
 	}
@@ -101,7 +122,15 @@ func resourceWafMainClassDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteWafMainClass(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteWafMainClass(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting WafMainClass resource: %v", err)
 	}
@@ -117,7 +146,15 @@ func resourceWafMainClassRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadWafMainClass(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadWafMainClass(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading WafMainClass resource: %v", err)
 	}

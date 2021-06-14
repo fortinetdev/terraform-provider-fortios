@@ -30,6 +30,11 @@ func resourceSystemZone() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -109,12 +114,20 @@ func resourceSystemZoneCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemZone(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemZone resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemZone(obj)
+	o, err := c.CreateSystemZone(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemZone resource: %v", err)
@@ -134,12 +147,20 @@ func resourceSystemZoneUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemZone(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemZone resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemZone(obj, mkey)
+	o, err := c.UpdateSystemZone(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemZone resource: %v", err)
 	}
@@ -160,7 +181,15 @@ func resourceSystemZoneDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemZone(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemZone(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemZone resource: %v", err)
 	}
@@ -176,7 +205,15 @@ func resourceSystemZoneRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemZone(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemZone(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemZone resource: %v", err)
 	}

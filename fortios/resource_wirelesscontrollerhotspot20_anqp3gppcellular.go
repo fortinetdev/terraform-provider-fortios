@@ -30,6 +30,11 @@ func resourceWirelessControllerHotspot20Anqp3GppCellular() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -76,12 +81,20 @@ func resourceWirelessControllerHotspot20Anqp3GppCellularCreate(d *schema.Resourc
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWirelessControllerHotspot20Anqp3GppCellular(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WirelessControllerHotspot20Anqp3GppCellular resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateWirelessControllerHotspot20Anqp3GppCellular(obj)
+	o, err := c.CreateWirelessControllerHotspot20Anqp3GppCellular(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating WirelessControllerHotspot20Anqp3GppCellular resource: %v", err)
@@ -101,12 +114,20 @@ func resourceWirelessControllerHotspot20Anqp3GppCellularUpdate(d *schema.Resourc
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWirelessControllerHotspot20Anqp3GppCellular(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerHotspot20Anqp3GppCellular resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateWirelessControllerHotspot20Anqp3GppCellular(obj, mkey)
+	o, err := c.UpdateWirelessControllerHotspot20Anqp3GppCellular(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerHotspot20Anqp3GppCellular resource: %v", err)
 	}
@@ -127,7 +148,15 @@ func resourceWirelessControllerHotspot20Anqp3GppCellularDelete(d *schema.Resourc
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteWirelessControllerHotspot20Anqp3GppCellular(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteWirelessControllerHotspot20Anqp3GppCellular(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting WirelessControllerHotspot20Anqp3GppCellular resource: %v", err)
 	}
@@ -143,7 +172,15 @@ func resourceWirelessControllerHotspot20Anqp3GppCellularRead(d *schema.ResourceD
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadWirelessControllerHotspot20Anqp3GppCellular(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadWirelessControllerHotspot20Anqp3GppCellular(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading WirelessControllerHotspot20Anqp3GppCellular resource: %v", err)
 	}

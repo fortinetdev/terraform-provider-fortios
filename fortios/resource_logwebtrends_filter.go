@@ -30,6 +30,11 @@ func resourceLogWebtrendsFilter() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"severity": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -144,12 +149,20 @@ func resourceLogWebtrendsFilterUpdate(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectLogWebtrendsFilter(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogWebtrendsFilter resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateLogWebtrendsFilter(obj, mkey)
+	o, err := c.UpdateLogWebtrendsFilter(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating LogWebtrendsFilter resource: %v", err)
 	}
@@ -170,7 +183,15 @@ func resourceLogWebtrendsFilterDelete(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteLogWebtrendsFilter(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteLogWebtrendsFilter(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting LogWebtrendsFilter resource: %v", err)
 	}
@@ -186,7 +207,15 @@ func resourceLogWebtrendsFilterRead(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadLogWebtrendsFilter(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadLogWebtrendsFilter(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading LogWebtrendsFilter resource: %v", err)
 	}

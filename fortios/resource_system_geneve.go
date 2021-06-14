@@ -30,6 +30,11 @@ func resourceSystemGeneve() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
@@ -74,12 +79,20 @@ func resourceSystemGeneveCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemGeneve(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemGeneve resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemGeneve(obj)
+	o, err := c.CreateSystemGeneve(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemGeneve resource: %v", err)
@@ -99,12 +112,20 @@ func resourceSystemGeneveUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemGeneve(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemGeneve resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemGeneve(obj, mkey)
+	o, err := c.UpdateSystemGeneve(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemGeneve resource: %v", err)
 	}
@@ -125,7 +146,15 @@ func resourceSystemGeneveDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemGeneve(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemGeneve(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemGeneve resource: %v", err)
 	}
@@ -141,7 +170,15 @@ func resourceSystemGeneveRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemGeneve(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemGeneve(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemGeneve resource: %v", err)
 	}

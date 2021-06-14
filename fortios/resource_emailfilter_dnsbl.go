@@ -30,6 +30,11 @@ func resourceEmailfilterDnsbl() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
@@ -89,12 +94,20 @@ func resourceEmailfilterDnsblCreate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectEmailfilterDnsbl(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating EmailfilterDnsbl resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateEmailfilterDnsbl(obj)
+	o, err := c.CreateEmailfilterDnsbl(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating EmailfilterDnsbl resource: %v", err)
@@ -114,12 +127,20 @@ func resourceEmailfilterDnsblUpdate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectEmailfilterDnsbl(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating EmailfilterDnsbl resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateEmailfilterDnsbl(obj, mkey)
+	o, err := c.UpdateEmailfilterDnsbl(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating EmailfilterDnsbl resource: %v", err)
 	}
@@ -140,7 +161,15 @@ func resourceEmailfilterDnsblDelete(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteEmailfilterDnsbl(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteEmailfilterDnsbl(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting EmailfilterDnsbl resource: %v", err)
 	}
@@ -156,7 +185,15 @@ func resourceEmailfilterDnsblRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadEmailfilterDnsbl(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadEmailfilterDnsbl(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading EmailfilterDnsbl resource: %v", err)
 	}

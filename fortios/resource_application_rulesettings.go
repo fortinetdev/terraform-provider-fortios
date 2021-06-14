@@ -30,6 +30,11 @@ func resourceApplicationRuleSettings() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -43,12 +48,20 @@ func resourceApplicationRuleSettingsCreate(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectApplicationRuleSettings(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating ApplicationRuleSettings resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateApplicationRuleSettings(obj)
+	o, err := c.CreateApplicationRuleSettings(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating ApplicationRuleSettings resource: %v", err)
@@ -68,12 +81,20 @@ func resourceApplicationRuleSettingsUpdate(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectApplicationRuleSettings(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating ApplicationRuleSettings resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateApplicationRuleSettings(obj, mkey)
+	o, err := c.UpdateApplicationRuleSettings(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating ApplicationRuleSettings resource: %v", err)
 	}
@@ -94,7 +115,15 @@ func resourceApplicationRuleSettingsDelete(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteApplicationRuleSettings(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteApplicationRuleSettings(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting ApplicationRuleSettings resource: %v", err)
 	}
@@ -110,7 +139,15 @@ func resourceApplicationRuleSettingsRead(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadApplicationRuleSettings(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadApplicationRuleSettings(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading ApplicationRuleSettings resource: %v", err)
 	}

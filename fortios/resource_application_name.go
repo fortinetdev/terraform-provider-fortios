@@ -30,6 +30,11 @@ func resourceApplicationName() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -146,12 +151,20 @@ func resourceApplicationNameCreate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectApplicationName(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating ApplicationName resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateApplicationName(obj)
+	o, err := c.CreateApplicationName(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating ApplicationName resource: %v", err)
@@ -171,12 +184,20 @@ func resourceApplicationNameUpdate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectApplicationName(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating ApplicationName resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateApplicationName(obj, mkey)
+	o, err := c.UpdateApplicationName(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating ApplicationName resource: %v", err)
 	}
@@ -197,7 +218,15 @@ func resourceApplicationNameDelete(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteApplicationName(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteApplicationName(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting ApplicationName resource: %v", err)
 	}
@@ -213,7 +242,15 @@ func resourceApplicationNameRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadApplicationName(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadApplicationName(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading ApplicationName resource: %v", err)
 	}

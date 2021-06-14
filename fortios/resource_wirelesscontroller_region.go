@@ -30,6 +30,11 @@ func resourceWirelessControllerRegion() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -67,12 +72,20 @@ func resourceWirelessControllerRegionCreate(d *schema.ResourceData, m interface{
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWirelessControllerRegion(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WirelessControllerRegion resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateWirelessControllerRegion(obj)
+	o, err := c.CreateWirelessControllerRegion(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating WirelessControllerRegion resource: %v", err)
@@ -92,12 +105,20 @@ func resourceWirelessControllerRegionUpdate(d *schema.ResourceData, m interface{
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWirelessControllerRegion(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerRegion resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateWirelessControllerRegion(obj, mkey)
+	o, err := c.UpdateWirelessControllerRegion(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerRegion resource: %v", err)
 	}
@@ -118,7 +139,15 @@ func resourceWirelessControllerRegionDelete(d *schema.ResourceData, m interface{
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteWirelessControllerRegion(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteWirelessControllerRegion(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting WirelessControllerRegion resource: %v", err)
 	}
@@ -134,7 +163,15 @@ func resourceWirelessControllerRegionRead(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadWirelessControllerRegion(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadWirelessControllerRegion(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading WirelessControllerRegion resource: %v", err)
 	}

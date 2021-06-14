@@ -30,6 +30,11 @@ func resourceSwitchControllerQosDot1PMap() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -95,12 +100,20 @@ func resourceSwitchControllerQosDot1PMapCreate(d *schema.ResourceData, m interfa
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerQosDot1PMap(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerQosDot1PMap resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSwitchControllerQosDot1PMap(obj)
+	o, err := c.CreateSwitchControllerQosDot1PMap(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerQosDot1PMap resource: %v", err)
@@ -120,12 +133,20 @@ func resourceSwitchControllerQosDot1PMapUpdate(d *schema.ResourceData, m interfa
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerQosDot1PMap(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerQosDot1PMap resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSwitchControllerQosDot1PMap(obj, mkey)
+	o, err := c.UpdateSwitchControllerQosDot1PMap(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerQosDot1PMap resource: %v", err)
 	}
@@ -146,7 +167,15 @@ func resourceSwitchControllerQosDot1PMapDelete(d *schema.ResourceData, m interfa
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSwitchControllerQosDot1PMap(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSwitchControllerQosDot1PMap(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SwitchControllerQosDot1PMap resource: %v", err)
 	}
@@ -162,7 +191,15 @@ func resourceSwitchControllerQosDot1PMapRead(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSwitchControllerQosDot1PMap(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSwitchControllerQosDot1PMap(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerQosDot1PMap resource: %v", err)
 	}

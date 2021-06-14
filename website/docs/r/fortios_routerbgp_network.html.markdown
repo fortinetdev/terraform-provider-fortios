@@ -21,6 +21,7 @@ The following arguments are supported:
 * `prefix` - (Required) Network prefix.
 * `backdoor` - Enable/disable route as backdoor. Valid values: `enable`, `disable`.
 * `route_map` - Route map to modify generated route.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

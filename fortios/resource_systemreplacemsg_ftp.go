@@ -30,6 +30,11 @@ func resourceSystemReplacemsgFtp() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"msg_type": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 28),
@@ -60,13 +65,21 @@ func resourceSystemReplacemsgFtpUpdate(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey = d.Get("msg_type").(string)
 	obj, err := getObjectSystemReplacemsgFtp(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemReplacemsgFtp resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemReplacemsgFtp(obj, mkey)
+	o, err := c.UpdateSystemReplacemsgFtp(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemReplacemsgFtp resource: %v", err)
 	}
@@ -87,7 +100,15 @@ func resourceSystemReplacemsgFtpDelete(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemReplacemsgFtp(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemReplacemsgFtp(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemReplacemsgFtp resource: %v", err)
 	}
@@ -103,7 +124,15 @@ func resourceSystemReplacemsgFtpRead(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemReplacemsgFtp(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemReplacemsgFtp(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemReplacemsgFtp resource: %v", err)
 	}

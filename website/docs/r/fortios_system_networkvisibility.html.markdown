@@ -32,6 +32,7 @@ The following arguments are supported:
 * `hostname_ttl` - TTL of hostname table entries (60 - 86400).
 * `hostname_limit` - Limit of the number of hostname table entries (0 - 50000).
 * `destination_location` - Enable/disable logging of destination geographical location visibility. Valid values: `disable`, `enable`.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

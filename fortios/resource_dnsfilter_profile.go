@@ -30,6 +30,11 @@ func resourceDnsfilterProfile() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -225,12 +230,20 @@ func resourceDnsfilterProfileCreate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectDnsfilterProfile(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating DnsfilterProfile resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateDnsfilterProfile(obj)
+	o, err := c.CreateDnsfilterProfile(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating DnsfilterProfile resource: %v", err)
@@ -250,12 +263,20 @@ func resourceDnsfilterProfileUpdate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectDnsfilterProfile(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating DnsfilterProfile resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateDnsfilterProfile(obj, mkey)
+	o, err := c.UpdateDnsfilterProfile(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating DnsfilterProfile resource: %v", err)
 	}
@@ -276,7 +297,15 @@ func resourceDnsfilterProfileDelete(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteDnsfilterProfile(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteDnsfilterProfile(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting DnsfilterProfile resource: %v", err)
 	}
@@ -292,7 +321,15 @@ func resourceDnsfilterProfileRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadDnsfilterProfile(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadDnsfilterProfile(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading DnsfilterProfile resource: %v", err)
 	}

@@ -21,6 +21,7 @@ The following arguments are supported:
 * `antivirus_profile` - AntiVirus profile name.
 * `webfilter_profile` - WebFilter profile name.
 * `scan_botnet_connections` - Block or monitor connections to Botnet servers or disable Botnet scanning. Valid values: `disable`, `block`, `monitor`.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

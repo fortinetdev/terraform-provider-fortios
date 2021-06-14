@@ -30,6 +30,11 @@ func resourceSwitchControllerTrafficSniffer() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"mode": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -140,12 +145,20 @@ func resourceSwitchControllerTrafficSnifferUpdate(d *schema.ResourceData, m inte
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerTrafficSniffer(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerTrafficSniffer resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSwitchControllerTrafficSniffer(obj, mkey)
+	o, err := c.UpdateSwitchControllerTrafficSniffer(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerTrafficSniffer resource: %v", err)
 	}
@@ -166,7 +179,15 @@ func resourceSwitchControllerTrafficSnifferDelete(d *schema.ResourceData, m inte
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSwitchControllerTrafficSniffer(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSwitchControllerTrafficSniffer(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SwitchControllerTrafficSniffer resource: %v", err)
 	}
@@ -182,7 +203,15 @@ func resourceSwitchControllerTrafficSnifferRead(d *schema.ResourceData, m interf
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSwitchControllerTrafficSniffer(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSwitchControllerTrafficSniffer(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerTrafficSniffer resource: %v", err)
 	}

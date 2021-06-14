@@ -30,6 +30,11 @@ func resourceRouterRouteMap() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -330,12 +335,20 @@ func resourceRouterRouteMapCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectRouterRouteMap(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating RouterRouteMap resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateRouterRouteMap(obj)
+	o, err := c.CreateRouterRouteMap(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating RouterRouteMap resource: %v", err)
@@ -355,12 +368,20 @@ func resourceRouterRouteMapUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectRouterRouteMap(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterRouteMap resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateRouterRouteMap(obj, mkey)
+	o, err := c.UpdateRouterRouteMap(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterRouteMap resource: %v", err)
 	}
@@ -381,7 +402,15 @@ func resourceRouterRouteMapDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteRouterRouteMap(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteRouterRouteMap(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting RouterRouteMap resource: %v", err)
 	}
@@ -397,7 +426,15 @@ func resourceRouterRouteMapRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadRouterRouteMap(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadRouterRouteMap(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading RouterRouteMap resource: %v", err)
 	}

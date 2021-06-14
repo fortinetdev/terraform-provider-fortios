@@ -30,6 +30,11 @@ func resourceUserQuarantine() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"quarantine": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -116,12 +121,20 @@ func resourceUserQuarantineUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectUserQuarantine(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating UserQuarantine resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateUserQuarantine(obj, mkey)
+	o, err := c.UpdateUserQuarantine(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating UserQuarantine resource: %v", err)
 	}
@@ -142,7 +155,15 @@ func resourceUserQuarantineDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteUserQuarantine(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteUserQuarantine(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting UserQuarantine resource: %v", err)
 	}
@@ -158,7 +179,15 @@ func resourceUserQuarantineRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadUserQuarantine(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadUserQuarantine(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading UserQuarantine resource: %v", err)
 	}

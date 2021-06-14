@@ -28,6 +28,7 @@ The following arguments are supported:
 * `cloud_server_type` - Cloud server type. Valid values: `production`, `alpha`, `beta`.
 * `call_timeout` - FortiClient EMS call timeout in milliseconds (500 - 30000 milliseconds, default = 5000).
 * `certificate` - FortiClient EMS certificate.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

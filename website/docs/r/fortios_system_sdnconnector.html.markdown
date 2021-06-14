@@ -77,6 +77,7 @@ The following arguments are supported:
 * `ibm_region` - IBM cloud region name. Valid values: `us-south`, `us-east`, `germany`, `great-britain`, `japan`, `australia`.
 * `update_interval` - Dynamic object update interval (0 - 3600 sec, 0 means disabled, default = 60).
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `nic` block supports:
 

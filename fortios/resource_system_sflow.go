@@ -30,6 +30,11 @@ func resourceSystemSflow() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"collector_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -54,12 +59,20 @@ func resourceSystemSflowUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemSflow(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSflow resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemSflow(obj, mkey)
+	o, err := c.UpdateSystemSflow(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSflow resource: %v", err)
 	}
@@ -80,7 +93,15 @@ func resourceSystemSflowDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemSflow(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemSflow(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemSflow resource: %v", err)
 	}
@@ -96,7 +117,15 @@ func resourceSystemSflowRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemSflow(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemSflow(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemSflow resource: %v", err)
 	}

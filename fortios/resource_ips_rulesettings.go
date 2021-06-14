@@ -30,6 +30,11 @@ func resourceIpsRuleSettings() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -43,12 +48,20 @@ func resourceIpsRuleSettingsCreate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectIpsRuleSettings(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating IpsRuleSettings resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateIpsRuleSettings(obj)
+	o, err := c.CreateIpsRuleSettings(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating IpsRuleSettings resource: %v", err)
@@ -68,12 +81,20 @@ func resourceIpsRuleSettingsUpdate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectIpsRuleSettings(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating IpsRuleSettings resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateIpsRuleSettings(obj, mkey)
+	o, err := c.UpdateIpsRuleSettings(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating IpsRuleSettings resource: %v", err)
 	}
@@ -94,7 +115,15 @@ func resourceIpsRuleSettingsDelete(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteIpsRuleSettings(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteIpsRuleSettings(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting IpsRuleSettings resource: %v", err)
 	}
@@ -110,7 +139,15 @@ func resourceIpsRuleSettingsRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadIpsRuleSettings(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadIpsRuleSettings(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading IpsRuleSettings resource: %v", err)
 	}

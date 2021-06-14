@@ -30,6 +30,11 @@ func resourceSystemDnsServer() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
@@ -56,12 +61,20 @@ func resourceSystemDnsServerCreate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemDnsServer(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemDnsServer resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemDnsServer(obj)
+	o, err := c.CreateSystemDnsServer(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemDnsServer resource: %v", err)
@@ -81,12 +94,20 @@ func resourceSystemDnsServerUpdate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemDnsServer(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemDnsServer resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemDnsServer(obj, mkey)
+	o, err := c.UpdateSystemDnsServer(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemDnsServer resource: %v", err)
 	}
@@ -107,7 +128,15 @@ func resourceSystemDnsServerDelete(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemDnsServer(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemDnsServer(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemDnsServer resource: %v", err)
 	}
@@ -123,7 +152,15 @@ func resourceSystemDnsServerRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemDnsServer(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemDnsServer(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemDnsServer resource: %v", err)
 	}

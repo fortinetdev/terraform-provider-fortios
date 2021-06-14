@@ -30,6 +30,11 @@ func resourceFirewallScheduleGroup() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
@@ -68,12 +73,20 @@ func resourceFirewallScheduleGroupCreate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallScheduleGroup(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallScheduleGroup resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateFirewallScheduleGroup(obj)
+	o, err := c.CreateFirewallScheduleGroup(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallScheduleGroup resource: %v", err)
@@ -93,12 +106,20 @@ func resourceFirewallScheduleGroupUpdate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallScheduleGroup(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallScheduleGroup resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateFirewallScheduleGroup(obj, mkey)
+	o, err := c.UpdateFirewallScheduleGroup(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallScheduleGroup resource: %v", err)
 	}
@@ -119,7 +140,15 @@ func resourceFirewallScheduleGroupDelete(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteFirewallScheduleGroup(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteFirewallScheduleGroup(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting FirewallScheduleGroup resource: %v", err)
 	}
@@ -135,7 +164,15 @@ func resourceFirewallScheduleGroupRead(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadFirewallScheduleGroup(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadFirewallScheduleGroup(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallScheduleGroup resource: %v", err)
 	}

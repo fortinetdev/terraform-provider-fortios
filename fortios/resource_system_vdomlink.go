@@ -30,6 +30,11 @@ func resourceSystemVdomLink() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 11),
@@ -55,12 +60,20 @@ func resourceSystemVdomLinkCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemVdomLink(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemVdomLink resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemVdomLink(obj)
+	o, err := c.CreateSystemVdomLink(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemVdomLink resource: %v", err)
@@ -80,12 +93,20 @@ func resourceSystemVdomLinkUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemVdomLink(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemVdomLink resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemVdomLink(obj, mkey)
+	o, err := c.UpdateSystemVdomLink(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemVdomLink resource: %v", err)
 	}
@@ -106,7 +127,15 @@ func resourceSystemVdomLinkDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemVdomLink(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemVdomLink(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemVdomLink resource: %v", err)
 	}
@@ -122,7 +151,15 @@ func resourceSystemVdomLinkRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemVdomLink(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemVdomLink(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemVdomLink resource: %v", err)
 	}

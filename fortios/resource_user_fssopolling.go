@@ -30,6 +30,11 @@ func resourceUserFssoPolling() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
@@ -123,12 +128,20 @@ func resourceUserFssoPollingCreate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectUserFssoPolling(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating UserFssoPolling resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateUserFssoPolling(obj)
+	o, err := c.CreateUserFssoPolling(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating UserFssoPolling resource: %v", err)
@@ -148,12 +161,20 @@ func resourceUserFssoPollingUpdate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectUserFssoPolling(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating UserFssoPolling resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateUserFssoPolling(obj, mkey)
+	o, err := c.UpdateUserFssoPolling(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating UserFssoPolling resource: %v", err)
 	}
@@ -174,7 +195,15 @@ func resourceUserFssoPollingDelete(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteUserFssoPolling(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteUserFssoPolling(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting UserFssoPolling resource: %v", err)
 	}
@@ -190,7 +219,15 @@ func resourceUserFssoPollingRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadUserFssoPolling(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadUserFssoPolling(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading UserFssoPolling resource: %v", err)
 	}

@@ -30,6 +30,11 @@ func resourceSystemReplacemsgAlertmail() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"msg_type": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 28),
@@ -60,13 +65,21 @@ func resourceSystemReplacemsgAlertmailUpdate(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey = d.Get("msg_type").(string)
 	obj, err := getObjectSystemReplacemsgAlertmail(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemReplacemsgAlertmail resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemReplacemsgAlertmail(obj, mkey)
+	o, err := c.UpdateSystemReplacemsgAlertmail(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemReplacemsgAlertmail resource: %v", err)
 	}
@@ -87,7 +100,15 @@ func resourceSystemReplacemsgAlertmailDelete(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemReplacemsgAlertmail(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemReplacemsgAlertmail(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemReplacemsgAlertmail resource: %v", err)
 	}
@@ -103,7 +124,15 @@ func resourceSystemReplacemsgAlertmailRead(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemReplacemsgAlertmail(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemReplacemsgAlertmail(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemReplacemsgAlertmail resource: %v", err)
 	}

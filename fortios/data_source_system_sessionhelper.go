@@ -21,6 +21,12 @@ func dataSourceSystemSessionHelper() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemSessionHelperRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				Required: true,
@@ -45,6 +51,14 @@ func dataSourceSystemSessionHelperRead(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := ""
 
 	t := d.Get("fosid")
@@ -56,7 +70,7 @@ func dataSourceSystemSessionHelperRead(d *schema.ResourceData, m interface{}) er
 		return fmt.Errorf("Error describing SystemSessionHelper: type error")
 	}
 
-	o, err := c.ReadSystemSessionHelper(mkey)
+	o, err := c.ReadSystemSessionHelper(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemSessionHelper: %v", err)
 	}

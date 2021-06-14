@@ -30,6 +30,11 @@ func resourceSwitchControllerStpSettings() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
@@ -86,12 +91,20 @@ func resourceSwitchControllerStpSettingsUpdate(d *schema.ResourceData, m interfa
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerStpSettings(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerStpSettings resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSwitchControllerStpSettings(obj, mkey)
+	o, err := c.UpdateSwitchControllerStpSettings(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerStpSettings resource: %v", err)
 	}
@@ -112,7 +125,15 @@ func resourceSwitchControllerStpSettingsDelete(d *schema.ResourceData, m interfa
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSwitchControllerStpSettings(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSwitchControllerStpSettings(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SwitchControllerStpSettings resource: %v", err)
 	}
@@ -128,7 +149,15 @@ func resourceSwitchControllerStpSettingsRead(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSwitchControllerStpSettings(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSwitchControllerStpSettings(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerStpSettings resource: %v", err)
 	}

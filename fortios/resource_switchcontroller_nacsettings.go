@@ -30,6 +30,11 @@ func resourceSwitchControllerNacSettings() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -77,12 +82,20 @@ func resourceSwitchControllerNacSettingsCreate(d *schema.ResourceData, m interfa
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerNacSettings(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerNacSettings resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSwitchControllerNacSettings(obj)
+	o, err := c.CreateSwitchControllerNacSettings(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerNacSettings resource: %v", err)
@@ -102,12 +115,20 @@ func resourceSwitchControllerNacSettingsUpdate(d *schema.ResourceData, m interfa
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerNacSettings(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerNacSettings resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSwitchControllerNacSettings(obj, mkey)
+	o, err := c.UpdateSwitchControllerNacSettings(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerNacSettings resource: %v", err)
 	}
@@ -128,7 +149,15 @@ func resourceSwitchControllerNacSettingsDelete(d *schema.ResourceData, m interfa
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSwitchControllerNacSettings(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSwitchControllerNacSettings(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SwitchControllerNacSettings resource: %v", err)
 	}
@@ -144,7 +173,15 @@ func resourceSwitchControllerNacSettingsRead(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSwitchControllerNacSettings(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSwitchControllerNacSettings(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerNacSettings resource: %v", err)
 	}

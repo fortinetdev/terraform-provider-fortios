@@ -30,6 +30,11 @@ func resourceSystemWccp() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"service_id": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 3),
@@ -159,12 +164,20 @@ func resourceSystemWccpCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemWccp(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemWccp resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemWccp(obj)
+	o, err := c.CreateSystemWccp(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemWccp resource: %v", err)
@@ -184,12 +197,20 @@ func resourceSystemWccpUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemWccp(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemWccp resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemWccp(obj, mkey)
+	o, err := c.UpdateSystemWccp(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemWccp resource: %v", err)
 	}
@@ -210,7 +231,15 @@ func resourceSystemWccpDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemWccp(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemWccp(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemWccp resource: %v", err)
 	}
@@ -226,7 +255,15 @@ func resourceSystemWccpRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemWccp(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemWccp(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemWccp resource: %v", err)
 	}

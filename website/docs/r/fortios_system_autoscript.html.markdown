@@ -40,6 +40,7 @@ The following arguments are supported:
 * `script` - List of FortiOS CLI commands to repeat.
 * `output_size` - Number of megabytes to limit script output to (10 - 1024, default = 10).
 * `timeout` - Maximum running time for this script in seconds (0 = no timeout).
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

@@ -19,6 +19,7 @@ The following arguments are supported:
 * `poe_status` - Enable/disable PoE status. Valid values: `enable`, `disable`.
 * `igmp_flood_report` - Enable/disable IGMP flood report. Valid values: `enable`, `disable`.
 * `igmp_flood_traffic` - Enable/disable IGMP flood traffic. Valid values: `enable`, `disable`.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

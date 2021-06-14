@@ -26,6 +26,7 @@ The following arguments are supported:
 * `default_db` - Select the AV database to be used for AV scanning. Valid values: `normal`, `extended`, `extreme`.
 * `grayware` - Enable/disable grayware detection when an AntiVirus profile is applied to traffic. Valid values: `enable`, `disable`.
 * `override_timeout` - Override the large file scan timeout value in seconds (30 - 3600). Zero is the default value and is used to disable this command. When disabled, the daemon adjusts the large file scan timeout based on the file size.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

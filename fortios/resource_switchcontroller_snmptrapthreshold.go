@@ -30,6 +30,11 @@ func resourceSwitchControllerSnmpTrapThreshold() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"trap_high_cpu_threshold": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -54,12 +59,20 @@ func resourceSwitchControllerSnmpTrapThresholdUpdate(d *schema.ResourceData, m i
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerSnmpTrapThreshold(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerSnmpTrapThreshold resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSwitchControllerSnmpTrapThreshold(obj, mkey)
+	o, err := c.UpdateSwitchControllerSnmpTrapThreshold(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerSnmpTrapThreshold resource: %v", err)
 	}
@@ -80,7 +93,15 @@ func resourceSwitchControllerSnmpTrapThresholdDelete(d *schema.ResourceData, m i
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSwitchControllerSnmpTrapThreshold(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSwitchControllerSnmpTrapThreshold(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SwitchControllerSnmpTrapThreshold resource: %v", err)
 	}
@@ -96,7 +117,15 @@ func resourceSwitchControllerSnmpTrapThresholdRead(d *schema.ResourceData, m int
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSwitchControllerSnmpTrapThreshold(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSwitchControllerSnmpTrapThreshold(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerSnmpTrapThreshold resource: %v", err)
 	}

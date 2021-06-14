@@ -30,6 +30,11 @@ func resourceSwitchControllerIgmpSnooping() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"aging_time": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(15, 3600),
@@ -50,12 +55,20 @@ func resourceSwitchControllerIgmpSnoopingUpdate(d *schema.ResourceData, m interf
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerIgmpSnooping(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerIgmpSnooping resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSwitchControllerIgmpSnooping(obj, mkey)
+	o, err := c.UpdateSwitchControllerIgmpSnooping(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerIgmpSnooping resource: %v", err)
 	}
@@ -76,7 +89,15 @@ func resourceSwitchControllerIgmpSnoopingDelete(d *schema.ResourceData, m interf
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSwitchControllerIgmpSnooping(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSwitchControllerIgmpSnooping(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SwitchControllerIgmpSnooping resource: %v", err)
 	}
@@ -92,7 +113,15 @@ func resourceSwitchControllerIgmpSnoopingRead(d *schema.ResourceData, m interfac
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSwitchControllerIgmpSnooping(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSwitchControllerIgmpSnooping(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerIgmpSnooping resource: %v", err)
 	}

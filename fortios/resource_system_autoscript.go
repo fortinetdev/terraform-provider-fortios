@@ -30,6 +30,11 @@ func resourceSystemAutoScript() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -79,12 +84,20 @@ func resourceSystemAutoScriptCreate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemAutoScript(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemAutoScript resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemAutoScript(obj)
+	o, err := c.CreateSystemAutoScript(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemAutoScript resource: %v", err)
@@ -104,12 +117,20 @@ func resourceSystemAutoScriptUpdate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemAutoScript(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAutoScript resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemAutoScript(obj, mkey)
+	o, err := c.UpdateSystemAutoScript(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAutoScript resource: %v", err)
 	}
@@ -130,7 +151,15 @@ func resourceSystemAutoScriptDelete(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemAutoScript(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemAutoScript(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemAutoScript resource: %v", err)
 	}
@@ -146,7 +175,15 @@ func resourceSystemAutoScriptRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemAutoScript(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemAutoScript(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemAutoScript resource: %v", err)
 	}

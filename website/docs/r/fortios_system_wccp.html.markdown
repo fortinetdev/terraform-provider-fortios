@@ -62,6 +62,7 @@ The following arguments are supported:
 * `assignment_method` - Hash key assignment preference. Valid values: `HASH`, `MASK`, `any`.
 * `assignment_srcaddr_mask` - Assignment source address mask.
 * `assignment_dstaddr_mask` - Assignment destination address mask.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

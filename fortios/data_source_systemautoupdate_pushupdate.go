@@ -21,6 +21,12 @@ func dataSourceSystemAutoupdatePushUpdate() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemAutoupdatePushUpdateRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -45,9 +51,17 @@ func dataSourceSystemAutoupdatePushUpdateRead(d *schema.ResourceData, m interfac
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := "SystemAutoupdatePushUpdate"
 
-	o, err := c.ReadSystemAutoupdatePushUpdate(mkey)
+	o, err := c.ReadSystemAutoupdatePushUpdate(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemAutoupdatePushUpdate: %v", err)
 	}

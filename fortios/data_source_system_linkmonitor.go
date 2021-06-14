@@ -21,6 +21,12 @@ func dataSourceSystemLinkMonitor() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemLinkMonitorRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -138,6 +144,14 @@ func dataSourceSystemLinkMonitorRead(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := ""
 
 	t := d.Get("name")
@@ -149,7 +163,7 @@ func dataSourceSystemLinkMonitorRead(d *schema.ResourceData, m interface{}) erro
 		return fmt.Errorf("Error describing SystemLinkMonitor: type error")
 	}
 
-	o, err := c.ReadSystemLinkMonitor(mkey)
+	o, err := c.ReadSystemLinkMonitor(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemLinkMonitor: %v", err)
 	}

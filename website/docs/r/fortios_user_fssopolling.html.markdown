@@ -27,6 +27,7 @@ The following arguments are supported:
 * `smbv1` - Enable/disable support of SMBv1 for Samba. Valid values: `enable`, `disable`.
 * `smb_ntlmv1_auth` - Enable/disable support of NTLMv1 for Samba authentication. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `adgrp` block supports:
 

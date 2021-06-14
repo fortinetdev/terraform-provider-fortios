@@ -54,6 +54,7 @@ The following arguments are supported:
 * `tod_min` - Minute of the hour on which to scan the server (0 - 59).
 * `weekday` - Day of the week on which to scan the server. Valid values: `sunday`, `monday`, `tuesday`, `wednesday`, `thursday`, `friday`, `saturday`.
 * `date` - Day of the month on which to scan the server (1 - 31).
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

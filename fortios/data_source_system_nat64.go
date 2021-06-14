@@ -21,6 +21,12 @@ func dataSourceSystemNat64() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemNat64Read,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -69,9 +75,17 @@ func dataSourceSystemNat64Read(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := "SystemNat64"
 
-	o, err := c.ReadSystemNat64(mkey)
+	o, err := c.ReadSystemNat64(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemNat64: %v", err)
 	}

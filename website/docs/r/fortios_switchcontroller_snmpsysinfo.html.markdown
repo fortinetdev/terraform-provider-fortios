@@ -18,6 +18,7 @@ The following arguments are supported:
 * `description` - System description.
 * `contact_info` - Contact information.
 * `location` - System location.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

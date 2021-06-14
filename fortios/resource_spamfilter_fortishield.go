@@ -30,6 +30,11 @@ func resourceSpamfilterFortishield() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"spam_submit_srv": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -55,12 +60,20 @@ func resourceSpamfilterFortishieldUpdate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSpamfilterFortishield(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SpamfilterFortishield resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSpamfilterFortishield(obj, mkey)
+	o, err := c.UpdateSpamfilterFortishield(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SpamfilterFortishield resource: %v", err)
 	}
@@ -81,7 +94,15 @@ func resourceSpamfilterFortishieldDelete(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSpamfilterFortishield(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSpamfilterFortishield(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SpamfilterFortishield resource: %v", err)
 	}
@@ -97,7 +118,15 @@ func resourceSpamfilterFortishieldRead(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSpamfilterFortishield(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSpamfilterFortishield(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SpamfilterFortishield resource: %v", err)
 	}

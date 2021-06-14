@@ -30,6 +30,11 @@ func resourceWirelessControllerAddrgrp() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fosid": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -69,12 +74,20 @@ func resourceWirelessControllerAddrgrpCreate(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWirelessControllerAddrgrp(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WirelessControllerAddrgrp resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateWirelessControllerAddrgrp(obj)
+	o, err := c.CreateWirelessControllerAddrgrp(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating WirelessControllerAddrgrp resource: %v", err)
@@ -94,12 +107,20 @@ func resourceWirelessControllerAddrgrpUpdate(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWirelessControllerAddrgrp(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerAddrgrp resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateWirelessControllerAddrgrp(obj, mkey)
+	o, err := c.UpdateWirelessControllerAddrgrp(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerAddrgrp resource: %v", err)
 	}
@@ -120,7 +141,15 @@ func resourceWirelessControllerAddrgrpDelete(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteWirelessControllerAddrgrp(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteWirelessControllerAddrgrp(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting WirelessControllerAddrgrp resource: %v", err)
 	}
@@ -136,7 +165,15 @@ func resourceWirelessControllerAddrgrpRead(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadWirelessControllerAddrgrp(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadWirelessControllerAddrgrp(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading WirelessControllerAddrgrp resource: %v", err)
 	}

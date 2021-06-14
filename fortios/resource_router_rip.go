@@ -30,6 +30,11 @@ func resourceRouterRip() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"default_information_originate": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -335,12 +340,20 @@ func resourceRouterRipUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectRouterRip(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterRip resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateRouterRip(obj, mkey)
+	o, err := c.UpdateRouterRip(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterRip resource: %v", err)
 	}
@@ -360,13 +373,21 @@ func resourceRouterRipDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectRouterRip(d, true, c.Fv)
 
 	if err != nil {
 		return fmt.Errorf("Error updating RouterRip resource while getting object: %v", err)
 	}
 
-	_, err = c.UpdateRouterRip(obj, mkey)
+	_, err = c.UpdateRouterRip(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error clearing RouterRip resource: %v", err)
 	}
@@ -382,7 +403,15 @@ func resourceRouterRipRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadRouterRip(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadRouterRip(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading RouterRip resource: %v", err)
 	}

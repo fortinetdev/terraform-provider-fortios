@@ -30,6 +30,11 @@ func resourceApplicationCustom() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"tag": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -92,12 +97,20 @@ func resourceApplicationCustomCreate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectApplicationCustom(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating ApplicationCustom resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateApplicationCustom(obj)
+	o, err := c.CreateApplicationCustom(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating ApplicationCustom resource: %v", err)
@@ -117,12 +130,20 @@ func resourceApplicationCustomUpdate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectApplicationCustom(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating ApplicationCustom resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateApplicationCustom(obj, mkey)
+	o, err := c.UpdateApplicationCustom(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating ApplicationCustom resource: %v", err)
 	}
@@ -143,7 +164,15 @@ func resourceApplicationCustomDelete(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteApplicationCustom(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteApplicationCustom(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting ApplicationCustom resource: %v", err)
 	}
@@ -159,7 +188,15 @@ func resourceApplicationCustomRead(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadApplicationCustom(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadApplicationCustom(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading ApplicationCustom resource: %v", err)
 	}

@@ -30,6 +30,11 @@ func resourceFirewallVipgrp6() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -79,12 +84,20 @@ func resourceFirewallVipgrp6Create(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallVipgrp6(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallVipgrp6 resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateFirewallVipgrp6(obj)
+	o, err := c.CreateFirewallVipgrp6(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallVipgrp6 resource: %v", err)
@@ -104,12 +117,20 @@ func resourceFirewallVipgrp6Update(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallVipgrp6(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallVipgrp6 resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateFirewallVipgrp6(obj, mkey)
+	o, err := c.UpdateFirewallVipgrp6(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallVipgrp6 resource: %v", err)
 	}
@@ -130,7 +151,15 @@ func resourceFirewallVipgrp6Delete(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteFirewallVipgrp6(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteFirewallVipgrp6(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting FirewallVipgrp6 resource: %v", err)
 	}
@@ -146,7 +175,15 @@ func resourceFirewallVipgrp6Read(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadFirewallVipgrp6(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadFirewallVipgrp6(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallVipgrp6 resource: %v", err)
 	}

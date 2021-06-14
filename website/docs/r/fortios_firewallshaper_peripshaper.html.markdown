@@ -38,6 +38,7 @@ The following arguments are supported:
 * `diffserv_reverse` - Enable/disable changing the Reverse (reply) DiffServ setting applied to traffic accepted by this shaper. Valid values: `enable`, `disable`.
 * `diffservcode_forward` - Forward (original) DiffServ setting to be applied to traffic accepted by this shaper.
 * `diffservcode_rev` - Reverse (reply) DiffServ setting to be applied to traffic accepted by this shaper.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

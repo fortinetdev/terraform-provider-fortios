@@ -27,6 +27,7 @@ The following arguments are supported:
 * `listening_port` - Listening port to accept clients (1 - 65535).
 * `authentication` - Enable/disable FSSO Agent Authentication. Valid values: `enable`, `disable`.
 * `auth_password` - Password to connect to FSSO Agent.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

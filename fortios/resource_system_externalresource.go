@@ -30,6 +30,11 @@ func resourceSystemExternalResource() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -114,12 +119,20 @@ func resourceSystemExternalResourceCreate(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemExternalResource(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemExternalResource resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemExternalResource(obj)
+	o, err := c.CreateSystemExternalResource(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemExternalResource resource: %v", err)
@@ -139,12 +152,20 @@ func resourceSystemExternalResourceUpdate(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemExternalResource(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemExternalResource resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemExternalResource(obj, mkey)
+	o, err := c.UpdateSystemExternalResource(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemExternalResource resource: %v", err)
 	}
@@ -165,7 +186,15 @@ func resourceSystemExternalResourceDelete(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemExternalResource(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemExternalResource(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemExternalResource resource: %v", err)
 	}
@@ -181,7 +210,15 @@ func resourceSystemExternalResourceRead(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemExternalResource(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemExternalResource(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemExternalResource resource: %v", err)
 	}

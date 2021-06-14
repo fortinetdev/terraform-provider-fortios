@@ -16,6 +16,7 @@ The following arguments are supported:
 * `name` - VDOM link name (maximum = 8 characters).
 * `vcluster` - Virtual cluster. Valid values: `vcluster1`, `vcluster2`.
 * `type` - VDOM link type: PPP or Ethernet. Valid values: `ppp`, `ethernet`.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

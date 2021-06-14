@@ -72,6 +72,7 @@ The following arguments are supported:
 * `scan_botnet_connections` - Enable/disable scanning for connections to Botnet servers. Valid values: `disable`, `block`, `monitor`.
 * `label` - Label.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `srcaddr` block supports:
 

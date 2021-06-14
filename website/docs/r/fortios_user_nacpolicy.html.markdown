@@ -35,6 +35,7 @@ The following arguments are supported:
 * `switch_port_policy` - switch-port-policy to be applied on the matched NAC policy.
 * `switch_mac_policy` - switch-mac-policy to be applied on the matched NAC policy.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `switch_scope` block supports:
 

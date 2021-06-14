@@ -36,6 +36,7 @@ The following arguments are supported:
 * `captive_portal_port` - Captive portal port number (1 - 65535, default = 7830).
 * `auth_https` - Enable/disable redirecting HTTP user authentication to HTTPS. Valid values: `enable`, `disable`.
 * `captive_portal_ssl_port` - Captive portal SSL port number (1 - 65535, default = 7831).
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

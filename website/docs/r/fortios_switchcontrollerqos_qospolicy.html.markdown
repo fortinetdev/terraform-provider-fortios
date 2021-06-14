@@ -18,6 +18,7 @@ The following arguments are supported:
 * `trust_dot1p_map` - QoS trust 802.1p map.
 * `trust_ip_dscp_map` - QoS trust ip dscp map.
 * `queue_policy` - QoS egress queue policy.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

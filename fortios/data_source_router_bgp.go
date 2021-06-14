@@ -21,6 +21,12 @@ func dataSourceRouterBgp() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceRouterBgpRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"as": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -1214,9 +1220,17 @@ func dataSourceRouterBgpRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := "RouterBgp"
 
-	o, err := c.ReadRouterBgp(mkey)
+	o, err := c.ReadRouterBgp(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing RouterBgp: %v", err)
 	}

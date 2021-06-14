@@ -30,6 +30,11 @@ func resourceSystemCustomLanguage() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -54,12 +59,20 @@ func resourceSystemCustomLanguageCreate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemCustomLanguage(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemCustomLanguage resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemCustomLanguage(obj)
+	o, err := c.CreateSystemCustomLanguage(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemCustomLanguage resource: %v", err)
@@ -79,12 +92,20 @@ func resourceSystemCustomLanguageUpdate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemCustomLanguage(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemCustomLanguage resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemCustomLanguage(obj, mkey)
+	o, err := c.UpdateSystemCustomLanguage(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemCustomLanguage resource: %v", err)
 	}
@@ -105,7 +126,15 @@ func resourceSystemCustomLanguageDelete(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemCustomLanguage(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemCustomLanguage(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemCustomLanguage resource: %v", err)
 	}
@@ -121,7 +150,15 @@ func resourceSystemCustomLanguageRead(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemCustomLanguage(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemCustomLanguage(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemCustomLanguage resource: %v", err)
 	}

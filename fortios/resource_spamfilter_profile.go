@@ -30,6 +30,11 @@ func resourceSpamfilterProfile() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -276,12 +281,20 @@ func resourceSpamfilterProfileCreate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSpamfilterProfile(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SpamfilterProfile resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSpamfilterProfile(obj)
+	o, err := c.CreateSpamfilterProfile(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SpamfilterProfile resource: %v", err)
@@ -301,12 +314,20 @@ func resourceSpamfilterProfileUpdate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSpamfilterProfile(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SpamfilterProfile resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSpamfilterProfile(obj, mkey)
+	o, err := c.UpdateSpamfilterProfile(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SpamfilterProfile resource: %v", err)
 	}
@@ -327,7 +348,15 @@ func resourceSpamfilterProfileDelete(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSpamfilterProfile(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSpamfilterProfile(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SpamfilterProfile resource: %v", err)
 	}
@@ -343,7 +372,15 @@ func resourceSpamfilterProfileRead(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSpamfilterProfile(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSpamfilterProfile(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SpamfilterProfile resource: %v", err)
 	}

@@ -30,6 +30,11 @@ func resourceWafSubClass() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 127),
@@ -50,12 +55,20 @@ func resourceWafSubClassCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWafSubClass(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WafSubClass resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateWafSubClass(obj)
+	o, err := c.CreateWafSubClass(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating WafSubClass resource: %v", err)
@@ -75,12 +88,20 @@ func resourceWafSubClassUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWafSubClass(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WafSubClass resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateWafSubClass(obj, mkey)
+	o, err := c.UpdateWafSubClass(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating WafSubClass resource: %v", err)
 	}
@@ -101,7 +122,15 @@ func resourceWafSubClassDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteWafSubClass(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteWafSubClass(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting WafSubClass resource: %v", err)
 	}
@@ -117,7 +146,15 @@ func resourceWafSubClassRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadWafSubClass(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadWafSubClass(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading WafSubClass resource: %v", err)
 	}

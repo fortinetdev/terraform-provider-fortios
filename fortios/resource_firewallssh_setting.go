@@ -30,6 +30,11 @@ func resourceFirewallSshSetting() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"caname": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -92,12 +97,20 @@ func resourceFirewallSshSettingUpdate(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallSshSetting(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallSshSetting resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateFirewallSshSetting(obj, mkey)
+	o, err := c.UpdateFirewallSshSetting(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallSshSetting resource: %v", err)
 	}
@@ -118,7 +131,15 @@ func resourceFirewallSshSettingDelete(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteFirewallSshSetting(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteFirewallSshSetting(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting FirewallSshSetting resource: %v", err)
 	}
@@ -134,7 +155,15 @@ func resourceFirewallSshSettingRead(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadFirewallSshSetting(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadFirewallSshSetting(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallSshSetting resource: %v", err)
 	}

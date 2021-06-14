@@ -30,6 +30,11 @@ func resourceLogThreatWeight() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -295,12 +300,20 @@ func resourceLogThreatWeightUpdate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectLogThreatWeight(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogThreatWeight resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateLogThreatWeight(obj, mkey)
+	o, err := c.UpdateLogThreatWeight(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating LogThreatWeight resource: %v", err)
 	}
@@ -321,7 +334,15 @@ func resourceLogThreatWeightDelete(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteLogThreatWeight(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteLogThreatWeight(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting LogThreatWeight resource: %v", err)
 	}
@@ -337,7 +358,15 @@ func resourceLogThreatWeightRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadLogThreatWeight(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadLogThreatWeight(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading LogThreatWeight resource: %v", err)
 	}

@@ -17,6 +17,11 @@ func dataSourceSystemDscpBasedPriorityList() *schema.Resource {
 		Read: dataSourceSystemDscpBasedPriorityListRead,
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"filter": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -34,12 +39,20 @@ func dataSourceSystemDscpBasedPriorityListRead(d *schema.ResourceData, m interfa
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	filter := d.Get("filter").(string)
 	if filter != "" {
 		filter = escapeFilter(filter)
 	}
 
-	o, err := c.GenericGroupRead("/api/v2/cmdb/system/dscp-based-priority", filter)
+	o, err := c.GenericGroupRead("/api/v2/cmdb/system/dscp-based-priority", filter, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemDscpBasedPriority: %v", err)
 	}

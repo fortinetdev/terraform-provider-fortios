@@ -30,6 +30,11 @@ func resourceSwitchControllerSwitchLog() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -49,12 +54,20 @@ func resourceSwitchControllerSwitchLogUpdate(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerSwitchLog(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerSwitchLog resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSwitchControllerSwitchLog(obj, mkey)
+	o, err := c.UpdateSwitchControllerSwitchLog(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerSwitchLog resource: %v", err)
 	}
@@ -75,7 +88,15 @@ func resourceSwitchControllerSwitchLogDelete(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSwitchControllerSwitchLog(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSwitchControllerSwitchLog(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SwitchControllerSwitchLog resource: %v", err)
 	}
@@ -91,7 +112,15 @@ func resourceSwitchControllerSwitchLogRead(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSwitchControllerSwitchLog(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSwitchControllerSwitchLog(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerSwitchLog resource: %v", err)
 	}

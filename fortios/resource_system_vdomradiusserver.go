@@ -30,6 +30,11 @@ func resourceSystemVdomRadiusServer() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
@@ -55,12 +60,20 @@ func resourceSystemVdomRadiusServerCreate(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemVdomRadiusServer(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemVdomRadiusServer resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemVdomRadiusServer(obj)
+	o, err := c.CreateSystemVdomRadiusServer(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemVdomRadiusServer resource: %v", err)
@@ -80,12 +93,20 @@ func resourceSystemVdomRadiusServerUpdate(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemVdomRadiusServer(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemVdomRadiusServer resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemVdomRadiusServer(obj, mkey)
+	o, err := c.UpdateSystemVdomRadiusServer(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemVdomRadiusServer resource: %v", err)
 	}
@@ -106,7 +127,15 @@ func resourceSystemVdomRadiusServerDelete(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemVdomRadiusServer(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemVdomRadiusServer(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemVdomRadiusServer resource: %v", err)
 	}
@@ -122,7 +151,15 @@ func resourceSystemVdomRadiusServerRead(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemVdomRadiusServer(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemVdomRadiusServer(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemVdomRadiusServer resource: %v", err)
 	}

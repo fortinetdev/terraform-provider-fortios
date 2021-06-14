@@ -26,6 +26,7 @@ output output1 {
   value = data.fortios_ipmask_cidr.trname.cidr
 }
 ```
+
 ### Example2
 
 ```hcl

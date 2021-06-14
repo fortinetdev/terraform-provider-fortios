@@ -30,6 +30,11 @@ func resourceRouterIsis() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"is_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -552,12 +557,20 @@ func resourceRouterIsisUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectRouterIsis(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterIsis resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateRouterIsis(obj, mkey)
+	o, err := c.UpdateRouterIsis(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterIsis resource: %v", err)
 	}
@@ -577,13 +590,21 @@ func resourceRouterIsisDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectRouterIsis(d, true, c.Fv)
 
 	if err != nil {
 		return fmt.Errorf("Error updating RouterIsis resource while getting object: %v", err)
 	}
 
-	_, err = c.UpdateRouterIsis(obj, mkey)
+	_, err = c.UpdateRouterIsis(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error clearing RouterIsis resource: %v", err)
 	}
@@ -599,7 +620,15 @@ func resourceRouterIsisRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadRouterIsis(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadRouterIsis(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading RouterIsis resource: %v", err)
 	}

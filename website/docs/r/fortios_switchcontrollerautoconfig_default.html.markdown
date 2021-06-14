@@ -16,6 +16,7 @@ The following arguments are supported:
 * `fgt_policy` - Default FortiLink auto-config policy.
 * `isl_policy` - Default ISL auto-config policy.
 * `icl_policy` - Default ICL auto-config policy.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

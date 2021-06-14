@@ -30,6 +30,11 @@ func resourceWebfilterContentHeader() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
@@ -82,12 +87,20 @@ func resourceWebfilterContentHeaderCreate(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWebfilterContentHeader(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WebfilterContentHeader resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateWebfilterContentHeader(obj)
+	o, err := c.CreateWebfilterContentHeader(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating WebfilterContentHeader resource: %v", err)
@@ -107,12 +120,20 @@ func resourceWebfilterContentHeaderUpdate(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWebfilterContentHeader(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WebfilterContentHeader resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateWebfilterContentHeader(obj, mkey)
+	o, err := c.UpdateWebfilterContentHeader(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating WebfilterContentHeader resource: %v", err)
 	}
@@ -133,7 +154,15 @@ func resourceWebfilterContentHeaderDelete(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteWebfilterContentHeader(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteWebfilterContentHeader(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting WebfilterContentHeader resource: %v", err)
 	}
@@ -149,7 +178,15 @@ func resourceWebfilterContentHeaderRead(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadWebfilterContentHeader(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadWebfilterContentHeader(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading WebfilterContentHeader resource: %v", err)
 	}

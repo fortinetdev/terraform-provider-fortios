@@ -17,6 +17,11 @@ func dataSourceFirewallWildcardFqdnGroupList() *schema.Resource {
 		Read: dataSourceFirewallWildcardFqdnGroupListRead,
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"filter": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -34,12 +39,20 @@ func dataSourceFirewallWildcardFqdnGroupListRead(d *schema.ResourceData, m inter
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	filter := d.Get("filter").(string)
 	if filter != "" {
 		filter = escapeFilter(filter)
 	}
 
-	o, err := c.GenericGroupRead("/api/v2/cmdb/firewall.wildcard-fqdn/group", filter)
+	o, err := c.GenericGroupRead("/api/v2/cmdb/firewall.wildcard-fqdn/group", filter, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing FirewallWildcardFqdnGroup: %v", err)
 	}

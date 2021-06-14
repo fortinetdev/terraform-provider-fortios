@@ -30,6 +30,11 @@ func resourceSystemAffinityPacketRedistribution() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
@@ -58,12 +63,20 @@ func resourceSystemAffinityPacketRedistributionCreate(d *schema.ResourceData, m 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemAffinityPacketRedistribution(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemAffinityPacketRedistribution resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemAffinityPacketRedistribution(obj)
+	o, err := c.CreateSystemAffinityPacketRedistribution(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemAffinityPacketRedistribution resource: %v", err)
@@ -83,12 +96,20 @@ func resourceSystemAffinityPacketRedistributionUpdate(d *schema.ResourceData, m 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemAffinityPacketRedistribution(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAffinityPacketRedistribution resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemAffinityPacketRedistribution(obj, mkey)
+	o, err := c.UpdateSystemAffinityPacketRedistribution(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAffinityPacketRedistribution resource: %v", err)
 	}
@@ -109,7 +130,15 @@ func resourceSystemAffinityPacketRedistributionDelete(d *schema.ResourceData, m 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemAffinityPacketRedistribution(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemAffinityPacketRedistribution(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemAffinityPacketRedistribution resource: %v", err)
 	}
@@ -125,7 +154,15 @@ func resourceSystemAffinityPacketRedistributionRead(d *schema.ResourceData, m in
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemAffinityPacketRedistribution(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemAffinityPacketRedistribution(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemAffinityPacketRedistribution resource: %v", err)
 	}

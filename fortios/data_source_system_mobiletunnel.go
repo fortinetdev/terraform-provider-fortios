@@ -21,6 +21,12 @@ func dataSourceSystemMobileTunnel() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemMobileTunnelRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -106,6 +112,14 @@ func dataSourceSystemMobileTunnelRead(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := ""
 
 	t := d.Get("name")
@@ -117,7 +131,7 @@ func dataSourceSystemMobileTunnelRead(d *schema.ResourceData, m interface{}) err
 		return fmt.Errorf("Error describing SystemMobileTunnel: type error")
 	}
 
-	o, err := c.ReadSystemMobileTunnel(mkey)
+	o, err := c.ReadSystemMobileTunnel(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemMobileTunnel: %v", err)
 	}

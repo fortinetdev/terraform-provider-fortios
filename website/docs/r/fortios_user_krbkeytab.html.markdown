@@ -49,6 +49,7 @@ The following arguments are supported:
 * `principal` - (Required) Kerberos service principal, e.g. HTTP/fgt.example.com@EXAMPLE.COM.
 * `ldap_server` - (Required) LDAP server name.
 * `keytab` - (Required) base64 coded keytab file containing a pre-shared key.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

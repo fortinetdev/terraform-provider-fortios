@@ -30,6 +30,11 @@ func resourceFirewallIpmacbindingTable() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"seq_num": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -63,12 +68,20 @@ func resourceFirewallIpmacbindingTableCreate(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallIpmacbindingTable(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallIpmacbindingTable resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateFirewallIpmacbindingTable(obj)
+	o, err := c.CreateFirewallIpmacbindingTable(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallIpmacbindingTable resource: %v", err)
@@ -88,12 +101,20 @@ func resourceFirewallIpmacbindingTableUpdate(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallIpmacbindingTable(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallIpmacbindingTable resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateFirewallIpmacbindingTable(obj, mkey)
+	o, err := c.UpdateFirewallIpmacbindingTable(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallIpmacbindingTable resource: %v", err)
 	}
@@ -114,7 +135,15 @@ func resourceFirewallIpmacbindingTableDelete(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteFirewallIpmacbindingTable(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteFirewallIpmacbindingTable(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting FirewallIpmacbindingTable resource: %v", err)
 	}
@@ -130,7 +159,15 @@ func resourceFirewallIpmacbindingTableRead(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadFirewallIpmacbindingTable(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadFirewallIpmacbindingTable(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallIpmacbindingTable resource: %v", err)
 	}

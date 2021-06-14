@@ -16,6 +16,7 @@ The following arguments are supported:
 * `name` - Policy name.
 * `vlan` - Names of VLANs that use captive portal authentication.
 * `policy_type` - Policy type. Valid values: `captive-portal`.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

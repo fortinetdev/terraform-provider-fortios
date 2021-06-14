@@ -30,6 +30,11 @@ func resourceWebProxyDebugUrl() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -60,12 +65,20 @@ func resourceWebProxyDebugUrlCreate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWebProxyDebugUrl(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WebProxyDebugUrl resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateWebProxyDebugUrl(obj)
+	o, err := c.CreateWebProxyDebugUrl(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating WebProxyDebugUrl resource: %v", err)
@@ -85,12 +98,20 @@ func resourceWebProxyDebugUrlUpdate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWebProxyDebugUrl(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WebProxyDebugUrl resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateWebProxyDebugUrl(obj, mkey)
+	o, err := c.UpdateWebProxyDebugUrl(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating WebProxyDebugUrl resource: %v", err)
 	}
@@ -111,7 +132,15 @@ func resourceWebProxyDebugUrlDelete(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteWebProxyDebugUrl(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteWebProxyDebugUrl(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting WebProxyDebugUrl resource: %v", err)
 	}
@@ -127,7 +156,15 @@ func resourceWebProxyDebugUrlRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadWebProxyDebugUrl(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadWebProxyDebugUrl(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading WebProxyDebugUrl resource: %v", err)
 	}

@@ -30,6 +30,11 @@ func resourceLogDiskFilter() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"severity": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -239,12 +244,20 @@ func resourceLogDiskFilterUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectLogDiskFilter(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogDiskFilter resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateLogDiskFilter(obj, mkey)
+	o, err := c.UpdateLogDiskFilter(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating LogDiskFilter resource: %v", err)
 	}
@@ -265,7 +278,15 @@ func resourceLogDiskFilterDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteLogDiskFilter(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteLogDiskFilter(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting LogDiskFilter resource: %v", err)
 	}
@@ -281,7 +302,15 @@ func resourceLogDiskFilterRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadLogDiskFilter(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadLogDiskFilter(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading LogDiskFilter resource: %v", err)
 	}

@@ -17,6 +17,11 @@ func dataSourceSystemDnsServerList() *schema.Resource {
 		Read: dataSourceSystemDnsServerListRead,
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"filter": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -34,12 +39,20 @@ func dataSourceSystemDnsServerListRead(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	filter := d.Get("filter").(string)
 	if filter != "" {
 		filter = escapeFilter(filter)
 	}
 
-	o, err := c.GenericGroupRead("/api/v2/cmdb/system/dns-server", filter)
+	o, err := c.GenericGroupRead("/api/v2/cmdb/system/dns-server", filter, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemDnsServer: %v", err)
 	}

@@ -30,6 +30,11 @@ func resourceUserDeviceAccessList() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -78,12 +83,20 @@ func resourceUserDeviceAccessListCreate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectUserDeviceAccessList(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating UserDeviceAccessList resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateUserDeviceAccessList(obj)
+	o, err := c.CreateUserDeviceAccessList(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating UserDeviceAccessList resource: %v", err)
@@ -103,12 +116,20 @@ func resourceUserDeviceAccessListUpdate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectUserDeviceAccessList(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating UserDeviceAccessList resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateUserDeviceAccessList(obj, mkey)
+	o, err := c.UpdateUserDeviceAccessList(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating UserDeviceAccessList resource: %v", err)
 	}
@@ -129,7 +150,15 @@ func resourceUserDeviceAccessListDelete(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteUserDeviceAccessList(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteUserDeviceAccessList(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting UserDeviceAccessList resource: %v", err)
 	}
@@ -145,7 +174,15 @@ func resourceUserDeviceAccessListRead(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadUserDeviceAccessList(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadUserDeviceAccessList(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading UserDeviceAccessList resource: %v", err)
 	}

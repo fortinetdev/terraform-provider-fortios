@@ -13,6 +13,11 @@ func dataSourceJSONGenericAPI() *schema.Resource {
 		Read: dataSourceJSONGenericAPIRead,
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"path": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -33,6 +38,14 @@ func dataSourceJSONGenericAPIRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	i := &forticlient.JSONJSONGenericAPI{
 		Path:          d.Get("path").(string),
 		Method:        "GET",
@@ -40,7 +53,7 @@ func dataSourceJSONGenericAPIRead(d *schema.ResourceData, m interface{}) error {
 		Json:          "",
 	}
 
-	res, err := c.CreateJSONGenericAPI(i)
+	res, err := c.CreateJSONGenericAPI(i, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading json generic api: %v", err)
 	}

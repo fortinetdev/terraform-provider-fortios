@@ -30,6 +30,11 @@ func resourceRouterAuthPath() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
@@ -54,12 +59,20 @@ func resourceRouterAuthPathCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectRouterAuthPath(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating RouterAuthPath resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateRouterAuthPath(obj)
+	o, err := c.CreateRouterAuthPath(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating RouterAuthPath resource: %v", err)
@@ -79,12 +92,20 @@ func resourceRouterAuthPathUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectRouterAuthPath(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterAuthPath resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateRouterAuthPath(obj, mkey)
+	o, err := c.UpdateRouterAuthPath(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterAuthPath resource: %v", err)
 	}
@@ -105,7 +126,15 @@ func resourceRouterAuthPathDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteRouterAuthPath(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteRouterAuthPath(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting RouterAuthPath resource: %v", err)
 	}
@@ -121,7 +150,15 @@ func resourceRouterAuthPathRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadRouterAuthPath(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadRouterAuthPath(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading RouterAuthPath resource: %v", err)
 	}

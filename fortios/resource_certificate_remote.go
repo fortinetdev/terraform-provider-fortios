@@ -30,6 +30,11 @@ func resourceCertificateRemote() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -60,12 +65,20 @@ func resourceCertificateRemoteCreate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectCertificateRemote(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating CertificateRemote resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateCertificateRemote(obj)
+	o, err := c.CreateCertificateRemote(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating CertificateRemote resource: %v", err)
@@ -85,12 +98,20 @@ func resourceCertificateRemoteUpdate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectCertificateRemote(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating CertificateRemote resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateCertificateRemote(obj, mkey)
+	o, err := c.UpdateCertificateRemote(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating CertificateRemote resource: %v", err)
 	}
@@ -111,7 +132,15 @@ func resourceCertificateRemoteDelete(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteCertificateRemote(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteCertificateRemote(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting CertificateRemote resource: %v", err)
 	}
@@ -127,7 +156,15 @@ func resourceCertificateRemoteRead(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadCertificateRemote(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadCertificateRemote(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading CertificateRemote resource: %v", err)
 	}

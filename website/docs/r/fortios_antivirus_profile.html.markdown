@@ -62,6 +62,7 @@ The following arguments are supported:
 * `av_block_log` - Enable/disable logging for AntiVirus file blocking. Valid values: `enable`, `disable`.
 * `extended_log` - Enable/disable extended logging for antivirus. Valid values: `enable`, `disable`.
 * `scan_mode` - Choose between full scan mode and quick scan mode.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `http` block supports:
 

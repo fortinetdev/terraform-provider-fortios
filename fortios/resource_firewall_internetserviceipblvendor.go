@@ -30,6 +30,11 @@ func resourceFirewallInternetServiceIpblVendor() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fosid": &schema.Schema{
 				Type: schema.TypeInt,
 				Optional: true,
@@ -49,12 +54,20 @@ func resourceFirewallInternetServiceIpblVendorCreate(d *schema.ResourceData, m i
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallInternetServiceIpblVendor(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallInternetServiceIpblVendor resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateFirewallInternetServiceIpblVendor(obj)
+	o, err := c.CreateFirewallInternetServiceIpblVendor(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallInternetServiceIpblVendor resource: %v", err)
@@ -74,12 +87,20 @@ func resourceFirewallInternetServiceIpblVendorUpdate(d *schema.ResourceData, m i
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallInternetServiceIpblVendor(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallInternetServiceIpblVendor resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateFirewallInternetServiceIpblVendor(obj, mkey)
+	o, err := c.UpdateFirewallInternetServiceIpblVendor(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallInternetServiceIpblVendor resource: %v", err)
 	}
@@ -100,7 +121,15 @@ func resourceFirewallInternetServiceIpblVendorDelete(d *schema.ResourceData, m i
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteFirewallInternetServiceIpblVendor(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteFirewallInternetServiceIpblVendor(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting FirewallInternetServiceIpblVendor resource: %v", err)
 	}
@@ -116,7 +145,15 @@ func resourceFirewallInternetServiceIpblVendorRead(d *schema.ResourceData, m int
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadFirewallInternetServiceIpblVendor(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadFirewallInternetServiceIpblVendor(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallInternetServiceIpblVendor resource: %v", err)
 	}

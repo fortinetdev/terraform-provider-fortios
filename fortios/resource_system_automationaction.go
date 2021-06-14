@@ -30,6 +30,11 @@ func resourceSystemAutomationAction() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
@@ -332,12 +337,20 @@ func resourceSystemAutomationActionCreate(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemAutomationAction(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemAutomationAction resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemAutomationAction(obj)
+	o, err := c.CreateSystemAutomationAction(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemAutomationAction resource: %v", err)
@@ -357,12 +370,20 @@ func resourceSystemAutomationActionUpdate(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemAutomationAction(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAutomationAction resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemAutomationAction(obj, mkey)
+	o, err := c.UpdateSystemAutomationAction(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAutomationAction resource: %v", err)
 	}
@@ -383,7 +404,15 @@ func resourceSystemAutomationActionDelete(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemAutomationAction(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemAutomationAction(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemAutomationAction resource: %v", err)
 	}
@@ -399,7 +428,15 @@ func resourceSystemAutomationActionRead(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemAutomationAction(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemAutomationAction(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemAutomationAction resource: %v", err)
 	}

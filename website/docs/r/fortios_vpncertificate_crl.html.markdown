@@ -27,6 +27,7 @@ The following arguments are supported:
 * `update_interval` - Time in seconds before the FortiGate checks for an updated CRL. Set to 0 to update only when it expires.
 * `source_ip` - Source IP address for communications to a HTTP or SCEP CA server.
 * `last_updated` - Time at which CRL was last updated.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

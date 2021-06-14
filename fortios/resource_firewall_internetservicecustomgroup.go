@@ -30,6 +30,11 @@ func resourceFirewallInternetServiceCustomGroup() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -68,12 +73,20 @@ func resourceFirewallInternetServiceCustomGroupCreate(d *schema.ResourceData, m 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallInternetServiceCustomGroup(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallInternetServiceCustomGroup resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateFirewallInternetServiceCustomGroup(obj)
+	o, err := c.CreateFirewallInternetServiceCustomGroup(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallInternetServiceCustomGroup resource: %v", err)
@@ -93,12 +106,20 @@ func resourceFirewallInternetServiceCustomGroupUpdate(d *schema.ResourceData, m 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallInternetServiceCustomGroup(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallInternetServiceCustomGroup resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateFirewallInternetServiceCustomGroup(obj, mkey)
+	o, err := c.UpdateFirewallInternetServiceCustomGroup(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallInternetServiceCustomGroup resource: %v", err)
 	}
@@ -119,7 +140,15 @@ func resourceFirewallInternetServiceCustomGroupDelete(d *schema.ResourceData, m 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteFirewallInternetServiceCustomGroup(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteFirewallInternetServiceCustomGroup(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting FirewallInternetServiceCustomGroup resource: %v", err)
 	}
@@ -135,7 +164,15 @@ func resourceFirewallInternetServiceCustomGroupRead(d *schema.ResourceData, m in
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadFirewallInternetServiceCustomGroup(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadFirewallInternetServiceCustomGroup(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallInternetServiceCustomGroup resource: %v", err)
 	}

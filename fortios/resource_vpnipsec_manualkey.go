@@ -30,6 +30,11 @@ func resourceVpnIpsecManualkey() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -89,12 +94,20 @@ func resourceVpnIpsecManualkeyCreate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectVpnIpsecManualkey(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating VpnIpsecManualkey resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateVpnIpsecManualkey(obj)
+	o, err := c.CreateVpnIpsecManualkey(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating VpnIpsecManualkey resource: %v", err)
@@ -114,12 +127,20 @@ func resourceVpnIpsecManualkeyUpdate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectVpnIpsecManualkey(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating VpnIpsecManualkey resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateVpnIpsecManualkey(obj, mkey)
+	o, err := c.UpdateVpnIpsecManualkey(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating VpnIpsecManualkey resource: %v", err)
 	}
@@ -140,7 +161,15 @@ func resourceVpnIpsecManualkeyDelete(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteVpnIpsecManualkey(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteVpnIpsecManualkey(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting VpnIpsecManualkey resource: %v", err)
 	}
@@ -156,7 +185,15 @@ func resourceVpnIpsecManualkeyRead(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadVpnIpsecManualkey(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadVpnIpsecManualkey(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading VpnIpsecManualkey resource: %v", err)
 	}

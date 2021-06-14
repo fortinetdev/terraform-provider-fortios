@@ -30,6 +30,11 @@ func resourceAntivirusQuarantine() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"agelimit": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 479),
@@ -96,12 +101,20 @@ func resourceAntivirusQuarantineUpdate(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectAntivirusQuarantine(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating AntivirusQuarantine resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateAntivirusQuarantine(obj, mkey)
+	o, err := c.UpdateAntivirusQuarantine(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating AntivirusQuarantine resource: %v", err)
 	}
@@ -122,7 +135,15 @@ func resourceAntivirusQuarantineDelete(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteAntivirusQuarantine(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteAntivirusQuarantine(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting AntivirusQuarantine resource: %v", err)
 	}
@@ -138,7 +159,15 @@ func resourceAntivirusQuarantineRead(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadAntivirusQuarantine(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadAntivirusQuarantine(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading AntivirusQuarantine resource: %v", err)
 	}

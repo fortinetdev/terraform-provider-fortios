@@ -17,6 +17,11 @@ func dataSourceFirewallScheduleOnetimeList() *schema.Resource {
 		Read: dataSourceFirewallScheduleOnetimeListRead,
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"filter": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -34,12 +39,20 @@ func dataSourceFirewallScheduleOnetimeListRead(d *schema.ResourceData, m interfa
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	filter := d.Get("filter").(string)
 	if filter != "" {
 		filter = escapeFilter(filter)
 	}
 
-	o, err := c.GenericGroupRead("/api/v2/cmdb/firewall.schedule/onetime", filter)
+	o, err := c.GenericGroupRead("/api/v2/cmdb/firewall.schedule/onetime", filter, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing FirewallScheduleOnetime: %v", err)
 	}

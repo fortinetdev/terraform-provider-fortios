@@ -30,6 +30,11 @@ func resourceSystemSdnConnector() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -394,12 +399,20 @@ func resourceSystemSdnConnectorCreate(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemSdnConnector(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemSdnConnector resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemSdnConnector(obj)
+	o, err := c.CreateSystemSdnConnector(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemSdnConnector resource: %v", err)
@@ -419,12 +432,20 @@ func resourceSystemSdnConnectorUpdate(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemSdnConnector(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSdnConnector resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemSdnConnector(obj, mkey)
+	o, err := c.UpdateSystemSdnConnector(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSdnConnector resource: %v", err)
 	}
@@ -445,7 +466,15 @@ func resourceSystemSdnConnectorDelete(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemSdnConnector(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemSdnConnector(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemSdnConnector resource: %v", err)
 	}
@@ -461,7 +490,15 @@ func resourceSystemSdnConnectorRead(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemSdnConnector(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemSdnConnector(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemSdnConnector resource: %v", err)
 	}

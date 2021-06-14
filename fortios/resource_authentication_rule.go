@@ -30,6 +30,11 @@ func resourceAuthenticationRule() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -153,12 +158,20 @@ func resourceAuthenticationRuleCreate(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectAuthenticationRule(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating AuthenticationRule resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateAuthenticationRule(obj)
+	o, err := c.CreateAuthenticationRule(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating AuthenticationRule resource: %v", err)
@@ -178,12 +191,20 @@ func resourceAuthenticationRuleUpdate(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectAuthenticationRule(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating AuthenticationRule resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateAuthenticationRule(obj, mkey)
+	o, err := c.UpdateAuthenticationRule(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating AuthenticationRule resource: %v", err)
 	}
@@ -204,7 +225,15 @@ func resourceAuthenticationRuleDelete(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteAuthenticationRule(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteAuthenticationRule(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting AuthenticationRule resource: %v", err)
 	}
@@ -220,7 +249,15 @@ func resourceAuthenticationRuleRead(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadAuthenticationRule(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadAuthenticationRule(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading AuthenticationRule resource: %v", err)
 	}

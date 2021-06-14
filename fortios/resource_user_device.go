@@ -30,6 +30,11 @@ func resourceUserDevice() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"alias": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -121,12 +126,20 @@ func resourceUserDeviceCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectUserDevice(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating UserDevice resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateUserDevice(obj)
+	o, err := c.CreateUserDevice(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating UserDevice resource: %v", err)
@@ -146,12 +159,20 @@ func resourceUserDeviceUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectUserDevice(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating UserDevice resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateUserDevice(obj, mkey)
+	o, err := c.UpdateUserDevice(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating UserDevice resource: %v", err)
 	}
@@ -172,7 +193,15 @@ func resourceUserDeviceDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteUserDevice(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteUserDevice(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting UserDevice resource: %v", err)
 	}
@@ -188,7 +217,15 @@ func resourceUserDeviceRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadUserDevice(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadUserDevice(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading UserDevice resource: %v", err)
 	}

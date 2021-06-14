@@ -30,6 +30,11 @@ func resourceSpamfilterOptions() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"dns_timeout": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 30),
@@ -45,12 +50,20 @@ func resourceSpamfilterOptionsUpdate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSpamfilterOptions(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SpamfilterOptions resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSpamfilterOptions(obj, mkey)
+	o, err := c.UpdateSpamfilterOptions(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SpamfilterOptions resource: %v", err)
 	}
@@ -71,7 +84,15 @@ func resourceSpamfilterOptionsDelete(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSpamfilterOptions(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSpamfilterOptions(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SpamfilterOptions resource: %v", err)
 	}
@@ -87,7 +108,15 @@ func resourceSpamfilterOptionsRead(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSpamfilterOptions(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSpamfilterOptions(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SpamfilterOptions resource: %v", err)
 	}

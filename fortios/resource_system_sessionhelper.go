@@ -30,6 +30,11 @@ func resourceSystemSessionHelper() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
@@ -58,12 +63,20 @@ func resourceSystemSessionHelperCreate(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemSessionHelper(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemSessionHelper resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemSessionHelper(obj)
+	o, err := c.CreateSystemSessionHelper(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemSessionHelper resource: %v", err)
@@ -83,12 +96,20 @@ func resourceSystemSessionHelperUpdate(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemSessionHelper(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSessionHelper resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemSessionHelper(obj, mkey)
+	o, err := c.UpdateSystemSessionHelper(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSessionHelper resource: %v", err)
 	}
@@ -109,7 +130,15 @@ func resourceSystemSessionHelperDelete(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemSessionHelper(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemSessionHelper(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemSessionHelper resource: %v", err)
 	}
@@ -125,7 +154,15 @@ func resourceSystemSessionHelperRead(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemSessionHelper(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemSessionHelper(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemSessionHelper resource: %v", err)
 	}

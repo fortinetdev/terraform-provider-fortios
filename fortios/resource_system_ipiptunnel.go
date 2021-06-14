@@ -30,6 +30,11 @@ func resourceSystemIpipTunnel() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
@@ -58,12 +63,20 @@ func resourceSystemIpipTunnelCreate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemIpipTunnel(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemIpipTunnel resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemIpipTunnel(obj)
+	o, err := c.CreateSystemIpipTunnel(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemIpipTunnel resource: %v", err)
@@ -83,12 +96,20 @@ func resourceSystemIpipTunnelUpdate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemIpipTunnel(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemIpipTunnel resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemIpipTunnel(obj, mkey)
+	o, err := c.UpdateSystemIpipTunnel(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemIpipTunnel resource: %v", err)
 	}
@@ -109,7 +130,15 @@ func resourceSystemIpipTunnelDelete(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemIpipTunnel(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemIpipTunnel(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemIpipTunnel resource: %v", err)
 	}
@@ -125,7 +154,15 @@ func resourceSystemIpipTunnelRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemIpipTunnel(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemIpipTunnel(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemIpipTunnel resource: %v", err)
 	}

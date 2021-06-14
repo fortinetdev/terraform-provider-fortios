@@ -22,6 +22,7 @@ The following arguments are supported:
 * `poll_interval` - Poll interval time in seconds.
 * `cost` - Cost of the interface, value range from 0 to 65535, 0 means auto-cost.
 * `priority` - Priority.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

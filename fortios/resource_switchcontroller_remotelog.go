@@ -30,6 +30,11 @@ func resourceSwitchControllerRemoteLog() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -77,12 +82,20 @@ func resourceSwitchControllerRemoteLogCreate(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerRemoteLog(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerRemoteLog resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSwitchControllerRemoteLog(obj)
+	o, err := c.CreateSwitchControllerRemoteLog(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerRemoteLog resource: %v", err)
@@ -102,12 +115,20 @@ func resourceSwitchControllerRemoteLogUpdate(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerRemoteLog(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerRemoteLog resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSwitchControllerRemoteLog(obj, mkey)
+	o, err := c.UpdateSwitchControllerRemoteLog(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerRemoteLog resource: %v", err)
 	}
@@ -128,7 +149,15 @@ func resourceSwitchControllerRemoteLogDelete(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSwitchControllerRemoteLog(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSwitchControllerRemoteLog(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SwitchControllerRemoteLog resource: %v", err)
 	}
@@ -144,7 +173,15 @@ func resourceSwitchControllerRemoteLogRead(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSwitchControllerRemoteLog(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSwitchControllerRemoteLog(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerRemoteLog resource: %v", err)
 	}

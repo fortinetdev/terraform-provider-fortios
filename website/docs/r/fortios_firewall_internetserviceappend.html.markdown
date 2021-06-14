@@ -15,6 +15,7 @@ The following arguments are supported:
 
 * `match_port` - Matching TCP/UDP/SCTP destination port (1 to 65535).
 * `append_port` - Appending TCP/UDP/SCTP destination port (1 to 65535).
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

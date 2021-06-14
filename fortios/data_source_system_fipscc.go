@@ -21,6 +21,12 @@ func dataSourceSystemFipsCc() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemFipsCcRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -45,9 +51,17 @@ func dataSourceSystemFipsCcRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := "SystemFipsCc"
 
-	o, err := c.ReadSystemFipsCc(mkey)
+	o, err := c.ReadSystemFipsCc(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemFipsCc: %v", err)
 	}

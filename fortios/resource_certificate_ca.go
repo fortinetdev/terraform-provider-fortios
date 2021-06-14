@@ -30,6 +30,11 @@ func resourceCertificateCa() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 79),
@@ -94,12 +99,20 @@ func resourceCertificateCaCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectCertificateCa(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating CertificateCa resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateCertificateCa(obj)
+	o, err := c.CreateCertificateCa(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating CertificateCa resource: %v", err)
@@ -119,12 +132,20 @@ func resourceCertificateCaUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectCertificateCa(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating CertificateCa resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateCertificateCa(obj, mkey)
+	o, err := c.UpdateCertificateCa(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating CertificateCa resource: %v", err)
 	}
@@ -145,7 +166,15 @@ func resourceCertificateCaDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteCertificateCa(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteCertificateCa(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting CertificateCa resource: %v", err)
 	}
@@ -161,7 +190,15 @@ func resourceCertificateCaRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadCertificateCa(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadCertificateCa(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading CertificateCa resource: %v", err)
 	}

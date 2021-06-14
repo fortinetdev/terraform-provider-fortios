@@ -30,6 +30,11 @@ func resourceSystemVneTunnel() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -83,12 +88,20 @@ func resourceSystemVneTunnelUpdate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemVneTunnel(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemVneTunnel resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemVneTunnel(obj, mkey)
+	o, err := c.UpdateSystemVneTunnel(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemVneTunnel resource: %v", err)
 	}
@@ -109,7 +122,15 @@ func resourceSystemVneTunnelDelete(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemVneTunnel(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemVneTunnel(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemVneTunnel resource: %v", err)
 	}
@@ -125,7 +146,15 @@ func resourceSystemVneTunnelRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemVneTunnel(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemVneTunnel(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemVneTunnel resource: %v", err)
 	}

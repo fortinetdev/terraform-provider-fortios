@@ -21,6 +21,12 @@ func dataSourceSystemCentralManagement() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemCentralManagementRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"mode": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -141,9 +147,17 @@ func dataSourceSystemCentralManagementRead(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := "SystemCentralManagement"
 
-	o, err := c.ReadSystemCentralManagement(mkey)
+	o, err := c.ReadSystemCentralManagement(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemCentralManagement: %v", err)
 	}

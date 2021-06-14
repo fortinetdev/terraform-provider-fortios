@@ -30,6 +30,11 @@ func resourceSwitchControllerSwitchInterfaceTag() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -44,12 +49,20 @@ func resourceSwitchControllerSwitchInterfaceTagCreate(d *schema.ResourceData, m 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerSwitchInterfaceTag(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerSwitchInterfaceTag resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSwitchControllerSwitchInterfaceTag(obj)
+	o, err := c.CreateSwitchControllerSwitchInterfaceTag(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerSwitchInterfaceTag resource: %v", err)
@@ -69,12 +82,20 @@ func resourceSwitchControllerSwitchInterfaceTagUpdate(d *schema.ResourceData, m 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerSwitchInterfaceTag(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerSwitchInterfaceTag resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSwitchControllerSwitchInterfaceTag(obj, mkey)
+	o, err := c.UpdateSwitchControllerSwitchInterfaceTag(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerSwitchInterfaceTag resource: %v", err)
 	}
@@ -95,7 +116,15 @@ func resourceSwitchControllerSwitchInterfaceTagDelete(d *schema.ResourceData, m 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSwitchControllerSwitchInterfaceTag(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSwitchControllerSwitchInterfaceTag(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SwitchControllerSwitchInterfaceTag resource: %v", err)
 	}
@@ -111,7 +140,15 @@ func resourceSwitchControllerSwitchInterfaceTagRead(d *schema.ResourceData, m in
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSwitchControllerSwitchInterfaceTag(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSwitchControllerSwitchInterfaceTag(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerSwitchInterfaceTag resource: %v", err)
 	}

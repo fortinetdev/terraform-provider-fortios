@@ -21,6 +21,12 @@ func dataSourceSystemNtp() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemNtpRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"ntpsync": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -123,9 +129,17 @@ func dataSourceSystemNtpRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := "SystemNtp"
 
-	o, err := c.ReadSystemNtp(mkey)
+	o, err := c.ReadSystemNtp(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemNtp: %v", err)
 	}

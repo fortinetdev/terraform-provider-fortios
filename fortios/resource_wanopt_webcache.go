@@ -30,6 +30,11 @@ func resourceWanoptWebcache() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"max_object_size": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 2147483),
@@ -129,12 +134,20 @@ func resourceWanoptWebcacheUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWanoptWebcache(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WanoptWebcache resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateWanoptWebcache(obj, mkey)
+	o, err := c.UpdateWanoptWebcache(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating WanoptWebcache resource: %v", err)
 	}
@@ -155,7 +168,15 @@ func resourceWanoptWebcacheDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteWanoptWebcache(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteWanoptWebcache(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting WanoptWebcache resource: %v", err)
 	}
@@ -171,7 +192,15 @@ func resourceWanoptWebcacheRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadWanoptWebcache(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadWanoptWebcache(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading WanoptWebcache resource: %v", err)
 	}

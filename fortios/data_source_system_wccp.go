@@ -21,6 +21,12 @@ func dataSourceSystemWccp() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemWccpRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"service_id": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -122,6 +128,14 @@ func dataSourceSystemWccpRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := ""
 
 	t := d.Get("service_id")
@@ -133,7 +147,7 @@ func dataSourceSystemWccpRead(d *schema.ResourceData, m interface{}) error {
 		return fmt.Errorf("Error describing SystemWccp: type error")
 	}
 
-	o, err := c.ReadSystemWccp(mkey)
+	o, err := c.ReadSystemWccp(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemWccp: %v", err)
 	}

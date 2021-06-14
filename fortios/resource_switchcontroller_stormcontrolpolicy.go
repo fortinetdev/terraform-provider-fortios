@@ -30,6 +30,11 @@ func resourceSwitchControllerStormControlPolicy() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -77,12 +82,20 @@ func resourceSwitchControllerStormControlPolicyCreate(d *schema.ResourceData, m 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerStormControlPolicy(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerStormControlPolicy resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSwitchControllerStormControlPolicy(obj)
+	o, err := c.CreateSwitchControllerStormControlPolicy(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerStormControlPolicy resource: %v", err)
@@ -102,12 +115,20 @@ func resourceSwitchControllerStormControlPolicyUpdate(d *schema.ResourceData, m 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerStormControlPolicy(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerStormControlPolicy resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSwitchControllerStormControlPolicy(obj, mkey)
+	o, err := c.UpdateSwitchControllerStormControlPolicy(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerStormControlPolicy resource: %v", err)
 	}
@@ -128,7 +149,15 @@ func resourceSwitchControllerStormControlPolicyDelete(d *schema.ResourceData, m 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSwitchControllerStormControlPolicy(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSwitchControllerStormControlPolicy(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SwitchControllerStormControlPolicy resource: %v", err)
 	}
@@ -144,7 +173,15 @@ func resourceSwitchControllerStormControlPolicyRead(d *schema.ResourceData, m in
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSwitchControllerStormControlPolicy(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSwitchControllerStormControlPolicy(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerStormControlPolicy resource: %v", err)
 	}

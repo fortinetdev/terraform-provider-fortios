@@ -30,6 +30,11 @@ func resourceVpnIpsecForticlient() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"realm": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -60,12 +65,20 @@ func resourceVpnIpsecForticlientCreate(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectVpnIpsecForticlient(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating VpnIpsecForticlient resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateVpnIpsecForticlient(obj)
+	o, err := c.CreateVpnIpsecForticlient(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating VpnIpsecForticlient resource: %v", err)
@@ -85,12 +98,20 @@ func resourceVpnIpsecForticlientUpdate(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectVpnIpsecForticlient(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating VpnIpsecForticlient resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateVpnIpsecForticlient(obj, mkey)
+	o, err := c.UpdateVpnIpsecForticlient(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating VpnIpsecForticlient resource: %v", err)
 	}
@@ -111,7 +132,15 @@ func resourceVpnIpsecForticlientDelete(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteVpnIpsecForticlient(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteVpnIpsecForticlient(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting VpnIpsecForticlient resource: %v", err)
 	}
@@ -127,7 +156,15 @@ func resourceVpnIpsecForticlientRead(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadVpnIpsecForticlient(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadVpnIpsecForticlient(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading VpnIpsecForticlient resource: %v", err)
 	}

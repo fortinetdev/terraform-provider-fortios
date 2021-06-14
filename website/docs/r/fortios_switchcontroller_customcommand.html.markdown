@@ -25,6 +25,7 @@ The following arguments are supported:
 * `command_name` - Command name called by the FortiGate switch controller in the execute command.
 * `description` - Description.
 * `command` - (Required) String of commands to send to FortiSwitch devices (For example (%0a = return key): config switch trunk %0a edit myTrunk %0a set members port1 port2 %0a end %0a).
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

@@ -30,6 +30,11 @@ func resourceUserKrbKeytab() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -66,12 +71,20 @@ func resourceUserKrbKeytabCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectUserKrbKeytab(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating UserKrbKeytab resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateUserKrbKeytab(obj)
+	o, err := c.CreateUserKrbKeytab(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating UserKrbKeytab resource: %v", err)
@@ -91,12 +104,20 @@ func resourceUserKrbKeytabUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectUserKrbKeytab(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating UserKrbKeytab resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateUserKrbKeytab(obj, mkey)
+	o, err := c.UpdateUserKrbKeytab(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating UserKrbKeytab resource: %v", err)
 	}
@@ -117,7 +138,15 @@ func resourceUserKrbKeytabDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteUserKrbKeytab(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteUserKrbKeytab(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting UserKrbKeytab resource: %v", err)
 	}
@@ -133,7 +162,15 @@ func resourceUserKrbKeytabRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadUserKrbKeytab(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadUserKrbKeytab(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading UserKrbKeytab resource: %v", err)
 	}

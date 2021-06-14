@@ -30,6 +30,11 @@ func resourceSystemSnmpSysinfo() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -83,12 +88,20 @@ func resourceSystemSnmpSysinfoUpdate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemSnmpSysinfo(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSnmpSysinfo resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemSnmpSysinfo(obj, mkey)
+	o, err := c.UpdateSystemSnmpSysinfo(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSnmpSysinfo resource: %v", err)
 	}
@@ -109,7 +122,15 @@ func resourceSystemSnmpSysinfoDelete(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemSnmpSysinfo(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemSnmpSysinfo(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemSnmpSysinfo resource: %v", err)
 	}
@@ -125,7 +146,15 @@ func resourceSystemSnmpSysinfoRead(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemSnmpSysinfo(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemSnmpSysinfo(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemSnmpSysinfo resource: %v", err)
 	}

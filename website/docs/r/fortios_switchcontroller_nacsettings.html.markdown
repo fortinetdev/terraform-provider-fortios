@@ -20,6 +20,7 @@ The following arguments are supported:
 * `auto_auth` - Enable/disable NAC device auto authorization when discovered and nac-policy matched. Valid values: `disable`, `enable`.
 * `bounce_nac_port` - Enable/disable bouncing (administratively bring the link down, up) of a switch port when NAC mode is configured on the port. Helps to re-initiate the DHCP process for a device. Valid values: `disable`, `enable`.
 * `link_down_flush` - Clear NAC devices on switch ports on link down event. Valid values: `disable`, `enable`.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

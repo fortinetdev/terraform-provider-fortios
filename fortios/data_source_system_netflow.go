@@ -21,6 +21,12 @@ func dataSourceSystemNetflow() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemNetflowRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"collector_ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -57,9 +63,17 @@ func dataSourceSystemNetflowRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := "SystemNetflow"
 
-	o, err := c.ReadSystemNetflow(mkey)
+	o, err := c.ReadSystemNetflow(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemNetflow: %v", err)
 	}

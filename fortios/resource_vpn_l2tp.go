@@ -30,6 +30,11 @@ func resourceVpnL2Tp() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"eip": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -81,12 +86,20 @@ func resourceVpnL2TpUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectVpnL2Tp(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating VpnL2Tp resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateVpnL2Tp(obj, mkey)
+	o, err := c.UpdateVpnL2Tp(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating VpnL2Tp resource: %v", err)
 	}
@@ -107,7 +120,15 @@ func resourceVpnL2TpDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteVpnL2Tp(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteVpnL2Tp(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting VpnL2Tp resource: %v", err)
 	}
@@ -123,7 +144,15 @@ func resourceVpnL2TpRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadVpnL2Tp(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadVpnL2Tp(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading VpnL2Tp resource: %v", err)
 	}

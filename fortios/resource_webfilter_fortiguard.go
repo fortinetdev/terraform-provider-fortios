@@ -30,6 +30,11 @@ func resourceWebfilterFortiguard() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"cache_mode": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -106,12 +111,20 @@ func resourceWebfilterFortiguardUpdate(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWebfilterFortiguard(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WebfilterFortiguard resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateWebfilterFortiguard(obj, mkey)
+	o, err := c.UpdateWebfilterFortiguard(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating WebfilterFortiguard resource: %v", err)
 	}
@@ -132,7 +145,15 @@ func resourceWebfilterFortiguardDelete(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteWebfilterFortiguard(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteWebfilterFortiguard(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting WebfilterFortiguard resource: %v", err)
 	}
@@ -148,7 +169,15 @@ func resourceWebfilterFortiguardRead(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadWebfilterFortiguard(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadWebfilterFortiguard(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading WebfilterFortiguard resource: %v", err)
 	}

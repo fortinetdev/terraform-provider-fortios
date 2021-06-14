@@ -30,6 +30,11 @@ func resourceIpsCustom() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"tag": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -113,12 +118,20 @@ func resourceIpsCustomCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectIpsCustom(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating IpsCustom resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateIpsCustom(obj)
+	o, err := c.CreateIpsCustom(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating IpsCustom resource: %v", err)
@@ -138,12 +151,20 @@ func resourceIpsCustomUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectIpsCustom(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating IpsCustom resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateIpsCustom(obj, mkey)
+	o, err := c.UpdateIpsCustom(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating IpsCustom resource: %v", err)
 	}
@@ -164,7 +185,15 @@ func resourceIpsCustomDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteIpsCustom(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteIpsCustom(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting IpsCustom resource: %v", err)
 	}
@@ -180,7 +209,15 @@ func resourceIpsCustomRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadIpsCustom(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadIpsCustom(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading IpsCustom resource: %v", err)
 	}

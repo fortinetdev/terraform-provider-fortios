@@ -30,6 +30,11 @@ func resourceAntivirusSettings() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"use_extreme_db": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -60,12 +65,20 @@ func resourceAntivirusSettingsUpdate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectAntivirusSettings(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating AntivirusSettings resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateAntivirusSettings(obj, mkey)
+	o, err := c.UpdateAntivirusSettings(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating AntivirusSettings resource: %v", err)
 	}
@@ -86,7 +99,15 @@ func resourceAntivirusSettingsDelete(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteAntivirusSettings(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteAntivirusSettings(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting AntivirusSettings resource: %v", err)
 	}
@@ -102,7 +123,15 @@ func resourceAntivirusSettingsRead(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadAntivirusSettings(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadAntivirusSettings(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading AntivirusSettings resource: %v", err)
 	}

@@ -21,6 +21,12 @@ func dataSourceRouterIsis() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceRouterIsisRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"is_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -421,9 +427,17 @@ func dataSourceRouterIsisRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := "RouterIsis"
 
-	o, err := c.ReadRouterIsis(mkey)
+	o, err := c.ReadRouterIsis(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing RouterIsis: %v", err)
 	}

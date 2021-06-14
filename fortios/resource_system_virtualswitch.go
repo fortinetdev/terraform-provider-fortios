@@ -30,6 +30,11 @@ func resourceSystemVirtualSwitch() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
@@ -108,12 +113,20 @@ func resourceSystemVirtualSwitchCreate(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemVirtualSwitch(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemVirtualSwitch resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemVirtualSwitch(obj)
+	o, err := c.CreateSystemVirtualSwitch(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemVirtualSwitch resource: %v", err)
@@ -133,12 +146,20 @@ func resourceSystemVirtualSwitchUpdate(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemVirtualSwitch(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemVirtualSwitch resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemVirtualSwitch(obj, mkey)
+	o, err := c.UpdateSystemVirtualSwitch(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemVirtualSwitch resource: %v", err)
 	}
@@ -159,7 +180,15 @@ func resourceSystemVirtualSwitchDelete(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemVirtualSwitch(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemVirtualSwitch(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemVirtualSwitch resource: %v", err)
 	}
@@ -175,7 +204,15 @@ func resourceSystemVirtualSwitchRead(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemVirtualSwitch(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemVirtualSwitch(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemVirtualSwitch resource: %v", err)
 	}

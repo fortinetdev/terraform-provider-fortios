@@ -30,6 +30,11 @@ func resourceSystemSmsServer() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -50,12 +55,20 @@ func resourceSystemSmsServerCreate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemSmsServer(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemSmsServer resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemSmsServer(obj)
+	o, err := c.CreateSystemSmsServer(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemSmsServer resource: %v", err)
@@ -75,12 +88,20 @@ func resourceSystemSmsServerUpdate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemSmsServer(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSmsServer resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemSmsServer(obj, mkey)
+	o, err := c.UpdateSystemSmsServer(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSmsServer resource: %v", err)
 	}
@@ -101,7 +122,15 @@ func resourceSystemSmsServerDelete(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemSmsServer(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemSmsServer(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemSmsServer resource: %v", err)
 	}
@@ -117,7 +146,15 @@ func resourceSystemSmsServerRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemSmsServer(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemSmsServer(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemSmsServer resource: %v", err)
 	}

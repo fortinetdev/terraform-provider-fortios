@@ -21,6 +21,12 @@ func dataSourceSystemVdomException() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemVdomExceptionRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				Required: true,
@@ -57,6 +63,14 @@ func dataSourceSystemVdomExceptionRead(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := ""
 
 	t := d.Get("fosid")
@@ -68,7 +82,7 @@ func dataSourceSystemVdomExceptionRead(d *schema.ResourceData, m interface{}) er
 		return fmt.Errorf("Error describing SystemVdomException: type error")
 	}
 
-	o, err := c.ReadSystemVdomException(mkey)
+	o, err := c.ReadSystemVdomException(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemVdomException: %v", err)
 	}

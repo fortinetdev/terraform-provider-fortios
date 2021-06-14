@@ -26,6 +26,7 @@ The following arguments are supported:
 * `distance` - Administrative distance (1 - 255) for this route.
 * `gateway` - Gateway IP address for this route.
 * `geo_filter` - Filter based on geographical location. Route will NOT be installed if the resolved IP address belongs to the country in the filter.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

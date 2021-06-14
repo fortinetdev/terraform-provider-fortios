@@ -30,6 +30,11 @@ func resourceUserAdgrp() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 511),
@@ -61,12 +66,20 @@ func resourceUserAdgrpCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectUserAdgrp(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating UserAdgrp resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateUserAdgrp(obj)
+	o, err := c.CreateUserAdgrp(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating UserAdgrp resource: %v", err)
@@ -86,12 +99,20 @@ func resourceUserAdgrpUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectUserAdgrp(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating UserAdgrp resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateUserAdgrp(obj, mkey)
+	o, err := c.UpdateUserAdgrp(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating UserAdgrp resource: %v", err)
 	}
@@ -112,7 +133,15 @@ func resourceUserAdgrpDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteUserAdgrp(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteUserAdgrp(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting UserAdgrp resource: %v", err)
 	}
@@ -128,7 +157,15 @@ func resourceUserAdgrpRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadUserAdgrp(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadUserAdgrp(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading UserAdgrp resource: %v", err)
 	}

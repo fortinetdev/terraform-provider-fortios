@@ -21,6 +21,12 @@ func dataSourceFirewallShaperPerIpShaper() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceFirewallShaperPerIpShaperRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -69,6 +75,14 @@ func dataSourceFirewallShaperPerIpShaperRead(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := ""
 
 	t := d.Get("name")
@@ -80,7 +94,7 @@ func dataSourceFirewallShaperPerIpShaperRead(d *schema.ResourceData, m interface
 		return fmt.Errorf("Error describing FirewallShaperPerIpShaper: type error")
 	}
 
-	o, err := c.ReadFirewallShaperPerIpShaper(mkey)
+	o, err := c.ReadFirewallShaperPerIpShaper(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing FirewallShaperPerIpShaper: %v", err)
 	}

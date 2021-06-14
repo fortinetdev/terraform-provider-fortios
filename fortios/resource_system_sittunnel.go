@@ -30,6 +30,11 @@ func resourceSystemSitTunnel() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
@@ -65,12 +70,20 @@ func resourceSystemSitTunnelCreate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemSitTunnel(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemSitTunnel resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemSitTunnel(obj)
+	o, err := c.CreateSystemSitTunnel(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemSitTunnel resource: %v", err)
@@ -90,12 +103,20 @@ func resourceSystemSitTunnelUpdate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemSitTunnel(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSitTunnel resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemSitTunnel(obj, mkey)
+	o, err := c.UpdateSystemSitTunnel(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSitTunnel resource: %v", err)
 	}
@@ -116,7 +137,15 @@ func resourceSystemSitTunnelDelete(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemSitTunnel(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemSitTunnel(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemSitTunnel resource: %v", err)
 	}
@@ -132,7 +161,15 @@ func resourceSystemSitTunnelRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemSitTunnel(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemSitTunnel(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemSitTunnel resource: %v", err)
 	}

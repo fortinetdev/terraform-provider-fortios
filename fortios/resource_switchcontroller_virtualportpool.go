@@ -30,6 +30,11 @@ func resourceSwitchControllerVirtualPortPool() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -51,12 +56,20 @@ func resourceSwitchControllerVirtualPortPoolCreate(d *schema.ResourceData, m int
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerVirtualPortPool(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerVirtualPortPool resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSwitchControllerVirtualPortPool(obj)
+	o, err := c.CreateSwitchControllerVirtualPortPool(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerVirtualPortPool resource: %v", err)
@@ -76,12 +89,20 @@ func resourceSwitchControllerVirtualPortPoolUpdate(d *schema.ResourceData, m int
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerVirtualPortPool(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerVirtualPortPool resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSwitchControllerVirtualPortPool(obj, mkey)
+	o, err := c.UpdateSwitchControllerVirtualPortPool(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerVirtualPortPool resource: %v", err)
 	}
@@ -102,7 +123,15 @@ func resourceSwitchControllerVirtualPortPoolDelete(d *schema.ResourceData, m int
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSwitchControllerVirtualPortPool(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSwitchControllerVirtualPortPool(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SwitchControllerVirtualPortPool resource: %v", err)
 	}
@@ -118,7 +147,15 @@ func resourceSwitchControllerVirtualPortPoolRead(d *schema.ResourceData, m inter
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSwitchControllerVirtualPortPool(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSwitchControllerVirtualPortPool(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerVirtualPortPool resource: %v", err)
 	}

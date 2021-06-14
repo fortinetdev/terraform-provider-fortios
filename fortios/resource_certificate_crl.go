@@ -30,6 +30,11 @@ func resourceCertificateCrl() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -116,12 +121,20 @@ func resourceCertificateCrlCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectCertificateCrl(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating CertificateCrl resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateCertificateCrl(obj)
+	o, err := c.CreateCertificateCrl(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating CertificateCrl resource: %v", err)
@@ -141,12 +154,20 @@ func resourceCertificateCrlUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectCertificateCrl(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating CertificateCrl resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateCertificateCrl(obj, mkey)
+	o, err := c.UpdateCertificateCrl(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating CertificateCrl resource: %v", err)
 	}
@@ -167,7 +188,15 @@ func resourceCertificateCrlDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteCertificateCrl(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteCertificateCrl(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting CertificateCrl resource: %v", err)
 	}
@@ -183,7 +212,15 @@ func resourceCertificateCrlRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadCertificateCrl(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadCertificateCrl(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading CertificateCrl resource: %v", err)
 	}

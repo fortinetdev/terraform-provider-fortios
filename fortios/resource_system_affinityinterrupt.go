@@ -30,6 +30,11 @@ func resourceSystemAffinityInterrupt() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
@@ -53,12 +58,20 @@ func resourceSystemAffinityInterruptCreate(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemAffinityInterrupt(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemAffinityInterrupt resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemAffinityInterrupt(obj)
+	o, err := c.CreateSystemAffinityInterrupt(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemAffinityInterrupt resource: %v", err)
@@ -78,12 +91,20 @@ func resourceSystemAffinityInterruptUpdate(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemAffinityInterrupt(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAffinityInterrupt resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemAffinityInterrupt(obj, mkey)
+	o, err := c.UpdateSystemAffinityInterrupt(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAffinityInterrupt resource: %v", err)
 	}
@@ -104,7 +125,15 @@ func resourceSystemAffinityInterruptDelete(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemAffinityInterrupt(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemAffinityInterrupt(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemAffinityInterrupt resource: %v", err)
 	}
@@ -120,7 +149,15 @@ func resourceSystemAffinityInterruptRead(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemAffinityInterrupt(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemAffinityInterrupt(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemAffinityInterrupt resource: %v", err)
 	}

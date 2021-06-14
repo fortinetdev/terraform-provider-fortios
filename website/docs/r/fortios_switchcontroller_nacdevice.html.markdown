@@ -23,6 +23,7 @@ The following arguments are supported:
 * `port_policy` - Port policy to be applied on this learned NAC device.
 * `mac_policy` - MAC policy to be applied on this learned NAC device.
 * `last_seen` - Device last seen.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

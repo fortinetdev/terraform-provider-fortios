@@ -30,6 +30,11 @@ func resourceDlpSensitivity() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -44,12 +49,20 @@ func resourceDlpSensitivityCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectDlpSensitivity(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating DlpSensitivity resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateDlpSensitivity(obj)
+	o, err := c.CreateDlpSensitivity(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating DlpSensitivity resource: %v", err)
@@ -69,12 +82,20 @@ func resourceDlpSensitivityUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectDlpSensitivity(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating DlpSensitivity resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateDlpSensitivity(obj, mkey)
+	o, err := c.UpdateDlpSensitivity(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating DlpSensitivity resource: %v", err)
 	}
@@ -95,7 +116,15 @@ func resourceDlpSensitivityDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteDlpSensitivity(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteDlpSensitivity(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting DlpSensitivity resource: %v", err)
 	}
@@ -111,7 +140,15 @@ func resourceDlpSensitivityRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadDlpSensitivity(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadDlpSensitivity(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading DlpSensitivity resource: %v", err)
 	}

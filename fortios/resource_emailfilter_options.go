@@ -30,6 +30,11 @@ func resourceEmailfilterOptions() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"dns_timeout": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 30),
@@ -45,12 +50,20 @@ func resourceEmailfilterOptionsUpdate(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectEmailfilterOptions(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating EmailfilterOptions resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateEmailfilterOptions(obj, mkey)
+	o, err := c.UpdateEmailfilterOptions(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating EmailfilterOptions resource: %v", err)
 	}
@@ -71,7 +84,15 @@ func resourceEmailfilterOptionsDelete(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteEmailfilterOptions(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteEmailfilterOptions(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting EmailfilterOptions resource: %v", err)
 	}
@@ -87,7 +108,15 @@ func resourceEmailfilterOptionsRead(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadEmailfilterOptions(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadEmailfilterOptions(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading EmailfilterOptions resource: %v", err)
 	}

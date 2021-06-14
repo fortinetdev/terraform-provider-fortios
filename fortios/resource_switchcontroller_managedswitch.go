@@ -30,6 +30,11 @@ func resourceSwitchControllerManagedSwitch() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"switch_id": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 16),
@@ -1371,12 +1376,20 @@ func resourceSwitchControllerManagedSwitchCreate(d *schema.ResourceData, m inter
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerManagedSwitch(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerManagedSwitch resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSwitchControllerManagedSwitch(obj)
+	o, err := c.CreateSwitchControllerManagedSwitch(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerManagedSwitch resource: %v", err)
@@ -1396,12 +1409,20 @@ func resourceSwitchControllerManagedSwitchUpdate(d *schema.ResourceData, m inter
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerManagedSwitch(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerManagedSwitch resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSwitchControllerManagedSwitch(obj, mkey)
+	o, err := c.UpdateSwitchControllerManagedSwitch(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerManagedSwitch resource: %v", err)
 	}
@@ -1422,7 +1443,15 @@ func resourceSwitchControllerManagedSwitchDelete(d *schema.ResourceData, m inter
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSwitchControllerManagedSwitch(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSwitchControllerManagedSwitch(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SwitchControllerManagedSwitch resource: %v", err)
 	}
@@ -1438,7 +1467,15 @@ func resourceSwitchControllerManagedSwitchRead(d *schema.ResourceData, m interfa
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSwitchControllerManagedSwitch(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSwitchControllerManagedSwitch(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerManagedSwitch resource: %v", err)
 	}

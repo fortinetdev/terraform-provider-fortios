@@ -21,6 +21,12 @@ func dataSourceSystemCsf() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemCsfRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -161,9 +167,17 @@ func dataSourceSystemCsfRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := "SystemCsf"
 
-	o, err := c.ReadSystemCsf(mkey)
+	o, err := c.ReadSystemCsf(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemCsf: %v", err)
 	}

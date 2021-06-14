@@ -30,6 +30,11 @@ func resourceWirelessControllerHotspot20Icon() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -93,12 +98,20 @@ func resourceWirelessControllerHotspot20IconCreate(d *schema.ResourceData, m int
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWirelessControllerHotspot20Icon(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WirelessControllerHotspot20Icon resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateWirelessControllerHotspot20Icon(obj)
+	o, err := c.CreateWirelessControllerHotspot20Icon(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating WirelessControllerHotspot20Icon resource: %v", err)
@@ -118,12 +131,20 @@ func resourceWirelessControllerHotspot20IconUpdate(d *schema.ResourceData, m int
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWirelessControllerHotspot20Icon(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerHotspot20Icon resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateWirelessControllerHotspot20Icon(obj, mkey)
+	o, err := c.UpdateWirelessControllerHotspot20Icon(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerHotspot20Icon resource: %v", err)
 	}
@@ -144,7 +165,15 @@ func resourceWirelessControllerHotspot20IconDelete(d *schema.ResourceData, m int
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteWirelessControllerHotspot20Icon(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteWirelessControllerHotspot20Icon(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting WirelessControllerHotspot20Icon resource: %v", err)
 	}
@@ -160,7 +189,15 @@ func resourceWirelessControllerHotspot20IconRead(d *schema.ResourceData, m inter
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadWirelessControllerHotspot20Icon(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadWirelessControllerHotspot20Icon(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading WirelessControllerHotspot20Icon resource: %v", err)
 	}

@@ -30,6 +30,11 @@ func resourceSystemReplacemsgWebproxy() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"msg_type": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 28),
@@ -60,13 +65,21 @@ func resourceSystemReplacemsgWebproxyUpdate(d *schema.ResourceData, m interface{
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey = d.Get("msg_type").(string)
 	obj, err := getObjectSystemReplacemsgWebproxy(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemReplacemsgWebproxy resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemReplacemsgWebproxy(obj, mkey)
+	o, err := c.UpdateSystemReplacemsgWebproxy(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemReplacemsgWebproxy resource: %v", err)
 	}
@@ -87,7 +100,15 @@ func resourceSystemReplacemsgWebproxyDelete(d *schema.ResourceData, m interface{
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemReplacemsgWebproxy(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemReplacemsgWebproxy(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemReplacemsgWebproxy resource: %v", err)
 	}
@@ -103,7 +124,15 @@ func resourceSystemReplacemsgWebproxyRead(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemReplacemsgWebproxy(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemReplacemsgWebproxy(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemReplacemsgWebproxy resource: %v", err)
 	}

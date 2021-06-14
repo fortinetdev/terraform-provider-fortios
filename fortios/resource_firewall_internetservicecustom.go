@@ -30,6 +30,11 @@ func resourceFirewallInternetServiceCustom() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -118,12 +123,20 @@ func resourceFirewallInternetServiceCustomCreate(d *schema.ResourceData, m inter
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallInternetServiceCustom(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallInternetServiceCustom resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateFirewallInternetServiceCustom(obj)
+	o, err := c.CreateFirewallInternetServiceCustom(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallInternetServiceCustom resource: %v", err)
@@ -143,12 +156,20 @@ func resourceFirewallInternetServiceCustomUpdate(d *schema.ResourceData, m inter
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallInternetServiceCustom(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallInternetServiceCustom resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateFirewallInternetServiceCustom(obj, mkey)
+	o, err := c.UpdateFirewallInternetServiceCustom(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallInternetServiceCustom resource: %v", err)
 	}
@@ -169,7 +190,15 @@ func resourceFirewallInternetServiceCustomDelete(d *schema.ResourceData, m inter
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteFirewallInternetServiceCustom(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteFirewallInternetServiceCustom(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting FirewallInternetServiceCustom resource: %v", err)
 	}
@@ -185,7 +214,15 @@ func resourceFirewallInternetServiceCustomRead(d *schema.ResourceData, m interfa
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadFirewallInternetServiceCustom(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadFirewallInternetServiceCustom(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallInternetServiceCustom resource: %v", err)
 	}

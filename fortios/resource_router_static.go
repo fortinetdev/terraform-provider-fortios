@@ -30,6 +30,11 @@ func resourceRouterStatic() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"seq_num": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
@@ -145,12 +150,20 @@ func resourceRouterStaticCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectRouterStatic(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating RouterStatic resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateRouterStatic(obj)
+	o, err := c.CreateRouterStatic(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating RouterStatic resource: %v", err)
@@ -170,12 +183,20 @@ func resourceRouterStaticUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectRouterStatic(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterStatic resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateRouterStatic(obj, mkey)
+	o, err := c.UpdateRouterStatic(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterStatic resource: %v", err)
 	}
@@ -196,7 +217,15 @@ func resourceRouterStaticDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteRouterStatic(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteRouterStatic(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting RouterStatic resource: %v", err)
 	}
@@ -212,7 +241,15 @@ func resourceRouterStaticRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadRouterStatic(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadRouterStatic(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading RouterStatic resource: %v", err)
 	}

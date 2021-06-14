@@ -37,6 +37,7 @@ The following arguments are supported:
 * `cmp_path` - Path location inside CMP server.
 * `cmp_server_cert` - CMP server certificate.
 * `cmp_regeneration_method` - CMP auto-regeneration method. Valid values: `keyupate`, `renewal`.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

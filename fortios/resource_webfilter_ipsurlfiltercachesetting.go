@@ -30,6 +30,11 @@ func resourceWebfilterIpsUrlfilterCacheSetting() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"dns_retry_interval": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 2147483),
@@ -51,12 +56,20 @@ func resourceWebfilterIpsUrlfilterCacheSettingUpdate(d *schema.ResourceData, m i
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWebfilterIpsUrlfilterCacheSetting(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WebfilterIpsUrlfilterCacheSetting resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateWebfilterIpsUrlfilterCacheSetting(obj, mkey)
+	o, err := c.UpdateWebfilterIpsUrlfilterCacheSetting(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating WebfilterIpsUrlfilterCacheSetting resource: %v", err)
 	}
@@ -77,7 +90,15 @@ func resourceWebfilterIpsUrlfilterCacheSettingDelete(d *schema.ResourceData, m i
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteWebfilterIpsUrlfilterCacheSetting(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteWebfilterIpsUrlfilterCacheSetting(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting WebfilterIpsUrlfilterCacheSetting resource: %v", err)
 	}
@@ -93,7 +114,15 @@ func resourceWebfilterIpsUrlfilterCacheSettingRead(d *schema.ResourceData, m int
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadWebfilterIpsUrlfilterCacheSetting(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadWebfilterIpsUrlfilterCacheSetting(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading WebfilterIpsUrlfilterCacheSetting resource: %v", err)
 	}

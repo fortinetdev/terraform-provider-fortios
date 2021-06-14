@@ -29,6 +29,7 @@ The following arguments are supported:
 * `db_mode` - Behaviour when the maximum size is reached. Valid values: `stop-adding`, `remove-modified-then-oldest`, `remove-oldest`.
 * `cache_mem_percent` - Maximum percentage of available memory allocated to caching (1 - 15%).
 * `chunk_size` - Maximum fingerprint chunk size.  **Changing will flush the entire database**.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

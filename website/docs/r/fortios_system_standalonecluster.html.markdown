@@ -19,6 +19,7 @@ The following arguments are supported:
 * `session_sync_dev` - Offload session-sync process to kernel and sync sessions using connected interface(s) directly.
 * `encryption` - Enable/disable encryption when synchronizing sessions. Valid values: `enable`, `disable`.
 * `psksecret` - Pre-shared secret for session synchronization (ASCII string or hexadecimal encoded with a leading 0x).
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

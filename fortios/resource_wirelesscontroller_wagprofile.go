@@ -30,6 +30,11 @@ func resourceWirelessControllerWagProfile() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -89,12 +94,20 @@ func resourceWirelessControllerWagProfileCreate(d *schema.ResourceData, m interf
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWirelessControllerWagProfile(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WirelessControllerWagProfile resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateWirelessControllerWagProfile(obj)
+	o, err := c.CreateWirelessControllerWagProfile(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating WirelessControllerWagProfile resource: %v", err)
@@ -114,12 +127,20 @@ func resourceWirelessControllerWagProfileUpdate(d *schema.ResourceData, m interf
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWirelessControllerWagProfile(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerWagProfile resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateWirelessControllerWagProfile(obj, mkey)
+	o, err := c.UpdateWirelessControllerWagProfile(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerWagProfile resource: %v", err)
 	}
@@ -140,7 +161,15 @@ func resourceWirelessControllerWagProfileDelete(d *schema.ResourceData, m interf
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteWirelessControllerWagProfile(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteWirelessControllerWagProfile(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting WirelessControllerWagProfile resource: %v", err)
 	}
@@ -156,7 +185,15 @@ func resourceWirelessControllerWagProfileRead(d *schema.ResourceData, m interfac
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadWirelessControllerWagProfile(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadWirelessControllerWagProfile(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading WirelessControllerWagProfile resource: %v", err)
 	}

@@ -26,6 +26,7 @@ The following arguments are supported:
 * `host_id` - (Required) Local host ID (must also be entered in the remote FortiGate's peer list).
 * `tunnel_ssl_algorithm` - Relative strength of encryption algorithms accepted during tunnel negotiation. Valid values: `high`, `medium`, `low`.
 * `auto_detect_algorithm` - Auto detection algorithms used in tunnel negotiations. Valid values: `simple`, `diff-req-resp`.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

@@ -30,6 +30,11 @@ func resourceReportChart() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 71),
@@ -419,12 +424,20 @@ func resourceReportChartCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectReportChart(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating ReportChart resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateReportChart(obj)
+	o, err := c.CreateReportChart(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating ReportChart resource: %v", err)
@@ -444,12 +457,20 @@ func resourceReportChartUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectReportChart(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating ReportChart resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateReportChart(obj, mkey)
+	o, err := c.UpdateReportChart(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating ReportChart resource: %v", err)
 	}
@@ -470,7 +491,15 @@ func resourceReportChartDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteReportChart(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteReportChart(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting ReportChart resource: %v", err)
 	}
@@ -486,7 +515,15 @@ func resourceReportChartRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadReportChart(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadReportChart(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading ReportChart resource: %v", err)
 	}

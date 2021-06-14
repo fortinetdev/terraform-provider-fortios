@@ -30,6 +30,11 @@ func resourceIcapServer() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -83,12 +88,20 @@ func resourceIcapServerCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectIcapServer(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating IcapServer resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateIcapServer(obj)
+	o, err := c.CreateIcapServer(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating IcapServer resource: %v", err)
@@ -108,12 +121,20 @@ func resourceIcapServerUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectIcapServer(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating IcapServer resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateIcapServer(obj, mkey)
+	o, err := c.UpdateIcapServer(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating IcapServer resource: %v", err)
 	}
@@ -134,7 +155,15 @@ func resourceIcapServerDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteIcapServer(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteIcapServer(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting IcapServer resource: %v", err)
 	}
@@ -150,7 +179,15 @@ func resourceIcapServerRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadIcapServer(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadIcapServer(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading IcapServer resource: %v", err)
 	}

@@ -30,6 +30,11 @@ func resourceSystemAlarm() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -178,12 +183,20 @@ func resourceSystemAlarmUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemAlarm(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAlarm resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemAlarm(obj, mkey)
+	o, err := c.UpdateSystemAlarm(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAlarm resource: %v", err)
 	}
@@ -204,7 +217,15 @@ func resourceSystemAlarmDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemAlarm(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemAlarm(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemAlarm resource: %v", err)
 	}
@@ -220,7 +241,15 @@ func resourceSystemAlarmRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemAlarm(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemAlarm(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemAlarm resource: %v", err)
 	}

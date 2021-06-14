@@ -21,6 +21,12 @@ func dataSourceFirewallAddrgrp6() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceFirewallAddrgrp6Read,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -89,6 +95,14 @@ func dataSourceFirewallAddrgrp6Read(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := ""
 
 	t := d.Get("name")
@@ -100,7 +114,7 @@ func dataSourceFirewallAddrgrp6Read(d *schema.ResourceData, m interface{}) error
 		return fmt.Errorf("Error describing FirewallAddrgrp6: type error")
 	}
 
-	o, err := c.ReadFirewallAddrgrp6(mkey)
+	o, err := c.ReadFirewallAddrgrp6(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing FirewallAddrgrp6: %v", err)
 	}

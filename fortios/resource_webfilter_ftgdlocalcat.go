@@ -30,6 +30,11 @@ func resourceWebfilterFtgdLocalCat() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -56,12 +61,20 @@ func resourceWebfilterFtgdLocalCatCreate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWebfilterFtgdLocalCat(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WebfilterFtgdLocalCat resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateWebfilterFtgdLocalCat(obj)
+	o, err := c.CreateWebfilterFtgdLocalCat(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating WebfilterFtgdLocalCat resource: %v", err)
@@ -81,12 +94,20 @@ func resourceWebfilterFtgdLocalCatUpdate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWebfilterFtgdLocalCat(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WebfilterFtgdLocalCat resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateWebfilterFtgdLocalCat(obj, mkey)
+	o, err := c.UpdateWebfilterFtgdLocalCat(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating WebfilterFtgdLocalCat resource: %v", err)
 	}
@@ -107,7 +128,15 @@ func resourceWebfilterFtgdLocalCatDelete(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteWebfilterFtgdLocalCat(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteWebfilterFtgdLocalCat(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting WebfilterFtgdLocalCat resource: %v", err)
 	}
@@ -123,7 +152,15 @@ func resourceWebfilterFtgdLocalCatRead(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadWebfilterFtgdLocalCat(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadWebfilterFtgdLocalCat(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading WebfilterFtgdLocalCat resource: %v", err)
 	}

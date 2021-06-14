@@ -39,6 +39,7 @@ The following arguments are supported:
 * `med_location_service` - Configuration method to edit Media Endpoint Discovery (MED) location service type-length-value (TLV) categories. The structure of `med_location_service` block is documented below.
 * `custom_tlvs` - Configuration method to edit custom TLV entries. The structure of `custom_tlvs` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `med_network_policy` block supports:
 

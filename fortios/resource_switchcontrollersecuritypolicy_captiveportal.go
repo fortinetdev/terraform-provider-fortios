@@ -30,6 +30,11 @@ func resourceSwitchControllerSecurityPolicyCaptivePortal() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
@@ -56,12 +61,20 @@ func resourceSwitchControllerSecurityPolicyCaptivePortalCreate(d *schema.Resourc
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerSecurityPolicyCaptivePortal(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerSecurityPolicyCaptivePortal resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSwitchControllerSecurityPolicyCaptivePortal(obj)
+	o, err := c.CreateSwitchControllerSecurityPolicyCaptivePortal(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerSecurityPolicyCaptivePortal resource: %v", err)
@@ -81,12 +94,20 @@ func resourceSwitchControllerSecurityPolicyCaptivePortalUpdate(d *schema.Resourc
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerSecurityPolicyCaptivePortal(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerSecurityPolicyCaptivePortal resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSwitchControllerSecurityPolicyCaptivePortal(obj, mkey)
+	o, err := c.UpdateSwitchControllerSecurityPolicyCaptivePortal(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerSecurityPolicyCaptivePortal resource: %v", err)
 	}
@@ -107,7 +128,15 @@ func resourceSwitchControllerSecurityPolicyCaptivePortalDelete(d *schema.Resourc
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSwitchControllerSecurityPolicyCaptivePortal(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSwitchControllerSecurityPolicyCaptivePortal(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SwitchControllerSecurityPolicyCaptivePortal resource: %v", err)
 	}
@@ -123,7 +152,15 @@ func resourceSwitchControllerSecurityPolicyCaptivePortalRead(d *schema.ResourceD
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSwitchControllerSecurityPolicyCaptivePortal(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSwitchControllerSecurityPolicyCaptivePortal(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerSecurityPolicyCaptivePortal resource: %v", err)
 	}

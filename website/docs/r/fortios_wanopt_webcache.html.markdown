@@ -54,6 +54,7 @@ The following arguments are supported:
 * `cache_by_default` - Enable/disable caching content that lacks explicit caching policies from the server. Valid values: `enable`, `disable`.
 * `host_validate` - Enable/disable validating "Host:" with original server IP. Valid values: `enable`, `disable`.
 * `external` - Enable/disable external Web caching. Valid values: `enable`, `disable`.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

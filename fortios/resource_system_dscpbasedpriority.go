@@ -30,6 +30,11 @@ func resourceSystemDscpBasedPriority() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
@@ -55,12 +60,20 @@ func resourceSystemDscpBasedPriorityCreate(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemDscpBasedPriority(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemDscpBasedPriority resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemDscpBasedPriority(obj)
+	o, err := c.CreateSystemDscpBasedPriority(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemDscpBasedPriority resource: %v", err)
@@ -80,12 +93,20 @@ func resourceSystemDscpBasedPriorityUpdate(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemDscpBasedPriority(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemDscpBasedPriority resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemDscpBasedPriority(obj, mkey)
+	o, err := c.UpdateSystemDscpBasedPriority(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemDscpBasedPriority resource: %v", err)
 	}
@@ -106,7 +127,15 @@ func resourceSystemDscpBasedPriorityDelete(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemDscpBasedPriority(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemDscpBasedPriority(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemDscpBasedPriority resource: %v", err)
 	}
@@ -122,7 +151,15 @@ func resourceSystemDscpBasedPriorityRead(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemDscpBasedPriority(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemDscpBasedPriority(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemDscpBasedPriority resource: %v", err)
 	}

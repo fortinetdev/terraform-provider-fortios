@@ -21,6 +21,12 @@ func dataSourceFirewallAddress() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceFirewallAddressRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -217,6 +223,14 @@ func dataSourceFirewallAddressRead(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := ""
 
 	t := d.Get("name")
@@ -228,7 +242,7 @@ func dataSourceFirewallAddressRead(d *schema.ResourceData, m interface{}) error 
 		return fmt.Errorf("Error describing FirewallAddress: type error")
 	}
 
-	o, err := c.ReadFirewallAddress(mkey)
+	o, err := c.ReadFirewallAddress(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing FirewallAddress: %v", err)
 	}

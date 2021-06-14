@@ -30,6 +30,11 @@ func resourceUserFsso() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -205,12 +210,20 @@ func resourceUserFssoCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectUserFsso(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating UserFsso resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateUserFsso(obj)
+	o, err := c.CreateUserFsso(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating UserFsso resource: %v", err)
@@ -230,12 +243,20 @@ func resourceUserFssoUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectUserFsso(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating UserFsso resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateUserFsso(obj, mkey)
+	o, err := c.UpdateUserFsso(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating UserFsso resource: %v", err)
 	}
@@ -256,7 +277,15 @@ func resourceUserFssoDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteUserFsso(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteUserFsso(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting UserFsso resource: %v", err)
 	}
@@ -272,7 +301,15 @@ func resourceUserFssoRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadUserFsso(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadUserFsso(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading UserFsso resource: %v", err)
 	}

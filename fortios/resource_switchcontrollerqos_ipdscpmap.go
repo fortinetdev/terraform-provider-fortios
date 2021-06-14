@@ -30,6 +30,11 @@ func resourceSwitchControllerQosIpDscpMap() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -90,12 +95,20 @@ func resourceSwitchControllerQosIpDscpMapCreate(d *schema.ResourceData, m interf
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerQosIpDscpMap(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerQosIpDscpMap resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSwitchControllerQosIpDscpMap(obj)
+	o, err := c.CreateSwitchControllerQosIpDscpMap(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerQosIpDscpMap resource: %v", err)
@@ -115,12 +128,20 @@ func resourceSwitchControllerQosIpDscpMapUpdate(d *schema.ResourceData, m interf
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerQosIpDscpMap(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerQosIpDscpMap resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSwitchControllerQosIpDscpMap(obj, mkey)
+	o, err := c.UpdateSwitchControllerQosIpDscpMap(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerQosIpDscpMap resource: %v", err)
 	}
@@ -141,7 +162,15 @@ func resourceSwitchControllerQosIpDscpMapDelete(d *schema.ResourceData, m interf
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSwitchControllerQosIpDscpMap(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSwitchControllerQosIpDscpMap(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SwitchControllerQosIpDscpMap resource: %v", err)
 	}
@@ -157,7 +186,15 @@ func resourceSwitchControllerQosIpDscpMapRead(d *schema.ResourceData, m interfac
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSwitchControllerQosIpDscpMap(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSwitchControllerQosIpDscpMap(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerQosIpDscpMap resource: %v", err)
 	}

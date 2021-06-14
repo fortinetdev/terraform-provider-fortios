@@ -85,6 +85,7 @@ The following arguments are supported:
 * `controller_report` - FortiExtender controller report configuration. The structure of `controller_report` block is documented below.
 * `modem1` - Configuration options for modem 1. The structure of `modem1` block is documented below.
 * `modem2` - Configuration options for modem 2. The structure of `modem2` block is documented below.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `controller_report` block supports:
 

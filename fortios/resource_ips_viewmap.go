@@ -30,6 +30,11 @@ func resourceIpsViewMap() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
@@ -64,12 +69,20 @@ func resourceIpsViewMapCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectIpsViewMap(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating IpsViewMap resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateIpsViewMap(obj)
+	o, err := c.CreateIpsViewMap(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating IpsViewMap resource: %v", err)
@@ -89,12 +102,20 @@ func resourceIpsViewMapUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectIpsViewMap(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating IpsViewMap resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateIpsViewMap(obj, mkey)
+	o, err := c.UpdateIpsViewMap(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating IpsViewMap resource: %v", err)
 	}
@@ -115,7 +136,15 @@ func resourceIpsViewMapDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteIpsViewMap(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteIpsViewMap(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting IpsViewMap resource: %v", err)
 	}
@@ -131,7 +160,15 @@ func resourceIpsViewMapRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadIpsViewMap(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadIpsViewMap(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading IpsViewMap resource: %v", err)
 	}

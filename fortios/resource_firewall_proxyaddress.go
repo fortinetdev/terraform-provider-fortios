@@ -30,6 +30,11 @@ func resourceFirewallProxyAddress() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -208,12 +213,20 @@ func resourceFirewallProxyAddressCreate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallProxyAddress(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallProxyAddress resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateFirewallProxyAddress(obj)
+	o, err := c.CreateFirewallProxyAddress(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallProxyAddress resource: %v", err)
@@ -233,12 +246,20 @@ func resourceFirewallProxyAddressUpdate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallProxyAddress(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallProxyAddress resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateFirewallProxyAddress(obj, mkey)
+	o, err := c.UpdateFirewallProxyAddress(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallProxyAddress resource: %v", err)
 	}
@@ -259,7 +280,15 @@ func resourceFirewallProxyAddressDelete(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteFirewallProxyAddress(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteFirewallProxyAddress(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting FirewallProxyAddress resource: %v", err)
 	}
@@ -275,7 +304,15 @@ func resourceFirewallProxyAddressRead(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadFirewallProxyAddress(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadFirewallProxyAddress(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallProxyAddress resource: %v", err)
 	}

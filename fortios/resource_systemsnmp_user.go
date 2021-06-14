@@ -30,6 +30,11 @@ func resourceSystemSnmpUser() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 32),
@@ -134,12 +139,20 @@ func resourceSystemSnmpUserCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemSnmpUser(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemSnmpUser resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemSnmpUser(obj)
+	o, err := c.CreateSystemSnmpUser(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemSnmpUser resource: %v", err)
@@ -159,12 +172,20 @@ func resourceSystemSnmpUserUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemSnmpUser(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSnmpUser resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemSnmpUser(obj, mkey)
+	o, err := c.UpdateSystemSnmpUser(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSnmpUser resource: %v", err)
 	}
@@ -185,7 +206,15 @@ func resourceSystemSnmpUserDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemSnmpUser(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemSnmpUser(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemSnmpUser resource: %v", err)
 	}
@@ -201,7 +230,15 @@ func resourceSystemSnmpUserRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemSnmpUser(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemSnmpUser(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemSnmpUser resource: %v", err)
 	}

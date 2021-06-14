@@ -21,6 +21,12 @@ func dataSourceFirewallIpv6EhFilter() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceFirewallIpv6EhFilterRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"hop_opt": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -61,9 +67,17 @@ func dataSourceFirewallIpv6EhFilterRead(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := "FirewallIpv6EhFilter"
 
-	o, err := c.ReadFirewallIpv6EhFilter(mkey)
+	o, err := c.ReadFirewallIpv6EhFilter(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing FirewallIpv6EhFilter: %v", err)
 	}

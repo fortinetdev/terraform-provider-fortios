@@ -30,6 +30,11 @@ func resourceWebProxyGlobal() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"ssl_cert": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -154,12 +159,20 @@ func resourceWebProxyGlobalUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWebProxyGlobal(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WebProxyGlobal resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateWebProxyGlobal(obj, mkey)
+	o, err := c.UpdateWebProxyGlobal(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating WebProxyGlobal resource: %v", err)
 	}
@@ -180,7 +193,15 @@ func resourceWebProxyGlobalDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteWebProxyGlobal(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteWebProxyGlobal(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting WebProxyGlobal resource: %v", err)
 	}
@@ -196,7 +217,15 @@ func resourceWebProxyGlobalRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadWebProxyGlobal(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadWebProxyGlobal(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading WebProxyGlobal resource: %v", err)
 	}

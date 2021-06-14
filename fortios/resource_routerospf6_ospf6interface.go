@@ -30,6 +30,11 @@ func resourceRouterospf6Ospf6Interface() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -198,12 +203,20 @@ func resourceRouterospf6Ospf6InterfaceCreate(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectRouterospf6Ospf6Interface(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating Routerospf6Ospf6Interface resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateRouterospf6Ospf6Interface(obj)
+	o, err := c.CreateRouterospf6Ospf6Interface(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating Routerospf6Ospf6Interface resource: %v", err)
@@ -223,12 +236,20 @@ func resourceRouterospf6Ospf6InterfaceUpdate(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectRouterospf6Ospf6Interface(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating Routerospf6Ospf6Interface resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateRouterospf6Ospf6Interface(obj, mkey)
+	o, err := c.UpdateRouterospf6Ospf6Interface(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating Routerospf6Ospf6Interface resource: %v", err)
 	}
@@ -249,7 +270,15 @@ func resourceRouterospf6Ospf6InterfaceDelete(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteRouterospf6Ospf6Interface(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteRouterospf6Ospf6Interface(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting Routerospf6Ospf6Interface resource: %v", err)
 	}
@@ -265,7 +294,15 @@ func resourceRouterospf6Ospf6InterfaceRead(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadRouterospf6Ospf6Interface(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadRouterospf6Ospf6Interface(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading Routerospf6Ospf6Interface resource: %v", err)
 	}

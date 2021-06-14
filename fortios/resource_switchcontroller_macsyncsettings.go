@@ -30,6 +30,11 @@ func resourceSwitchControllerMacSyncSettings() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"mac_sync_interval": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(30, 1800),
@@ -45,12 +50,20 @@ func resourceSwitchControllerMacSyncSettingsUpdate(d *schema.ResourceData, m int
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerMacSyncSettings(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerMacSyncSettings resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSwitchControllerMacSyncSettings(obj, mkey)
+	o, err := c.UpdateSwitchControllerMacSyncSettings(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerMacSyncSettings resource: %v", err)
 	}
@@ -71,7 +84,15 @@ func resourceSwitchControllerMacSyncSettingsDelete(d *schema.ResourceData, m int
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSwitchControllerMacSyncSettings(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSwitchControllerMacSyncSettings(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SwitchControllerMacSyncSettings resource: %v", err)
 	}
@@ -87,7 +108,15 @@ func resourceSwitchControllerMacSyncSettingsRead(d *schema.ResourceData, m inter
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSwitchControllerMacSyncSettings(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSwitchControllerMacSyncSettings(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerMacSyncSettings resource: %v", err)
 	}

@@ -30,6 +30,11 @@ func resourceSystemSettings() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"comments": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 255),
@@ -693,12 +698,20 @@ func resourceSystemSettingsUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemSettings(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSettings resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemSettings(obj, mkey)
+	o, err := c.UpdateSystemSettings(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSettings resource: %v", err)
 	}
@@ -719,7 +732,15 @@ func resourceSystemSettingsDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemSettings(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemSettings(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemSettings resource: %v", err)
 	}
@@ -735,7 +756,15 @@ func resourceSystemSettingsRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemSettings(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemSettings(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemSettings resource: %v", err)
 	}

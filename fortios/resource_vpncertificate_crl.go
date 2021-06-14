@@ -30,6 +30,11 @@ func resourceVpnCertificateCrl() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -116,12 +121,20 @@ func resourceVpnCertificateCrlCreate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectVpnCertificateCrl(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating VpnCertificateCrl resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateVpnCertificateCrl(obj)
+	o, err := c.CreateVpnCertificateCrl(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating VpnCertificateCrl resource: %v", err)
@@ -141,12 +154,20 @@ func resourceVpnCertificateCrlUpdate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectVpnCertificateCrl(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating VpnCertificateCrl resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateVpnCertificateCrl(obj, mkey)
+	o, err := c.UpdateVpnCertificateCrl(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating VpnCertificateCrl resource: %v", err)
 	}
@@ -167,7 +188,15 @@ func resourceVpnCertificateCrlDelete(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteVpnCertificateCrl(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteVpnCertificateCrl(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting VpnCertificateCrl resource: %v", err)
 	}
@@ -183,7 +212,15 @@ func resourceVpnCertificateCrlRead(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadVpnCertificateCrl(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadVpnCertificateCrl(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading VpnCertificateCrl resource: %v", err)
 	}

@@ -30,6 +30,11 @@ func resourceUserSecurityExemptList() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -125,12 +130,20 @@ func resourceUserSecurityExemptListCreate(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectUserSecurityExemptList(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating UserSecurityExemptList resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateUserSecurityExemptList(obj)
+	o, err := c.CreateUserSecurityExemptList(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating UserSecurityExemptList resource: %v", err)
@@ -150,12 +163,20 @@ func resourceUserSecurityExemptListUpdate(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectUserSecurityExemptList(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating UserSecurityExemptList resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateUserSecurityExemptList(obj, mkey)
+	o, err := c.UpdateUserSecurityExemptList(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating UserSecurityExemptList resource: %v", err)
 	}
@@ -176,7 +197,15 @@ func resourceUserSecurityExemptListDelete(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteUserSecurityExemptList(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteUserSecurityExemptList(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting UserSecurityExemptList resource: %v", err)
 	}
@@ -192,7 +221,15 @@ func resourceUserSecurityExemptListRead(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadUserSecurityExemptList(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadUserSecurityExemptList(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading UserSecurityExemptList resource: %v", err)
 	}

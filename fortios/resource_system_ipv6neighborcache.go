@@ -30,6 +30,11 @@ func resourceSystemIpv6NeighborCache() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
@@ -56,12 +61,20 @@ func resourceSystemIpv6NeighborCacheCreate(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemIpv6NeighborCache(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemIpv6NeighborCache resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemIpv6NeighborCache(obj)
+	o, err := c.CreateSystemIpv6NeighborCache(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemIpv6NeighborCache resource: %v", err)
@@ -81,12 +94,20 @@ func resourceSystemIpv6NeighborCacheUpdate(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemIpv6NeighborCache(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemIpv6NeighborCache resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemIpv6NeighborCache(obj, mkey)
+	o, err := c.UpdateSystemIpv6NeighborCache(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemIpv6NeighborCache resource: %v", err)
 	}
@@ -107,7 +128,15 @@ func resourceSystemIpv6NeighborCacheDelete(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemIpv6NeighborCache(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemIpv6NeighborCache(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemIpv6NeighborCache resource: %v", err)
 	}
@@ -123,7 +152,15 @@ func resourceSystemIpv6NeighborCacheRead(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemIpv6NeighborCache(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemIpv6NeighborCache(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemIpv6NeighborCache resource: %v", err)
 	}

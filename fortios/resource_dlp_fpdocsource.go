@@ -30,6 +30,11 @@ func resourceDlpFpDocSource() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -136,12 +141,20 @@ func resourceDlpFpDocSourceCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectDlpFpDocSource(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating DlpFpDocSource resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateDlpFpDocSource(obj)
+	o, err := c.CreateDlpFpDocSource(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating DlpFpDocSource resource: %v", err)
@@ -161,12 +174,20 @@ func resourceDlpFpDocSourceUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectDlpFpDocSource(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating DlpFpDocSource resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateDlpFpDocSource(obj, mkey)
+	o, err := c.UpdateDlpFpDocSource(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating DlpFpDocSource resource: %v", err)
 	}
@@ -187,7 +208,15 @@ func resourceDlpFpDocSourceDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteDlpFpDocSource(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteDlpFpDocSource(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting DlpFpDocSource resource: %v", err)
 	}
@@ -203,7 +232,15 @@ func resourceDlpFpDocSourceRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadDlpFpDocSource(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadDlpFpDocSource(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading DlpFpDocSource resource: %v", err)
 	}

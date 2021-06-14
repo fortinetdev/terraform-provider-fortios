@@ -21,6 +21,12 @@ func dataSourceSystemReplacemsgGroup() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemReplacemsgGroupRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -497,6 +503,14 @@ func dataSourceSystemReplacemsgGroupRead(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := ""
 
 	t := d.Get("name")
@@ -508,7 +522,7 @@ func dataSourceSystemReplacemsgGroupRead(d *schema.ResourceData, m interface{}) 
 		return fmt.Errorf("Error describing SystemReplacemsgGroup: type error")
 	}
 
-	o, err := c.ReadSystemReplacemsgGroup(mkey)
+	o, err := c.ReadSystemReplacemsgGroup(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemReplacemsgGroup: %v", err)
 	}

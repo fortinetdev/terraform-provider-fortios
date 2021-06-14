@@ -30,6 +30,11 @@ func resourceLogFortianalyzerCloudOverrideSetting() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -44,12 +49,20 @@ func resourceLogFortianalyzerCloudOverrideSettingUpdate(d *schema.ResourceData, 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectLogFortianalyzerCloudOverrideSetting(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogFortianalyzerCloudOverrideSetting resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateLogFortianalyzerCloudOverrideSetting(obj, mkey)
+	o, err := c.UpdateLogFortianalyzerCloudOverrideSetting(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating LogFortianalyzerCloudOverrideSetting resource: %v", err)
 	}
@@ -70,7 +83,15 @@ func resourceLogFortianalyzerCloudOverrideSettingDelete(d *schema.ResourceData, 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteLogFortianalyzerCloudOverrideSetting(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteLogFortianalyzerCloudOverrideSetting(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting LogFortianalyzerCloudOverrideSetting resource: %v", err)
 	}
@@ -86,7 +107,15 @@ func resourceLogFortianalyzerCloudOverrideSettingRead(d *schema.ResourceData, m 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadLogFortianalyzerCloudOverrideSetting(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadLogFortianalyzerCloudOverrideSetting(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading LogFortianalyzerCloudOverrideSetting resource: %v", err)
 	}

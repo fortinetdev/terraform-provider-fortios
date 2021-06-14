@@ -47,6 +47,7 @@ The following arguments are supported:
 * `sdwan` - Enable/disable SD-WAN logging. Valid values: `enable`, `disable`.
 * `cifs` - Enable/disable CIFS logging. Valid values: `enable`, `disable`.
 * `switch_controller` - Enable/disable Switch-Controller logging. Valid values: `enable`, `disable`.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

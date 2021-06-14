@@ -30,6 +30,11 @@ func resourceUserRadius() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -333,12 +338,20 @@ func resourceUserRadiusCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectUserRadius(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating UserRadius resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateUserRadius(obj)
+	o, err := c.CreateUserRadius(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating UserRadius resource: %v", err)
@@ -358,12 +371,20 @@ func resourceUserRadiusUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectUserRadius(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating UserRadius resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateUserRadius(obj, mkey)
+	o, err := c.UpdateUserRadius(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating UserRadius resource: %v", err)
 	}
@@ -384,7 +405,15 @@ func resourceUserRadiusDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteUserRadius(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteUserRadius(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting UserRadius resource: %v", err)
 	}
@@ -400,7 +429,15 @@ func resourceUserRadiusRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadUserRadius(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadUserRadius(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading UserRadius resource: %v", err)
 	}

@@ -30,6 +30,11 @@ func resourceSwitchControllerAutoConfigPolicy() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -71,12 +76,20 @@ func resourceSwitchControllerAutoConfigPolicyCreate(d *schema.ResourceData, m in
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerAutoConfigPolicy(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerAutoConfigPolicy resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSwitchControllerAutoConfigPolicy(obj)
+	o, err := c.CreateSwitchControllerAutoConfigPolicy(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerAutoConfigPolicy resource: %v", err)
@@ -96,12 +109,20 @@ func resourceSwitchControllerAutoConfigPolicyUpdate(d *schema.ResourceData, m in
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerAutoConfigPolicy(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerAutoConfigPolicy resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSwitchControllerAutoConfigPolicy(obj, mkey)
+	o, err := c.UpdateSwitchControllerAutoConfigPolicy(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerAutoConfigPolicy resource: %v", err)
 	}
@@ -122,7 +143,15 @@ func resourceSwitchControllerAutoConfigPolicyDelete(d *schema.ResourceData, m in
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSwitchControllerAutoConfigPolicy(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSwitchControllerAutoConfigPolicy(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SwitchControllerAutoConfigPolicy resource: %v", err)
 	}
@@ -138,7 +167,15 @@ func resourceSwitchControllerAutoConfigPolicyRead(d *schema.ResourceData, m inte
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSwitchControllerAutoConfigPolicy(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSwitchControllerAutoConfigPolicy(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerAutoConfigPolicy resource: %v", err)
 	}

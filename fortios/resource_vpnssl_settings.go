@@ -30,6 +30,11 @@ func resourceVpnSslSettings() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"reqclientcert": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -541,12 +546,20 @@ func resourceVpnSslSettingsUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectVpnSslSettings(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating VpnSslSettings resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateVpnSslSettings(obj, mkey)
+	o, err := c.UpdateVpnSslSettings(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating VpnSslSettings resource: %v", err)
 	}
@@ -566,13 +579,21 @@ func resourceVpnSslSettingsDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectVpnSslSettings(d, true, c.Fv)
 
 	if err != nil {
 		return fmt.Errorf("Error updating VpnSslSettings resource while getting object: %v", err)
 	}
 
-	_, err = c.UpdateVpnSslSettings(obj, mkey)
+	_, err = c.UpdateVpnSslSettings(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error clearing VpnSslSettings resource: %v", err)
 	}
@@ -588,7 +609,15 @@ func resourceVpnSslSettingsRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadVpnSslSettings(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadVpnSslSettings(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading VpnSslSettings resource: %v", err)
 	}

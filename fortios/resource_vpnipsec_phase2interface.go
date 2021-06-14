@@ -30,6 +30,11 @@ func resourceVpnIpsecPhase2Interface() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -272,12 +277,20 @@ func resourceVpnIpsecPhase2InterfaceCreate(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectVpnIpsecPhase2Interface(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating VpnIpsecPhase2Interface resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateVpnIpsecPhase2Interface(obj)
+	o, err := c.CreateVpnIpsecPhase2Interface(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating VpnIpsecPhase2Interface resource: %v", err)
@@ -297,12 +310,20 @@ func resourceVpnIpsecPhase2InterfaceUpdate(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectVpnIpsecPhase2Interface(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating VpnIpsecPhase2Interface resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateVpnIpsecPhase2Interface(obj, mkey)
+	o, err := c.UpdateVpnIpsecPhase2Interface(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating VpnIpsecPhase2Interface resource: %v", err)
 	}
@@ -323,7 +344,15 @@ func resourceVpnIpsecPhase2InterfaceDelete(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteVpnIpsecPhase2Interface(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteVpnIpsecPhase2Interface(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting VpnIpsecPhase2Interface resource: %v", err)
 	}
@@ -339,7 +368,15 @@ func resourceVpnIpsecPhase2InterfaceRead(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadVpnIpsecPhase2Interface(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadVpnIpsecPhase2Interface(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading VpnIpsecPhase2Interface resource: %v", err)
 	}

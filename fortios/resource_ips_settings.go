@@ -30,6 +30,11 @@ func resourceIpsSettings() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"packet_log_history": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 255),
@@ -62,12 +67,20 @@ func resourceIpsSettingsUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectIpsSettings(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating IpsSettings resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateIpsSettings(obj, mkey)
+	o, err := c.UpdateIpsSettings(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating IpsSettings resource: %v", err)
 	}
@@ -88,7 +101,15 @@ func resourceIpsSettingsDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteIpsSettings(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteIpsSettings(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting IpsSettings resource: %v", err)
 	}
@@ -104,7 +125,15 @@ func resourceIpsSettingsRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadIpsSettings(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadIpsSettings(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading IpsSettings resource: %v", err)
 	}

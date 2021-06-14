@@ -30,6 +30,11 @@ func resourceDpdkCpus() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"rx_cpus": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 1022),
@@ -63,12 +68,20 @@ func resourceDpdkCpusUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectDpdkCpus(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating DpdkCpus resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateDpdkCpus(obj, mkey)
+	o, err := c.UpdateDpdkCpus(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating DpdkCpus resource: %v", err)
 	}
@@ -89,7 +102,15 @@ func resourceDpdkCpusDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteDpdkCpus(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteDpdkCpus(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting DpdkCpus resource: %v", err)
 	}
@@ -105,7 +126,15 @@ func resourceDpdkCpusRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadDpdkCpus(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadDpdkCpus(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading DpdkCpus resource: %v", err)
 	}

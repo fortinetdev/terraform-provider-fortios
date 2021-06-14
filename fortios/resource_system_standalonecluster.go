@@ -30,6 +30,11 @@ func resourceSystemStandaloneCluster() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"standalone_group_id": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
@@ -71,12 +76,20 @@ func resourceSystemStandaloneClusterUpdate(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemStandaloneCluster(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemStandaloneCluster resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemStandaloneCluster(obj, mkey)
+	o, err := c.UpdateSystemStandaloneCluster(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemStandaloneCluster resource: %v", err)
 	}
@@ -97,7 +110,15 @@ func resourceSystemStandaloneClusterDelete(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemStandaloneCluster(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemStandaloneCluster(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemStandaloneCluster resource: %v", err)
 	}
@@ -113,7 +134,15 @@ func resourceSystemStandaloneClusterRead(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemStandaloneCluster(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemStandaloneCluster(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemStandaloneCluster resource: %v", err)
 	}

@@ -30,6 +30,11 @@ func resourceRouterAspathList() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -73,12 +78,20 @@ func resourceRouterAspathListCreate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectRouterAspathList(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating RouterAspathList resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateRouterAspathList(obj)
+	o, err := c.CreateRouterAspathList(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating RouterAspathList resource: %v", err)
@@ -98,12 +111,20 @@ func resourceRouterAspathListUpdate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectRouterAspathList(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterAspathList resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateRouterAspathList(obj, mkey)
+	o, err := c.UpdateRouterAspathList(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterAspathList resource: %v", err)
 	}
@@ -124,7 +145,15 @@ func resourceRouterAspathListDelete(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteRouterAspathList(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteRouterAspathList(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting RouterAspathList resource: %v", err)
 	}
@@ -140,7 +169,15 @@ func resourceRouterAspathListRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadRouterAspathList(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadRouterAspathList(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading RouterAspathList resource: %v", err)
 	}

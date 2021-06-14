@@ -42,6 +42,7 @@ The following arguments are supported:
 * `kxp_queue_threshold` - Maximum length of the CP KXP queue. When the queue becomes full, the proxy switches cipher functions to the main CPU (0 - 512, default = 16).
 * `ssl_queue_threshold` - Maximum length of the CP SSL queue. When the queue becomes full, the proxy switches cipher functions to the main CPU (0 - 512, default = 32).
 * `abbreviate_handshake` - Enable/disable use of SSL abbreviated handshake. Valid values: `enable`, `disable`.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

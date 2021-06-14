@@ -30,6 +30,11 @@ func resourceWebProxyForwardServer() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -101,12 +106,20 @@ func resourceWebProxyForwardServerCreate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWebProxyForwardServer(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WebProxyForwardServer resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateWebProxyForwardServer(obj)
+	o, err := c.CreateWebProxyForwardServer(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating WebProxyForwardServer resource: %v", err)
@@ -126,12 +139,20 @@ func resourceWebProxyForwardServerUpdate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWebProxyForwardServer(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WebProxyForwardServer resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateWebProxyForwardServer(obj, mkey)
+	o, err := c.UpdateWebProxyForwardServer(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating WebProxyForwardServer resource: %v", err)
 	}
@@ -152,7 +173,15 @@ func resourceWebProxyForwardServerDelete(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteWebProxyForwardServer(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteWebProxyForwardServer(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting WebProxyForwardServer resource: %v", err)
 	}
@@ -168,7 +197,15 @@ func resourceWebProxyForwardServerRead(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadWebProxyForwardServer(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadWebProxyForwardServer(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading WebProxyForwardServer resource: %v", err)
 	}

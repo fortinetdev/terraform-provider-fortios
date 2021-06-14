@@ -30,6 +30,11 @@ func resourceFirewallInternetService() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -101,12 +106,20 @@ func resourceFirewallInternetServiceCreate(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallInternetService(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallInternetService resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateFirewallInternetService(obj)
+	o, err := c.CreateFirewallInternetService(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallInternetService resource: %v", err)
@@ -126,12 +139,20 @@ func resourceFirewallInternetServiceUpdate(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallInternetService(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallInternetService resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateFirewallInternetService(obj, mkey)
+	o, err := c.UpdateFirewallInternetService(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallInternetService resource: %v", err)
 	}
@@ -152,7 +173,15 @@ func resourceFirewallInternetServiceDelete(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteFirewallInternetService(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteFirewallInternetService(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting FirewallInternetService resource: %v", err)
 	}
@@ -168,7 +197,15 @@ func resourceFirewallInternetServiceRead(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadFirewallInternetService(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadFirewallInternetService(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallInternetService resource: %v", err)
 	}

@@ -30,6 +30,11 @@ func resourceFirewallCentralSnatMap() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"policyid": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
@@ -199,12 +204,20 @@ func resourceFirewallCentralSnatMapCreate(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallCentralSnatMap(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallCentralSnatMap resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateFirewallCentralSnatMap(obj)
+	o, err := c.CreateFirewallCentralSnatMap(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallCentralSnatMap resource: %v", err)
@@ -224,12 +237,20 @@ func resourceFirewallCentralSnatMapUpdate(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallCentralSnatMap(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallCentralSnatMap resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateFirewallCentralSnatMap(obj, mkey)
+	o, err := c.UpdateFirewallCentralSnatMap(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallCentralSnatMap resource: %v", err)
 	}
@@ -250,7 +271,15 @@ func resourceFirewallCentralSnatMapDelete(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteFirewallCentralSnatMap(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteFirewallCentralSnatMap(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting FirewallCentralSnatMap resource: %v", err)
 	}
@@ -266,7 +295,15 @@ func resourceFirewallCentralSnatMapRead(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadFirewallCentralSnatMap(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadFirewallCentralSnatMap(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallCentralSnatMap resource: %v", err)
 	}

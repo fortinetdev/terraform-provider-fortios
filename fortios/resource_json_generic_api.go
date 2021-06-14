@@ -16,6 +16,11 @@ func resourceJSONGenericAPI() *schema.Resource {
 		Delete: resourceJSONGenericAPIDelete,
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"path": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -57,8 +62,16 @@ func resourceJSONGenericAPICreateUpdate(d *schema.ResourceData, m interface{}) e
 		Json:          d.Get("json").(string),
 	}
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	//Call process by sdk
-	res, err := c.CreateJSONGenericAPI(i)
+	res, err := c.CreateJSONGenericAPI(i, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error creating json generic api: %v", err)
 	}

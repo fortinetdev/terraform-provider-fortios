@@ -21,6 +21,12 @@ func dataSourceSystemPasswordPolicy() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemPasswordPolicyRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -73,9 +79,17 @@ func dataSourceSystemPasswordPolicyRead(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := "SystemPasswordPolicy"
 
-	o, err := c.ReadSystemPasswordPolicy(mkey)
+	o, err := c.ReadSystemPasswordPolicy(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemPasswordPolicy: %v", err)
 	}

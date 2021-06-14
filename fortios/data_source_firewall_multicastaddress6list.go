@@ -17,6 +17,11 @@ func dataSourceFirewallMulticastAddress6List() *schema.Resource {
 		Read: dataSourceFirewallMulticastAddress6ListRead,
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"filter": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -34,12 +39,20 @@ func dataSourceFirewallMulticastAddress6ListRead(d *schema.ResourceData, m inter
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	filter := d.Get("filter").(string)
 	if filter != "" {
 		filter = escapeFilter(filter)
 	}
 
-	o, err := c.GenericGroupRead("/api/v2/cmdb/firewall/multicast-address6", filter)
+	o, err := c.GenericGroupRead("/api/v2/cmdb/firewall/multicast-address6", filter, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing FirewallMulticastAddress6: %v", err)
 	}

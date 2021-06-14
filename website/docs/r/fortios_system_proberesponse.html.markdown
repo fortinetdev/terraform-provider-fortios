@@ -33,6 +33,7 @@ The following arguments are supported:
 * `security_mode` - Twamp respondor security mode. Valid values: `none`, `authentication`.
 * `password` - Twamp respondor password in authentication mode
 * `timeout` - An inactivity timer for a twamp test session.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

@@ -30,6 +30,11 @@ func resourceSystemAdmin() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -567,12 +572,20 @@ func resourceSystemAdminCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemAdmin(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemAdmin resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemAdmin(obj)
+	o, err := c.CreateSystemAdmin(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemAdmin resource: %v", err)
@@ -592,12 +605,20 @@ func resourceSystemAdminUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemAdmin(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAdmin resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemAdmin(obj, mkey)
+	o, err := c.UpdateSystemAdmin(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAdmin resource: %v", err)
 	}
@@ -618,7 +639,15 @@ func resourceSystemAdminDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemAdmin(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemAdmin(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemAdmin resource: %v", err)
 	}
@@ -634,7 +663,15 @@ func resourceSystemAdminRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemAdmin(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemAdmin(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemAdmin resource: %v", err)
 	}

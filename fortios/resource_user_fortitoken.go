@@ -30,6 +30,11 @@ func resourceUserFortitoken() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"serial_number": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 16),
@@ -90,12 +95,20 @@ func resourceUserFortitokenCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectUserFortitoken(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating UserFortitoken resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateUserFortitoken(obj)
+	o, err := c.CreateUserFortitoken(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating UserFortitoken resource: %v", err)
@@ -115,12 +128,20 @@ func resourceUserFortitokenUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectUserFortitoken(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating UserFortitoken resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateUserFortitoken(obj, mkey)
+	o, err := c.UpdateUserFortitoken(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating UserFortitoken resource: %v", err)
 	}
@@ -141,7 +162,15 @@ func resourceUserFortitokenDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteUserFortitoken(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteUserFortitoken(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting UserFortitoken resource: %v", err)
 	}
@@ -157,7 +186,15 @@ func resourceUserFortitokenRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadUserFortitoken(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadUserFortitoken(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading UserFortitoken resource: %v", err)
 	}

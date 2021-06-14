@@ -30,6 +30,11 @@ func resourceRouterMulticast() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"route_threshold": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -427,12 +432,20 @@ func resourceRouterMulticastUpdate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectRouterMulticast(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterMulticast resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateRouterMulticast(obj, mkey)
+	o, err := c.UpdateRouterMulticast(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterMulticast resource: %v", err)
 	}
@@ -452,13 +465,21 @@ func resourceRouterMulticastDelete(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectRouterMulticast(d, true, c.Fv)
 
 	if err != nil {
 		return fmt.Errorf("Error updating RouterMulticast resource while getting object: %v", err)
 	}
 
-	_, err = c.UpdateRouterMulticast(obj, mkey)
+	_, err = c.UpdateRouterMulticast(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error clearing RouterMulticast resource: %v", err)
 	}
@@ -474,7 +495,15 @@ func resourceRouterMulticastRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadRouterMulticast(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadRouterMulticast(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading RouterMulticast resource: %v", err)
 	}

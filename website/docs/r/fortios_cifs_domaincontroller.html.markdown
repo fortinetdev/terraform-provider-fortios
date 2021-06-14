@@ -20,6 +20,7 @@ The following arguments are supported:
 * `port` - Port number of service. Port number 0 indicates automatic discovery.
 * `ip` - IPv4 server address.
 * `ip6` - IPv6 server address.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

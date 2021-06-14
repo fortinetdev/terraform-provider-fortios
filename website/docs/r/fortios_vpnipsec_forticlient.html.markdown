@@ -172,6 +172,7 @@ The following arguments are supported:
 * `usergroupname` - (Required) User group name for FortiClient users.
 * `phase2name` - (Required) Phase 2 tunnel name that you defined in the FortiClient dialup configuration.
 * `status` - Enable/disable this FortiClient configuration. Valid values: `enable`, `disable`.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

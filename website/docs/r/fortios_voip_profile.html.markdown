@@ -84,6 +84,7 @@ The following arguments are supported:
 * `comment` - Comment.
 * `sip` - SIP. The structure of `sip` block is documented below.
 * `sccp` - SCCP. The structure of `sccp` block is documented below.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `sip` block supports:
 

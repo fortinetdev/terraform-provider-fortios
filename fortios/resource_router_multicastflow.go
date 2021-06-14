@@ -30,6 +30,11 @@ func resourceRouterMulticastFlow() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -78,12 +83,20 @@ func resourceRouterMulticastFlowCreate(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectRouterMulticastFlow(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating RouterMulticastFlow resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateRouterMulticastFlow(obj)
+	o, err := c.CreateRouterMulticastFlow(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating RouterMulticastFlow resource: %v", err)
@@ -103,12 +116,20 @@ func resourceRouterMulticastFlowUpdate(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectRouterMulticastFlow(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterMulticastFlow resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateRouterMulticastFlow(obj, mkey)
+	o, err := c.UpdateRouterMulticastFlow(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterMulticastFlow resource: %v", err)
 	}
@@ -129,7 +150,15 @@ func resourceRouterMulticastFlowDelete(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteRouterMulticastFlow(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteRouterMulticastFlow(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting RouterMulticastFlow resource: %v", err)
 	}
@@ -145,7 +174,15 @@ func resourceRouterMulticastFlowRead(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadRouterMulticastFlow(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadRouterMulticastFlow(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading RouterMulticastFlow resource: %v", err)
 	}

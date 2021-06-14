@@ -30,6 +30,11 @@ func resourceFirewallSslServer() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -109,12 +114,20 @@ func resourceFirewallSslServerCreate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallSslServer(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallSslServer resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateFirewallSslServer(obj)
+	o, err := c.CreateFirewallSslServer(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallSslServer resource: %v", err)
@@ -134,12 +147,20 @@ func resourceFirewallSslServerUpdate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallSslServer(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallSslServer resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateFirewallSslServer(obj, mkey)
+	o, err := c.UpdateFirewallSslServer(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallSslServer resource: %v", err)
 	}
@@ -160,7 +181,15 @@ func resourceFirewallSslServerDelete(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteFirewallSslServer(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteFirewallSslServer(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting FirewallSslServer resource: %v", err)
 	}
@@ -176,7 +205,15 @@ func resourceFirewallSslServerRead(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadFirewallSslServer(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadFirewallSslServer(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallSslServer resource: %v", err)
 	}

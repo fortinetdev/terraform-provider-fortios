@@ -30,6 +30,11 @@ func resourceWirelessControllerGlobal() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -131,12 +136,20 @@ func resourceWirelessControllerGlobalUpdate(d *schema.ResourceData, m interface{
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWirelessControllerGlobal(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerGlobal resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateWirelessControllerGlobal(obj, mkey)
+	o, err := c.UpdateWirelessControllerGlobal(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerGlobal resource: %v", err)
 	}
@@ -157,7 +170,15 @@ func resourceWirelessControllerGlobalDelete(d *schema.ResourceData, m interface{
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteWirelessControllerGlobal(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteWirelessControllerGlobal(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting WirelessControllerGlobal resource: %v", err)
 	}
@@ -173,7 +194,15 @@ func resourceWirelessControllerGlobalRead(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadWirelessControllerGlobal(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadWirelessControllerGlobal(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading WirelessControllerGlobal resource: %v", err)
 	}

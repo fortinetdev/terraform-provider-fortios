@@ -30,6 +30,11 @@ func resourceCertificateLocal() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -168,12 +173,20 @@ func resourceCertificateLocalCreate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectCertificateLocal(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating CertificateLocal resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateCertificateLocal(obj)
+	o, err := c.CreateCertificateLocal(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating CertificateLocal resource: %v", err)
@@ -193,12 +206,20 @@ func resourceCertificateLocalUpdate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectCertificateLocal(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating CertificateLocal resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateCertificateLocal(obj, mkey)
+	o, err := c.UpdateCertificateLocal(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating CertificateLocal resource: %v", err)
 	}
@@ -219,7 +240,15 @@ func resourceCertificateLocalDelete(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteCertificateLocal(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteCertificateLocal(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting CertificateLocal resource: %v", err)
 	}
@@ -235,7 +264,15 @@ func resourceCertificateLocalRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadCertificateLocal(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadCertificateLocal(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading CertificateLocal resource: %v", err)
 	}

@@ -30,6 +30,11 @@ func resourceSystemSsoAdmin() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
@@ -69,12 +74,20 @@ func resourceSystemSsoAdminCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemSsoAdmin(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemSsoAdmin resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemSsoAdmin(obj)
+	o, err := c.CreateSystemSsoAdmin(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemSsoAdmin resource: %v", err)
@@ -94,12 +107,20 @@ func resourceSystemSsoAdminUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemSsoAdmin(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSsoAdmin resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemSsoAdmin(obj, mkey)
+	o, err := c.UpdateSystemSsoAdmin(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSsoAdmin resource: %v", err)
 	}
@@ -120,7 +141,15 @@ func resourceSystemSsoAdminDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemSsoAdmin(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemSsoAdmin(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemSsoAdmin resource: %v", err)
 	}
@@ -136,7 +165,15 @@ func resourceSystemSsoAdminRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemSsoAdmin(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemSsoAdmin(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemSsoAdmin resource: %v", err)
 	}

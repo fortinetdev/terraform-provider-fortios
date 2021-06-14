@@ -30,6 +30,11 @@ func resourceSystemFederatedUpgrade() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -83,12 +88,20 @@ func resourceSystemFederatedUpgradeUpdate(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemFederatedUpgrade(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemFederatedUpgrade resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemFederatedUpgrade(obj, mkey)
+	o, err := c.UpdateSystemFederatedUpgrade(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemFederatedUpgrade resource: %v", err)
 	}
@@ -109,7 +122,15 @@ func resourceSystemFederatedUpgradeDelete(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemFederatedUpgrade(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemFederatedUpgrade(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemFederatedUpgrade resource: %v", err)
 	}
@@ -125,7 +146,15 @@ func resourceSystemFederatedUpgradeRead(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemFederatedUpgrade(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemFederatedUpgrade(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemFederatedUpgrade resource: %v", err)
 	}
