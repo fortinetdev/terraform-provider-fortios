@@ -6,6 +6,7 @@
 IMPROVEMENTS:
 
 * Support ipmask/cidr for system/interface/ip
+* Support vdom for each resource
 
 FEATURES:
 
@@ -16,7 +17,15 @@ FEATURES:
 * **New Resource:** `fortios_routerospf_network`
 * **New Resource:** `fortios_routerospf_neighbor`
 * **New Resource:** `fortios_routerospf6_ospf6interface`
+* **New Resource:** `resource_firewall_centralsnatmap_move`
+* **New Resource:** `resource_firewall_centralsnatmap_sort`
+* **New Resource:** `resource_firewall_proxypolicy_move`
+* **New Resource:** `resource_firewall_proxypolicy_sort`
 * **New Data Source:** `fortios_ipmask_cidr`
+* **New Data Source:** `fortios_firewall_centralsnatmap`
+* **New Data Source:** `fortios_firewall_centralsnatmaplist`
+* **New Data Source:** `fortios_firewall_proxypolicy`
+* **New Data Source:** `fortios_firewall_proxypolicylist`
 
 ## 1.12.1 (Jun 5, 2021)
 
