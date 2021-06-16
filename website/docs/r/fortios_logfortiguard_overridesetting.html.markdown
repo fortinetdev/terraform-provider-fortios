@@ -33,6 +33,7 @@ The following arguments are supported:
 * `upload_time` - Time of day to roll logs (hh:mm).
 * `priority` - Set log transmission priority. Valid values: `default`, `low`.
 * `max_log_rate` - FortiCloud maximum log rate in MBps (0 = unlimited).
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

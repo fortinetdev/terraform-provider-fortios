@@ -30,6 +30,11 @@ func resourceFirewallAuthPortal() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"groups": &schema.Schema{
 				Type:     schema.TypeList,
 				Optional: true,
@@ -76,12 +81,20 @@ func resourceFirewallAuthPortalUpdate(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallAuthPortal(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallAuthPortal resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateFirewallAuthPortal(obj, mkey)
+	o, err := c.UpdateFirewallAuthPortal(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallAuthPortal resource: %v", err)
 	}
@@ -102,7 +115,15 @@ func resourceFirewallAuthPortalDelete(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteFirewallAuthPortal(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteFirewallAuthPortal(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting FirewallAuthPortal resource: %v", err)
 	}
@@ -118,7 +139,15 @@ func resourceFirewallAuthPortalRead(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadFirewallAuthPortal(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadFirewallAuthPortal(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallAuthPortal resource: %v", err)
 	}

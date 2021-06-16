@@ -30,6 +30,11 @@ func resourceUserTacacs() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -114,12 +119,20 @@ func resourceUserTacacsCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectUserTacacs(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating UserTacacs resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateUserTacacs(obj)
+	o, err := c.CreateUserTacacs(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating UserTacacs resource: %v", err)
@@ -139,12 +152,20 @@ func resourceUserTacacsUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectUserTacacs(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating UserTacacs resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateUserTacacs(obj, mkey)
+	o, err := c.UpdateUserTacacs(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating UserTacacs resource: %v", err)
 	}
@@ -165,7 +186,15 @@ func resourceUserTacacsDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteUserTacacs(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteUserTacacs(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting UserTacacs resource: %v", err)
 	}
@@ -181,7 +210,15 @@ func resourceUserTacacsRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadUserTacacs(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadUserTacacs(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading UserTacacs resource: %v", err)
 	}

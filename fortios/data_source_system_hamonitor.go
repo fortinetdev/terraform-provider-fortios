@@ -21,6 +21,12 @@ func dataSourceSystemHaMonitor() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemHaMonitorRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"monitor_vlan": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -41,9 +47,17 @@ func dataSourceSystemHaMonitorRead(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := "SystemHaMonitor"
 
-	o, err := c.ReadSystemHaMonitor(mkey)
+	o, err := c.ReadSystemHaMonitor(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemHaMonitor: %v", err)
 	}

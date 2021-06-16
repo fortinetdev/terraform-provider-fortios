@@ -30,6 +30,11 @@ func resourceNsxtServiceChain() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fosid": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 1023),
@@ -88,12 +93,20 @@ func resourceNsxtServiceChainCreate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectNsxtServiceChain(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating NsxtServiceChain resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateNsxtServiceChain(obj)
+	o, err := c.CreateNsxtServiceChain(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating NsxtServiceChain resource: %v", err)
@@ -113,12 +126,20 @@ func resourceNsxtServiceChainUpdate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectNsxtServiceChain(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating NsxtServiceChain resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateNsxtServiceChain(obj, mkey)
+	o, err := c.UpdateNsxtServiceChain(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating NsxtServiceChain resource: %v", err)
 	}
@@ -139,7 +160,15 @@ func resourceNsxtServiceChainDelete(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteNsxtServiceChain(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteNsxtServiceChain(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting NsxtServiceChain resource: %v", err)
 	}
@@ -155,7 +184,15 @@ func resourceNsxtServiceChainRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadNsxtServiceChain(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadNsxtServiceChain(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading NsxtServiceChain resource: %v", err)
 	}

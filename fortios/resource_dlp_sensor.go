@@ -30,6 +30,11 @@ func resourceDlpSensor() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -210,12 +215,20 @@ func resourceDlpSensorCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectDlpSensor(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating DlpSensor resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateDlpSensor(obj)
+	o, err := c.CreateDlpSensor(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating DlpSensor resource: %v", err)
@@ -235,12 +248,20 @@ func resourceDlpSensorUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectDlpSensor(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating DlpSensor resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateDlpSensor(obj, mkey)
+	o, err := c.UpdateDlpSensor(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating DlpSensor resource: %v", err)
 	}
@@ -261,7 +282,15 @@ func resourceDlpSensorDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteDlpSensor(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteDlpSensor(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting DlpSensor resource: %v", err)
 	}
@@ -277,7 +306,15 @@ func resourceDlpSensorRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadDlpSensor(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadDlpSensor(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading DlpSensor resource: %v", err)
 	}

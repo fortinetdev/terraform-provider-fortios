@@ -16,6 +16,11 @@ func resourceFirewallSecurityPolicySeq() *schema.Resource {
 		Delete: resourceFirewallSecurityPolicySeqDel,
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"policy_src_id": &schema.Schema{
 				Type:     schema.TypeInt,
 				Required: true,
@@ -78,6 +83,14 @@ func resourceFirewallSecurityPolicySeqCreateUpdate(d *schema.ResourceData, m int
 
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	srcIdPatch := d.Get("policy_src_id").(int)
 	dstIdPatch := d.Get("policy_dst_id").(int)
 	alterPos := d.Get("alter_position").(string)
@@ -89,7 +102,7 @@ func resourceFirewallSecurityPolicySeqCreateUpdate(d *schema.ResourceData, m int
 		return fmt.Errorf("<alter_position> param should be only 'after' or 'before'")
 	}
 
-	err := c.CreateUpdateFirewallSecurityPolicySeq(srcId, dstId, alterPos)
+	err := c.CreateUpdateFirewallSecurityPolicySeq(srcId, dstId, alterPos, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error Altering Firewall Security Policy Sequence: %s", err)
 	}
@@ -118,8 +131,6 @@ func resourceFirewallSecurityPolicySeqRead(d *schema.ResourceData, m interface{}
 		return nil
 	}
 
-	mkey := d.Id()
-
 	c := m.(*FortiClient).Client
 
 	if c == nil {
@@ -128,16 +139,19 @@ func resourceFirewallSecurityPolicySeqRead(d *schema.ResourceData, m interface{}
 
 	c.Retries = 1
 
-	err := c.ReadFirewallSecurityPolicySeq()
-	if err != nil {
-		return fmt.Errorf("Error reading Firewall Security Policy List: %s %s", err, mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
 	}
 
 	sid := d.Get("policy_src_id").(int)
 	did := d.Get("policy_dst_id").(int)
 	action := d.Get("alter_position").(string)
 
-	o, err := c.GetSecurityPolicyList()
+	o, err := c.GetSecurityPolicyList(vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading Firewall Security Policy List: %s", err)
 	}

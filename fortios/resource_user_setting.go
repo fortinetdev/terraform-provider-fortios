@@ -30,6 +30,11 @@ func resourceUserSetting() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"auth_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -165,12 +170,20 @@ func resourceUserSettingUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectUserSetting(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating UserSetting resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateUserSetting(obj, mkey)
+	o, err := c.UpdateUserSetting(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating UserSetting resource: %v", err)
 	}
@@ -190,13 +203,21 @@ func resourceUserSettingDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectUserSetting(d, true, c.Fv)
 
 	if err != nil {
 		return fmt.Errorf("Error updating UserSetting resource while getting object: %v", err)
 	}
 
-	_, err = c.UpdateUserSetting(obj, mkey)
+	_, err = c.UpdateUserSetting(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error clearing UserSetting resource: %v", err)
 	}
@@ -212,7 +233,15 @@ func resourceUserSettingRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadUserSetting(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadUserSetting(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading UserSetting resource: %v", err)
 	}

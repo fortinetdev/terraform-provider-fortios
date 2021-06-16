@@ -10,7 +10,7 @@
 
 - [Terraform](https://www.terraform.io/downloads.html) 0.12.x +
 - [Go](https://golang.org/doc/install) 1.13.x (to build the provider plugin)
-- The provider can cover both FortiOS 6.0 and 6.2 versions. The provider can cover both FortiManager 6.0 and 6.2 versions. When using FortiManager, make sure the versions of FortiManager and the FortiGates controlled by it are the same.
+- The provider can cover FortiOS 6.0, 6.2, 6.4, 7.0 versions, the configuration of all parameters should be based on the relevant FortiOS version manual. The provider can cover both FortiManager 6.0 and 6.2 versions. When using FortiManager, make sure the versions of FortiManager and the FortiGates controlled by it are the same.
 
 ## Building the Provider
 
@@ -18,7 +18,7 @@
 
     ```sh
     $ mkdir -p $GOPATH/src/github.com/terraform-providers; cd $GOPATH/src/github.com/terraform-providers
-    $ git clone git@github.com:terraform-providers/terraform-provider-fortios
+    $ git clone git@github.com:fortinetdev/terraform-provider-fortios
     ```
 
 2. Enter the provider directory and build the provider.

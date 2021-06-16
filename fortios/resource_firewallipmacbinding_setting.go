@@ -30,6 +30,11 @@ func resourceFirewallIpmacbindingSetting() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"bindthroughfw": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -54,12 +59,20 @@ func resourceFirewallIpmacbindingSettingUpdate(d *schema.ResourceData, m interfa
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallIpmacbindingSetting(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallIpmacbindingSetting resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateFirewallIpmacbindingSetting(obj, mkey)
+	o, err := c.UpdateFirewallIpmacbindingSetting(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallIpmacbindingSetting resource: %v", err)
 	}
@@ -80,7 +93,15 @@ func resourceFirewallIpmacbindingSettingDelete(d *schema.ResourceData, m interfa
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteFirewallIpmacbindingSetting(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteFirewallIpmacbindingSetting(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting FirewallIpmacbindingSetting resource: %v", err)
 	}
@@ -96,7 +117,15 @@ func resourceFirewallIpmacbindingSettingRead(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadFirewallIpmacbindingSetting(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadFirewallIpmacbindingSetting(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallIpmacbindingSetting resource: %v", err)
 	}

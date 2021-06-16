@@ -21,6 +21,12 @@ func dataSourceFirewallServiceCustom() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceFirewallServiceCustomRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -145,6 +151,14 @@ func dataSourceFirewallServiceCustomRead(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := ""
 
 	t := d.Get("name")
@@ -156,7 +170,7 @@ func dataSourceFirewallServiceCustomRead(d *schema.ResourceData, m interface{}) 
 		return fmt.Errorf("Error describing FirewallServiceCustom: type error")
 	}
 
-	o, err := c.ReadFirewallServiceCustom(mkey)
+	o, err := c.ReadFirewallServiceCustom(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing FirewallServiceCustom: %v", err)
 	}

@@ -30,6 +30,11 @@ func resourceFirewallShapingProfile() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"profile_name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -135,12 +140,20 @@ func resourceFirewallShapingProfileCreate(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallShapingProfile(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallShapingProfile resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateFirewallShapingProfile(obj)
+	o, err := c.CreateFirewallShapingProfile(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallShapingProfile resource: %v", err)
@@ -160,12 +173,20 @@ func resourceFirewallShapingProfileUpdate(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallShapingProfile(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallShapingProfile resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateFirewallShapingProfile(obj, mkey)
+	o, err := c.UpdateFirewallShapingProfile(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallShapingProfile resource: %v", err)
 	}
@@ -186,7 +207,15 @@ func resourceFirewallShapingProfileDelete(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteFirewallShapingProfile(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteFirewallShapingProfile(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting FirewallShapingProfile resource: %v", err)
 	}
@@ -202,7 +231,15 @@ func resourceFirewallShapingProfileRead(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadFirewallShapingProfile(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadFirewallShapingProfile(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallShapingProfile resource: %v", err)
 	}

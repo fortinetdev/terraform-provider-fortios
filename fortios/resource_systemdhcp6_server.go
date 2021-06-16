@@ -30,6 +30,11 @@ func resourceSystemDhcp6Server() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
@@ -192,12 +197,20 @@ func resourceSystemDhcp6ServerCreate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemDhcp6Server(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemDhcp6Server resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemDhcp6Server(obj)
+	o, err := c.CreateSystemDhcp6Server(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemDhcp6Server resource: %v", err)
@@ -217,12 +230,20 @@ func resourceSystemDhcp6ServerUpdate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemDhcp6Server(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemDhcp6Server resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemDhcp6Server(obj, mkey)
+	o, err := c.UpdateSystemDhcp6Server(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemDhcp6Server resource: %v", err)
 	}
@@ -243,7 +264,15 @@ func resourceSystemDhcp6ServerDelete(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemDhcp6Server(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemDhcp6Server(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemDhcp6Server resource: %v", err)
 	}
@@ -259,7 +288,15 @@ func resourceSystemDhcp6ServerRead(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemDhcp6Server(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemDhcp6Server(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemDhcp6Server resource: %v", err)
 	}

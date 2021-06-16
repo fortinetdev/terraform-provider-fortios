@@ -30,6 +30,11 @@ func resourceApplicationGroup() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -124,12 +129,20 @@ func resourceApplicationGroupCreate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectApplicationGroup(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating ApplicationGroup resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateApplicationGroup(obj)
+	o, err := c.CreateApplicationGroup(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating ApplicationGroup resource: %v", err)
@@ -149,12 +162,20 @@ func resourceApplicationGroupUpdate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectApplicationGroup(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating ApplicationGroup resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateApplicationGroup(obj, mkey)
+	o, err := c.UpdateApplicationGroup(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating ApplicationGroup resource: %v", err)
 	}
@@ -175,7 +196,15 @@ func resourceApplicationGroupDelete(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteApplicationGroup(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteApplicationGroup(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting ApplicationGroup resource: %v", err)
 	}
@@ -191,7 +220,15 @@ func resourceApplicationGroupRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadApplicationGroup(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadApplicationGroup(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading ApplicationGroup resource: %v", err)
 	}

@@ -193,6 +193,7 @@ The following arguments are supported:
 * `dst_subnet` - Remote proxy ID IPv4 subnet.
 * `dst_subnet6` - Remote proxy ID IPv6 subnet.
 * `dst_port` - Quick mode destination port (1 - 65535 or 0 for all).
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

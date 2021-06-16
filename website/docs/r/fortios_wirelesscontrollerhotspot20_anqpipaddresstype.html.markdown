@@ -26,6 +26,7 @@ The following arguments are supported:
 * `name` - IP type name.
 * `ipv6_address_type` - IPv6 address type. Valid values: `not-available`, `available`, `not-known`.
 * `ipv4_address_type` - IPv4 address type. Valid values: `not-available`, `public`, `port-restricted`, `single-NATed-private`, `double-NATed-private`, `port-restricted-and-single-NATed`, `port-restricted-and-double-NATed`, `not-known`.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

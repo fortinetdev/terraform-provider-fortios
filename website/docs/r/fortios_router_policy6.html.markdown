@@ -45,6 +45,7 @@ The following arguments are supported:
 * `tos_mask` - Type of service evaluated bits.
 * `status` - Enable/disable this policy route. Valid values: `enable`, `disable`.
 * `comments` - Optional comments.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

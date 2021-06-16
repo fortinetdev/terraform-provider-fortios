@@ -30,6 +30,11 @@ func resourceSystemArpTable() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
@@ -56,12 +61,20 @@ func resourceSystemArpTableCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemArpTable(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemArpTable resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemArpTable(obj)
+	o, err := c.CreateSystemArpTable(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemArpTable resource: %v", err)
@@ -81,12 +94,20 @@ func resourceSystemArpTableUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemArpTable(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemArpTable resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemArpTable(obj, mkey)
+	o, err := c.UpdateSystemArpTable(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemArpTable resource: %v", err)
 	}
@@ -107,7 +128,15 @@ func resourceSystemArpTableDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemArpTable(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemArpTable(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemArpTable resource: %v", err)
 	}
@@ -123,7 +152,15 @@ func resourceSystemArpTableRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemArpTable(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemArpTable(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemArpTable resource: %v", err)
 	}

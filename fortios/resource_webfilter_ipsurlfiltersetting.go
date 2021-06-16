@@ -30,6 +30,11 @@ func resourceWebfilterIpsUrlfilterSetting() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"device": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -61,12 +66,20 @@ func resourceWebfilterIpsUrlfilterSettingUpdate(d *schema.ResourceData, m interf
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWebfilterIpsUrlfilterSetting(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WebfilterIpsUrlfilterSetting resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateWebfilterIpsUrlfilterSetting(obj, mkey)
+	o, err := c.UpdateWebfilterIpsUrlfilterSetting(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating WebfilterIpsUrlfilterSetting resource: %v", err)
 	}
@@ -87,7 +100,15 @@ func resourceWebfilterIpsUrlfilterSettingDelete(d *schema.ResourceData, m interf
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteWebfilterIpsUrlfilterSetting(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteWebfilterIpsUrlfilterSetting(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting WebfilterIpsUrlfilterSetting resource: %v", err)
 	}
@@ -103,7 +124,15 @@ func resourceWebfilterIpsUrlfilterSettingRead(d *schema.ResourceData, m interfac
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadWebfilterIpsUrlfilterSetting(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadWebfilterIpsUrlfilterSetting(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading WebfilterIpsUrlfilterSetting resource: %v", err)
 	}

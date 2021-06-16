@@ -30,6 +30,11 @@ func resourceFirewallWildcardFqdnGroup() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -84,12 +89,20 @@ func resourceFirewallWildcardFqdnGroupCreate(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallWildcardFqdnGroup(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallWildcardFqdnGroup resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateFirewallWildcardFqdnGroup(obj)
+	o, err := c.CreateFirewallWildcardFqdnGroup(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallWildcardFqdnGroup resource: %v", err)
@@ -109,12 +122,20 @@ func resourceFirewallWildcardFqdnGroupUpdate(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallWildcardFqdnGroup(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallWildcardFqdnGroup resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateFirewallWildcardFqdnGroup(obj, mkey)
+	o, err := c.UpdateFirewallWildcardFqdnGroup(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallWildcardFqdnGroup resource: %v", err)
 	}
@@ -135,7 +156,15 @@ func resourceFirewallWildcardFqdnGroupDelete(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteFirewallWildcardFqdnGroup(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteFirewallWildcardFqdnGroup(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting FirewallWildcardFqdnGroup resource: %v", err)
 	}
@@ -151,7 +180,15 @@ func resourceFirewallWildcardFqdnGroupRead(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadFirewallWildcardFqdnGroup(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadFirewallWildcardFqdnGroup(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallWildcardFqdnGroup resource: %v", err)
 	}

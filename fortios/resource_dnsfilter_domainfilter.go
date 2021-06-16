@@ -30,6 +30,11 @@ func resourceDnsfilterDomainFilter() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
@@ -92,12 +97,20 @@ func resourceDnsfilterDomainFilterCreate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectDnsfilterDomainFilter(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating DnsfilterDomainFilter resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateDnsfilterDomainFilter(obj)
+	o, err := c.CreateDnsfilterDomainFilter(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating DnsfilterDomainFilter resource: %v", err)
@@ -117,12 +130,20 @@ func resourceDnsfilterDomainFilterUpdate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectDnsfilterDomainFilter(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating DnsfilterDomainFilter resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateDnsfilterDomainFilter(obj, mkey)
+	o, err := c.UpdateDnsfilterDomainFilter(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating DnsfilterDomainFilter resource: %v", err)
 	}
@@ -143,7 +164,15 @@ func resourceDnsfilterDomainFilterDelete(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteDnsfilterDomainFilter(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteDnsfilterDomainFilter(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting DnsfilterDomainFilter resource: %v", err)
 	}
@@ -159,7 +188,15 @@ func resourceDnsfilterDomainFilterRead(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadDnsfilterDomainFilter(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadDnsfilterDomainFilter(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading DnsfilterDomainFilter resource: %v", err)
 	}

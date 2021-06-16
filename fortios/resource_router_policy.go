@@ -30,6 +30,11 @@ func resourceRouterPolicy() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"seq_num": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
@@ -228,12 +233,20 @@ func resourceRouterPolicyCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectRouterPolicy(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating RouterPolicy resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateRouterPolicy(obj)
+	o, err := c.CreateRouterPolicy(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating RouterPolicy resource: %v", err)
@@ -253,12 +266,20 @@ func resourceRouterPolicyUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectRouterPolicy(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterPolicy resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateRouterPolicy(obj, mkey)
+	o, err := c.UpdateRouterPolicy(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterPolicy resource: %v", err)
 	}
@@ -279,7 +300,15 @@ func resourceRouterPolicyDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteRouterPolicy(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteRouterPolicy(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting RouterPolicy resource: %v", err)
 	}
@@ -295,7 +324,15 @@ func resourceRouterPolicyRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadRouterPolicy(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadRouterPolicy(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading RouterPolicy resource: %v", err)
 	}

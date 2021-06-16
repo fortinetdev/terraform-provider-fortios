@@ -30,6 +30,11 @@ func resourceSystemAlias() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -50,12 +55,20 @@ func resourceSystemAliasCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemAlias(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemAlias resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemAlias(obj)
+	o, err := c.CreateSystemAlias(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemAlias resource: %v", err)
@@ -75,12 +88,20 @@ func resourceSystemAliasUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemAlias(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAlias resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemAlias(obj, mkey)
+	o, err := c.UpdateSystemAlias(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAlias resource: %v", err)
 	}
@@ -101,7 +122,15 @@ func resourceSystemAliasDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemAlias(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemAlias(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemAlias resource: %v", err)
 	}
@@ -117,7 +146,15 @@ func resourceSystemAliasRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemAlias(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemAlias(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemAlias resource: %v", err)
 	}

@@ -21,6 +21,12 @@ func dataSourceRouterAccessList() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceRouterAccessListRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -69,6 +75,14 @@ func dataSourceRouterAccessListRead(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := ""
 
 	t := d.Get("name")
@@ -80,7 +94,7 @@ func dataSourceRouterAccessListRead(d *schema.ResourceData, m interface{}) error
 		return fmt.Errorf("Error describing RouterAccessList: type error")
 	}
 
-	o, err := c.ReadRouterAccessList(mkey)
+	o, err := c.ReadRouterAccessList(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing RouterAccessList: %v", err)
 	}

@@ -24,6 +24,7 @@ The following arguments are supported:
 
 * `name` - Name of SMS server.
 * `mail_server` - (Required) Email-to-SMS server domain name.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

@@ -9,6 +9,10 @@ description: |-
 # fortios_router_ospf6
 Configure IPv6 OSPF.
 
+~> The provider supports the definition of Ospf6-Interface in Router Ospf6 `fortios_router_ospf6`, and also allows the definition of separate Ospf6-Interface resources `fortios_routerospf6_ospf6interface`, but do not use a `fortios_router_ospf6` with in-line Ospf6-Interface in conjunction with any `fortios_routerospf6_ospf6interface` resources, otherwise conflicts and overwrite will occur.
+
+
+
 ## Example Usage
 
 ```hcl
@@ -78,6 +82,7 @@ The following arguments are supported:
 * `passive_interface` - Passive interface configuration. The structure of `passive_interface` block is documented below.
 * `summary_address` - IPv6 address summary configuration. The structure of `summary_address` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `area` block supports:
 

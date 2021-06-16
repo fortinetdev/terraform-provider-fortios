@@ -32,6 +32,7 @@ The following arguments are supported:
 * `threshold_rx_errors` - Threshold in percentage for receive errors to trigger channel reselection in DARRP monitor stage (0 - 100, default = 50).
 * `include_weather_channel` - Enable/disable use of weather channel in DARRP channel selection phase 1 (default = disable).
 * `include_dfs_channel` - Enable/disable use of DFS channel in DARRP channel selection phase 1 (default = disable).
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

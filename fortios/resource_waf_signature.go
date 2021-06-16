@@ -30,6 +30,11 @@ func resourceWafSignature() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"desc": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 511),
@@ -50,12 +55,20 @@ func resourceWafSignatureCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWafSignature(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WafSignature resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateWafSignature(obj)
+	o, err := c.CreateWafSignature(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating WafSignature resource: %v", err)
@@ -75,12 +88,20 @@ func resourceWafSignatureUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWafSignature(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WafSignature resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateWafSignature(obj, mkey)
+	o, err := c.UpdateWafSignature(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating WafSignature resource: %v", err)
 	}
@@ -101,7 +122,15 @@ func resourceWafSignatureDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteWafSignature(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteWafSignature(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting WafSignature resource: %v", err)
 	}
@@ -117,7 +146,15 @@ func resourceWafSignatureRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadWafSignature(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadWafSignature(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading WafSignature resource: %v", err)
 	}

@@ -30,6 +30,11 @@ func resourceEmailfilterBword() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
@@ -110,12 +115,20 @@ func resourceEmailfilterBwordCreate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectEmailfilterBword(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating EmailfilterBword resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateEmailfilterBword(obj)
+	o, err := c.CreateEmailfilterBword(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating EmailfilterBword resource: %v", err)
@@ -135,12 +148,20 @@ func resourceEmailfilterBwordUpdate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectEmailfilterBword(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating EmailfilterBword resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateEmailfilterBword(obj, mkey)
+	o, err := c.UpdateEmailfilterBword(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating EmailfilterBword resource: %v", err)
 	}
@@ -161,7 +182,15 @@ func resourceEmailfilterBwordDelete(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteEmailfilterBword(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteEmailfilterBword(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting EmailfilterBword resource: %v", err)
 	}
@@ -177,7 +206,15 @@ func resourceEmailfilterBwordRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadEmailfilterBword(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadEmailfilterBword(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading EmailfilterBword resource: %v", err)
 	}

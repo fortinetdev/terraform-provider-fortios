@@ -30,6 +30,11 @@ func resourceSpamfilterBword() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
@@ -108,12 +113,20 @@ func resourceSpamfilterBwordCreate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSpamfilterBword(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SpamfilterBword resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSpamfilterBword(obj)
+	o, err := c.CreateSpamfilterBword(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SpamfilterBword resource: %v", err)
@@ -133,12 +146,20 @@ func resourceSpamfilterBwordUpdate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSpamfilterBword(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SpamfilterBword resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSpamfilterBword(obj, mkey)
+	o, err := c.UpdateSpamfilterBword(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SpamfilterBword resource: %v", err)
 	}
@@ -159,7 +180,15 @@ func resourceSpamfilterBwordDelete(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSpamfilterBword(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSpamfilterBword(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SpamfilterBword resource: %v", err)
 	}
@@ -175,7 +204,15 @@ func resourceSpamfilterBwordRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSpamfilterBword(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSpamfilterBword(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SpamfilterBword resource: %v", err)
 	}

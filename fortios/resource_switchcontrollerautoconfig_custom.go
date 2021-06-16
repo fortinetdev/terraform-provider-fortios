@@ -30,6 +30,11 @@ func resourceSwitchControllerAutoConfigCustom() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
@@ -69,12 +74,20 @@ func resourceSwitchControllerAutoConfigCustomCreate(d *schema.ResourceData, m in
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerAutoConfigCustom(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerAutoConfigCustom resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSwitchControllerAutoConfigCustom(obj)
+	o, err := c.CreateSwitchControllerAutoConfigCustom(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerAutoConfigCustom resource: %v", err)
@@ -94,12 +107,20 @@ func resourceSwitchControllerAutoConfigCustomUpdate(d *schema.ResourceData, m in
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerAutoConfigCustom(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerAutoConfigCustom resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSwitchControllerAutoConfigCustom(obj, mkey)
+	o, err := c.UpdateSwitchControllerAutoConfigCustom(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerAutoConfigCustom resource: %v", err)
 	}
@@ -120,7 +141,15 @@ func resourceSwitchControllerAutoConfigCustomDelete(d *schema.ResourceData, m in
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSwitchControllerAutoConfigCustom(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSwitchControllerAutoConfigCustom(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SwitchControllerAutoConfigCustom resource: %v", err)
 	}
@@ -136,7 +165,15 @@ func resourceSwitchControllerAutoConfigCustomRead(d *schema.ResourceData, m inte
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSwitchControllerAutoConfigCustom(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSwitchControllerAutoConfigCustom(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerAutoConfigCustom resource: %v", err)
 	}

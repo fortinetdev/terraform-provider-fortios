@@ -30,6 +30,11 @@ func resourceRouterCommunityList() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -83,12 +88,20 @@ func resourceRouterCommunityListCreate(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectRouterCommunityList(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating RouterCommunityList resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateRouterCommunityList(obj)
+	o, err := c.CreateRouterCommunityList(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating RouterCommunityList resource: %v", err)
@@ -108,12 +121,20 @@ func resourceRouterCommunityListUpdate(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectRouterCommunityList(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterCommunityList resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateRouterCommunityList(obj, mkey)
+	o, err := c.UpdateRouterCommunityList(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterCommunityList resource: %v", err)
 	}
@@ -134,7 +155,15 @@ func resourceRouterCommunityListDelete(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteRouterCommunityList(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteRouterCommunityList(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting RouterCommunityList resource: %v", err)
 	}
@@ -150,7 +179,15 @@ func resourceRouterCommunityListRead(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadRouterCommunityList(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadRouterCommunityList(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading RouterCommunityList resource: %v", err)
 	}

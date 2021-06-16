@@ -21,7 +21,7 @@ type JSONJSONGenericAPI struct {
 
 // CreateJSONGenericAPI API operation for FortiOS sends request to FortiGate/FortiOS APIs.
 // Returns the response from FortiGate or FortiOS .
-func (c *FortiSDKClient) CreateJSONGenericAPI(params *JSONJSONGenericAPI) (res string, err error) {
+func (c *FortiSDKClient) CreateJSONGenericAPI(params *JSONJSONGenericAPI, vdomparam string) (res string, err error) {
 	HTTPMethod := params.Method
 	path := params.Path
 	specialparams := params.Specialparams
@@ -45,7 +45,7 @@ func (c *FortiSDKClient) CreateJSONGenericAPI(params *JSONJSONGenericAPI) (res s
 		req = c.NewRequest(HTTPMethod, path, nil, nil)
 	}
 
-	err = req.SendWithSpecialParams(specialparams)
+	err = req.SendWithSpecialParams(specialparams, vdomparam)
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %v", err)
 		return
@@ -81,9 +81,9 @@ func (c *FortiSDKClient) ReadJSONGenericAPI(mkey string) (output *JSONJSONGeneri
 }
 
 // GenericGroupRead API operation for FortiOS, Read Generic Group
-func (c *FortiSDKClient) GenericGroupRead(path, specialparams string) (mapTmp []interface{}, err error) {
+func (c *FortiSDKClient) GenericGroupRead(path, specialparams, vdomparam string) (mapTmp []interface{}, err error) {
 	req := c.NewRequest("GET", path, nil, nil)
-	err = req.SendWithSpecialParams(specialparams)
+	err = req.SendWithSpecialParams(specialparams, vdomparam)
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %v", err)
 		return

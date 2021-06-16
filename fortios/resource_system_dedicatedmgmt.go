@@ -30,6 +30,11 @@ func resourceSystemDedicatedMgmt() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -75,12 +80,20 @@ func resourceSystemDedicatedMgmtUpdate(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemDedicatedMgmt(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemDedicatedMgmt resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemDedicatedMgmt(obj, mkey)
+	o, err := c.UpdateSystemDedicatedMgmt(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemDedicatedMgmt resource: %v", err)
 	}
@@ -101,7 +114,15 @@ func resourceSystemDedicatedMgmtDelete(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemDedicatedMgmt(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemDedicatedMgmt(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemDedicatedMgmt resource: %v", err)
 	}
@@ -117,7 +138,15 @@ func resourceSystemDedicatedMgmtRead(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemDedicatedMgmt(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemDedicatedMgmt(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemDedicatedMgmt resource: %v", err)
 	}

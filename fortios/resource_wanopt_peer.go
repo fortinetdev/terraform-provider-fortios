@@ -30,6 +30,11 @@ func resourceWanoptPeer() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"peer_host_id": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -50,12 +55,20 @@ func resourceWanoptPeerCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWanoptPeer(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WanoptPeer resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateWanoptPeer(obj)
+	o, err := c.CreateWanoptPeer(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating WanoptPeer resource: %v", err)
@@ -75,12 +88,20 @@ func resourceWanoptPeerUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWanoptPeer(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WanoptPeer resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateWanoptPeer(obj, mkey)
+	o, err := c.UpdateWanoptPeer(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating WanoptPeer resource: %v", err)
 	}
@@ -101,7 +122,15 @@ func resourceWanoptPeerDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteWanoptPeer(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteWanoptPeer(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting WanoptPeer resource: %v", err)
 	}
@@ -117,7 +146,15 @@ func resourceWanoptPeerRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadWanoptPeer(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadWanoptPeer(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading WanoptPeer resource: %v", err)
 	}

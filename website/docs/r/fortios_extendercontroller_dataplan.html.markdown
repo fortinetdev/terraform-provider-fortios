@@ -32,6 +32,7 @@ The following arguments are supported:
 * `overage` - Enable/disable dataplan overage detection. Valid values: `disable`, `enable`.
 * `preferred_subnet` - Preferred subnet mask (8 - 32).
 * `private_network` - Enable/disable dataplan private network support. Valid values: `disable`, `enable`.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

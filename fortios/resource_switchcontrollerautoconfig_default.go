@@ -30,6 +30,11 @@ func resourceSwitchControllerAutoConfigDefault() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fgt_policy": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -57,12 +62,20 @@ func resourceSwitchControllerAutoConfigDefaultUpdate(d *schema.ResourceData, m i
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerAutoConfigDefault(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerAutoConfigDefault resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSwitchControllerAutoConfigDefault(obj, mkey)
+	o, err := c.UpdateSwitchControllerAutoConfigDefault(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerAutoConfigDefault resource: %v", err)
 	}
@@ -83,7 +96,15 @@ func resourceSwitchControllerAutoConfigDefaultDelete(d *schema.ResourceData, m i
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSwitchControllerAutoConfigDefault(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSwitchControllerAutoConfigDefault(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SwitchControllerAutoConfigDefault resource: %v", err)
 	}
@@ -99,7 +120,15 @@ func resourceSwitchControllerAutoConfigDefaultRead(d *schema.ResourceData, m int
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSwitchControllerAutoConfigDefault(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSwitchControllerAutoConfigDefault(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerAutoConfigDefault resource: %v", err)
 	}

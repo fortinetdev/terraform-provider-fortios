@@ -21,6 +21,12 @@ func dataSourceRouterMulticastFlow() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceRouterMulticastFlowRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -57,6 +63,14 @@ func dataSourceRouterMulticastFlowRead(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := ""
 
 	t := d.Get("name")
@@ -68,7 +82,7 @@ func dataSourceRouterMulticastFlowRead(d *schema.ResourceData, m interface{}) er
 		return fmt.Errorf("Error describing RouterMulticastFlow: type error")
 	}
 
-	o, err := c.ReadRouterMulticastFlow(mkey)
+	o, err := c.ReadRouterMulticastFlow(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing RouterMulticastFlow: %v", err)
 	}

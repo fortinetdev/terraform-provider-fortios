@@ -30,6 +30,11 @@ func resourceSwitchControllerSnmpSysinfo() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -68,12 +73,20 @@ func resourceSwitchControllerSnmpSysinfoUpdate(d *schema.ResourceData, m interfa
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerSnmpSysinfo(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerSnmpSysinfo resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSwitchControllerSnmpSysinfo(obj, mkey)
+	o, err := c.UpdateSwitchControllerSnmpSysinfo(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerSnmpSysinfo resource: %v", err)
 	}
@@ -94,7 +107,15 @@ func resourceSwitchControllerSnmpSysinfoDelete(d *schema.ResourceData, m interfa
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSwitchControllerSnmpSysinfo(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSwitchControllerSnmpSysinfo(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SwitchControllerSnmpSysinfo resource: %v", err)
 	}
@@ -110,7 +131,15 @@ func resourceSwitchControllerSnmpSysinfoRead(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSwitchControllerSnmpSysinfo(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSwitchControllerSnmpSysinfo(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerSnmpSysinfo resource: %v", err)
 	}

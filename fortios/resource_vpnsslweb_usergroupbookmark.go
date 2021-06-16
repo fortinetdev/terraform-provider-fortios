@@ -30,6 +30,11 @@ func resourceVpnSslWebUserGroupBookmark() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 64),
@@ -203,12 +208,20 @@ func resourceVpnSslWebUserGroupBookmarkCreate(d *schema.ResourceData, m interfac
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectVpnSslWebUserGroupBookmark(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating VpnSslWebUserGroupBookmark resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateVpnSslWebUserGroupBookmark(obj)
+	o, err := c.CreateVpnSslWebUserGroupBookmark(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating VpnSslWebUserGroupBookmark resource: %v", err)
@@ -228,12 +241,20 @@ func resourceVpnSslWebUserGroupBookmarkUpdate(d *schema.ResourceData, m interfac
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectVpnSslWebUserGroupBookmark(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating VpnSslWebUserGroupBookmark resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateVpnSslWebUserGroupBookmark(obj, mkey)
+	o, err := c.UpdateVpnSslWebUserGroupBookmark(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating VpnSslWebUserGroupBookmark resource: %v", err)
 	}
@@ -254,7 +275,15 @@ func resourceVpnSslWebUserGroupBookmarkDelete(d *schema.ResourceData, m interfac
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteVpnSslWebUserGroupBookmark(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteVpnSslWebUserGroupBookmark(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting VpnSslWebUserGroupBookmark resource: %v", err)
 	}
@@ -270,7 +299,15 @@ func resourceVpnSslWebUserGroupBookmarkRead(d *schema.ResourceData, m interface{
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadVpnSslWebUserGroupBookmark(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadVpnSslWebUserGroupBookmark(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading VpnSslWebUserGroupBookmark resource: %v", err)
 	}

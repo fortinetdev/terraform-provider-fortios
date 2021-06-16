@@ -30,6 +30,11 @@ func resourceSystemFtmPush() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"server_port": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
@@ -61,12 +66,20 @@ func resourceSystemFtmPushUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemFtmPush(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemFtmPush resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemFtmPush(obj, mkey)
+	o, err := c.UpdateSystemFtmPush(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemFtmPush resource: %v", err)
 	}
@@ -87,7 +100,15 @@ func resourceSystemFtmPushDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemFtmPush(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemFtmPush(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemFtmPush resource: %v", err)
 	}
@@ -103,7 +124,15 @@ func resourceSystemFtmPushRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemFtmPush(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemFtmPush(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemFtmPush resource: %v", err)
 	}

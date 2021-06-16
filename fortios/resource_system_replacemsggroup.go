@@ -30,6 +30,11 @@ func resourceSystemReplacemsgGroup() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -610,12 +615,20 @@ func resourceSystemReplacemsgGroupCreate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemReplacemsgGroup(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemReplacemsgGroup resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemReplacemsgGroup(obj)
+	o, err := c.CreateSystemReplacemsgGroup(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemReplacemsgGroup resource: %v", err)
@@ -635,12 +648,20 @@ func resourceSystemReplacemsgGroupUpdate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemReplacemsgGroup(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemReplacemsgGroup resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemReplacemsgGroup(obj, mkey)
+	o, err := c.UpdateSystemReplacemsgGroup(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemReplacemsgGroup resource: %v", err)
 	}
@@ -661,7 +682,15 @@ func resourceSystemReplacemsgGroupDelete(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemReplacemsgGroup(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemReplacemsgGroup(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemReplacemsgGroup resource: %v", err)
 	}
@@ -677,7 +706,15 @@ func resourceSystemReplacemsgGroupRead(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemReplacemsgGroup(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemReplacemsgGroup(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemReplacemsgGroup resource: %v", err)
 	}

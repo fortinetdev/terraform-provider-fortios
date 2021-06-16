@@ -21,6 +21,12 @@ func dataSourceFirewallInternetServiceDefinition() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceFirewallInternetServiceDefinitionRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				Required: true,
@@ -81,6 +87,14 @@ func dataSourceFirewallInternetServiceDefinitionRead(d *schema.ResourceData, m i
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := ""
 
 	t := d.Get("fosid")
@@ -92,7 +106,7 @@ func dataSourceFirewallInternetServiceDefinitionRead(d *schema.ResourceData, m i
 		return fmt.Errorf("Error describing FirewallInternetServiceDefinition: type error")
 	}
 
-	o, err := c.ReadFirewallInternetServiceDefinition(mkey)
+	o, err := c.ReadFirewallInternetServiceDefinition(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing FirewallInternetServiceDefinition: %v", err)
 	}

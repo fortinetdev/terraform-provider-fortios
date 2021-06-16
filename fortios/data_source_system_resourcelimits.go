@@ -21,6 +21,12 @@ func dataSourceSystemResourceLimits() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemResourceLimitsRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"session": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -101,9 +107,17 @@ func dataSourceSystemResourceLimitsRead(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := "SystemResourceLimits"
 
-	o, err := c.ReadSystemResourceLimits(mkey)
+	o, err := c.ReadSystemResourceLimits(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemResourceLimits: %v", err)
 	}

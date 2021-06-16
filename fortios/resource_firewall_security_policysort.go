@@ -16,6 +16,11 @@ func resourceFirewallSecurityPolicySort() *schema.Resource {
 		Delete: schema.Noop,
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"sortby": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -74,6 +79,14 @@ func resourceFirewallSecurityPolicySortCreateUpdate(d *schema.ResourceData, m in
 
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	sortby := d.Get("sortby").(string)
 	sortdirection := d.Get("sortdirection").(string)
 
@@ -85,7 +98,7 @@ func resourceFirewallSecurityPolicySortCreateUpdate(d *schema.ResourceData, m in
 		return fmt.Errorf("Unsupported sort direction: " + sortdirection)
 	}
 
-	err := c.CreateUpdateFirewallSecurityPolicySort(sortby, sortdirection)
+	err := c.CreateUpdateFirewallSecurityPolicySort(sortby, sortdirection, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error Sort Firewall Security Policies: %s", err)
 	}
@@ -106,6 +119,14 @@ func resourceFirewallSecurityPolicySortRead(d *schema.ResourceData, m interface{
 
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	sortby := d.Get("sortby").(string)
 	sortdirection := d.Get("sortdirection").(string)
 
@@ -117,7 +138,7 @@ func resourceFirewallSecurityPolicySortRead(d *schema.ResourceData, m interface{
 		return fmt.Errorf("Unsupported sort direction: " + sortdirection)
 	}
 
-	sorted, err := c.ReadFirewallSecurityPolicySort(sortby, sortdirection)
+	sorted, err := c.ReadFirewallSecurityPolicySort(sortby, sortdirection, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading Firewall Security Policy Sort Status: %s %s", err, mkey)
 	}
@@ -128,7 +149,7 @@ func resourceFirewallSecurityPolicySortRead(d *schema.ResourceData, m interface{
 		d.Set("status", "")
 	}
 
-	o, err := c.GetSecurityPolicyList()
+	o, err := c.GetSecurityPolicyList(vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading Firewall Security Policy List: %s", err)
 	}

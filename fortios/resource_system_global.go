@@ -30,6 +30,11 @@ func resourceSystemGlobal() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"language": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -1161,12 +1166,20 @@ func resourceSystemGlobalUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemGlobal(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemGlobal resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemGlobal(obj, mkey)
+	o, err := c.UpdateSystemGlobal(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemGlobal resource: %v", err)
 	}
@@ -1187,7 +1200,15 @@ func resourceSystemGlobalDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemGlobal(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemGlobal(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemGlobal resource: %v", err)
 	}
@@ -1203,7 +1224,15 @@ func resourceSystemGlobalRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemGlobal(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemGlobal(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemGlobal resource: %v", err)
 	}

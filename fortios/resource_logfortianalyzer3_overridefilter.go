@@ -30,6 +30,11 @@ func resourceLogFortianalyzer3OverrideFilter() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"severity": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -149,12 +154,20 @@ func resourceLogFortianalyzer3OverrideFilterUpdate(d *schema.ResourceData, m int
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectLogFortianalyzer3OverrideFilter(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogFortianalyzer3OverrideFilter resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateLogFortianalyzer3OverrideFilter(obj, mkey)
+	o, err := c.UpdateLogFortianalyzer3OverrideFilter(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating LogFortianalyzer3OverrideFilter resource: %v", err)
 	}
@@ -175,7 +188,15 @@ func resourceLogFortianalyzer3OverrideFilterDelete(d *schema.ResourceData, m int
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteLogFortianalyzer3OverrideFilter(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteLogFortianalyzer3OverrideFilter(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting LogFortianalyzer3OverrideFilter resource: %v", err)
 	}
@@ -191,7 +212,15 @@ func resourceLogFortianalyzer3OverrideFilterRead(d *schema.ResourceData, m inter
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadLogFortianalyzer3OverrideFilter(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadLogFortianalyzer3OverrideFilter(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading LogFortianalyzer3OverrideFilter resource: %v", err)
 	}

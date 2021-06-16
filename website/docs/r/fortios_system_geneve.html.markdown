@@ -34,6 +34,7 @@ The following arguments are supported:
 * `remote_ip` - (Required) IPv4 address of the GENEVE interface on the device at the remote end of the GENEVE.
 * `remote_ip6` - IPv6 IP address of the GENEVE interface on the device at the remote end of the GENEVE.
 * `dstport` - GENEVE destination port (1 - 65535, default = 6081).
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

@@ -21,6 +21,12 @@ func dataSourceSystemFortisandbox() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemFortisandboxRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -65,9 +71,17 @@ func dataSourceSystemFortisandboxRead(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := "SystemFortisandbox"
 
-	o, err := c.ReadSystemFortisandbox(mkey)
+	o, err := c.ReadSystemFortisandbox(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemFortisandbox: %v", err)
 	}

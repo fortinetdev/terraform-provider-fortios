@@ -21,6 +21,12 @@ func dataSourceSystemSnmpSysinfo() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemSnmpSysinfoRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -61,9 +67,17 @@ func dataSourceSystemSnmpSysinfoRead(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := "SystemSnmpSysinfo"
 
-	o, err := c.ReadSystemSnmpSysinfo(mkey)
+	o, err := c.ReadSystemSnmpSysinfo(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemSnmpSysinfo: %v", err)
 	}

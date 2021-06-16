@@ -26,6 +26,7 @@ The following arguments are supported:
 * `fosid` - field ID <string>.
 * `name` - (Required) Field name (max: 15 characters).
 * `value` - (Required) Field value (max: 15 characters).
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

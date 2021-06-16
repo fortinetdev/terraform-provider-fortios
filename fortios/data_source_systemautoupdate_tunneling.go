@@ -21,6 +21,12 @@ func dataSourceSystemAutoupdateTunneling() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemAutoupdateTunnelingRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -50,9 +56,17 @@ func dataSourceSystemAutoupdateTunnelingRead(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := "SystemAutoupdateTunneling"
 
-	o, err := c.ReadSystemAutoupdateTunneling(mkey)
+	o, err := c.ReadSystemAutoupdateTunneling(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemAutoupdateTunneling: %v", err)
 	}

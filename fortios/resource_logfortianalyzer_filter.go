@@ -30,6 +30,11 @@ func resourceLogFortianalyzerFilter() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"severity": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -149,12 +154,20 @@ func resourceLogFortianalyzerFilterUpdate(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectLogFortianalyzerFilter(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogFortianalyzerFilter resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateLogFortianalyzerFilter(obj, mkey)
+	o, err := c.UpdateLogFortianalyzerFilter(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating LogFortianalyzerFilter resource: %v", err)
 	}
@@ -175,7 +188,15 @@ func resourceLogFortianalyzerFilterDelete(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteLogFortianalyzerFilter(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteLogFortianalyzerFilter(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting LogFortianalyzerFilter resource: %v", err)
 	}
@@ -191,7 +212,15 @@ func resourceLogFortianalyzerFilterRead(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadLogFortianalyzerFilter(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadLogFortianalyzerFilter(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading LogFortianalyzerFilter resource: %v", err)
 	}

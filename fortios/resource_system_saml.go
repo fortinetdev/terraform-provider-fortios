@@ -30,6 +30,11 @@ func resourceSystemSaml() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -222,12 +227,20 @@ func resourceSystemSamlUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemSaml(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSaml resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemSaml(obj, mkey)
+	o, err := c.UpdateSystemSaml(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSaml resource: %v", err)
 	}
@@ -247,13 +260,21 @@ func resourceSystemSamlDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemSaml(d, true, c.Fv)
 
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSaml resource while getting object: %v", err)
 	}
 
-	_, err = c.UpdateSystemSaml(obj, mkey)
+	_, err = c.UpdateSystemSaml(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error clearing SystemSaml resource: %v", err)
 	}
@@ -269,7 +290,15 @@ func resourceSystemSamlRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemSaml(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemSaml(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemSaml resource: %v", err)
 	}

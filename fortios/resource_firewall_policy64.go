@@ -30,6 +30,11 @@ func resourceFirewallPolicy64() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"policyid": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
@@ -201,12 +206,20 @@ func resourceFirewallPolicy64Create(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallPolicy64(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallPolicy64 resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateFirewallPolicy64(obj)
+	o, err := c.CreateFirewallPolicy64(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallPolicy64 resource: %v", err)
@@ -226,12 +239,20 @@ func resourceFirewallPolicy64Update(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallPolicy64(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallPolicy64 resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateFirewallPolicy64(obj, mkey)
+	o, err := c.UpdateFirewallPolicy64(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallPolicy64 resource: %v", err)
 	}
@@ -252,7 +273,15 @@ func resourceFirewallPolicy64Delete(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteFirewallPolicy64(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteFirewallPolicy64(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting FirewallPolicy64 resource: %v", err)
 	}
@@ -268,7 +297,15 @@ func resourceFirewallPolicy64Read(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadFirewallPolicy64(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadFirewallPolicy64(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallPolicy64 resource: %v", err)
 	}

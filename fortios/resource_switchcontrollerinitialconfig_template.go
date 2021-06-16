@@ -30,6 +30,11 @@ func resourceSwitchControllerInitialConfigTemplate() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -71,12 +76,20 @@ func resourceSwitchControllerInitialConfigTemplateCreate(d *schema.ResourceData,
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerInitialConfigTemplate(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerInitialConfigTemplate resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSwitchControllerInitialConfigTemplate(obj)
+	o, err := c.CreateSwitchControllerInitialConfigTemplate(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerInitialConfigTemplate resource: %v", err)
@@ -96,12 +109,20 @@ func resourceSwitchControllerInitialConfigTemplateUpdate(d *schema.ResourceData,
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerInitialConfigTemplate(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerInitialConfigTemplate resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSwitchControllerInitialConfigTemplate(obj, mkey)
+	o, err := c.UpdateSwitchControllerInitialConfigTemplate(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerInitialConfigTemplate resource: %v", err)
 	}
@@ -122,7 +143,15 @@ func resourceSwitchControllerInitialConfigTemplateDelete(d *schema.ResourceData,
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSwitchControllerInitialConfigTemplate(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSwitchControllerInitialConfigTemplate(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SwitchControllerInitialConfigTemplate resource: %v", err)
 	}
@@ -138,7 +167,15 @@ func resourceSwitchControllerInitialConfigTemplateRead(d *schema.ResourceData, m
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSwitchControllerInitialConfigTemplate(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSwitchControllerInitialConfigTemplate(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerInitialConfigTemplate resource: %v", err)
 	}

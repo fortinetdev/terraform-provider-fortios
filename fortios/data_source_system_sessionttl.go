@@ -21,6 +21,12 @@ func dataSourceSystemSessionTtl() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemSessionTtlRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"default": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -61,9 +67,17 @@ func dataSourceSystemSessionTtlRead(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := "SystemSessionTtl"
 
-	o, err := c.ReadSystemSessionTtl(mkey)
+	o, err := c.ReadSystemSessionTtl(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemSessionTtl: %v", err)
 	}

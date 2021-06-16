@@ -30,6 +30,11 @@ func resourceSystemVdom() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
@@ -66,12 +71,20 @@ func resourceSystemVdomCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemVdom(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemVdom resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemVdom(obj)
+	o, err := c.CreateSystemVdom(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemVdom resource: %v", err)
@@ -91,12 +104,20 @@ func resourceSystemVdomUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemVdom(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemVdom resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemVdom(obj, mkey)
+	o, err := c.UpdateSystemVdom(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemVdom resource: %v", err)
 	}
@@ -117,7 +138,15 @@ func resourceSystemVdomDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemVdom(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemVdom(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemVdom resource: %v", err)
 	}
@@ -133,7 +162,15 @@ func resourceSystemVdomRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemVdom(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemVdom(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemVdom resource: %v", err)
 	}

@@ -30,6 +30,11 @@ func resourceSystemReplacemsgAdmin() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"msg_type": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 28),
@@ -60,13 +65,21 @@ func resourceSystemReplacemsgAdminUpdate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey = d.Get("msg_type").(string)
 	obj, err := getObjectSystemReplacemsgAdmin(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemReplacemsgAdmin resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemReplacemsgAdmin(obj, mkey)
+	o, err := c.UpdateSystemReplacemsgAdmin(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemReplacemsgAdmin resource: %v", err)
 	}
@@ -87,7 +100,15 @@ func resourceSystemReplacemsgAdminDelete(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemReplacemsgAdmin(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemReplacemsgAdmin(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemReplacemsgAdmin resource: %v", err)
 	}
@@ -103,7 +124,15 @@ func resourceSystemReplacemsgAdminRead(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemReplacemsgAdmin(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemReplacemsgAdmin(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemReplacemsgAdmin resource: %v", err)
 	}

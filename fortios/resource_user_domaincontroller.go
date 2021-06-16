@@ -30,6 +30,11 @@ func resourceUserDomainController() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -96,12 +101,20 @@ func resourceUserDomainControllerCreate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectUserDomainController(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating UserDomainController resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateUserDomainController(obj)
+	o, err := c.CreateUserDomainController(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating UserDomainController resource: %v", err)
@@ -121,12 +134,20 @@ func resourceUserDomainControllerUpdate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectUserDomainController(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating UserDomainController resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateUserDomainController(obj, mkey)
+	o, err := c.UpdateUserDomainController(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating UserDomainController resource: %v", err)
 	}
@@ -147,7 +168,15 @@ func resourceUserDomainControllerDelete(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteUserDomainController(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteUserDomainController(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting UserDomainController resource: %v", err)
 	}
@@ -163,7 +192,15 @@ func resourceUserDomainControllerRead(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadUserDomainController(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadUserDomainController(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading UserDomainController resource: %v", err)
 	}

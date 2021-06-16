@@ -56,7 +56,8 @@ func (r *Request) Send() error {
 	return r.Send2(15, false)
 }
 
-
+// Send2 request data to FortiOS with bIgnoreVdom.
+// If errors are encountered, it returns the error.
 func (r *Request) Send2(retries int, ignvdom bool) error {
 	//Build FortiOS
 	//build Sign/Login INfo
@@ -106,6 +107,75 @@ func (r *Request) Send2(retries int, ignvdom bool) error {
 	return err
 }
 
+
+func buildURL3(r *Request, vdomparam string) string {
+	u := "https://"
+	u += r.Config.FwTarget
+	u += r.Path
+	u += "?"
+
+	if vdomparam != "" {
+		u += "vdom="
+		u += vdomparam
+		u += "&"
+	} else {
+		if r.Config.Auth.Vdom != "" {
+			u += "vdom="
+			u += r.Config.Auth.Vdom
+			u += "&"
+		}
+	}
+
+	u += "access_token="
+	u += r.Config.Auth.Token
+
+	return u
+}
+
+// Send3 request data to FortiOS with custom vdom.
+// If errors are encountered, it returns the error.
+func (r *Request) Send3(vdomparam string) error {
+	retries := 15
+
+	r.HTTPRequest.Header.Set("Content-Type", "application/json")
+	u :=  buildURL3(r, vdomparam)
+	var err error
+	r.HTTPRequest.URL, err = url.Parse(u)
+	if err != nil {
+		log.Fatal(err)
+		return err
+	}
+
+	retry := 0
+	for {
+		//Send
+		rsp, errdo := r.Config.HTTPCon.Do(r.HTTPRequest)
+		r.HTTPResponse = rsp
+		if errdo != nil {
+			if strings.Contains(errdo.Error(), "x509: ") {
+				err = fmt.Errorf("Error found: %v", filterapikey(errdo.Error()))
+				break
+			}
+
+			if retry >  retries {
+				err = fmt.Errorf("lost connection to firewall with error: %v", filterapikey(errdo.Error()))
+				break
+			}
+			time.Sleep(time.Second)
+			log.Printf("Error found: %v, will resend again %s, %d", filterapikey(errdo.Error()), u, retry)
+
+			retry++
+
+		} else {
+			break
+		}
+	}
+
+	return err
+}
+
+
+
 func filterapikey(v string) string {
 	re, _ := regexp.Compile("access_token=.*?\"");
 	res := re.ReplaceAllString(v, "access_token=***************\"");
@@ -145,9 +215,9 @@ func buildURL(r *Request) string {
 
 // SendWithSpecialParams sends request data to FortiOS with special URL paramaters.
 // If errors are encountered, it returns the error.
-func (r *Request) SendWithSpecialParams(s string) error {
+func (r *Request) SendWithSpecialParams(s, vdomparam string) error {
 	r.HTTPRequest.Header.Set("Content-Type", "application/json")
-	u := buildURL(r)
+	u := buildURL3(r, vdomparam)
 
 	if s != "" {
 		u += "&"

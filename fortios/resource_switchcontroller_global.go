@@ -30,6 +30,11 @@ func resourceSwitchControllerGlobal() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"mac_aging_interval": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(10, 1000000),
@@ -151,12 +156,20 @@ func resourceSwitchControllerGlobalUpdate(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerGlobal(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerGlobal resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSwitchControllerGlobal(obj, mkey)
+	o, err := c.UpdateSwitchControllerGlobal(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerGlobal resource: %v", err)
 	}
@@ -177,7 +190,15 @@ func resourceSwitchControllerGlobalDelete(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSwitchControllerGlobal(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSwitchControllerGlobal(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SwitchControllerGlobal resource: %v", err)
 	}
@@ -193,7 +214,15 @@ func resourceSwitchControllerGlobalRead(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSwitchControllerGlobal(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSwitchControllerGlobal(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerGlobal resource: %v", err)
 	}

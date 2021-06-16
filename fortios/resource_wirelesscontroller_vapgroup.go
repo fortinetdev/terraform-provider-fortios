@@ -30,6 +30,11 @@ func resourceWirelessControllerVapGroup() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -68,12 +73,20 @@ func resourceWirelessControllerVapGroupCreate(d *schema.ResourceData, m interfac
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWirelessControllerVapGroup(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WirelessControllerVapGroup resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateWirelessControllerVapGroup(obj)
+	o, err := c.CreateWirelessControllerVapGroup(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating WirelessControllerVapGroup resource: %v", err)
@@ -93,12 +106,20 @@ func resourceWirelessControllerVapGroupUpdate(d *schema.ResourceData, m interfac
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWirelessControllerVapGroup(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerVapGroup resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateWirelessControllerVapGroup(obj, mkey)
+	o, err := c.UpdateWirelessControllerVapGroup(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerVapGroup resource: %v", err)
 	}
@@ -119,7 +140,15 @@ func resourceWirelessControllerVapGroupDelete(d *schema.ResourceData, m interfac
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteWirelessControllerVapGroup(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteWirelessControllerVapGroup(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting WirelessControllerVapGroup resource: %v", err)
 	}
@@ -135,7 +164,15 @@ func resourceWirelessControllerVapGroupRead(d *schema.ResourceData, m interface{
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadWirelessControllerVapGroup(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadWirelessControllerVapGroup(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading WirelessControllerVapGroup resource: %v", err)
 	}

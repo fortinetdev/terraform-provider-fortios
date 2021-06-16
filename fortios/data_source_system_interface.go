@@ -21,6 +21,12 @@ func dataSourceSystemInterface() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemInterfaceRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -1296,6 +1302,14 @@ func dataSourceSystemInterfaceRead(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := ""
 
 	t := d.Get("name")
@@ -1307,7 +1321,7 @@ func dataSourceSystemInterfaceRead(d *schema.ResourceData, m interface{}) error 
 		return fmt.Errorf("Error describing SystemInterface: type error")
 	}
 
-	o, err := c.ReadSystemInterface(mkey)
+	o, err := c.ReadSystemInterface(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemInterface: %v", err)
 	}
@@ -1464,6 +1478,13 @@ func dataSourceFlattenSystemInterfaceManagementIp(v interface{}, d *schema.Resou
 }
 
 func dataSourceFlattenSystemInterfaceIp(v interface{}, d *schema.ResourceData, pre string) interface{} {
+	if v1, ok := d.GetOkExists(pre); ok && v != nil {
+		if s, ok := v1.(string); ok {
+			v = validateConvIPMask2CIDR(s, v.(string))
+			return v
+		}
+	}
+
 	return v
 }
 

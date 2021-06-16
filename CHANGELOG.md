@@ -1,4 +1,56 @@
-## 1.11.1 (Unreleased)
+## 1.14.0 (Unreleased)
+
+
+## 1.13.0 (Jun 12, 2021)
+
+IMPROVEMENTS:
+
+* Support ipmask/cidr for system/interface/ip
+* Support vdom for each resource
+
+FEATURES:
+
+* **New Resource:** `fortios_firewall_securitypolicy`
+* **New Resource:** `fortios_system_virtualswitch`
+* **New Resource:** `fortios_routerbgp_network6`
+* **New Resource:** `fortios_routerospf_ospfinterface`
+* **New Resource:** `fortios_routerospf_network`
+* **New Resource:** `fortios_routerospf_neighbor`
+* **New Resource:** `fortios_routerospf6_ospf6interface`
+* **New Resource:** `resource_firewall_centralsnatmap_move`
+* **New Resource:** `resource_firewall_centralsnatmap_sort`
+* **New Resource:** `resource_firewall_proxypolicy_move`
+* **New Resource:** `resource_firewall_proxypolicy_sort`
+* **New Data Source:** `fortios_ipmask_cidr`
+* **New Data Source:** `fortios_firewall_centralsnatmap`
+* **New Data Source:** `fortios_firewall_centralsnatmaplist`
+* **New Data Source:** `fortios_firewall_proxypolicy`
+* **New Data Source:** `fortios_firewall_proxypolicylist`
+
+## 1.12.1 (Jun 5, 2021)
+
+BUG FIXES:
+
+* Fix fortios_certificate_local documentation error
+
+## 1.12.0 (Jun 3, 2021)
+
+IMPROVEMENTS:
+
+* Adjust instructions website/docs/r/fortios_system_ha.html.markdown
+* Adjust instructions website/docs/r/fortios_system_fortimanager.html.markdown
+* Adjust instructions website/docs/r/fortios_router_accesslist.html.markdown
+* Adjust instructions website/docs/r/fortios_certificate_local.html.markdown
+* Adjust function structure for vendor/github.com/fortinetdev/forti-sdk-go/fortios/sdkcore/sdkfos.go
+* Adjust function structure for fortios/resource_routerbgp_network.go
+* Update READM.md
+* Update policy seq/sort docs
+* Remove redundant statement #148
+* Fix wrong spelling in fgt_policysort.html.md
+
+FEATURES:
+
+* **New Resource:** `fortios_routerbgp_network`
 
 ## 1.11.0 (Mar 15, 2021)
 

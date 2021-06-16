@@ -30,6 +30,11 @@ func resourceDlpFilepattern() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
@@ -82,12 +87,20 @@ func resourceDlpFilepatternCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectDlpFilepattern(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating DlpFilepattern resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateDlpFilepattern(obj)
+	o, err := c.CreateDlpFilepattern(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating DlpFilepattern resource: %v", err)
@@ -107,12 +120,20 @@ func resourceDlpFilepatternUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectDlpFilepattern(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating DlpFilepattern resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateDlpFilepattern(obj, mkey)
+	o, err := c.UpdateDlpFilepattern(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating DlpFilepattern resource: %v", err)
 	}
@@ -133,7 +154,15 @@ func resourceDlpFilepatternDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteDlpFilepattern(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteDlpFilepattern(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting DlpFilepattern resource: %v", err)
 	}
@@ -149,7 +178,15 @@ func resourceDlpFilepatternRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadDlpFilepattern(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadDlpFilepattern(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading DlpFilepattern resource: %v", err)
 	}

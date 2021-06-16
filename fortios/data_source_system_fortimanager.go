@@ -21,6 +21,12 @@ func dataSourceSystemFortimanager() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemFortimanagerRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -57,9 +63,17 @@ func dataSourceSystemFortimanagerRead(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := "SystemFortimanager"
 
-	o, err := c.ReadSystemFortimanager(mkey)
+	o, err := c.ReadSystemFortimanager(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemFortimanager: %v", err)
 	}

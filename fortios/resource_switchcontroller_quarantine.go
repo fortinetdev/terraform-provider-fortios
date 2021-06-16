@@ -30,6 +30,11 @@ func resourceSwitchControllerQuarantine() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"quarantine": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -87,12 +92,20 @@ func resourceSwitchControllerQuarantineUpdate(d *schema.ResourceData, m interfac
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerQuarantine(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerQuarantine resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSwitchControllerQuarantine(obj, mkey)
+	o, err := c.UpdateSwitchControllerQuarantine(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerQuarantine resource: %v", err)
 	}
@@ -113,7 +126,15 @@ func resourceSwitchControllerQuarantineDelete(d *schema.ResourceData, m interfac
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSwitchControllerQuarantine(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSwitchControllerQuarantine(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SwitchControllerQuarantine resource: %v", err)
 	}
@@ -129,7 +150,15 @@ func resourceSwitchControllerQuarantineRead(d *schema.ResourceData, m interface{
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSwitchControllerQuarantine(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSwitchControllerQuarantine(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerQuarantine resource: %v", err)
 	}

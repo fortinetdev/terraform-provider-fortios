@@ -30,6 +30,11 @@ func resourceSystemVxlan() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
@@ -104,12 +109,20 @@ func resourceSystemVxlanCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemVxlan(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemVxlan resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemVxlan(obj)
+	o, err := c.CreateSystemVxlan(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemVxlan resource: %v", err)
@@ -129,12 +142,20 @@ func resourceSystemVxlanUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemVxlan(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemVxlan resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemVxlan(obj, mkey)
+	o, err := c.UpdateSystemVxlan(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemVxlan resource: %v", err)
 	}
@@ -155,7 +176,15 @@ func resourceSystemVxlanDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemVxlan(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemVxlan(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemVxlan resource: %v", err)
 	}
@@ -171,7 +200,15 @@ func resourceSystemVxlanRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemVxlan(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemVxlan(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemVxlan resource: %v", err)
 	}

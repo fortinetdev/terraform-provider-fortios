@@ -30,6 +30,11 @@ func resourceFirewallTrafficClass() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"class_id": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(2, 31),
@@ -50,12 +55,20 @@ func resourceFirewallTrafficClassCreate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallTrafficClass(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallTrafficClass resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateFirewallTrafficClass(obj)
+	o, err := c.CreateFirewallTrafficClass(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallTrafficClass resource: %v", err)
@@ -75,12 +88,20 @@ func resourceFirewallTrafficClassUpdate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallTrafficClass(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallTrafficClass resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateFirewallTrafficClass(obj, mkey)
+	o, err := c.UpdateFirewallTrafficClass(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallTrafficClass resource: %v", err)
 	}
@@ -101,7 +122,15 @@ func resourceFirewallTrafficClassDelete(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteFirewallTrafficClass(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteFirewallTrafficClass(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting FirewallTrafficClass resource: %v", err)
 	}
@@ -117,7 +146,15 @@ func resourceFirewallTrafficClassRead(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadFirewallTrafficClass(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadFirewallTrafficClass(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallTrafficClass resource: %v", err)
 	}

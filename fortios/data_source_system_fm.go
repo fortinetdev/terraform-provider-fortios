@@ -21,6 +21,12 @@ func dataSourceSystemFm() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemFmRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -57,9 +63,17 @@ func dataSourceSystemFmRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := "SystemFm"
 
-	o, err := c.ReadSystemFm(mkey)
+	o, err := c.ReadSystemFm(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemFm: %v", err)
 	}

@@ -30,6 +30,11 @@ func resourceSpamfilterIptrust() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
@@ -91,12 +96,20 @@ func resourceSpamfilterIptrustCreate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSpamfilterIptrust(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SpamfilterIptrust resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSpamfilterIptrust(obj)
+	o, err := c.CreateSpamfilterIptrust(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SpamfilterIptrust resource: %v", err)
@@ -116,12 +129,20 @@ func resourceSpamfilterIptrustUpdate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSpamfilterIptrust(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SpamfilterIptrust resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSpamfilterIptrust(obj, mkey)
+	o, err := c.UpdateSpamfilterIptrust(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SpamfilterIptrust resource: %v", err)
 	}
@@ -142,7 +163,15 @@ func resourceSpamfilterIptrustDelete(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSpamfilterIptrust(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSpamfilterIptrust(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SpamfilterIptrust resource: %v", err)
 	}
@@ -158,7 +187,15 @@ func resourceSpamfilterIptrustRead(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSpamfilterIptrust(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSpamfilterIptrust(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SpamfilterIptrust resource: %v", err)
 	}

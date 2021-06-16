@@ -30,6 +30,11 @@ func resourceSwitchControllerPortPolicy() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -86,12 +91,20 @@ func resourceSwitchControllerPortPolicyCreate(d *schema.ResourceData, m interfac
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerPortPolicy(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerPortPolicy resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSwitchControllerPortPolicy(obj)
+	o, err := c.CreateSwitchControllerPortPolicy(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerPortPolicy resource: %v", err)
@@ -111,12 +124,20 @@ func resourceSwitchControllerPortPolicyUpdate(d *schema.ResourceData, m interfac
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerPortPolicy(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerPortPolicy resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSwitchControllerPortPolicy(obj, mkey)
+	o, err := c.UpdateSwitchControllerPortPolicy(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerPortPolicy resource: %v", err)
 	}
@@ -137,7 +158,15 @@ func resourceSwitchControllerPortPolicyDelete(d *schema.ResourceData, m interfac
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSwitchControllerPortPolicy(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSwitchControllerPortPolicy(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SwitchControllerPortPolicy resource: %v", err)
 	}
@@ -153,7 +182,15 @@ func resourceSwitchControllerPortPolicyRead(d *schema.ResourceData, m interface{
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSwitchControllerPortPolicy(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSwitchControllerPortPolicy(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerPortPolicy resource: %v", err)
 	}

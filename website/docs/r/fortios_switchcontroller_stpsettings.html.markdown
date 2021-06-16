@@ -35,6 +35,7 @@ The following arguments are supported:
 * `max_age` - Maximum time before a bridge port saves its configuration BPDU information (6 - 40 sec, default = 20).
 * `max_hops` - Maximum number of hops between the root bridge and the furthest bridge (1- 40, default = 20).
 * `pending_timer` - Pending time (1 - 15 sec, default = 4).
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

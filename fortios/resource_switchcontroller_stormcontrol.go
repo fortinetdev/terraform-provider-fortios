@@ -30,6 +30,11 @@ func resourceSwitchControllerStormControl() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"rate": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 10000000),
@@ -60,12 +65,20 @@ func resourceSwitchControllerStormControlUpdate(d *schema.ResourceData, m interf
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerStormControl(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerStormControl resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSwitchControllerStormControl(obj, mkey)
+	o, err := c.UpdateSwitchControllerStormControl(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerStormControl resource: %v", err)
 	}
@@ -86,7 +99,15 @@ func resourceSwitchControllerStormControlDelete(d *schema.ResourceData, m interf
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSwitchControllerStormControl(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSwitchControllerStormControl(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SwitchControllerStormControl resource: %v", err)
 	}
@@ -102,7 +123,15 @@ func resourceSwitchControllerStormControlRead(d *schema.ResourceData, m interfac
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSwitchControllerStormControl(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSwitchControllerStormControl(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerStormControl resource: %v", err)
 	}

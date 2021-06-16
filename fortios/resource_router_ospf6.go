@@ -30,6 +30,11 @@ func resourceRouterOspf6() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"abr_type": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -557,12 +562,20 @@ func resourceRouterOspf6Update(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectRouterOspf6(d, false, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterOspf6 resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateRouterOspf6(obj, mkey)
+	o, err := c.UpdateRouterOspf6(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterOspf6 resource: %v", err)
 	}
@@ -582,13 +595,21 @@ func resourceRouterOspf6Delete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectRouterOspf6(d, true, c.Fv)
 
 	if err != nil {
 		return fmt.Errorf("Error updating RouterOspf6 resource while getting object: %v", err)
 	}
 
-	_, err = c.UpdateRouterOspf6(obj, mkey)
+	_, err = c.UpdateRouterOspf6(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error clearing RouterOspf6 resource: %v", err)
 	}
@@ -604,7 +625,15 @@ func resourceRouterOspf6Read(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadRouterOspf6(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadRouterOspf6(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading RouterOspf6 resource: %v", err)
 	}

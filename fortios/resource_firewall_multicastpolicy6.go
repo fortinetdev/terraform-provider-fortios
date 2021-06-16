@@ -30,6 +30,11 @@ func resourceFirewallMulticastPolicy6() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
@@ -136,12 +141,20 @@ func resourceFirewallMulticastPolicy6Create(d *schema.ResourceData, m interface{
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallMulticastPolicy6(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallMulticastPolicy6 resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateFirewallMulticastPolicy6(obj)
+	o, err := c.CreateFirewallMulticastPolicy6(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallMulticastPolicy6 resource: %v", err)
@@ -161,12 +174,20 @@ func resourceFirewallMulticastPolicy6Update(d *schema.ResourceData, m interface{
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallMulticastPolicy6(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallMulticastPolicy6 resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateFirewallMulticastPolicy6(obj, mkey)
+	o, err := c.UpdateFirewallMulticastPolicy6(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallMulticastPolicy6 resource: %v", err)
 	}
@@ -187,7 +208,15 @@ func resourceFirewallMulticastPolicy6Delete(d *schema.ResourceData, m interface{
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteFirewallMulticastPolicy6(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteFirewallMulticastPolicy6(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting FirewallMulticastPolicy6 resource: %v", err)
 	}
@@ -203,7 +232,15 @@ func resourceFirewallMulticastPolicy6Read(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadFirewallMulticastPolicy6(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadFirewallMulticastPolicy6(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallMulticastPolicy6 resource: %v", err)
 	}

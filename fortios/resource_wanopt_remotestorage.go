@@ -30,6 +30,11 @@ func resourceWanoptRemoteStorage() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -61,12 +66,20 @@ func resourceWanoptRemoteStorageUpdate(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWanoptRemoteStorage(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WanoptRemoteStorage resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateWanoptRemoteStorage(obj, mkey)
+	o, err := c.UpdateWanoptRemoteStorage(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating WanoptRemoteStorage resource: %v", err)
 	}
@@ -87,7 +100,15 @@ func resourceWanoptRemoteStorageDelete(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteWanoptRemoteStorage(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteWanoptRemoteStorage(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting WanoptRemoteStorage resource: %v", err)
 	}
@@ -103,7 +124,15 @@ func resourceWanoptRemoteStorageRead(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadWanoptRemoteStorage(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadWanoptRemoteStorage(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading WanoptRemoteStorage resource: %v", err)
 	}

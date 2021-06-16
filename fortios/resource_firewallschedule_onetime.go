@@ -30,6 +30,11 @@ func resourceFirewallScheduleOnetime() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
@@ -63,12 +68,20 @@ func resourceFirewallScheduleOnetimeCreate(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallScheduleOnetime(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallScheduleOnetime resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateFirewallScheduleOnetime(obj)
+	o, err := c.CreateFirewallScheduleOnetime(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallScheduleOnetime resource: %v", err)
@@ -88,12 +101,20 @@ func resourceFirewallScheduleOnetimeUpdate(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallScheduleOnetime(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallScheduleOnetime resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateFirewallScheduleOnetime(obj, mkey)
+	o, err := c.UpdateFirewallScheduleOnetime(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallScheduleOnetime resource: %v", err)
 	}
@@ -114,7 +135,15 @@ func resourceFirewallScheduleOnetimeDelete(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteFirewallScheduleOnetime(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteFirewallScheduleOnetime(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting FirewallScheduleOnetime resource: %v", err)
 	}
@@ -130,7 +159,15 @@ func resourceFirewallScheduleOnetimeRead(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadFirewallScheduleOnetime(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadFirewallScheduleOnetime(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallScheduleOnetime resource: %v", err)
 	}

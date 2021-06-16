@@ -21,6 +21,12 @@ func dataSourceSystemExternalResource() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemExternalResourceRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -86,6 +92,14 @@ func dataSourceSystemExternalResourceRead(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := ""
 
 	t := d.Get("name")
@@ -97,7 +111,7 @@ func dataSourceSystemExternalResourceRead(d *schema.ResourceData, m interface{})
 		return fmt.Errorf("Error describing SystemExternalResource: type error")
 	}
 
-	o, err := c.ReadSystemExternalResource(mkey)
+	o, err := c.ReadSystemExternalResource(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemExternalResource: %v", err)
 	}

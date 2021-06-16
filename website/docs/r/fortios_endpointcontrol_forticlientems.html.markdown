@@ -23,6 +23,7 @@ The following arguments are supported:
 * `admin_username` - (Required) FortiClient EMS admin username.
 * `admin_password` - FortiClient EMS admin password.
 * `admin_type` - FortiClient EMS admin type. Valid values: `Windows`, `LDAP`.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

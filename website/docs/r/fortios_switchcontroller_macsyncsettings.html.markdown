@@ -14,6 +14,7 @@ Configure global MAC synchronization settings. Applies to FortiOS Version `<= 6.
 The following arguments are supported:
 
 * `mac_sync_interval` - Time interval between MAC synchronizations (30 - 1800 sec, default = 60, 0 = disable MAC synchronization).
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

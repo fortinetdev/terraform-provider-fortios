@@ -30,6 +30,11 @@ func resourceSystemPasswordPolicy() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -100,12 +105,20 @@ func resourceSystemPasswordPolicyUpdate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemPasswordPolicy(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemPasswordPolicy resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemPasswordPolicy(obj, mkey)
+	o, err := c.UpdateSystemPasswordPolicy(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemPasswordPolicy resource: %v", err)
 	}
@@ -126,7 +139,15 @@ func resourceSystemPasswordPolicyDelete(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemPasswordPolicy(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemPasswordPolicy(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemPasswordPolicy resource: %v", err)
 	}
@@ -142,7 +163,15 @@ func resourceSystemPasswordPolicyRead(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemPasswordPolicy(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemPasswordPolicy(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemPasswordPolicy resource: %v", err)
 	}

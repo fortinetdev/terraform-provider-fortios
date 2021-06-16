@@ -30,6 +30,11 @@ func resourceUserPop3() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -66,12 +71,20 @@ func resourceUserPop3Create(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectUserPop3(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating UserPop3 resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateUserPop3(obj)
+	o, err := c.CreateUserPop3(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating UserPop3 resource: %v", err)
@@ -91,12 +104,20 @@ func resourceUserPop3Update(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectUserPop3(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating UserPop3 resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateUserPop3(obj, mkey)
+	o, err := c.UpdateUserPop3(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating UserPop3 resource: %v", err)
 	}
@@ -117,7 +138,15 @@ func resourceUserPop3Delete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteUserPop3(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteUserPop3(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting UserPop3 resource: %v", err)
 	}
@@ -133,7 +162,15 @@ func resourceUserPop3Read(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadUserPop3(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadUserPop3(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading UserPop3 resource: %v", err)
 	}

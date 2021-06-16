@@ -21,6 +21,12 @@ func dataSourceSystemHa() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemHaRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"group_id": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -372,9 +378,17 @@ func dataSourceSystemHaRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := "SystemHa"
 
-	o, err := c.ReadSystemHa(mkey)
+	o, err := c.ReadSystemHa(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemHa: %v", err)
 	}

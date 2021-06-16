@@ -30,6 +30,11 @@ func resourceSystemIpsUrlfilterDns() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"address": &schema.Schema{
 				Type:     schema.TypeString,
 				ForceNew: true,
@@ -54,12 +59,20 @@ func resourceSystemIpsUrlfilterDnsCreate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemIpsUrlfilterDns(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemIpsUrlfilterDns resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemIpsUrlfilterDns(obj)
+	o, err := c.CreateSystemIpsUrlfilterDns(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemIpsUrlfilterDns resource: %v", err)
@@ -79,12 +92,20 @@ func resourceSystemIpsUrlfilterDnsUpdate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemIpsUrlfilterDns(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemIpsUrlfilterDns resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemIpsUrlfilterDns(obj, mkey)
+	o, err := c.UpdateSystemIpsUrlfilterDns(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemIpsUrlfilterDns resource: %v", err)
 	}
@@ -105,7 +126,15 @@ func resourceSystemIpsUrlfilterDnsDelete(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemIpsUrlfilterDns(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemIpsUrlfilterDns(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemIpsUrlfilterDns resource: %v", err)
 	}
@@ -121,7 +150,15 @@ func resourceSystemIpsUrlfilterDnsRead(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemIpsUrlfilterDns(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemIpsUrlfilterDns(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemIpsUrlfilterDns resource: %v", err)
 	}

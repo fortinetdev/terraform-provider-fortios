@@ -30,6 +30,11 @@ func resourceAuthenticationScheme() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -107,12 +112,20 @@ func resourceAuthenticationSchemeCreate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectAuthenticationScheme(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating AuthenticationScheme resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateAuthenticationScheme(obj)
+	o, err := c.CreateAuthenticationScheme(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating AuthenticationScheme resource: %v", err)
@@ -132,12 +145,20 @@ func resourceAuthenticationSchemeUpdate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectAuthenticationScheme(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating AuthenticationScheme resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateAuthenticationScheme(obj, mkey)
+	o, err := c.UpdateAuthenticationScheme(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating AuthenticationScheme resource: %v", err)
 	}
@@ -158,7 +179,15 @@ func resourceAuthenticationSchemeDelete(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteAuthenticationScheme(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteAuthenticationScheme(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting AuthenticationScheme resource: %v", err)
 	}
@@ -174,7 +203,15 @@ func resourceAuthenticationSchemeRead(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadAuthenticationScheme(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadAuthenticationScheme(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading AuthenticationScheme resource: %v", err)
 	}

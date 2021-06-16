@@ -14,14 +14,14 @@ type policySort struct {
 	name     string
 }
 
-func getPolicyList(c *FortiSDKClient) (idlist []policySort, err error) {
+func getPolicyList(c *FortiSDKClient, vdomparam string) (idlist []policySort, err error) {
 	HTTPMethod := "GET"
 	path := "/api/v2/cmdb/firewall/policy/"
 
 	specialparams := "format=policyid|name"
 
 	req := c.NewRequest(HTTPMethod, path, nil, nil)
-	err = req.SendWithSpecialParams(specialparams)
+	err = req.SendWithSpecialParams(specialparams, vdomparam)
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
 		return
@@ -99,7 +99,7 @@ func bPolicyListSorted(idlist []policySort, sortby, sortdirection string) (bsort
 	return
 }
 
-func moveAfter(idbefore, idafter int, c *FortiSDKClient) (err error) {
+func moveAfter(idbefore, idafter int, c *FortiSDKClient, vdomparam string) (err error) {
 	idbefores := strconv.Itoa(idbefore)
 	idafters := strconv.Itoa(idafter)
 
@@ -111,7 +111,7 @@ func moveAfter(idbefore, idafter int, c *FortiSDKClient) (err error) {
 	specialparams += idafters
 
 	req := c.NewRequest(HTTPMethod, path, nil, nil)
-	err = req.SendWithSpecialParams(specialparams)
+	err = req.SendWithSpecialParams(specialparams, vdomparam)
 	if err != nil || req.HTTPResponse == nil {
 		err = fmt.Errorf("cannot send request %s", err)
 		return
@@ -133,7 +133,7 @@ func moveAfter(idbefore, idafter int, c *FortiSDKClient) (err error) {
 	return
 }
 
-func sortPolicyList(idlist []policySort, sortby, sortdirection string, c *FortiSDKClient) (err error) {
+func sortPolicyList(idlist []policySort, sortby, sortdirection string, c *FortiSDKClient, vdomparam string) (err error) {
 	if sortby == "policyid" {
 		if sortdirection == "ascending" {
 			sort.Slice(idlist, func(i, j int) bool {
@@ -146,7 +146,7 @@ func sortPolicyList(idlist []policySort, sortby, sortdirection string, c *FortiS
 		}
 
 		for i := 0; i < len(idlist) - 1; i++ {
-			err = moveAfter(idlist[i + 1].policyid, idlist[i].policyid, c)
+			err = moveAfter(idlist[i + 1].policyid, idlist[i].policyid, c, vdomparam)
 			if err != nil {
 				err = fmt.Errorf("sort err %s", err)
 				return
@@ -164,7 +164,7 @@ func sortPolicyList(idlist []policySort, sortby, sortdirection string, c *FortiS
 		}
 
 		for i := 0; i < len(idlist) - 1; i++ {
-			err = moveAfter(idlist[i + 1].policyid, idlist[i].policyid, c)
+			err = moveAfter(idlist[i + 1].policyid, idlist[i].policyid, c, vdomparam)
 			if err != nil {
 				err = fmt.Errorf("sort err %s", err)
 				return
@@ -177,8 +177,8 @@ func sortPolicyList(idlist []policySort, sortby, sortdirection string, c *FortiS
 
 // CreateUpdateFirewallSecurityPolicySort API operation for FortiOS to sort the firewall policies.
 // Returns error for service API and SDK errors.
-func (c *FortiSDKClient) CreateUpdateFirewallSecurityPolicySort(sortby, sortdirection string) (err error) {
-	idlist, err := getPolicyList(c)
+func (c *FortiSDKClient) CreateUpdateFirewallSecurityPolicySort(sortby, sortdirection, vdomparam string) (err error) {
+	idlist, err := getPolicyList(c, vdomparam)
 	log.Printf("shengh: %v", idlist)
 	if err != nil {
 		err = fmt.Errorf("sort err %s", err)
@@ -190,7 +190,7 @@ func (c *FortiSDKClient) CreateUpdateFirewallSecurityPolicySort(sortby, sortdire
 		return
 	}
 
-	err = sortPolicyList(idlist, sortby, sortdirection, c);
+	err = sortPolicyList(idlist, sortby, sortdirection, c, vdomparam);
 	if err != nil {
 		err = fmt.Errorf("sort err %s", err)
 		return
@@ -203,8 +203,8 @@ func (c *FortiSDKClient) CreateUpdateFirewallSecurityPolicySort(sortby, sortdire
 // ReadFirewallSecurityPolicySort API operation for FortiOS to read the firewall policies sort results
 // Returns sort status
 // Returns error for service API and SDK errors.
-func (c *FortiSDKClient) ReadFirewallSecurityPolicySort(sortby, sortdirection string) (sorted bool, err error) {
-	idlist, err := getPolicyList(c)
+func (c *FortiSDKClient) ReadFirewallSecurityPolicySort(sortby, sortdirection, vdomparam string) (sorted bool, err error) {
+	idlist, err := getPolicyList(c, vdomparam)
 	if err != nil {
 		err = fmt.Errorf("sort err %s", err)
 		return

@@ -21,6 +21,12 @@ func dataSourceFirewallProxyAddrgrp() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceFirewallProxyAddrgrpRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -93,6 +99,14 @@ func dataSourceFirewallProxyAddrgrpRead(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := ""
 
 	t := d.Get("name")
@@ -104,7 +118,7 @@ func dataSourceFirewallProxyAddrgrpRead(d *schema.ResourceData, m interface{}) e
 		return fmt.Errorf("Error describing FirewallProxyAddrgrp: type error")
 	}
 
-	o, err := c.ReadFirewallProxyAddrgrp(mkey)
+	o, err := c.ReadFirewallProxyAddrgrp(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing FirewallProxyAddrgrp: %v", err)
 	}

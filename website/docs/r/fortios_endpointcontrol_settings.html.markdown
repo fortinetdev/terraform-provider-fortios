@@ -47,6 +47,7 @@ The following arguments are supported:
 * `forticlient_disconnect_unsupported_client` - Enable/disable disconnecting of unsupported FortiClient endpoints. Valid values: `enable`, `disable`.
 * `forticlient_dereg_unsupported_client` - Enable/disable deregistering unsupported FortiClient endpoints. Valid values: `enable`, `disable`.
 * `forticlient_ems_rest_api_call_timeout` - FortiClient EMS call timeout in milliseconds (500 - 30000 milliseconds, default = 5000).
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

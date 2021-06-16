@@ -30,6 +30,11 @@ func resourceSystemProbeResponse() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"port": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(1, 65535),
@@ -78,12 +83,20 @@ func resourceSystemProbeResponseUpdate(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemProbeResponse(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemProbeResponse resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemProbeResponse(obj, mkey)
+	o, err := c.UpdateSystemProbeResponse(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemProbeResponse resource: %v", err)
 	}
@@ -104,7 +117,15 @@ func resourceSystemProbeResponseDelete(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemProbeResponse(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemProbeResponse(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemProbeResponse resource: %v", err)
 	}
@@ -120,7 +141,15 @@ func resourceSystemProbeResponseRead(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemProbeResponse(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemProbeResponse(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemProbeResponse resource: %v", err)
 	}

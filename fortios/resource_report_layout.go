@@ -30,6 +30,11 @@ func resourceReportLayout() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -443,12 +448,20 @@ func resourceReportLayoutCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectReportLayout(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating ReportLayout resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateReportLayout(obj)
+	o, err := c.CreateReportLayout(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating ReportLayout resource: %v", err)
@@ -468,12 +481,20 @@ func resourceReportLayoutUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectReportLayout(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating ReportLayout resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateReportLayout(obj, mkey)
+	o, err := c.UpdateReportLayout(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating ReportLayout resource: %v", err)
 	}
@@ -494,7 +515,15 @@ func resourceReportLayoutDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteReportLayout(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteReportLayout(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting ReportLayout resource: %v", err)
 	}
@@ -510,7 +539,15 @@ func resourceReportLayoutRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadReportLayout(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadReportLayout(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading ReportLayout resource: %v", err)
 	}

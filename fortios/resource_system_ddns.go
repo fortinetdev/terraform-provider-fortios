@@ -30,6 +30,11 @@ func resourceSystemDdns() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"ddnsid": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
@@ -152,12 +157,20 @@ func resourceSystemDdnsCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemDdns(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemDdns resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemDdns(obj)
+	o, err := c.CreateSystemDdns(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemDdns resource: %v", err)
@@ -177,12 +190,20 @@ func resourceSystemDdnsUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemDdns(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemDdns resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemDdns(obj, mkey)
+	o, err := c.UpdateSystemDdns(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemDdns resource: %v", err)
 	}
@@ -203,7 +224,15 @@ func resourceSystemDdnsDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemDdns(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemDdns(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemDdns resource: %v", err)
 	}
@@ -219,7 +248,15 @@ func resourceSystemDdnsRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemDdns(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemDdns(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemDdns resource: %v", err)
 	}

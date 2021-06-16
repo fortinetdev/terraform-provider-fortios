@@ -30,6 +30,11 @@ func resourceSystemGreTunnel() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
@@ -126,12 +131,20 @@ func resourceSystemGreTunnelCreate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemGreTunnel(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemGreTunnel resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemGreTunnel(obj)
+	o, err := c.CreateSystemGreTunnel(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemGreTunnel resource: %v", err)
@@ -151,12 +164,20 @@ func resourceSystemGreTunnelUpdate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemGreTunnel(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemGreTunnel resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemGreTunnel(obj, mkey)
+	o, err := c.UpdateSystemGreTunnel(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemGreTunnel resource: %v", err)
 	}
@@ -177,7 +198,15 @@ func resourceSystemGreTunnelDelete(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemGreTunnel(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemGreTunnel(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemGreTunnel resource: %v", err)
 	}
@@ -193,7 +222,15 @@ func resourceSystemGreTunnelRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemGreTunnel(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemGreTunnel(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemGreTunnel resource: %v", err)
 	}

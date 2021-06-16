@@ -30,6 +30,11 @@ func resourceDlpSettings() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"storage_device": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -67,12 +72,20 @@ func resourceDlpSettingsUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectDlpSettings(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating DlpSettings resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateDlpSettings(obj, mkey)
+	o, err := c.UpdateDlpSettings(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating DlpSettings resource: %v", err)
 	}
@@ -93,7 +106,15 @@ func resourceDlpSettingsDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteDlpSettings(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteDlpSettings(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting DlpSettings resource: %v", err)
 	}
@@ -109,7 +130,15 @@ func resourceDlpSettingsRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadDlpSettings(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadDlpSettings(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading DlpSettings resource: %v", err)
 	}

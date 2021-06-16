@@ -38,6 +38,7 @@ The following arguments are supported:
 * `hostkey_ecdsa521` - ECDSA nid384 certificate used by SSH proxy.
 * `hostkey_ed25519` - ED25519 hostkey used by SSH proxy.
 * `host_trusted_checking` - Enable/disable host trusted checking. Valid values: `enable`, `disable`.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

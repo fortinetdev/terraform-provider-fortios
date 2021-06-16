@@ -61,6 +61,7 @@ The following arguments are supported:
 * `certname_ecdsa521` - 521 bit ECDSA key certificate for re-signing server certificates for SSL inspection.
 * `certname_ed25519` - 253 bit EdDSA key certificate for re-signing server certificates for SSL inspection.
 * `certname_ed448` - 456 bit EdDSA key certificate for re-signing server certificates for SSL inspection.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

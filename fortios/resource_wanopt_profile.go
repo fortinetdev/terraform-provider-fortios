@@ -30,6 +30,11 @@ func resourceWanoptProfile() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -332,12 +337,20 @@ func resourceWanoptProfileCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWanoptProfile(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WanoptProfile resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateWanoptProfile(obj)
+	o, err := c.CreateWanoptProfile(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating WanoptProfile resource: %v", err)
@@ -357,12 +370,20 @@ func resourceWanoptProfileUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWanoptProfile(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WanoptProfile resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateWanoptProfile(obj, mkey)
+	o, err := c.UpdateWanoptProfile(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating WanoptProfile resource: %v", err)
 	}
@@ -383,7 +404,15 @@ func resourceWanoptProfileDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteWanoptProfile(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteWanoptProfile(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting WanoptProfile resource: %v", err)
 	}
@@ -399,7 +428,15 @@ func resourceWanoptProfileRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadWanoptProfile(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadWanoptProfile(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading WanoptProfile resource: %v", err)
 	}

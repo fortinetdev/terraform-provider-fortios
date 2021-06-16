@@ -30,6 +30,11 @@ func resourceLogSyslogd2OverrideFilter() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"severity": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -144,12 +149,20 @@ func resourceLogSyslogd2OverrideFilterUpdate(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectLogSyslogd2OverrideFilter(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogSyslogd2OverrideFilter resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateLogSyslogd2OverrideFilter(obj, mkey)
+	o, err := c.UpdateLogSyslogd2OverrideFilter(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating LogSyslogd2OverrideFilter resource: %v", err)
 	}
@@ -170,7 +183,15 @@ func resourceLogSyslogd2OverrideFilterDelete(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteLogSyslogd2OverrideFilter(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteLogSyslogd2OverrideFilter(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting LogSyslogd2OverrideFilter resource: %v", err)
 	}
@@ -186,7 +207,15 @@ func resourceLogSyslogd2OverrideFilterRead(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadLogSyslogd2OverrideFilter(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadLogSyslogd2OverrideFilter(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading LogSyslogd2OverrideFilter resource: %v", err)
 	}

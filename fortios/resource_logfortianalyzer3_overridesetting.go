@@ -30,6 +30,11 @@ func resourceLogFortianalyzer3OverrideSetting() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"override": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -203,12 +208,20 @@ func resourceLogFortianalyzer3OverrideSettingUpdate(d *schema.ResourceData, m in
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectLogFortianalyzer3OverrideSetting(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogFortianalyzer3OverrideSetting resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateLogFortianalyzer3OverrideSetting(obj, mkey)
+	o, err := c.UpdateLogFortianalyzer3OverrideSetting(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating LogFortianalyzer3OverrideSetting resource: %v", err)
 	}
@@ -229,7 +242,15 @@ func resourceLogFortianalyzer3OverrideSettingDelete(d *schema.ResourceData, m in
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteLogFortianalyzer3OverrideSetting(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteLogFortianalyzer3OverrideSetting(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting LogFortianalyzer3OverrideSetting resource: %v", err)
 	}
@@ -245,7 +266,15 @@ func resourceLogFortianalyzer3OverrideSettingRead(d *schema.ResourceData, m inte
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadLogFortianalyzer3OverrideSetting(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadLogFortianalyzer3OverrideSetting(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading LogFortianalyzer3OverrideSetting resource: %v", err)
 	}

@@ -90,6 +90,7 @@ The following arguments are supported:
 * `encode_2f_sequence` - Encode \2F sequence to forward slash in URLs. Valid values: `enable`, `disable`.
 * `encrypt_and_store_password` - Encrypt and store user passwords for SSL-VPN web sessions. Valid values: `enable`, `disable`.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `tunnel_ip_pools` block supports:
 

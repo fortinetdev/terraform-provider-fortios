@@ -30,6 +30,11 @@ func resourceWirelessControllerHotspot20AnqpNetworkAuthType() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -56,12 +61,20 @@ func resourceWirelessControllerHotspot20AnqpNetworkAuthTypeCreate(d *schema.Reso
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWirelessControllerHotspot20AnqpNetworkAuthType(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WirelessControllerHotspot20AnqpNetworkAuthType resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateWirelessControllerHotspot20AnqpNetworkAuthType(obj)
+	o, err := c.CreateWirelessControllerHotspot20AnqpNetworkAuthType(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating WirelessControllerHotspot20AnqpNetworkAuthType resource: %v", err)
@@ -81,12 +94,20 @@ func resourceWirelessControllerHotspot20AnqpNetworkAuthTypeUpdate(d *schema.Reso
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWirelessControllerHotspot20AnqpNetworkAuthType(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerHotspot20AnqpNetworkAuthType resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateWirelessControllerHotspot20AnqpNetworkAuthType(obj, mkey)
+	o, err := c.UpdateWirelessControllerHotspot20AnqpNetworkAuthType(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerHotspot20AnqpNetworkAuthType resource: %v", err)
 	}
@@ -107,7 +128,15 @@ func resourceWirelessControllerHotspot20AnqpNetworkAuthTypeDelete(d *schema.Reso
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteWirelessControllerHotspot20AnqpNetworkAuthType(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteWirelessControllerHotspot20AnqpNetworkAuthType(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting WirelessControllerHotspot20AnqpNetworkAuthType resource: %v", err)
 	}
@@ -123,7 +152,15 @@ func resourceWirelessControllerHotspot20AnqpNetworkAuthTypeRead(d *schema.Resour
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadWirelessControllerHotspot20AnqpNetworkAuthType(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadWirelessControllerHotspot20AnqpNetworkAuthType(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading WirelessControllerHotspot20AnqpNetworkAuthType resource: %v", err)
 	}

@@ -30,6 +30,11 @@ func resourceLogMemoryGlobalSetting() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"max_size": &schema.Schema{
 				Type:     schema.TypeInt,
 				Optional: true,
@@ -62,12 +67,20 @@ func resourceLogMemoryGlobalSettingUpdate(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectLogMemoryGlobalSetting(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogMemoryGlobalSetting resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateLogMemoryGlobalSetting(obj, mkey)
+	o, err := c.UpdateLogMemoryGlobalSetting(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating LogMemoryGlobalSetting resource: %v", err)
 	}
@@ -88,7 +101,15 @@ func resourceLogMemoryGlobalSettingDelete(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteLogMemoryGlobalSetting(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteLogMemoryGlobalSetting(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting LogMemoryGlobalSetting resource: %v", err)
 	}
@@ -104,7 +125,15 @@ func resourceLogMemoryGlobalSettingRead(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadLogMemoryGlobalSetting(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadLogMemoryGlobalSetting(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading LogMemoryGlobalSetting resource: %v", err)
 	}

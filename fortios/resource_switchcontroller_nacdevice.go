@@ -30,6 +30,11 @@ func resourceSwitchControllerNacDevice() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
@@ -95,12 +100,20 @@ func resourceSwitchControllerNacDeviceCreate(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerNacDevice(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerNacDevice resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSwitchControllerNacDevice(obj)
+	o, err := c.CreateSwitchControllerNacDevice(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerNacDevice resource: %v", err)
@@ -120,12 +133,20 @@ func resourceSwitchControllerNacDeviceUpdate(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerNacDevice(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerNacDevice resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSwitchControllerNacDevice(obj, mkey)
+	o, err := c.UpdateSwitchControllerNacDevice(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerNacDevice resource: %v", err)
 	}
@@ -146,7 +167,15 @@ func resourceSwitchControllerNacDeviceDelete(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSwitchControllerNacDevice(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSwitchControllerNacDevice(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SwitchControllerNacDevice resource: %v", err)
 	}
@@ -162,7 +191,15 @@ func resourceSwitchControllerNacDeviceRead(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSwitchControllerNacDevice(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSwitchControllerNacDevice(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerNacDevice resource: %v", err)
 	}

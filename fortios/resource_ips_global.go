@@ -30,6 +30,11 @@ func resourceIpsGlobal() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fail_open": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -153,12 +158,20 @@ func resourceIpsGlobalUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectIpsGlobal(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating IpsGlobal resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateIpsGlobal(obj, mkey)
+	o, err := c.UpdateIpsGlobal(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating IpsGlobal resource: %v", err)
 	}
@@ -179,7 +192,15 @@ func resourceIpsGlobalDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteIpsGlobal(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteIpsGlobal(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting IpsGlobal resource: %v", err)
 	}
@@ -195,7 +216,15 @@ func resourceIpsGlobalRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadIpsGlobal(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadIpsGlobal(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading IpsGlobal resource: %v", err)
 	}

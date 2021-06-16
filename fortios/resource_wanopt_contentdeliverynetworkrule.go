@@ -30,6 +30,11 @@ func resourceWanoptContentDeliveryNetworkRule() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -244,12 +249,20 @@ func resourceWanoptContentDeliveryNetworkRuleCreate(d *schema.ResourceData, m in
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWanoptContentDeliveryNetworkRule(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WanoptContentDeliveryNetworkRule resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateWanoptContentDeliveryNetworkRule(obj)
+	o, err := c.CreateWanoptContentDeliveryNetworkRule(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating WanoptContentDeliveryNetworkRule resource: %v", err)
@@ -269,12 +282,20 @@ func resourceWanoptContentDeliveryNetworkRuleUpdate(d *schema.ResourceData, m in
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWanoptContentDeliveryNetworkRule(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WanoptContentDeliveryNetworkRule resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateWanoptContentDeliveryNetworkRule(obj, mkey)
+	o, err := c.UpdateWanoptContentDeliveryNetworkRule(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating WanoptContentDeliveryNetworkRule resource: %v", err)
 	}
@@ -295,7 +316,15 @@ func resourceWanoptContentDeliveryNetworkRuleDelete(d *schema.ResourceData, m in
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteWanoptContentDeliveryNetworkRule(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteWanoptContentDeliveryNetworkRule(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting WanoptContentDeliveryNetworkRule resource: %v", err)
 	}
@@ -311,7 +340,15 @@ func resourceWanoptContentDeliveryNetworkRuleRead(d *schema.ResourceData, m inte
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadWanoptContentDeliveryNetworkRule(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadWanoptContentDeliveryNetworkRule(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading WanoptContentDeliveryNetworkRule resource: %v", err)
 	}

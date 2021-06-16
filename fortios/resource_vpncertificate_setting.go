@@ -30,6 +30,11 @@ func resourceVpnCertificateSetting() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"ocsp_status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -170,12 +175,20 @@ func resourceVpnCertificateSettingUpdate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectVpnCertificateSetting(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating VpnCertificateSetting resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateVpnCertificateSetting(obj, mkey)
+	o, err := c.UpdateVpnCertificateSetting(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating VpnCertificateSetting resource: %v", err)
 	}
@@ -196,7 +209,15 @@ func resourceVpnCertificateSettingDelete(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteVpnCertificateSetting(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteVpnCertificateSetting(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting VpnCertificateSetting resource: %v", err)
 	}
@@ -212,7 +233,15 @@ func resourceVpnCertificateSettingRead(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadVpnCertificateSetting(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadVpnCertificateSetting(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading VpnCertificateSetting resource: %v", err)
 	}

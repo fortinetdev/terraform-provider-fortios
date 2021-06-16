@@ -18,6 +18,7 @@ The following arguments are supported:
 * `private_key` - (Required) SSH proxy private key, encrypted with a password.
 * `public_key` - (Required) SSH proxy public key.
 * `source` - SSH proxy local CA source type. Valid values: `built-in`, `user`.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

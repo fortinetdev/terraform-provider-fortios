@@ -38,6 +38,7 @@ The following arguments are supported:
 * `spam_mheader_table` - Anti-spam MIME header table ID.
 * `spam_rbl_table` - Anti-spam DNSBL table ID.
 * `spam_iptrust_table` - Anti-spam IP trust table ID.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `file_filter` block supports:
 

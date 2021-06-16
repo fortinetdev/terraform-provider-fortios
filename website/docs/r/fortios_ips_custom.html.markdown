@@ -27,6 +27,7 @@ The following arguments are supported:
 * `log_packet` - Enable/disable packet logging. Valid values: `disable`, `enable`.
 * `action` - Default action (pass or block) for this signature. Valid values: `pass`, `block`.
 * `comment` - Comment.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

@@ -21,6 +21,12 @@ func dataSourceSystemVirtualWanLink() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemVirtualWanLinkRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -706,9 +712,17 @@ func dataSourceSystemVirtualWanLinkRead(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := "SystemVirtualWanLink"
 
-	o, err := c.ReadSystemVirtualWanLink(mkey)
+	o, err := c.ReadSystemVirtualWanLink(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemVirtualWanLink: %v", err)
 	}

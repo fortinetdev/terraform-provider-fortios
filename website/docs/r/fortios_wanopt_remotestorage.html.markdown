@@ -26,6 +26,7 @@ The following arguments are supported:
 * `local_cache_id` - ID that this device uses to connect to the remote device.
 * `remote_cache_id` - ID of the remote device to which the device connects.
 * `remote_cache_ip` - IP address of the remote device to which the device connects.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

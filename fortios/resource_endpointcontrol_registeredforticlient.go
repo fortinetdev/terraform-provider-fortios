@@ -30,6 +30,11 @@ func resourceEndpointControlRegisteredForticlient() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"uid": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 32),
@@ -79,12 +84,20 @@ func resourceEndpointControlRegisteredForticlientCreate(d *schema.ResourceData, 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectEndpointControlRegisteredForticlient(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating EndpointControlRegisteredForticlient resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateEndpointControlRegisteredForticlient(obj)
+	o, err := c.CreateEndpointControlRegisteredForticlient(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating EndpointControlRegisteredForticlient resource: %v", err)
@@ -104,12 +117,20 @@ func resourceEndpointControlRegisteredForticlientUpdate(d *schema.ResourceData, 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectEndpointControlRegisteredForticlient(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating EndpointControlRegisteredForticlient resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateEndpointControlRegisteredForticlient(obj, mkey)
+	o, err := c.UpdateEndpointControlRegisteredForticlient(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating EndpointControlRegisteredForticlient resource: %v", err)
 	}
@@ -130,7 +151,15 @@ func resourceEndpointControlRegisteredForticlientDelete(d *schema.ResourceData, 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteEndpointControlRegisteredForticlient(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteEndpointControlRegisteredForticlient(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting EndpointControlRegisteredForticlient resource: %v", err)
 	}
@@ -146,7 +175,15 @@ func resourceEndpointControlRegisteredForticlientRead(d *schema.ResourceData, m 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadEndpointControlRegisteredForticlient(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadEndpointControlRegisteredForticlient(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading EndpointControlRegisteredForticlient resource: %v", err)
 	}

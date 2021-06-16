@@ -30,6 +30,11 @@ func resourceWirelessControllerSetting() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"account_id": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -143,12 +148,20 @@ func resourceWirelessControllerSettingUpdate(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWirelessControllerSetting(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerSetting resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateWirelessControllerSetting(obj, mkey)
+	o, err := c.UpdateWirelessControllerSetting(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerSetting resource: %v", err)
 	}
@@ -169,7 +182,15 @@ func resourceWirelessControllerSettingDelete(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteWirelessControllerSetting(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteWirelessControllerSetting(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting WirelessControllerSetting resource: %v", err)
 	}
@@ -185,7 +206,15 @@ func resourceWirelessControllerSettingRead(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadWirelessControllerSetting(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadWirelessControllerSetting(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading WirelessControllerSetting resource: %v", err)
 	}

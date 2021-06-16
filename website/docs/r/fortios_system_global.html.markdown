@@ -233,6 +233,7 @@ The following arguments are supported:
 * `irq_time_accounting` - Configure CPU IRQ time accounting mode. Valid values: `auto`, `force`.
 * `fortiipam_integration` - Enable/disable integration with the FortiIPAM cloud service. Valid values: `enable`, `disable`.
 * `vdom_mode` - Enable/disable support for split/multiple virtual domains (VDOMs). no-vdom:Disable split/multiple VDOMs mode. split-vdom:Enable split VDOMs mode. multi-vdom:Enable multiple VDOMs mode.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

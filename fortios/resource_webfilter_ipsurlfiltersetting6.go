@@ -30,6 +30,11 @@ func resourceWebfilterIpsUrlfilterSetting6() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"device": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -61,12 +66,20 @@ func resourceWebfilterIpsUrlfilterSetting6Update(d *schema.ResourceData, m inter
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWebfilterIpsUrlfilterSetting6(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WebfilterIpsUrlfilterSetting6 resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateWebfilterIpsUrlfilterSetting6(obj, mkey)
+	o, err := c.UpdateWebfilterIpsUrlfilterSetting6(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating WebfilterIpsUrlfilterSetting6 resource: %v", err)
 	}
@@ -87,7 +100,15 @@ func resourceWebfilterIpsUrlfilterSetting6Delete(d *schema.ResourceData, m inter
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteWebfilterIpsUrlfilterSetting6(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteWebfilterIpsUrlfilterSetting6(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting WebfilterIpsUrlfilterSetting6 resource: %v", err)
 	}
@@ -103,7 +124,15 @@ func resourceWebfilterIpsUrlfilterSetting6Read(d *schema.ResourceData, m interfa
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadWebfilterIpsUrlfilterSetting6(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadWebfilterIpsUrlfilterSetting6(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading WebfilterIpsUrlfilterSetting6 resource: %v", err)
 	}

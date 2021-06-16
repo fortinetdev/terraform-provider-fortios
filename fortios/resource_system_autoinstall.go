@@ -30,6 +30,11 @@ func resourceSystemAutoInstall() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"auto_install_config": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -61,12 +66,20 @@ func resourceSystemAutoInstallUpdate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemAutoInstall(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAutoInstall resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemAutoInstall(obj, mkey)
+	o, err := c.UpdateSystemAutoInstall(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAutoInstall resource: %v", err)
 	}
@@ -87,7 +100,15 @@ func resourceSystemAutoInstallDelete(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemAutoInstall(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemAutoInstall(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemAutoInstall resource: %v", err)
 	}
@@ -103,7 +124,15 @@ func resourceSystemAutoInstallRead(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemAutoInstall(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemAutoInstall(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemAutoInstall resource: %v", err)
 	}

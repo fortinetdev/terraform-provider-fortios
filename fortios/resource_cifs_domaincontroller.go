@@ -30,6 +30,11 @@ func resourceCifsDomainController() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"server_name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -79,12 +84,20 @@ func resourceCifsDomainControllerCreate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectCifsDomainController(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating CifsDomainController resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateCifsDomainController(obj)
+	o, err := c.CreateCifsDomainController(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating CifsDomainController resource: %v", err)
@@ -104,12 +117,20 @@ func resourceCifsDomainControllerUpdate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectCifsDomainController(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating CifsDomainController resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateCifsDomainController(obj, mkey)
+	o, err := c.UpdateCifsDomainController(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating CifsDomainController resource: %v", err)
 	}
@@ -130,7 +151,15 @@ func resourceCifsDomainControllerDelete(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteCifsDomainController(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteCifsDomainController(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting CifsDomainController resource: %v", err)
 	}
@@ -146,7 +175,15 @@ func resourceCifsDomainControllerRead(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadCifsDomainController(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadCifsDomainController(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading CifsDomainController resource: %v", err)
 	}

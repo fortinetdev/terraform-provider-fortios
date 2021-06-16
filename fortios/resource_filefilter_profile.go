@@ -30,6 +30,11 @@ func resourceFileFilterProfile() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -134,12 +139,20 @@ func resourceFileFilterProfileCreate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFileFilterProfile(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FileFilterProfile resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateFileFilterProfile(obj)
+	o, err := c.CreateFileFilterProfile(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating FileFilterProfile resource: %v", err)
@@ -159,12 +172,20 @@ func resourceFileFilterProfileUpdate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFileFilterProfile(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FileFilterProfile resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateFileFilterProfile(obj, mkey)
+	o, err := c.UpdateFileFilterProfile(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating FileFilterProfile resource: %v", err)
 	}
@@ -185,7 +206,15 @@ func resourceFileFilterProfileDelete(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteFileFilterProfile(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteFileFilterProfile(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting FileFilterProfile resource: %v", err)
 	}
@@ -201,7 +230,15 @@ func resourceFileFilterProfileRead(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadFileFilterProfile(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadFileFilterProfile(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading FileFilterProfile resource: %v", err)
 	}

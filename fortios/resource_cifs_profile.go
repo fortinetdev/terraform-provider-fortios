@@ -30,6 +30,11 @@ func resourceCifsProfile() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -143,12 +148,20 @@ func resourceCifsProfileCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectCifsProfile(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating CifsProfile resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateCifsProfile(obj)
+	o, err := c.CreateCifsProfile(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating CifsProfile resource: %v", err)
@@ -168,12 +181,20 @@ func resourceCifsProfileUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectCifsProfile(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating CifsProfile resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateCifsProfile(obj, mkey)
+	o, err := c.UpdateCifsProfile(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating CifsProfile resource: %v", err)
 	}
@@ -194,7 +215,15 @@ func resourceCifsProfileDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteCifsProfile(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteCifsProfile(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting CifsProfile resource: %v", err)
 	}
@@ -210,7 +239,15 @@ func resourceCifsProfileRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadCifsProfile(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadCifsProfile(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading CifsProfile resource: %v", err)
 	}

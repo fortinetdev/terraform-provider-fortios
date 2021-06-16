@@ -30,6 +30,11 @@ func resourceFirewallTtlPolicy() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
@@ -100,12 +105,20 @@ func resourceFirewallTtlPolicyCreate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallTtlPolicy(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallTtlPolicy resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateFirewallTtlPolicy(obj)
+	o, err := c.CreateFirewallTtlPolicy(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallTtlPolicy resource: %v", err)
@@ -125,12 +138,20 @@ func resourceFirewallTtlPolicyUpdate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallTtlPolicy(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallTtlPolicy resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateFirewallTtlPolicy(obj, mkey)
+	o, err := c.UpdateFirewallTtlPolicy(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallTtlPolicy resource: %v", err)
 	}
@@ -151,7 +172,15 @@ func resourceFirewallTtlPolicyDelete(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteFirewallTtlPolicy(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteFirewallTtlPolicy(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting FirewallTtlPolicy resource: %v", err)
 	}
@@ -167,7 +196,15 @@ func resourceFirewallTtlPolicyRead(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadFirewallTtlPolicy(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadFirewallTtlPolicy(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallTtlPolicy resource: %v", err)
 	}

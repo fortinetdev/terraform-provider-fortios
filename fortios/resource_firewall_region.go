@@ -30,6 +30,11 @@ func resourceFirewallRegion() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fosid": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
@@ -69,12 +74,20 @@ func resourceFirewallRegionCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallRegion(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallRegion resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateFirewallRegion(obj)
+	o, err := c.CreateFirewallRegion(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallRegion resource: %v", err)
@@ -94,12 +107,20 @@ func resourceFirewallRegionUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallRegion(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallRegion resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateFirewallRegion(obj, mkey)
+	o, err := c.UpdateFirewallRegion(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallRegion resource: %v", err)
 	}
@@ -120,7 +141,15 @@ func resourceFirewallRegionDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteFirewallRegion(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteFirewallRegion(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting FirewallRegion resource: %v", err)
 	}
@@ -136,7 +165,15 @@ func resourceFirewallRegionRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadFirewallRegion(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadFirewallRegion(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallRegion resource: %v", err)
 	}

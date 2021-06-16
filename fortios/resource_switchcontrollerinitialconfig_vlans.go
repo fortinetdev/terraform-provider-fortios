@@ -30,6 +30,11 @@ func resourceSwitchControllerInitialConfigVlans() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"default_vlan": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -75,12 +80,20 @@ func resourceSwitchControllerInitialConfigVlansUpdate(d *schema.ResourceData, m 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerInitialConfigVlans(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerInitialConfigVlans resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSwitchControllerInitialConfigVlans(obj, mkey)
+	o, err := c.UpdateSwitchControllerInitialConfigVlans(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerInitialConfigVlans resource: %v", err)
 	}
@@ -101,7 +114,15 @@ func resourceSwitchControllerInitialConfigVlansDelete(d *schema.ResourceData, m 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSwitchControllerInitialConfigVlans(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSwitchControllerInitialConfigVlans(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SwitchControllerInitialConfigVlans resource: %v", err)
 	}
@@ -117,7 +138,15 @@ func resourceSwitchControllerInitialConfigVlansRead(d *schema.ResourceData, m in
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSwitchControllerInitialConfigVlans(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSwitchControllerInitialConfigVlans(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerInitialConfigVlans resource: %v", err)
 	}

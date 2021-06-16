@@ -53,6 +53,7 @@ The following arguments are supported:
 * `diffservcode` - DiffServ setting to be applied to GRE tunnel outer IP header.
 * `keepalive_interval` - Keepalive message interval (0 - 32767, 0 = disabled).
 * `keepalive_failtimes` - Number of consecutive unreturned keepalive messages before a GRE connection is considered down (1 - 255).
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

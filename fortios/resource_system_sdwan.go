@@ -30,6 +30,11 @@ func resourceSystemSdwan() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -1069,12 +1074,20 @@ func resourceSystemSdwanUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemSdwan(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSdwan resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemSdwan(obj, mkey)
+	o, err := c.UpdateSystemSdwan(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSdwan resource: %v", err)
 	}
@@ -1095,7 +1108,15 @@ func resourceSystemSdwanDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemSdwan(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemSdwan(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemSdwan resource: %v", err)
 	}
@@ -1111,7 +1132,15 @@ func resourceSystemSdwanRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemSdwan(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemSdwan(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemSdwan resource: %v", err)
 	}

@@ -30,6 +30,11 @@ func resourceSwitchControllerLldpProfile() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -196,12 +201,20 @@ func resourceSwitchControllerLldpProfileCreate(d *schema.ResourceData, m interfa
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerLldpProfile(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerLldpProfile resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSwitchControllerLldpProfile(obj)
+	o, err := c.CreateSwitchControllerLldpProfile(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerLldpProfile resource: %v", err)
@@ -221,12 +234,20 @@ func resourceSwitchControllerLldpProfileUpdate(d *schema.ResourceData, m interfa
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerLldpProfile(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerLldpProfile resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSwitchControllerLldpProfile(obj, mkey)
+	o, err := c.UpdateSwitchControllerLldpProfile(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerLldpProfile resource: %v", err)
 	}
@@ -247,7 +268,15 @@ func resourceSwitchControllerLldpProfileDelete(d *schema.ResourceData, m interfa
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSwitchControllerLldpProfile(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSwitchControllerLldpProfile(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SwitchControllerLldpProfile resource: %v", err)
 	}
@@ -263,7 +292,15 @@ func resourceSwitchControllerLldpProfileRead(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSwitchControllerLldpProfile(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSwitchControllerLldpProfile(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerLldpProfile resource: %v", err)
 	}

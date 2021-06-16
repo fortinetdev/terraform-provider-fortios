@@ -27,6 +27,7 @@ The following arguments are supported:
 * `auto_discover_kdc` - Enable/disable automatic discovery of KDC IP addresses. Valid values: `enable`, `disable`.
 * `kdc_ip` - KDC IPv4 addresses for Kerberos authentication. The structure of `kdc_ip` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `kdc_ip` block supports:
 

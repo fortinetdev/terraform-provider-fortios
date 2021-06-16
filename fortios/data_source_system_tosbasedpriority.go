@@ -21,6 +21,12 @@ func dataSourceSystemTosBasedPriority() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemTosBasedPriorityRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				Required: true,
@@ -41,6 +47,14 @@ func dataSourceSystemTosBasedPriorityRead(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := ""
 
 	t := d.Get("fosid")
@@ -52,7 +66,7 @@ func dataSourceSystemTosBasedPriorityRead(d *schema.ResourceData, m interface{})
 		return fmt.Errorf("Error describing SystemTosBasedPriority: type error")
 	}
 
-	o, err := c.ReadSystemTosBasedPriority(mkey)
+	o, err := c.ReadSystemTosBasedPriority(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemTosBasedPriority: %v", err)
 	}

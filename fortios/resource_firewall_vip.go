@@ -30,6 +30,11 @@ func resourceFirewallVip() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -609,12 +614,20 @@ func resourceFirewallVipCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallVip(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallVip resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateFirewallVip(obj)
+	o, err := c.CreateFirewallVip(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallVip resource: %v", err)
@@ -634,12 +647,20 @@ func resourceFirewallVipUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallVip(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallVip resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateFirewallVip(obj, mkey)
+	o, err := c.UpdateFirewallVip(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallVip resource: %v", err)
 	}
@@ -660,7 +681,15 @@ func resourceFirewallVipDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteFirewallVip(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteFirewallVip(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting FirewallVip resource: %v", err)
 	}
@@ -676,7 +705,15 @@ func resourceFirewallVipRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadFirewallVip(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadFirewallVip(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallVip resource: %v", err)
 	}

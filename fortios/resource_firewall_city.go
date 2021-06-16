@@ -30,6 +30,11 @@ func resourceFirewallCity() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fosid": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 65535),
@@ -50,12 +55,20 @@ func resourceFirewallCityCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallCity(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallCity resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateFirewallCity(obj)
+	o, err := c.CreateFirewallCity(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallCity resource: %v", err)
@@ -75,12 +88,20 @@ func resourceFirewallCityUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallCity(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallCity resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateFirewallCity(obj, mkey)
+	o, err := c.UpdateFirewallCity(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallCity resource: %v", err)
 	}
@@ -101,7 +122,15 @@ func resourceFirewallCityDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteFirewallCity(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteFirewallCity(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting FirewallCity resource: %v", err)
 	}
@@ -117,7 +146,15 @@ func resourceFirewallCityRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadFirewallCity(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadFirewallCity(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallCity resource: %v", err)
 	}

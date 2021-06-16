@@ -39,6 +39,7 @@ The following arguments are supported:
 * `store_heuristic` - Quarantine files detected by heuristics found in sessions using the selected protocols.
 * `lowspace` - Select the method for handling additional files when running low on disk space. Valid values: `drop-new`, `ovrw-old`.
 * `destination` - Choose whether to quarantine files to the FortiGate disk or to FortiAnalyzer or to delete them instead of quarantining them. Valid values: `NULL`, `disk`, `FortiAnalyzer`.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

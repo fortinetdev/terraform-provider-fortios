@@ -30,6 +30,11 @@ func resourceSystemMobileTunnel() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
@@ -135,12 +140,20 @@ func resourceSystemMobileTunnelCreate(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemMobileTunnel(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemMobileTunnel resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemMobileTunnel(obj)
+	o, err := c.CreateSystemMobileTunnel(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemMobileTunnel resource: %v", err)
@@ -160,12 +173,20 @@ func resourceSystemMobileTunnelUpdate(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemMobileTunnel(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemMobileTunnel resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemMobileTunnel(obj, mkey)
+	o, err := c.UpdateSystemMobileTunnel(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemMobileTunnel resource: %v", err)
 	}
@@ -186,7 +207,15 @@ func resourceSystemMobileTunnelDelete(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemMobileTunnel(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemMobileTunnel(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemMobileTunnel resource: %v", err)
 	}
@@ -202,7 +231,15 @@ func resourceSystemMobileTunnelRead(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemMobileTunnel(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemMobileTunnel(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemMobileTunnel resource: %v", err)
 	}

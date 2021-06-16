@@ -30,6 +30,11 @@ func resourceSystemSwitchInterface() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
@@ -115,12 +120,20 @@ func resourceSystemSwitchInterfaceCreate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemSwitchInterface(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemSwitchInterface resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemSwitchInterface(obj)
+	o, err := c.CreateSystemSwitchInterface(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemSwitchInterface resource: %v", err)
@@ -140,12 +153,20 @@ func resourceSystemSwitchInterfaceUpdate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemSwitchInterface(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSwitchInterface resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemSwitchInterface(obj, mkey)
+	o, err := c.UpdateSystemSwitchInterface(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSwitchInterface resource: %v", err)
 	}
@@ -166,7 +187,15 @@ func resourceSystemSwitchInterfaceDelete(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemSwitchInterface(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemSwitchInterface(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemSwitchInterface resource: %v", err)
 	}
@@ -182,7 +211,15 @@ func resourceSystemSwitchInterfaceRead(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemSwitchInterface(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemSwitchInterface(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemSwitchInterface resource: %v", err)
 	}

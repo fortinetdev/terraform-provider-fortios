@@ -30,6 +30,11 @@ func resourceSystemNdProxy() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -63,12 +68,20 @@ func resourceSystemNdProxyUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemNdProxy(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemNdProxy resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemNdProxy(obj, mkey)
+	o, err := c.UpdateSystemNdProxy(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemNdProxy resource: %v", err)
 	}
@@ -89,7 +102,15 @@ func resourceSystemNdProxyDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemNdProxy(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemNdProxy(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemNdProxy resource: %v", err)
 	}
@@ -105,7 +126,15 @@ func resourceSystemNdProxyRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemNdProxy(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemNdProxy(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemNdProxy resource: %v", err)
 	}

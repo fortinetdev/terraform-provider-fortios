@@ -30,6 +30,11 @@ func resourceSpamfilterDnsbl() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
@@ -87,12 +92,20 @@ func resourceSpamfilterDnsblCreate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSpamfilterDnsbl(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SpamfilterDnsbl resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSpamfilterDnsbl(obj)
+	o, err := c.CreateSpamfilterDnsbl(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SpamfilterDnsbl resource: %v", err)
@@ -112,12 +125,20 @@ func resourceSpamfilterDnsblUpdate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSpamfilterDnsbl(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SpamfilterDnsbl resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSpamfilterDnsbl(obj, mkey)
+	o, err := c.UpdateSpamfilterDnsbl(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SpamfilterDnsbl resource: %v", err)
 	}
@@ -138,7 +159,15 @@ func resourceSpamfilterDnsblDelete(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSpamfilterDnsbl(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSpamfilterDnsbl(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SpamfilterDnsbl resource: %v", err)
 	}
@@ -154,7 +183,15 @@ func resourceSpamfilterDnsblRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSpamfilterDnsbl(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSpamfilterDnsbl(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SpamfilterDnsbl resource: %v", err)
 	}

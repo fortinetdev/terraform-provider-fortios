@@ -30,6 +30,11 @@ func resourceSystemVirtualWirePair() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 11),
@@ -74,12 +79,20 @@ func resourceSystemVirtualWirePairCreate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemVirtualWirePair(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemVirtualWirePair resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemVirtualWirePair(obj)
+	o, err := c.CreateSystemVirtualWirePair(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemVirtualWirePair resource: %v", err)
@@ -99,12 +112,20 @@ func resourceSystemVirtualWirePairUpdate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemVirtualWirePair(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemVirtualWirePair resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemVirtualWirePair(obj, mkey)
+	o, err := c.UpdateSystemVirtualWirePair(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemVirtualWirePair resource: %v", err)
 	}
@@ -125,7 +146,15 @@ func resourceSystemVirtualWirePairDelete(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemVirtualWirePair(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemVirtualWirePair(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemVirtualWirePair resource: %v", err)
 	}
@@ -141,7 +170,15 @@ func resourceSystemVirtualWirePairRead(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemVirtualWirePair(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemVirtualWirePair(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemVirtualWirePair resource: %v", err)
 	}

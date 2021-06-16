@@ -30,6 +30,11 @@ func resourceVpnSslWebPortal() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -666,12 +671,20 @@ func resourceVpnSslWebPortalCreate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectVpnSslWebPortal(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating VpnSslWebPortal resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateVpnSslWebPortal(obj)
+	o, err := c.CreateVpnSslWebPortal(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating VpnSslWebPortal resource: %v", err)
@@ -691,12 +704,20 @@ func resourceVpnSslWebPortalUpdate(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectVpnSslWebPortal(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating VpnSslWebPortal resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateVpnSslWebPortal(obj, mkey)
+	o, err := c.UpdateVpnSslWebPortal(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating VpnSslWebPortal resource: %v", err)
 	}
@@ -717,7 +738,15 @@ func resourceVpnSslWebPortalDelete(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteVpnSslWebPortal(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteVpnSslWebPortal(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting VpnSslWebPortal resource: %v", err)
 	}
@@ -733,7 +762,15 @@ func resourceVpnSslWebPortalRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadVpnSslWebPortal(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadVpnSslWebPortal(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading VpnSslWebPortal resource: %v", err)
 	}

@@ -30,6 +30,11 @@ func resourceRouterSetting() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"show_filter": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -171,12 +176,20 @@ func resourceRouterSettingUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectRouterSetting(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterSetting resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateRouterSetting(obj, mkey)
+	o, err := c.UpdateRouterSetting(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterSetting resource: %v", err)
 	}
@@ -197,7 +210,15 @@ func resourceRouterSettingDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteRouterSetting(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteRouterSetting(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting RouterSetting resource: %v", err)
 	}
@@ -213,7 +234,15 @@ func resourceRouterSettingRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadRouterSetting(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadRouterSetting(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading RouterSetting resource: %v", err)
 	}

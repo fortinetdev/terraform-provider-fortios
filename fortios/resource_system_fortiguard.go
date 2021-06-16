@@ -30,6 +30,11 @@ func resourceSystemFortiguard() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"protocol": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -274,12 +279,20 @@ func resourceSystemFortiguardUpdate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemFortiguard(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemFortiguard resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemFortiguard(obj, mkey)
+	o, err := c.UpdateSystemFortiguard(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemFortiguard resource: %v", err)
 	}
@@ -300,7 +313,15 @@ func resourceSystemFortiguardDelete(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemFortiguard(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemFortiguard(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemFortiguard resource: %v", err)
 	}
@@ -316,7 +337,15 @@ func resourceSystemFortiguardRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemFortiguard(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemFortiguard(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemFortiguard resource: %v", err)
 	}

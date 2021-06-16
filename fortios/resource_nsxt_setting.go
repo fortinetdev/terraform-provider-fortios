@@ -30,6 +30,11 @@ func resourceNsxtSetting() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"liveness": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -50,12 +55,20 @@ func resourceNsxtSettingUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectNsxtSetting(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating NsxtSetting resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateNsxtSetting(obj, mkey)
+	o, err := c.UpdateNsxtSetting(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating NsxtSetting resource: %v", err)
 	}
@@ -76,7 +89,15 @@ func resourceNsxtSettingDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteNsxtSetting(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteNsxtSetting(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting NsxtSetting resource: %v", err)
 	}
@@ -92,7 +113,15 @@ func resourceNsxtSettingRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadNsxtSetting(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadNsxtSetting(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading NsxtSetting resource: %v", err)
 	}

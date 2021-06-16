@@ -30,6 +30,11 @@ func resourceExtenderControllerExtender1() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 19),
@@ -341,12 +346,20 @@ func resourceExtenderControllerExtender1Create(d *schema.ResourceData, m interfa
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectExtenderControllerExtender1(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating ExtenderControllerExtender1 resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateExtenderControllerExtender1(obj)
+	o, err := c.CreateExtenderControllerExtender1(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating ExtenderControllerExtender1 resource: %v", err)
@@ -366,12 +379,20 @@ func resourceExtenderControllerExtender1Update(d *schema.ResourceData, m interfa
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectExtenderControllerExtender1(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating ExtenderControllerExtender1 resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateExtenderControllerExtender1(obj, mkey)
+	o, err := c.UpdateExtenderControllerExtender1(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating ExtenderControllerExtender1 resource: %v", err)
 	}
@@ -392,7 +413,15 @@ func resourceExtenderControllerExtender1Delete(d *schema.ResourceData, m interfa
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteExtenderControllerExtender1(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteExtenderControllerExtender1(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting ExtenderControllerExtender1 resource: %v", err)
 	}
@@ -408,7 +437,15 @@ func resourceExtenderControllerExtender1Read(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadExtenderControllerExtender1(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadExtenderControllerExtender1(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading ExtenderControllerExtender1 resource: %v", err)
 	}

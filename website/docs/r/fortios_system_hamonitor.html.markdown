@@ -26,6 +26,7 @@ The following arguments are supported:
 * `monitor_vlan` - Enable/disable monitor VLAN interfaces. Valid values: `enable`, `disable`.
 * `vlan_hb_interval` - Configure heartbeat interval (seconds).
 * `vlan_hb_lost_threshold` - VLAN lost heartbeat threshold (1 - 60).
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

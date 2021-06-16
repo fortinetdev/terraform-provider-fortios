@@ -127,6 +127,9 @@ resource "fortios_networking_route_static" "test1" {
 }
 ```
 
+By default, each resource inherits the provider's global vdom settings, but it can also set its own vdom through the `vdomparam` of each resource. See the `vdomparam` argument of each resource for details.
+
+
 ### Argument Reference
 
 The following arguments are supported:

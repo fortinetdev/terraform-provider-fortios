@@ -30,6 +30,11 @@ func resourceRouterbgpNeighbor() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"ip": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 45),
@@ -559,12 +564,20 @@ func resourceRouterbgpNeighborCreate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectRouterbgpNeighbor(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating RouterbgpNeighbor resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateRouterbgpNeighbor(obj)
+	o, err := c.CreateRouterbgpNeighbor(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating RouterbgpNeighbor resource: %v", err)
@@ -584,12 +597,20 @@ func resourceRouterbgpNeighborUpdate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectRouterbgpNeighbor(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterbgpNeighbor resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateRouterbgpNeighbor(obj, mkey)
+	o, err := c.UpdateRouterbgpNeighbor(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterbgpNeighbor resource: %v", err)
 	}
@@ -610,7 +631,15 @@ func resourceRouterbgpNeighborDelete(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteRouterbgpNeighbor(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteRouterbgpNeighbor(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting RouterbgpNeighbor resource: %v", err)
 	}
@@ -626,7 +655,15 @@ func resourceRouterbgpNeighborRead(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadRouterbgpNeighbor(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadRouterbgpNeighbor(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading RouterbgpNeighbor resource: %v", err)
 	}

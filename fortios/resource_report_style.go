@@ -30,6 +30,11 @@ func resourceReportStyle() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 71),
@@ -185,12 +190,20 @@ func resourceReportStyleCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectReportStyle(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating ReportStyle resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateReportStyle(obj)
+	o, err := c.CreateReportStyle(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating ReportStyle resource: %v", err)
@@ -210,12 +223,20 @@ func resourceReportStyleUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectReportStyle(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating ReportStyle resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateReportStyle(obj, mkey)
+	o, err := c.UpdateReportStyle(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating ReportStyle resource: %v", err)
 	}
@@ -236,7 +257,15 @@ func resourceReportStyleDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteReportStyle(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteReportStyle(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting ReportStyle resource: %v", err)
 	}
@@ -252,7 +281,15 @@ func resourceReportStyleRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadReportStyle(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadReportStyle(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading ReportStyle resource: %v", err)
 	}

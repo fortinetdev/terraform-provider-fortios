@@ -30,6 +30,11 @@ func resourceSystemLinkMonitor() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -192,12 +197,20 @@ func resourceSystemLinkMonitorCreate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemLinkMonitor(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemLinkMonitor resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemLinkMonitor(obj)
+	o, err := c.CreateSystemLinkMonitor(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemLinkMonitor resource: %v", err)
@@ -217,12 +230,20 @@ func resourceSystemLinkMonitorUpdate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemLinkMonitor(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemLinkMonitor resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemLinkMonitor(obj, mkey)
+	o, err := c.UpdateSystemLinkMonitor(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemLinkMonitor resource: %v", err)
 	}
@@ -243,7 +264,15 @@ func resourceSystemLinkMonitorDelete(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemLinkMonitor(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemLinkMonitor(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemLinkMonitor resource: %v", err)
 	}
@@ -259,7 +288,15 @@ func resourceSystemLinkMonitorRead(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemLinkMonitor(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemLinkMonitor(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemLinkMonitor resource: %v", err)
 	}

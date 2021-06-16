@@ -33,6 +33,7 @@ The following arguments are supported:
 * `safesearch` - Safe search method. You can disable safe search, add the safe search string to URLs, or insert a safe search header. Valid values: `disable`, `url`, `header`.
 * `charset` - Search engine charset. Valid values: `utf-8`, `gb2312`.
 * `safesearch_str` - Safe search parameter used in the URL.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

@@ -21,6 +21,12 @@ func dataSourceRouterBfd6() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceRouterBfd6Read,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"neighbor": &schema.Schema{
 				Type:     schema.TypeList,
 				Computed: true,
@@ -45,9 +51,17 @@ func dataSourceRouterBfd6Read(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := "RouterBfd6"
 
-	o, err := c.ReadRouterBfd6(mkey)
+	o, err := c.ReadRouterBfd6(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing RouterBfd6: %v", err)
 	}

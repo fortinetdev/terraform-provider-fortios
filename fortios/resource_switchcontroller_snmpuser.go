@@ -30,6 +30,11 @@ func resourceSwitchControllerSnmpUser() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 32),
@@ -83,12 +88,20 @@ func resourceSwitchControllerSnmpUserCreate(d *schema.ResourceData, m interface{
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerSnmpUser(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerSnmpUser resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSwitchControllerSnmpUser(obj)
+	o, err := c.CreateSwitchControllerSnmpUser(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerSnmpUser resource: %v", err)
@@ -108,12 +121,20 @@ func resourceSwitchControllerSnmpUserUpdate(d *schema.ResourceData, m interface{
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerSnmpUser(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerSnmpUser resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSwitchControllerSnmpUser(obj, mkey)
+	o, err := c.UpdateSwitchControllerSnmpUser(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerSnmpUser resource: %v", err)
 	}
@@ -134,7 +155,15 @@ func resourceSwitchControllerSnmpUserDelete(d *schema.ResourceData, m interface{
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSwitchControllerSnmpUser(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSwitchControllerSnmpUser(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SwitchControllerSnmpUser resource: %v", err)
 	}
@@ -150,7 +179,15 @@ func resourceSwitchControllerSnmpUserRead(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSwitchControllerSnmpUser(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSwitchControllerSnmpUser(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerSnmpUser resource: %v", err)
 	}

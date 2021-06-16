@@ -30,6 +30,11 @@ func resourceWafProfile() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -905,12 +910,20 @@ func resourceWafProfileCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWafProfile(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WafProfile resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateWafProfile(obj)
+	o, err := c.CreateWafProfile(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating WafProfile resource: %v", err)
@@ -930,12 +943,20 @@ func resourceWafProfileUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWafProfile(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WafProfile resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateWafProfile(obj, mkey)
+	o, err := c.UpdateWafProfile(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating WafProfile resource: %v", err)
 	}
@@ -956,7 +977,15 @@ func resourceWafProfileDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteWafProfile(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteWafProfile(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting WafProfile resource: %v", err)
 	}
@@ -972,7 +1001,15 @@ func resourceWafProfileRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadWafProfile(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadWafProfile(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading WafProfile resource: %v", err)
 	}

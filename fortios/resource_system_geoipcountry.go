@@ -30,6 +30,11 @@ func resourceSystemGeoipCountry() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fosid": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 2),
@@ -51,12 +56,20 @@ func resourceSystemGeoipCountryCreate(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemGeoipCountry(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemGeoipCountry resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemGeoipCountry(obj)
+	o, err := c.CreateSystemGeoipCountry(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemGeoipCountry resource: %v", err)
@@ -76,12 +89,20 @@ func resourceSystemGeoipCountryUpdate(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemGeoipCountry(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemGeoipCountry resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemGeoipCountry(obj, mkey)
+	o, err := c.UpdateSystemGeoipCountry(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemGeoipCountry resource: %v", err)
 	}
@@ -102,7 +123,15 @@ func resourceSystemGeoipCountryDelete(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemGeoipCountry(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemGeoipCountry(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemGeoipCountry resource: %v", err)
 	}
@@ -118,7 +147,15 @@ func resourceSystemGeoipCountryRead(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemGeoipCountry(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemGeoipCountry(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemGeoipCountry resource: %v", err)
 	}

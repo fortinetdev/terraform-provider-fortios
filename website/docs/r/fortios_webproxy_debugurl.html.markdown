@@ -28,6 +28,7 @@ The following arguments are supported:
 * `url_pattern` - (Required) URL exemption pattern.
 * `status` - Enable/disable this URL exemption. Valid values: `enable`, `disable`.
 * `exact` - Enable/disable matching the exact path. Valid values: `enable`, `disable`.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

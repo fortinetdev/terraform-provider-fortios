@@ -21,6 +21,12 @@ func dataSourceRouterMulticast() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceRouterMulticastRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"route_threshold": &schema.Schema{
 				Type:     schema.TypeInt,
 				Computed: true,
@@ -315,9 +321,17 @@ func dataSourceRouterMulticastRead(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := "RouterMulticast"
 
-	o, err := c.ReadRouterMulticast(mkey)
+	o, err := c.ReadRouterMulticast(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing RouterMulticast: %v", err)
 	}

@@ -30,6 +30,11 @@ func resourceVoipProfile() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -590,12 +595,20 @@ func resourceVoipProfileCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectVoipProfile(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating VoipProfile resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateVoipProfile(obj)
+	o, err := c.CreateVoipProfile(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating VoipProfile resource: %v", err)
@@ -615,12 +628,20 @@ func resourceVoipProfileUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectVoipProfile(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating VoipProfile resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateVoipProfile(obj, mkey)
+	o, err := c.UpdateVoipProfile(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating VoipProfile resource: %v", err)
 	}
@@ -641,7 +662,15 @@ func resourceVoipProfileDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteVoipProfile(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteVoipProfile(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting VoipProfile resource: %v", err)
 	}
@@ -657,7 +686,15 @@ func resourceVoipProfileRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadVoipProfile(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadVoipProfile(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading VoipProfile resource: %v", err)
 	}

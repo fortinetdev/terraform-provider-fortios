@@ -19,6 +19,7 @@ The following arguments are supported:
 * `allowaccess` - Permitted types of management access to this interface. Valid values: `ping`, `https`, `ssh`, `snmp`, `http`, `telnet`, `fgfm`, `radius-acct`, `probe-response`, `fabric`, `ftm`.
 * `auto_ip` - Automatically allocate interface address and subnet block. Valid values: `enable`, `disable`.
 * `dhcp_server` - Enable/disable a DHCP server on this interface. Valid values: `enable`, `disable`.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

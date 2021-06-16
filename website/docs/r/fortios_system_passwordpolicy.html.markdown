@@ -42,6 +42,7 @@ The following arguments are supported:
 * `expire_status` - Enable/disable password expiration. Valid values: `enable`, `disable`.
 * `expire_day` - Number of days after which passwords expire (1 - 999 days, default = 90).
 * `reuse_password` - Enable/disable reusing of password (if both reuse-password and change-4-characters are enabled, change-4-characters overrides). Valid values: `enable`, `disable`.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

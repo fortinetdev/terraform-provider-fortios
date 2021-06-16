@@ -52,6 +52,7 @@ The following arguments are supported:
 * `ap_log_server` - Enable/disable configuring APs or FortiAPs to send log messages to a syslog server (default = disable). Valid values: `enable`, `disable`.
 * `ap_log_server_ip` - IP address that APs or FortiAPs send log messages to.
 * `ap_log_server_port` - Port that APs or FortiAPs send log messages to.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

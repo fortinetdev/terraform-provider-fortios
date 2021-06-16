@@ -30,6 +30,11 @@ func resourceSshFilterProfile() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -181,12 +186,20 @@ func resourceSshFilterProfileCreate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSshFilterProfile(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SshFilterProfile resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSshFilterProfile(obj)
+	o, err := c.CreateSshFilterProfile(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SshFilterProfile resource: %v", err)
@@ -206,12 +219,20 @@ func resourceSshFilterProfileUpdate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSshFilterProfile(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SshFilterProfile resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSshFilterProfile(obj, mkey)
+	o, err := c.UpdateSshFilterProfile(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SshFilterProfile resource: %v", err)
 	}
@@ -232,7 +253,15 @@ func resourceSshFilterProfileDelete(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSshFilterProfile(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSshFilterProfile(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SshFilterProfile resource: %v", err)
 	}
@@ -248,7 +277,15 @@ func resourceSshFilterProfileRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSshFilterProfile(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSshFilterProfile(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SshFilterProfile resource: %v", err)
 	}

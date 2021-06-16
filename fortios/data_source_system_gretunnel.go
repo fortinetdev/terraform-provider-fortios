@@ -21,6 +21,12 @@ func dataSourceSystemGreTunnel() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemGreTunnelRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -97,6 +103,14 @@ func dataSourceSystemGreTunnelRead(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := ""
 
 	t := d.Get("name")
@@ -108,7 +122,7 @@ func dataSourceSystemGreTunnelRead(d *schema.ResourceData, m interface{}) error 
 		return fmt.Errorf("Error describing SystemGreTunnel: type error")
 	}
 
-	o, err := c.ReadSystemGreTunnel(mkey)
+	o, err := c.ReadSystemGreTunnel(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemGreTunnel: %v", err)
 	}

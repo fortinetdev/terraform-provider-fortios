@@ -30,6 +30,11 @@ func resourceSystemReplacemsgImage() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 23),
@@ -55,12 +60,20 @@ func resourceSystemReplacemsgImageCreate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemReplacemsgImage(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemReplacemsgImage resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemReplacemsgImage(obj)
+	o, err := c.CreateSystemReplacemsgImage(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemReplacemsgImage resource: %v", err)
@@ -80,12 +93,20 @@ func resourceSystemReplacemsgImageUpdate(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemReplacemsgImage(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemReplacemsgImage resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemReplacemsgImage(obj, mkey)
+	o, err := c.UpdateSystemReplacemsgImage(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemReplacemsgImage resource: %v", err)
 	}
@@ -106,7 +127,15 @@ func resourceSystemReplacemsgImageDelete(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemReplacemsgImage(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemReplacemsgImage(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemReplacemsgImage resource: %v", err)
 	}
@@ -122,7 +151,15 @@ func resourceSystemReplacemsgImageRead(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemReplacemsgImage(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemReplacemsgImage(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemReplacemsgImage resource: %v", err)
 	}

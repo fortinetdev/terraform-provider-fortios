@@ -30,6 +30,11 @@ func resourceAlertemailSetting() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"username": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -234,12 +239,20 @@ func resourceAlertemailSettingUpdate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectAlertemailSetting(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating AlertemailSetting resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateAlertemailSetting(obj, mkey)
+	o, err := c.UpdateAlertemailSetting(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating AlertemailSetting resource: %v", err)
 	}
@@ -260,7 +273,15 @@ func resourceAlertemailSettingDelete(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteAlertemailSetting(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteAlertemailSetting(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting AlertemailSetting resource: %v", err)
 	}
@@ -276,7 +297,15 @@ func resourceAlertemailSettingRead(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadAlertemailSetting(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadAlertemailSetting(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading AlertemailSetting resource: %v", err)
 	}

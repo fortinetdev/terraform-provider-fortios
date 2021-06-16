@@ -21,6 +21,12 @@ func dataSourceSystemVdomSflow() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemVdomSflowRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"vdom_sflow": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -45,9 +51,17 @@ func dataSourceSystemVdomSflowRead(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := "SystemVdomSflow"
 
-	o, err := c.ReadSystemVdomSflow(mkey)
+	o, err := c.ReadSystemVdomSflow(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemVdomSflow: %v", err)
 	}

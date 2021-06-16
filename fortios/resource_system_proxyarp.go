@@ -30,6 +30,11 @@ func resourceSystemProxyArp() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
@@ -57,12 +62,20 @@ func resourceSystemProxyArpCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemProxyArp(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemProxyArp resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemProxyArp(obj)
+	o, err := c.CreateSystemProxyArp(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemProxyArp resource: %v", err)
@@ -82,12 +95,20 @@ func resourceSystemProxyArpUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemProxyArp(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemProxyArp resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemProxyArp(obj, mkey)
+	o, err := c.UpdateSystemProxyArp(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemProxyArp resource: %v", err)
 	}
@@ -108,7 +129,15 @@ func resourceSystemProxyArpDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemProxyArp(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemProxyArp(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemProxyArp resource: %v", err)
 	}
@@ -124,7 +153,15 @@ func resourceSystemProxyArpRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemProxyArp(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemProxyArp(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemProxyArp resource: %v", err)
 	}

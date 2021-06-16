@@ -21,6 +21,12 @@ func dataSourceSystemReplacemsgImage() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemReplacemsgImageRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -41,6 +47,14 @@ func dataSourceSystemReplacemsgImageRead(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := ""
 
 	t := d.Get("name")
@@ -52,7 +66,7 @@ func dataSourceSystemReplacemsgImageRead(d *schema.ResourceData, m interface{}) 
 		return fmt.Errorf("Error describing SystemReplacemsgImage: type error")
 	}
 
-	o, err := c.ReadSystemReplacemsgImage(mkey)
+	o, err := c.ReadSystemReplacemsgImage(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemReplacemsgImage: %v", err)
 	}

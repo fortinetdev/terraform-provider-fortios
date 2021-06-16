@@ -30,6 +30,11 @@ func resourceLogCustomField() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fosid": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -55,12 +60,20 @@ func resourceLogCustomFieldCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectLogCustomField(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating LogCustomField resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateLogCustomField(obj)
+	o, err := c.CreateLogCustomField(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating LogCustomField resource: %v", err)
@@ -80,12 +93,20 @@ func resourceLogCustomFieldUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectLogCustomField(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogCustomField resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateLogCustomField(obj, mkey)
+	o, err := c.UpdateLogCustomField(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating LogCustomField resource: %v", err)
 	}
@@ -106,7 +127,15 @@ func resourceLogCustomFieldDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteLogCustomField(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteLogCustomField(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting LogCustomField resource: %v", err)
 	}
@@ -122,7 +151,15 @@ func resourceLogCustomFieldRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadLogCustomField(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadLogCustomField(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading LogCustomField resource: %v", err)
 	}

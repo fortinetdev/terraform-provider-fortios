@@ -21,6 +21,12 @@ func dataSourceRouterPrefixList6() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceRouterPrefixList6Read,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -69,6 +75,14 @@ func dataSourceRouterPrefixList6Read(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := ""
 
 	t := d.Get("name")
@@ -80,7 +94,7 @@ func dataSourceRouterPrefixList6Read(d *schema.ResourceData, m interface{}) erro
 		return fmt.Errorf("Error describing RouterPrefixList6: type error")
 	}
 
-	o, err := c.ReadRouterPrefixList6(mkey)
+	o, err := c.ReadRouterPrefixList6(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing RouterPrefixList6: %v", err)
 	}

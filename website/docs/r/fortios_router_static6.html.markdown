@@ -45,6 +45,7 @@ The following arguments are supported:
 * `virtual_wan_link` - Enable/disable egress through the virtual-wan-link. Valid values: `enable`, `disable`.
 * `link_monitor_exempt` - Enable/disable withdrawal of this static route when link monitor or health check is down. Valid values: `enable`, `disable`.
 * `bfd` - Enable/disable Bidirectional Forwarding Detection (BFD). Valid values: `enable`, `disable`.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

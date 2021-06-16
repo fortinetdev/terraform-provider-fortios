@@ -30,6 +30,11 @@ func resourceWebfilterFtgdLocalRating() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"url": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 511),
@@ -59,12 +64,20 @@ func resourceWebfilterFtgdLocalRatingCreate(d *schema.ResourceData, m interface{
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWebfilterFtgdLocalRating(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WebfilterFtgdLocalRating resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateWebfilterFtgdLocalRating(obj)
+	o, err := c.CreateWebfilterFtgdLocalRating(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating WebfilterFtgdLocalRating resource: %v", err)
@@ -84,12 +97,20 @@ func resourceWebfilterFtgdLocalRatingUpdate(d *schema.ResourceData, m interface{
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWebfilterFtgdLocalRating(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WebfilterFtgdLocalRating resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateWebfilterFtgdLocalRating(obj, mkey)
+	o, err := c.UpdateWebfilterFtgdLocalRating(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating WebfilterFtgdLocalRating resource: %v", err)
 	}
@@ -110,7 +131,15 @@ func resourceWebfilterFtgdLocalRatingDelete(d *schema.ResourceData, m interface{
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteWebfilterFtgdLocalRating(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteWebfilterFtgdLocalRating(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting WebfilterFtgdLocalRating resource: %v", err)
 	}
@@ -126,7 +155,15 @@ func resourceWebfilterFtgdLocalRatingRead(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadWebfilterFtgdLocalRating(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadWebfilterFtgdLocalRating(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading WebfilterFtgdLocalRating resource: %v", err)
 	}

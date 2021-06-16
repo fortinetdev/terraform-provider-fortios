@@ -30,6 +30,11 @@ func resourceEmailfilterBlockAllowList() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
@@ -114,12 +119,20 @@ func resourceEmailfilterBlockAllowListCreate(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectEmailfilterBlockAllowList(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating EmailfilterBlockAllowList resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateEmailfilterBlockAllowList(obj)
+	o, err := c.CreateEmailfilterBlockAllowList(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating EmailfilterBlockAllowList resource: %v", err)
@@ -139,12 +152,20 @@ func resourceEmailfilterBlockAllowListUpdate(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectEmailfilterBlockAllowList(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating EmailfilterBlockAllowList resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateEmailfilterBlockAllowList(obj, mkey)
+	o, err := c.UpdateEmailfilterBlockAllowList(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating EmailfilterBlockAllowList resource: %v", err)
 	}
@@ -165,7 +186,15 @@ func resourceEmailfilterBlockAllowListDelete(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteEmailfilterBlockAllowList(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteEmailfilterBlockAllowList(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting EmailfilterBlockAllowList resource: %v", err)
 	}
@@ -181,7 +210,15 @@ func resourceEmailfilterBlockAllowListRead(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadEmailfilterBlockAllowList(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadEmailfilterBlockAllowList(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading EmailfilterBlockAllowList resource: %v", err)
 	}

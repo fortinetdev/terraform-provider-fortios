@@ -21,6 +21,12 @@ func dataSourceRouterbgpNeighbor() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceRouterbgpNeighborRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"ip": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -410,6 +416,14 @@ func dataSourceRouterbgpNeighborRead(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := ""
 
 	t := d.Get("ip")
@@ -421,7 +435,7 @@ func dataSourceRouterbgpNeighborRead(d *schema.ResourceData, m interface{}) erro
 		return fmt.Errorf("Error describing RouterbgpNeighbor: type error")
 	}
 
-	o, err := c.ReadRouterbgpNeighbor(mkey)
+	o, err := c.ReadRouterbgpNeighbor(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing RouterbgpNeighbor: %v", err)
 	}

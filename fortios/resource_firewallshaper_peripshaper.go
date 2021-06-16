@@ -30,6 +30,11 @@ func resourceFirewallShaperPerIpShaper() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -93,12 +98,20 @@ func resourceFirewallShaperPerIpShaperCreate(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallShaperPerIpShaper(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallShaperPerIpShaper resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateFirewallShaperPerIpShaper(obj)
+	o, err := c.CreateFirewallShaperPerIpShaper(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallShaperPerIpShaper resource: %v", err)
@@ -118,12 +131,20 @@ func resourceFirewallShaperPerIpShaperUpdate(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallShaperPerIpShaper(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallShaperPerIpShaper resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateFirewallShaperPerIpShaper(obj, mkey)
+	o, err := c.UpdateFirewallShaperPerIpShaper(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallShaperPerIpShaper resource: %v", err)
 	}
@@ -144,7 +165,15 @@ func resourceFirewallShaperPerIpShaperDelete(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteFirewallShaperPerIpShaper(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteFirewallShaperPerIpShaper(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting FirewallShaperPerIpShaper resource: %v", err)
 	}
@@ -160,7 +189,15 @@ func resourceFirewallShaperPerIpShaperRead(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadFirewallShaperPerIpShaper(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadFirewallShaperPerIpShaper(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallShaperPerIpShaper resource: %v", err)
 	}

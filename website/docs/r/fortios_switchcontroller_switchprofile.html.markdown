@@ -25,6 +25,7 @@ The following arguments are supported:
 * `name` - FortiSwitch Profile name.
 * `login_passwd_override` - Enable/disable overriding the admin administrator password for a managed FortiSwitch with the FortiGate admin administrator account password. Valid values: `enable`, `disable`.
 * `login_passwd` - Login password of managed FortiSwitch.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

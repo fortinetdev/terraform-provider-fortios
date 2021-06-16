@@ -30,6 +30,11 @@ func resourceFirewallProxyPolicy() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"uuid": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -510,12 +515,20 @@ func resourceFirewallProxyPolicyCreate(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallProxyPolicy(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallProxyPolicy resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateFirewallProxyPolicy(obj)
+	o, err := c.CreateFirewallProxyPolicy(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallProxyPolicy resource: %v", err)
@@ -535,12 +548,20 @@ func resourceFirewallProxyPolicyUpdate(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallProxyPolicy(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallProxyPolicy resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateFirewallProxyPolicy(obj, mkey)
+	o, err := c.UpdateFirewallProxyPolicy(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallProxyPolicy resource: %v", err)
 	}
@@ -561,7 +582,15 @@ func resourceFirewallProxyPolicyDelete(d *schema.ResourceData, m interface{}) er
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteFirewallProxyPolicy(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteFirewallProxyPolicy(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting FirewallProxyPolicy resource: %v", err)
 	}
@@ -577,7 +606,15 @@ func resourceFirewallProxyPolicyRead(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadFirewallProxyPolicy(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadFirewallProxyPolicy(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallProxyPolicy resource: %v", err)
 	}

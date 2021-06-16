@@ -30,6 +30,11 @@ func resourceIpsRule() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -139,12 +144,20 @@ func resourceIpsRuleCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectIpsRule(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating IpsRule resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateIpsRule(obj)
+	o, err := c.CreateIpsRule(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating IpsRule resource: %v", err)
@@ -164,12 +177,20 @@ func resourceIpsRuleUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectIpsRule(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating IpsRule resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateIpsRule(obj, mkey)
+	o, err := c.UpdateIpsRule(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating IpsRule resource: %v", err)
 	}
@@ -190,7 +211,15 @@ func resourceIpsRuleDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteIpsRule(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteIpsRule(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting IpsRule resource: %v", err)
 	}
@@ -206,7 +235,15 @@ func resourceIpsRuleRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadIpsRule(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadIpsRule(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading IpsRule resource: %v", err)
 	}

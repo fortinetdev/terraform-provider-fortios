@@ -21,6 +21,12 @@ func dataSourceFirewallScheduleOnetime() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceFirewallScheduleOnetimeRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -49,6 +55,14 @@ func dataSourceFirewallScheduleOnetimeRead(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := ""
 
 	t := d.Get("name")
@@ -60,7 +74,7 @@ func dataSourceFirewallScheduleOnetimeRead(d *schema.ResourceData, m interface{}
 		return fmt.Errorf("Error describing FirewallScheduleOnetime: type error")
 	}
 
-	o, err := c.ReadFirewallScheduleOnetime(mkey)
+	o, err := c.ReadFirewallScheduleOnetime(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing FirewallScheduleOnetime: %v", err)
 	}

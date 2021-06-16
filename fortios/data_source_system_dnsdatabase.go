@@ -21,6 +21,12 @@ func dataSourceSystemDnsDatabase() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemDnsDatabaseRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -133,6 +139,14 @@ func dataSourceSystemDnsDatabaseRead(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := ""
 
 	t := d.Get("name")
@@ -144,7 +158,7 @@ func dataSourceSystemDnsDatabaseRead(d *schema.ResourceData, m interface{}) erro
 		return fmt.Errorf("Error describing SystemDnsDatabase: type error")
 	}
 
-	o, err := c.ReadSystemDnsDatabase(mkey)
+	o, err := c.ReadSystemDnsDatabase(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemDnsDatabase: %v", err)
 	}

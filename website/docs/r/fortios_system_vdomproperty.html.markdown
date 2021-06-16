@@ -34,6 +34,7 @@ The following arguments are supported:
 * `sslvpn` - Maximum guaranteed number of SSL-VPNs.
 * `proxy` - Maximum guaranteed number of concurrent proxy users.
 * `log_disk_quota` - Log disk quota in MB (range depends on how much disk space is available).
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

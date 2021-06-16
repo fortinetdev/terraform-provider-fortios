@@ -30,6 +30,11 @@ func resourceSwitchControllerSwitchGroup() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -82,12 +87,20 @@ func resourceSwitchControllerSwitchGroupCreate(d *schema.ResourceData, m interfa
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerSwitchGroup(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerSwitchGroup resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSwitchControllerSwitchGroup(obj)
+	o, err := c.CreateSwitchControllerSwitchGroup(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerSwitchGroup resource: %v", err)
@@ -107,12 +120,20 @@ func resourceSwitchControllerSwitchGroupUpdate(d *schema.ResourceData, m interfa
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerSwitchGroup(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerSwitchGroup resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSwitchControllerSwitchGroup(obj, mkey)
+	o, err := c.UpdateSwitchControllerSwitchGroup(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerSwitchGroup resource: %v", err)
 	}
@@ -133,7 +154,15 @@ func resourceSwitchControllerSwitchGroupDelete(d *schema.ResourceData, m interfa
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSwitchControllerSwitchGroup(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSwitchControllerSwitchGroup(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SwitchControllerSwitchGroup resource: %v", err)
 	}
@@ -149,7 +178,15 @@ func resourceSwitchControllerSwitchGroupRead(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSwitchControllerSwitchGroup(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSwitchControllerSwitchGroup(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerSwitchGroup resource: %v", err)
 	}

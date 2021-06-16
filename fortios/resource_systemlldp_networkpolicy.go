@@ -30,6 +30,11 @@ func resourceSystemLldpNetworkPolicy() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -345,12 +350,20 @@ func resourceSystemLldpNetworkPolicyCreate(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemLldpNetworkPolicy(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemLldpNetworkPolicy resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemLldpNetworkPolicy(obj)
+	o, err := c.CreateSystemLldpNetworkPolicy(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemLldpNetworkPolicy resource: %v", err)
@@ -370,12 +383,20 @@ func resourceSystemLldpNetworkPolicyUpdate(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemLldpNetworkPolicy(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemLldpNetworkPolicy resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemLldpNetworkPolicy(obj, mkey)
+	o, err := c.UpdateSystemLldpNetworkPolicy(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemLldpNetworkPolicy resource: %v", err)
 	}
@@ -396,7 +417,15 @@ func resourceSystemLldpNetworkPolicyDelete(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemLldpNetworkPolicy(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemLldpNetworkPolicy(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemLldpNetworkPolicy resource: %v", err)
 	}
@@ -412,7 +441,15 @@ func resourceSystemLldpNetworkPolicyRead(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemLldpNetworkPolicy(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemLldpNetworkPolicy(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemLldpNetworkPolicy resource: %v", err)
 	}

@@ -21,6 +21,7 @@ The following arguments are supported:
 * `lcp_echo_interval` - Time in seconds between PPPoE Link Control Protocol (LCP) echo requests.
 * `lcp_max_echo_fails` - Maximum number of missed LCP echo messages before disconnect.
 * `compress` - Enable/disable data compression. Valid values: `enable`, `disable`.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

@@ -30,6 +30,11 @@ func resourceReportTheme() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -217,12 +222,20 @@ func resourceReportThemeCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectReportTheme(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating ReportTheme resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateReportTheme(obj)
+	o, err := c.CreateReportTheme(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating ReportTheme resource: %v", err)
@@ -242,12 +255,20 @@ func resourceReportThemeUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectReportTheme(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating ReportTheme resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateReportTheme(obj, mkey)
+	o, err := c.UpdateReportTheme(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating ReportTheme resource: %v", err)
 	}
@@ -268,7 +289,15 @@ func resourceReportThemeDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteReportTheme(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteReportTheme(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting ReportTheme resource: %v", err)
 	}
@@ -284,7 +313,15 @@ func resourceReportThemeRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadReportTheme(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadReportTheme(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading ReportTheme resource: %v", err)
 	}

@@ -30,6 +30,11 @@ func resourceVpnSslWebRealm() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"url_path": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -83,12 +88,20 @@ func resourceVpnSslWebRealmCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectVpnSslWebRealm(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating VpnSslWebRealm resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateVpnSslWebRealm(obj)
+	o, err := c.CreateVpnSslWebRealm(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating VpnSslWebRealm resource: %v", err)
@@ -108,12 +121,20 @@ func resourceVpnSslWebRealmUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectVpnSslWebRealm(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating VpnSslWebRealm resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateVpnSslWebRealm(obj, mkey)
+	o, err := c.UpdateVpnSslWebRealm(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating VpnSslWebRealm resource: %v", err)
 	}
@@ -134,7 +155,15 @@ func resourceVpnSslWebRealmDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteVpnSslWebRealm(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteVpnSslWebRealm(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting VpnSslWebRealm resource: %v", err)
 	}
@@ -150,7 +179,15 @@ func resourceVpnSslWebRealmRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadVpnSslWebRealm(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadVpnSslWebRealm(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading VpnSslWebRealm resource: %v", err)
 	}

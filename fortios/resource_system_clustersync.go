@@ -30,6 +30,11 @@ func resourceSystemClusterSync() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"sync_id": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 255),
@@ -175,12 +180,20 @@ func resourceSystemClusterSyncCreate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemClusterSync(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemClusterSync resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemClusterSync(obj)
+	o, err := c.CreateSystemClusterSync(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemClusterSync resource: %v", err)
@@ -200,12 +213,20 @@ func resourceSystemClusterSyncUpdate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemClusterSync(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemClusterSync resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemClusterSync(obj, mkey)
+	o, err := c.UpdateSystemClusterSync(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemClusterSync resource: %v", err)
 	}
@@ -226,7 +247,15 @@ func resourceSystemClusterSyncDelete(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemClusterSync(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemClusterSync(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemClusterSync resource: %v", err)
 	}
@@ -242,7 +271,15 @@ func resourceSystemClusterSyncRead(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemClusterSync(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemClusterSync(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemClusterSync resource: %v", err)
 	}

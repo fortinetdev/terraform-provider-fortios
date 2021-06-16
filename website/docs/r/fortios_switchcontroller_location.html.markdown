@@ -17,6 +17,7 @@ The following arguments are supported:
 * `address_civic` - Configure location civic address. The structure of `address_civic` block is documented below.
 * `coordinates` - Configure location GPS coordinates. The structure of `coordinates` block is documented below.
 * `elin_number` - Configure location ELIN number. The structure of `elin_number` block is documented below.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `address_civic` block supports:
 

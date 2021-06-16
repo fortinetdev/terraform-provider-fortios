@@ -30,6 +30,11 @@ func resourceSwitchControllerSystem() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"parallel_process_override": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -82,12 +87,20 @@ func resourceSwitchControllerSystemUpdate(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerSystem(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerSystem resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSwitchControllerSystem(obj, mkey)
+	o, err := c.UpdateSwitchControllerSystem(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerSystem resource: %v", err)
 	}
@@ -108,7 +121,15 @@ func resourceSwitchControllerSystemDelete(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSwitchControllerSystem(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSwitchControllerSystem(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SwitchControllerSystem resource: %v", err)
 	}
@@ -124,7 +145,15 @@ func resourceSwitchControllerSystemRead(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSwitchControllerSystem(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSwitchControllerSystem(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerSystem resource: %v", err)
 	}

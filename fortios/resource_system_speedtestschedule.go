@@ -30,6 +30,11 @@ func resourceSystemSpeedTestSchedule() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"interface": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
@@ -114,12 +119,20 @@ func resourceSystemSpeedTestScheduleCreate(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemSpeedTestSchedule(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemSpeedTestSchedule resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemSpeedTestSchedule(obj)
+	o, err := c.CreateSystemSpeedTestSchedule(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemSpeedTestSchedule resource: %v", err)
@@ -139,12 +152,20 @@ func resourceSystemSpeedTestScheduleUpdate(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemSpeedTestSchedule(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSpeedTestSchedule resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemSpeedTestSchedule(obj, mkey)
+	o, err := c.UpdateSystemSpeedTestSchedule(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemSpeedTestSchedule resource: %v", err)
 	}
@@ -165,7 +186,15 @@ func resourceSystemSpeedTestScheduleDelete(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemSpeedTestSchedule(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemSpeedTestSchedule(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemSpeedTestSchedule resource: %v", err)
 	}
@@ -181,7 +210,15 @@ func resourceSystemSpeedTestScheduleRead(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemSpeedTestSchedule(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemSpeedTestSchedule(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemSpeedTestSchedule resource: %v", err)
 	}

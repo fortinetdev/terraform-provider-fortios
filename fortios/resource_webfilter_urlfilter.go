@@ -30,6 +30,11 @@ func resourceWebfilterUrlfilter() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
@@ -129,12 +134,20 @@ func resourceWebfilterUrlfilterCreate(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWebfilterUrlfilter(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WebfilterUrlfilter resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateWebfilterUrlfilter(obj)
+	o, err := c.CreateWebfilterUrlfilter(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating WebfilterUrlfilter resource: %v", err)
@@ -154,12 +167,20 @@ func resourceWebfilterUrlfilterUpdate(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWebfilterUrlfilter(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WebfilterUrlfilter resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateWebfilterUrlfilter(obj, mkey)
+	o, err := c.UpdateWebfilterUrlfilter(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating WebfilterUrlfilter resource: %v", err)
 	}
@@ -180,7 +201,15 @@ func resourceWebfilterUrlfilterDelete(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteWebfilterUrlfilter(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteWebfilterUrlfilter(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting WebfilterUrlfilter resource: %v", err)
 	}
@@ -196,7 +225,15 @@ func resourceWebfilterUrlfilterRead(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadWebfilterUrlfilter(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadWebfilterUrlfilter(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading WebfilterUrlfilter resource: %v", err)
 	}

@@ -21,6 +21,12 @@ func dataSourceFirewallPolicy() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceFirewallPolicyRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"policyid": &schema.Schema{
 				Type:     schema.TypeInt,
 				Required: true,
@@ -873,6 +879,14 @@ func dataSourceFirewallPolicyRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := ""
 
 	t := d.Get("policyid")
@@ -884,7 +898,7 @@ func dataSourceFirewallPolicyRead(d *schema.ResourceData, m interface{}) error {
 		return fmt.Errorf("Error describing FirewallPolicy: type error")
 	}
 
-	o, err := c.ReadFirewallPolicy(mkey)
+	o, err := c.ReadFirewallPolicy(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing FirewallPolicy: %v", err)
 	}

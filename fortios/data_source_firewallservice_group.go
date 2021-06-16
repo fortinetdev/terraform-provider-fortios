@@ -21,6 +21,12 @@ func dataSourceFirewallServiceGroup() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceFirewallServiceGroupRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -57,6 +63,14 @@ func dataSourceFirewallServiceGroupRead(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := ""
 
 	t := d.Get("name")
@@ -68,7 +82,7 @@ func dataSourceFirewallServiceGroupRead(d *schema.ResourceData, m interface{}) e
 		return fmt.Errorf("Error describing FirewallServiceGroup: type error")
 	}
 
-	o, err := c.ReadFirewallServiceGroup(mkey)
+	o, err := c.ReadFirewallServiceGroup(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing FirewallServiceGroup: %v", err)
 	}

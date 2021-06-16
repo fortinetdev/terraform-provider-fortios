@@ -21,6 +21,12 @@ func dataSourceSystemFssoPolling() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemFssoPollingRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Computed: true,
@@ -46,9 +52,17 @@ func dataSourceSystemFssoPollingRead(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := "SystemFssoPolling"
 
-	o, err := c.ReadSystemFssoPolling(mkey)
+	o, err := c.ReadSystemFssoPolling(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemFssoPolling: %v", err)
 	}

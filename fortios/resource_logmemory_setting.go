@@ -30,6 +30,11 @@ func resourceLogMemorySetting() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -49,12 +54,20 @@ func resourceLogMemorySettingUpdate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectLogMemorySetting(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating LogMemorySetting resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateLogMemorySetting(obj, mkey)
+	o, err := c.UpdateLogMemorySetting(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating LogMemorySetting resource: %v", err)
 	}
@@ -75,7 +88,15 @@ func resourceLogMemorySettingDelete(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteLogMemorySetting(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteLogMemorySetting(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting LogMemorySetting resource: %v", err)
 	}
@@ -91,7 +112,15 @@ func resourceLogMemorySettingRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadLogMemorySetting(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadLogMemorySetting(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading LogMemorySetting resource: %v", err)
 	}

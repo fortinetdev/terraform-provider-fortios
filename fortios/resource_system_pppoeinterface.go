@@ -30,6 +30,11 @@ func resourceSystemPppoeInterface() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
@@ -124,12 +129,20 @@ func resourceSystemPppoeInterfaceCreate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemPppoeInterface(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemPppoeInterface resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemPppoeInterface(obj)
+	o, err := c.CreateSystemPppoeInterface(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemPppoeInterface resource: %v", err)
@@ -149,12 +162,20 @@ func resourceSystemPppoeInterfaceUpdate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemPppoeInterface(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemPppoeInterface resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemPppoeInterface(obj, mkey)
+	o, err := c.UpdateSystemPppoeInterface(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemPppoeInterface resource: %v", err)
 	}
@@ -175,7 +196,15 @@ func resourceSystemPppoeInterfaceDelete(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemPppoeInterface(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemPppoeInterface(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemPppoeInterface resource: %v", err)
 	}
@@ -191,7 +220,15 @@ func resourceSystemPppoeInterfaceRead(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemPppoeInterface(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemPppoeInterface(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemPppoeInterface resource: %v", err)
 	}

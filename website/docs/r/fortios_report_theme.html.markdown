@@ -54,6 +54,7 @@ The following arguments are supported:
 * `table_chart_head_style` - Table chart head row style.
 * `table_chart_odd_row_style` - Table chart odd row style.
 * `table_chart_even_row_style` - Table chart even row style.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

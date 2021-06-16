@@ -30,6 +30,11 @@ func resourceSpamfilterMheader() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"fosid": &schema.Schema{
 				Type:     schema.TypeInt,
 				ForceNew: true,
@@ -98,12 +103,20 @@ func resourceSpamfilterMheaderCreate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSpamfilterMheader(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SpamfilterMheader resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSpamfilterMheader(obj)
+	o, err := c.CreateSpamfilterMheader(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SpamfilterMheader resource: %v", err)
@@ -123,12 +136,20 @@ func resourceSpamfilterMheaderUpdate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSpamfilterMheader(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SpamfilterMheader resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSpamfilterMheader(obj, mkey)
+	o, err := c.UpdateSpamfilterMheader(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SpamfilterMheader resource: %v", err)
 	}
@@ -149,7 +170,15 @@ func resourceSpamfilterMheaderDelete(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSpamfilterMheader(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSpamfilterMheader(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SpamfilterMheader resource: %v", err)
 	}
@@ -165,7 +194,15 @@ func resourceSpamfilterMheaderRead(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSpamfilterMheader(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSpamfilterMheader(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SpamfilterMheader resource: %v", err)
 	}

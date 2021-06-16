@@ -30,6 +30,11 @@ func resourceSystemIpv6Tunnel() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 15),
@@ -60,12 +65,20 @@ func resourceSystemIpv6TunnelCreate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemIpv6Tunnel(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemIpv6Tunnel resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemIpv6Tunnel(obj)
+	o, err := c.CreateSystemIpv6Tunnel(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemIpv6Tunnel resource: %v", err)
@@ -85,12 +98,20 @@ func resourceSystemIpv6TunnelUpdate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemIpv6Tunnel(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemIpv6Tunnel resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemIpv6Tunnel(obj, mkey)
+	o, err := c.UpdateSystemIpv6Tunnel(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemIpv6Tunnel resource: %v", err)
 	}
@@ -111,7 +132,15 @@ func resourceSystemIpv6TunnelDelete(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemIpv6Tunnel(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemIpv6Tunnel(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemIpv6Tunnel resource: %v", err)
 	}
@@ -127,7 +156,15 @@ func resourceSystemIpv6TunnelRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemIpv6Tunnel(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemIpv6Tunnel(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemIpv6Tunnel resource: %v", err)
 	}

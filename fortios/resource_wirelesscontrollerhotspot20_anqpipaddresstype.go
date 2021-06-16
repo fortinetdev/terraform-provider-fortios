@@ -30,6 +30,11 @@ func resourceWirelessControllerHotspot20AnqpIpAddressType() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -55,12 +60,20 @@ func resourceWirelessControllerHotspot20AnqpIpAddressTypeCreate(d *schema.Resour
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWirelessControllerHotspot20AnqpIpAddressType(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating WirelessControllerHotspot20AnqpIpAddressType resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateWirelessControllerHotspot20AnqpIpAddressType(obj)
+	o, err := c.CreateWirelessControllerHotspot20AnqpIpAddressType(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating WirelessControllerHotspot20AnqpIpAddressType resource: %v", err)
@@ -80,12 +93,20 @@ func resourceWirelessControllerHotspot20AnqpIpAddressTypeUpdate(d *schema.Resour
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectWirelessControllerHotspot20AnqpIpAddressType(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerHotspot20AnqpIpAddressType resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateWirelessControllerHotspot20AnqpIpAddressType(obj, mkey)
+	o, err := c.UpdateWirelessControllerHotspot20AnqpIpAddressType(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating WirelessControllerHotspot20AnqpIpAddressType resource: %v", err)
 	}
@@ -106,7 +127,15 @@ func resourceWirelessControllerHotspot20AnqpIpAddressTypeDelete(d *schema.Resour
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteWirelessControllerHotspot20AnqpIpAddressType(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteWirelessControllerHotspot20AnqpIpAddressType(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting WirelessControllerHotspot20AnqpIpAddressType resource: %v", err)
 	}
@@ -122,7 +151,15 @@ func resourceWirelessControllerHotspot20AnqpIpAddressTypeRead(d *schema.Resource
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadWirelessControllerHotspot20AnqpIpAddressType(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadWirelessControllerHotspot20AnqpIpAddressType(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading WirelessControllerHotspot20AnqpIpAddressType resource: %v", err)
 	}

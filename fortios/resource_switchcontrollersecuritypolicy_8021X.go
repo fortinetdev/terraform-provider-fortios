@@ -30,6 +30,11 @@ func resourceSwitchControllerSecurityPolicy8021X() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 31),
@@ -161,12 +166,20 @@ func resourceSwitchControllerSecurityPolicy8021XCreate(d *schema.ResourceData, m
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerSecurityPolicy8021X(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerSecurityPolicy8021X resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSwitchControllerSecurityPolicy8021X(obj)
+	o, err := c.CreateSwitchControllerSecurityPolicy8021X(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerSecurityPolicy8021X resource: %v", err)
@@ -186,12 +199,20 @@ func resourceSwitchControllerSecurityPolicy8021XUpdate(d *schema.ResourceData, m
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerSecurityPolicy8021X(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerSecurityPolicy8021X resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSwitchControllerSecurityPolicy8021X(obj, mkey)
+	o, err := c.UpdateSwitchControllerSecurityPolicy8021X(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerSecurityPolicy8021X resource: %v", err)
 	}
@@ -212,7 +233,15 @@ func resourceSwitchControllerSecurityPolicy8021XDelete(d *schema.ResourceData, m
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSwitchControllerSecurityPolicy8021X(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSwitchControllerSecurityPolicy8021X(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SwitchControllerSecurityPolicy8021X resource: %v", err)
 	}
@@ -228,7 +257,15 @@ func resourceSwitchControllerSecurityPolicy8021XRead(d *schema.ResourceData, m i
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSwitchControllerSecurityPolicy8021X(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSwitchControllerSecurityPolicy8021X(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerSecurityPolicy8021X resource: %v", err)
 	}

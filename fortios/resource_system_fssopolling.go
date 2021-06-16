@@ -30,6 +30,11 @@ func resourceSystemFssoPolling() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -61,12 +66,20 @@ func resourceSystemFssoPollingUpdate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemFssoPolling(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemFssoPolling resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemFssoPolling(obj, mkey)
+	o, err := c.UpdateSystemFssoPolling(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemFssoPolling resource: %v", err)
 	}
@@ -87,7 +100,15 @@ func resourceSystemFssoPollingDelete(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemFssoPolling(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemFssoPolling(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemFssoPolling resource: %v", err)
 	}
@@ -103,7 +124,15 @@ func resourceSystemFssoPollingRead(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemFssoPolling(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemFssoPolling(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemFssoPolling resource: %v", err)
 	}

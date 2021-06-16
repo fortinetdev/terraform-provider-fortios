@@ -30,6 +30,11 @@ func resourceRouterAccessList() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -93,12 +98,20 @@ func resourceRouterAccessListCreate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectRouterAccessList(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating RouterAccessList resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateRouterAccessList(obj)
+	o, err := c.CreateRouterAccessList(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating RouterAccessList resource: %v", err)
@@ -118,12 +131,20 @@ func resourceRouterAccessListUpdate(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectRouterAccessList(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterAccessList resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateRouterAccessList(obj, mkey)
+	o, err := c.UpdateRouterAccessList(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating RouterAccessList resource: %v", err)
 	}
@@ -144,7 +165,15 @@ func resourceRouterAccessListDelete(d *schema.ResourceData, m interface{}) error
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteRouterAccessList(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteRouterAccessList(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting RouterAccessList resource: %v", err)
 	}
@@ -160,7 +189,15 @@ func resourceRouterAccessListRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadRouterAccessList(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadRouterAccessList(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading RouterAccessList resource: %v", err)
 	}

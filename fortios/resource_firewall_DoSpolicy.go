@@ -30,6 +30,11 @@ func resourceFirewallDosPolicy() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"policyid": &schema.Schema{
 				Type:         schema.TypeInt,
 				ValidateFunc: validation.IntBetween(0, 9999),
@@ -167,12 +172,20 @@ func resourceFirewallDosPolicyCreate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallDosPolicy(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallDosPolicy resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateFirewallDosPolicy(obj)
+	o, err := c.CreateFirewallDosPolicy(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallDosPolicy resource: %v", err)
@@ -192,12 +205,20 @@ func resourceFirewallDosPolicyUpdate(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallDosPolicy(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallDosPolicy resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateFirewallDosPolicy(obj, mkey)
+	o, err := c.UpdateFirewallDosPolicy(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallDosPolicy resource: %v", err)
 	}
@@ -218,7 +239,15 @@ func resourceFirewallDosPolicyDelete(d *schema.ResourceData, m interface{}) erro
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteFirewallDosPolicy(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteFirewallDosPolicy(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting FirewallDosPolicy resource: %v", err)
 	}
@@ -234,7 +263,15 @@ func resourceFirewallDosPolicyRead(d *schema.ResourceData, m interface{}) error 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadFirewallDosPolicy(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadFirewallDosPolicy(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallDosPolicy resource: %v", err)
 	}

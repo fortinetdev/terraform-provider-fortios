@@ -30,6 +30,11 @@ func resourceSystemAutoupdateSchedule() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -56,12 +61,20 @@ func resourceSystemAutoupdateScheduleUpdate(d *schema.ResourceData, m interface{
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemAutoupdateSchedule(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAutoupdateSchedule resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemAutoupdateSchedule(obj, mkey)
+	o, err := c.UpdateSystemAutoupdateSchedule(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemAutoupdateSchedule resource: %v", err)
 	}
@@ -82,7 +95,15 @@ func resourceSystemAutoupdateScheduleDelete(d *schema.ResourceData, m interface{
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemAutoupdateSchedule(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemAutoupdateSchedule(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemAutoupdateSchedule resource: %v", err)
 	}
@@ -98,7 +119,15 @@ func resourceSystemAutoupdateScheduleRead(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemAutoupdateSchedule(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemAutoupdateSchedule(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemAutoupdateSchedule resource: %v", err)
 	}

@@ -48,6 +48,7 @@ The following arguments are supported:
 * `ssl_max_version` - Highest SSL/TLS version to negotiate. Valid values: `tls-1.0`, `tls-1.1`, `tls-1.2`.
 * `ssl_send_empty_frags` - Enable/disable sending empty fragments to avoid attack on CBC IV. Valid values: `enable`, `disable`.
 * `url_rewrite` - Enable/disable rewriting the URL. Valid values: `enable`, `disable`.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

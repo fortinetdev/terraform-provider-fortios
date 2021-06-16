@@ -33,6 +33,7 @@ The following arguments are supported:
 * `server_port` - (Required) WISP server port (1 - 65535, default = 15868).
 * `max_connections` - Maximum number of web proxy WISP connections (4 - 4096, default = 64).
 * `timeout` - Period of time before WISP requests time out (1 - 15 sec, default = 5).
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 
 ## Attribute Reference

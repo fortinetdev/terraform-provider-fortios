@@ -30,6 +30,11 @@ func resourceSystemVirtualWanLink() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"status": &schema.Schema{
 				Type:     schema.TypeString,
 				Optional: true,
@@ -899,12 +904,20 @@ func resourceSystemVirtualWanLinkUpdate(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemVirtualWanLink(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemVirtualWanLink resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemVirtualWanLink(obj, mkey)
+	o, err := c.UpdateSystemVirtualWanLink(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemVirtualWanLink resource: %v", err)
 	}
@@ -925,7 +938,15 @@ func resourceSystemVirtualWanLinkDelete(d *schema.ResourceData, m interface{}) e
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemVirtualWanLink(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemVirtualWanLink(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemVirtualWanLink resource: %v", err)
 	}
@@ -941,7 +962,15 @@ func resourceSystemVirtualWanLinkRead(d *schema.ResourceData, m interface{}) err
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemVirtualWanLink(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemVirtualWanLink(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemVirtualWanLink resource: %v", err)
 	}

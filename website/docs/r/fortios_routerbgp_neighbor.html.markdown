@@ -12,6 +12,7 @@ BGP neighbor table.
 ~> The provider supports the definition of Neighbor in Router Bgp `fortios_router_bgp`, and also allows the definition of separate Neighbor resources `fortios_routerbgp_neighbor`, but do not use a `fortios_router_bgp` with in-line Neighbor in conjunction with any `fortios_routerbgp_neighbor` resources, otherwise conflicts and overwrite will occur.
 
 
+
 ## Argument Reference
 
 The following arguments are supported:
@@ -108,6 +109,7 @@ The following arguments are supported:
 * `password` - Password used in MD5 authentication.
 * `conditional_advertise` - Conditional advertisement. The structure of `conditional_advertise` block is documented below.
 * `dynamic_sort_subtable` - true or false, set this parameter to true when using dynamic for_each + toset to configure and sort sub-tables, please do not set this parameter when configuring static sub-tables.
+* `vdomparam` - Specifies the vdom to which the resource will be applied when the FortiGate unit is running in VDOM mode. Only one vdom can be specified. If you want to inherit the vdom configuration of the provider, please do not set this parameter.
 
 The `conditional_advertise` block supports:
 

@@ -30,6 +30,11 @@ func resourceSystemApiUser() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 35),
@@ -131,12 +136,20 @@ func resourceSystemApiUserCreate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemApiUser(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SystemApiUser resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSystemApiUser(obj)
+	o, err := c.CreateSystemApiUser(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SystemApiUser resource: %v", err)
@@ -156,12 +169,20 @@ func resourceSystemApiUserUpdate(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSystemApiUser(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemApiUser resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSystemApiUser(obj, mkey)
+	o, err := c.UpdateSystemApiUser(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SystemApiUser resource: %v", err)
 	}
@@ -182,7 +203,15 @@ func resourceSystemApiUserDelete(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSystemApiUser(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSystemApiUser(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SystemApiUser resource: %v", err)
 	}
@@ -198,7 +227,15 @@ func resourceSystemApiUserRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSystemApiUser(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSystemApiUser(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SystemApiUser resource: %v", err)
 	}

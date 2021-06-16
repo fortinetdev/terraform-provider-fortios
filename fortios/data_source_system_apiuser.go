@@ -21,6 +21,12 @@ func dataSourceSystemApiUser() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemApiUserRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
+
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -98,6 +104,14 @@ func dataSourceSystemApiUserRead(d *schema.ResourceData, m interface{}) error {
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	mkey := ""
 
 	t := d.Get("name")
@@ -109,7 +123,7 @@ func dataSourceSystemApiUserRead(d *schema.ResourceData, m interface{}) error {
 		return fmt.Errorf("Error describing SystemApiUser: type error")
 	}
 
-	o, err := c.ReadSystemApiUser(mkey)
+	o, err := c.ReadSystemApiUser(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error describing SystemApiUser: %v", err)
 	}

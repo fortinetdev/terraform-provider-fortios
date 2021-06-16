@@ -30,6 +30,11 @@ func resourceFirewallServiceCategory() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -49,12 +54,20 @@ func resourceFirewallServiceCategoryCreate(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallServiceCategory(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallServiceCategory resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateFirewallServiceCategory(obj)
+	o, err := c.CreateFirewallServiceCategory(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating FirewallServiceCategory resource: %v", err)
@@ -74,12 +87,20 @@ func resourceFirewallServiceCategoryUpdate(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectFirewallServiceCategory(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallServiceCategory resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateFirewallServiceCategory(obj, mkey)
+	o, err := c.UpdateFirewallServiceCategory(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating FirewallServiceCategory resource: %v", err)
 	}
@@ -100,7 +121,15 @@ func resourceFirewallServiceCategoryDelete(d *schema.ResourceData, m interface{}
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteFirewallServiceCategory(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteFirewallServiceCategory(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting FirewallServiceCategory resource: %v", err)
 	}
@@ -116,7 +145,15 @@ func resourceFirewallServiceCategoryRead(d *schema.ResourceData, m interface{}) 
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadFirewallServiceCategory(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadFirewallServiceCategory(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading FirewallServiceCategory resource: %v", err)
 	}

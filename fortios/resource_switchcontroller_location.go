@@ -30,6 +30,11 @@ func resourceSwitchControllerLocation() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
 				ValidateFunc: validation.StringLenBetween(0, 63),
@@ -322,12 +327,20 @@ func resourceSwitchControllerLocationCreate(d *schema.ResourceData, m interface{
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerLocation(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerLocation resource while getting object: %v", err)
 	}
 
-	o, err := c.CreateSwitchControllerLocation(obj)
+	o, err := c.CreateSwitchControllerLocation(obj, vdomparam)
 
 	if err != nil {
 		return fmt.Errorf("Error creating SwitchControllerLocation resource: %v", err)
@@ -347,12 +360,20 @@ func resourceSwitchControllerLocationUpdate(d *schema.ResourceData, m interface{
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	obj, err := getObjectSwitchControllerLocation(d, c.Fv)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerLocation resource while getting object: %v", err)
 	}
 
-	o, err := c.UpdateSwitchControllerLocation(obj, mkey)
+	o, err := c.UpdateSwitchControllerLocation(obj, mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error updating SwitchControllerLocation resource: %v", err)
 	}
@@ -373,7 +394,15 @@ func resourceSwitchControllerLocationDelete(d *schema.ResourceData, m interface{
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	err := c.DeleteSwitchControllerLocation(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	err := c.DeleteSwitchControllerLocation(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error deleting SwitchControllerLocation resource: %v", err)
 	}
@@ -389,7 +418,15 @@ func resourceSwitchControllerLocationRead(d *schema.ResourceData, m interface{})
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
-	o, err := c.ReadSwitchControllerLocation(mkey)
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
+	o, err := c.ReadSwitchControllerLocation(mkey, vdomparam)
 	if err != nil {
 		return fmt.Errorf("Error reading SwitchControllerLocation resource: %v", err)
 	}
