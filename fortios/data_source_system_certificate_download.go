@@ -8,12 +8,9 @@
 package fortios
 
 import (
-	"crypto/x509"
-	"encoding/pem"
 	"fmt"
 	"log"
 	"strconv"
-	"time"
 
 	forticlient "github.com/fortinetdev/forti-sdk-go/fortios/sdkcore"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
@@ -24,6 +21,11 @@ func dataSourceSystemCertificateDownload() *schema.Resource {
 	return &schema.Resource{
 		Read: dataSourceSystemCertificateDownloadRead,
 		Schema: map[string]*schema.Schema{
+			"vdomparam": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
+				ForceNew: true,
+			},
 			"name": &schema.Schema{
 				Type:     schema.TypeString,
 				Required: true,
@@ -36,33 +38,57 @@ func dataSourceSystemCertificateDownload() *schema.Resource {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			"issuer_cn": &schema.Schema{
-				Type:     schema.TypeString,
+			"certificate_details": {
+				Type:     schema.TypeList,
 				Computed: true,
-			},
-			"subject_cn": &schema.Schema{
-				Type:     schema.TypeString,
-				Computed: true,
-			},
-			"serial": &schema.Schema{
-				Type:     schema.TypeString,
-				Computed: true,
-			},
-			"valid_not_before": &schema.Schema{
-				Type:     schema.TypeString,
-				Computed: true,
-			},
-			"valid_not_after": &schema.Schema{
-				Type:     schema.TypeString,
-				Computed: true,
-			},
-			"is_valid": &schema.Schema{
-				Type:     schema.TypeBool,
-				Computed: true,
-			},
-			"version": &schema.Schema{
-				Type:     schema.TypeInt,
-				Computed: true,
+				Elem: &schema.Resource{
+					Schema: map[string]*schema.Schema{
+						"signature_algorithm": {
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"public_key_algorithm": {
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"serial_number": {
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"is_ca": {
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"is_valid": {
+							Type:     schema.TypeBool,
+							Computed: true,
+						},
+						"version": {
+							Type:     schema.TypeInt,
+							Computed: true,
+						},
+						"issuer": {
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"subject": {
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"not_before": {
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"not_after": {
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+						"sha1_fingerprint": {
+							Type:     schema.TypeString,
+							Computed: true,
+						},
+					},
+				},
 			},
 		},
 	}
@@ -72,17 +98,26 @@ func dataSourceSystemCertificateDownloadRead(d *schema.ResourceData, m interface
 	c := m.(*FortiClient).Client
 	c.Retries = 1
 
+	vdomparam := ""
+
+	if v, ok := d.GetOk("vdomparam"); ok {
+		if s, ok := v.(string); ok {
+			vdomparam = s
+		}
+	}
+
 	i := &forticlient.JSONSystemCertificateDownload{
 		Mkey: d.Get("name").(string),
 		Type: d.Get("type").(string),
 	}
 
-	o, err := c.ReadSystemCertificateDownload(i)
+	o, err := c.ReadSystemCertificateDownload(i, vdomparam)
 	if err != nil {
-		return fmt.Errorf("Error describing SystemCertificateDownload: %v", err)
+		return fmt.Errorf("Error reading certificate from API: %v", err)
 	}
 
 	if o == "" {
+		log.Printf("[WARN] certificate (%s) not found, removing from state", d.Id())
 		d.SetId("")
 		return nil
 	}
@@ -98,70 +133,22 @@ func dataSourceSystemCertificateDownloadRead(d *schema.ResourceData, m interface
 }
 
 func dataSourceRefreshObjectSystemCertificateDownload(d *schema.ResourceData, o string) error {
-	var err error
 
-	der, rest := pem.Decode([]byte(o))
+	parsed_cert, err := parseDownloadedPemCertificate(o)
 
-	if der == nil {
-		return fmt.Errorf("Error valid certificate not found: %v", rest)
+	if err != nil {
+		return fmt.Errorf("%v", err)
 	}
 
-	cert, err2 := x509.ParseCertificate(der.Bytes)
+	var certificate_details []interface{}
+	certificate_details = append(certificate_details, parsed_cert)
 
-	if err2 != nil {
-		return fmt.Errorf("Error parsing certificate: %v", err)
-	}
-
-	expired := time.Now().Before(cert.NotAfter)
-	prevalid := time.Now().After(cert.NotBefore)
-	valid := expired && prevalid
-
-	if err = d.Set("issuer_cn", cert.Issuer.CommonName); err != nil {
-		if !fortiAPIPatch(o) {
-			return fmt.Errorf("Error reading certificate issuer cn: %v", err)
-		}
-	}
-
-	if err = d.Set("subject_cn", cert.Subject.CommonName); err != nil {
-		if !fortiAPIPatch(o) {
-			return fmt.Errorf("Error reading certificate subject cn: %v", err)
-		}
-	}
-
-	if err = d.Set("serial", cert.SerialNumber.String()); err != nil {
-		if !fortiAPIPatch(o) {
-			return fmt.Errorf("Error reading certificate serial number: %v", err)
-		}
-	}
-
-	if err = d.Set("version", cert.Version); err != nil {
-		if !fortiAPIPatch(o) {
-			return fmt.Errorf("Error reading certificate version: %v", err)
-		}
-	}
-
-	if err = d.Set("valid_not_before", cert.NotBefore.Format(time.RFC3339)); err != nil {
-		if !fortiAPIPatch(o) {
-			return fmt.Errorf("Error reading certificate validity: %v", err)
-		}
-	}
-
-	if err = d.Set("valid_not_after", cert.NotAfter.Format(time.RFC3339)); err != nil {
-		if !fortiAPIPatch(o) {
-			return fmt.Errorf("Error reading certificate validity: %v", err)
-		}
-	}
-
-	if err = d.Set("is_valid", valid); err != nil {
-		if !fortiAPIPatch(o) {
-			return fmt.Errorf("Error reading certificate validity: %v", err)
-		}
+	if err = d.Set("certificate_details", certificate_details); err != nil {
+		return fmt.Errorf("Error reading certificate details: %v", err)
 	}
 
 	if err = d.Set("certificate", o); err != nil {
-		if !fortiAPIPatch(o) {
-			return fmt.Errorf("Error reading certificate: %v", err)
-		}
+		return fmt.Errorf("Error reading certificate: %v", err)
 	}
 
 	return nil
