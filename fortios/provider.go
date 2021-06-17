@@ -950,7 +950,7 @@ func Provider() terraform.ResourceProvider {
 			"fortios_firewall_proxypolicy_move":                         resourceFirewallProxypolicyMove(),
 			"fortios_firewall_centralsnatmap_sort":                      resourceFirewallCentralsnatmapSort(),
 			"fortios_firewall_proxypolicy_sort":                         resourceFirewallProxypolicySort(),
-			"fortios_vpncertificate_local_fixed":                        resourceVpnCertificateLocalFixed(),
+			"fortios_certificate_management_local":                      resourceCertificateManagementLocal(),
 		},
 
 		ConfigureFunc: providerConfigure,
