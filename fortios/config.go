@@ -1,13 +1,17 @@
 package fortios
 
 import (
+	"crypto/sha1"
+	"crypto/x509"
 	"encoding/binary"
+	"encoding/pem"
 	"fmt"
 	"net"
 	"os"
 	"sort"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/hashicorp/go-version"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
@@ -177,4 +181,34 @@ func intBetweenWithZero(min, max int) schema.SchemaValidateFunc {
 
 		return warnings, errors
 	}
+}
+
+func parseDownloadedPemCertificate(v string) (*map[string]interface{}, error) {
+	der, rest := pem.Decode([]byte(v))
+
+	if der == nil {
+		return nil, fmt.Errorf("error, valid certificate not found: %v", rest)
+	}
+
+	cert, err := x509.ParseCertificate(der.Bytes)
+
+	if err != nil {
+		return nil, fmt.Errorf("error parsing certificate: %v", err)
+	}
+
+	o := map[string]interface{}{
+		"signature_algorithm":  cert.SignatureAlgorithm.String(),
+		"public_key_algorithm": cert.PublicKeyAlgorithm.String(),
+		"serial_number":        cert.SerialNumber.String(),
+		"is_ca":                cert.IsCA,
+		"version":              cert.Version,
+		"issuer":               cert.Issuer.String(),
+		"subject":              cert.Subject.String(),
+		"not_before":           cert.NotBefore.Format(time.RFC3339),
+		"not_after":            cert.NotAfter.Format(time.RFC3339),
+		"sha1_fingerprint":     fmt.Sprintf("%x", sha1.Sum(cert.Raw)),
+		"is_valid":             time.Now().Before(cert.NotAfter) && time.Now().After(cert.NotBefore),
+	}
+
+	return &o, nil
 }
