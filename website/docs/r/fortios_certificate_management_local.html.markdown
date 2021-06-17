@@ -1,13 +1,13 @@
 ---
-subcategory: "FortiGate System"
+subcategory: "FortiGate Certificate"
 layout: "fortios"
-page_title: "FortiOS: fortios_system_certificate_management_local"
+page_title: "FortiOS: fortios_certificate_management_local"
 description: |-
-  Manage a fortios system local certificate.
+  Manage fortios local certificates.
 ---
 
-# fortios_system_certificate_management_local
-Use this resource to manage a fortios system local certificate
+# fortios_certificate_management_local
+Use this resource to manage a fortios local certificate
 
 ## Example Usage
 
