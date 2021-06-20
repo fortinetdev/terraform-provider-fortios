@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSLogNullDeviceSetting_basic(t *testing.T) {
@@ -48,7 +49,7 @@ func testAccCheckFortiOSLogNullDeviceSettingExists(n string) resource.TestCheckF
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadLogNullDeviceSetting(i)
+		o, err := c.ReadLogNullDeviceSetting(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading LogNullDeviceSetting: %s", err)
@@ -71,7 +72,7 @@ func testAccCheckLogNullDeviceSettingDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadLogNullDeviceSetting(i)
+		o, err := c.ReadLogNullDeviceSetting(i, "root")
 
 		if err == nil {
 			if o != nil {

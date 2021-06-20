@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSSystemWccp_basic(t *testing.T) {
@@ -66,7 +67,7 @@ func testAccCheckFortiOSSystemWccpExists(n string) resource.TestCheckFunc {
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadSystemWccp(i)
+		o, err := c.ReadSystemWccp(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading SystemWccp: %s", err)
@@ -89,7 +90,7 @@ func testAccCheckSystemWccpDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadSystemWccp(i)
+		o, err := c.ReadSystemWccp(i, "root")
 
 		if err == nil {
 			if o != nil {

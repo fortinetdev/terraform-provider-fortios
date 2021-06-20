@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSFirewallProxyPolicy_basic(t *testing.T) {
@@ -73,7 +74,7 @@ func testAccCheckFortiOSFirewallProxyPolicyExists(n string) resource.TestCheckFu
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadFirewallProxyPolicy(i)
+		o, err := c.ReadFirewallProxyPolicy(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading FirewallProxyPolicy: %s", err)
@@ -96,7 +97,7 @@ func testAccCheckFirewallProxyPolicyDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadFirewallProxyPolicy(i)
+		o, err := c.ReadFirewallProxyPolicy(i, "root")
 
 		if err == nil {
 			if o != nil {

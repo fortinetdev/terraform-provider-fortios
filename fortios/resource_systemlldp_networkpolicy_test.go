@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSSystemLldpNetworkPolicy_basic(t *testing.T) {
@@ -49,7 +50,7 @@ func testAccCheckFortiOSSystemLldpNetworkPolicyExists(n string) resource.TestChe
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadSystemLldpNetworkPolicy(i)
+		o, err := c.ReadSystemLldpNetworkPolicy(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading SystemLldpNetworkPolicy: %s", err)
@@ -72,7 +73,7 @@ func testAccCheckSystemLldpNetworkPolicyDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadSystemLldpNetworkPolicy(i)
+		o, err := c.ReadSystemLldpNetworkPolicy(i, "root")
 
 		if err == nil {
 			if o != nil {

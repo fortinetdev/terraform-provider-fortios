@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSFirewallShapingProfile_basic(t *testing.T) {
@@ -54,7 +55,7 @@ func testAccCheckFortiOSFirewallShapingProfileExists(n string) resource.TestChec
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadFirewallShapingProfile(i)
+		o, err := c.ReadFirewallShapingProfile(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading FirewallShapingProfile: %s", err)
@@ -77,7 +78,7 @@ func testAccCheckFirewallShapingProfileDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadFirewallShapingProfile(i)
+		o, err := c.ReadFirewallShapingProfile(i, "root")
 
 		if err == nil {
 			if o != nil {

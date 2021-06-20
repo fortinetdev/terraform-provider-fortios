@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSEndpointControlSettings_basic(t *testing.T) {
@@ -59,7 +60,7 @@ func testAccCheckFortiOSEndpointControlSettingsExists(n string) resource.TestChe
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadEndpointControlSettings(i)
+		o, err := c.ReadEndpointControlSettings(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading EndpointControlSettings: %s", err)
@@ -82,7 +83,7 @@ func testAccCheckEndpointControlSettingsDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadEndpointControlSettings(i)
+		o, err := c.ReadEndpointControlSettings(i, "root")
 
 		if err == nil {
 			if o != nil {

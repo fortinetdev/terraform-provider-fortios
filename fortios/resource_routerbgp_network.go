@@ -42,13 +42,15 @@ func resourceRouterbgpNetwork() *schema.Resource {
 				Computed: true,
 			},
 			"prefix": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Type:         schema.TypeString,
+				ValidateFunc: fortiValidateIPv4Classnet,
+				Required:     true,
 			},
 			"backdoor": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:         schema.TypeString,
+				ValidateFunc: fortiValidateEnableDisable(),
+				Optional:     true,
+				Computed:     true,
 			},
 			"route_map": &schema.Schema{
 				Type:         schema.TypeString,

@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSSwitchControllerNetworkMonitorSettings_basic(t *testing.T) {
@@ -48,7 +49,7 @@ func testAccCheckFortiOSSwitchControllerNetworkMonitorSettingsExists(n string) r
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadSwitchControllerNetworkMonitorSettings(i)
+		o, err := c.ReadSwitchControllerNetworkMonitorSettings(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading SwitchControllerNetworkMonitorSettings: %s", err)
@@ -71,7 +72,7 @@ func testAccCheckSwitchControllerNetworkMonitorSettingsDestroy(s *terraform.Stat
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadSwitchControllerNetworkMonitorSettings(i)
+		o, err := c.ReadSwitchControllerNetworkMonitorSettings(i, "root")
 
 		if err == nil {
 			if o != nil {

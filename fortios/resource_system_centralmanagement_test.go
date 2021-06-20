@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSSystemCentralManagement_basic(t *testing.T) {
@@ -60,7 +61,7 @@ func testAccCheckFortiOSSystemCentralManagementExists(n string) resource.TestChe
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadSystemCentralManagement(i)
+		o, err := c.ReadSystemCentralManagement(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading SystemCentralManagement: %s", err)
@@ -83,7 +84,7 @@ func testAccCheckSystemCentralManagementDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadSystemCentralManagement(i)
+		o, err := c.ReadSystemCentralManagement(i, "root")
 
 		if err == nil {
 			if o != nil {

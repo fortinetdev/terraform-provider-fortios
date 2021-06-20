@@ -81,9 +81,10 @@ func resourceRouterOspf() *schema.Resource {
 				Computed:     true,
 			},
 			"default_information_originate": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:         schema.TypeString,
+				ValidateFunc: fortiValidateEnum([]string{"enable", "always", "disable"}),
+				Optional:     true,
+				Computed:     true,
 			},
 			"default_information_metric": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -120,8 +121,9 @@ func resourceRouterOspf() *schema.Resource {
 				Computed: true,
 			},
 			"router_id": &schema.Schema{
-				Type:     schema.TypeString,
-				Required: true,
+				Type:         schema.TypeString,
+				ValidateFunc: validation.IsIPv4Address,
+				Required:     true,
 			},
 			"spf_timers": &schema.Schema{
 				Type:     schema.TypeString,
@@ -532,9 +534,10 @@ func resourceRouterOspf() *schema.Resource {
 							Computed: true,
 						},
 						"prefix": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Type:         schema.TypeString,
+							ValidateFunc: fortiValidateIPv4Classnet,
+							Optional:     true,
+							Computed:     true,
 						},
 						"area": &schema.Schema{
 							Type:     schema.TypeString,
@@ -658,9 +661,10 @@ func resourceRouterOspf() *schema.Resource {
 							Computed:     true,
 						},
 						"status": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Type:         schema.TypeString,
+							ValidateFunc: fortiValidateEnableDisable(),
+							Optional:     true,
+							Computed:     true,
 						},
 						"metric": &schema.Schema{
 							Type:         schema.TypeInt,

@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSUserRadius_basic(t *testing.T) {
@@ -74,7 +75,7 @@ func testAccCheckFortiOSUserRadiusExists(n string) resource.TestCheckFunc {
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadUserRadius(i)
+		o, err := c.ReadUserRadius(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading UserRadius: %s", err)
@@ -97,7 +98,7 @@ func testAccCheckUserRadiusDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadUserRadius(i)
+		o, err := c.ReadUserRadius(i, "root")
 
 		if err == nil {
 			if o != nil {

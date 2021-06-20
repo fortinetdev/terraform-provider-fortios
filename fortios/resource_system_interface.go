@@ -64,9 +64,10 @@ func resourceSystemInterface() *schema.Resource {
 				Computed: true,
 			},
 			"fortilink": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:         schema.TypeString,
+				ValidateFunc: fortiValidateEnableDisable(),
+				Optional:     true,
+				Computed:     true,
 			},
 			"switch_controller_source_ip": &schema.Schema{
 				Type:     schema.TypeString,
@@ -74,9 +75,10 @@ func resourceSystemInterface() *schema.Resource {
 				Computed: true,
 			},
 			"mode": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:         schema.TypeString,
+				ValidateFunc: fortiValidateEnum([]string{"static", "dhcp", "pppoe"}),
+				Optional:     true,
+				Computed:     true,
 			},
 			"client_options": &schema.Schema{
 				Type:     schema.TypeList,
@@ -95,9 +97,10 @@ func resourceSystemInterface() *schema.Resource {
 							Computed:     true,
 						},
 						"type": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Type:         schema.TypeString,
+							ValidateFunc: fortiValidateEnum([]string{"hex", "string", "ip", "fqdn"}),
+							Optional:     true,
+							Computed:     true,
 						},
 						"value": &schema.Schema{
 							Type:         schema.TypeString,
@@ -156,14 +159,16 @@ func resourceSystemInterface() *schema.Resource {
 				Computed: true,
 			},
 			"management_ip": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:         schema.TypeString,
+				ValidateFunc: fortiValidateIPv4ClassnetHost,
+				Optional:     true,
+				Computed:     true,
 			},
 			"ip": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:         schema.TypeString,
+				ValidateFunc: fortiValidateIPv4ClassnetHost,
+				Optional:     true,
+				Computed:     true,
 			},
 			"allowaccess": &schema.Schema{
 				Type:     schema.TypeString,
@@ -684,9 +689,10 @@ func resourceSystemInterface() *schema.Resource {
 				Computed: true,
 			},
 			"remote_ip": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:         schema.TypeString,
+				ValidateFunc: fortiValidateIPv4ClassnetHost,
+				Optional:     true,
+				Computed:     true,
 			},
 			"member": &schema.Schema{
 				Type:     schema.TypeList,
@@ -703,9 +709,10 @@ func resourceSystemInterface() *schema.Resource {
 				},
 			},
 			"lacp_mode": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:         schema.TypeString,
+				ValidateFunc: fortiValidateEnum([]string{"static", "passive", "active"}),
+				Optional:     true,
+				Computed:     true,
 			},
 			"lacp_ha_slave": &schema.Schema{
 				Type:     schema.TypeString,
@@ -713,9 +720,10 @@ func resourceSystemInterface() *schema.Resource {
 				Computed: true,
 			},
 			"lacp_speed": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:         schema.TypeString,
+				ValidateFunc: fortiValidateEnum([]string{"slow", "fast"}),
+				Optional:     true,
+				Computed:     true,
 			},
 			"min_links": &schema.Schema{
 				Type:         schema.TypeInt,
@@ -1047,9 +1055,10 @@ func resourceSystemInterface() *schema.Resource {
 				},
 			},
 			"role": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:         schema.TypeString,
+				ValidateFunc: fortiValidateEnum([]string{"lan", "wan", "dmz", "undefined"}),
+				Optional:     true,
+				Computed:     true,
 			},
 			"snmp_index": &schema.Schema{
 				Type:     schema.TypeInt,
@@ -1057,9 +1066,10 @@ func resourceSystemInterface() *schema.Resource {
 				Computed: true,
 			},
 			"secondary_ip": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:         schema.TypeString,
+				ValidateFunc: fortiValidateEnableDisable(),
+				Optional:     true,
+				Computed:     true,
 			},
 			"secondaryip": &schema.Schema{
 				Type:     schema.TypeList,
@@ -1072,9 +1082,10 @@ func resourceSystemInterface() *schema.Resource {
 							Computed: true,
 						},
 						"ip": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Type:         schema.TypeString,
+							ValidateFunc: fortiValidateIPv4ClassnetHost,
+							Optional:     true,
+							Computed:     true,
 						},
 						"allowaccess": &schema.Schema{
 							Type:     schema.TypeString,
@@ -1117,9 +1128,10 @@ func resourceSystemInterface() *schema.Resource {
 				Computed: true,
 			},
 			"auto_auth_extension_device": &schema.Schema{
-				Type:     schema.TypeString,
-				Optional: true,
-				Computed: true,
+				Type:         schema.TypeString,
+				ValidateFunc: fortiValidateEnableDisable(),
+				Optional:     true,
+				Computed:     true,
 			},
 			"ap_discover": &schema.Schema{
 				Type:     schema.TypeString,
@@ -1343,9 +1355,10 @@ func resourceSystemInterface() *schema.Resource {
 							Computed: true,
 						},
 						"ip6_address": &schema.Schema{
-							Type:     schema.TypeString,
-							Optional: true,
-							Computed: true,
+							Type:         schema.TypeString,
+							ValidateFunc: fortiValidateIPv6Prefix,
+							Optional:     true,
+							Computed:     true,
 						},
 						"ip6_extra_addr": &schema.Schema{
 							Type:     schema.TypeList,
@@ -1353,9 +1366,10 @@ func resourceSystemInterface() *schema.Resource {
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"prefix": &schema.Schema{
-										Type:     schema.TypeString,
-										Optional: true,
-										Computed: true,
+										Type:         schema.TypeString,
+										ValidateFunc: fortiValidateIPv6Prefix,
+										Optional:     true,
+										Computed:     true,
 									},
 								},
 							},
@@ -2416,6 +2430,13 @@ func flattenSystemInterfaceForwardDomain(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenSystemInterfaceRemoteIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v1, ok := d.GetOkExists(pre); ok && v != nil {
+		if s, ok := v1.(string); ok {
+			v = validateConvIPMask2CIDR(s, v.(string))
+			return v
+		}
+	}
+
 	return v
 }
 
@@ -3001,6 +3022,13 @@ func flattenSystemInterfaceSecondaryipId(v interface{}, d *schema.ResourceData, 
 }
 
 func flattenSystemInterfaceSecondaryipIp(v interface{}, d *schema.ResourceData, pre string, sv string) interface{} {
+	if v1, ok := d.GetOkExists(pre); ok && v != nil {
+		if s, ok := v1.(string); ok {
+			v = validateConvIPMask2CIDR(s, v.(string))
+			return v
+		}
+	}
+
 	return v
 }
 

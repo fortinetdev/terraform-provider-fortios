@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSFirewallVipgrp46_basic(t *testing.T) {
@@ -52,7 +53,7 @@ func testAccCheckFortiOSFirewallVipgrp46Exists(n string) resource.TestCheckFunc 
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadFirewallVipgrp46(i)
+		o, err := c.ReadFirewallVipgrp46(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading FirewallVipgrp46: %s", err)
@@ -75,7 +76,7 @@ func testAccCheckFirewallVipgrp46Destroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadFirewallVipgrp46(i)
+		o, err := c.ReadFirewallVipgrp46(i, "root")
 
 		if err == nil {
 			if o != nil {

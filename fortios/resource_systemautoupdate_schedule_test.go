@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSSystemAutoupdateSchedule_basic(t *testing.T) {
@@ -51,7 +52,7 @@ func testAccCheckFortiOSSystemAutoupdateScheduleExists(n string) resource.TestCh
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadSystemAutoupdateSchedule(i)
+		o, err := c.ReadSystemAutoupdateSchedule(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading SystemAutoupdateSchedule: %s", err)
@@ -74,7 +75,7 @@ func testAccCheckSystemAutoupdateScheduleDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadSystemAutoupdateSchedule(i)
+		o, err := c.ReadSystemAutoupdateSchedule(i, "root")
 
 		if err == nil {
 			if o != nil {

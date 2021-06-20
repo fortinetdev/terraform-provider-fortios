@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSFirewallScheduleRecurring_basic(t *testing.T) {
@@ -52,7 +53,7 @@ func testAccCheckFortiOSFirewallScheduleRecurringExists(n string) resource.TestC
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadFirewallScheduleRecurring(i)
+		o, err := c.ReadFirewallScheduleRecurring(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading FirewallScheduleRecurring: %s", err)
@@ -75,7 +76,7 @@ func testAccCheckFirewallScheduleRecurringDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadFirewallScheduleRecurring(i)
+		o, err := c.ReadFirewallScheduleRecurring(i, "root")
 
 		if err == nil {
 			if o != nil {

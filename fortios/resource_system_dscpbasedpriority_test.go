@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSSystemDscpBasedPriority_basic(t *testing.T) {
@@ -50,7 +51,7 @@ func testAccCheckFortiOSSystemDscpBasedPriorityExists(n string) resource.TestChe
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadSystemDscpBasedPriority(i)
+		o, err := c.ReadSystemDscpBasedPriority(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading SystemDscpBasedPriority: %s", err)
@@ -73,7 +74,7 @@ func testAccCheckSystemDscpBasedPriorityDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadSystemDscpBasedPriority(i)
+		o, err := c.ReadSystemDscpBasedPriority(i, "root")
 
 		if err == nil {
 			if o != nil {

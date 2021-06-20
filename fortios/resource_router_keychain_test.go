@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSRouterKeyChain_basic(t *testing.T) {
@@ -51,7 +52,7 @@ func testAccCheckFortiOSRouterKeyChainExists(n string) resource.TestCheckFunc {
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadRouterKeyChain(i)
+		o, err := c.ReadRouterKeyChain(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading RouterKeyChain: %s", err)
@@ -74,7 +75,7 @@ func testAccCheckRouterKeyChainDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadRouterKeyChain(i)
+		o, err := c.ReadRouterKeyChain(i, "root")
 
 		if err == nil {
 			if o != nil {

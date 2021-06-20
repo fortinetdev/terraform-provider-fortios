@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSSystemIpv6NeighborCache_basic(t *testing.T) {
@@ -51,7 +52,7 @@ func testAccCheckFortiOSSystemIpv6NeighborCacheExists(n string) resource.TestChe
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadSystemIpv6NeighborCache(i)
+		o, err := c.ReadSystemIpv6NeighborCache(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading SystemIpv6NeighborCache: %s", err)
@@ -74,7 +75,7 @@ func testAccCheckSystemIpv6NeighborCacheDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadSystemIpv6NeighborCache(i)
+		o, err := c.ReadSystemIpv6NeighborCache(i, "root")
 
 		if err == nil {
 			if o != nil {

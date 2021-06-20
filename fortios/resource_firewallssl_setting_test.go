@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSFirewallSslSetting_basic(t *testing.T) {
@@ -58,7 +59,7 @@ func testAccCheckFortiOSFirewallSslSettingExists(n string) resource.TestCheckFun
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadFirewallSslSetting(i)
+		o, err := c.ReadFirewallSslSetting(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading FirewallSslSetting: %s", err)
@@ -81,7 +82,7 @@ func testAccCheckFirewallSslSettingDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadFirewallSslSetting(i)
+		o, err := c.ReadFirewallSslSetting(i, "root")
 
 		if err == nil {
 			if o != nil {

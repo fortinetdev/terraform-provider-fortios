@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSSystemZone_basic(t *testing.T) {
@@ -49,7 +50,7 @@ func testAccCheckFortiOSSystemZoneExists(n string) resource.TestCheckFunc {
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadSystemZone(i)
+		o, err := c.ReadSystemZone(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading SystemZone: %s", err)
@@ -72,7 +73,7 @@ func testAccCheckSystemZoneDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadSystemZone(i)
+		o, err := c.ReadSystemZone(i, "root")
 
 		if err == nil {
 			if o != nil {

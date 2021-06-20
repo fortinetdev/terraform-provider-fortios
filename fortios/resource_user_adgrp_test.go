@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSUserAdgrp_basic(t *testing.T) {
@@ -51,7 +52,7 @@ func testAccCheckFortiOSUserAdgrpExists(n string) resource.TestCheckFunc {
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadUserAdgrp(i)
+		o, err := c.ReadUserAdgrp(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading UserAdgrp: %s", err)
@@ -74,7 +75,7 @@ func testAccCheckUserAdgrpDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadUserAdgrp(i)
+		o, err := c.ReadUserAdgrp(i, "root")
 
 		if err == nil {
 			if o != nil {

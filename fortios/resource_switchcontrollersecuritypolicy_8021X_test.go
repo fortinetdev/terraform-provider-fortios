@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSSwitchControllerSecurityPolicy8021X_basic(t *testing.T) {
@@ -61,7 +62,7 @@ func testAccCheckFortiOSSwitchControllerSecurityPolicy8021XExists(n string) reso
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadSwitchControllerSecurityPolicy8021X(i)
+		o, err := c.ReadSwitchControllerSecurityPolicy8021X(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading SwitchControllerSecurityPolicy8021X: %s", err)
@@ -84,7 +85,7 @@ func testAccCheckSwitchControllerSecurityPolicy8021XDestroy(s *terraform.State) 
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadSwitchControllerSecurityPolicy8021X(i)
+		o, err := c.ReadSwitchControllerSecurityPolicy8021X(i, "root")
 
 		if err == nil {
 			if o != nil {

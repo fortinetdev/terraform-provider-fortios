@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSAntivirusProfile_basic(t *testing.T) {
@@ -59,7 +60,7 @@ func testAccCheckFortiOSAntivirusProfileExists(n string) resource.TestCheckFunc 
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadAntivirusProfile(i)
+		o, err := c.ReadAntivirusProfile(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading AntivirusProfile: %s", err)
@@ -82,7 +83,7 @@ func testAccCheckAntivirusProfileDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadAntivirusProfile(i)
+		o, err := c.ReadAntivirusProfile(i, "root")
 
 		if err == nil {
 			if o != nil {

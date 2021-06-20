@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSSystemExternalResource_basic(t *testing.T) {
@@ -53,7 +54,7 @@ func testAccCheckFortiOSSystemExternalResourceExists(n string) resource.TestChec
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadSystemExternalResource(i)
+		o, err := c.ReadSystemExternalResource(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading SystemExternalResource: %s", err)
@@ -76,7 +77,7 @@ func testAccCheckSystemExternalResourceDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadSystemExternalResource(i)
+		o, err := c.ReadSystemExternalResource(i, "root")
 
 		if err == nil {
 			if o != nil {

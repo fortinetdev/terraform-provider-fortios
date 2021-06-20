@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSSwitchControllerQosQueuePolicy_basic(t *testing.T) {
@@ -50,7 +51,7 @@ func testAccCheckFortiOSSwitchControllerQosQueuePolicyExists(n string) resource.
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadSwitchControllerQosQueuePolicy(i)
+		o, err := c.ReadSwitchControllerQosQueuePolicy(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading SwitchControllerQosQueuePolicy: %s", err)
@@ -73,7 +74,7 @@ func testAccCheckSwitchControllerQosQueuePolicyDestroy(s *terraform.State) error
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadSwitchControllerQosQueuePolicy(i)
+		o, err := c.ReadSwitchControllerQosQueuePolicy(i, "root")
 
 		if err == nil {
 			if o != nil {

@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSSwitchControllerVirtualPortPool_basic(t *testing.T) {
@@ -49,7 +50,7 @@ func testAccCheckFortiOSSwitchControllerVirtualPortPoolExists(n string) resource
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadSwitchControllerVirtualPortPool(i)
+		o, err := c.ReadSwitchControllerVirtualPortPool(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading SwitchControllerVirtualPortPool: %s", err)
@@ -72,7 +73,7 @@ func testAccCheckSwitchControllerVirtualPortPoolDestroy(s *terraform.State) erro
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadSwitchControllerVirtualPortPool(i)
+		o, err := c.ReadSwitchControllerVirtualPortPool(i, "root")
 
 		if err == nil {
 			if o != nil {

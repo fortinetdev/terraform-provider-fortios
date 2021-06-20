@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSFirewallWildcardFqdnCustom_basic(t *testing.T) {
@@ -51,7 +52,7 @@ func testAccCheckFortiOSFirewallWildcardFqdnCustomExists(n string) resource.Test
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadFirewallWildcardFqdnCustom(i)
+		o, err := c.ReadFirewallWildcardFqdnCustom(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading FirewallWildcardFqdnCustom: %s", err)
@@ -74,7 +75,7 @@ func testAccCheckFirewallWildcardFqdnCustomDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadFirewallWildcardFqdnCustom(i)
+		o, err := c.ReadFirewallWildcardFqdnCustom(i, "root")
 
 		if err == nil {
 			if o != nil {

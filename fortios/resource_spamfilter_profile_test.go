@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSSpamfilterProfile_basic(t *testing.T) {
@@ -79,7 +80,7 @@ func testAccCheckFortiOSSpamfilterProfileExists(n string) resource.TestCheckFunc
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadSpamfilterProfile(i)
+		o, err := c.ReadSpamfilterProfile(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading SpamfilterProfile: %s", err)
@@ -102,7 +103,7 @@ func testAccCheckSpamfilterProfileDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadSpamfilterProfile(i)
+		o, err := c.ReadSpamfilterProfile(i, "root")
 
 		if err == nil {
 			if o != nil {

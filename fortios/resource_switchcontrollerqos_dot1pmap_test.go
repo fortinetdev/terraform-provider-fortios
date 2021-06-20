@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSSwitchControllerQosDot1PMap_basic(t *testing.T) {
@@ -56,7 +57,7 @@ func testAccCheckFortiOSSwitchControllerQosDot1PMapExists(n string) resource.Tes
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadSwitchControllerQosDot1PMap(i)
+		o, err := c.ReadSwitchControllerQosDot1PMap(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading SwitchControllerQosDot1PMap: %s", err)
@@ -79,7 +80,7 @@ func testAccCheckSwitchControllerQosDot1PMapDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadSwitchControllerQosDot1PMap(i)
+		o, err := c.ReadSwitchControllerQosDot1PMap(i, "root")
 
 		if err == nil {
 			if o != nil {
