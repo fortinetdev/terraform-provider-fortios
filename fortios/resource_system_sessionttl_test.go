@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSSystemSessionTtl_basic(t *testing.T) {
@@ -48,7 +49,7 @@ func testAccCheckFortiOSSystemSessionTtlExists(n string) resource.TestCheckFunc 
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadSystemSessionTtl(i)
+		o, err := c.ReadSystemSessionTtl(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading SystemSessionTtl: %s", err)
@@ -71,7 +72,7 @@ func testAccCheckSystemSessionTtlDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadSystemSessionTtl(i)
+		o, err := c.ReadSystemSessionTtl(i, "root")
 
 		if err == nil {
 			if o != nil {

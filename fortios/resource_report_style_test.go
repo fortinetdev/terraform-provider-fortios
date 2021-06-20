@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSReportStyle_basic(t *testing.T) {
@@ -56,7 +57,7 @@ func testAccCheckFortiOSReportStyleExists(n string) resource.TestCheckFunc {
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadReportStyle(i)
+		o, err := c.ReadReportStyle(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading ReportStyle: %s", err)
@@ -79,7 +80,7 @@ func testAccCheckReportStyleDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadReportStyle(i)
+		o, err := c.ReadReportStyle(i, "root")
 
 		if err == nil {
 			if o != nil {

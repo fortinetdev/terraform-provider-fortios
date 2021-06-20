@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSRouterAuthPath_basic(t *testing.T) {
@@ -50,7 +51,7 @@ func testAccCheckFortiOSRouterAuthPathExists(n string) resource.TestCheckFunc {
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadRouterAuthPath(i)
+		o, err := c.ReadRouterAuthPath(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading RouterAuthPath: %s", err)
@@ -73,7 +74,7 @@ func testAccCheckRouterAuthPathDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadRouterAuthPath(i)
+		o, err := c.ReadRouterAuthPath(i, "root")
 
 		if err == nil {
 			if o != nil {

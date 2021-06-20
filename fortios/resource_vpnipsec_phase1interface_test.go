@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSVpnIpsecPhase1Interface_basic(t *testing.T) {
@@ -144,7 +145,7 @@ func testAccCheckFortiOSVpnIpsecPhase1InterfaceExists(n string) resource.TestChe
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadVpnIpsecPhase1Interface(i)
+		o, err := c.ReadVpnIpsecPhase1Interface(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading VpnIpsecPhase1Interface: %s", err)
@@ -167,7 +168,7 @@ func testAccCheckVpnIpsecPhase1InterfaceDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadVpnIpsecPhase1Interface(i)
+		o, err := c.ReadVpnIpsecPhase1Interface(i, "root")
 
 		if err == nil {
 			if o != nil {

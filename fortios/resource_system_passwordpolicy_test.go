@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSSystemPasswordPolicy_basic(t *testing.T) {
@@ -58,7 +59,7 @@ func testAccCheckFortiOSSystemPasswordPolicyExists(n string) resource.TestCheckF
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadSystemPasswordPolicy(i)
+		o, err := c.ReadSystemPasswordPolicy(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading SystemPasswordPolicy: %s", err)
@@ -81,7 +82,7 @@ func testAccCheckSystemPasswordPolicyDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadSystemPasswordPolicy(i)
+		o, err := c.ReadSystemPasswordPolicy(i, "root")
 
 		if err == nil {
 			if o != nil {

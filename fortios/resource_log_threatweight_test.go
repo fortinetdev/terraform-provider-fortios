@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSLogThreatWeight_basic(t *testing.T) {
@@ -119,7 +120,7 @@ func testAccCheckFortiOSLogThreatWeightExists(n string) resource.TestCheckFunc {
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadLogThreatWeight(i)
+		o, err := c.ReadLogThreatWeight(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading LogThreatWeight: %s", err)
@@ -142,7 +143,7 @@ func testAccCheckLogThreatWeightDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadLogThreatWeight(i)
+		o, err := c.ReadLogThreatWeight(i, "root")
 
 		if err == nil {
 			if o != nil {

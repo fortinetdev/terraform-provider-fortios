@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSLogDiskFilter_basic(t *testing.T) {
@@ -59,7 +60,7 @@ func testAccCheckFortiOSLogDiskFilterExists(n string) resource.TestCheckFunc {
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadLogDiskFilter(i)
+		o, err := c.ReadLogDiskFilter(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading LogDiskFilter: %s", err)
@@ -82,7 +83,7 @@ func testAccCheckLogDiskFilterDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadLogDiskFilter(i)
+		o, err := c.ReadLogDiskFilter(i, "root")
 
 		if err == nil {
 			if o != nil {

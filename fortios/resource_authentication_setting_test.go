@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSAuthenticationSetting_basic(t *testing.T) {
@@ -53,7 +54,7 @@ func testAccCheckFortiOSAuthenticationSettingExists(n string) resource.TestCheck
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadAuthenticationSetting(i)
+		o, err := c.ReadAuthenticationSetting(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading AuthenticationSetting: %s", err)
@@ -76,7 +77,7 @@ func testAccCheckAuthenticationSettingDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadAuthenticationSetting(i)
+		o, err := c.ReadAuthenticationSetting(i, "root")
 
 		if err == nil {
 			if o != nil {

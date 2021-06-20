@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSFirewallLdbMonitor_basic(t *testing.T) {
@@ -54,7 +55,7 @@ func testAccCheckFortiOSFirewallLdbMonitorExists(n string) resource.TestCheckFun
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadFirewallLdbMonitor(i)
+		o, err := c.ReadFirewallLdbMonitor(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading FirewallLdbMonitor: %s", err)
@@ -77,7 +78,7 @@ func testAccCheckFirewallLdbMonitorDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadFirewallLdbMonitor(i)
+		o, err := c.ReadFirewallLdbMonitor(i, "root")
 
 		if err == nil {
 			if o != nil {

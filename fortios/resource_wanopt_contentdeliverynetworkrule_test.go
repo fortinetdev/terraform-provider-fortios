@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSWanoptContentDeliveryNetworkRule_basic(t *testing.T) {
@@ -56,7 +57,7 @@ func testAccCheckFortiOSWanoptContentDeliveryNetworkRuleExists(n string) resourc
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadWanoptContentDeliveryNetworkRule(i)
+		o, err := c.ReadWanoptContentDeliveryNetworkRule(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading WanoptContentDeliveryNetworkRule: %s", err)
@@ -79,7 +80,7 @@ func testAccCheckWanoptContentDeliveryNetworkRuleDestroy(s *terraform.State) err
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadWanoptContentDeliveryNetworkRule(i)
+		o, err := c.ReadWanoptContentDeliveryNetworkRule(i, "root")
 
 		if err == nil {
 			if o != nil {

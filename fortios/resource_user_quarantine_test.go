@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSUserQuarantine_basic(t *testing.T) {
@@ -48,7 +49,7 @@ func testAccCheckFortiOSUserQuarantineExists(n string) resource.TestCheckFunc {
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadUserQuarantine(i)
+		o, err := c.ReadUserQuarantine(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading UserQuarantine: %s", err)
@@ -71,7 +72,7 @@ func testAccCheckUserQuarantineDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadUserQuarantine(i)
+		o, err := c.ReadUserQuarantine(i, "root")
 
 		if err == nil {
 			if o != nil {

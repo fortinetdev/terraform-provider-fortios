@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSFirewallIppool6_basic(t *testing.T) {
@@ -50,7 +51,7 @@ func testAccCheckFortiOSFirewallIppool6Exists(n string) resource.TestCheckFunc {
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadFirewallIppool6(i)
+		o, err := c.ReadFirewallIppool6(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading FirewallIppool6: %s", err)
@@ -73,7 +74,7 @@ func testAccCheckFirewallIppool6Destroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadFirewallIppool6(i)
+		o, err := c.ReadFirewallIppool6(i, "root")
 
 		if err == nil {
 			if o != nil {

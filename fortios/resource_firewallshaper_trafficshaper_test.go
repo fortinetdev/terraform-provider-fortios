@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSFirewallShaperTrafficShaper_basic(t *testing.T) {
@@ -55,7 +56,7 @@ func testAccCheckFortiOSFirewallShaperTrafficShaperExists(n string) resource.Tes
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadFirewallShaperTrafficShaper(i)
+		o, err := c.ReadFirewallShaperTrafficShaper(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading FirewallShaperTrafficShaper: %s", err)
@@ -78,7 +79,7 @@ func testAccCheckFirewallShaperTrafficShaperDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadFirewallShaperTrafficShaper(i)
+		o, err := c.ReadFirewallShaperTrafficShaper(i, "root")
 
 		if err == nil {
 			if o != nil {

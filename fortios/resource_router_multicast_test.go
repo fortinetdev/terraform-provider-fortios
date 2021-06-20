@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSRouterMulticast_basic(t *testing.T) {
@@ -68,7 +69,7 @@ func testAccCheckFortiOSRouterMulticastExists(n string) resource.TestCheckFunc {
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadRouterMulticast(i)
+		o, err := c.ReadRouterMulticast(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading RouterMulticast: %s", err)
@@ -91,7 +92,7 @@ func testAccCheckRouterMulticastDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadRouterMulticast(i)
+		o, err := c.ReadRouterMulticast(i, "root")
 
 		if err == nil {
 			if o != nil {

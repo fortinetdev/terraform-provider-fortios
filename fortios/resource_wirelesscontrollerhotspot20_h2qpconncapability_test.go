@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSWirelessControllerHotspot20H2QpConnCapability_basic(t *testing.T) {
@@ -59,7 +60,7 @@ func testAccCheckFortiOSWirelessControllerHotspot20H2QpConnCapabilityExists(n st
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadWirelessControllerHotspot20H2QpConnCapability(i)
+		o, err := c.ReadWirelessControllerHotspot20H2QpConnCapability(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading WirelessControllerHotspot20H2QpConnCapability: %s", err)
@@ -82,7 +83,7 @@ func testAccCheckWirelessControllerHotspot20H2QpConnCapabilityDestroy(s *terrafo
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadWirelessControllerHotspot20H2QpConnCapability(i)
+		o, err := c.ReadWirelessControllerHotspot20H2QpConnCapability(i, "root")
 
 		if err == nil {
 			if o != nil {

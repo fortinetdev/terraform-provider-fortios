@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSSystemIpsecAggregate_basic(t *testing.T) {
@@ -54,7 +55,7 @@ func testAccCheckFortiOSSystemIpsecAggregateExists(n string) resource.TestCheckF
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadSystemIpsecAggregate(i)
+		o, err := c.ReadSystemIpsecAggregate(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading SystemIpsecAggregate: %s", err)
@@ -77,7 +78,7 @@ func testAccCheckSystemIpsecAggregateDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadSystemIpsecAggregate(i)
+		o, err := c.ReadSystemIpsecAggregate(i, "root")
 
 		if err == nil {
 			if o != nil {

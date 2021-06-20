@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSSystemAutomationTrigger_basic(t *testing.T) {
@@ -55,7 +56,7 @@ func testAccCheckFortiOSSystemAutomationTriggerExists(n string) resource.TestChe
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadSystemAutomationTrigger(i)
+		o, err := c.ReadSystemAutomationTrigger(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading SystemAutomationTrigger: %s", err)
@@ -78,7 +79,7 @@ func testAccCheckSystemAutomationTriggerDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadSystemAutomationTrigger(i)
+		o, err := c.ReadSystemAutomationTrigger(i, "root")
 
 		if err == nil {
 			if o != nil {

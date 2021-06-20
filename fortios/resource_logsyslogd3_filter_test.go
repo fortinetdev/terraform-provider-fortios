@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSLogSyslogd3Filter_basic(t *testing.T) {
@@ -58,7 +59,7 @@ func testAccCheckFortiOSLogSyslogd3FilterExists(n string) resource.TestCheckFunc
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadLogSyslogd3Filter(i)
+		o, err := c.ReadLogSyslogd3Filter(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading LogSyslogd3Filter: %s", err)
@@ -81,7 +82,7 @@ func testAccCheckLogSyslogd3FilterDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadLogSyslogd3Filter(i)
+		o, err := c.ReadLogSyslogd3Filter(i, "root")
 
 		if err == nil {
 			if o != nil {

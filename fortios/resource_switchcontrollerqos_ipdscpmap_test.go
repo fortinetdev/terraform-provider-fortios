@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSSwitchControllerQosIpDscpMap_basic(t *testing.T) {
@@ -52,7 +53,7 @@ func testAccCheckFortiOSSwitchControllerQosIpDscpMapExists(n string) resource.Te
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadSwitchControllerQosIpDscpMap(i)
+		o, err := c.ReadSwitchControllerQosIpDscpMap(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading SwitchControllerQosIpDscpMap: %s", err)
@@ -75,7 +76,7 @@ func testAccCheckSwitchControllerQosIpDscpMapDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadSwitchControllerQosIpDscpMap(i)
+		o, err := c.ReadSwitchControllerQosIpDscpMap(i, "root")
 
 		if err == nil {
 			if o != nil {

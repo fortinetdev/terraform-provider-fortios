@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSFirewallMulticastAddress_basic(t *testing.T) {
@@ -54,7 +55,7 @@ func testAccCheckFortiOSFirewallMulticastAddressExists(n string) resource.TestCh
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadFirewallMulticastAddress(i)
+		o, err := c.ReadFirewallMulticastAddress(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading FirewallMulticastAddress: %s", err)
@@ -77,7 +78,7 @@ func testAccCheckFirewallMulticastAddressDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadFirewallMulticastAddress(i)
+		o, err := c.ReadFirewallMulticastAddress(i, "root")
 
 		if err == nil {
 			if o != nil {

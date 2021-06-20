@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSLogFortianalyzer2OverrideSetting_basic(t *testing.T) {
@@ -63,7 +64,7 @@ func testAccCheckFortiOSLogFortianalyzer2OverrideSettingExists(n string) resourc
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadLogFortianalyzer2OverrideSetting(i)
+		o, err := c.ReadLogFortianalyzer2OverrideSetting(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading LogFortianalyzer2OverrideSetting: %s", err)
@@ -86,7 +87,7 @@ func testAccCheckLogFortianalyzer2OverrideSettingDestroy(s *terraform.State) err
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadLogFortianalyzer2OverrideSetting(i)
+		o, err := c.ReadLogFortianalyzer2OverrideSetting(i, "root")
 
 		if err == nil {
 			if o != nil {

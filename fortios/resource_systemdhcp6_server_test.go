@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSSystemDhcp6Server_basic(t *testing.T) {
@@ -53,7 +54,7 @@ func testAccCheckFortiOSSystemDhcp6ServerExists(n string) resource.TestCheckFunc
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadSystemDhcp6Server(i)
+		o, err := c.ReadSystemDhcp6Server(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading SystemDhcp6Server: %s", err)
@@ -76,7 +77,7 @@ func testAccCheckSystemDhcp6ServerDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadSystemDhcp6Server(i)
+		o, err := c.ReadSystemDhcp6Server(i, "root")
 
 		if err == nil {
 			if o != nil {

@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSSwitchControllerSwitchLog_basic(t *testing.T) {
@@ -49,7 +50,7 @@ func testAccCheckFortiOSSwitchControllerSwitchLogExists(n string) resource.TestC
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadSwitchControllerSwitchLog(i)
+		o, err := c.ReadSwitchControllerSwitchLog(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading SwitchControllerSwitchLog: %s", err)
@@ -72,7 +73,7 @@ func testAccCheckSwitchControllerSwitchLogDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadSwitchControllerSwitchLog(i)
+		o, err := c.ReadSwitchControllerSwitchLog(i, "root")
 
 		if err == nil {
 			if o != nil {

@@ -60,7 +60,7 @@ func testAccCheckFortiOSFirewallSecurityPolicyExists(n string) resource.TestChec
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadFirewallSecurityPolicy(i)
+		o, err := c.ReadFirewallSecurityPolicy(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading Firewall Security Policy: %s", err)
@@ -83,7 +83,7 @@ func testAccCheckFirewallSecurityPolicyDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadFirewallSecurityPolicy(i)
+		o, err := c.ReadFirewallSecurityPolicy(i, "root")
 
 		if err == nil {
 			if o != nil {

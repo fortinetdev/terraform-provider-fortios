@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSFirewallInterfacePolicy_basic(t *testing.T) {
@@ -63,7 +64,7 @@ func testAccCheckFortiOSFirewallInterfacePolicyExists(n string) resource.TestChe
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadFirewallInterfacePolicy(i)
+		o, err := c.ReadFirewallInterfacePolicy(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading FirewallInterfacePolicy: %s", err)
@@ -86,7 +87,7 @@ func testAccCheckFirewallInterfacePolicyDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadFirewallInterfacePolicy(i)
+		o, err := c.ReadFirewallInterfacePolicy(i, "root")
 
 		if err == nil {
 			if o != nil {

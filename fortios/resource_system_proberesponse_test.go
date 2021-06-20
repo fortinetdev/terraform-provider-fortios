@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSSystemProbeResponse_basic(t *testing.T) {
@@ -53,7 +54,7 @@ func testAccCheckFortiOSSystemProbeResponseExists(n string) resource.TestCheckFu
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadSystemProbeResponse(i)
+		o, err := c.ReadSystemProbeResponse(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading SystemProbeResponse: %s", err)
@@ -76,7 +77,7 @@ func testAccCheckSystemProbeResponseDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadSystemProbeResponse(i)
+		o, err := c.ReadSystemProbeResponse(i, "root")
 
 		if err == nil {
 			if o != nil {

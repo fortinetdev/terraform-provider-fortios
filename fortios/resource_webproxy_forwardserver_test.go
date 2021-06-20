@@ -8,11 +8,12 @@ package fortios
 
 import (
 	"fmt"
+	"log"
+	"testing"
+
 	"github.com/hashicorp/terraform-plugin-sdk/helper/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/helper/resource"
 	"github.com/hashicorp/terraform-plugin-sdk/terraform"
-	"log"
-	"testing"
 )
 
 func TestAccFortiOSWebProxyForwardServer_basic(t *testing.T) {
@@ -54,7 +55,7 @@ func testAccCheckFortiOSWebProxyForwardServerExists(n string) resource.TestCheck
 		c := testAccProvider.Meta().(*FortiClient).Client
 
 		i := rs.Primary.ID
-		o, err := c.ReadWebProxyForwardServer(i)
+		o, err := c.ReadWebProxyForwardServer(i, "root")
 
 		if err != nil {
 			return fmt.Errorf("Error reading WebProxyForwardServer: %s", err)
@@ -77,7 +78,7 @@ func testAccCheckWebProxyForwardServerDestroy(s *terraform.State) error {
 		}
 
 		i := rs.Primary.ID
-		o, err := c.ReadWebProxyForwardServer(i)
+		o, err := c.ReadWebProxyForwardServer(i, "root")
 
 		if err == nil {
 			if o != nil {
