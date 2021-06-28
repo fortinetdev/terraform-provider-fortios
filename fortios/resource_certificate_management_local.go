@@ -1,10 +1,8 @@
-// Copyright 2020 Fortinet, Inc. All rights reserved.
-// Author: Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu)
+// Author: Justin Roberts (@poroping)
 // Documentation:
-// Frank Shen (@frankshen01), Hongbin Lu (@fgtdev-hblu),
-// Xing Li (@lix-fortinet), Yue Wang (@yuew-ftnt), Yuffie Zhu (@yuffiezhu)
+// Justin Roberts (@poroping),
 
-// Description: Local keys and certificates.
+// Description: Local certificate management.
 
 package fortios
 
