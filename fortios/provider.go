@@ -346,6 +346,7 @@ func Provider() terraform.ResourceProvider {
 			"fortios_systemsnmp_userlist":                     dataSourceSystemSnmpUserList(),
 			"fortios_user_samllist":                           dataSourceUserSamlList(),
 			"fortios_routerbgp_neighborlist":                  dataSourceRouterbgpNeighborList(),
+			"fortios_system_certificate_download":             dataSourceSystemCertificateDownload(),
 		},
 
 		ResourcesMap: map[string]*schema.Resource{
@@ -949,6 +950,7 @@ func Provider() terraform.ResourceProvider {
 			"fortios_firewall_proxypolicy_move":                         resourceFirewallProxypolicyMove(),
 			"fortios_firewall_centralsnatmap_sort":                      resourceFirewallCentralsnatmapSort(),
 			"fortios_firewall_proxypolicy_sort":                         resourceFirewallProxypolicySort(),
+			"fortios_certificate_management_local":                      resourceCertificateManagementLocal(),
 		},
 
 		ConfigureFunc: providerConfigure,
