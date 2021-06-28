@@ -1,4 +1,3 @@
-// Copyright 2020 Fortinet, Inc. All rights reserved.
 // Author: Justin Roberts (@poroping)
 // Documentation:
 // Justin Roberts (@poroping),
