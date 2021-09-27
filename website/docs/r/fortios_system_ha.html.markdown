@@ -9,7 +9,7 @@ description: |-
 # fortios_system_ha
 Configure HA.
 
-Due to the limitations of the current system, the feature is temporarily unavailable. Please use the following resource configuration as an alternative.
+By design considerations, the feature is using the fortios_system_autoscript resource as documented below.
 
 ## Example1
 

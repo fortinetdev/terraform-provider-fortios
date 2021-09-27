@@ -9,7 +9,7 @@ description: |-
 # fortios_system_fortimanager
 Configure FortiManager.
 
-Due to the limitations of the current system, the feature is temporarily unavailable. Please use the following resource configuration as an alternative.
+By design considerations, the feature is using the fortios_system_centralmanagement resource as documented below.
 
 ## Example
 ```
