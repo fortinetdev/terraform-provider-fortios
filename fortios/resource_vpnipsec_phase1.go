@@ -86,7 +86,7 @@ func resourceVpnIpsecPhase1() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
 							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 64),
+							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -232,19 +232,19 @@ func resourceVpnIpsecPhase1() *schema.Resource {
 			},
 			"ipv4_split_include": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 63),
+				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
 				Computed:     true,
 			},
 			"split_include_service": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 63),
+				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
 				Computed:     true,
 			},
 			"ipv4_name": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 63),
+				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -304,13 +304,13 @@ func resourceVpnIpsecPhase1() *schema.Resource {
 			},
 			"ipv6_split_include": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 63),
+				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
 				Computed:     true,
 			},
 			"ipv6_name": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 63),
+				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -337,13 +337,13 @@ func resourceVpnIpsecPhase1() *schema.Resource {
 			},
 			"ipv4_split_exclude": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 63),
+				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
 				Computed:     true,
 			},
 			"ipv6_split_exclude": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 63),
+				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -369,7 +369,7 @@ func resourceVpnIpsecPhase1() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 						"address": &schema.Schema{
 							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 64),
+							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
 							Computed:     true,
 						},

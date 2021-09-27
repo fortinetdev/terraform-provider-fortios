@@ -59,7 +59,7 @@ func resourceUserKrbKeytab() *schema.Resource {
 			},
 			"keytab": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 2047),
+				ValidateFunc: validation.StringLenBetween(0, 8191),
 				Required:     true,
 				Sensitive:    true,
 			},

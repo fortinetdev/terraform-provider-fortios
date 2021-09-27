@@ -63,7 +63,7 @@ func resourceFirewallProxyPolicy() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
 							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 64),
+							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -77,7 +77,7 @@ func resourceFirewallProxyPolicy() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
 							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 64),
+							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -91,7 +91,7 @@ func resourceFirewallProxyPolicy() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
 							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 64),
+							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -105,7 +105,7 @@ func resourceFirewallProxyPolicy() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
 							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 64),
+							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -119,7 +119,7 @@ func resourceFirewallProxyPolicy() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
 							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 64),
+							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -184,7 +184,7 @@ func resourceFirewallProxyPolicy() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
 							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 64),
+							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -212,7 +212,7 @@ func resourceFirewallProxyPolicy() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
 							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 64),
+							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -267,7 +267,7 @@ func resourceFirewallProxyPolicy() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
 							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 64),
+							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -281,7 +281,7 @@ func resourceFirewallProxyPolicy() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
 							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 64),
+							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -295,7 +295,7 @@ func resourceFirewallProxyPolicy() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
 							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 64),
+							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -309,7 +309,7 @@ func resourceFirewallProxyPolicy() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
 							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 64),
+							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
 							Computed:     true,
 						},

@@ -637,7 +637,7 @@ func resourceSystemGlobal() *schema.Resource {
 			},
 			"wifi_ca_certificate": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
 				Computed:     true,
 			},

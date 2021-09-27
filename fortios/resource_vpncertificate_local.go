@@ -156,7 +156,7 @@ func resourceVpnCertificateLocal() *schema.Resource {
 			},
 			"cmp_server_cert": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
 				Computed:     true,
 			},

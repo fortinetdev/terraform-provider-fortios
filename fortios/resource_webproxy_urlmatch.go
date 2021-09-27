@@ -54,7 +54,7 @@ func resourceWebProxyUrlMatch() *schema.Resource {
 			},
 			"forward_server": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 35),
+				ValidateFunc: validation.StringLenBetween(0, 63),
 				Optional:     true,
 				Computed:     true,
 			},

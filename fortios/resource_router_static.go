@@ -111,7 +111,7 @@ func resourceRouterStatic() *schema.Resource {
 			},
 			"dstaddr": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 63),
+				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
 				Computed:     true,
 			},

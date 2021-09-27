@@ -37,7 +37,7 @@ func resourceFirewallAddress() *schema.Resource {
 			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 63),
+				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -212,7 +212,7 @@ func resourceFirewallAddress() *schema.Resource {
 			},
 			"filter": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 255),
+				ValidateFunc: validation.StringLenBetween(0, 2047),
 				Optional:     true,
 			},
 			"sdn_addr_type": &schema.Schema{
@@ -268,7 +268,7 @@ func resourceFirewallAddress() *schema.Resource {
 								Schema: map[string]*schema.Schema{
 									"name": &schema.Schema{
 										Type:         schema.TypeString,
-										ValidateFunc: validation.StringLenBetween(0, 64),
+										ValidateFunc: validation.StringLenBetween(0, 79),
 										Optional:     true,
 										Computed:     true,
 									},

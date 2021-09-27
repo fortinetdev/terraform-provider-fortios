@@ -627,19 +627,19 @@ func resourceFirewallSslSshProfile() *schema.Resource {
 						},
 						"address": &schema.Schema{
 							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 63),
+							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
 							Computed:     true,
 						},
 						"address6": &schema.Schema{
 							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 63),
+							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
 							Computed:     true,
 						},
 						"wildcard_fqdn": &schema.Schema{
 							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 63),
+							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
 							Computed:     true,
 						},

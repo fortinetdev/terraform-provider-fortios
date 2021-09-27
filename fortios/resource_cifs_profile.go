@@ -111,7 +111,7 @@ func resourceCifsProfile() *schema.Resource {
 			},
 			"domain_controller": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 63),
+				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
 				Computed:     true,
 			},

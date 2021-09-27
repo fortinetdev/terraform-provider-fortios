@@ -111,7 +111,7 @@ func resourceSystemSdnConnector() *schema.Resource {
 			},
 			"region": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 15),
+				ValidateFunc: validation.StringLenBetween(0, 31),
 				Optional:     true,
 				Computed:     true,
 			},

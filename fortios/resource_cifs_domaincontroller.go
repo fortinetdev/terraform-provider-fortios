@@ -37,14 +37,14 @@ func resourceCifsDomainController() *schema.Resource {
 			},
 			"server_name": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 63),
+				ValidateFunc: validation.StringLenBetween(0, 255),
 				ForceNew:     true,
 				Optional:     true,
 				Computed:     true,
 			},
 			"domain_name": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 79),
+				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
 				Computed:     true,
 			},

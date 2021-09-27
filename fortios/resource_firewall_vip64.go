@@ -37,7 +37,7 @@ func resourceFirewallVip64() *schema.Resource {
 			},
 			"name": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 63),
+				ValidateFunc: validation.StringLenBetween(0, 79),
 				Optional:     true,
 				Computed:     true,
 			},
@@ -175,7 +175,7 @@ func resourceFirewallVip64() *schema.Resource {
 						},
 						"monitor": &schema.Schema{
 							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 64),
+							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
 							Computed:     true,
 						},
@@ -194,7 +194,7 @@ func resourceFirewallVip64() *schema.Resource {
 					Schema: map[string]*schema.Schema{
 						"name": &schema.Schema{
 							Type:         schema.TypeString,
-							ValidateFunc: validation.StringLenBetween(0, 64),
+							ValidateFunc: validation.StringLenBetween(0, 79),
 							Optional:     true,
 							Computed:     true,
 						},

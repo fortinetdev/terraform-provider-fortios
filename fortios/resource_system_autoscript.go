@@ -61,7 +61,7 @@ func resourceSystemAutoScript() *schema.Resource {
 			},
 			"script": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 255),
+				ValidateFunc: validation.StringLenBetween(0, 1023),
 				Optional:     true,
 			},
 			"output_size": &schema.Schema{

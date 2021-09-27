@@ -44,7 +44,7 @@ func resourceIpsCustom() *schema.Resource {
 			},
 			"signature": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 1023),
+				ValidateFunc: validation.StringLenBetween(0, 4095),
 				Optional:     true,
 				Computed:     true,
 			},

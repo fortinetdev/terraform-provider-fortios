@@ -50,7 +50,7 @@ func resourceCredentialStoreDomainController() *schema.Resource {
 			},
 			"domain_name": &schema.Schema{
 				Type:         schema.TypeString,
-				ValidateFunc: validation.StringLenBetween(0, 79),
+				ValidateFunc: validation.StringLenBetween(0, 255),
 				Optional:     true,
 				Computed:     true,
 			},
