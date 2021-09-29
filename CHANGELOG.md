@@ -1,6 +1,12 @@
 ## 1.14.0 (Unreleased)
 
 
+## 1.13.1 (Sep 28, 2021)
+
+BUG FIXES:
+
+* Fix parameter value's length limitation issue
+
 ## 1.13.0 (Jun 12, 2021)
 
 IMPROVEMENTS:
