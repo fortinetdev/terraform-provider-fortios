@@ -280,13 +280,13 @@ func resourceRouterBgp() *schema.Resource {
 			},
 			"additional_path_select": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(2, 3),
+				ValidateFunc: validation.IntBetween(2, 255),
 				Optional:     true,
 				Computed:     true,
 			},
 			"additional_path_select6": &schema.Schema{
 				Type:         schema.TypeInt,
-				ValidateFunc: validation.IntBetween(2, 3),
+				ValidateFunc: validation.IntBetween(2, 255),
 				Optional:     true,
 				Computed:     true,
 			},
